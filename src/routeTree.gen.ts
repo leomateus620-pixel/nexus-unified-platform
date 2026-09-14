@@ -10,33 +10,206 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClientesRouteImport } from './routes/clientes'
+import { Route as ComercialRouteImport } from './routes/comercial'
+import { Route as ComprasRouteImport } from './routes/compras'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as DocumentacaoRouteImport } from './routes/documentacao'
+import { Route as EngenhariaRouteImport } from './routes/engenharia'
+import { Route as ExecucaoRouteImport } from './routes/execucao'
+import { Route as FinanceiroRouteImport } from './routes/financeiro'
+import { Route as InspecoesRouteImport } from './routes/inspecoes'
+import { Route as LevantamentosRouteImport } from './routes/levantamentos'
+import { Route as ProdutosRouteImport } from './routes/produtos'
+import { Route as ProjetosRouteImport } from './routes/projetos'
+import { Route as RelatoriosRouteImport } from './routes/relatorios'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientesRoute = ClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComercialRoute = ComercialRouteImport.update({
+  id: '/comercial',
+  path: '/comercial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComprasRoute = ComprasRouteImport.update({
+  id: '/compras',
+  path: '/compras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentacaoRoute = DocumentacaoRouteImport.update({
+  id: '/documentacao',
+  path: '/documentacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EngenhariaRoute = EngenhariaRouteImport.update({
+  id: '/engenharia',
+  path: '/engenharia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExecucaoRoute = ExecucaoRouteImport.update({
+  id: '/execucao',
+  path: '/execucao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceiroRoute = FinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspecoesRoute = InspecoesRouteImport.update({
+  id: '/inspecoes',
+  path: '/inspecoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LevantamentosRoute = LevantamentosRouteImport.update({
+  id: '/levantamentos',
+  path: '/levantamentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosRoute = ProdutosRouteImport.update({
+  id: '/produtos',
+  path: '/produtos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetosRoute = ProjetosRouteImport.update({
+  id: '/projetos',
+  path: '/projetos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RelatoriosRoute = RelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clientes': typeof ClientesRoute
+  '/comercial': typeof ComercialRoute
+  '/compras': typeof ComprasRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/documentacao': typeof DocumentacaoRoute
+  '/engenharia': typeof EngenhariaRoute
+  '/execucao': typeof ExecucaoRoute
+  '/financeiro': typeof FinanceiroRoute
+  '/inspecoes': typeof InspecoesRoute
+  '/levantamentos': typeof LevantamentosRoute
+  '/produtos': typeof ProdutosRoute
+  '/projetos': typeof ProjetosRoute
+  '/relatorios': typeof RelatoriosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clientes': typeof ClientesRoute
+  '/comercial': typeof ComercialRoute
+  '/compras': typeof ComprasRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/documentacao': typeof DocumentacaoRoute
+  '/engenharia': typeof EngenhariaRoute
+  '/execucao': typeof ExecucaoRoute
+  '/financeiro': typeof FinanceiroRoute
+  '/inspecoes': typeof InspecoesRoute
+  '/levantamentos': typeof LevantamentosRoute
+  '/produtos': typeof ProdutosRoute
+  '/projetos': typeof ProjetosRoute
+  '/relatorios': typeof RelatoriosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clientes': typeof ClientesRoute
+  '/comercial': typeof ComercialRoute
+  '/compras': typeof ComprasRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/documentacao': typeof DocumentacaoRoute
+  '/engenharia': typeof EngenhariaRoute
+  '/execucao': typeof ExecucaoRoute
+  '/financeiro': typeof FinanceiroRoute
+  '/inspecoes': typeof InspecoesRoute
+  '/levantamentos': typeof LevantamentosRoute
+  '/produtos': typeof ProdutosRoute
+  '/projetos': typeof ProjetosRoute
+  '/relatorios': typeof RelatoriosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/clientes'
+    | '/comercial'
+    | '/compras'
+    | '/configuracoes'
+    | '/documentacao'
+    | '/engenharia'
+    | '/execucao'
+    | '/financeiro'
+    | '/inspecoes'
+    | '/levantamentos'
+    | '/produtos'
+    | '/projetos'
+    | '/relatorios'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/clientes'
+    | '/comercial'
+    | '/compras'
+    | '/configuracoes'
+    | '/documentacao'
+    | '/engenharia'
+    | '/execucao'
+    | '/financeiro'
+    | '/inspecoes'
+    | '/levantamentos'
+    | '/produtos'
+    | '/projetos'
+    | '/relatorios'
+  id:
+    | '__root__'
+    | '/'
+    | '/clientes'
+    | '/comercial'
+    | '/compras'
+    | '/configuracoes'
+    | '/documentacao'
+    | '/engenharia'
+    | '/execucao'
+    | '/financeiro'
+    | '/inspecoes'
+    | '/levantamentos'
+    | '/produtos'
+    | '/projetos'
+    | '/relatorios'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClientesRoute: typeof ClientesRoute
+  ComercialRoute: typeof ComercialRoute
+  ComprasRoute: typeof ComprasRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
+  DocumentacaoRoute: typeof DocumentacaoRoute
+  EngenhariaRoute: typeof EngenhariaRoute
+  ExecucaoRoute: typeof ExecucaoRoute
+  FinanceiroRoute: typeof FinanceiroRoute
+  InspecoesRoute: typeof InspecoesRoute
+  LevantamentosRoute: typeof LevantamentosRoute
+  ProdutosRoute: typeof ProdutosRoute
+  ProjetosRoute: typeof ProjetosRoute
+  RelatoriosRoute: typeof RelatoriosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +221,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clientes': {
+      id: '/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof ClientesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comercial': {
+      id: '/comercial'
+      path: '/comercial'
+      fullPath: '/comercial'
+      preLoaderRoute: typeof ComercialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compras': {
+      id: '/compras'
+      path: '/compras'
+      fullPath: '/compras'
+      preLoaderRoute: typeof ComprasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documentacao': {
+      id: '/documentacao'
+      path: '/documentacao'
+      fullPath: '/documentacao'
+      preLoaderRoute: typeof DocumentacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/engenharia': {
+      id: '/engenharia'
+      path: '/engenharia'
+      fullPath: '/engenharia'
+      preLoaderRoute: typeof EngenhariaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/execucao': {
+      id: '/execucao'
+      path: '/execucao'
+      fullPath: '/execucao'
+      preLoaderRoute: typeof ExecucaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/financeiro': {
+      id: '/financeiro'
+      path: '/financeiro'
+      fullPath: '/financeiro'
+      preLoaderRoute: typeof FinanceiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspecoes': {
+      id: '/inspecoes'
+      path: '/inspecoes'
+      fullPath: '/inspecoes'
+      preLoaderRoute: typeof InspecoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/levantamentos': {
+      id: '/levantamentos'
+      path: '/levantamentos'
+      fullPath: '/levantamentos'
+      preLoaderRoute: typeof LevantamentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos': {
+      id: '/produtos'
+      path: '/produtos'
+      fullPath: '/produtos'
+      preLoaderRoute: typeof ProdutosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projetos': {
+      id: '/projetos'
+      path: '/projetos'
+      fullPath: '/projetos'
+      preLoaderRoute: typeof ProjetosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatorios': {
+      id: '/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof RelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClientesRoute: ClientesRoute,
+  ComercialRoute: ComercialRoute,
+  ComprasRoute: ComprasRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
+  DocumentacaoRoute: DocumentacaoRoute,
+  EngenhariaRoute: EngenhariaRoute,
+  ExecucaoRoute: ExecucaoRoute,
+  FinanceiroRoute: FinanceiroRoute,
+  InspecoesRoute: InspecoesRoute,
+  LevantamentosRoute: LevantamentosRoute,
+  ProdutosRoute: ProdutosRoute,
+  ProjetosRoute: ProjetosRoute,
+  RelatoriosRoute: RelatoriosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

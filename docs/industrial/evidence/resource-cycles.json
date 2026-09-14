@@ -1,0 +1,42 @@
+{
+  "snapshots": [
+    {
+      "geometries": 115,
+      "textures": 18,
+      "programs": 18,
+      "losses": 0
+    },
+    {
+      "geometries": 115,
+      "textures": 18,
+      "programs": 18,
+      "losses": 0
+    },
+    {
+      "geometries": 115,
+      "textures": 18,
+      "programs": 18,
+      "losses": 0
+    },
+    {
+      "geometries": 115,
+      "textures": 18,
+      "programs": 18,
+      "losses": 0
+    },
+    {
+      "geometries": 115,
+      "textures": 18,
+      "programs": 18,
+      "losses": 0
+    },
+    {
+      "geometries": 115,
+      "textures": 18,
+      "programs": 18,
+      "losses": 0
+    }
+  ],
+  "routeReentries": 3,
+  "scope": "Renderer object counts; not a GPU/JS heap leak proof."
+}

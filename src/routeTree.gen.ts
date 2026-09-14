@@ -20,6 +20,7 @@ import { Route as ExecucaoRouteImport } from './routes/execucao'
 import { Route as FinanceiroRouteImport } from './routes/financeiro'
 import { Route as InspecoesRouteImport } from './routes/inspecoes'
 import { Route as LevantamentosRouteImport } from './routes/levantamentos'
+import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
@@ -79,6 +80,11 @@ const LevantamentosRoute = LevantamentosRouteImport.update({
   path: '/levantamentos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Mapas3dRoute = Mapas3dRouteImport.update({
+  id: '/mapas-3d',
+  path: '/mapas-3d',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutosRoute = ProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
   '/levantamentos': typeof LevantamentosRoute
+  '/mapas-3d': typeof Mapas3dRoute
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
   '/levantamentos': typeof LevantamentosRoute
+  '/mapas-3d': typeof Mapas3dRoute
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
   '/levantamentos': typeof LevantamentosRoute
+  '/mapas-3d': typeof Mapas3dRoute
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   FinanceiroRoute: typeof FinanceiroRoute
   InspecoesRoute: typeof InspecoesRoute
   LevantamentosRoute: typeof LevantamentosRoute
+  Mapas3dRoute: typeof Mapas3dRoute
   ProdutosRoute: typeof ProdutosRoute
   ProjetosRoute: typeof ProjetosRoute
   RelatoriosRoute: typeof RelatoriosRoute
@@ -291,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LevantamentosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mapas-3d': {
+      id: '/mapas-3d'
+      path: '/mapas-3d'
+      fullPath: '/mapas-3d'
+      preLoaderRoute: typeof Mapas3dRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtos': {
       id: '/produtos'
       path: '/produtos'
@@ -327,6 +347,7 @@ const rootRouteChildren: RootRouteChildren = {
   FinanceiroRoute: FinanceiroRoute,
   InspecoesRoute: InspecoesRoute,
   LevantamentosRoute: LevantamentosRoute,
+  Mapas3dRoute: Mapas3dRoute,
   ProdutosRoute: ProdutosRoute,
   ProjetosRoute: ProjetosRoute,
   RelatoriosRoute: RelatoriosRoute,

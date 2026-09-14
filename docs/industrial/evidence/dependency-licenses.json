@@ -1,0 +1,120 @@
+[
+  {
+    "name": "react",
+    "version": "19.2.8",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/react/react.git",
+      "directory": "packages/react"
+    }
+  },
+  {
+    "name": "react-dom",
+    "version": "19.2.8",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/react/react.git",
+      "directory": "packages/react-dom"
+    }
+  },
+  {
+    "name": "three",
+    "version": "0.186.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mrdoob/three.js"
+    }
+  },
+  {
+    "name": "@react-three/fiber",
+    "version": "9.7.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/pmndrs/react-three-fiber.git"
+    }
+  },
+  {
+    "name": "@react-three/drei",
+    "version": "10.7.8",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/pmndrs/drei.git"
+    }
+  },
+  {
+    "name": "vite",
+    "version": "8.1.5",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/vitejs/vite.git",
+      "directory": "packages/vite"
+    }
+  },
+  {
+    "name": "@gltf-transform/core",
+    "version": "4.5.0",
+    "license": "MIT",
+    "repository": "github:donmccurdy/glTF-Transform"
+  },
+  {
+    "name": "@gltf-transform/functions",
+    "version": "4.5.0",
+    "license": "MIT",
+    "repository": "github:donmccurdy/glTF-Transform"
+  },
+  {
+    "name": "@gltf-transform/extensions",
+    "version": "4.5.0",
+    "license": "MIT",
+    "repository": "github:donmccurdy/glTF-Transform"
+  },
+  {
+    "name": "meshoptimizer",
+    "version": "1.2.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/zeux/meshoptimizer"
+    }
+  },
+  {
+    "name": "gltf-validator",
+    "version": "2.0.0-dev.3.10",
+    "license": "Apache-2.0",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/KhronosGroup/glTF-Validator"
+    }
+  },
+  {
+    "name": "@playwright/test",
+    "version": "1.63.0",
+    "license": "Apache-2.0",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/microsoft/playwright.git"
+    }
+  },
+  {
+    "name": "wrangler",
+    "version": "4.131.1",
+    "license": "MIT OR Apache-2.0",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/cloudflare/workers-sdk.git",
+      "directory": "packages/wrangler"
+    }
+  },
+  {
+    "name": "tsx",
+    "version": "4.23.13",
+    "license": "MIT",
+    "repository": "privatenumber/tsx"
+  }
+]

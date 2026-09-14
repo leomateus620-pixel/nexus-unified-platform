@@ -1,0 +1,5 @@
+# Generated evidence remains available while keeping PR source review readable.
+docs/industrial/evidence/*.json linguist-generated=true
+public/models/3tentos/*.glb binary linguist-generated=true
+public/textures/3tentos/*.png binary linguist-generated=true
+assets/industrial/source/*.blend binary

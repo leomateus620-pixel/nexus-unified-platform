@@ -30,3 +30,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Reproducible intermediate models and browser test traces
+/assets/industrial/raw/
+/test-results/
+*.blend1
+*.blend2

@@ -40,6 +40,14 @@ Mapas 3D das Unidades — visualização interativa e técnica das unidades dos 
 
 This project was built with [Lovable](https://lovable.dev).
 
+## Mapa 3D da unidade 3 Tentos
+
+O menu **Mapas 3D das Unidades** abre `/mapas-3d`: reconstrução visual baseada nas quatro fotografias fornecidas, com silos paramétricos, edifícios, vias, vegetação, passeio, seleção e comparação de referências. Dimensões são estimadas e a ferramenta de medição permanece desativada.
+
+Instalação reprodutível: `npm ci`, seguida de `npm run dev`. Os GLBs e o arquivo-fonte Blender já estão incluídos. Para regenerar os ativos com Blender 4.5 LTS: `npm run assets:prepare`.
+
+Consulte [preparação completa, controles e testes](docs/industrial/README.md), [inventário e hipóteses](docs/industrial/reconstruction.md) e [validação e desempenho](docs/industrial/validation.md).
+
 ## Build with Lovable
 
 Continue developing this project in the [Lovable editor](https://lovable.dev/projects/91380c2d-559c-4527-b3a4-1a8bc1e19f69).

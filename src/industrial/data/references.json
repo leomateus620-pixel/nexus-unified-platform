@@ -1,0 +1,30 @@
+[
+  {
+    "id": "A",
+    "originalName": "DE8CBDEB-B80D-4584-A99F-C44956F484E3.png",
+    "url": "/references/3tentos/DE8CBDEB-B80D-4584-A99F-C44956F484E3.png",
+    "sha256": "c3af384a9d54e54b32b130e44d4d241af3953e103afe49aaaeef57c552c6354f",
+    "rights": "Fotografia fornecida pelo usuário para esta reconstrução; autoria/licença de redistribuição ampla não informadas."
+  },
+  {
+    "id": "B",
+    "originalName": "24C7F9DF-9669-47D7-93CF-C97B1812BE16.png",
+    "url": "/references/3tentos/24C7F9DF-9669-47D7-93CF-C97B1812BE16.png",
+    "sha256": "4fb9dd8e7e63d4400d4572b158dcb4b602f4c26e6bd657a1de9fc16e12f24ccc",
+    "rights": "Fotografia fornecida pelo usuário para esta reconstrução; autoria/licença de redistribuição ampla não informadas."
+  },
+  {
+    "id": "C",
+    "originalName": "6E762B60-F347-4E7B-AC1A-8ABEFB1B01EB.png",
+    "url": "/references/3tentos/6E762B60-F347-4E7B-AC1A-8ABEFB1B01EB.png",
+    "sha256": "5dceee43dc714d4005330947ea60c9d9336c3d171e11c1c55a223eb6c7006f1c",
+    "rights": "Fotografia fornecida pelo usuário para esta reconstrução; autoria/licença de redistribuição ampla não informadas."
+  },
+  {
+    "id": "D",
+    "originalName": "90E869D1-CF44-4CDA-9BF7-C09E199A23B0.png",
+    "url": "/references/3tentos/90E869D1-CF44-4CDA-9BF7-C09E199A23B0.png",
+    "sha256": "16e552c9435788ff61aafa4493da38235d3620e537531ceb55757652eee8a444",
+    "rights": "Fotografia fornecida pelo usuário para esta reconstrução; autoria/licença de redistribuição ampla não informadas."
+  }
+]

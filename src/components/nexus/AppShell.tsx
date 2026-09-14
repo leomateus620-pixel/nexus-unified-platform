@@ -68,6 +68,9 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const immersive = useRouterState({ select: (s) => s.location.pathname === '/mapas-3d' });
+
+  if (immersive) return <main>{children}</main>;
 
   return (
     <div className="min-h-screen bg-background">

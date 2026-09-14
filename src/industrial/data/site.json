@@ -1,0 +1,1829 @@
+{
+  "version": 1,
+  "calibration": {
+    "status": "estimated",
+    "metersPerUnit": 1,
+    "unitLabel": "metro estimado",
+    "source": "Hipótese de diâmetro externo de 17,6 m, sem medida de campo. Não calibrado.",
+    "originPhotoB": [616, 539],
+    "approximateUnitsPerPixel": 0.16,
+    "axes": {
+      "x": "direita da Foto B",
+      "y": "vertical",
+      "z": "baixo da Foto B"
+    },
+    "groundPlane": "Plano conservador; altimetria desconhecida.",
+    "measurementEnabled": false
+  },
+  "elements": [
+    {
+      "id": "SILO-01",
+      "name": "Silo 01",
+      "category": "silos",
+      "photos": ["A", "B", "C", "D"],
+      "position": [-10.56, 0, -10.24],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "radius": 8.8,
+        "bodyHeight": 17.6,
+        "coneHeight": 3.8,
+        "baseHeight": 0.35,
+        "topHeight": 1.65,
+        "segments": 96
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "assumptions": [
+        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+      ],
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+      ]
+    },
+    {
+      "id": "SILO-02",
+      "name": "Silo 02",
+      "category": "silos",
+      "photos": ["A", "B", "C", "D"],
+      "position": [10.24, 0, -10.24],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "radius": 8.8,
+        "bodyHeight": 17.6,
+        "coneHeight": 3.8,
+        "baseHeight": 0.35,
+        "topHeight": 1.65,
+        "segments": 96
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "assumptions": [
+        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+      ],
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+      ]
+    },
+    {
+      "id": "SILO-03",
+      "name": "Silo 03",
+      "category": "silos",
+      "photos": ["A", "B", "C", "D"],
+      "position": [-10.56, 0, 10.24],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "radius": 8.8,
+        "bodyHeight": 17.6,
+        "coneHeight": 3.8,
+        "baseHeight": 0.35,
+        "topHeight": 1.65,
+        "segments": 96
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "assumptions": [
+        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+      ],
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+      ]
+    },
+    {
+      "id": "SILO-04",
+      "name": "Silo 04",
+      "category": "silos",
+      "photos": ["A", "B", "C", "D"],
+      "position": [10.24, 0, 10.24],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "radius": 8.8,
+        "bodyHeight": 17.6,
+        "coneHeight": 3.8,
+        "baseHeight": 0.35,
+        "topHeight": 1.65,
+        "segments": 96
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "assumptions": [
+        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+      ],
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+      ]
+    },
+    {
+      "id": "EQ-01",
+      "name": "Conjunto central de elevação",
+      "category": "equipment",
+      "photos": ["A", "B", "C", "D"],
+      "position": [-0.16, 0, 0.96],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "height": 34,
+        "width": 1.4,
+        "depth": 1.5
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "probable",
+      "description": "Estruturas verticais distintas, tubos inclinados conectados aos quatro topos e plataformas amarelas.",
+      "assumptions": ["Seções e alturas estimadas; carenagens não revelam o processo interno."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "EQ-02",
+      "name": "Ligação elevada com o galpão",
+      "category": "equipment",
+      "photos": ["A", "B", "C"],
+      "position": [-0.16, 0, 25.76],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "height": 24,
+        "span": 36
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "probable",
+      "description": "Estrutura elevada longitudinal apoiada junto ao galpão; carenagem e suportes visíveis.",
+      "assumptions": ["Tipo operacional e conexões ocultas permanecem desconhecidos."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "ED-01",
+      "name": "Galpão adjacente",
+      "category": "buildings",
+      "photos": ["A", "B", "C"],
+      "position": [-0.64, 0, 26.72],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 27.2,
+        "depth": 17.2,
+        "height": 6.5,
+        "rise": 1.8,
+        "roof": "gable"
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Galpão com cobertura em duas águas, fachadas metálicas e acessos aparentes.",
+      "assumptions": ["Portas reproduzidas somente nas fachadas visíveis; sem interiores."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "ED-02",
+      "name": "Edificação superior 01",
+      "category": "buildings",
+      "photos": ["A", "B", "C"],
+      "position": [-57.6, 0, -46.88],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 11,
+        "depth": 10.6,
+        "height": 3.4,
+        "rise": 0.65,
+        "roof": "flat"
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Volume superior esquerdo, com composição de cobertura em níveis.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "ED-03",
+      "name": "Edificação superior 02",
+      "category": "buildings",
+      "photos": ["A", "B", "C"],
+      "position": [-56.32, 0, -33.76],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 7.5,
+        "depth": 11.2,
+        "height": 3.3,
+        "rise": 0.65,
+        "roof": "flat"
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Segundo volume do setor superior esquerdo. Função não confirmada.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "ED-04",
+      "name": "Edificação lateral",
+      "category": "buildings",
+      "photos": ["A", "B", "C"],
+      "position": [58.88, 0, -5.76],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 10.2,
+        "depth": 13,
+        "height": 3.5,
+        "rise": 1,
+        "roof": "hip"
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Edificação junto à faixa longitudinal de concreto e ao canteiro de palmeiras.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "PV-01",
+      "name": "Faixa de provável pesagem",
+      "category": "terrain",
+      "photos": ["A", "B", "C"],
+      "position": [51.2, 0, -5.76],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 3.2,
+        "depth": 24,
+        "height": 0.18
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "probable",
+      "description": "Faixa pavimentada alongada. A identificação como balança é uma hipótese.",
+      "assumptions": ["Limites exatos, mecanismos e operação não confirmados."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "ED-05",
+      "name": "Edificação inferior direita",
+      "category": "buildings",
+      "photos": ["A", "B", "C"],
+      "position": [50.56, 0, 50.56],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 11.8,
+        "depth": 11.6,
+        "height": 3.7,
+        "rise": 0.9,
+        "roof": "gable"
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Volume periférico próximo ao elemento circular, com cobertura clara.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "EQ-03",
+      "name": "Elemento circular",
+      "category": "equipment",
+      "photos": ["A", "B", "C"],
+      "position": [49.12, 0, 41.76],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "radius": 2.35,
+        "height": 2.2
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "probable",
+      "description": "Forma cilíndrica aparente, provisoriamente descrita como possível reservatório.",
+      "assumptions": ["Conteúdo, uso e conexões não confirmados."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "TR-01",
+      "name": "Pátio de circulação",
+      "category": "terrain",
+      "photos": ["A", "B", "C"],
+      "position": [23.04, 0, 27.36],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "material": "agregado mineral aparente"
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Pátio cinza com transições para solo avermelhado e áreas amplas de manobra.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "TR-02",
+      "name": "Acesso externo superior",
+      "category": "terrain",
+      "photos": ["A", "B", "C"],
+      "position": [13.44, 0, -64.8],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 7.2
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Ligação pela parte superior da Foto B, distinta da circulação interna e da rodovia.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "TR-03",
+      "name": "Rodovia lateral",
+      "category": "terrain",
+      "photos": ["A", "B", "C"],
+      "position": [104.16, 0, 1.76],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 9.8
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Pista externa contínua à direita da Foto B. Orientação geográfica desconhecida.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "VG-01",
+      "name": "Alinhamentos de palmeiras",
+      "category": "vegetation",
+      "photos": ["A", "B", "C", "D"],
+      "position": [79.04, 0, 4.96],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "seed": 31028
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Palmeiras ornamentais da faixa lateral e do canteiro da edificação.",
+      "assumptions": ["Espécies não identificadas; altura e frondes estimadas."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "VG-02",
+      "name": "Árvores e vegetação periférica",
+      "category": "vegetation",
+      "photos": ["A", "B", "C", "D"],
+      "position": [-55.04, 0, 6.08],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "seed": 31028
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "visible",
+      "description": "Copas densas à esquerda, alinhamentos podados e faixas ajardinadas.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "CE-01",
+      "name": "Cercamento externo visível",
+      "category": "fences",
+      "photos": ["A", "B", "C", "D"],
+      "position": [45.44, 0, 63.52],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "height": 1.45
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Trechos com postes e fios/tela. Não representa divisa jurídica.",
+      "assumptions": ["Tipo de malha não resolvido em todos os trechos."],
+      "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "CE-02",
+      "name": "Subdivisões e portões",
+      "category": "fences",
+      "photos": ["A", "B", "C"],
+      "position": [18.4, 0, -47.36],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "height": 1.5
+      },
+      "existence": "visible",
+      "dimensionStatus": "estimated",
+      "functionStatus": "unknown",
+      "description": "Subdivisão do acesso superior, portões e cercamento interno visível.",
+      "assumptions": [],
+      "pending": ["Medidas independentes e identificação em campo."]
+    }
+  ],
+  "terrain": {
+    "site": [
+      [-68.16, -61.44],
+      [91.84, -61.44],
+      [91.84, 65.28],
+      [-68.16, 62.72]
+    ],
+    "yard": [
+      [-40.96, -19.04],
+      [-26.56, -25.44],
+      [21.76, -24.96],
+      [28.8, -21.76],
+      [40.8, -24.96],
+      [44, -33.44],
+      [38.56, -37.92],
+      [-30.4, -39.52],
+      [-36.32, -42.24],
+      [-38.4, -47.68],
+      [-34.88, -53.44],
+      [-27.52, -53.6],
+      [52.32, -52.32],
+      [61.76, -46.72],
+      [68, -40.16],
+      [68, -19.68],
+      [61.92, -18.4],
+      [59.04, -15.36],
+      [52.8, -18.4],
+      [49.76, -15.84],
+      [49.6, 2.56],
+      [52.96, 8.32],
+      [59.2, 18.24],
+      [62.08, 33.92],
+      [60.32, 40.16],
+      [63.68, 54.72],
+      [59.36, 58.56],
+      [-30.88, 56.96],
+      [-41.92, 52.8],
+      [-46.56, 44.48],
+      [-44.64, 28],
+      [-45.28, -2.56]
+    ],
+    "islands": [
+      [
+        [-44.8, -38.56],
+        [-28.96, -38.72],
+        [28.48, -38.08],
+        [39.36, -35.84],
+        [41.28, -33.44],
+        [39.36, -30.72],
+        [26.88, -29.6],
+        [-27.84, -27.84],
+        [-44.32, -25.44]
+      ],
+      [
+        [-28.8, -21.44],
+        [17.76, -22.24],
+        [23.2, -15.52],
+        [30.56, -0.8],
+        [24.64, 13.6],
+        [17.76, 16.32],
+        [-24.64, 16.48],
+        [-30.4, 12.16],
+        [-32.48, -10.56]
+      ],
+      [
+        [51.52, -18.08],
+        [47.68, -17.6],
+        [44.16, -14.24],
+        [42.24, -9.28],
+        [42.24, -0.96],
+        [45.44, 3.52],
+        [49.76, 5.76],
+        [50.08, -16]
+      ]
+    ],
+    "access": [
+      [-34.56, -47.52],
+      [-34.88, -57.76],
+      [-28.64, -63.84],
+      [83.68, -64],
+      [92.32, -65.6],
+      [101.12, -66.88]
+    ],
+    "highwayX": 104.16,
+    "fences": [
+      {
+        "id": "CE-01",
+        "points": [
+          [-67.04, -24.8],
+          [-67.04, 62.72],
+          [74.24, 65.28],
+          [74.08, -52.48],
+          [-24.32, -53.12]
+        ],
+        "type": "wire"
+      },
+      {
+        "id": "CE-01",
+        "points": [
+          [-66.88, -24.96],
+          [-66.88, -60],
+          [-40.16, -60],
+          [-38.24, -53.44]
+        ],
+        "type": "wire"
+      },
+      {
+        "id": "CE-02",
+        "points": [
+          [-44.48, -39.36],
+          [18.24, -39.36],
+          [18.24, -43.04]
+        ],
+        "type": "wire"
+      },
+      {
+        "id": "CE-02",
+        "points": [
+          [18.24, -48.96],
+          [18.24, -53.12]
+        ],
+        "type": "gate"
+      },
+      {
+        "id": "CE-02",
+        "points": [
+          [18.24, -48.8],
+          [18.24, -43.2]
+        ],
+        "type": "gate-open"
+      }
+    ]
+  },
+  "trees": [
+    {
+      "position": [80.32, 0, -53.44],
+      "type": "palm",
+      "height": 7,
+      "variant": 0,
+      "rotation": 0,
+      "id": "VG-01"
+    },
+    {
+      "position": [81.44, 0, -46.24],
+      "type": "palm",
+      "height": 7.65,
+      "variant": 1,
+      "rotation": 2.399,
+      "id": "VG-01"
+    },
+    {
+      "position": [82.56, 0, -39.04],
+      "type": "palm",
+      "height": 8.3,
+      "variant": 2,
+      "rotation": 4.798,
+      "id": "VG-01"
+    },
+    {
+      "position": [80.32, 0, -31.84],
+      "type": "palm",
+      "height": 8.95,
+      "variant": 0,
+      "rotation": 0.913815,
+      "id": "VG-01"
+    },
+    {
+      "position": [81.44, 0, -24.64],
+      "type": "palm",
+      "height": 7,
+      "variant": 1,
+      "rotation": 3.312815,
+      "id": "VG-01"
+    },
+    {
+      "position": [82.56, 0, -17.44],
+      "type": "palm",
+      "height": 7.65,
+      "variant": 2,
+      "rotation": 5.711815,
+      "id": "VG-01"
+    },
+    {
+      "position": [80.32, 0, -10.24],
+      "type": "palm",
+      "height": 8.3,
+      "variant": 0,
+      "rotation": 1.827629,
+      "id": "VG-01"
+    },
+    {
+      "position": [81.44, 0, -3.04],
+      "type": "palm",
+      "height": 8.95,
+      "variant": 1,
+      "rotation": 4.226629,
+      "id": "VG-01"
+    },
+    {
+      "position": [82.56, 0, 4.16],
+      "type": "palm",
+      "height": 7,
+      "variant": 2,
+      "rotation": 0.342444,
+      "id": "VG-01"
+    },
+    {
+      "position": [80.32, 0, 11.36],
+      "type": "palm",
+      "height": 7.65,
+      "variant": 0,
+      "rotation": 2.741444,
+      "id": "VG-01"
+    },
+    {
+      "position": [81.44, 0, 18.56],
+      "type": "palm",
+      "height": 8.3,
+      "variant": 1,
+      "rotation": 5.140444,
+      "id": "VG-01"
+    },
+    {
+      "position": [82.56, 0, 25.76],
+      "type": "palm",
+      "height": 8.95,
+      "variant": 2,
+      "rotation": 1.256259,
+      "id": "VG-01"
+    },
+    {
+      "position": [80.32, 0, 32.96],
+      "type": "palm",
+      "height": 7,
+      "variant": 0,
+      "rotation": 3.655259,
+      "id": "VG-01"
+    },
+    {
+      "position": [81.44, 0, 40.16],
+      "type": "palm",
+      "height": 7.65,
+      "variant": 1,
+      "rotation": 6.054259,
+      "id": "VG-01"
+    },
+    {
+      "position": [82.56, 0, 47.36],
+      "type": "palm",
+      "height": 8.3,
+      "variant": 2,
+      "rotation": 2.170073,
+      "id": "VG-01"
+    },
+    {
+      "position": [80.32, 0, 54.56],
+      "type": "palm",
+      "height": 8.95,
+      "variant": 0,
+      "rotation": 4.569073,
+      "id": "VG-01"
+    },
+    {
+      "position": [44.48, 0, -11.36],
+      "type": "palm",
+      "height": 5.4,
+      "variant": 0,
+      "rotation": 0.684888,
+      "id": "VG-01"
+    },
+    {
+      "position": [44.48, 0, -6.08],
+      "type": "palm",
+      "height": 6.4,
+      "variant": 1,
+      "rotation": 3.083888,
+      "id": "VG-01"
+    },
+    {
+      "position": [44.48, 0, 0],
+      "type": "palm",
+      "height": 7.4,
+      "variant": 2,
+      "rotation": 5.482888,
+      "id": "VG-01"
+    },
+    {
+      "position": [56.64, 0, 8.16],
+      "type": "palm",
+      "height": 5.4,
+      "variant": 0,
+      "rotation": 1.598703,
+      "id": "VG-01"
+    },
+    {
+      "position": [65.6, 0, 7.52],
+      "type": "palm",
+      "height": 6.4,
+      "variant": 1,
+      "rotation": 3.997703,
+      "id": "VG-01"
+    },
+    {
+      "position": [62.88, 0, 14.88],
+      "type": "palm",
+      "height": 7.4,
+      "variant": 2,
+      "rotation": 0.113518,
+      "id": "VG-01"
+    },
+    {
+      "position": [61.92, 0, 27.52],
+      "type": "palm",
+      "height": 5.4,
+      "variant": 0,
+      "rotation": 2.512518,
+      "id": "VG-01"
+    },
+    {
+      "position": [79.04, 0, 53.28],
+      "type": "palm",
+      "height": 6.4,
+      "variant": 1,
+      "rotation": 4.911518,
+      "id": "VG-01"
+    },
+    {
+      "position": [75.68, 0, 48.48],
+      "type": "palm",
+      "height": 7.4,
+      "variant": 2,
+      "rotation": 1.027332,
+      "id": "VG-01"
+    },
+    {
+      "position": [-28.16, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 3.426332,
+      "id": "VG-02"
+    },
+    {
+      "position": [-24.16, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 5.825332,
+      "id": "VG-02"
+    },
+    {
+      "position": [-20.16, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 1.941147,
+      "id": "VG-02"
+    },
+    {
+      "position": [-16.16, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 4.340147,
+      "id": "VG-02"
+    },
+    {
+      "position": [-12.16, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 0.455962,
+      "id": "VG-02"
+    },
+    {
+      "position": [-8.16, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 2.854962,
+      "id": "VG-02"
+    },
+    {
+      "position": [-4.16, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 5.253962,
+      "id": "VG-02"
+    },
+    {
+      "position": [-0.16, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 1.369776,
+      "id": "VG-02"
+    },
+    {
+      "position": [3.84, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 3.768776,
+      "id": "VG-02"
+    },
+    {
+      "position": [7.84, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 6.167776,
+      "id": "VG-02"
+    },
+    {
+      "position": [11.84, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 2.283591,
+      "id": "VG-02"
+    },
+    {
+      "position": [15.84, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 4.682591,
+      "id": "VG-02"
+    },
+    {
+      "position": [19.84, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 0.798406,
+      "id": "VG-02"
+    },
+    {
+      "position": [23.84, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 3.197406,
+      "id": "VG-02"
+    },
+    {
+      "position": [27.84, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 5.596406,
+      "id": "VG-02"
+    },
+    {
+      "position": [31.84, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 1.71222,
+      "id": "VG-02"
+    },
+    {
+      "position": [35.84, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 4.11122,
+      "id": "VG-02"
+    },
+    {
+      "position": [39.84, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 0.227035,
+      "id": "VG-02"
+    },
+    {
+      "position": [43.84, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 2.626035,
+      "id": "VG-02"
+    },
+    {
+      "position": [47.84, 0, -53.44],
+      "type": "trimmed",
+      "height": 3.5,
+      "variant": 1,
+      "rotation": 5.025035,
+      "id": "VG-02"
+    },
+    {
+      "position": [51.84, 0, -52.96],
+      "type": "trimmed",
+      "height": 3.8000000000000003,
+      "variant": 2,
+      "rotation": 1.14085,
+      "id": "VG-02"
+    },
+    {
+      "position": [55.84, 0, -53.92],
+      "type": "trimmed",
+      "height": 3.2,
+      "variant": 0,
+      "rotation": 3.53985,
+      "id": "VG-02"
+    },
+    {
+      "position": [-37.76, 0, 56.8],
+      "type": "dense",
+      "height": 4.1,
+      "variant": 0,
+      "rotation": 5.93885,
+      "id": "VG-02"
+    },
+    {
+      "position": [-33.92, 0, 57.44],
+      "type": "dense",
+      "height": 4.6,
+      "variant": 1,
+      "rotation": 2.054664,
+      "id": "VG-02"
+    },
+    {
+      "position": [-30.08, 0, 56.8],
+      "type": "dense",
+      "height": 5.1,
+      "variant": 2,
+      "rotation": 4.453664,
+      "id": "VG-02"
+    },
+    {
+      "position": [-26.24, 0, 57.44],
+      "type": "dense",
+      "height": 5.6,
+      "variant": 0,
+      "rotation": 0.569479,
+      "id": "VG-02"
+    },
+    {
+      "position": [-22.4, 0, 56.8],
+      "type": "dense",
+      "height": 4.1,
+      "variant": 1,
+      "rotation": 2.968479,
+      "id": "VG-02"
+    },
+    {
+      "position": [-18.56, 0, 57.44],
+      "type": "dense",
+      "height": 4.6,
+      "variant": 2,
+      "rotation": 5.367479,
+      "id": "VG-02"
+    },
+    {
+      "position": [-14.72, 0, 56.8],
+      "type": "dense",
+      "height": 5.1,
+      "variant": 0,
+      "rotation": 1.483294,
+      "id": "VG-02"
+    },
+    {
+      "position": [-10.88, 0, 57.44],
+      "type": "dense",
+      "height": 5.6,
+      "variant": 1,
+      "rotation": 3.882294,
+      "id": "VG-02"
+    },
+    {
+      "position": [-7.04, 0, 56.8],
+      "type": "dense",
+      "height": 4.1,
+      "variant": 2,
+      "rotation": 6.281294,
+      "id": "VG-02"
+    },
+    {
+      "position": [-3.2, 0, 57.44],
+      "type": "dense",
+      "height": 4.6,
+      "variant": 0,
+      "rotation": 2.397109,
+      "id": "VG-02"
+    },
+    {
+      "position": [0.64, 0, 56.8],
+      "type": "dense",
+      "height": 5.1,
+      "variant": 1,
+      "rotation": 4.796109,
+      "id": "VG-02"
+    },
+    {
+      "position": [4.48, 0, 57.44],
+      "type": "dense",
+      "height": 5.6,
+      "variant": 2,
+      "rotation": 0.911923,
+      "id": "VG-02"
+    },
+    {
+      "position": [8.32, 0, 56.8],
+      "type": "dense",
+      "height": 4.1,
+      "variant": 0,
+      "rotation": 3.310923,
+      "id": "VG-02"
+    },
+    {
+      "position": [12.16, 0, 57.44],
+      "type": "dense",
+      "height": 4.6,
+      "variant": 1,
+      "rotation": 5.709923,
+      "id": "VG-02"
+    },
+    {
+      "position": [16, 0, 56.8],
+      "type": "dense",
+      "height": 5.1,
+      "variant": 2,
+      "rotation": 1.825738,
+      "id": "VG-02"
+    },
+    {
+      "position": [19.84, 0, 57.44],
+      "type": "dense",
+      "height": 5.6,
+      "variant": 0,
+      "rotation": 4.224738,
+      "id": "VG-02"
+    },
+    {
+      "position": [23.68, 0, 56.8],
+      "type": "dense",
+      "height": 4.1,
+      "variant": 1,
+      "rotation": 0.340553,
+      "id": "VG-02"
+    },
+    {
+      "position": [27.52, 0, 57.44],
+      "type": "dense",
+      "height": 4.6,
+      "variant": 2,
+      "rotation": 2.739553,
+      "id": "VG-02"
+    },
+    {
+      "position": [31.36, 0, 56.8],
+      "type": "dense",
+      "height": 5.1,
+      "variant": 0,
+      "rotation": 5.138553,
+      "id": "VG-02"
+    },
+    {
+      "position": [35.2, 0, 57.44],
+      "type": "dense",
+      "height": 5.6,
+      "variant": 1,
+      "rotation": 1.254367,
+      "id": "VG-02"
+    },
+    {
+      "position": [39.04, 0, 56.8],
+      "type": "dense",
+      "height": 4.1,
+      "variant": 2,
+      "rotation": 3.653367,
+      "id": "VG-02"
+    },
+    {
+      "position": [42.88, 0, 58.24],
+      "type": "trimmed",
+      "height": 1.8,
+      "variant": 0,
+      "rotation": 6.052367,
+      "id": "VG-02"
+    },
+    {
+      "position": [46.72, 0, 58.24],
+      "type": "trimmed",
+      "height": 1.8,
+      "variant": 1,
+      "rotation": 2.168182,
+      "id": "VG-02"
+    },
+    {
+      "position": [50.56, 0, 58.24],
+      "type": "trimmed",
+      "height": 1.8,
+      "variant": 2,
+      "rotation": 4.567182,
+      "id": "VG-02"
+    },
+    {
+      "position": [54.4, 0, 58.24],
+      "type": "trimmed",
+      "height": 1.8,
+      "variant": 0,
+      "rotation": 0.682997,
+      "id": "VG-02"
+    },
+    {
+      "position": [-35.84, 0, -30.24],
+      "type": "pruned",
+      "height": 4.3,
+      "variant": 0,
+      "rotation": 3.081997,
+      "id": "VG-02"
+    },
+    {
+      "position": [-32.16, 0, -29.6],
+      "type": "trimmed",
+      "height": 4.6499999999999995,
+      "variant": 1,
+      "rotation": 5.480997,
+      "id": "VG-02"
+    },
+    {
+      "position": [-28.48, 0, -28.96],
+      "type": "trimmed",
+      "height": 5,
+      "variant": 2,
+      "rotation": 1.596811,
+      "id": "VG-02"
+    },
+    {
+      "position": [-24.8, 0, -30.24],
+      "type": "trimmed",
+      "height": 5.35,
+      "variant": 0,
+      "rotation": 3.995811,
+      "id": "VG-02"
+    },
+    {
+      "position": [-21.12, 0, -29.6],
+      "type": "trimmed",
+      "height": 4.3,
+      "variant": 1,
+      "rotation": 0.111626,
+      "id": "VG-02"
+    },
+    {
+      "position": [-17.44, 0, -28.96],
+      "type": "pruned",
+      "height": 4.6499999999999995,
+      "variant": 2,
+      "rotation": 2.510626,
+      "id": "VG-02"
+    },
+    {
+      "position": [-13.76, 0, -30.24],
+      "type": "trimmed",
+      "height": 5,
+      "variant": 0,
+      "rotation": 4.909626,
+      "id": "VG-02"
+    },
+    {
+      "position": [-10.08, 0, -29.6],
+      "type": "trimmed",
+      "height": 5.35,
+      "variant": 1,
+      "rotation": 1.025441,
+      "id": "VG-02"
+    },
+    {
+      "position": [-6.4, 0, -28.96],
+      "type": "trimmed",
+      "height": 4.3,
+      "variant": 2,
+      "rotation": 3.424441,
+      "id": "VG-02"
+    },
+    {
+      "position": [-2.72, 0, -30.24],
+      "type": "trimmed",
+      "height": 4.6499999999999995,
+      "variant": 0,
+      "rotation": 5.823441,
+      "id": "VG-02"
+    },
+    {
+      "position": [0.96, 0, -29.6],
+      "type": "pruned",
+      "height": 5,
+      "variant": 1,
+      "rotation": 1.939255,
+      "id": "VG-02"
+    },
+    {
+      "position": [4.64, 0, -28.96],
+      "type": "trimmed",
+      "height": 5.35,
+      "variant": 2,
+      "rotation": 4.338255,
+      "id": "VG-02"
+    },
+    {
+      "position": [8.32, 0, -30.24],
+      "type": "trimmed",
+      "height": 4.3,
+      "variant": 0,
+      "rotation": 0.45407,
+      "id": "VG-02"
+    },
+    {
+      "position": [12, 0, -29.6],
+      "type": "trimmed",
+      "height": 4.6499999999999995,
+      "variant": 1,
+      "rotation": 2.85307,
+      "id": "VG-02"
+    },
+    {
+      "position": [15.68, 0, -28.96],
+      "type": "trimmed",
+      "height": 5,
+      "variant": 2,
+      "rotation": 5.25207,
+      "id": "VG-02"
+    },
+    {
+      "position": [19.36, 0, -30.24],
+      "type": "pruned",
+      "height": 5.35,
+      "variant": 0,
+      "rotation": 1.367885,
+      "id": "VG-02"
+    },
+    {
+      "position": [23.04, 0, -29.6],
+      "type": "trimmed",
+      "height": 4.3,
+      "variant": 1,
+      "rotation": 3.766885,
+      "id": "VG-02"
+    },
+    {
+      "position": [26.72, 0, -28.96],
+      "type": "trimmed",
+      "height": 4.6499999999999995,
+      "variant": 2,
+      "rotation": 6.165885,
+      "id": "VG-02"
+    },
+    {
+      "position": [30.4, 0, -30.24],
+      "type": "trimmed",
+      "height": 5,
+      "variant": 0,
+      "rotation": 2.2817,
+      "id": "VG-02"
+    },
+    {
+      "position": [34.08, 0, -29.6],
+      "type": "trimmed",
+      "height": 5.35,
+      "variant": 1,
+      "rotation": 4.6807,
+      "id": "VG-02"
+    },
+    {
+      "position": [37.76, 0, -28.96],
+      "type": "pruned",
+      "height": 4.3,
+      "variant": 2,
+      "rotation": 0.796514,
+      "id": "VG-02"
+    },
+    {
+      "position": [-28.96, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 0,
+      "rotation": 3.195514,
+      "id": "VG-02"
+    },
+    {
+      "position": [-25.44, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 1,
+      "rotation": 5.594514,
+      "id": "VG-02"
+    },
+    {
+      "position": [-21.92, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 2,
+      "rotation": 1.710329,
+      "id": "VG-02"
+    },
+    {
+      "position": [-18.4, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 0,
+      "rotation": 4.109329,
+      "id": "VG-02"
+    },
+    {
+      "position": [-14.88, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 1,
+      "rotation": 0.225144,
+      "id": "VG-02"
+    },
+    {
+      "position": [-11.36, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 2,
+      "rotation": 2.624144,
+      "id": "VG-02"
+    },
+    {
+      "position": [-7.84, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 0,
+      "rotation": 5.023144,
+      "id": "VG-02"
+    },
+    {
+      "position": [-4.32, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 1,
+      "rotation": 1.138958,
+      "id": "VG-02"
+    },
+    {
+      "position": [-0.8, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 2,
+      "rotation": 3.537958,
+      "id": "VG-02"
+    },
+    {
+      "position": [2.72, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 0,
+      "rotation": 5.936958,
+      "id": "VG-02"
+    },
+    {
+      "position": [6.24, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 1,
+      "rotation": 2.052773,
+      "id": "VG-02"
+    },
+    {
+      "position": [9.76, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 2,
+      "rotation": 4.451773,
+      "id": "VG-02"
+    },
+    {
+      "position": [13.28, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.2,
+      "variant": 0,
+      "rotation": 0.567588,
+      "id": "VG-02"
+    },
+    {
+      "position": [16.8, 0, -39.84],
+      "type": "trimmed",
+      "height": 2.4000000000000004,
+      "variant": 1,
+      "rotation": 2.966588,
+      "id": "VG-02"
+    },
+    {
+      "position": [-60.16, 0, -58.56],
+      "type": "dense",
+      "height": 6.4,
+      "variant": 0,
+      "rotation": 5.365588,
+      "id": "VG-02"
+    },
+    {
+      "position": [-52.64, 0, -58.56],
+      "type": "dense",
+      "height": 7.1000000000000005,
+      "variant": 1,
+      "rotation": 1.481402,
+      "id": "VG-02"
+    },
+    {
+      "position": [-45.6, 0, -56.64],
+      "type": "dense",
+      "height": 7.800000000000001,
+      "variant": 2,
+      "rotation": 3.880402,
+      "id": "VG-02"
+    },
+    {
+      "position": [-46.56, 0, -47.04],
+      "type": "dense",
+      "height": 8.5,
+      "variant": 0,
+      "rotation": 6.279402,
+      "id": "VG-02"
+    },
+    {
+      "position": [-47.2, 0, -38.08],
+      "type": "dense",
+      "height": 9.2,
+      "variant": 1,
+      "rotation": 2.395217,
+      "id": "VG-02"
+    },
+    {
+      "position": [-52.48, 0, -25.92],
+      "type": "dense",
+      "height": 6.4,
+      "variant": 2,
+      "rotation": 4.794217,
+      "id": "VG-02"
+    },
+    {
+      "position": [-59.68, 0, -24.48],
+      "type": "dense",
+      "height": 7.1000000000000005,
+      "variant": 0,
+      "rotation": 0.910032,
+      "id": "VG-02"
+    },
+    {
+      "position": [-66.72, 0, -21.92],
+      "type": "dense",
+      "height": 7.800000000000001,
+      "variant": 1,
+      "rotation": 3.309032,
+      "id": "VG-02"
+    },
+    {
+      "position": [-45.76, 0, -22.08],
+      "type": "dense",
+      "height": 8.5,
+      "variant": 2,
+      "rotation": 5.708032,
+      "id": "VG-02"
+    },
+    {
+      "position": [-55.2, 0, -19.84],
+      "type": "dense",
+      "height": 9.2,
+      "variant": 0,
+      "rotation": 1.823846,
+      "id": "VG-02"
+    },
+    {
+      "position": [-47.04, 0, -13.92],
+      "type": "dense",
+      "height": 6.4,
+      "variant": 1,
+      "rotation": 4.222846,
+      "id": "VG-02"
+    },
+    {
+      "position": [-60.48, 0, -7.36],
+      "type": "dense",
+      "height": 7.1000000000000005,
+      "variant": 2,
+      "rotation": 0.338661,
+      "id": "VG-02"
+    },
+    {
+      "position": [-50.88, 0, -0.64],
+      "type": "dense",
+      "height": 7.800000000000001,
+      "variant": 0,
+      "rotation": 2.737661,
+      "id": "VG-02"
+    },
+    {
+      "position": [-59.2, 0, 1.76],
+      "type": "dense",
+      "height": 8.5,
+      "variant": 1,
+      "rotation": 5.136661,
+      "id": "VG-02"
+    },
+    {
+      "position": [-66.24, 0, 7.68],
+      "type": "dense",
+      "height": 9.2,
+      "variant": 2,
+      "rotation": 1.252476,
+      "id": "VG-02"
+    },
+    {
+      "position": [-52.96, 0, 10.08],
+      "type": "dense",
+      "height": 6.4,
+      "variant": 0,
+      "rotation": 3.651476,
+      "id": "VG-02"
+    },
+    {
+      "position": [-60.8, 0, 15.36],
+      "type": "dense",
+      "height": 7.1000000000000005,
+      "variant": 1,
+      "rotation": 6.050476,
+      "id": "VG-02"
+    },
+    {
+      "position": [-55.2, 0, 19.68],
+      "type": "dense",
+      "height": 7.800000000000001,
+      "variant": 2,
+      "rotation": 2.166291,
+      "id": "VG-02"
+    },
+    {
+      "position": [-49.44, 0, 22.56],
+      "type": "dense",
+      "height": 8.5,
+      "variant": 0,
+      "rotation": 4.565291,
+      "id": "VG-02"
+    },
+    {
+      "position": [-58.88, 0, 27.68],
+      "type": "dense",
+      "height": 9.2,
+      "variant": 1,
+      "rotation": 0.681105,
+      "id": "VG-02"
+    },
+    {
+      "position": [-49.6, 0, 33.6],
+      "type": "dense",
+      "height": 6.4,
+      "variant": 2,
+      "rotation": 3.080105,
+      "id": "VG-02"
+    },
+    {
+      "position": [-53.44, 0, 41.28],
+      "type": "dense",
+      "height": 7.1000000000000005,
+      "variant": 0,
+      "rotation": 5.479105,
+      "id": "VG-02"
+    },
+    {
+      "position": [-65.76, 0, -30.72],
+      "type": "dense",
+      "height": 7.800000000000001,
+      "variant": 1,
+      "rotation": 1.59492,
+      "id": "VG-02"
+    },
+    {
+      "position": [-61.76, 0, 34.56],
+      "type": "dense",
+      "height": 8.5,
+      "variant": 2,
+      "rotation": 3.99392,
+      "id": "VG-02"
+    },
+    {
+      "position": [61.6, 0, -20.8],
+      "type": "dense",
+      "height": 9.2,
+      "variant": 0,
+      "rotation": 0.109735,
+      "id": "VG-02"
+    },
+    {
+      "position": [70.24, 0, -27.68],
+      "type": "dense",
+      "height": 6.4,
+      "variant": 1,
+      "rotation": 2.508735,
+      "id": "VG-02"
+    },
+    {
+      "position": [69.28, 0, -34.08],
+      "type": "dense",
+      "height": 7.1000000000000005,
+      "variant": 2,
+      "rotation": 4.907735,
+      "id": "VG-02"
+    },
+    {
+      "position": [70.72, 0, -41.92],
+      "type": "dense",
+      "height": 7.800000000000001,
+      "variant": 0,
+      "rotation": 1.023549,
+      "id": "VG-02"
+    },
+    {
+      "position": [60.64, 0, 24.48],
+      "type": "dense",
+      "height": 8.5,
+      "variant": 1,
+      "rotation": 3.422549,
+      "id": "VG-02"
+    },
+    {
+      "position": [93.12, 0, 63.04],
+      "type": "dense",
+      "height": 9.2,
+      "variant": 2,
+      "rotation": 5.821549,
+      "id": "VG-02"
+    },
+    {
+      "position": [112, 0, -99.04],
+      "type": "dense",
+      "height": 8,
+      "variant": 0,
+      "rotation": 1.937364,
+      "id": "VG-02"
+    },
+    {
+      "position": [113.12, 0, -86.24],
+      "type": "dense",
+      "height": 9,
+      "variant": 1,
+      "rotation": 4.336364,
+      "id": "VG-02"
+    },
+    {
+      "position": [114.24, 0, -73.44],
+      "type": "dense",
+      "height": 10,
+      "variant": 2,
+      "rotation": 0.452179,
+      "id": "VG-02"
+    },
+    {
+      "position": [112, 0, -60.64],
+      "type": "dense",
+      "height": 8,
+      "variant": 0,
+      "rotation": 2.851179,
+      "id": "VG-02"
+    },
+    {
+      "position": [113.12, 0, -47.84],
+      "type": "dense",
+      "height": 9,
+      "variant": 1,
+      "rotation": 5.250179,
+      "id": "VG-02"
+    },
+    {
+      "position": [114.24, 0, -35.04],
+      "type": "dense",
+      "height": 10,
+      "variant": 2,
+      "rotation": 1.365993,
+      "id": "VG-02"
+    },
+    {
+      "position": [112, 0, -22.24],
+      "type": "dense",
+      "height": 8,
+      "variant": 0,
+      "rotation": 3.764993,
+      "id": "VG-02"
+    },
+    {
+      "position": [113.12, 0, -9.44],
+      "type": "dense",
+      "height": 9,
+      "variant": 1,
+      "rotation": 6.163993,
+      "id": "VG-02"
+    },
+    {
+      "position": [114.24, 0, 3.36],
+      "type": "dense",
+      "height": 10,
+      "variant": 2,
+      "rotation": 2.279808,
+      "id": "VG-02"
+    },
+    {
+      "position": [112, 0, 16.16],
+      "type": "dense",
+      "height": 8,
+      "variant": 0,
+      "rotation": 4.678808,
+      "id": "VG-02"
+    },
+    {
+      "position": [113.12, 0, 28.96],
+      "type": "dense",
+      "height": 9,
+      "variant": 1,
+      "rotation": 0.794623,
+      "id": "VG-02"
+    },
+    {
+      "position": [114.24, 0, 41.76],
+      "type": "dense",
+      "height": 10,
+      "variant": 2,
+      "rotation": 3.193623,
+      "id": "VG-02"
+    },
+    {
+      "position": [112, 0, 54.56],
+      "type": "dense",
+      "height": 8,
+      "variant": 0,
+      "rotation": 5.592623,
+      "id": "VG-02"
+    },
+    {
+      "position": [113.12, 0, 67.36],
+      "type": "dense",
+      "height": 9,
+      "variant": 1,
+      "rotation": 1.708437,
+      "id": "VG-02"
+    },
+    {
+      "position": [114.24, 0, 80.16],
+      "type": "dense",
+      "height": 10,
+      "variant": 2,
+      "rotation": 4.107437,
+      "id": "VG-02"
+    },
+    {
+      "position": [112, 0, 92.96],
+      "type": "dense",
+      "height": 8,
+      "variant": 0,
+      "rotation": 0.223252,
+      "id": "VG-02"
+    }
+  ],
+  "cameras": {
+    "overview": {
+      "position": [99, 119, 164],
+      "target": [5, 2, 0],
+      "fov": 43,
+      "label": "Visão geral"
+    },
+    "A": {
+      "position": [26.91956, 345.53931, 296.01969],
+      "target": [13.12151, 0, 6.04879],
+      "fov": 18,
+      "label": "Foto A · aérea oblíqua"
+    },
+    "B": {
+      "position": [17.28, 250, 0.641],
+      "target": [17.28, 0, 0.64],
+      "fov": 43,
+      "orthographic": true,
+      "span": 173.76,
+      "label": "Foto B · implantação"
+    },
+    "C": {
+      "position": [7.31015, 203.85736, -122.98724],
+      "target": [7.53283, 0, -14.43919],
+      "fov": 35.29492,
+      "label": "Foto C · lado oposto"
+    },
+    "D": {
+      "position": [7, 1.7, -68],
+      "target": [0, 11, 0],
+      "fov": 62,
+      "label": "Foto D · nível do solo"
+    },
+    "walk": {
+      "position": [37, 1.7, 40],
+      "target": [0, 10, 0],
+      "fov": 62,
+      "label": "Passeio"
+    }
+  }
+}

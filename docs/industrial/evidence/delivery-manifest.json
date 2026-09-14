@@ -1,0 +1,290 @@
+[
+  {
+    "file": "assets/industrial/source/3tentos-reconstruction.blend",
+    "normalization": "binary",
+    "bytes": 6510223,
+    "sha256": "ba9e803842a56622e7d728fde90426818c6248c877b7b298c90b92c70f2e269d"
+  },
+  {
+    "file": "assets/industrial/source/README.md",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 746,
+    "sha256": "dcf210ded213d8b7dc246bd95e92e0e019af8305c6c759abf2fc2d85c4185bff"
+  },
+  {
+    "file": "bun.lock",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 191130,
+    "sha256": "7966061be4d0d1f579ff5c09618e487c384d74b08cce0bd4e93889d1a4b2fc92"
+  },
+  {
+    "file": "package-lock.json",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 366761,
+    "sha256": "d284d00af7c9a7ac7166887512f342e086ebb7b5b996dc559719a1da0aede694"
+  },
+  {
+    "file": "package.json",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 3936,
+    "sha256": "ed90308b8f2f19f69862c011bb0a520d8bbfd34ecd50d5a03232b5b37375f75c"
+  },
+  {
+    "file": "public/models/3tentos/blockout.glb",
+    "normalization": "binary",
+    "bytes": 34896,
+    "sha256": "49005b343bae2fabd9aa787b31afb331a9d0fb9d68028897a76561891ad8426c"
+  },
+  {
+    "file": "public/models/3tentos/buildings.glb",
+    "normalization": "binary",
+    "bytes": 83736,
+    "sha256": "2758af86fd455dfe6caec56707fdcdea5e13acfa74badecf11b9081b1a10e0f3"
+  },
+  {
+    "file": "public/models/3tentos/fences.glb",
+    "normalization": "binary",
+    "bytes": 46820,
+    "sha256": "c2f0b9bf60d900a74661ce0251d042b518bce53793bce8649344367a6cd0b423"
+  },
+  {
+    "file": "public/models/3tentos/grain-handling.glb",
+    "normalization": "binary",
+    "bytes": 149124,
+    "sha256": "3bce89e4130b74530eed4171f46597073fc516100400ebe403a5ee3c0a0575d9"
+  },
+  {
+    "file": "public/models/3tentos/grass.glb",
+    "normalization": "binary",
+    "bytes": 142380,
+    "sha256": "b0d38ada2389c5a34f7f4f0f6d22a5a25d190357b944a2fc9f71909647cb9ad8"
+  },
+  {
+    "file": "public/models/3tentos/silos-high.glb",
+    "normalization": "binary",
+    "bytes": 270332,
+    "sha256": "2a278190203c33b883bb94fa8ccb62ef7ba98e874cab02f5e14ec1cbfae2e8a6"
+  },
+  {
+    "file": "public/models/3tentos/silos-low.glb",
+    "normalization": "binary",
+    "bytes": 187036,
+    "sha256": "7a35d432b9e89ee92b7bfc0f9c6876d4f8477a7b04ae60901c9b482067f8e79b"
+  },
+  {
+    "file": "public/models/3tentos/terrain.glb",
+    "normalization": "binary",
+    "bytes": 4780780,
+    "sha256": "f655ac4f922251a8d4c85bd3208e02c831b60a3caca9f698cc6934bdc2ddf7cf"
+  },
+  {
+    "file": "public/models/3tentos/vegetation-low.glb",
+    "normalization": "binary",
+    "bytes": 391596,
+    "sha256": "d9bd395d2631e70d8bc87d16bd6509e1010f5b7fc6ccaa9001fed2c77fd4056c"
+  },
+  {
+    "file": "public/models/3tentos/vegetation-prototypes.glb",
+    "normalization": "binary",
+    "bytes": 570884,
+    "sha256": "1e3d88a204dab77d10c2803b39e5800d87d169aeb417931eeae1fda79a8372b6"
+  },
+  {
+    "file": "public/textures/3tentos/asphalt-base.png",
+    "normalization": "binary",
+    "bytes": 426207,
+    "sha256": "e2dad3d4ee667309e9100151d3e2a8028495e1cd6ce332dacd875c6a112157e4"
+  },
+  {
+    "file": "public/textures/3tentos/asphalt-normal.png",
+    "normalization": "binary",
+    "bytes": 546098,
+    "sha256": "99790cbc239fb1c38a40122eec01289ee340cfd0b53901d310afd0b0e9dba591"
+  },
+  {
+    "file": "public/textures/3tentos/crop-base.png",
+    "normalization": "binary",
+    "bytes": 332803,
+    "sha256": "2c58fafc140825e5240fb39c737f500e66f00ad2ba167f5413b334513bbb3293"
+  },
+  {
+    "file": "public/textures/3tentos/crop-normal.png",
+    "normalization": "binary",
+    "bytes": 546325,
+    "sha256": "d370ce0435c1662fed90d9e6c22789facca6d3f0c76fc83d73e878b86a9baddd"
+  },
+  {
+    "file": "public/textures/3tentos/galvanized-normal.png",
+    "normalization": "binary",
+    "bytes": 1964,
+    "sha256": "6dca648076108e12ebbe3ea6a470365830740aa01bb25261d03f2c41b3db0407"
+  },
+  {
+    "file": "public/textures/3tentos/grass-base.png",
+    "normalization": "binary",
+    "bytes": 427380,
+    "sha256": "358f0f3a065b6020cfe2a2a9ad2386d491a70481f142fe73c782823ddd5e98da"
+  },
+  {
+    "file": "public/textures/3tentos/grass-normal.png",
+    "normalization": "binary",
+    "bytes": 546796,
+    "sha256": "6b57de014078bb20c2daff913263c59de2a7edbd89a79b16549e01045e103307"
+  },
+  {
+    "file": "public/textures/3tentos/gravel-base.png",
+    "normalization": "binary",
+    "bytes": 398675,
+    "sha256": "1555bf8c7f6173bf360162b8130e18309a17fced2438d9df09b0542dc4d0b53c"
+  },
+  {
+    "file": "public/textures/3tentos/gravel-normal.png",
+    "normalization": "binary",
+    "bytes": 546383,
+    "sha256": "f9d25a1569be2a0c8c9aed932b31b0cd9c4109e2354626799b8524da99f4f8cd"
+  },
+  {
+    "file": "public/textures/3tentos/soil-base.png",
+    "normalization": "binary",
+    "bytes": 406944,
+    "sha256": "dace7ec2905249fd5b8cd3f227ecfaa41eb46a2d2ca486e5c9d557fe653c3a7b"
+  },
+  {
+    "file": "public/textures/3tentos/soil-normal.png",
+    "normalization": "binary",
+    "bytes": 546594,
+    "sha256": "5bb5ef941c334363c7c7a72db530cdcf3cea6b888460bc01cdc45f9687d6c1de"
+  },
+  {
+    "file": "scripts/audit-industrial-geometry.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 3970,
+    "sha256": "72d819181a93bc03d457eb15fd6ef1342e67cbbc84dbece2bcb6ebb6e565be28"
+  },
+  {
+    "file": "scripts/benchmark-industrial.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 5877,
+    "sha256": "55f882ee535b517f10da652564d59191bae576b64cbad2822271e6ea33d8511e"
+  },
+  {
+    "file": "scripts/blender/generate_unit.py",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 25057,
+    "sha256": "c9f167c712755271d0169e9f83ddb64015c8988ccab638de648285dfbc2de6fc"
+  },
+  {
+    "file": "scripts/capture-industrial-views.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 1336,
+    "sha256": "63f59a6f6756fa258bc924bab829d350f07efbfe7aecf732b7dfc5571adefa0c"
+  },
+  {
+    "file": "scripts/optimize-industrial.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 3186,
+    "sha256": "ad67f339e34aa9fc28212cd3f1c74b0cbe86592e3d27d63cc3e523a8d96af8fe"
+  },
+  {
+    "file": "src/industrial/app/IndustrialMap.tsx",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 29408,
+    "sha256": "5366d1a13f29ab79aa987ae1d7d7fabedf813abdfcea22be748163d0a32c4fa7"
+  },
+  {
+    "file": "src/industrial/app/industrial.css",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 22517,
+    "sha256": "b793e75628674a2d262c4c23739f3065395489f034148222445ba9611bcd9f8e"
+  },
+  {
+    "file": "src/industrial/data/index.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 742,
+    "sha256": "2a5444f29a6a5de8f51deed790f7ba2bd0e5b6b3654f974dd8157dd33fa75d33"
+  },
+  {
+    "file": "src/industrial/data/references.json",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 1531,
+    "sha256": "e7809713a51370fb719925fc0b19dfbdfa1c571edc30a27fd0682de902618b7e"
+  },
+  {
+    "file": "src/industrial/data/site.json",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 43631,
+    "sha256": "3e099cb6e85641d008962fcf5a5bcef8ac8032dd8c763720e5e01eede8df8519"
+  },
+  {
+    "file": "src/industrial/lighting/Lighting.tsx",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 2659,
+    "sha256": "e48257076c68b427564bff081529d69a6ebc99de60721a033e84ebf8204c75c2"
+  },
+  {
+    "file": "src/industrial/navigation/Navigation.tsx",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 10901,
+    "sha256": "01527a4f9432a676ce11b96f41ab6ee937a355de4e7e0c9932d2b5498dd60f85"
+  },
+  {
+    "file": "src/industrial/navigation/collision.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 1943,
+    "sha256": "2ff187a831ecaf8b4fe11ccd336ea2572e5a79bd89d8ffdc6ee0117264c40798"
+  },
+  {
+    "file": "src/industrial/performance/metrics.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 3628,
+    "sha256": "577cc33e3382a8472b1f99d87f68105ed322e1ec76546d1918b210a603637706"
+  },
+  {
+    "file": "src/industrial/scene/IndustrialScene.tsx",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 13881,
+    "sha256": "a00525a2112bd5e6fd35395f3c9008cafc54fb2c03239a8ff6d3310300fdeee1"
+  },
+  {
+    "file": "src/industrial/scene/assets.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 2790,
+    "sha256": "fb1aaa62aaaa3bf22497cd1bd6debc00120b3ccc645335dc487b2827f18a7f86"
+  },
+  {
+    "file": "src/industrial/types/index.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 830,
+    "sha256": "5c26ca466936b422048ef2b06eebb1974b8d30edda1470f5125cf8ebeb10f22f"
+  },
+  {
+    "file": "src/industrial/ui/Minimap.tsx",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 2930,
+    "sha256": "15c448f9094550861229b0724be72e2d49578b787871813312be781d9f6009c2"
+  },
+  {
+    "file": "src/industrial/vegetation/Vegetation.tsx",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 5545,
+    "sha256": "7b7883e1bf2488caf4e8208426f8e53057a85a7f6d551cd034a57f896de4a15b"
+  },
+  {
+    "file": "src/industrial/vegetation/prototypeGeometry.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 961,
+    "sha256": "e9730529f68e1a8641143da47d40104ed76dc130707f769276827908f78d25ba"
+  },
+  {
+    "file": "tests/industrial/contracts.test.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 4471,
+    "sha256": "c8c7065f39e868073c94beea3ea1c6feb43d3c0c8b37a8943739679f595e8b7e"
+  },
+  {
+    "file": "tests/industrial/interface.spec.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 9863,
+    "sha256": "2cb2fec5818869e008158ae1de9552eddb5c2b68f38d26a9b4787b03cd73a17c"
+  }
+]

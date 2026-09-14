@@ -12,7 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ClientesRouteImport } from './routes/clientes'
 import { Route as ComercialRouteImport } from './routes/comercial'
+import { Route as ComprasRouteImport } from './routes/compras'
+import { Route as EngenhariaRouteImport } from './routes/engenharia'
+import { Route as ExecucaoRouteImport } from './routes/execucao'
+import { Route as LevantamentosRouteImport } from './routes/levantamentos'
 import { Route as ProdutosRouteImport } from './routes/produtos'
+import { Route as ProjetosRouteImport } from './routes/projetos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,9 +34,34 @@ const ComercialRoute = ComercialRouteImport.update({
   path: '/comercial',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComprasRoute = ComprasRouteImport.update({
+  id: '/compras',
+  path: '/compras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EngenhariaRoute = EngenhariaRouteImport.update({
+  id: '/engenharia',
+  path: '/engenharia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExecucaoRoute = ExecucaoRouteImport.update({
+  id: '/execucao',
+  path: '/execucao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LevantamentosRoute = LevantamentosRouteImport.update({
+  id: '/levantamentos',
+  path: '/levantamentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutosRoute = ProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetosRoute = ProjetosRouteImport.update({
+  id: '/projetos',
+  path: '/projetos',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,34 +69,82 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/clientes': typeof ClientesRoute
   '/comercial': typeof ComercialRoute
+  '/compras': typeof ComprasRoute
+  '/engenharia': typeof EngenhariaRoute
+  '/execucao': typeof ExecucaoRoute
+  '/levantamentos': typeof LevantamentosRoute
   '/produtos': typeof ProdutosRoute
+  '/projetos': typeof ProjetosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/clientes': typeof ClientesRoute
   '/comercial': typeof ComercialRoute
+  '/compras': typeof ComprasRoute
+  '/engenharia': typeof EngenhariaRoute
+  '/execucao': typeof ExecucaoRoute
+  '/levantamentos': typeof LevantamentosRoute
   '/produtos': typeof ProdutosRoute
+  '/projetos': typeof ProjetosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/clientes': typeof ClientesRoute
   '/comercial': typeof ComercialRoute
+  '/compras': typeof ComprasRoute
+  '/engenharia': typeof EngenhariaRoute
+  '/execucao': typeof ExecucaoRoute
+  '/levantamentos': typeof LevantamentosRoute
   '/produtos': typeof ProdutosRoute
+  '/projetos': typeof ProjetosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/clientes' | '/comercial' | '/produtos'
+  fullPaths:
+    | '/'
+    | '/clientes'
+    | '/comercial'
+    | '/compras'
+    | '/engenharia'
+    | '/execucao'
+    | '/levantamentos'
+    | '/produtos'
+    | '/projetos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clientes' | '/comercial' | '/produtos'
-  id: '__root__' | '/' | '/clientes' | '/comercial' | '/produtos'
+  to:
+    | '/'
+    | '/clientes'
+    | '/comercial'
+    | '/compras'
+    | '/engenharia'
+    | '/execucao'
+    | '/levantamentos'
+    | '/produtos'
+    | '/projetos'
+  id:
+    | '__root__'
+    | '/'
+    | '/clientes'
+    | '/comercial'
+    | '/compras'
+    | '/engenharia'
+    | '/execucao'
+    | '/levantamentos'
+    | '/produtos'
+    | '/projetos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ClientesRoute: typeof ClientesRoute
   ComercialRoute: typeof ComercialRoute
+  ComprasRoute: typeof ComprasRoute
+  EngenhariaRoute: typeof EngenhariaRoute
+  ExecucaoRoute: typeof ExecucaoRoute
+  LevantamentosRoute: typeof LevantamentosRoute
   ProdutosRoute: typeof ProdutosRoute
+  ProjetosRoute: typeof ProjetosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +170,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComercialRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compras': {
+      id: '/compras'
+      path: '/compras'
+      fullPath: '/compras'
+      preLoaderRoute: typeof ComprasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/engenharia': {
+      id: '/engenharia'
+      path: '/engenharia'
+      fullPath: '/engenharia'
+      preLoaderRoute: typeof EngenhariaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/execucao': {
+      id: '/execucao'
+      path: '/execucao'
+      fullPath: '/execucao'
+      preLoaderRoute: typeof ExecucaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/levantamentos': {
+      id: '/levantamentos'
+      path: '/levantamentos'
+      fullPath: '/levantamentos'
+      preLoaderRoute: typeof LevantamentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtos': {
       id: '/produtos'
       path: '/produtos'
       fullPath: '/produtos'
       preLoaderRoute: typeof ProdutosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projetos': {
+      id: '/projetos'
+      path: '/projetos'
+      fullPath: '/projetos'
+      preLoaderRoute: typeof ProjetosRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +219,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ClientesRoute: ClientesRoute,
   ComercialRoute: ComercialRoute,
+  ComprasRoute: ComprasRoute,
+  EngenhariaRoute: EngenhariaRoute,
+  ExecucaoRoute: ExecucaoRoute,
+  LevantamentosRoute: LevantamentosRoute,
   ProdutosRoute: ProdutosRoute,
+  ProjetosRoute: ProjetosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

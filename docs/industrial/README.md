@@ -1,81 +1,116 @@
-# Unidade 3 Tentos · reconstrução visual referenciada
+# Unidade 3Tentos · CAD integrado à base existente
 
-A aplicação está em **`/mapas-3d`**, integrada ao menu existente do Nexus. Utiliza a mesma cena para navegação orbital, superior ortográfica, passeio e enquadramentos das quatro fotografias. Não utiliza mapas remotos, autenticação, sensores ou dados operacionais fictícios.
+A aplicação permanece em **`/mapas-3d`**, no menu existente do Nexus, com a mesma cena, IDs históricos, materiais e controles. A revisão integra medidas CAD às estruturas associadas e preserva a implantação fotográfica, com intervenções localizadas registradas no cadastro.
 
-**Natureza do modelo:** reconstrução autoral a partir de quatro fotografias, com dimensões estimadas. Não é levantamento cadastral, as built validado, avaliação de segurança, simulação estrutural ou gêmeo digital conectado. O usuário confirmou que ainda não dispõe de uma medida confiável. Medição permanece desativada.
+O usuário confirmou que o CAD de Giruá e as referências pertencem à mesma unidade e autorizou uma convenção local de integração. Isso não define norte geográfico, coordenadas cadastrais ou datum de campo. **Geometria CAD verificada, base fotográfica estimada e nome técnico por convenção são informações separadas.** A medição interativa permanece desativada; o painel informa a origem, os envelopes e as cotas locais.
 
-## Instalação e execução
+## Executar o mapa
 
-Pré-requisitos verificados: Node.js 24.15.0, npm 11.12.1, Blender 4.5.10 LTS para regenerar os ativos. O Blender não é necessário para executar os GLBs entregues.
+Node.js/npm executam a aplicação; Blender só é necessário para gerar modelos. O lockfile npm define as versões. O gerador usa Blender 4.5 LTS; a extração CAD usa Python 3 com `numpy` e `lxml`.
 
 ```sh
 npm ci
 npm run dev
-# abrir a URL informada pelo Vite, no caminho /mapas-3d
+# abrir /mapas-3d na URL informada pelo Vite
 npm run typecheck
 npm run test:industrial
 npm run build
 npm run preview -- --port 4173
 ```
 
-O projeto mantém TanStack Start, o wrapper Vite do Lovable e as rotas existentes. A prévia usa Wrangler local para executar o build Cloudflare: o comando anterior `vite preview` procurava um servidor Node inexistente. Nenhuma implantação remota é executada pela prévia. React/React DOM 19.2.8, Three.js 0.186.0, Fiber 9.7.0, Drei 10.7.8, tipos Three 0.186.0 e Vite 8.1.5 estão fixados. As versões foram conferidas no registro npm, nos peer dependencies e na documentação do Fiber: a versão 9 acompanha React 19. O lockfile npm permite instalação reprodutível.
+TanStack Start, o wrapper Vite/Lovable, o SSR das demais rotas e o destino Cloudflare permanecem. A prévia usa Wrangler local. No Windows, encerre a prévia antes de outro build, pois o Worker pode manter arquivos de `.output/public` abertos. Esses comandos não publicam a aplicação.
 
-No Windows, encerre a prévia antes de executar outro build: o Worker local mantém arquivos de `.output/public` abertos. O lockfile Bun também foi atualizado; `npm ci` é a sequência utilizada nos testes e no CI.
+## Fontes e coordenadas
 
-## Preparação dos modelos
+| Fonte                                             | Responsabilidade                                                                                                 |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `src/industrial/data/site.json`                   | Implantação Nexus, dimensões, identificação, proveniência, anchors, bounds, colliders, câmeras e base preservada |
+| `.model` original autorizado                      | Vértices, hierarquia e transformações CAD; entrada local offline                                                 |
+| `assets/industrial/cad/registry-source.json`      | Registro compacto da auditoria, fonte/hash e medidas por ocorrência                                              |
+| `assets/industrial/cad/partition-footprints.json` | Projeções convexas dos vértices pertencentes a cada partição, sem filhos excluídos                               |
+| `public/references/3tentos/`                      | Fotos originais: aparência, entorno e implantação histórica                                                      |
 
-1. Edite **`src/industrial/data/site.json`**, fonte central de implantação, parâmetros, câmeras, plantas e calibração. Preserve os identificadores. Mudanças dimensionais exigem revisão de todas as vistas; uma dimensão não valida as demais.
-2. Execute `npm run assets:prepare`. O script localiza Blender 4.5 no Windows ou o comando `blender` no PATH. Para outra instalação, defina `BLENDER_BIN` com o executável. Todos os arquivos são resolvidos a partir do repositório.
-3. O Blender produz `assets/industrial/source/3tentos-reconstruction.blend`, intermediários em `assets/industrial/raw/` e texturas autorais em `public/textures/3tentos/`. As onze imagens ficam empacotadas no `.blend`, permitindo abrir a fonte em outro computador. Os intermediários são regeneráveis e ignorados pelo Git.
-4. glTF Transform aplica weld, deduplicação e meshoptimizer, preserva metadados e grava GLBs em `public/models/3tentos/`. No terreno, a compressão é sem quantização das posições: pequenos afastamentos entre superfícies não podem colapsar numa grade que abrange o entorno rural.
-5. O pipeline valida os GLBs compactados e a versão decodificada com Khronos glTF Validator, e escreve `evidence/gltf-validation.json`. O validador não descompacta meshopt por conta própria; a segunda validação verifica a geometria efetivamente decodificada.
-6. Execute `node scripts/audit-industrial-geometry.mjs`, os testes e a comparação visual após regenerar.
+O original tem 322.380.101 bytes e SHA-256 `bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b`. O arquivo fornecido como `3dmodel.model` corresponde ao conteúdo auditado como `8ae5c19b-e1af-4dc4-9c7c-215a3f18c58d.model`. O original e o cache de malhas não substituem os derivados compactos versionados.
 
-Os arquivos `.blend` entregues foram realmente gerados e abertos pelo Blender em modo background. Contêm a cena autoral, malhas editáveis, coleções por setor, cópias vinculadas da vegetação e câmeras de referência. O gerador usa coordenadas locais X/Y/Z; converte para `(x, -z, y)` dentro do Blender e exporta glTF com Y vertical. Os dados de rastreabilidade estão em extras e no cadastro central exportável pela interface.
+A extração converte vértices e translações de milímetros para metros uma vez. O registro CAD métrico → Nexus usa yaw de π e translação, **com escala 1**, sem deformação para caber no traçado estimado. Solo CAD Y=0,010 corresponde ao datum Nexus Y=0; os pisos visuais preservados têm cotas próprias.
 
-`scripts/create-industrial-data.mjs` é o **bootstrap documentado**, não deve ser executado sobre ajustes manuais sem revisão: reconstrói o cadastro inicial. Pode receber uma pasta de entrada para copiar as quatro fotos; num clone existente utiliza as cópias já preservadas. `scripts/fit-reference-cameras.mjs` refaz o ajuste de A/C, modificando somente as câmeras. A sequência de reconstrução inicial foi bootstrap → ajuste de câmeras → Blender → otimização → auditorias.
+Blender converte Nexus `(x,y,z)` para `(x,−z,y)` e exporta glTF Y-up. Matrizes acumuladas e registro são compostos uma vez. **Os GLBs já contêm placement; React não reaplica `element.position`.** Caminho de instância, não apenas ID CAD, identifica cada ocorrência. Veja [método de geometria CAD](cad-geometry.md).
+
+## Preparação incremental
+
+Execute da raiz do repositório, substituindo o caminho de exemplo pelo original autorizado:
+
+```sh
+npm run assets:extract -- --source "C:/caminho/3dmodel.model"
+node scripts/cad/integrate-site.mjs --check
+```
+
+`assets:extract` verifica hash, lê o XML, acumula build/ancestrais e calcula goldens independentes dos GLBs. O cache padrão é `assets/industrial/raw/cad/`, ignorado pelo Git: `geometry-cache.npz`, `cad-manifest.json`, custos e validação do cache. O navegador não carrega esse inventário. `CAD_PYTHON` configura o Python com `numpy`/`lxml`; o extrator aceita `--cache-dir`, `--goldens` e `--reference-dir`.
+
+`integrate-site.mjs --check` confere a reprodução do cadastro. Sem `--check`, aplica as associações/convenção documentadas, preservando `legacySnapshot` e a base fora dos remendos autorizados. Não é ajuste automático por aparência.
+
+Para alterar somente silos, o gerador inclui automaticamente os dois LODs e blockout:
+
+```sh
+npm run assets:generate -- --sectors silos-high
+npm run assets:optimize
+```
+
+Para estruturas e os remendos locais desta revisão:
+
+```sh
+npm run assets:generate -- --sectors silos-high,buildings,grain-handling,blockout,terrain,fences,grass
+npm run assets:optimize
+```
+
+Selecione apenas setores e dependências afetados. Um novo registro global afeta todos os setores CAD; mudanças de dimensões podem afetar ligações, grama e piso local. Selecionar um protótipo vegetal inclui também seu outro LOD. `BLENDER_BIN` configura outro executável; `--cad-cache` informa cache fora do padrão.
+
+O gerador abre o `.blend` existente, substitui coleções selecionadas e reutiliza materiais/imagens. O manifesto `assets/industrial/raw/generation-manifest.json` informa o conjunto produzido. O otimizador usa esse manifesto para não promover intermediários antigos. A fonte deve incluir ambos os LODs antes de salvar.
+
+A otimização ocorre em `assets/industrial/raw/optimized/`, preservando IDs. O conjunto selecionado é validado antes da cópia para `public/models/3tentos/`; meshopt também é decodificado para validação Khronos. O terreno conserva posições sem quantização que colapse separações entre pisos. Falha interrompe a promoção. Conferir relatório/hashes antes de considerar a geração concluída.
+
+`npm run assets:prepare` prepara todos os setores. Para trabalho incremental, use os dois comandos explícitos acima.
+
+### Ferramentas históricas
+
+`scripts/create-industrial-data.mjs` é o bootstrap fotográfico e **recusa executar sobre cadastro com `cadRegistration`**. Não serve para correções CAD.
+
+`scripts/fit-reference-cameras.mjs` conserva o ajuste A/C por pixels da Foto B e não integra o fluxo CAD atual. Seus landmarks estimados e resíduos históricos não substituem anchors registrados nem pontos independentes de conferência.
+
+## Interface e navegação
+
+- **Elementos:** malha, lista, busca e minimapa mantêm o mesmo ID. Busca reconhece aliases, nome CAD e identificador técnico; exportação conserva proveniência e estados.
+- **Foco/legenda:** usam envelopes/anchors, incluindo elevações e acessórios, sem repetir transformações.
+- **Minimapa:** projeções convexas podem conter vazios e não são footprints de contato. Elas são separadas dos colliders; partes subterrâneas aparecem tracejadas.
+- **Passeio:** WASD/setas, arrastar, toque, ponteiro opcional e Esc. Olhos em `groundHeightAt(x,z) + 1,7 m`; colisões respeitam intervalo vertical, mantendo edifícios fechados e portão aberto. Não há circulação subterrânea inferida.
+- **Apresentação:** mesmos modos orbital/superior/passeio, vistas A–D, camadas, luz, blockout, qualidade, vento, sobreposição e acessibilidade. Carregamento mantém setores, cancelamento e descarte.
 
 ## Organização
 
-| Diretório | Conteúdo |
-|---|---|
-| `src/industrial/app`, `ui` | Interface em português, busca, cadastro, minimapa, comparação e exportações |
-| `src/industrial/data`, `types` | Inventário, calibração, câmeras, vegetação ancorada e contratos |
-| `src/industrial/scene` | Carregamento cancelável por setor, seleção, blockout, LODs e descarte |
-| `src/industrial/navigation` | OrbitControls, transições, passeio, teclado/toque e colisões |
-| `src/industrial/lighting`, `vegetation` | PBR, ambiente PMREM local, instanciamento e vento nas folhas |
-| `src/industrial/performance` | Contadores e amostras limitadas, estimativas separadas de recursos |
-| `scripts/blender` | Gerador paramétrico autoral de silos, perfis, tubos, escadas, plataformas, galpões e vegetação |
-| `assets/industrial/source` | Fonte `.blend` efetivamente produzida |
-| `public/models/3tentos` | Dez GLBs por setor e nível de detalhe |
-| `public/references/3tentos` | Quatro PNGs originais, sem alteração dos bytes |
-| `public/textures/3tentos` | Texturas procedurais PNG utilizadas nos GLBs |
-| `tests/industrial`, `docs/industrial/evidence` | Testes, capturas e relatórios reproduzíveis |
-
-## Controles
-
-- **Orbital:** botão esquerdo/um dedo gira; botão direito/dois dedos desloca; roda/pinça aproxima. As vistas A/C ajustam câmera, sem espelhar a implantação. A vista B fixa a rotação e permite deslocamento/zoom ortográfico.
-- **Passeio:** WASD/setas, arrastar para olhar e botões de toque. Captura de ponteiro é opcional e explicitamente acionada. Esc sai. Colisões conservadoras impedem entrar em silos, edifícios, estrutura central e cercamentos modelados; não há simulação física industrial.
-- **Elementos:** clique/toque nas malhas ou escolha na lista/minimapa. Seleção mostra ID provisório, fotos, grau de confirmação e pendências. Apenas o elemento selecionado recebe etiqueta com oclusão.
-- **Camadas/Ajustes:** equipamento, edifícios, silos, vegetação, piso, cercas e informações. Modo neutro, blockout separado, qualidade, vento e exportação de cadastro/diagnóstico.
-- **Fotos:** A/B/C/D e sobreposição com opacidade. As fotos só são transferidas ao abrir esse painel/uma comparação; não são texturas do terreno.
-- **Acessibilidade:** controles HTML fora do canvas, foco visível, alternativas de teclado à seleção, nomes acessíveis nos botões compactos, ajuda com foco contido e preferência de movimento reduzido.
+| Diretório                                              | Conteúdo                                                    |
+| ------------------------------------------------------ | ----------------------------------------------------------- |
+| `src/industrial/app`, `ui`                             | Interface, busca, detalhes, minimapa, fotos e exportações   |
+| `src/industrial/data`, `types`                         | Fonte central e contratos                                   |
+| `src/industrial/scene`, `navigation`                   | Ativos, seleção, LOD, helpers espaciais, câmeras e colisões |
+| `src/industrial/lighting`, `vegetation`, `performance` | Ambiente, instanciamento, vento e diagnósticos              |
+| `scripts/cad`, `scripts/blender`                       | Extração, registro, compatibilização e geração              |
+| `assets/industrial/source`                             | Fonte Blender editável                                      |
+| `public/models/3tentos`                                | Dez arquivos por setor/LOD                                  |
+| `tests/industrial`, `docs/industrial/evidence`         | Testes e evidências identificadas pela geração              |
 
 ## Validação reproduzível
 
-Com a aplicação executando, configure `MAP_URL` para o **endereço base** ao rodar Playwright e para o **endereço completo com `/mapas-3d`** nos scripts de captura/desempenho. O padrão Playwright é `http://127.0.0.1:5173`; o benchmark usa `http://127.0.0.1:4173/mapas-3d`.
-
 ```sh
+npm run typecheck
 npm run test:industrial
+npm run test:industrial:cad
 node scripts/audit-industrial-geometry.mjs
+npm run build
 npm run test:industrial:ui
 npm run test:industrial:views
 npm run test:industrial:performance
-node scripts/report-industrial-validation.mjs
 ```
 
-Os testes de navegador usam o Chrome instalado (`channel: chrome`). Para outro ambiente, instale Chrome ou ajuste o canal explicitamente. O benchmark demora pelo menos dois minutos **por perfil**, desabilita o cache HTTP no contexto novo e registra seu navegador, renderizador e host. Emulação móvel não é teste em Android/iPhone físicos.
+Scripts de navegador exigem aplicação executando. Playwright usa `MAP_URL` como endereço base; captura/benchmark usam URL completa com `/mapas-3d`. Os testes usam Chrome instalado; emulação móvel não certifica Android/iPhone físicos ou Safari. Benchmark registra host/perfil/percurso; tamanho de arquivo não é memória GPU nem FPS.
 
-O gerador do relatório consolida as evidências já gravadas. Execute-o somente depois de refazer os testes, capturas, auditorias e percursos correspondentes; ele não executa TypeScript/build nem comprova por si só a atualidade dessas verificações.
-
-Veja [inventário e hipóteses](reconstruction.md), [auditoria e desempenho](validation.md) e [licenças](licenses.md). Os dados JSON em `evidence/` são a evidência primária; capturas não certificam desempenho contínuo.
+O roteiro não comprova aprovação. Consulte [validation.md](validation.md) para checks efetivamente executados. Evidências de 14/09/2026 pertencem à versão fotográfica até serem substituídas por medições identificadas da revisão CAD. Um relatório consolidado não executa os testes que cita. Veja também [proveniência](reconstruction.md) e [licenças](licenses.md).

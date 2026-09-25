@@ -1,21 +1,33 @@
 [
   {
+    "file": ".github/workflows/industrial-map.yml",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 620,
+    "sha256": "937c814a7f5634b199befe7ea32bbb3581a204a07644fd7a882c24d1bfbed4ec"
+  },
+  {
+    "file": "assets/industrial/cad/partition-footprints.json",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 46331,
+    "sha256": "5bf02119c4b9c92dbabdd512864f73f9761bbaebac480112c2cf4236fbf677fd"
+  },
+  {
+    "file": "assets/industrial/cad/registry-source.json",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 450238,
+    "sha256": "d9acfe810a4564932eadcadebf3c0b876af1fbd26bc6593da6c484c862f444c5"
+  },
+  {
     "file": "assets/industrial/source/3tentos-reconstruction.blend",
     "normalization": "binary",
-    "bytes": 6510223,
-    "sha256": "ba9e803842a56622e7d728fde90426818c6248c877b7b298c90b92c70f2e269d"
+    "bytes": 75942759,
+    "sha256": "9bb492ef6d08d9fae088564cf7244fbd084c5c0a1ed40b10d6f4e4d66868df41"
   },
   {
     "file": "assets/industrial/source/README.md",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 746,
-    "sha256": "dcf210ded213d8b7dc246bd95e92e0e019af8305c6c759abf2fc2d85c4185bff"
-  },
-  {
-    "file": "bun.lock",
-    "normalization": "UTF-8, LF line endings",
-    "bytes": 191130,
-    "sha256": "7966061be4d0d1f579ff5c09618e487c384d74b08cce0bd4e93889d1a4b2fc92"
+    "bytes": 3000,
+    "sha256": "259441b8c19ceca22b5e0833181920843c2fb03127b0b3eaeba1322bcc9c4f11"
   },
   {
     "file": "package-lock.json",
@@ -26,56 +38,56 @@
   {
     "file": "package.json",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 3936,
-    "sha256": "ed90308b8f2f19f69862c011bb0a520d8bbfd34ecd50d5a03232b5b37375f75c"
+    "bytes": 4095,
+    "sha256": "8469dd3129ab323da3e445dff61dfa369170fe75173c4ee05a2628115729eabe"
   },
   {
     "file": "public/models/3tentos/blockout.glb",
     "normalization": "binary",
-    "bytes": 34896,
-    "sha256": "49005b343bae2fabd9aa787b31afb331a9d0fb9d68028897a76561891ad8426c"
+    "bytes": 9287628,
+    "sha256": "a67176edeeeb0fd883ab565a05f072882c362e1ed1fc6357ff38d63b7d13142c"
   },
   {
     "file": "public/models/3tentos/buildings.glb",
     "normalization": "binary",
-    "bytes": 83736,
-    "sha256": "2758af86fd455dfe6caec56707fdcdea5e13acfa74badecf11b9081b1a10e0f3"
+    "bytes": 82228,
+    "sha256": "aa0fb8a20faeb731da2750a61e4222d3afe8a1a420e9535019c303e566e13a8c"
   },
   {
     "file": "public/models/3tentos/fences.glb",
     "normalization": "binary",
-    "bytes": 46820,
-    "sha256": "c2f0b9bf60d900a74661ce0251d042b518bce53793bce8649344367a6cd0b423"
+    "bytes": 53628,
+    "sha256": "40fcc85243731864410446d0f162ea47cd40521551f4dacd45ec6b906ad4645b"
   },
   {
     "file": "public/models/3tentos/grain-handling.glb",
     "normalization": "binary",
-    "bytes": 149124,
-    "sha256": "3bce89e4130b74530eed4171f46597073fc516100400ebe403a5ee3c0a0575d9"
+    "bytes": 6118104,
+    "sha256": "aa8d1e8e9a01b3399112d52bd6734636e3d7371c0779c9c5b0544a29f89519df"
   },
   {
     "file": "public/models/3tentos/grass.glb",
     "normalization": "binary",
-    "bytes": 142380,
-    "sha256": "b0d38ada2389c5a34f7f4f0f6d22a5a25d190357b944a2fc9f71909647cb9ad8"
+    "bytes": 146952,
+    "sha256": "1fb7e05a6d84483c2bbc5ec2e9607fa0372a15e34d0f3304d6d1f2dad3e1a624"
   },
   {
     "file": "public/models/3tentos/silos-high.glb",
     "normalization": "binary",
-    "bytes": 270332,
-    "sha256": "2a278190203c33b883bb94fa8ccb62ef7ba98e874cab02f5e14ec1cbfae2e8a6"
+    "bytes": 13309176,
+    "sha256": "5980b0f94e566e0a13c9f5c3060b6decb06e0cb5742efeb434e8f4da957a7620"
   },
   {
     "file": "public/models/3tentos/silos-low.glb",
     "normalization": "binary",
-    "bytes": 187036,
-    "sha256": "7a35d432b9e89ee92b7bfc0f9c6876d4f8477a7b04ae60901c9b482067f8e79b"
+    "bytes": 7560544,
+    "sha256": "adbc60923316f57073543b6cebf13a9ea0fdebbb9a1177c6dbf8dbef2f1bb7de"
   },
   {
     "file": "public/models/3tentos/terrain.glb",
     "normalization": "binary",
-    "bytes": 4780780,
-    "sha256": "f655ac4f922251a8d4c85bd3208e02c831b60a3caca9f698cc6934bdc2ddf7cf"
+    "bytes": 4785628,
+    "sha256": "2485645994df7212d5191faf936b9eec2ac500924c2ebe8501263337dd991bfd"
   },
   {
     "file": "public/models/3tentos/vegetation-low.glb",
@@ -156,10 +168,16 @@
     "sha256": "5bb5ef941c334363c7c7a72db530cdcf3cea6b888460bc01cdc45f9687d6c1de"
   },
   {
+    "file": "scripts/audit-industrial-cad.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 24881,
+    "sha256": "703a5f9d347fdfa2d84f549976d8f776317e71c8baf9b0875fdfaad97a4a5a84"
+  },
+  {
     "file": "scripts/audit-industrial-geometry.mjs",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 3970,
-    "sha256": "72d819181a93bc03d457eb15fd6ef1342e67cbbc84dbece2bcb6ebb6e565be28"
+    "bytes": 5231,
+    "sha256": "a876b751afc7972bf1ca6d9b8437af5e7ba78ad83f6b07b1cd360c15ab6692d2"
   },
   {
     "file": "scripts/benchmark-industrial.mjs",
@@ -168,10 +186,52 @@
     "sha256": "55f882ee535b517f10da652564d59191bae576b64cbad2822271e6ea33d8511e"
   },
   {
+    "file": "scripts/blender/cad_geometry.py",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 24606,
+    "sha256": "fbd76bc1707e71cf2d8fff1485597289c1ee749a1a6efcf37372b2c749fdb329"
+  },
+  {
     "file": "scripts/blender/generate_unit.py",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 25057,
-    "sha256": "c9f167c712755271d0169e9f83ddb64015c8988ccab638de648285dfbc2de6fc"
+    "bytes": 30852,
+    "sha256": "f05642fc4c69d10cd554dcc94b5ab77bff0438fd0776162c0435e7ac8400cd40"
+  },
+  {
+    "file": "scripts/cad/audit-export-topology.py",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 4956,
+    "sha256": "b242a50dea71b03e7e1d652a709067c7c9c4b002ee6df4354defc7ed91ab41e2"
+  },
+  {
+    "file": "scripts/cad/audit-local-compatibility.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 5369,
+    "sha256": "5f397847250011e95ecc548e4849ac4054cf8c9f66de59d0eb03e6673fa2e790"
+  },
+  {
+    "file": "scripts/cad/extract_model.py",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 28344,
+    "sha256": "e31e97b714ff1b93f317c8b7c2aa84fa54d662fc619af450f27f86641d149ef3"
+  },
+  {
+    "file": "scripts/cad/inspect-wall-openings.py",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 5337,
+    "sha256": "c7f0298fd12d5c8686f7f97decb58b6d4ec5135da7ceeea70ceb21a687bae521"
+  },
+  {
+    "file": "scripts/cad/integrate-site.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 21864,
+    "sha256": "cd0a07140a919513b8516d9394d6315a09351cac84549d918baee67a565e1513"
+  },
+  {
+    "file": "scripts/cad/project-partition-footprints.py",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 3491,
+    "sha256": "fce0707d7d8a78d5225cd869bc90d64c059d2bac472e0e642cf7534662cfe4c6"
   },
   {
     "file": "scripts/capture-industrial-views.mjs",
@@ -180,28 +240,76 @@
     "sha256": "63f59a6f6756fa258bc924bab829d350f07efbfe7aecf732b7dfc5571adefa0c"
   },
   {
+    "file": "scripts/create-industrial-data.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 12577,
+    "sha256": "36afa4087de07419ab1a1d5da6de0f60d72fd919e5f2a63e9660bf6da4a3db6a"
+  },
+  {
+    "file": "scripts/fit-reference-cameras.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 4430,
+    "sha256": "f3eaa07ca650d33c3f0da738c72e86f362efeabbf5629852ec7bba273c343319"
+  },
+  {
+    "file": "scripts/inspect-industrial.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 1137,
+    "sha256": "198a4c917e5474713406cee125b450eb9a0a049242cdcace3d1d415a81ca6217"
+  },
+  {
     "file": "scripts/optimize-industrial.mjs",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 3186,
-    "sha256": "ad67f339e34aa9fc28212cd3f1c74b0cbe86592e3d27d63cc3e523a8d96af8fe"
+    "bytes": 4661,
+    "sha256": "b39b74df5eb008a080a43cbb6123fd842661933b1206df45dbb72df9382ee419"
+  },
+  {
+    "file": "scripts/repair-industrial-tangents.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 6853,
+    "sha256": "7b1f5b95e24e26bba78bdc85e7c409fa83470bea6533038c357c58e158705484"
+  },
+  {
+    "file": "scripts/report-industrial-cad.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 17454,
+    "sha256": "f1f5d786c1f6181a0222d742453fb22312da6faa39358a2931c3277534bbc874"
+  },
+  {
+    "file": "scripts/report-industrial-validation.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 11724,
+    "sha256": "cca8d4e764e10c8287863ea37fb39f05dc209d3e9476d67731866a6257ab5f8c"
+  },
+  {
+    "file": "scripts/run-blender.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 796,
+    "sha256": "a3b07918ff46f74745de7e3a0a26e2493b40195917e1222c52efacaf1d189e55"
+  },
+  {
+    "file": "scripts/run-cad.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 1479,
+    "sha256": "f55847d68c6b66492d5a9dfae5a58036199ec82ae2ea1b536123cfc2245a8218"
   },
   {
     "file": "src/industrial/app/IndustrialMap.tsx",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 29408,
-    "sha256": "5366d1a13f29ab79aa987ae1d7d7fabedf813abdfcea22be748163d0a32c4fa7"
+    "bytes": 33313,
+    "sha256": "139ba67f3e047c2c1df915f5bbdf2220a163683707a6da718bab1e4205c08ab1"
   },
   {
     "file": "src/industrial/app/industrial.css",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 22517,
-    "sha256": "b793e75628674a2d262c4c23739f3065395489f034148222445ba9611bcd9f8e"
+    "bytes": 22692,
+    "sha256": "2e6b39162611c58647dfc5ec0ffeb73c60d2f20c030959a25de22eaab33fe49a"
   },
   {
     "file": "src/industrial/data/index.ts",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 742,
-    "sha256": "2a5444f29a6a5de8f51deed790f7ba2bd0e5b6b3654f974dd8157dd33fa75d33"
+    "bytes": 887,
+    "sha256": "4d52c0282052f60827a71588ac6f08e55467aa3f6378d5553da90e55f8d0444a"
   },
   {
     "file": "src/industrial/data/references.json",
@@ -212,8 +320,8 @@
   {
     "file": "src/industrial/data/site.json",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 43631,
-    "sha256": "3e099cb6e85641d008962fcf5a5bcef8ac8032dd8c763720e5e01eede8df8519"
+    "bytes": 141114,
+    "sha256": "14b7dd107b1c0a926aea189d11ec64242f4cb8040160f5cb4d6a6d22ab10787c"
   },
   {
     "file": "src/industrial/lighting/Lighting.tsx",
@@ -224,14 +332,14 @@
   {
     "file": "src/industrial/navigation/Navigation.tsx",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 10901,
-    "sha256": "01527a4f9432a676ce11b96f41ab6ee937a355de4e7e0c9932d2b5498dd60f85"
+    "bytes": 12456,
+    "sha256": "9c3d9a847ffb2c7fde602894a4e6a098904be8e794503931304d9960f59fc251"
   },
   {
     "file": "src/industrial/navigation/collision.ts",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 1943,
-    "sha256": "2ff187a831ecaf8b4fe11ccd336ea2572e5a79bd89d8ffdc6ee0117264c40798"
+    "bytes": 3577,
+    "sha256": "eb5a6218e4737476489892aa1b623dd3cb1304c59b1fcede3e867acebe4607f5"
   },
   {
     "file": "src/industrial/performance/metrics.ts",
@@ -242,8 +350,8 @@
   {
     "file": "src/industrial/scene/IndustrialScene.tsx",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 13881,
-    "sha256": "a00525a2112bd5e6fd35395f3c9008cafc54fb2c03239a8ff6d3310300fdeee1"
+    "bytes": 15383,
+    "sha256": "1e78e259c51113bc14a04265545ece6b32389e8d929df21619e5d1f054059c2b"
   },
   {
     "file": "src/industrial/scene/assets.ts",
@@ -252,22 +360,28 @@
     "sha256": "fb1aaa62aaaa3bf22497cd1bd6debc00120b3ccc645335dc487b2827f18a7f86"
   },
   {
+    "file": "src/industrial/scene/spatial.ts",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 8979,
+    "sha256": "52d8fcb16c4e953feb2124a86724fa1d48e2315b9ab140221a31d66b6fda911e"
+  },
+  {
     "file": "src/industrial/types/index.ts",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 830,
-    "sha256": "5c26ca466936b422048ef2b06eebb1974b8d30edda1470f5125cf8ebeb10f22f"
+    "bytes": 2210,
+    "sha256": "238043d28b3a468448f38562263790a829dd1fe7ed07a4f97c9675f68a570947"
   },
   {
     "file": "src/industrial/ui/Minimap.tsx",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 2930,
-    "sha256": "15c448f9094550861229b0724be72e2d49578b787871813312be781d9f6009c2"
+    "bytes": 4516,
+    "sha256": "2ae4b8837c6c9da6b994c6f3247b4de3e2c6dc92c9bdef5569673342cacb9914"
   },
   {
     "file": "src/industrial/vegetation/Vegetation.tsx",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 5545,
-    "sha256": "7b7883e1bf2488caf4e8208426f8e53057a85a7f6d551cd034a57f896de4a15b"
+    "bytes": 5993,
+    "sha256": "cc584c0db746e29a0658ca8a90a220f0d4d2c111d65d5855979e3481e897991f"
   },
   {
     "file": "src/industrial/vegetation/prototypeGeometry.ts",
@@ -278,13 +392,19 @@
   {
     "file": "tests/industrial/contracts.test.ts",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 4471,
-    "sha256": "c8c7065f39e868073c94beea3ea1c6feb43d3c0c8b37a8943739679f595e8b7e"
+    "bytes": 9391,
+    "sha256": "3af721251554c78dea0adaa2dc06829e393d637c41ec1b384a3c5a4abf328edf"
   },
   {
     "file": "tests/industrial/interface.spec.ts",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 9863,
-    "sha256": "2cb2fec5818869e008158ae1de9552eddb5c2b68f38d26a9b4787b03cd73a17c"
+    "bytes": 14340,
+    "sha256": "a5b70bc944955024d619fc19d784c6ba9c3770c7a15242060b8453ca2c1e4ec2"
+  },
+  {
+    "file": "tests/industrial/tangent-repair.test.mjs",
+    "normalization": "UTF-8, LF line endings",
+    "bytes": 4734,
+    "sha256": "8d78c37f07034216f0d17ab54996be8453d1ec9973ce7d3740e3c875c5125bb0"
   }
 ]

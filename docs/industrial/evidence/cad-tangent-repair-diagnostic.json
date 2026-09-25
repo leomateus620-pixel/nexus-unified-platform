@@ -1,0 +1,677 @@
+{
+  "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+  "blenderVersion": "4.5.10 LTS",
+  "scope": "Diagnostic raw GLBs before final publication; final asset validation is recorded separately in gltf-validation.json",
+  "isolatedTriangleReproduction": [
+    {
+      "triangle": 2632,
+      "centered": false,
+      "tangents": [
+        [
+          0.5064424872398376,
+          -0.8622736930847168,
+          1.7033480048667116e-07
+        ],
+        [
+          0.5064424872398376,
+          -0.8622737526893616,
+          1.7033482890838059e-07
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "lengths": [
+        0.9999999573338283,
+        1.0000000087293481,
+        0.0
+      ]
+    },
+    {
+      "triangle": 2632,
+      "centered": true,
+      "tangents": [
+        [
+          0.5065860152244568,
+          -0.8621894121170044,
+          3.05116799881322e-11
+        ],
+        [
+          0.5065860152244568,
+          -0.8621894121170044,
+          3.05116799881322e-11
+        ],
+        [
+          0.5065860152244568,
+          -0.8621894717216492,
+          3.05116799881322e-11
+        ]
+      ],
+      "lengths": [
+        0.9999999865938295,
+        0.9999999865938295,
+        1.0000000379843244
+      ]
+    },
+    {
+      "triangle": 2698,
+      "centered": false,
+      "tangents": [
+        [
+          -0.718529999256134,
+          -0.6954959034919739,
+          3.960981942441322e-08
+        ],
+        [
+          -0.7185300588607788,
+          -0.6954959034919739,
+          3.960981942441322e-08
+        ],
+        [
+          -0.718529999256134,
+          -0.6954959630966187,
+          3.9609822977126896e-08
+        ]
+      ],
+      "lengths": [
+        0.9999999558025683,
+        0.9999999986302964,
+        0.9999999972573573
+      ]
+    },
+    {
+      "triangle": 2698,
+      "centered": true,
+      "tangents": [
+        [
+          -0.7185132503509521,
+          -0.6955131888389587,
+          -9.853766413936427e-11
+        ],
+        [
+          -0.7185133099555969,
+          -0.6955132484436035,
+          -9.853768495604598e-11
+        ],
+        [
+          -0.7185132503509521,
+          -0.6955131888389587,
+          -9.853767107825817e-11
+        ]
+      ],
+      "lengths": [
+        0.999999943389412,
+        1.0000000276719603,
+        0.999999943389412
+      ]
+    },
+    {
+      "triangle": 2700,
+      "centered": false,
+      "tangents": [
+        [
+          0.697402834892273,
+          -0.7166794538497925,
+          3.622849931161909e-08
+        ],
+        [
+          0.6974027752876282,
+          -0.7166793942451477,
+          3.622849931161909e-08
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "lengths": [
+        1.0000000768431057,
+        0.9999999925572396,
+        0.0
+      ]
+    },
+    {
+      "triangle": 2700,
+      "centered": true,
+      "tangents": [
+        [
+          0.697372317314148,
+          -0.7167090773582458,
+          0.0
+        ],
+        [
+          0.697372317314148,
+          -0.7167090177536011,
+          0.0
+        ],
+        [
+          0.697372317314148,
+          -0.7167090773582458,
+          0.0
+        ]
+      ],
+      "lengths": [
+        1.0000000252619061,
+        0.999999982542718,
+        1.0000000252619061
+      ]
+    },
+    {
+      "triangle": 2714,
+      "centered": false,
+      "tangents": [
+        [
+          -0.8267497420310974,
+          -0.5625699162483215,
+          9.120195443301782e-08
+        ],
+        [
+          -0.8267496824264526,
+          -0.5625699162483215,
+          9.120196153844518e-08
+        ],
+        [
+          -0.8267496824264526,
+          -0.5625699162483215,
+          9.120196153844518e-08
+        ]
+      ],
+      "lengths": [
+        1.0000000233080686,
+        0.9999999740299457,
+        0.9999999740299457
+      ]
+    },
+    {
+      "triangle": 2714,
+      "centered": true,
+      "tangents": [
+        [
+          -0.8267258405685425,
+          -0.5626050233840942,
+          -2.571119706029634e-10
+        ],
+        [
+          -0.8267258405685425,
+          -0.5626050233840942,
+          -2.571119706029634e-10
+        ],
+        [
+          -0.8267258405685425,
+          -0.5626050233840942,
+          -2.571119706029634e-10
+        ]
+      ],
+      "lengths": [
+        1.0000000139003902,
+        1.0000000139003902,
+        1.0000000139003902
+      ]
+    }
+  ],
+  "rawAssetChecks": [
+    {
+      "asset": "silos-high",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 1073,
+        "geometryHashBefore": "9bea4de9e2a7f4d4f894989953e7c79d899a98701dd7e53b694676dd5de535fe",
+        "geometryHashAfter": "9bea4de9e2a7f4d4f894989953e7c79d899a98701dd7e53b694676dd5de535fe",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": [
+          {
+            "mesh": "SILO-01-yellow-cad",
+            "primitive": 0,
+            "repairedVertices": 7,
+            "maxLengthError": 2.89600409209001e-08,
+            "maxNormalDot": 1.098703716895244e-08
+          },
+          {
+            "mesh": "SILO-01-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 202,
+            "maxLengthError": 3.1931719490785326e-08,
+            "maxNormalDot": 3.681818749878829e-08
+          },
+          {
+            "mesh": "SILO-02-yellow-cad",
+            "primitive": 0,
+            "repairedVertices": 12,
+            "maxLengthError": 2.969887580306363e-08,
+            "maxNormalDot": 1.3195344116846697e-08
+          },
+          {
+            "mesh": "SILO-02-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 251,
+            "maxLengthError": 3.986737240335714e-08,
+            "maxNormalDot": 3.576571488972391e-08
+          },
+          {
+            "mesh": "SILO-03-yellow-cad",
+            "primitive": 0,
+            "repairedVertices": 11,
+            "maxLengthError": 3.334368536833665e-08,
+            "maxNormalDot": 3.2226030122206595e-08
+          },
+          {
+            "mesh": "SILO-03-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 253,
+            "maxLengthError": 3.986737240335714e-08,
+            "maxNormalDot": 3.025513173326999e-08
+          },
+          {
+            "mesh": "SILO-04-yellow-cad",
+            "primitive": 0,
+            "repairedVertices": 11,
+            "maxLengthError": 2.9085105879289586e-08,
+            "maxNormalDot": 3.518712989210304e-08
+          },
+          {
+            "mesh": "SILO-04-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 326,
+            "maxLengthError": 3.702116790904597e-08,
+            "maxNormalDot": 3.758801231379394e-08
+          }
+        ]
+      }
+    },
+    {
+      "asset": "silos-low",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 748,
+        "geometryHashBefore": "3c7ba6ad3f40d9958575aec7c969a4cd8920573c17dbb2e161b8ec00845748ed",
+        "geometryHashAfter": "3c7ba6ad3f40d9958575aec7c969a4cd8920573c17dbb2e161b8ec00845748ed",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": [
+          {
+            "mesh": "SILO-01-yellow-cad.001",
+            "primitive": 0,
+            "repairedVertices": 18,
+            "maxLengthError": 3.092437339535792e-08,
+            "maxNormalDot": 1.5638168364418004e-08
+          },
+          {
+            "mesh": "SILO-01-zinc-cad.001",
+            "primitive": 0,
+            "repairedVertices": 32,
+            "maxLengthError": 2.933423948192626e-08,
+            "maxNormalDot": 3.2075975875400786e-08
+          },
+          {
+            "mesh": "SILO-01-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 118,
+            "maxLengthError": 3.965988493170869e-08,
+            "maxNormalDot": 3.681818749878829e-08
+          },
+          {
+            "mesh": "SILO-02-yellow-cad.001",
+            "primitive": 0,
+            "repairedVertices": 12,
+            "maxLengthError": 3.0073443291200874e-08,
+            "maxNormalDot": 2.134352634908243e-08
+          },
+          {
+            "mesh": "SILO-02-zinc-cad.001",
+            "primitive": 0,
+            "repairedVertices": 33,
+            "maxLengthError": 2.4304318557710758e-08,
+            "maxNormalDot": 2.436793217208688e-08
+          },
+          {
+            "mesh": "SILO-02-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 139,
+            "maxLengthError": 3.990576602497242e-08,
+            "maxNormalDot": 3.025513173326999e-08
+          },
+          {
+            "mesh": "SILO-03-yellow-cad.001",
+            "primitive": 0,
+            "repairedVertices": 12,
+            "maxLengthError": 3.334368536833665e-08,
+            "maxNormalDot": 3.409266477157405e-08
+          },
+          {
+            "mesh": "SILO-03-zinc-cad.001",
+            "primitive": 0,
+            "repairedVertices": 33,
+            "maxLengthError": 3.694692640721087e-08,
+            "maxNormalDot": 2.4437042556169075e-08
+          },
+          {
+            "mesh": "SILO-03-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 139,
+            "maxLengthError": 3.986737240335714e-08,
+            "maxNormalDot": 3.025513173326999e-08
+          },
+          {
+            "mesh": "SILO-04-yellow-cad.001",
+            "primitive": 0,
+            "repairedVertices": 18,
+            "maxLengthError": 3.878050724992477e-08,
+            "maxNormalDot": 2.7521038378774954e-08
+          },
+          {
+            "mesh": "SILO-04-zinc-cad.001",
+            "primitive": 0,
+            "repairedVertices": 31,
+            "maxLengthError": 2.9334229711963644e-08,
+            "maxNormalDot": 3.525840225337973e-08
+          },
+          {
+            "mesh": "SILO-04-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 163,
+            "maxLengthError": 3.601546638698494e-08,
+            "maxNormalDot": 3.758801231379394e-08
+          }
+        ]
+      }
+    },
+    {
+      "asset": "grain-handling",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 981,
+        "geometryHashBefore": "e65e837830b15c8a9b000865743c743ee57ffad5321f36e0d7605e0670f420eb",
+        "geometryHashAfter": "e65e837830b15c8a9b000865743c743ee57ffad5321f36e0d7605e0670f420eb",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": [
+          {
+            "mesh": "EQ-02-paint-cad",
+            "primitive": 0,
+            "repairedVertices": 582,
+            "maxLengthError": 3.4406744009451984e-08,
+            "maxNormalDot": 4.014319016087953e-08
+          },
+          {
+            "mesh": "EQ-02-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 90,
+            "maxLengthError": 3.5029947831333175e-08,
+            "maxNormalDot": 2.1798082561197418e-08
+          },
+          {
+            "mesh": "CAD-HOPPER-PITS-concrete-cad",
+            "primitive": 0,
+            "repairedVertices": 4,
+            "maxLengthError": 0,
+            "maxNormalDot": 0
+          },
+          {
+            "mesh": "CAD-HOPPER-CONNECTIONS-paint-cad",
+            "primitive": 0,
+            "repairedVertices": 241,
+            "maxLengthError": 1.8007934921016044e-08,
+            "maxNormalDot": 2.11780937647843e-08
+          },
+          {
+            "mesh": "CAD-HOPPER-CONNECTIONS-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 39,
+            "maxLengthError": 3.402797643659028e-08,
+            "maxNormalDot": 2.5099441747222784e-08
+          },
+          {
+            "mesh": "CAD-WATER-TANK-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 25,
+            "maxLengthError": 3.0750978874394264e-08,
+            "maxNormalDot": 2.3094247569854787e-08
+          }
+        ]
+      }
+    },
+    {
+      "asset": "blockout",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 1108,
+        "geometryHashBefore": "7ff15ff970bbe0c65a1712d20a4c1a74e28bfe15cf98fb42ea508589c8bf0754",
+        "geometryHashAfter": "7ff15ff970bbe0c65a1712d20a4c1a74e28bfe15cf98fb42ea508589c8bf0754",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": [
+          {
+            "mesh": "SILO-01-yellow-cad.002",
+            "primitive": 0,
+            "repairedVertices": 18,
+            "maxLengthError": 3.092437339535792e-08,
+            "maxNormalDot": 1.5638168364418004e-08
+          },
+          {
+            "mesh": "SILO-01-zinc-cad.002",
+            "primitive": 0,
+            "repairedVertices": 32,
+            "maxLengthError": 2.933423948192626e-08,
+            "maxNormalDot": 3.2075975875400786e-08
+          },
+          {
+            "mesh": "SILO-01-zinc-edge-cad.002",
+            "primitive": 0,
+            "repairedVertices": 118,
+            "maxLengthError": 3.965988493170869e-08,
+            "maxNormalDot": 3.681818749878829e-08
+          },
+          {
+            "mesh": "SILO-02-yellow-cad.002",
+            "primitive": 0,
+            "repairedVertices": 12,
+            "maxLengthError": 3.0073443291200874e-08,
+            "maxNormalDot": 2.134352634908243e-08
+          },
+          {
+            "mesh": "SILO-02-zinc-cad.002",
+            "primitive": 0,
+            "repairedVertices": 33,
+            "maxLengthError": 2.4304318557710758e-08,
+            "maxNormalDot": 2.436793217208688e-08
+          },
+          {
+            "mesh": "SILO-02-zinc-edge-cad.002",
+            "primitive": 0,
+            "repairedVertices": 139,
+            "maxLengthError": 3.990576602497242e-08,
+            "maxNormalDot": 3.025513173326999e-08
+          },
+          {
+            "mesh": "SILO-03-yellow-cad.002",
+            "primitive": 0,
+            "repairedVertices": 12,
+            "maxLengthError": 3.334368536833665e-08,
+            "maxNormalDot": 3.409266477157405e-08
+          },
+          {
+            "mesh": "SILO-03-zinc-cad.002",
+            "primitive": 0,
+            "repairedVertices": 33,
+            "maxLengthError": 3.694692640721087e-08,
+            "maxNormalDot": 2.4437042556169075e-08
+          },
+          {
+            "mesh": "SILO-03-zinc-edge-cad.002",
+            "primitive": 0,
+            "repairedVertices": 139,
+            "maxLengthError": 3.986737240335714e-08,
+            "maxNormalDot": 3.025513173326999e-08
+          },
+          {
+            "mesh": "SILO-04-yellow-cad.002",
+            "primitive": 0,
+            "repairedVertices": 18,
+            "maxLengthError": 3.878050724992477e-08,
+            "maxNormalDot": 2.7521038378774954e-08
+          },
+          {
+            "mesh": "SILO-04-zinc-cad.002",
+            "primitive": 0,
+            "repairedVertices": 31,
+            "maxLengthError": 2.9334229711963644e-08,
+            "maxNormalDot": 3.525840225337973e-08
+          },
+          {
+            "mesh": "SILO-04-zinc-edge-cad.002",
+            "primitive": 0,
+            "repairedVertices": 163,
+            "maxLengthError": 3.601546638698494e-08,
+            "maxNormalDot": 3.758801231379394e-08
+          },
+          {
+            "mesh": "EQ-02-paint-cad.001",
+            "primitive": 0,
+            "repairedVertices": 169,
+            "maxLengthError": 3.5969648148892475e-08,
+            "maxNormalDot": 2.6765566096820237e-08
+          },
+          {
+            "mesh": "EQ-02-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 86,
+            "maxLengthError": 3.5029947831333175e-08,
+            "maxNormalDot": 2.1798082561197418e-08
+          },
+          {
+            "mesh": "ED-01-paint-cad.001",
+            "primitive": 0,
+            "repairedVertices": 4,
+            "maxLengthError": 0,
+            "maxNormalDot": 0
+          },
+          {
+            "mesh": "ED-04-white-cad.001",
+            "primitive": 0,
+            "repairedVertices": 1,
+            "maxLengthError": 0,
+            "maxNormalDot": 0
+          },
+          {
+            "mesh": "CAD-HOPPER-PITS-concrete-cad.001",
+            "primitive": 0,
+            "repairedVertices": 4,
+            "maxLengthError": 0,
+            "maxNormalDot": 0
+          },
+          {
+            "mesh": "CAD-HOPPER-CONNECTIONS-paint-cad.001",
+            "primitive": 0,
+            "repairedVertices": 35,
+            "maxLengthError": 1.2897880097284542e-08,
+            "maxNormalDot": 1.7414978958907312e-08
+          },
+          {
+            "mesh": "CAD-HOPPER-CONNECTIONS-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 36,
+            "maxLengthError": 3.402797643659028e-08,
+            "maxNormalDot": 2.5099441747222784e-08
+          },
+          {
+            "mesh": "CAD-WATER-TANK-zinc-edge-cad.001",
+            "primitive": 0,
+            "repairedVertices": 25,
+            "maxLengthError": 3.0750978874394264e-08,
+            "maxNormalDot": 2.3094247569854787e-08
+          }
+        ]
+      }
+    },
+    {
+      "asset": "buildings",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 6,
+        "geometryHashBefore": "7bf978218cdbf3c308cb0821e93a7ed80297063159444607e4738aaecece5f8e",
+        "geometryHashAfter": "7bf978218cdbf3c308cb0821e93a7ed80297063159444607e4738aaecece5f8e",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": [
+          {
+            "mesh": "ED-01-paint-cad",
+            "primitive": 0,
+            "repairedVertices": 4,
+            "maxLengthError": 0,
+            "maxNormalDot": 0
+          },
+          {
+            "mesh": "ED-04-white-cad",
+            "primitive": 0,
+            "repairedVertices": 1,
+            "maxLengthError": 0,
+            "maxNormalDot": 0
+          },
+          {
+            "mesh": "CAD-OFFICE-ROOF-zinc-edge-cad",
+            "primitive": 0,
+            "repairedVertices": 1,
+            "maxLengthError": 1.8433633841574704e-08,
+            "maxNormalDot": 7.551821668005942e-10
+          }
+        ]
+      }
+    },
+    {
+      "asset": "terrain",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 0,
+        "geometryHashBefore": "8e12854ddd3848f92108fac61d9210d4b998796ff22f53d95b45f298cbde0e29",
+        "geometryHashAfter": "8e12854ddd3848f92108fac61d9210d4b998796ff22f53d95b45f298cbde0e29",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": []
+      }
+    },
+    {
+      "asset": "fences",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 60,
+        "geometryHashBefore": "ff679796fa4a056ce42ebd8c12c5fd02af3c75977451be15d118f2223fc3d831",
+        "geometryHashAfter": "ff679796fa4a056ce42ebd8c12c5fd02af3c75977451be15d118f2223fc3d831",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": [
+          {
+            "mesh": "CE-01-zinc-edge",
+            "primitive": 0,
+            "repairedVertices": 60,
+            "maxLengthError": 2.8515582117805138e-08,
+            "maxNormalDot": 2.5661067664270275e-10
+          }
+        ]
+      }
+    },
+    {
+      "asset": "grass",
+      "errors": 0,
+      "warnings": 0,
+      "tangentRepairs": {
+        "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+        "repairedVertices": 0,
+        "geometryHashBefore": "81a8fc59fb567d07f40e30bfe33ce40cfc24c06c8406aae967f29c155abd953d",
+        "geometryHashAfter": "81a8fc59fb567d07f40e30bfe33ce40cfc24c06c8406aae967f29c155abd953d",
+        "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+        "primitives": []
+      }
+    }
+  ]
+}

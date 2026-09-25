@@ -1,10 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "calibration": {
-    "status": "estimated",
+    "status": "mixed",
     "metersPerUnit": 1,
-    "unitLabel": "metro estimado",
-    "source": "Hipótese de diâmetro externo de 17,6 m, sem medida de campo. Não calibrado.",
+    "unitLabel": "metro CAD / base fotográfica estimada",
+    "source": "Estruturas associadas: CAD em milímetros convertido para metros e integrado por convenção local aprovada. Base cartográfica fotográfica preservada, sem calibração geográfica ou altimétrica de campo.",
     "originPhotoB": [616, 539],
     "approximateUnitsPerPixel": 0.16,
     "axes": {
@@ -21,170 +21,1278 @@
       "name": "Silo 01",
       "category": "silos",
       "photos": ["A", "B", "C", "D"],
-      "position": [-10.56, 0, -10.24],
-      "rotation": [0, 0, 0],
+      "position": [-12.16000048825, 0.1, -10.49750088525],
+      "rotation": [0, -1.57079632679, 0],
       "geometry": {
-        "radius": 8.8,
-        "bodyHeight": 17.6,
-        "coneHeight": 3.8,
-        "baseHeight": 0.35,
-        "topHeight": 1.65,
+        "width": 18.78296358746,
+        "depth": 18.78296358746,
+        "height": 21.179475,
+        "radius": 9.408003997998284,
+        "bodyHeight": 14.5,
+        "coneHeight": 5.503,
+        "baseHeight": 0,
+        "baseHeightDefinition": "no separate procedural base; CAD body mesh includes its base region, nominal split UNRESOLVED",
+        "topHeight": 1.176475,
+        "nominalDiameterStatus": "UNRESOLVED",
+        "diameterDefinition": "outer_radial_envelope_including_details",
+        "assemblyHeight": 21.179475,
         "segments": 96
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
+      "dimensionStatus": "cad_verified",
       "functionStatus": "visible",
-      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "description": "Silo 01. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
       "assumptions": [
-        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
-        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
       ],
       "pending": [
-        "Medidas independentes e identificação em campo.",
-        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
-      ]
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD.",
+        "Diâmetro nominal e separação nominal entre base e chaparia não são determináveis somente pelo envelope CAD.",
+        "A correspondência individual dos silos visíveis na Foto D permanece UNRESOLVED; a convenção por quadrante não estabelece uma numeração operacional."
+      ],
+      "identification": {
+        "cadName": "Montagem Silo Adequado",
+        "technicalIdentifier": "CAD-OBJ-4136",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Silo 01", "Montagem Silo Adequado", "CAD-OBJ-4136"]
+      },
+      "cad": {
+        "sourceObjectId": 4136,
+        "sourceInstancePath": "build0/1/11:4136",
+        "sourcePaths": ["build0/1/11:4136"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 25.644419922, 0.11, -6.155342285, 1
+        ],
+        "worldMatrixNexus": [
+          0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, -0.21121044925, 0.1, -0.00232901025, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "SILO-01",
+        "renderPartition": "complete silo assembly",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Montagem Silo Adequado",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Silo 01",
+          "position": [-10.56, 0, -10.24],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "radius": 8.8,
+            "bodyHeight": 17.6,
+            "coneHeight": 3.8,
+            "baseHeight": 0.35,
+            "topHeight": 1.65,
+            "segments": 96
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "visible",
+          "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+          "assumptions": [
+            "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+            "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+          ],
+          "pending": [
+            "Medidas independentes e identificação em campo.",
+            "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+          ]
+        }
+      },
+      "bounds": {
+        "min": [-21.55148228198, 0.1, -19.88898267898],
+        "max": [-2.76851869452, 21.279475, -1.10601909152]
+      },
+      "anchors": {
+        "base": [-12.16000048825, 0.1, -10.49750088525],
+        "center": [-12.16000048825, 10.6897375, -10.49750088525],
+        "top": [-12.16000048825, 21.279475, -10.49750088525]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [-2.76851869452, -11.05480362],
+          [-2.77760181402, -10.32408920561],
+          [-2.7963794026, -9.58476280103],
+          [-2.79696180621, -9.57879104588],
+          [-2.92024164627, -8.85849343196],
+          [-3.05444586325, -8.13120755833],
+          [-3.05595373809, -8.12539959638],
+          [-3.29039672777, -7.4332561044],
+          [-3.5367190489, -6.73591772603],
+          [-3.53911829028, -6.73041884966],
+          [-3.87894944594, -6.08347045336],
+          [-4.2313274333, -5.43325113907],
+          [-4.23455712212, -5.42819455814],
+          [-4.67140914652, -4.84237239288],
+          [-5.12116622538, -4.255282905],
+          [-5.12514684062, -4.25079188108],
+          [-5.648262905, -3.74052208757],
+          [-6.18432417601, -3.23101768952],
+          [-6.18895810125, -3.22720639808],
+          [-6.785458085, -2.80505191368],
+          [-7.39462269625, -2.38567867725],
+          [-7.39979605225, -2.38263953325],
+          [-8.05499151761, -2.05899443864],
+          [-8.72226054023, -1.74007949124],
+          [-8.72784657977, -1.7378869537],
+          [-9.42560449226, -1.52072220876],
+          [-10.13454826225, -1.31011734187],
+          [-10.14040671277, -1.3088248207],
+          [-10.86354629058, -1.20348644533],
+          [-11.59670852193, -1.1063782652],
+          [-11.6026977535, -1.10601909152],
+          [-12.33341216789, -1.11510221102],
+          [-13.07273857247, -1.1338797996],
+          [-13.07871032762, -1.13446220321],
+          [-13.79900794154, -1.25774204327],
+          [-14.52629381517, -1.39194626025],
+          [-14.53210177712, -1.39345413509],
+          [-15.2242452691, -1.62789712477],
+          [-15.92158364747, -1.8742194459],
+          [-15.92708252384, -1.87661868728],
+          [-16.57403092014, -2.21644984294],
+          [-17.22425023443, -2.5688278303],
+          [-17.22930681536, -2.57205751912],
+          [-17.81512898062, -3.00890954352],
+          [-18.4022184685, -3.45866662238],
+          [-18.40670949242, -3.46264723762],
+          [-18.91697928593, -3.985763302],
+          [-19.42648368398, -4.52182457301],
+          [-19.43029497542, -4.52645849825],
+          [-19.85244951047, -5.12295856822],
+          [-20.27182269625, -5.73212309325],
+          [-20.27486184025, -5.73729644925],
+          [-20.59850693486, -6.39249191461],
+          [-20.91742188226, -7.05976093723],
+          [-20.9196144198, -7.06534697677],
+          [-21.13677916474, -7.76310488926],
+          [-21.34738403163, -8.47204865925],
+          [-21.3486765528, -8.47790710977],
+          [-21.45401492817, -9.20104668758],
+          [-21.5511231083, -9.93420891893],
+          [-21.55148228198, -9.9401981505],
+          [-21.54239916248, -10.67091256489],
+          [-21.5236215739, -11.41023896947],
+          [-21.52303917029, -11.41621072462],
+          [-21.39975933023, -12.13650833854],
+          [-21.26555511325, -12.86379421217],
+          [-21.26404723841, -12.86960217412],
+          [-21.02960424873, -13.5617456661],
+          [-20.7832819276, -14.25908404447],
+          [-20.78088268622, -14.26458292084],
+          [-20.44105153056, -14.91153131714],
+          [-20.0886735432, -15.56175063143],
+          [-20.08544385438, -15.56680721236],
+          [-19.64859182998, -16.15262937762],
+          [-19.19883475112, -16.7397188655],
+          [-19.19485413588, -16.74420988942],
+          [-18.6717380715, -17.25447968293],
+          [-18.13567680049, -17.76398408098],
+          [-18.13104287525, -17.76779537242],
+          [-17.53454280528, -18.18994990747],
+          [-16.92537828025, -18.60932309325],
+          [-16.92020492425, -18.61236223725],
+          [-16.26374629077, -18.93662065707],
+          [-15.59774043627, -19.25492227926],
+          [-15.59215439673, -19.2571148168],
+          [-14.89439648424, -19.47427956174],
+          [-14.18545271425, -19.68488442863],
+          [-14.17959426373, -19.6861769498],
+          [-13.45645468592, -19.79151532517],
+          [-12.72329245457, -19.8886235053],
+          [-12.717303223, -19.88898267898],
+          [-11.98658880861, -19.87989955948],
+          [-11.24726240403, -19.8611219709],
+          [-11.24129064888, -19.86053956729],
+          [-10.52099303496, -19.73725972723],
+          [-9.79370716133, -19.60305551025],
+          [-9.78789919938, -19.60154763541],
+          [-9.0957557074, -19.36710464573],
+          [-8.39841732903, -19.1207823246],
+          [-8.39291845266, -19.11838308322],
+          [-7.74597005636, -18.77855192756],
+          [-7.09575074207, -18.4261739402],
+          [-7.09069416114, -18.42294425138],
+          [-6.50487199588, -17.98609222698],
+          [-5.917782508, -17.53633514812],
+          [-5.91329148408, -17.53235453288],
+          [-5.40302169057, -17.0092384685],
+          [-4.89351729252, -16.47317719749],
+          [-4.88970600108, -16.46854327225],
+          [-4.46755151668, -15.8720432885],
+          [-4.04817828025, -15.26287867725],
+          [-4.04513913625, -15.25770532125],
+          [-3.72149404164, -14.60250985589],
+          [-3.40257909424, -13.93524083327],
+          [-3.4003865567, -13.92965479373],
+          [-3.18322181176, -13.23189688124],
+          [-2.97261694487, -12.52295311125],
+          [-2.9713244237, -12.51709466073],
+          [-2.86598604833, -11.79395508292],
+          [-2.7688778682, -11.06079285157],
+          [-2.76851869452, -11.05480362]
+        ],
+        "definition": "convex projection of the CAD body mesh; assembly accessories remain in bounds"
+      },
+      "collider": {
+        "kind": "circle",
+        "center": [-12.16000048825, -10.49750088525],
+        "radius": 9.408003997998284,
+        "minY": 0.1,
+        "maxY": 14.6,
+        "sourceInstancePath": "build0/1/11:4136/2:3727/1:3730"
+      }
     },
     {
       "id": "SILO-02",
       "name": "Silo 02",
       "category": "silos",
       "photos": ["A", "B", "C", "D"],
-      "position": [10.24, 0, -10.24],
-      "rotation": [0, 0, 0],
+      "position": [11.8399972383, 0.1, -10.49749523527],
+      "rotation": [0, -2.6179936761, 0],
       "geometry": {
-        "radius": 8.8,
-        "bodyHeight": 17.6,
-        "coneHeight": 3.8,
-        "baseHeight": 0.35,
-        "topHeight": 1.65,
+        "width": 18.79710791101,
+        "depth": 19.14318308666,
+        "height": 21.179475,
+        "radius": 9.408000708136312,
+        "bodyHeight": 14.5,
+        "coneHeight": 5.503,
+        "baseHeight": 0,
+        "baseHeightDefinition": "no separate procedural base; CAD body mesh includes its base region, nominal split UNRESOLVED",
+        "topHeight": 1.176475,
+        "nominalDiameterStatus": "UNRESOLVED",
+        "diameterDefinition": "outer_radial_envelope_including_details",
+        "assemblyHeight": 21.179475,
         "segments": 96
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
+      "dimensionStatus": "cad_verified",
       "functionStatus": "visible",
-      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "description": "Silo 02. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
       "assumptions": [
-        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
-        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
       ],
       "pending": [
-        "Medidas independentes e identificação em campo.",
-        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
-      ]
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD.",
+        "Diâmetro nominal e separação nominal entre base e chaparia não são determináveis somente pelo envelope CAD.",
+        "A correspondência individual dos silos visíveis na Foto D permanece UNRESOLVED; a convenção por quadrante não estabelece uma numeração operacional."
+      ],
+      "identification": {
+        "cadName": "Montagem Silo Adequado",
+        "technicalIdentifier": "CAD-OBJ-4125",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Silo 02", "Montagem Silo Adequado", "CAD-OBJ-4125"]
+      },
+      "cad": {
+        "sourceObjectId": 4125,
+        "sourceInstancePath": "build0/1/10:4125",
+        "sourcePaths": ["build0/1/10:4125"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [
+          0.866025, 0, -0.5, 0, 0, 1, 0, 0, 0.5, 0, 0.866025, 0, 16.707898438, 0.11, -11.255712891,
+          1
+        ],
+        "worldMatrixNexus": [
+          -0.866025, 0, 0.5, 0, 0, 1, 0, 0, -0.5, 0, -0.866025, 0, 8.72531103475, 0.1,
+          5.09804159575, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "SILO-02",
+        "renderPartition": "complete silo assembly",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Montagem Silo Adequado",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Silo 02",
+          "position": [10.24, 0, -10.24],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "radius": 8.8,
+            "bodyHeight": 17.6,
+            "coneHeight": 3.8,
+            "baseHeight": 0.35,
+            "topHeight": 1.65,
+            "segments": 96
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "visible",
+          "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+          "assumptions": [
+            "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+            "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+          ],
+          "pending": [
+            "Medidas independentes e identificação em campo.",
+            "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+          ]
+        }
+      },
+      "bounds": {
+        "min": [2.44144328279, 0.1, -19.89604919078],
+        "max": [21.2385511938, 21.279475, -0.75286610412]
+      },
+      "anchors": {
+        "base": [11.8399972383, 0.1, -10.49749523527],
+        "center": [11.8399972383, 10.6897375, -10.49749523527],
+        "top": [11.8399972383, 21.279475, -10.49749523527]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [12.15786205467, -1.11888279042],
+          [11.41856687934, -1.09894127977],
+          [11.41257290943, -1.09920998056],
+          [10.68681025655, -1.18462367237],
+          [9.95349754339, -1.28057980265],
+          [9.94761789678, -1.281781603],
+          [9.24415346666, -1.4796782959],
+          [8.53487928483, -1.6891685591],
+          [8.52926164854, -1.69127600849],
+          [7.86541531932, -1.99678266472],
+          [7.19764530661, -2.31464782896],
+          [7.19242665393, -2.31760851259],
+          [6.58454417819, -2.72320161817],
+          [5.97472134956, -3.14161579979],
+          [5.97002953747, -3.14535718091],
+          [5.43308048299, -3.6410506046],
+          [4.89621951814, -4.14971119956],
+          [4.89217093723, -4.15413850359],
+          [4.4393754818, -4.72772626878],
+          [3.98869625443, -5.31410900012],
+          [3.98539058526, -5.31911623755],
+          [3.62789958663, -5.95647474802],
+          [3.27449824549, -6.60613869183],
+          [3.272016744, -6.61160158289],
+          [3.01863136052, -7.29703724402],
+          [2.77121263072, -7.99398710122],
+          [2.76961450705, -7.99977087889],
+          [2.62657625121, -8.71640594137],
+          [2.49122835017, -9.44347957106],
+          [2.490556715, -9.44944135616],
+          [2.46138479344, -10.1796304189],
+          [2.44144328279, -10.91892559424],
+          [2.44171198359, -10.92491956414],
+          [2.52712567539, -11.65068221702],
+          [2.62308180567, -12.38399493018],
+          [2.62428360602, -12.3898745768],
+          [2.82218029892, -13.09333900691],
+          [3.03167056212, -13.80261318874],
+          [3.03377801151, -13.80823082503],
+          [3.33928471708, -14.47207724123],
+          [3.65714983198, -15.13984716696],
+          [3.66011051561, -15.14506581964],
+          [4.06570362119, -15.75294829538],
+          [4.48411780281, -16.36277112402],
+          [4.48785918393, -16.3674629361],
+          [4.98355260762, -16.90441199058],
+          [5.49221320258, -17.44127295543],
+          [5.49664050662, -17.44532153634],
+          [6.0702282718, -17.89811699177],
+          [6.65661100314, -18.34879621914],
+          [6.66161824058, -18.35210188831],
+          [7.29897675104, -18.70959288694],
+          [7.94864069486, -19.06299422808],
+          [7.95410358591, -19.06547572957],
+          [8.63953924704, -19.31886111305],
+          [9.33648910424, -19.56627984285],
+          [9.34227288191, -19.56787796652],
+          [10.05890794439, -19.71091622237],
+          [10.78598157408, -19.8462641234],
+          [10.79194335918, -19.84693575857],
+          [11.52213242192, -19.87610768013],
+          [12.26142759726, -19.89604919078],
+          [12.26742156717, -19.89578048999],
+          [12.99318422004, -19.81036679818],
+          [13.72649693321, -19.7144106679],
+          [13.73237657982, -19.71320886755],
+          [14.43584100994, -19.51531217465],
+          [15.14511519176, -19.30582191145],
+          [15.15073282805, -19.30371446206],
+          [15.81457924426, -18.99820775649],
+          [16.48234916998, -18.68034264159],
+          [16.48756782266, -18.67738195796],
+          [17.09661303742, -18.27100157981],
+          [17.70527312704, -17.85337467076],
+          [17.70996493912, -17.84963328964],
+          [18.2469139936, -17.35393986595],
+          [18.78377495845, -16.84527927099],
+          [18.78782353936, -16.84085196696],
+          [19.24061899479, -16.26726420177],
+          [19.69129822216, -15.68088147043],
+          [19.69460389134, -15.675874233],
+          [20.05209488997, -15.03851572253],
+          [20.4054962311, -14.38885177872],
+          [20.4079777326, -14.38338888766],
+          [20.66136311607, -13.69795322653],
+          [20.90878184587, -13.00100336933],
+          [20.91037996954, -12.99521959166],
+          [21.05341822539, -12.27858452918],
+          [21.18876612642, -11.55151089949],
+          [21.18943776159, -11.54554911439],
+          [21.21860968316, -10.81536005165],
+          [21.2385511938, -10.07606487631],
+          [21.23828249301, -10.07007090641],
+          [21.1528688012, -9.34430825353],
+          [21.05691267092, -8.61099554037],
+          [21.05571087057, -8.60511589375],
+          [20.85781417767, -7.90165146364],
+          [20.64832391447, -7.19237728181],
+          [20.64621646508, -7.18675964552],
+          [20.34070980886, -6.52291331629],
+          [20.02284464461, -5.85514330359],
+          [20.01988396098, -5.84992465091],
+          [19.6142908554, -5.24204217517],
+          [19.19587667379, -4.63221934653],
+          [19.19213529266, -4.62752753445],
+          [18.69644186897, -4.09057847997],
+          [18.18778127401, -3.55371751512],
+          [18.18335396998, -3.54966893421],
+          [17.6097662048, -3.09687347878],
+          [17.02338347345, -2.64619425141],
+          [17.01837623602, -2.64288858224],
+          [16.38101772555, -2.28539758361],
+          [15.73135378174, -1.93199624247],
+          [15.72589089068, -1.92951474098],
+          [15.04045522955, -1.6761293575],
+          [14.34350537235, -1.4287106277],
+          [14.33772159468, -1.42711250403],
+          [13.6210865322, -1.28407424818],
+          [12.89401290251, -1.14872634715],
+          [12.88805111741, -1.14805471198],
+          [12.15786205467, -1.11888279042]
+        ],
+        "definition": "convex projection of the CAD body mesh; assembly accessories remain in bounds"
+      },
+      "collider": {
+        "kind": "circle",
+        "center": [11.8399972383, -10.49749523527],
+        "radius": 9.408000708136312,
+        "minY": 0.1,
+        "maxY": 14.6,
+        "sourceInstancePath": "build0/1/10:4125/2:3727/1:3730"
+      }
     },
     {
       "id": "SILO-03",
       "name": "Silo 03",
       "category": "silos",
       "photos": ["A", "B", "C", "D"],
-      "position": [-10.56, 0, 10.24],
-      "rotation": [0, 0, 0],
+      "position": [-12.1599962618, 0.1, 10.49749554077],
+      "rotation": [0, 0.52359897749, 0],
       "geometry": {
-        "radius": 8.8,
-        "bodyHeight": 17.6,
-        "coneHeight": 3.8,
-        "baseHeight": 0.35,
-        "topHeight": 1.65,
+        "width": 18.79710791101,
+        "depth": 19.14318308666,
+        "height": 21.179475,
+        "radius": 9.408000708136312,
+        "bodyHeight": 14.5,
+        "coneHeight": 5.503,
+        "baseHeight": 0,
+        "baseHeightDefinition": "no separate procedural base; CAD body mesh includes its base region, nominal split UNRESOLVED",
+        "topHeight": 1.176475,
+        "nominalDiameterStatus": "UNRESOLVED",
+        "diameterDefinition": "outer_radial_envelope_including_details",
+        "assemblyHeight": 21.179475,
         "segments": 96
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
+      "dimensionStatus": "cad_verified",
       "functionStatus": "visible",
-      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "description": "Silo 03. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
       "assumptions": [
-        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
-        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
       ],
       "pending": [
-        "Medidas independentes e identificação em campo.",
-        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
-      ]
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD.",
+        "Diâmetro nominal e separação nominal entre base e chaparia não são determináveis somente pelo envelope CAD.",
+        "A correspondência individual dos silos visíveis na Foto D permanece UNRESOLVED; a convenção por quadrante não estabelece uma numeração operacional."
+      ],
+      "identification": {
+        "cadName": "Montagem Silo Adequado",
+        "technicalIdentifier": "CAD-OBJ-4147",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Silo 03", "Montagem Silo Adequado", "CAD-OBJ-4147"]
+      },
+      "cad": {
+        "sourceObjectId": 4147,
+        "sourceInstancePath": "build0/1/12:4147",
+        "sourcePaths": ["build0/1/12:4147"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [
+          -0.866025, 0, 0.5, 0, 0, 1, 0, 0, -0.5, 0, -0.866025, 0, 34.478519530999996, 0.11,
+          -1.059630005, 1
+        ],
+        "worldMatrixNexus": [
+          0.866025, 0, -0.5, 0, 0, 1, 0, 0, 0.5, 0, 0.866025, 0, -9.04531005825, 0.1,
+          -5.09804129025, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "SILO-03",
+        "renderPartition": "complete silo assembly",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Montagem Silo Adequado",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Silo 03",
+          "position": [-10.56, 0, 10.24],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "radius": 8.8,
+            "bodyHeight": 17.6,
+            "coneHeight": 3.8,
+            "baseHeight": 0.35,
+            "topHeight": 1.65,
+            "segments": 96
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "visible",
+          "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+          "assumptions": [
+            "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+            "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+          ],
+          "pending": [
+            "Medidas independentes e identificação em campo.",
+            "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+          ]
+        }
+      },
+      "bounds": {
+        "min": [-21.5585502173, 0.1, 0.75286640962],
+        "max": [-2.76144230629, 21.279475, 19.89604949628]
+      },
+      "anchors": {
+        "base": [-12.1599962618, 0.1, 10.49749554077],
+        "center": [-12.1599962618, 10.6897375, 10.49749554077],
+        "top": [-12.1599962618, 21.279475, 10.49749554077]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [-11.84213144542, 19.87610798563],
+          [-12.58142662076, 19.89604949628],
+          [-12.58742059067, 19.89578079549],
+          [-13.31318324354, 19.81036710368],
+          [-14.04649595671, 19.7144109734],
+          [-14.05237560332, 19.71320917305],
+          [-14.75584003344, 19.51531248015],
+          [-15.46511421526, 19.30582221695],
+          [-15.47073185155, 19.30371476756],
+          [-16.13457826776, 18.99820806199],
+          [-16.80234819348, 18.68034294709],
+          [-16.80756684616, 18.67738226346],
+          [-17.41661206092, 18.27100188531],
+          [-18.02527215054, 17.85337497626],
+          [-18.02996396262, 17.84963359514],
+          [-18.5669130171, 17.35394017145],
+          [-19.10377398195, 16.84527957649],
+          [-19.10782256286, 16.84085227246],
+          [-19.56061801829, 16.26726450727],
+          [-20.01129724566, 15.68088177593],
+          [-20.01460291484, 15.6758745385],
+          [-20.37209391347, 15.03851602803],
+          [-20.7254952546, 14.38885208422],
+          [-20.7279767561, 14.38338919316],
+          [-20.98136213957, 13.69795353203],
+          [-21.22878086937, 13.00100367483],
+          [-21.23037899304, 12.99521989716],
+          [-21.37341724889, 12.27858483468],
+          [-21.50876514992, 11.55151120499],
+          [-21.50943678509, 11.54554941989],
+          [-21.53860870666, 10.81536035715],
+          [-21.5585502173, 10.07606518181],
+          [-21.55828151651, 10.07007121191],
+          [-21.4728678247, 9.34430855903],
+          [-21.37691169442, 8.61099584587],
+          [-21.37570989407, 8.60511619925],
+          [-21.17781320117, 7.90165176914],
+          [-20.96832293797, 7.19237758731],
+          [-20.96621548858, 7.18675995102],
+          [-20.66070883236, 6.52291362179],
+          [-20.34284366811, 5.85514360909],
+          [-20.33988298448, 5.84992495641],
+          [-19.9342898789, 5.24204248067],
+          [-19.51587569729, 4.63221965203],
+          [-19.51213431616, 4.62752783995],
+          [-19.01644089247, 4.09057878547],
+          [-18.50778029751, 3.55371782062],
+          [-18.50335299348, 3.54966923971],
+          [-17.9297652283, 3.09687378428],
+          [-17.34338249695, 2.64619455691],
+          [-17.33837525952, 2.64288888774],
+          [-16.70101674905, 2.28539788911],
+          [-16.05135280524, 1.93199654797],
+          [-16.04588991418, 1.92951504648],
+          [-15.36045425305, 1.676129663],
+          [-14.66350439585, 1.4287109332],
+          [-14.65772061818, 1.42711280953],
+          [-13.9410855557, 1.28407455368],
+          [-13.21401192601, 1.14872665265],
+          [-13.20805014091, 1.14805501748],
+          [-12.47786107817, 1.11888309592],
+          [-11.73856590284, 1.09894158527],
+          [-11.73257193293, 1.09921028606],
+          [-11.00680928005, 1.18462397787],
+          [-10.27349656689, 1.28058010815],
+          [-10.26761692028, 1.2817819085],
+          [-9.56415249016, 1.4796786014],
+          [-8.85487830833, 1.6891688646],
+          [-8.84926067204, 1.69127631399],
+          [-8.18541434282, 1.99678297022],
+          [-7.51764433011, 2.31464813446],
+          [-7.51242567743, 2.31760881809],
+          [-6.90454320169, 2.72320192367],
+          [-6.29472037306, 3.14161610529],
+          [-6.29002856097, 3.14535748641],
+          [-5.75307950649, 3.6410509101],
+          [-5.21621854164, 4.14971150506],
+          [-5.21216996073, 4.15413880909],
+          [-4.7593745053, 4.72772657428],
+          [-4.30869527793, 5.31410930562],
+          [-4.30538960876, 5.31911654305],
+          [-3.94789861013, 5.95647505352],
+          [-3.59449726899, 6.60613899733],
+          [-3.5920157675, 6.61160188839],
+          [-3.33863038402, 7.29703754952],
+          [-3.09121165422, 7.99398740672],
+          [-3.08961353055, 7.99977118439],
+          [-2.94657527471, 8.71640624687],
+          [-2.81122737367, 9.44347987656],
+          [-2.8105557385, 9.44944166166],
+          [-2.78138381694, 10.1796307244],
+          [-2.76144230629, 10.91892589974],
+          [-2.76171100709, 10.92491986964],
+          [-2.84712469889, 11.65068252252],
+          [-2.94308082917, 12.38399523568],
+          [-2.94428262952, 12.3898748823],
+          [-3.14217932242, 13.09333931241],
+          [-3.35166958562, 13.80261349424],
+          [-3.35377703501, 13.80823113053],
+          [-3.65928374058, 14.47207754673],
+          [-3.97714885548, 15.13984747246],
+          [-3.98010953911, 15.14506612514],
+          [-4.38570264469, 15.75294860088],
+          [-4.80411682631, 16.36277142952],
+          [-4.80785820743, 16.3674632416],
+          [-5.30355163112, 16.90441229608],
+          [-5.81221222608, 17.44127326093],
+          [-5.81663953012, 17.44532184184],
+          [-6.3902272953, 17.89811729727],
+          [-6.97661002664, 18.34879652464],
+          [-6.98161726408, 18.35210219381],
+          [-7.61897577454, 18.70959319244],
+          [-8.26863971836, 19.06299453358],
+          [-8.27410260941, 19.06547603507],
+          [-8.95953827054, 19.31886141855],
+          [-9.65648812774, 19.56628014835],
+          [-9.66227190541, 19.56787827202],
+          [-10.37890696789, 19.71091652787],
+          [-11.10598059758, 19.8462644289],
+          [-11.11194238268, 19.84693606407],
+          [-11.84213144542, 19.87610798563]
+        ],
+        "definition": "convex projection of the CAD body mesh; assembly accessories remain in bounds"
+      },
+      "collider": {
+        "kind": "circle",
+        "center": [-12.1599962618, 10.49749554077],
+        "radius": 9.408000708136312,
+        "minY": 0.1,
+        "maxY": 14.6,
+        "sourceInstancePath": "build0/1/12:4147/2:3727/1:3730"
+      }
     },
     {
       "id": "SILO-04",
       "name": "Silo 04",
       "category": "silos",
       "photos": ["A", "B", "C", "D"],
-      "position": [10.24, 0, 10.24],
-      "rotation": [0, 0, 0],
+      "position": [11.83999951175, 0.1, 10.49750057975],
+      "rotation": [0, 1.57079632679, 0],
       "geometry": {
-        "radius": 8.8,
-        "bodyHeight": 17.6,
-        "coneHeight": 3.8,
-        "baseHeight": 0.35,
-        "topHeight": 1.65,
+        "width": 18.78296358746,
+        "depth": 18.78296358746,
+        "height": 21.179475,
+        "radius": 9.408003997998284,
+        "bodyHeight": 14.5,
+        "coneHeight": 5.503,
+        "baseHeight": 0,
+        "baseHeightDefinition": "no separate procedural base; CAD body mesh includes its base region, nominal split UNRESOLVED",
+        "topHeight": 1.176475,
+        "nominalDiameterStatus": "UNRESOLVED",
+        "diameterDefinition": "outer_radial_envelope_including_details",
+        "assemblyHeight": 21.179475,
         "segments": 96
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
+      "dimensionStatus": "cad_verified",
       "functionStatus": "visible",
-      "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+      "description": "Silo 04. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
       "assumptions": [
-        "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
-        "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
       ],
       "pending": [
-        "Medidas independentes e identificação em campo.",
-        "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
-      ]
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD.",
+        "Diâmetro nominal e separação nominal entre base e chaparia não são determináveis somente pelo envelope CAD.",
+        "A correspondência individual dos silos visíveis na Foto D permanece UNRESOLVED; a convenção por quadrante não estabelece uma numeração operacional."
+      ],
+      "identification": {
+        "cadName": "Montagem Silo Adequado",
+        "technicalIdentifier": "CAD-OBJ-1531",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Silo 04", "Montagem Silo Adequado", "CAD-OBJ-1531"]
+      },
+      "cad": {
+        "sourceObjectId": 1531,
+        "sourceInstancePath": "build0/1/6:1531",
+        "sourcePaths": ["build0/1/6:1531"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 25.542, 0.11, -6.16, 1],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -0.10879052725, 0.1, 0.00232870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "SILO-04",
+        "renderPartition": "complete silo assembly",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Montagem Silo Adequado",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Silo 04",
+          "position": [10.24, 0, 10.24],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "radius": 8.8,
+            "bodyHeight": 17.6,
+            "coneHeight": 3.8,
+            "baseHeight": 0.35,
+            "topHeight": 1.65,
+            "segments": 96
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "visible",
+          "description": "Corpo de chapas com anéis horizontais, montantes, cobertura cônica e coroamento. Numeração provisória.",
+          "assumptions": [
+            "Diâmetro de 17,6 unidades adotado apenas como escala visual; quatro corpos inicialmente iguais.",
+            "A Foto D comprova detalhes de dois silos visíveis, mas não permite vincular sua numeração."
+          ],
+          "pending": [
+            "Medidas independentes e identificação em campo.",
+            "Confirmar diferenças entre os quatro silos e correspondência exata da Foto D."
+          ]
+        }
+      },
+      "bounds": {
+        "min": [2.44851771802, 0.1, 1.10601878602],
+        "max": [21.23148130548, 21.279475, 19.88898237348]
+      },
+      "anchors": {
+        "base": [11.83999951175, 0.1, 10.49750057975],
+        "center": [11.83999951175, 10.6897375, 10.49750057975],
+        "top": [11.83999951175, 21.279475, 10.49750057975]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [18.08670851592, 3.46264693212],
+          [18.59697830943, 3.9857629965],
+          [19.10648270748, 4.52182426751],
+          [19.11029399892, 4.52645819275],
+          [19.53244853397, 5.12295826272],
+          [19.95182171975, 5.73212278775],
+          [19.95486086375, 5.73729614375],
+          [20.27850595836, 6.39249160911],
+          [20.59742090576, 7.05976063173],
+          [20.5996134433, 7.06534667127],
+          [20.81677818824, 7.76310458376],
+          [21.02738305513, 8.47204835375],
+          [21.0286755763, 8.47790680427],
+          [21.13401395167, 9.20104638208],
+          [21.2311221318, 9.93420861343],
+          [21.23148130548, 9.940197845],
+          [21.22239818598, 10.67091225939],
+          [21.2036205974, 11.41023866397],
+          [21.20303819379, 11.41621041912],
+          [21.07975835373, 12.13650803304],
+          [20.94555413675, 12.86379390667],
+          [20.94404626191, 12.86960186862],
+          [20.70960327223, 13.5617453606],
+          [20.4632809511, 14.25908373897],
+          [20.46088170972, 14.26458261534],
+          [20.12105055406, 14.91153101164],
+          [19.7686725667, 15.56175032593],
+          [19.76544287788, 15.56680690686],
+          [19.32859085348, 16.15262907212],
+          [18.87883377462, 16.73971856],
+          [18.87485315938, 16.74420958392],
+          [18.351737095, 17.25447937743],
+          [17.81567582399, 17.76398377548],
+          [17.81104189875, 17.76779506692],
+          [17.21454182878, 18.18994960197],
+          [16.60537730375, 18.60932278775],
+          [16.60020394775, 18.61236193175],
+          [15.94374531427, 18.93662035157],
+          [15.27773945977, 19.25492197376],
+          [15.27215342023, 19.2571145113],
+          [14.57439550774, 19.47427925624],
+          [13.86545173775, 19.68488412313],
+          [13.85959328723, 19.6861766443],
+          [13.13645370942, 19.79151501967],
+          [12.40329147807, 19.8886231998],
+          [12.3973022465, 19.88898237348],
+          [11.66658783211, 19.87989925398],
+          [10.92726142753, 19.8611216654],
+          [10.92128967238, 19.86053926179],
+          [10.20099205846, 19.73725942173],
+          [9.47370618483, 19.60305520475],
+          [9.46789822288, 19.60154732991],
+          [8.7757547309, 19.36710434023],
+          [8.07841635253, 19.1207820191],
+          [8.07291747616, 19.11838277772],
+          [7.42596907986, 18.77855162206],
+          [6.77574976557, 18.4261736347],
+          [6.77069318464, 18.42294394588],
+          [6.18487101938, 17.98609192148],
+          [5.5977815315, 17.53633484262],
+          [5.59329050758, 17.53235422738],
+          [5.08302071407, 17.009238163],
+          [4.57351631602, 16.47317689199],
+          [4.56970502458, 16.46854296675],
+          [4.14755054018, 15.872042983],
+          [3.72817730375, 15.26287837175],
+          [3.72513815975, 15.25770501575],
+          [3.40149306514, 14.60250955039],
+          [3.08257811774, 13.93524052777],
+          [3.0803855802, 13.92965448823],
+          [2.86322083526, 13.23189657574],
+          [2.65261596837, 12.52295280575],
+          [2.6513234472, 12.51709435523],
+          [2.54598507183, 11.79395477742],
+          [2.4488768917, 11.06079254607],
+          [2.44851771802, 11.0548033145],
+          [2.45760083752, 10.32408890011],
+          [2.4763784261, 9.58476249553],
+          [2.47696082971, 9.57879074038],
+          [2.60024066977, 8.85849312646],
+          [2.73444488675, 8.13120725283],
+          [2.73595276159, 8.12539929088],
+          [2.97039575127, 7.4332557989],
+          [3.2167180724, 6.73591742053],
+          [3.21911731378, 6.73041854416],
+          [3.55894846944, 6.08347014786],
+          [3.9113264568, 5.43325083357],
+          [3.91455614562, 5.42819425264],
+          [4.35140817002, 4.84237208738],
+          [4.80116524888, 4.2552825995],
+          [4.80514586412, 4.25079157558],
+          [5.3282619285, 3.74052178207],
+          [5.86432319951, 3.23101738402],
+          [5.86895712475, 3.22720609258],
+          [6.4654571085, 2.80505160818],
+          [7.07462171975, 2.38567837175],
+          [7.07979507575, 2.38263922775],
+          [7.73499054111, 2.05899413314],
+          [8.40225956373, 1.74007918574],
+          [8.40784560327, 1.7378866482],
+          [9.10560351576, 1.52072190326],
+          [9.81454728575, 1.31011703637],
+          [9.82040573627, 1.3088245152],
+          [10.54354531408, 1.20348613983],
+          [11.27670754543, 1.1063779597],
+          [11.282696777, 1.10601878602],
+          [12.01341119139, 1.11510190552],
+          [12.75273759597, 1.1338794941],
+          [12.75870935112, 1.13446189771],
+          [13.47900696504, 1.25774173777],
+          [14.20629283867, 1.39194595475],
+          [14.21210080062, 1.39345382959],
+          [14.9042442926, 1.62789681927],
+          [15.60158267097, 1.8742191404],
+          [15.60708154734, 1.87661838178],
+          [16.25402994364, 2.21644953744],
+          [16.90424925793, 2.5688275248],
+          [16.90930583886, 2.57205721362],
+          [17.49512800412, 3.00890923802],
+          [18.082217492, 3.45866631688],
+          [18.08670851592, 3.46264693212]
+        ],
+        "definition": "convex projection of the CAD body mesh; assembly accessories remain in bounds"
+      },
+      "collider": {
+        "kind": "circle",
+        "center": [11.83999951175, 10.49750057975],
+        "radius": 9.408003997998284,
+        "minY": 0.1,
+        "maxY": 14.6,
+        "sourceInstancePath": "build0/1/6:1531/2:3727/1:3730"
+      }
     },
     {
       "id": "EQ-01",
-      "name": "Conjunto central de elevação",
+      "name": "Elevador dos silos",
       "category": "equipment",
       "photos": ["A", "B", "C", "D"],
-      "position": [-0.16, 0, 0.96],
-      "rotation": [0, 0, 0],
+      "position": [0.06620947275, -6.763, 1.01482876575],
+      "rotation": [0, -1.57079632679, 0],
       "geometry": {
-        "height": 34,
-        "width": 1.4,
-        "depth": 1.5
+        "width": 1.687,
+        "depth": 0.529,
+        "height": 41.85
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
-      "functionStatus": "probable",
-      "description": "Estruturas verticais distintas, tubos inclinados conectados aos quatro topos e plataformas amarelas.",
-      "assumptions": ["Seções e alturas estimadas; carenagens não revelam o processo interno."],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Elevador dos silos. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "identification": {
+        "cadName": "Elevador dos Silos",
+        "technicalIdentifier": "CAD-OBJ-1511",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Conjunto central de elevação", "Elevador dos Silos", "CAD-OBJ-1511"]
+      },
+      "cad": {
+        "sourceObjectId": 1511,
+        "sourceInstancePath": "build0/1/5:1009/12:1511",
+        "sourcePaths": ["build0/1/5:1009/12:1511"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 25.6035, -6.328, -7.172500061, 1
+        ],
+        "worldMatrixNexus": [
+          0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, -0.17029052725, -6.338, 1.01482876575, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "EQ-01",
+        "renderPartition": "Elevador dos silos",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Elevador dos Silos",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Conjunto central de elevação",
+          "position": [-0.16, 0, 0.96],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "height": 34,
+            "width": 1.4,
+            "depth": 1.5
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "probable",
+          "description": "Estruturas verticais distintas, tubos inclinados conectados aos quatro topos e plataformas amarelas.",
+          "assumptions": ["Seções e alturas estimadas; carenagens não revelam o processo interno."],
+          "pending": ["Medidas independentes e identificação em campo."]
+        }
+      },
+      "bounds": {
+        "min": [-0.77729052725, -6.763, 0.75032876575],
+        "max": [0.90970947275, 35.087, 1.27932876575]
+      },
+      "anchors": {
+        "base": [0.06620947275, -6.763, 1.01482876575],
+        "center": [0.06620947275, 14.162, 1.01482876575],
+        "top": [0.06620947275, 35.087, 1.01482876575]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [0.90970947275, 1.25232876575],
+          [0.43670947275, 1.27932876575],
+          [-0.77729052725, 1.27932876575],
+          [-0.77729052725, 0.75032876575],
+          [0.43670947275, 0.75032876575],
+          [0.90970947275, 0.77732876575]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [-0.77729052725, 1.27932876575],
+          [-0.77729052725, 0.75032876575],
+          [0.43670947275, 0.75032876575],
+          [0.90970947275, 0.77732876575],
+          [0.90970947275, 1.25232876575],
+          [0.43670947275, 1.27932876575],
+          [-0.77729052725, 1.27932876575]
+        ],
+        "minY": -6.763,
+        "maxY": 35.087,
+        "sourceInstancePath": "build0/1/5:1009/12:1511"
+      }
     },
     {
       "id": "EQ-02",
-      "name": "Ligação elevada com o galpão",
+      "name": "Conexões e acessos dos silos",
       "category": "equipment",
       "photos": ["A", "B", "C"],
-      "position": [-0.16, 0, 25.76],
-      "rotation": [0, 0, 0],
+      "position": [-0.09567313737, -6.763, 3.80549329009],
+      "rotation": [0, 1.57079632679, 0],
       "geometry": {
-        "height": 24,
-        "span": 36
+        "width": 24.72192044001,
+        "depth": 54.26574904868,
+        "height": 41.859861919
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
-      "functionStatus": "probable",
-      "description": "Estrutura elevada longitudinal apoiada junto ao galpão; carenagem e suportes visíveis.",
-      "assumptions": ["Tipo operacional e conexões ocultas permanecem desconhecidos."],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Conexões e acessos dos silos. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "identification": {
+        "cadName": "Elevador e Túneis",
+        "technicalIdentifier": "CAD-OBJ-1009",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Ligação elevada com o galpão", "Elevador e Túneis", "CAD-OBJ-1009"]
+      },
+      "cad": {
+        "sourceObjectId": 1009,
+        "sourceInstancePath": "build0/1/5:1009",
+        "sourcePaths": ["build0/1/5:1009"],
+        "excludedPaths": ["build0/1/5:1009/11:1508", "build0/1/5:1009/12:1511"],
+        "worldMatrixCadMeters": [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 25.542, 0.11, -6.16, 1],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -0.10879052725, 0.1, 0.00232870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "EQ-02",
+        "renderPartition": "silo assembly connections and access, excluding elevator and underground pit/tunnels",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Elevador e Túneis",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Ligação elevada com o galpão",
+          "position": [-0.16, 0, 25.76],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "height": 24,
+            "span": 36
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "probable",
+          "description": "Estrutura elevada longitudinal apoiada junto ao galpão; carenagem e suportes visíveis.",
+          "assumptions": ["Tipo operacional e conexões ocultas permanecem desconhecidos."],
+          "pending": ["Medidas independentes e identificação em campo."]
+        }
+      },
+      "bounds": {
+        "min": [-12.45663335738, -6.763, -23.32738123425],
+        "max": [12.26528708263, 35.096861919, 30.93836781443]
+      },
+      "anchors": {
+        "base": [-0.09567313737, -6.763, 3.80549329009],
+        "center": [-0.09567313737, 14.1669309595, 3.80549329009],
+        "top": [-0.09567313737, 35.096861919, 3.80549329009]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [12.26528708263, 10.72837817079],
+          [2.91623883247, 30.92092881443],
+          [2.66684783247, 30.93836781443],
+          [-12.30757710738, 10.830601681],
+          [-12.45663335738, 10.629897431],
+          [-12.44656313975, -10.65392826175],
+          [-12.27928038975, -10.83971451175],
+          [0.57470947275, -23.32738123425],
+          [0.82470947275, -23.32738123425],
+          [12.21951581159, -10.73434495745]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "none",
+        "minY": -6.763,
+        "maxY": 35.096861919
+      }
     },
     {
       "id": "ED-01",
-      "name": "Galpão adjacente",
+      "name": "Pavilhão das moegas",
       "category": "buildings",
       "photos": ["A", "B", "C"],
-      "position": [-0.64, 0, 26.72],
-      "rotation": [0, 0, 0],
+      "position": [-0.55679052725, 0.015, 31.24732870475],
+      "rotation": [0, 1.57079632679, 0],
       "geometry": {
-        "width": 27.2,
-        "depth": 17.2,
-        "height": 6.5,
-        "rise": 1.8,
+        "width": 24.2,
+        "depth": 18.3,
+        "height": 6,
+        "rise": 5.95,
         "roof": "gable"
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
-      "functionStatus": "unknown",
-      "description": "Galpão com cobertura em duas águas, fachadas metálicas e acessos aparentes.",
-      "assumptions": ["Portas reproduzidas somente nas fachadas visíveis; sem interiores."],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Pavilhão das moegas. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante.",
+        "Formas, aberturas e fechamentos de fachada seguem a malha CAD, sem portas ou painéis adicionais."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "identification": {
+        "cadName": "Pavilhão Moegas(Valor predeterminado)Estado de exibição 1_969ea5",
+        "technicalIdentifier": "CAD-OBJ-480",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": [
+          "Galpão adjacente",
+          "Pavilhão Moegas(Valor predeterminado)Estado de exibição 1_969ea5",
+          "CAD-OBJ-480"
+        ]
+      },
+      "cad": {
+        "sourceObjectId": 480,
+        "sourceInstancePath": "build0/1/1:5/8:480",
+        "sourcePaths": ["build0/1/1:5/8:480"],
+        "excludedPaths": ["build0/1/1:5/8:480/3:487"],
+        "worldMatrixCadMeters": [
+          0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 25.990000000000002, 0.025, -37.405, 1
+        ],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -0.55679052725, 0.015, 31.24732870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "ED-01",
+        "renderPartition": "pavilion architecture, excluding underground hoppers",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Pavilhão Moegas(Valor predeterminado)Estado de exibição 1_969ea5",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Galpão adjacente",
+          "position": [-0.64, 0, 26.72],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "width": 27.2,
+            "depth": 17.2,
+            "height": 6.5,
+            "rise": 1.8,
+            "roof": "gable"
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "unknown",
+          "description": "Galpão com cobertura em duas águas, fachadas metálicas e acessos aparentes.",
+          "assumptions": ["Portas reproduzidas somente nas fachadas visíveis; sem interiores."],
+          "pending": ["Medidas independentes e identificação em campo."]
+        }
+      },
+      "bounds": {
+        "min": [-13.65679052725, 0.015, 21.87732870475],
+        "max": [12.54320947275, 11.965, 40.69732870475]
+      },
+      "anchors": {
+        "base": [-0.55679052725, 0.015, 31.24732870475],
+        "center": [-0.55679052725, 5.99, 31.28732870475],
+        "top": [-0.55679052725, 11.965, 31.24732870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [12.54320947275, 40.69732870475],
+          [-13.65679052725, 40.69732870475],
+          [-13.65679052725, 21.87732870475],
+          [12.54320947275, 21.87732870475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [11.54320947275, 40.09732870475],
+          [11.54320947275, 34.41332870475],
+          [11.54320947275, 34.01332870475],
+          [11.54320947275, 28.32932870475],
+          [11.54320947275, 22.09732870475],
+          [-12.65679052725, 22.09732870475],
+          [-12.65679052725, 28.32932870475],
+          [-12.65679052725, 34.01332870475],
+          [-12.65679052725, 34.41332870475],
+          [-12.65679052725, 40.09732870475],
+          [-12.65679052725, 40.39732870475],
+          [11.54320947275, 40.39732870475],
+          [11.54320947275, 40.09732870475]
+        ],
+        "minY": 0.015,
+        "maxY": 6.015,
+        "sourceInstancePath": "build0/1/1:5/8:480/0:481"
+      }
     },
     {
       "id": "ED-02",
@@ -205,7 +1313,10 @@
       "functionStatus": "unknown",
       "description": "Volume superior esquerdo, com composição de cobertura em níveis.",
       "assumptions": [],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "UNRESOLVED: não há associação inequívoca com objeto do CAD para este registro fotográfico; preservar identidade e geometria atuais."
+      ]
     },
     {
       "id": "ED-03",
@@ -226,28 +1337,137 @@
       "functionStatus": "unknown",
       "description": "Segundo volume do setor superior esquerdo. Função não confirmada.",
       "assumptions": [],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "UNRESOLVED: não há associação inequívoca com objeto do CAD para este registro fotográfico; preservar identidade e geometria atuais."
+      ]
     },
     {
       "id": "ED-04",
-      "name": "Edificação lateral",
+      "name": "Escritório",
       "category": "buildings",
       "photos": ["A", "B", "C"],
-      "position": [58.88, 0, -5.76],
-      "rotation": [0, 0, 0],
+      "position": [60.30820947275, 0.015, -8.97267129525],
+      "rotation": [0, 1.57079632679, 0],
       "geometry": {
-        "width": 10.2,
-        "depth": 13,
-        "height": 3.5,
+        "width": 7.7,
+        "depth": 11.75,
+        "height": 2.85,
         "rise": 1,
         "roof": "hip"
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
-      "functionStatus": "unknown",
-      "description": "Edificação junto à faixa longitudinal de concreto e ao canteiro de palmeiras.",
-      "assumptions": [],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Escritório. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante.",
+        "Aberturas e recessos seguem o CAD. O acabamento de vidro nos seis painéis existentes do escritório reutiliza o material anterior e permanece INFERRED, sem identificação operacional oficial."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "identification": {
+        "cadName": "Escritório(Valor predeterminado)Estado de exibição 1",
+        "technicalIdentifier": "CAD-OBJ-4120",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": [
+          "Edificação lateral",
+          "Escritório(Valor predeterminado)Estado de exibição 1",
+          "CAD-OBJ-4120"
+        ]
+      },
+      "cad": {
+        "sourceObjectId": 4120,
+        "sourceInstancePath": "build0/1/9:4120",
+        "sourcePaths": ["build0/1/9:4120"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, -34.875, 0.025, 2.815, 1],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 60.30820947275, 0.015, -8.97267129525, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "ED-04",
+        "renderPartition": "Escritório",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Escritório(Valor predeterminado)Estado de exibição 1",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Edificação lateral",
+          "position": [58.88, 0, -5.76],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "width": 10.2,
+            "depth": 13,
+            "height": 3.5,
+            "rise": 1,
+            "roof": "hip"
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "unknown",
+          "description": "Edificação junto à faixa longitudinal de concreto e ao canteiro de palmeiras.",
+          "assumptions": [],
+          "pending": ["Medidas independentes e identificação em campo."]
+        }
+      },
+      "bounds": {
+        "min": [55.35820947275, 0.015, -15.94767129525],
+        "max": [65.25820947275, 3.865, -1.99767129525]
+      },
+      "anchors": {
+        "base": [60.30820947275, 0.015, -8.97267129525],
+        "center": [60.30820947275, 1.94, -8.97267129525],
+        "top": [60.30820947275, 3.865, -8.97267129525]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [65.25820947275, -1.99767129525],
+          [55.35820947275, -1.99767129525],
+          [55.35820947275, -15.94767129525],
+          [65.25820947275, -15.94767129525]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [64.15820947275, -13.16017129525],
+          [64.15820947275, -14.84767129525],
+          [62.95820947275, -14.84767129525],
+          [60.95820947275, -14.84767129525],
+          [59.70820947275, -14.84767129525],
+          [57.70820947275, -14.84767129525],
+          [56.45820947275, -14.84767129525],
+          [56.45820947275, -13.16017129525],
+          [56.45820947275, -11.16017129525],
+          [56.45820947275, -9.47267129525],
+          [56.45820947275, -8.47267129525],
+          [56.45820947275, -6.78517129525],
+          [56.45820947275, -4.78517129525],
+          [56.45820947275, -3.09767129525],
+          [57.70820947275, -3.09767129525],
+          [59.70820947275, -3.09767129525],
+          [64.15820947275, -3.09767129525],
+          [64.15820947275, -4.78517129525],
+          [64.15820947275, -6.78517129525],
+          [64.15820947275, -11.16017129525],
+          [64.15820947275, -13.16017129525]
+        ],
+        "minY": 0.015,
+        "maxY": 2.865,
+        "sourceInstancePath": "build0/1/9:4120/1:4123"
+      }
     },
     {
       "id": "PV-01",
@@ -266,28 +1486,123 @@
       "functionStatus": "probable",
       "description": "Faixa pavimentada alongada. A identificação como balança é uma hipótese.",
       "assumptions": ["Limites exatos, mecanismos e operação não confirmados."],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "UNRESOLVED: não há associação inequívoca com objeto do CAD para este registro fotográfico; preservar identidade e geometria atuais."
+      ]
     },
     {
       "id": "ED-05",
-      "name": "Edificação inferior direita",
+      "name": "Pavilhão de agrotóxicos",
       "category": "buildings",
       "photos": ["A", "B", "C"],
-      "position": [50.56, 0, 50.56],
-      "rotation": [0, 0, 0],
+      "position": [53.50620947275, 0, 54.04232870475],
+      "rotation": [0, -1.57079632679, 0],
       "geometry": {
-        "width": 11.8,
-        "depth": 11.6,
-        "height": 3.7,
-        "rise": 0.9,
+        "width": 10.4,
+        "depth": 10.4,
+        "height": 6,
+        "rise": 1.5,
         "roof": "gable"
       },
       "existence": "visible",
-      "dimensionStatus": "estimated",
-      "functionStatus": "unknown",
-      "description": "Volume periférico próximo ao elemento circular, com cobertura clara.",
-      "assumptions": [],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Pavilhão de agrotóxicos. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante.",
+        "Formas, aberturas e fechamentos de fachada seguem a malha CAD, sem portas ou painéis adicionais."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "identification": {
+        "cadName": "Pavilhão Agrotóxicos(Valor predeterminado)Estado de exibição 1",
+        "technicalIdentifier": "CAD-OBJ-903",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": [
+          "Edificação inferior direita",
+          "Pavilhão Agrotóxicos(Valor predeterminado)Estado de exibição 1",
+          "CAD-OBJ-903"
+        ]
+      },
+      "cad": {
+        "sourceObjectId": 903,
+        "sourceInstancePath": "build0/1/3:903",
+        "sourcePaths": ["build0/1/3:903"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -28.073, 0.01, -60.2, 1],
+        "worldMatrixNexus": [
+          0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 53.50620947275, 0, 54.04232870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "ED-05",
+        "renderPartition": "Pavilhão de agrotóxicos",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Pavilhão Agrotóxicos(Valor predeterminado)Estado de exibição 1",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        },
+        "legacySnapshot": {
+          "name": "Edificação inferior direita",
+          "position": [50.56, 0, 50.56],
+          "rotation": [0, 0, 0],
+          "geometry": {
+            "width": 11.8,
+            "depth": 11.6,
+            "height": 3.7,
+            "rise": 0.9,
+            "roof": "gable"
+          },
+          "dimensionStatus": "estimated",
+          "existence": "visible",
+          "functionStatus": "unknown",
+          "description": "Volume periférico próximo ao elemento circular, com cobertura clara.",
+          "assumptions": [],
+          "pending": ["Medidas independentes e identificação em campo."]
+        }
+      },
+      "bounds": {
+        "min": [47.30620947275, 0, 48.54232870475],
+        "max": [59.70620947275, 7.5, 59.54232870475]
+      },
+      "anchors": {
+        "base": [53.50620947275, 0, 54.04232870475],
+        "center": [53.50620947275, 3.75, 54.04232870475],
+        "top": [53.50620947275, 7.5, 54.04232870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [59.70620947275, 59.54232870475],
+          [47.30620947275, 59.54232870475],
+          [47.30620947275, 48.54232870475],
+          [59.70620947275, 48.54232870475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [58.70620947275, 48.84232870475],
+          [48.30620947275, 48.84232870475],
+          [48.30620947275, 49.14232870475],
+          [48.30620947275, 54.04232870475],
+          [48.30620947275, 59.24232870475],
+          [58.70620947275, 59.24232870475],
+          [58.70620947275, 48.84232870475]
+        ],
+        "minY": 0,
+        "maxY": 6,
+        "sourceInstancePath": "build0/1/3:903/1:906"
+      }
     },
     {
       "id": "EQ-03",
@@ -305,7 +1620,10 @@
       "functionStatus": "probable",
       "description": "Forma cilíndrica aparente, provisoriamente descrita como possível reservatório.",
       "assumptions": ["Conteúdo, uso e conexões não confirmados."],
-      "pending": ["Medidas independentes e identificação em campo."]
+      "pending": [
+        "Medidas independentes e identificação em campo.",
+        "UNRESOLVED: o elemento circular fotográfico não corresponde espacialmente à caixa d’água CAD-OBJ-4117; ambos são preservados como identidades distintas."
+      ]
     },
     {
       "id": "TR-01",
@@ -332,7 +1650,9 @@
       "position": [13.44, 0, -64.8],
       "rotation": [0, 0, 0],
       "geometry": {
-        "width": 7.2
+        "width": 7.2,
+        "renderedWidth": 9,
+        "renderedWidthDefinition": "preserved historical procedural width; photo width parameter 7.2 remains estimated, not a CAD correction"
       },
       "existence": "visible",
       "dimensionStatus": "estimated",
@@ -425,6 +1745,718 @@
       "description": "Subdivisão do acesso superior, portões e cercamento interno visível.",
       "assumptions": [],
       "pending": ["Medidas independentes e identificação em campo."]
+    },
+    {
+      "id": "CAD-HOPPER-PITS",
+      "category": "equipment",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Moegas e poços",
+      "position": [-0.55679052725, -9.825, 31.24732870475],
+      "rotation": [0, 1.57079632679, 0],
+      "geometry": {
+        "width": 23.8,
+        "depth": 17.9,
+        "height": 11.05
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Moegas e poços. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "parentId": "ED-01",
+      "identification": {
+        "cadName": "body2722",
+        "technicalIdentifier": "CAD-OBJ-487",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["body2722", "CAD-OBJ-487"]
+      },
+      "cad": {
+        "sourceObjectId": 487,
+        "sourceInstancePath": "build0/1/1:5/8:480/3:487",
+        "sourcePaths": ["build0/1/1:5/8:480/3:487"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [
+          0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 25.990000000000002, 0.025, -37.405, 1
+        ],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -0.55679052725, 0.015, 31.24732870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-HOPPER-PITS",
+        "renderPartition": "Moegas e poços",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "body2722",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [-12.45679052725, -9.825, 22.29732870475],
+        "max": [11.34320947275, 1.225, 40.19732870475]
+      },
+      "anchors": {
+        "base": [-0.55679052725, -9.825, 31.24732870475],
+        "center": [-0.55679052725, -4.3, 31.24732870475],
+        "top": [-0.55679052725, 1.225, 31.24732870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [11.34320947275, 40.19732870475],
+          [-12.45679052725, 40.19732870475],
+          [-12.45679052725, 22.29732870475],
+          [11.34320947275, 22.29732870475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "none",
+        "minY": -9.825,
+        "maxY": 1.225
+      }
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-01",
+      "category": "equipment",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Elevador das moegas 01",
+      "position": [3.27870947275, -9.813, 34.00082870475],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 0.529,
+        "depth": 1.687,
+        "height": 32.85
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Elevador das moegas 01. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "parentId": "ED-01",
+      "identification": {
+        "cadName": "Elevador das Moegas - 01",
+        "technicalIdentifier": "CAD-OBJ-489",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Elevador das Moegas - 01", "CAD-OBJ-489"]
+      },
+      "cad": {
+        "sourceObjectId": 489,
+        "sourceInstancePath": "build0/1/1:5/9:489",
+        "sourcePaths": ["build0/1/1:5/9:489"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 22.1545, -9.378, -40.395, 1],
+        "worldMatrixNexus": [
+          1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 3.27870947275, -9.388, 34.23732870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-HOPPER-ELEVATOR-01",
+        "renderPartition": "Elevador das moegas 01",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Elevador das Moegas - 01",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [3.01420947275, -9.813, 33.15732870475],
+        "max": [3.54320947275, 23.037, 34.84432870475]
+      },
+      "anchors": {
+        "base": [3.27870947275, -9.813, 34.00082870475],
+        "center": [3.27870947275, 6.612, 34.00082870475],
+        "top": [3.27870947275, 23.037, 34.00082870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [3.54320947275, 34.84432870475],
+          [3.01420947275, 34.84432870475],
+          [3.01420947275, 33.63032870475],
+          [3.04120947275, 33.15732870475],
+          [3.51620947275, 33.15732870475],
+          [3.54320947275, 33.63032870475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [3.01420947275, 34.84432870475],
+          [3.01420947275, 33.63032870475],
+          [3.04120947275, 33.15732870475],
+          [3.51620947275, 33.15732870475],
+          [3.54320947275, 33.63032870475],
+          [3.54320947275, 34.84432870475],
+          [3.01420947275, 34.84432870475]
+        ],
+        "minY": -9.813,
+        "maxY": 23.037,
+        "sourceInstancePath": "build0/1/1:5/9:489"
+      }
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-02",
+      "category": "equipment",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Elevador das moegas 02",
+      "position": [1.97420947275, -9.813, 33.79332870475],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 0.475,
+        "depth": 1.82,
+        "height": 30.85
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Elevador das moegas 02. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "parentId": "ED-01",
+      "identification": {
+        "cadName": "Elevador das Moegas - 02",
+        "technicalIdentifier": "CAD-OBJ-505",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Elevador das Moegas - 02", "CAD-OBJ-505"]
+      },
+      "cad": {
+        "sourceObjectId": 505,
+        "sourceInstancePath": "build0/1/1:5/11:505",
+        "sourcePaths": ["build0/1/1:5/11:505"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 23.459, -9.378, -40.281, 1],
+        "worldMatrixNexus": [
+          1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1.97420947275, -9.388, 34.12332870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-HOPPER-ELEVATOR-02",
+        "renderPartition": "Elevador das moegas 02",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Elevador das Moegas - 02",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [1.73670947275, -9.813, 32.88332870475],
+        "max": [2.21170947275, 21.037, 34.70332870475]
+      },
+      "anchors": {
+        "base": [1.97420947275, -9.813, 33.79332870475],
+        "center": [1.97420947275, 5.612, 33.79332870475],
+        "top": [1.97420947275, 21.037, 33.79332870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [2.21170947275, 34.70332870475],
+          [1.73670947275, 34.70332870475],
+          [1.73670947275, 32.88332870475],
+          [2.21170947275, 32.88332870475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [1.73670947275, 34.70332870475],
+          [1.73670947275, 32.88332870475],
+          [2.21170947275, 32.88332870475],
+          [2.21170947275, 34.70332870475],
+          [1.73670947275, 34.70332870475]
+        ],
+        "minY": -9.813,
+        "maxY": 21.037,
+        "sourceInstancePath": "build0/1/1:5/11:505"
+      }
+    },
+    {
+      "id": "CAD-SILO-PIT-TUNNELS",
+      "category": "equipment",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Poço e túneis dos silos",
+      "position": [-0.10879052725, -6.764, 0.00232870475],
+      "rotation": [0, 1.57079632679, 0],
+      "geometry": {
+        "width": 30.3907,
+        "depth": 26.83008,
+        "height": 6.864
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Poço e túneis dos silos. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "parentId": "EQ-01",
+      "identification": {
+        "cadName": "Poço do Elevador e Túneis(Valor predeterminado)Estado de exibição 1_969ea5",
+        "technicalIdentifier": "CAD-OBJ-1508",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": [
+          "Poço do Elevador e Túneis(Valor predeterminado)Estado de exibição 1_969ea5",
+          "CAD-OBJ-1508"
+        ]
+      },
+      "cad": {
+        "sourceObjectId": 1508,
+        "sourceInstancePath": "build0/1/5:1009/11:1508",
+        "sourcePaths": ["build0/1/5:1009/11:1508"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 25.542, 0.11, -6.16, 1],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -0.10879052725, 0.1, 0.00232870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-SILO-PIT-TUNNELS",
+        "renderPartition": "Poço e túneis dos silos",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Poço do Elevador e Túneis(Valor predeterminado)Estado de exibição 1_969ea5",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [-15.30414052725, -6.764, -13.41271129525],
+        "max": [15.08655947275, 0.1, 13.41736870475]
+      },
+      "anchors": {
+        "base": [-0.10879052725, -6.764, 0.00232870475],
+        "center": [-0.10879052725, -3.332, 0.00232870475],
+        "top": [-0.10879052725, 0.1, 0.00232870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [15.08655947275, 11.92186870475],
+          [13.85080947275, 13.41736870475],
+          [-14.06839052725, 13.41736870475],
+          [-15.30414052725, 11.92186870475],
+          [-15.30414052725, -11.91721129525],
+          [-14.06839052725, -13.41271129525],
+          [13.85080947275, -13.41271129525],
+          [15.08655947275, -11.91721129525]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "none",
+        "minY": -6.764,
+        "maxY": 0.1
+      }
+    },
+    {
+      "id": "CAD-HOPPER-CONNECTIONS",
+      "category": "equipment",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Conexões e acessos das moegas",
+      "position": [2.49770947275, -4.525877441, 29.25108064887],
+      "rotation": [0, 1.57079632679, 0],
+      "geometry": {
+        "width": 11.295,
+        "depth": 40.05943888161,
+        "height": 26.558127832
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Conexões e acessos das moegas. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "parentId": "ED-01",
+      "identification": {
+        "cadName": "Pavilhão Moegas",
+        "technicalIdentifier": "CAD-OBJ-5",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Pavilhão Moegas", "CAD-OBJ-5"]
+      },
+      "cad": {
+        "sourceObjectId": 5,
+        "sourceInstancePath": "build0/1/1:5",
+        "sourcePaths": ["build0/1/1:5"],
+        "excludedPaths": ["build0/1/1:5/8:480", "build0/1/1:5/9:489", "build0/1/1:5/11:505"],
+        "worldMatrixCadMeters": [
+          0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 25.990000000000002, 0.025, -37.405, 1
+        ],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, -0.55679052725, 0.015, 31.24732870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-HOPPER-CONNECTIONS",
+        "renderPartition": "hopper connections, stairs, platforms and roof equipment; excluding architecture, pits and elevators",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Pavilhão Moegas",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [-3.14979052725, -4.525877441, 9.22136120807],
+        "max": [8.14520947275, 22.032250391, 49.28080008968]
+      },
+      "anchors": {
+        "base": [2.49770947275, -4.525877441, 29.25108064887],
+        "center": [2.49770947275, 8.753186475, 29.25108064887],
+        "top": [2.49770947275, 22.032250391, 29.25108064887]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [8.14520947275, 40.15032870475],
+          [-0.45768640072, 49.28080008968],
+          [-0.70166565072, 49.22626433968],
+          [-0.99833084527, 49.14446041539],
+          [-3.14979052725, 40.15032870475],
+          [-3.14979052725, 28.27632870475],
+          [0.13964570413, 9.24800549189],
+          [0.38900595413, 9.23013124189],
+          [0.65343830093, 9.22136120807],
+          [8.14520947275, 28.27632870475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "none",
+        "minY": -4.525877441,
+        "maxY": 22.032250391
+      }
+    },
+    {
+      "id": "CAD-WATER-TANK",
+      "category": "equipment",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Caixa d’água",
+      "position": [-59.95379052725, 0, 62.86032870475],
+      "rotation": [0, 0, 0],
+      "geometry": {
+        "width": 1.837243238,
+        "depth": 1.62,
+        "height": 7.8,
+        "radius": 0.81,
+        "bodyWidth": 1.62,
+        "bodyDepth": 1.62,
+        "bodyHeight": 7.8,
+        "dimensionDefinition": "body dimensions exclude ladder and upper assembly; full assembly uses bounds"
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Caixa d’água. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "identification": {
+        "cadName": "Caixa D'Água(Valor predeterminado)Estado de exibição 1",
+        "technicalIdentifier": "CAD-OBJ-4117",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": ["Caixa D'Água(Valor predeterminado)Estado de exibição 1", "CAD-OBJ-4117"]
+      },
+      "cad": {
+        "sourceObjectId": 4117,
+        "sourceInstancePath": "build0/1/8:4117",
+        "sourcePaths": ["build0/1/8:4117", "build0/1/7:4113", "build0/1/2:858"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 85.387, 0.01, -69.018, 1],
+        "worldMatrixNexus": [
+          1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -59.95379052725, 0, 62.86032870475, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-WATER-TANK",
+        "renderPartition": "water tank with its ladder and superior assembly",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "Caixa D'Água(Valor predeterminado)Estado de exibição 1",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [-60.98103376525, 0, 62.05032870475],
+        "max": [-59.14379052725, 10.09688709098, 63.67032870475]
+      },
+      "anchors": {
+        "base": [-59.95379052725, 0, 62.86032870475],
+        "center": [-60.06241214625, 5.04844354549, 62.86032870475],
+        "top": [-59.95379052725, 10.09688709098, 62.86032870475]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [-59.14379052725, 62.86032870475],
+          [-59.15609622725, 63.00098370475],
+          [-59.19263952725, 63.13736500475],
+          [-59.25230992725, 63.26532870475],
+          [-59.33329452725, 63.38098670475],
+          [-59.43313252725, 63.48082470475],
+          [-59.54879052725, 63.56180930475],
+          [-59.67675422725, 63.62147970475],
+          [-59.81313552725, 63.65802300475],
+          [-59.95379052725, 63.67032870475],
+          [-60.09444552725, 63.65802300475],
+          [-60.23082682725, 63.62147970475],
+          [-60.35879052725, 63.56180930475],
+          [-60.47444852725, 63.48082470475],
+          [-60.89147264025, 63.11379980475],
+          [-60.89192252725, 63.11334990475],
+          [-60.89228745825, 63.11282870475],
+          [-60.89445655125, 63.10865710475],
+          [-60.89490039725, 63.10777500475],
+          [-60.89526590325, 63.10691280475],
+          [-60.89563799425, 63.10599670475],
+          [-60.98103376525, 62.86359120475],
+          [-60.98103376525, 62.85882870475],
+          [-60.96309592596, 62.75963411205],
+          [-60.96291549929, 62.75896062375],
+          [-60.89490039725, 62.61288240475],
+          [-60.89445655125, 62.61200030475],
+          [-60.89228745825, 62.60782870475],
+          [-60.89192252725, 62.60730750475],
+          [-60.89147264025, 62.60685760475],
+          [-60.47444852725, 62.23983270475],
+          [-60.35879052725, 62.15884810475],
+          [-60.23082682725, 62.09917770475],
+          [-60.09444552725, 62.06263440475],
+          [-59.95379052725, 62.05032870475],
+          [-59.81313552725, 62.06263440475],
+          [-59.67675422725, 62.09917770475],
+          [-59.54879052725, 62.15884810475],
+          [-59.43313252725, 62.23983270475],
+          [-59.33329452725, 62.33967070475],
+          [-59.25230992725, 62.45532870475],
+          [-59.19263952725, 62.58329240475],
+          [-59.15609622725, 62.71967370475]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "polygon",
+        "points": [
+          [-59.15609622725, 62.71967370475],
+          [-59.19263952725, 62.58329240475],
+          [-59.25230992725, 62.45532870475],
+          [-59.33329452725, 62.33967070475],
+          [-59.43313252725, 62.23983270475],
+          [-59.54879052725, 62.15884810475],
+          [-59.67675422725, 62.09917770475],
+          [-59.81313552725, 62.06263440475],
+          [-59.95379052725, 62.05032870475],
+          [-60.09444552725, 62.06263440475],
+          [-60.23082682725, 62.09917770475],
+          [-60.35879052725, 62.15884810475],
+          [-60.47444852725, 62.23983270475],
+          [-60.57428652725, 62.33967070475],
+          [-60.65527112725, 62.45532870475],
+          [-60.71494152725, 62.58329240475],
+          [-60.75148482725, 62.71967370475],
+          [-60.76379052725, 62.86032870475],
+          [-60.75148482725, 63.00098370475],
+          [-60.71494152725, 63.13736500475],
+          [-60.65527112725, 63.26532870475],
+          [-60.57428652725, 63.38098670475],
+          [-60.47444852725, 63.48082470475],
+          [-60.35879052725, 63.56180930475],
+          [-60.23082682725, 63.62147970475],
+          [-60.09444552725, 63.65802300475],
+          [-59.95379052725, 63.67032870475],
+          [-59.81313552725, 63.65802300475],
+          [-59.67675422725, 63.62147970475],
+          [-59.54879052725, 63.56180930475],
+          [-59.43313252725, 63.48082470475],
+          [-59.33329452725, 63.38098670475],
+          [-59.25230992725, 63.26532870475],
+          [-59.19263952725, 63.13736500475],
+          [-59.15609622725, 63.00098370475],
+          [-59.14379052725, 62.86032870475],
+          [-59.15609622725, 62.71967370475]
+        ],
+        "minY": 0,
+        "maxY": 7.8,
+        "sourceInstancePath": "build0/1/8:4117"
+      }
+    },
+    {
+      "id": "CAD-OFFICE-ROOF",
+      "category": "buildings",
+      "photos": [],
+      "assumptions": [
+        "Associação da unidade confirmada pelo usuário. Orientação local escolhida pelos eixos dos silos e pelos setores de moegas, escritório e agrotóxicos; não é registro geográfico.",
+        "As dimensões são envelopes da geometria CAD, não capacidades ou dimensões nominais de fabricante."
+      ],
+      "pending": [
+        "Identificação operacional e levantamento georreferenciado permanecem UNRESOLVED; o nome exibido é uma convenção técnica baseada no CAD."
+      ],
+      "name": "Conjunto superior da cobertura do escritório",
+      "position": [60.30820947275, 3.865, -8.97267129525],
+      "rotation": [0, 1.57079632679, 0],
+      "geometry": {
+        "width": 0.15,
+        "depth": 13.78,
+        "height": 0.59465
+      },
+      "existence": "cad_verified",
+      "dimensionStatus": "cad_verified",
+      "functionStatus": "visible",
+      "description": "Conjunto superior da cobertura do escritório. Geometria verificada no CAD, registrada no Nexus por convenção local aprovada; cotas relativas preservadas.",
+      "parentId": "ED-04",
+      "identification": {
+        "cadName": "LVH-NXS-M00 - Telhado Escritório(Valor predeterminado)Estado de exibição 1",
+        "technicalIdentifier": "CAD-OBJ-912",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "identityStatus": "user_confirmed",
+        "nameStatus": "technical_convention",
+        "aliases": [
+          "LVH-NXS-M00 - Telhado Escritório(Valor predeterminado)Estado de exibição 1",
+          "CAD-OBJ-912"
+        ]
+      },
+      "cad": {
+        "sourceObjectId": 912,
+        "sourceInstancePath": "build0/1/4:912",
+        "sourcePaths": ["build0/1/4:912"],
+        "excludedPaths": [],
+        "worldMatrixCadMeters": [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, -34.875, 3.875, 9.605, 1],
+        "worldMatrixNexus": [
+          0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 60.30820947275, 3.865, -15.76267129525, 1
+        ],
+        "registrationId": "3tentos-local-cad-v1",
+        "renderOwnerId": "CAD-OFFICE-ROOF",
+        "renderPartition": "Conjunto superior da cobertura do escritório",
+        "associationStatus": "HIGH_CONFIDENCE",
+        "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+        "sourceName": "LVH-NXS-M00 - Telhado Escritório(Valor predeterminado)Estado de exibição 1",
+        "geometryFrame": {
+          "dimensions": "nexus_world_axes",
+          "rotation": "source_occurrence_root",
+          "placement": "baked_in_glb",
+          "note": "width/depth describe the selected parts or envelope along final Nexus world axes; rotation and worldMatrixNexus describe the original occurrence pivot. Do not rotate these world dimensions again or derive an OBB from width/depth plus rotation."
+        }
+      },
+      "bounds": {
+        "min": [60.23320947275, 3.865, -15.86267129525],
+        "max": [60.38320947275, 4.45965, -2.08267129525]
+      },
+      "anchors": {
+        "base": [60.30820947275, 3.865, -8.97267129525],
+        "center": [60.30820947275, 4.162325, -8.97267129525],
+        "top": [60.30820947275, 4.45965, -8.97267129525]
+      },
+      "footprint": {
+        "kind": "polygon",
+        "points": [
+          [60.38320947275, -2.08767129525],
+          [60.38313350275, -2.08680129525],
+          [60.38290793275, -2.08596129525],
+          [60.38253960275, -2.08517129525],
+          [60.38203969275, -2.08446129525],
+          [60.38142341275, -2.08384129525],
+          [60.38070947275, -2.08334129525],
+          [60.37991958275, -2.08297129525],
+          [60.37907771275, -2.08275129525],
+          [60.37820947275, -2.08267129525],
+          [60.23820947275, -2.08267129525],
+          [60.23734123275, -2.08275129525],
+          [60.23649936275, -2.08297129525],
+          [60.23570947275, -2.08334129525],
+          [60.23499553275, -2.08384129525],
+          [60.23437925275, -2.08446129525],
+          [60.23387934275, -2.08517129525],
+          [60.23351101275, -2.08596129525],
+          [60.23328544275, -2.08680129525],
+          [60.23320947275, -2.08767129525],
+          [60.23320947275, -15.85767129525],
+          [60.23328544275, -15.85853953525],
+          [60.23351101275, -15.85938139525],
+          [60.23387934275, -15.86017129525],
+          [60.23437925275, -15.86088523525],
+          [60.23499553275, -15.86150151525],
+          [60.23570947275, -15.86200141525],
+          [60.23649936275, -15.86236975525],
+          [60.23734123275, -15.86259532525],
+          [60.23820947275, -15.86267129525],
+          [60.37820947275, -15.86267129525],
+          [60.37907771275, -15.86259532525],
+          [60.37991958275, -15.86236975525],
+          [60.38070947275, -15.86200141525],
+          [60.38142341275, -15.86150151525],
+          [60.38203969275, -15.86088523525],
+          [60.38253960275, -15.86017129525],
+          [60.38290793275, -15.85938139525],
+          [60.38313350275, -15.85853953525],
+          [60.38320947275, -15.85767129525]
+        ],
+        "definition": "convex projection of actual vertices owned by this CAD partition; not a ground-contact footprint"
+      },
+      "collider": {
+        "kind": "none",
+        "minY": 3.865,
+        "maxY": 4.45965
+      }
     }
   ],
   "terrain": {
@@ -432,6 +2464,10 @@
       [-68.16, -61.44],
       [91.84, -61.44],
       [91.84, 65.28],
+      [-57, 62.89856],
+      [-57, 65.5],
+      [-63, 65.5],
+      [-63, 62.80256],
       [-68.16, 62.72]
     ],
     "yard": [
@@ -517,6 +2553,10 @@
         "points": [
           [-67.04, -24.8],
           [-67.04, 62.72],
+          [-63, 62.79320498301],
+          [-63, 65],
+          [-57, 65],
+          [-57, 62.90192525481],
           [74.24, 65.28],
           [74.08, -52.48],
           [-24.32, -53.12]
@@ -558,7 +2598,32 @@
         ],
         "type": "gate-open"
       }
-    ]
+    ],
+    "surfaceHeights": {
+      "site": 0.005,
+      "yard": 0.08,
+      "islands": 0.12,
+      "access": 0.085,
+      "highway": 0.0875,
+      "environment": -0.1,
+      "northSoil": -0.07,
+      "yardShoulder": 0.04
+    },
+    "localPatches": [
+      {
+        "id": "CAD-WATER-TANK-PAD",
+        "relatedElementId": "CAD-WATER-TANK",
+        "material": "concrete",
+        "height": 0.008,
+        "points": [
+          [-61.48103376525, 61.55032870475],
+          [-58.64379052725, 61.55032870475],
+          [-58.64379052725, 64.17032870475],
+          [-61.48103376525, 64.17032870475]
+        ]
+      }
+    ],
+    "northSoilEdgeZ": -68
   },
   "trees": [
     {
@@ -1122,7 +3187,7 @@
       "id": "VG-02"
     },
     {
-      "position": [50.56, 0, 58.24],
+      "position": [50.56, 0, 61],
       "type": "trimmed",
       "height": 1.8,
       "variant": 2,
@@ -1130,7 +3195,7 @@
       "id": "VG-02"
     },
     {
-      "position": [54.4, 0, 58.24],
+      "position": [54.4, 0, 61],
       "type": "trimmed",
       "height": 1.8,
       "variant": 0,
@@ -1825,5 +3890,128 @@
       "fov": 62,
       "label": "Passeio"
     }
+  },
+  "cadRegistration": {
+    "id": "3tentos-local-cad-v1",
+    "status": "local_integration",
+    "identityStatus": "user_confirmed",
+    "associationStatus": "HIGH_CONFIDENCE",
+    "source": {
+      "filename": "3dmodel.model",
+      "sha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+      "rootObjectId": 1,
+      "rootName": "Planta 3D - 3Tentos Agroindustrial - Giruá",
+      "repositoryCommitAudited": "87b3817f303d2856598eee6a203a08d39b77b1ff",
+      "auditFilename": "8ae5c19b-e1af-4dc4-9c7c-215a3f18c58d.model"
+    },
+    "auditInputs": [
+      {
+        "file": "cad-site-layout.json",
+        "sha256": "d84f6c209fdfe857256394f35ed96c9c6a219ee38be8c24eff032fb5e4f17ee1"
+      },
+      {
+        "file": "cad-silos.json",
+        "sha256": "692c4444fcac1597fdddded0a3ba275e8528fe5edda4d412a068935202c8f925"
+      },
+      {
+        "file": "cad-hierarchy-world (1).json",
+        "sha256": "e81c851f6e50b8b8e770dda68cdb7d820d84ab75df6577de46725bb93b4b54be"
+      }
+    ],
+    "sourceUnit": "millimeter",
+    "vertexScale": 0.001,
+    "registrationScale": 1,
+    "upAxis": "Y",
+    "sourceGroundY": 0.01,
+    "groundY": 0,
+    "localAdjustments": {
+      "status": "user_authorized_local_compatibility",
+      "trees": [
+        {
+          "index": 70,
+          "before": {
+            "position": [50.56, 0, 58.24],
+            "type": "trimmed",
+            "height": 1.8,
+            "variant": 2,
+            "rotation": 4.567182,
+            "id": "VG-02"
+          },
+          "afterPosition": [50.56, 0, 61]
+        },
+        {
+          "index": 71,
+          "before": {
+            "position": [54.4, 0, 58.24],
+            "type": "trimmed",
+            "height": 1.8,
+            "variant": 0,
+            "rotation": 0.682997,
+            "id": "VG-02"
+          },
+          "afterPosition": [54.4, 0, 61]
+        }
+      ],
+      "fenceOriginalSegment": [
+        [-67.04, 62.72],
+        [74.24, 65.28]
+      ],
+      "siteOriginalSegment": [
+        [91.84, 65.28],
+        [-68.16, 62.72]
+      ],
+      "relatedElementId": "CAD-WATER-TANK",
+      "fenceAddedPoints": [
+        [-63, 62.79320498301],
+        [-63, 65],
+        [-57, 65],
+        [-57, 62.90192525481]
+      ],
+      "siteAddedPoints": [
+        [-57, 62.89856],
+        [-57, 65.5],
+        [-63, 65.5],
+        [-63, 62.80256]
+      ],
+      "patchId": "CAD-WATER-TANK-PAD"
+    },
+    "cadAnchor": [25.59320947275, 0.01, -6.15767129525],
+    "nexusAnchor": [-0.16, 0, 0],
+    "translation": [25.43320947275, -0.01, -6.15767129525],
+    "rotationRadians": [0, 3.141592653589793, 0],
+    "matrixColumnMajorMeters": [
+      -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 25.43320947275, -0.01, -6.15767129525, 1
+    ],
+    "geographicOrientation": "UNRESOLVED",
+    "fieldVerticalDatum": "UNRESOLVED",
+    "registrationDefinition": "Local rigid convention: mean of four silo axes retained at original Nexus center, pi yaw agrees with hopper (+Z), office (+X/-Z) and pesticide pavilion (+X/+Z) sectors. No geographic fit or independent survey implied.",
+    "siloAssignments": [
+      {
+        "nexusId": "SILO-01",
+        "sourceObjectId": 4136,
+        "sourceAxisMeters": [37.593209961, 0.11, 4.339829590000001],
+        "nexusAxis": [-12.16000048825, 0.1, -10.49750088525]
+      },
+      {
+        "nexusId": "SILO-02",
+        "sourceObjectId": 4125,
+        "sourceAxisMeters": [13.593212234453125, 0.11, 4.339823940024977],
+        "nexusAxis": [11.8399972383, 0.1, -10.49749523527]
+      },
+      {
+        "nexusId": "SILO-03",
+        "sourceObjectId": 4147,
+        "sourceAxisMeters": [37.59320573454687, 0.11, -16.655166836024975],
+        "nexusAxis": [-12.1599962618, 0.1, 10.49749554077]
+      },
+      {
+        "nexusId": "SILO-04",
+        "sourceObjectId": 1531,
+        "sourceAxisMeters": [13.593209961000001, 0.11, -16.655171875],
+        "nexusAxis": [11.83999951175, 0.1, 10.49750057975]
+      }
+    ],
+    "renderPolicy": "CAD world matrices in meters, then this registration exactly once in Blender. React does not transform already placed GLBs. One owner per source instance path; children override only via disjoint excludedPaths.",
+    "groundCollisionPolicy": "Closed outer footprints of building wall meshes preserve no-interior walking; roofs and complete-assembly AABBs are not ground obstacles. Underground assemblies retain negative elevation and do not block their entire horizontal envelopes."
   }
 }

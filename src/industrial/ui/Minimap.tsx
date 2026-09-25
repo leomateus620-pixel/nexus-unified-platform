@@ -1,13 +1,28 @@
 import { site, elements } from "../data";
+import type { Layers } from "../types";
+import {
+  accessFootprint,
+  elementBounds,
+  elementFootprint,
+  groundY,
+  highwayWidth,
+  navigationBounds,
+} from "../scene/spatial";
 export function Minimap({
   camera,
   selected,
   onSelect,
+  layers,
 }: {
   camera: [number, number];
   selected: string | null;
   onSelect: (id: string) => void;
+  layers: Layers;
 }) {
+  const minX = Math.min(navigationBounds.min[0], site.terrain.highwayX - 8);
+  const minZ = navigationBounds.min[2];
+  const maxX = Math.max(navigationBounds.max[0], site.terrain.highwayX + 8);
+  const maxZ = navigationBounds.max[2];
   return (
     <div className="industrial-minimap industrial-overlay">
       <div>
@@ -15,25 +30,42 @@ export function Minimap({
         <span>+X → · +Z ↓</span>
       </div>
       <svg
-        viewBox="-80 -78 200 162"
+        viewBox={`${minX} ${minZ} ${maxX - minX} ${maxZ - minZ}`}
         role="img"
-        aria-label="Minimapa da implantação, orientação da Foto B"
+        aria-label="Minimapa da implantação no sistema local Nexus"
       >
-        <rect x="-80" y="-78" width="200" height="162" fill="#c7c8aa" />
+        <rect x={minX} y={minZ} width={maxX - minX} height={maxZ - minZ} fill="#c7c8aa" />
         <polygon points={site.terrain.site.map((p) => p.join(",")).join(" ")} fill="#71936a" />
         <polygon points={site.terrain.yard.map((p) => p.join(",")).join(" ")} fill="#bbb8a5" />
         {site.terrain.islands.map((p, i) => (
           <polygon key={i} points={p.map((v) => v.join(",")).join(" ")} fill="#71936a" />
         ))}
-        <path
-          d={`M ${site.terrain.access.map((p) => p.join(",")).join(" L ")}`}
-          fill="none"
-          stroke="#bbb8a5"
-          strokeWidth="8"
+        {(site.terrain.localPatches ?? []).map((patch) => (
+          <polygon
+            key={patch.id}
+            points={patch.points.map((point) => point.join(",")).join(" ")}
+            fill="#c6c4b4"
+          />
+        ))}
+        <polygon
+          points={accessFootprint.map((point) => point.join(",")).join(" ")}
+          fill="#bbb8a5"
         />
-        <path d={`M ${site.terrain.highwayX} -78 V84`} stroke="#626761" strokeWidth="8" />
+        <path
+          d={`M ${site.terrain.highwayX} ${minZ} V${maxZ}`}
+          stroke="#626761"
+          strokeWidth={highwayWidth}
+        />
         {elements
-          .filter((e) => ["silos", "buildings"].includes(e.category))
+          .filter(
+            (e) => ["silos", "buildings", "equipment"].includes(e.category) && layers[e.category],
+          )
+          // Projected tunnels/connections must not cover surface structures.
+          .sort((a, b) => {
+            const rank = (category: string) =>
+              category === "equipment" ? 0 : category === "buildings" ? 1 : 2;
+            return rank(a.category) - rank(b.category);
+          })
           .map((e) => (
             <g
               key={e.id}
@@ -49,38 +81,48 @@ export function Minimap({
               }}
               className="minimap-element"
             >
-              {e.category === "silos" ? (
-                <circle
-                  cx={e.position[0]}
-                  cy={e.position[2]}
-                  r={Number(e.geometry["radius"])}
-                  fill={selected === e.id ? "#ffb367" : "#e4e7df"}
-                  stroke="#53665e"
-                  strokeWidth=".9"
-                />
-              ) : (
-                <rect
-                  x={e.position[0] - Number(e.geometry["width"]) / 2}
-                  y={e.position[2] - Number(e.geometry["depth"]) / 2}
-                  width={Number(e.geometry["width"])}
-                  height={Number(e.geometry["depth"])}
-                  fill={selected === e.id ? "#ffb367" : "#ece7d8"}
-                  stroke="#677367"
-                  strokeWidth=".7"
-                />
-              )}
+              <title>
+                {e.name} · {e.id}
+                {e.identification ? ` · ${e.identification.cadName}` : ""}
+                {e.cad
+                  ? " · Contorno projetado da geometria; não representa contato com o solo"
+                  : ""}
+              </title>
+              <polygon
+                points={elementFootprint(e)
+                  .map((point) => point.join(","))
+                  .join(" ")}
+                fill={
+                  selected === e.id
+                    ? "#ffb367"
+                    : e.category === "silos"
+                      ? "#e4e7df"
+                      : e.category === "equipment"
+                        ? "#a9bbc0"
+                        : "#ece7d8"
+                }
+                fillOpacity={e.category === "equipment" ? (selected === e.id ? 0.65 : 0.22) : 1}
+                pointerEvents={
+                  e.category === "equipment" && elementBounds(e).min[1] < groundY - 0.3
+                    ? "visibleStroke"
+                    : "visiblePainted"
+                }
+                stroke="#53665e"
+                strokeWidth={selected === e.id ? 1.3 : 0.7}
+                strokeDasharray={elementBounds(e).min[1] < groundY - 0.3 ? "2 1" : undefined}
+              />
             </g>
           ))}
         <circle
-          cx={Math.max(-74, Math.min(115, camera[0]))}
-          cy={Math.max(-73, Math.min(78, camera[1]))}
+          cx={Math.max(minX + 4, Math.min(maxX - 4, camera[0]))}
+          cy={Math.max(minZ + 4, Math.min(maxZ - 4, camera[1]))}
           r="3.4"
           fill="#ef963d"
           stroke="#fff"
           strokeWidth="1.4"
         />
       </svg>
-      <small>Coordenadas locais · escala estimada</small>
+      <small>Coordenadas locais · CAD e base fotográfica</small>
     </div>
   );
 }

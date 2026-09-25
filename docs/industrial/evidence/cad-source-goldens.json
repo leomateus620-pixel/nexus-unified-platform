@@ -1,0 +1,2568 @@
+{
+  "schemaVersion": "3tentos-cad-source-goldens-1",
+  "source": {
+    "sha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+    "bytes": 322380101,
+    "unit": "millimeter",
+    "rootObjectId": 1,
+    "rootName": "Planta 3D - 3Tentos Agroindustrial - Giruá"
+  },
+  "coordinateSystem": {
+    "unit": "meter",
+    "basis": "original CAD X/Y/Z; Y up by geometric evidence",
+    "groundReferenceY": 0.01,
+    "registrationApplied": false,
+    "matrixConvention": "nested row-major 4x4; column vectors"
+  },
+  "method": "Selection paths from the supplied verified audit; all measurement values recalculated directly from original mesh vertices using accumulated build/component transforms, before any Blender simplification or Nexus registration.",
+  "roots": [
+    {
+      "sourceObjectId": 2,
+      "sourceInstancePath": "build0/1/0:2",
+      "sourceName": "Terreno(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -95.0,
+          0.0,
+          -77.0
+        ],
+        "max": [
+          95.0,
+          0.01,
+          77.0
+        ],
+        "size": [
+          190.0,
+          0.01,
+          154.0
+        ]
+      },
+      "centerAabbMeters": [
+        0.0,
+        0.005,
+        0.0
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 8,
+      "expandedTriangles": 12
+    },
+    {
+      "sourceObjectId": 5,
+      "sourceInstancePath": "build0/1/1:5",
+      "sourceName": "Pavilhão Moegas",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.990000000000002
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -37.405
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          12.89,
+          -9.815,
+          -55.438471384930004
+        ],
+        "max": [
+          39.09,
+          23.047,
+          -15.37903250332
+        ],
+        "size": [
+          26.200000000000003,
+          32.862,
+          40.059438881610006
+        ]
+      },
+      "centerAabbMeters": [
+        25.990000000000002,
+        6.6160000000000005,
+        -35.408751944125
+      ],
+      "meshInstances": 843,
+      "expandedVertices": 890152,
+      "expandedTriangles": 1779094
+    },
+    {
+      "sourceObjectId": 858,
+      "sourceInstancePath": "build0/1/2:858",
+      "sourceName": "SRG - SUPERIOR(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          84.69103125000001
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          8.281308594
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -69.982117188
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          84.63462766,
+          7.8100007940000005,
+          -69.165626888
+        ],
+        "max": [
+          85.73274125,
+          10.034006594000001,
+          -68.865627188
+        ],
+        "size": [
+          1.098113589999997,
+          2.2240058000000005,
+          0.29999970000000076
+        ]
+      },
+      "centerAabbMeters": [
+        85.183684455,
+        8.922003694,
+        -69.015627038
+      ],
+      "meshInstances": 22,
+      "expandedVertices": 25791,
+      "expandedTriangles": 51530
+    },
+    {
+      "sourceObjectId": 903,
+      "sourceInstancePath": "build0/1/3:903",
+      "sourceName": "Pavilhão Agrotóxicos(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          -28.073
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.01
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -60.2
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -34.273,
+          0.01,
+          -65.7
+        ],
+        "max": [
+          -21.873,
+          7.51,
+          -54.7
+        ],
+        "size": [
+          12.400000000000002,
+          7.5,
+          11.0
+        ]
+      },
+      "centerAabbMeters": [
+        -28.073,
+        3.76,
+        -60.2
+      ],
+      "meshInstances": 4,
+      "expandedVertices": 70,
+      "expandedTriangles": 100
+    },
+    {
+      "sourceObjectId": 912,
+      "sourceInstancePath": "build0/1/4:912",
+      "sourceName": "LVH-NXS-M00 - Telhado Escritório(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -34.875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.875
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          9.605
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -34.95,
+          3.875,
+          -4.075
+        ],
+        "max": [
+          -34.800000000000004,
+          4.46965,
+          9.705
+        ],
+        "size": [
+          0.14999999999999858,
+          0.5946499999999997,
+          13.780000000000001
+        ]
+      },
+      "centerAabbMeters": [
+        -34.875,
+        4.172325,
+        2.815
+      ],
+      "meshInstances": 48,
+      "expandedVertices": 124198,
+      "expandedTriangles": 247766
+    },
+    {
+      "sourceObjectId": 1009,
+      "sourceInstancePath": "build0/1/5:1009",
+      "sourceName": "Elevador e Túneis",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.542
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          10.34665,
+          -6.7540000000000004,
+          -37.09603910968
+        ],
+        "max": [
+          40.73735,
+          35.106861918999996,
+          17.169709939
+        ],
+        "size": [
+          30.3907,
+          41.860861918999994,
+          54.26574904868
+        ]
+      },
+      "centerAabbMeters": [
+        25.542,
+        14.176430959499998,
+        -9.96316458534
+      ],
+      "meshInstances": 1850,
+      "expandedVertices": 2198581,
+      "expandedTriangles": 4416788
+    },
+    {
+      "sourceObjectId": 1531,
+      "sourceInstancePath": "build0/1/6:1531",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.542
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          4.201728167274001,
+          0.11,
+          -26.046653668726
+        ],
+        "max": [
+          22.984691754726,
+          21.289475,
+          -7.263690081274
+        ],
+        "size": [
+          18.782963587452,
+          21.179475,
+          18.782963587452002
+        ]
+      },
+      "centerAabbMeters": [
+        13.593209961000001,
+        10.6997375,
+        -16.655171875
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 4113,
+      "sourceInstancePath": "build0/1/7:4113",
+      "sourceName": "Escada Caixa D'Água",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          86.321335938
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          2.086
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -69.018
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          86.15537683800001,
+          0.01,
+          -69.272325
+        ],
+        "max": [
+          86.41424323800001,
+          10.10688709098145,
+          -68.736325
+        ],
+        "size": [
+          0.2588664000000023,
+          10.09688709098145,
+          0.5360000000000014
+        ]
+      },
+      "centerAabbMeters": [
+        86.28481003800002,
+        5.058443545490725,
+        -69.004325
+      ],
+      "meshInstances": 382,
+      "expandedVertices": 445806,
+      "expandedTriangles": 889254
+    },
+    {
+      "sourceObjectId": 4117,
+      "sourceInstancePath": "build0/1/8:4117",
+      "sourceName": "Caixa D'Água(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          85.387
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.01
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -69.018
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          84.577,
+          0.01,
+          -69.828
+        ],
+        "max": [
+          86.197,
+          7.8100000000000005,
+          -68.208
+        ],
+        "size": [
+          1.6200000000000045,
+          7.800000000000001,
+          1.6200000000000045
+        ]
+      },
+      "centerAabbMeters": [
+        85.387,
+        3.91,
+        -69.018
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 416,
+      "expandedTriangles": 720
+    },
+    {
+      "sourceObjectId": 4120,
+      "sourceInstancePath": "build0/1/9:4120",
+      "sourceName": "Escritório(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -34.875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.815
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -39.825,
+          0.025,
+          -4.16
+        ],
+        "max": [
+          -29.925,
+          3.875,
+          9.790000000000001
+        ],
+        "size": [
+          9.900000000000002,
+          3.85,
+          13.950000000000001
+        ]
+      },
+      "centerAabbMeters": [
+        -34.875,
+        1.95,
+        2.8150000000000004
+      ],
+      "meshInstances": 2,
+      "expandedVertices": 137,
+      "expandedTriangles": 244
+    },
+    {
+      "sourceObjectId": 4125,
+      "sourceInstancePath": "build0/1/10:4125",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.866025,
+          0.0,
+          0.5,
+          16.707898438
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -0.5,
+          0.0,
+          0.866025,
+          -11.255712891
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          4.194658278945586,
+          0.11,
+          -5.404805191126211
+        ],
+        "max": [
+          22.991766189960664,
+          21.289475,
+          13.738377895532514
+        ],
+        "size": [
+          18.79710791101508,
+          21.179475,
+          19.143183086658723
+        ]
+      },
+      "centerAabbMeters": [
+        13.593212234453125,
+        10.6997375,
+        4.166786352203151
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 4136,
+      "sourceInstancePath": "build0/1/11:4136",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          25.644419922
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -6.155342285
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          28.201728167274,
+          0.11,
+          -5.051652203725999
+        ],
+        "max": [
+          46.984691754726,
+          21.289475,
+          13.731311383725998
+        ],
+        "size": [
+          18.782963587452002,
+          21.179475,
+          18.782963587452
+        ]
+      },
+      "centerAabbMeters": [
+        37.593209961,
+        10.6997375,
+        4.339829589999999
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 4147,
+      "sourceInstancePath": "build0/1/12:4147",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          -0.866025,
+          0.0,
+          -0.5,
+          34.478519530999996
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          0.5,
+          0.0,
+          -0.866025,
+          -1.059630005
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          28.194651779039333,
+          0.11,
+          -26.053720791532513
+        ],
+        "max": [
+          46.99175969005441,
+          21.289475,
+          -6.910537704873788
+        ],
+        "size": [
+          18.797107911015075,
+          21.179475,
+          19.143183086658723
+        ]
+      },
+      "centerAabbMeters": [
+        37.59320573454687,
+        10.6997375,
+        -16.48212924820315
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    }
+  ],
+  "metrics": [
+    {
+      "sourceObjectId": 2,
+      "sourceInstancePath": "build0/1/0:2",
+      "sourceName": "Terreno(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -95.0,
+          0.0,
+          -77.0
+        ],
+        "max": [
+          95.0,
+          0.01,
+          77.0
+        ],
+        "size": [
+          190.0,
+          0.01,
+          154.0
+        ]
+      },
+      "centerAabbMeters": [
+        0.0,
+        0.005,
+        0.0
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 8,
+      "expandedTriangles": 12
+    },
+    {
+      "sourceObjectId": 5,
+      "sourceInstancePath": "build0/1/1:5",
+      "sourceName": "Pavilhão Moegas",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.990000000000002
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -37.405
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          12.89,
+          -9.815,
+          -55.438471384930004
+        ],
+        "max": [
+          39.09,
+          23.047,
+          -15.37903250332
+        ],
+        "size": [
+          26.200000000000003,
+          32.862,
+          40.059438881610006
+        ]
+      },
+      "centerAabbMeters": [
+        25.990000000000002,
+        6.6160000000000005,
+        -35.408751944125
+      ],
+      "meshInstances": 843,
+      "expandedVertices": 890152,
+      "expandedTriangles": 1779094
+    },
+    {
+      "sourceObjectId": 858,
+      "sourceInstancePath": "build0/1/2:858",
+      "sourceName": "SRG - SUPERIOR(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          84.69103125000001
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          8.281308594
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -69.982117188
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          84.63462766,
+          7.8100007940000005,
+          -69.165626888
+        ],
+        "max": [
+          85.73274125,
+          10.034006594000001,
+          -68.865627188
+        ],
+        "size": [
+          1.098113589999997,
+          2.2240058000000005,
+          0.29999970000000076
+        ]
+      },
+      "centerAabbMeters": [
+        85.183684455,
+        8.922003694,
+        -69.015627038
+      ],
+      "meshInstances": 22,
+      "expandedVertices": 25791,
+      "expandedTriangles": 51530
+    },
+    {
+      "sourceObjectId": 903,
+      "sourceInstancePath": "build0/1/3:903",
+      "sourceName": "Pavilhão Agrotóxicos(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          -28.073
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.01
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -60.2
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -34.273,
+          0.01,
+          -65.7
+        ],
+        "max": [
+          -21.873,
+          7.51,
+          -54.7
+        ],
+        "size": [
+          12.400000000000002,
+          7.5,
+          11.0
+        ]
+      },
+      "centerAabbMeters": [
+        -28.073,
+        3.76,
+        -60.2
+      ],
+      "meshInstances": 4,
+      "expandedVertices": 70,
+      "expandedTriangles": 100
+    },
+    {
+      "sourceObjectId": 912,
+      "sourceInstancePath": "build0/1/4:912",
+      "sourceName": "LVH-NXS-M00 - Telhado Escritório(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -34.875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.875
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          9.605
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -34.95,
+          3.875,
+          -4.075
+        ],
+        "max": [
+          -34.800000000000004,
+          4.46965,
+          9.705
+        ],
+        "size": [
+          0.14999999999999858,
+          0.5946499999999997,
+          13.780000000000001
+        ]
+      },
+      "centerAabbMeters": [
+        -34.875,
+        4.172325,
+        2.815
+      ],
+      "meshInstances": 48,
+      "expandedVertices": 124198,
+      "expandedTriangles": 247766
+    },
+    {
+      "sourceObjectId": 1009,
+      "sourceInstancePath": "build0/1/5:1009",
+      "sourceName": "Elevador e Túneis",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.542
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          10.34665,
+          -6.7540000000000004,
+          -37.09603910968
+        ],
+        "max": [
+          40.73735,
+          35.106861918999996,
+          17.169709939
+        ],
+        "size": [
+          30.3907,
+          41.860861918999994,
+          54.26574904868
+        ]
+      },
+      "centerAabbMeters": [
+        25.542,
+        14.176430959499998,
+        -9.96316458534
+      ],
+      "meshInstances": 1850,
+      "expandedVertices": 2198581,
+      "expandedTriangles": 4416788
+    },
+    {
+      "sourceObjectId": 1531,
+      "sourceInstancePath": "build0/1/6:1531",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.542
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          4.201728167274001,
+          0.11,
+          -26.046653668726
+        ],
+        "max": [
+          22.984691754726,
+          21.289475,
+          -7.263690081274
+        ],
+        "size": [
+          18.782963587452,
+          21.179475,
+          18.782963587452002
+        ]
+      },
+      "centerAabbMeters": [
+        13.593209961000001,
+        10.6997375,
+        -16.655171875
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 4113,
+      "sourceInstancePath": "build0/1/7:4113",
+      "sourceName": "Escada Caixa D'Água",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          86.321335938
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          2.086
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -69.018
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          86.15537683800001,
+          0.01,
+          -69.272325
+        ],
+        "max": [
+          86.41424323800001,
+          10.10688709098145,
+          -68.736325
+        ],
+        "size": [
+          0.2588664000000023,
+          10.09688709098145,
+          0.5360000000000014
+        ]
+      },
+      "centerAabbMeters": [
+        86.28481003800002,
+        5.058443545490725,
+        -69.004325
+      ],
+      "meshInstances": 382,
+      "expandedVertices": 445806,
+      "expandedTriangles": 889254
+    },
+    {
+      "sourceObjectId": 4117,
+      "sourceInstancePath": "build0/1/8:4117",
+      "sourceName": "Caixa D'Água(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          85.387
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.01
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -69.018
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          84.577,
+          0.01,
+          -69.828
+        ],
+        "max": [
+          86.197,
+          7.8100000000000005,
+          -68.208
+        ],
+        "size": [
+          1.6200000000000045,
+          7.800000000000001,
+          1.6200000000000045
+        ]
+      },
+      "centerAabbMeters": [
+        85.387,
+        3.91,
+        -69.018
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 416,
+      "expandedTriangles": 720
+    },
+    {
+      "sourceObjectId": 4120,
+      "sourceInstancePath": "build0/1/9:4120",
+      "sourceName": "Escritório(Valor predeterminado)Estado de exibição 1",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -34.875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.815
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -39.825,
+          0.025,
+          -4.16
+        ],
+        "max": [
+          -29.925,
+          3.875,
+          9.790000000000001
+        ],
+        "size": [
+          9.900000000000002,
+          3.85,
+          13.950000000000001
+        ]
+      },
+      "centerAabbMeters": [
+        -34.875,
+        1.95,
+        2.8150000000000004
+      ],
+      "meshInstances": 2,
+      "expandedVertices": 137,
+      "expandedTriangles": 244
+    },
+    {
+      "sourceObjectId": 4125,
+      "sourceInstancePath": "build0/1/10:4125",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.866025,
+          0.0,
+          0.5,
+          16.707898438
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -0.5,
+          0.0,
+          0.866025,
+          -11.255712891
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          4.194658278945586,
+          0.11,
+          -5.404805191126211
+        ],
+        "max": [
+          22.991766189960664,
+          21.289475,
+          13.738377895532514
+        ],
+        "size": [
+          18.79710791101508,
+          21.179475,
+          19.143183086658723
+        ]
+      },
+      "centerAabbMeters": [
+        13.593212234453125,
+        10.6997375,
+        4.166786352203151
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 4136,
+      "sourceInstancePath": "build0/1/11:4136",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          25.644419922
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -6.155342285
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          28.201728167274,
+          0.11,
+          -5.051652203725999
+        ],
+        "max": [
+          46.984691754726,
+          21.289475,
+          13.731311383725998
+        ],
+        "size": [
+          18.782963587452002,
+          21.179475,
+          18.782963587452
+        ]
+      },
+      "centerAabbMeters": [
+        37.593209961,
+        10.6997375,
+        4.339829589999999
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 4147,
+      "sourceInstancePath": "build0/1/12:4147",
+      "sourceName": "Montagem Silo Adequado",
+      "parentSourceInstancePath": "build0/1",
+      "worldMatrixMeters": [
+        [
+          -0.866025,
+          0.0,
+          -0.5,
+          34.478519530999996
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          0.5,
+          0.0,
+          -0.866025,
+          -1.059630005
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          28.194651779039333,
+          0.11,
+          -26.053720791532513
+        ],
+        "max": [
+          46.99175969005441,
+          21.289475,
+          -6.910537704873788
+        ],
+        "size": [
+          18.797107911015075,
+          21.179475,
+          19.143183086658723
+        ]
+      },
+      "centerAabbMeters": [
+        37.59320573454687,
+        10.6997375,
+        -16.48212924820315
+      ],
+      "meshInstances": 3117,
+      "expandedVertices": 3202229,
+      "expandedTriangles": 6395244
+    },
+    {
+      "sourceObjectId": 480,
+      "sourceInstancePath": "build0/1/1:5/8:480",
+      "sourceName": "Pavilhão Moegas(Valor predeterminado)Estado de exibição 1_969ea5",
+      "parentSourceInstancePath": "build0/1/1:5",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.990000000000002
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -37.405
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          12.89,
+          -9.815,
+          -46.855000000000004
+        ],
+        "max": [
+          39.09,
+          11.975,
+          -28.035
+        ],
+        "size": [
+          26.200000000000003,
+          21.79,
+          18.820000000000004
+        ]
+      },
+      "centerAabbMeters": [
+        25.990000000000002,
+        1.08,
+        -37.445
+      ],
+      "meshInstances": 4,
+      "expandedVertices": 277,
+      "expandedTriangles": 566
+    },
+    {
+      "sourceObjectId": 481,
+      "sourceInstancePath": "build0/1/1:5/8:480/0:481",
+      "sourceName": "body2479",
+      "parentSourceInstancePath": "build0/1/1:5/8:480",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.990000000000002
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -37.405
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          13.89,
+          0.025,
+          -46.555
+        ],
+        "max": [
+          38.09,
+          6.025,
+          -28.255
+        ],
+        "size": [
+          24.200000000000003,
+          6.0,
+          18.3
+        ]
+      },
+      "centerAabbMeters": [
+        25.990000000000002,
+        3.0250000000000004,
+        -37.405
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 48,
+      "expandedTriangles": 112
+    },
+    {
+      "sourceObjectId": 485,
+      "sourceInstancePath": "build0/1/1:5/8:480/2:485",
+      "sourceName": "body2366",
+      "parentSourceInstancePath": "build0/1/1:5/8:480",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.990000000000002
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -37.405
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          12.89,
+          6.025,
+          -46.855000000000004
+        ],
+        "max": [
+          39.09,
+          11.975,
+          -28.035
+        ],
+        "size": [
+          26.200000000000003,
+          5.949999999999999,
+          18.820000000000004
+        ]
+      },
+      "centerAabbMeters": [
+        25.990000000000002,
+        9.0,
+        -37.445
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 30,
+      "expandedTriangles": 32
+    },
+    {
+      "sourceObjectId": 487,
+      "sourceInstancePath": "build0/1/1:5/8:480/3:487",
+      "sourceName": "body2722",
+      "parentSourceInstancePath": "build0/1/1:5/8:480",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.990000000000002
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -37.405
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          14.09,
+          -9.815,
+          -46.355000000000004
+        ],
+        "max": [
+          37.89,
+          1.235,
+          -28.455000000000002
+        ],
+        "size": [
+          23.8,
+          11.049999999999999,
+          17.900000000000002
+        ]
+      },
+      "centerAabbMeters": [
+        25.990000000000002,
+        -4.29,
+        -37.405
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 189,
+      "expandedTriangles": 414
+    },
+    {
+      "sourceObjectId": 489,
+      "sourceInstancePath": "build0/1/1:5/9:489",
+      "sourceName": "Elevador das Moegas - 01",
+      "parentSourceInstancePath": "build0/1/1:5",
+      "worldMatrixMeters": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          22.1545
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -9.378
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -40.395
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          21.89,
+          -9.803,
+          -41.002
+        ],
+        "max": [
+          22.419,
+          23.047,
+          -39.315
+        ],
+        "size": [
+          0.5289999999999999,
+          32.85,
+          1.6870000000000047
+        ]
+      },
+      "centerAabbMeters": [
+        22.1545,
+        6.622,
+        -40.158500000000004
+      ],
+      "meshInstances": 19,
+      "expandedVertices": 1517,
+      "expandedTriangles": 3294
+    },
+    {
+      "sourceObjectId": 505,
+      "sourceInstancePath": "build0/1/1:5/11:505",
+      "sourceName": "Elevador das Moegas - 02",
+      "parentSourceInstancePath": "build0/1/1:5",
+      "worldMatrixMeters": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          23.459
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -9.378
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -40.281
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          23.2215,
+          -9.803,
+          -40.861000000000004
+        ],
+        "max": [
+          23.6965,
+          21.047,
+          -39.041000000000004
+        ],
+        "size": [
+          0.4750000000000014,
+          30.85,
+          1.8200000000000003
+        ]
+      },
+      "centerAabbMeters": [
+        23.459,
+        5.622,
+        -39.95100000000001
+      ],
+      "meshInstances": 17,
+      "expandedVertices": 1357,
+      "expandedTriangles": 2942
+    },
+    {
+      "sourceObjectId": 906,
+      "sourceInstancePath": "build0/1/3:903/1:906",
+      "sourceName": "body479805",
+      "parentSourceInstancePath": "build0/1/3:903",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          -28.073
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.01
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -60.2
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -33.273,
+          0.01,
+          -65.4
+        ],
+        "max": [
+          -22.873,
+          6.01,
+          -55.0
+        ],
+        "size": [
+          10.400000000000002,
+          6.0,
+          10.400000000000006
+        ]
+      },
+      "centerAabbMeters": [
+        -28.073,
+        3.01,
+        -60.2
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 28,
+      "expandedTriangles": 48
+    },
+    {
+      "sourceObjectId": 910,
+      "sourceInstancePath": "build0/1/3:903/3:910",
+      "sourceName": "body479703",
+      "parentSourceInstancePath": "build0/1/3:903",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          -28.073
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.01
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -60.2
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -34.273,
+          6.01,
+          -65.7
+        ],
+        "max": [
+          -21.873,
+          7.51,
+          -54.7
+        ],
+        "size": [
+          12.400000000000002,
+          1.5,
+          11.0
+        ]
+      },
+      "centerAabbMeters": [
+        -28.073,
+        6.76,
+        -60.2
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 24,
+      "expandedTriangles": 32
+    },
+    {
+      "sourceObjectId": 1508,
+      "sourceInstancePath": "build0/1/5:1009/11:1508",
+      "sourceName": "Poço do Elevador e Túneis(Valor predeterminado)Estado de exibição 1_969ea5",
+      "parentSourceInstancePath": "build0/1/5:1009",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.542
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          10.34665,
+          -6.7540000000000004,
+          -19.57504
+        ],
+        "max": [
+          40.73735,
+          0.11,
+          7.255040000000001
+        ],
+        "size": [
+          30.3907,
+          6.864000000000001,
+          26.830080000000002
+        ]
+      },
+      "centerAabbMeters": [
+        25.542,
+        -3.322,
+        -6.16
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 96,
+      "expandedTriangles": 188
+    },
+    {
+      "sourceObjectId": 1511,
+      "sourceInstancePath": "build0/1/5:1009/12:1511",
+      "sourceName": "Elevador dos Silos",
+      "parentSourceInstancePath": "build0/1/5:1009",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          25.6035
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -6.328
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -7.172500061
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          24.523500000000002,
+          -6.753,
+          -7.437000061
+        ],
+        "max": [
+          26.2105,
+          35.097,
+          -6.908000061
+        ],
+        "size": [
+          1.6869999999999976,
+          41.85,
+          0.5289999999999999
+        ]
+      },
+      "centerAabbMeters": [
+        25.367,
+        14.172,
+        -7.172500061
+      ],
+      "meshInstances": 22,
+      "expandedVertices": 1757,
+      "expandedTriangles": 3822
+    },
+    {
+      "sourceObjectId": 4121,
+      "sourceInstancePath": "build0/1/9:4120/0:4121",
+      "sourceName": "body433",
+      "parentSourceInstancePath": "build0/1/9:4120",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -34.875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.815
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -39.825,
+          2.875,
+          -4.16
+        ],
+        "max": [
+          -29.925,
+          3.875,
+          9.790000000000001
+        ],
+        "size": [
+          9.900000000000002,
+          1.0,
+          13.950000000000001
+        ]
+      },
+      "centerAabbMeters": [
+        -34.875,
+        3.375,
+        2.8150000000000004
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 49,
+      "expandedTriangles": 68
+    },
+    {
+      "sourceObjectId": 4123,
+      "sourceInstancePath": "build0/1/9:4120/1:4123",
+      "sourceName": "body453",
+      "parentSourceInstancePath": "build0/1/9:4120",
+      "worldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -34.875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.815
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "boundsMeters": {
+        "min": [
+          -38.725,
+          0.025,
+          -3.06
+        ],
+        "max": [
+          -31.025000000000002,
+          2.875,
+          8.69
+        ],
+        "size": [
+          7.699999999999999,
+          2.85,
+          11.75
+        ]
+      },
+      "centerAabbMeters": [
+        -34.875,
+        1.45,
+        2.8149999999999995
+      ],
+      "meshInstances": 1,
+      "expandedVertices": 88,
+      "expandedTriangles": 176
+    }
+  ],
+  "silos": [
+    {
+      "reviewId": "CAD-SILO-01",
+      "sourceParentObjectId": 1531,
+      "sourceInstancePath": "build0/1/6:1531",
+      "sourceBodyAssemblyId": 3727,
+      "sourceBodyMeshId": 3730,
+      "sourceRoofMeshId": 3728,
+      "axisAtBaseMeters": [
+        13.593209961000001,
+        0.11,
+        -16.655171875
+      ],
+      "axisDefinition": "Transformed local origin of source body assembly 3727, corroborated by circular lower roof rings in the Phase 1 audit.",
+      "assemblyWorldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          25.542
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyWorldMatrixMeters": [
+        [
+          0.862226,
+          0.0,
+          0.506524,
+          13.593209961000001
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -0.506524,
+          0.0,
+          0.862226,
+          -16.655171875
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "bodyEnvelopeHeightMeters": 14.5,
+      "roofBaseYMeters": 14.61,
+      "roofTopYMeters": 20.113,
+      "roofEnvelopeHeightMeters": 5.503,
+      "assemblyBaseYMeters": 0.11,
+      "assemblyTopYMeters": 21.289475,
+      "nominalDiameterStatus": "NOT DETERMINABLE FROM SOURCE",
+      "nominalShellOnlyHeightStatus": "UNRESOLVED"
+    },
+    {
+      "reviewId": "CAD-SILO-02",
+      "sourceParentObjectId": 4147,
+      "sourceInstancePath": "build0/1/12:4147",
+      "sourceBodyAssemblyId": 3727,
+      "sourceBodyMeshId": 3730,
+      "sourceRoofMeshId": 3728,
+      "axisAtBaseMeters": [
+        37.59320573454687,
+        0.11,
+        -16.655166836024975
+      ],
+      "axisDefinition": "Transformed local origin of source body assembly 3727, corroborated by circular lower roof rings in the Phase 1 audit.",
+      "assemblyWorldMatrixMeters": [
+        [
+          -0.866025,
+          0.0,
+          -0.5,
+          34.478519530999996
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          0.5,
+          0.0,
+          -0.866025,
+          -1.059630005
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyWorldMatrixMeters": [
+        [
+          0.8697754471000001,
+          0.0,
+          -0.49344727165000013,
+          37.59320573454687
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          0.4934472716500001,
+          0.0,
+          0.8697754471,
+          -16.655166836024975
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "bodyEnvelopeHeightMeters": 14.5,
+      "roofBaseYMeters": 14.61,
+      "roofTopYMeters": 20.113,
+      "roofEnvelopeHeightMeters": 5.503,
+      "assemblyBaseYMeters": 0.11,
+      "assemblyTopYMeters": 21.289475,
+      "nominalDiameterStatus": "NOT DETERMINABLE FROM SOURCE",
+      "nominalShellOnlyHeightStatus": "UNRESOLVED"
+    },
+    {
+      "reviewId": "CAD-SILO-03",
+      "sourceParentObjectId": 4125,
+      "sourceInstancePath": "build0/1/10:4125",
+      "sourceBodyAssemblyId": 3727,
+      "sourceBodyMeshId": 3730,
+      "sourceRoofMeshId": 3728,
+      "axisAtBaseMeters": [
+        13.593212234453125,
+        0.11,
+        4.339823940024977
+      ],
+      "axisDefinition": "Transformed local origin of source body assembly 3727, corroborated by circular lower roof rings in the Phase 1 audit.",
+      "assemblyWorldMatrixMeters": [
+        [
+          0.866025,
+          0.0,
+          0.5,
+          16.707898438
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -0.5,
+          0.0,
+          0.866025,
+          -11.255712891
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyWorldMatrixMeters": [
+        [
+          -0.8697754471000001,
+          0.0,
+          0.49344727165000013,
+          13.593212234453125
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -0.4934472716500001,
+          0.0,
+          -0.8697754471,
+          4.339823940024977
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "bodyEnvelopeHeightMeters": 14.5,
+      "roofBaseYMeters": 14.61,
+      "roofTopYMeters": 20.113,
+      "roofEnvelopeHeightMeters": 5.503,
+      "assemblyBaseYMeters": 0.11,
+      "assemblyTopYMeters": 21.289475,
+      "nominalDiameterStatus": "NOT DETERMINABLE FROM SOURCE",
+      "nominalShellOnlyHeightStatus": "UNRESOLVED"
+    },
+    {
+      "reviewId": "CAD-SILO-04",
+      "sourceParentObjectId": 4136,
+      "sourceInstancePath": "build0/1/11:4136",
+      "sourceBodyAssemblyId": 3727,
+      "sourceBodyMeshId": 3730,
+      "sourceRoofMeshId": 3728,
+      "axisAtBaseMeters": [
+        37.593209961,
+        0.11,
+        4.339829590000001
+      ],
+      "axisDefinition": "Transformed local origin of source body assembly 3727, corroborated by circular lower roof rings in the Phase 1 audit.",
+      "assemblyWorldMatrixMeters": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          25.644419922
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0,
+          -6.155342285
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyWorldMatrixMeters": [
+        [
+          -0.862226,
+          0.0,
+          -0.506524,
+          37.593209961
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.11
+        ],
+        [
+          0.506524,
+          0.0,
+          -0.862226,
+          4.339829590000001
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "bodyOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "bodyEnvelopeHeightMeters": 14.5,
+      "roofBaseYMeters": 14.61,
+      "roofTopYMeters": 20.113,
+      "roofEnvelopeHeightMeters": 5.503,
+      "assemblyBaseYMeters": 0.11,
+      "assemblyTopYMeters": 21.289475,
+      "nominalDiameterStatus": "NOT DETERMINABLE FROM SOURCE",
+      "nominalShellOnlyHeightStatus": "UNRESOLVED"
+    }
+  ],
+  "siloAxisDistances": [
+    {
+      "fromReviewId": "CAD-SILO-01",
+      "toReviewId": "CAD-SILO-02",
+      "deltaXYZMeters": [
+        23.99999577354687,
+        0.0,
+        5.038975025684067e-06
+      ],
+      "axisDistanceXZMeters": 23.9999957735474
+    },
+    {
+      "fromReviewId": "CAD-SILO-01",
+      "toReviewId": "CAD-SILO-03",
+      "deltaXYZMeters": [
+        2.2734531235357736e-06,
+        0.0,
+        20.99499581502498
+      ],
+      "axisDistanceXZMeters": 20.994995815025103
+    },
+    {
+      "fromReviewId": "CAD-SILO-01",
+      "toReviewId": "CAD-SILO-04",
+      "deltaXYZMeters": [
+        24.0,
+        0.0,
+        20.995001465
+      ],
+      "axisDistanceXZMeters": 31.887146101765712
+    },
+    {
+      "fromReviewId": "CAD-SILO-02",
+      "toReviewId": "CAD-SILO-03",
+      "deltaXYZMeters": [
+        -23.999993500093744,
+        0.0,
+        20.994990776049953
+      ],
+      "axisDistanceXZMeters": 31.88713417180924
+    },
+    {
+      "fromReviewId": "CAD-SILO-02",
+      "toReviewId": "CAD-SILO-04",
+      "deltaXYZMeters": [
+        4.226453128808316e-06,
+        0.0,
+        20.994996426024976
+      ],
+      "axisDistanceXZMeters": 20.994996426025402
+    },
+    {
+      "fromReviewId": "CAD-SILO-03",
+      "toReviewId": "CAD-SILO-04",
+      "deltaXYZMeters": [
+        23.999997726546873,
+        0.0,
+        5.649975023835907e-06
+      ],
+      "axisDistanceXZMeters": 23.999997726547537
+    }
+  ],
+  "limitations": [
+    "Source tessellation, not field/as-built certification.",
+    "No operational Nexus IDs inferred from CAD review numbering.",
+    "AABBs are aggregate bounds, not architecture-only dimensions or collision solids.",
+    "No OBB, projected footprint, solid clearance or volume recomputed here."
+  ],
+  "referenceComparison": {
+    "performed": true,
+    "majorBoundsMaxErrorMeters": 0.0,
+    "siloAxisMaxErrorMeters": 0.0,
+    "siloRadialEnvelopeMaxErrorMeters": 3.552713678800501e-15
+  }
+}

@@ -2,8 +2,10 @@ import source from "./site.json";
 import photoSource from "./references.json";
 import type { ElementRecord, PhotoId, Vec3 } from "../types";
 export const site = source;
+// JSON imports widen tuple/enumeration values; CAD contracts validate the source schema.
 export const elements = source.elements as unknown as ElementRecord[];
 export const byId = new Map(elements.map((e) => [e.id, e]));
+export const cadRegistration = source.cadRegistration;
 export const references = photoSource as {
   id: PhotoId;
   originalName: string;

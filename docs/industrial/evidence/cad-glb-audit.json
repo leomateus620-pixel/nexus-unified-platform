@@ -1,0 +1,2226 @@
+{
+  "status": "passed",
+  "generatedAt": "2026-09-25T22:30:37.237Z",
+  "sourceHash": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+  "toleranceMeters": 0.005,
+  "sourceCacheValidated": false,
+  "files": [
+    {
+      "file": "public/models/3tentos/silos-high.glb",
+      "sha256": "5980b0f94e566e0a13c9f5c3060b6decb06e0cb5742efeb434e8f4da957a7620",
+      "bytes": 13309176,
+      "ids": [
+        "SILO-01",
+        "SILO-02",
+        "SILO-03",
+        "SILO-04"
+      ]
+    },
+    {
+      "file": "public/models/3tentos/silos-low.glb",
+      "sha256": "adbc60923316f57073543b6cebf13a9ea0fdebbb9a1177c6dbf8dbef2f1bb7de",
+      "bytes": 7560544,
+      "ids": [
+        "SILO-01",
+        "SILO-02",
+        "SILO-03",
+        "SILO-04"
+      ]
+    },
+    {
+      "file": "public/models/3tentos/buildings.glb",
+      "sha256": "aa0fb8a20faeb731da2750a61e4222d3afe8a1a420e9535019c303e566e13a8c",
+      "bytes": 82228,
+      "ids": [
+        "CAD-OFFICE-ROOF",
+        "ED-01",
+        "ED-02",
+        "ED-03",
+        "ED-04",
+        "ED-05"
+      ]
+    },
+    {
+      "file": "public/models/3tentos/grain-handling.glb",
+      "sha256": "aa8d1e8e9a01b3399112d52bd6734636e3d7371c0779c9c5b0544a29f89519df",
+      "bytes": 6118104,
+      "ids": [
+        "CAD-HOPPER-CONNECTIONS",
+        "CAD-HOPPER-ELEVATOR-01",
+        "CAD-HOPPER-ELEVATOR-02",
+        "CAD-HOPPER-PITS",
+        "CAD-SILO-PIT-TUNNELS",
+        "CAD-WATER-TANK",
+        "EQ-01",
+        "EQ-02",
+        "EQ-03"
+      ]
+    },
+    {
+      "file": "public/models/3tentos/blockout.glb",
+      "sha256": "a67176edeeeb0fd883ab565a05f072882c362e1ed1fc6357ff38d63b7d13142c",
+      "bytes": 9287628,
+      "ids": [
+        "CAD-HOPPER-CONNECTIONS",
+        "CAD-HOPPER-ELEVATOR-01",
+        "CAD-HOPPER-ELEVATOR-02",
+        "CAD-HOPPER-PITS",
+        "CAD-OFFICE-ROOF",
+        "CAD-SILO-PIT-TUNNELS",
+        "CAD-WATER-TANK",
+        "ED-01",
+        "ED-02",
+        "ED-03",
+        "ED-04",
+        "ED-05",
+        "EQ-01",
+        "EQ-02",
+        "EQ-03",
+        "PV-01",
+        "SILO-01",
+        "SILO-02",
+        "SILO-03",
+        "SILO-04"
+      ]
+    }
+  ],
+  "partitions": [
+    {
+      "id": "SILO-01",
+      "sector": "silos-high",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -21.55148184299469,
+          0.10000002384185791,
+          -19.88898277282715
+        ],
+        "max": [
+          -2.768518567085266,
+          21.27947425842285,
+          -1.1060194969177246
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -21.551482281976,
+          0.1,
+          -19.888982678976
+        ],
+        "max": [
+          -2.7685186945239977,
+          21.279474999999998,
+          -1.1060190915240007
+        ]
+      },
+      "catalogErrorMeters": 7.415771499097445e-7,
+      "sourceErrorMeters": 7.415771463570309e-7,
+      "generationErrorMeters": 7.415771463570309e-7,
+      "triangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 654,
+      "omittedMicroDetails": 2463
+    },
+    {
+      "id": "SILO-01",
+      "sector": "silos-low",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -21.551481246948242,
+          0.10000002384185791,
+          -19.888516272006044
+        ],
+        "max": [
+          -2.768519163131714,
+          21.27947425842285,
+          -1.106127416195859
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -21.551482281976,
+          0.1,
+          -19.888982678976
+        ],
+        "max": [
+          -2.7685186945239977,
+          21.279474999999998,
+          -1.1060190915240007
+        ]
+      },
+      "catalogErrorMeters": 0.00046640697395616826,
+      "sourceErrorMeters": 0.00046640696995581266,
+      "generationErrorMeters": 0.0001079487582043015,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-01",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -21.551481246948242,
+          0.10000002384185791,
+          -19.888516272006044
+        ],
+        "max": [
+          -2.768519163131714,
+          21.27947425842285,
+          -1.106127416195859
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -21.551482281976,
+          0.1,
+          -19.888982678976
+        ],
+        "max": [
+          -2.7685186945239977,
+          21.279474999999998,
+          -1.1060190915240007
+        ]
+      },
+      "catalogErrorMeters": 0.00046640697395616826,
+      "sourceErrorMeters": 0.00046640696995581266,
+      "generationErrorMeters": 0.0001079487582043015,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-high",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          2.4414429664611816,
+          0.10000002384185791,
+          -19.896049797534943
+        ],
+        "max": [
+          21.23855209350586,
+          21.27947425842285,
+          -0.7528747901896642
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          2.4414432827893364,
+          0.1,
+          -19.896049190782513
+        ],
+        "max": [
+          21.238551193804415,
+          21.279474999999998,
+          -0.7528661041237887
+        ]
+      },
+      "catalogErrorMeters": 0.000008686069664198826,
+      "sourceErrorMeters": 0.000008686065875451732,
+      "generationErrorMeters": 0.000008686065875451732,
+      "triangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 654,
+      "omittedMicroDetails": 2463
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-low",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          2.4414429664611816,
+          0.10000002384185791,
+          -19.896049797534943
+        ],
+        "max": [
+          21.23855209350586,
+          21.27947425842285,
+          -0.7528747901896642
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          2.4414432827893364,
+          0.1,
+          -19.896049190782513
+        ],
+        "max": [
+          21.238551193804415,
+          21.279474999999998,
+          -0.7528661041237887
+        ]
+      },
+      "catalogErrorMeters": 0.000008686069664198826,
+      "sourceErrorMeters": 0.000008686065875451732,
+      "generationErrorMeters": 0.000008705212368287363,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-02",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          2.4414429664611816,
+          0.10000002384185791,
+          -19.896049797534943
+        ],
+        "max": [
+          21.23855209350586,
+          21.27947425842285,
+          -0.7528747901896642
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          2.4414432827893364,
+          0.1,
+          -19.896049190782513
+        ],
+        "max": [
+          21.238551193804415,
+          21.279474999999998,
+          -0.7528661041237887
+        ]
+      },
+      "catalogErrorMeters": 0.000008686069664198826,
+      "sourceErrorMeters": 0.000008686065875451732,
+      "generationErrorMeters": 0.000008705212368287363,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-high",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -21.558550000190735,
+          0.10000002384185791,
+          0.7528749392012761
+        ],
+        "max": [
+          -2.7614418268203735,
+          21.27947425842285,
+          19.89604949951172
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -21.558550217304408,
+          0.1,
+          0.7528664096237883
+        ],
+        "max": [
+          -2.7614423062893323,
+          21.279474999999998,
+          19.89604949628251
+        ]
+      },
+      "catalogErrorMeters": 0.000008529581276173204,
+      "sourceErrorMeters": 0.000008529577487870199,
+      "generationErrorMeters": 0.000008529577487870199,
+      "triangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 654,
+      "omittedMicroDetails": 2463
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-low",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -21.558550000190735,
+          0.10000002384185791,
+          0.7528749392012761
+        ],
+        "max": [
+          -2.7614418268203735,
+          21.27947425842285,
+          19.89604949951172
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -21.558550217304408,
+          0.1,
+          0.7528664096237883
+        ],
+        "max": [
+          -2.7614423062893323,
+          21.279474999999998,
+          19.89604949628251
+        ]
+      },
+      "catalogErrorMeters": 0.000008529581276173204,
+      "sourceErrorMeters": 0.000008529577487870199,
+      "generationErrorMeters": 0.00000854872398070583,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-03",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -21.558550000190735,
+          0.10000002384185791,
+          0.7528749392012761
+        ],
+        "max": [
+          -2.7614418268203735,
+          21.27947425842285,
+          19.89604949951172
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -21.558550217304408,
+          0.1,
+          0.7528664096237883
+        ],
+        "max": [
+          -2.7614423062893323,
+          21.279474999999998,
+          19.89604949628251
+        ]
+      },
+      "catalogErrorMeters": 0.000008529581276173204,
+      "sourceErrorMeters": 0.000008529577487870199,
+      "generationErrorMeters": 0.00000854872398070583,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-high",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          2.4485179781913757,
+          0.10000002384185791,
+          1.106019139289856
+        ],
+        "max": [
+          21.231481611728668,
+          21.27947425842285,
+          19.88898277282715
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          2.448517718024,
+          0.1,
+          1.1060187860240003
+        ],
+        "max": [
+          21.231481305476,
+          21.279474999999998,
+          19.888982373476
+        ]
+      },
+      "catalogErrorMeters": 7.415771499097445e-7,
+      "sourceErrorMeters": 7.415771463570309e-7,
+      "generationErrorMeters": 7.752648016889907e-7,
+      "triangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 654,
+      "omittedMicroDetails": 2463
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-low",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          2.4485180377960205,
+          0.10000002384185791,
+          1.1061265221480152
+        ],
+        "max": [
+          21.231481552124023,
+          21.27947425842285,
+          19.88851680842602
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          2.448517718024,
+          0.1,
+          1.1060187860240003
+        ],
+        "max": [
+          21.231481305476,
+          21.279474999999998,
+          19.888982373476
+        ]
+      },
+      "catalogErrorMeters": 0.00046556505398243075,
+      "sourceErrorMeters": 0.00046556504998207515,
+      "generationErrorMeters": 0.00010736021036272803,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "SILO-04",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          2.4485180377960205,
+          0.10000002384185791,
+          1.1061265221480152
+        ],
+        "max": [
+          21.231481552124023,
+          21.27947425842285,
+          19.88851680842602
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          2.448517718024,
+          0.1,
+          1.1060187860240003
+        ],
+        "max": [
+          21.231481305476,
+          21.279474999999998,
+          19.888982373476
+        ]
+      },
+      "catalogErrorMeters": 0.00046556505398243075,
+      "sourceErrorMeters": 0.00046556504998207515,
+      "generationErrorMeters": 0.00010736021036272803,
+      "triangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 3117,
+      "retainedOccurrences": 422,
+      "omittedMicroDetails": 2695
+    },
+    {
+      "id": "EQ-01",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -0.7773809213069963,
+          -6.763000011444092,
+          0.7504484680431146
+        ],
+        "max": [
+          0.9097998518375444,
+          35.08700180053711,
+          1.2792091342670662
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -0.777290527249999,
+          -6.763,
+          0.75032876575
+        ],
+        "max": [
+          0.9097094727499986,
+          35.087,
+          1.2793287657499999
+        ]
+      },
+      "catalogErrorMeters": 0.00011970229311464298,
+      "sourceErrorMeters": 0.00011970229311464298,
+      "generationErrorMeters": 0.00011970229311464298,
+      "triangles": 3822,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 22,
+      "retainedOccurrences": 22,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "EQ-01",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -0.7773809213069963,
+          -6.763000011444092,
+          0.7504484084384698
+        ],
+        "max": [
+          0.9097998518375444,
+          35.08700180053711,
+          1.2792090746624214
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -0.777290527249999,
+          -6.763,
+          0.75032876575
+        ],
+        "max": [
+          0.9097094727499986,
+          35.087,
+          1.2793287657499999
+        ]
+      },
+      "catalogErrorMeters": 0.0001196910875786994,
+      "sourceErrorMeters": 0.00011969108757847735,
+      "generationErrorMeters": 0.00011968321976540963,
+      "triangles": 2202,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 22,
+      "retainedOccurrences": 22,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "EQ-02",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -12.456876440357018,
+          -6.763000011444092,
+          -23.327381134033203
+        ],
+        "max": [
+          12.265530271838951,
+          35.09686279296875,
+          30.93836784362793
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -12.45663335738,
+          -6.763,
+          -23.32738123425
+        ],
+        "max": [
+          12.26528708263,
+          35.096861919,
+          30.93836781443
+        ]
+      },
+      "catalogErrorMeters": 0.00024318920895183282,
+      "sourceErrorMeters": 0.00024318920895183282,
+      "generationErrorMeters": 0.00024352446756914503,
+      "triangles": 302160,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 1827,
+      "retainedOccurrences": 905,
+      "omittedMicroDetails": 922
+    },
+    {
+      "id": "EQ-02",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -12.456876440357018,
+          -6.763000011444092,
+          -23.327381134033203
+        ],
+        "max": [
+          12.265530271838951,
+          35.09686279296875,
+          30.93836784362793
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -12.45663335738,
+          -6.763,
+          -23.32738123425
+        ],
+        "max": [
+          12.26528708263,
+          35.096861919,
+          30.93836781443
+        ]
+      },
+      "catalogErrorMeters": 0.00024318920895183282,
+      "sourceErrorMeters": 0.00024318920895183282,
+      "generationErrorMeters": 0.00024352446756914503,
+      "triangles": 107886,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 1827,
+      "retainedOccurrences": 579,
+      "omittedMicroDetails": 1248
+    },
+    {
+      "id": "ED-01",
+      "sector": "buildings",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -13.656790733337402,
+          0.015018267825518627,
+          21.877414278542112
+        ],
+        "max": [
+          12.543209075927734,
+          11.964855787922648,
+          40.69724506899207
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -13.656790527250003,
+          0.015000000000000001,
+          21.87732870475
+        ],
+        "max": [
+          12.54320947275,
+          11.965,
+          40.69732870475001
+        ]
+      },
+      "catalogErrorMeters": 0.00014421207735182406,
+      "sourceErrorMeters": 0.00014421207735182406,
+      "generationErrorMeters": 0.00014421207735360042,
+      "triangles": 152,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 3,
+      "retainedOccurrences": 3,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "ED-01",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -13.656790733337402,
+          0.015018267825518627,
+          21.877414278542112
+        ],
+        "max": [
+          12.543209075927734,
+          11.964855787922648,
+          40.69724506899207
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -13.656790527250003,
+          0.015000000000000001,
+          21.87732870475
+        ],
+        "max": [
+          12.54320947275,
+          11.965,
+          40.69732870475001
+        ]
+      },
+      "catalogErrorMeters": 0.00014421207735182406,
+      "sourceErrorMeters": 0.00014421207735182406,
+      "generationErrorMeters": 0.00014421207735360042,
+      "triangles": 152,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 3,
+      "retainedOccurrences": 3,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "ED-04",
+      "sector": "buildings",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          55.358208575556354,
+          0.014953434958244749,
+          -15.947670936584473
+        ],
+        "max": [
+          65.25820835559598,
+          3.865023650271952,
+          -1.9976712465286255
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          55.358209472750005,
+          0.015000000000000001,
+          -15.94767129525
+        ],
+        "max": [
+          65.25820947275,
+          3.865,
+          -1.99767129525
+        ]
+      },
+      "catalogErrorMeters": 0.00004656504175525045,
+      "sourceErrorMeters": 0.00004656504175525218,
+      "generationErrorMeters": 0.00004656504175525218,
+      "triangles": 244,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 2,
+      "retainedOccurrences": 2,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "ED-04",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          55.358208575556354,
+          0.014953434958244749,
+          -15.947670936584473
+        ],
+        "max": [
+          65.25820835559598,
+          3.865023650271952,
+          -1.9976712465286255
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          55.358209472750005,
+          0.015000000000000001,
+          -15.94767129525
+        ],
+        "max": [
+          65.25820947275,
+          3.865,
+          -1.99767129525
+        ]
+      },
+      "catalogErrorMeters": 0.00004656504175525045,
+      "sourceErrorMeters": 0.00004656504175525218,
+      "generationErrorMeters": 0.00004656504175525218,
+      "triangles": 244,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 2,
+      "retainedOccurrences": 2,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "ED-05",
+      "sector": "buildings",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          47.306209564208984,
+          0.00004653549101174548,
+          48.542421811449266
+        ],
+        "max": [
+          59.70621109008789,
+          7.500047395986572,
+          59.542233950269484
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          47.30620947275,
+          0,
+          48.542328704750005
+        ],
+        "max": [
+          59.706209472750004,
+          7.5,
+          59.542328704750005
+        ]
+      },
+      "catalogErrorMeters": 0.00009475448051432522,
+      "sourceErrorMeters": 0.00009475448052143065,
+      "generationErrorMeters": 0.00009475448052143065,
+      "triangles": 100,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 4,
+      "retainedOccurrences": 4,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "ED-05",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          47.306209564208984,
+          0.00004653549101174548,
+          48.542421811449266
+        ],
+        "max": [
+          59.70621109008789,
+          7.500047395986572,
+          59.542233950269484
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          47.30620947275,
+          0,
+          48.542328704750005
+        ],
+        "max": [
+          59.706209472750004,
+          7.5,
+          59.542328704750005
+        ]
+      },
+      "catalogErrorMeters": 0.00009475448051432522,
+      "sourceErrorMeters": 0.00009475448052143065,
+      "generationErrorMeters": 0.00009475448052143065,
+      "triangles": 100,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 4,
+      "retainedOccurrences": 4,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-PITS",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -12.456790924072266,
+          -9.824909144422957,
+          22.297361684623343
+        ],
+        "max": [
+          11.343209266662598,
+          1.2249093589996782,
+          40.197297739204785
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -12.45679052725,
+          -9.825,
+          22.29732870475
+        ],
+        "max": [
+          11.34320947275,
+          1.225,
+          40.19732870475001
+        ]
+      },
+      "catalogErrorMeters": 0.00009085557704224811,
+      "sourceErrorMeters": 0.00009085557704224811,
+      "generationErrorMeters": 0.00009085557704224811,
+      "triangles": 406,
+      "omittedDegenerateTriangles": 8,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 1,
+      "retainedOccurrences": 1,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-PITS",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -12.456790924072266,
+          -9.824909144422957,
+          22.297361684623343
+        ],
+        "max": [
+          11.343209266662598,
+          1.2249093589996782,
+          40.197297739204785
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -12.45679052725,
+          -9.825,
+          22.29732870475
+        ],
+        "max": [
+          11.34320947275,
+          1.225,
+          40.19732870475001
+        ]
+      },
+      "catalogErrorMeters": 0.00009085557704224811,
+      "sourceErrorMeters": 0.00009085557704224811,
+      "generationErrorMeters": 0.00009085557704224811,
+      "triangles": 406,
+      "omittedDegenerateTriangles": 8,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 1,
+      "retainedOccurrences": 1,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-01",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          3.014040806177287,
+          -9.812999725341797,
+          33.15719813682353
+        ],
+        "max": [
+          3.5433782554834794,
+          23.03700065612793,
+          34.844461256487016
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          3.01420947275,
+          -9.813,
+          33.15732870475
+        ],
+        "max": [
+          3.54320947275,
+          23.037,
+          34.844328704750005
+        ]
+      },
+      "catalogErrorMeters": 0.00016878273347931128,
+      "sourceErrorMeters": 0.00016878273347931128,
+      "generationErrorMeters": 0.00016878273347753492,
+      "triangles": 3294,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 19,
+      "retainedOccurrences": 19,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-01",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          3.014040806177287,
+          -9.812999725341797,
+          33.15719813682353
+        ],
+        "max": [
+          3.5433782554834794,
+          23.03700065612793,
+          34.844461256487016
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          3.01420947275,
+          -9.813,
+          33.15732870475
+        ],
+        "max": [
+          3.54320947275,
+          23.037,
+          34.844328704750005
+        ]
+      },
+      "catalogErrorMeters": 0.00016878273347931128,
+      "sourceErrorMeters": 0.00016878273347931128,
+      "generationErrorMeters": 0.00016879060129060264,
+      "triangles": 1902,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 19,
+      "retainedOccurrences": 19,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-02",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          1.7364817401216608,
+          -9.812999725341797,
+          32.883371419537276
+        ],
+        "max": [
+          2.211937234754743,
+          21.03700065612793,
+          34.70328324354866
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          1.7367094727500003,
+          -9.813,
+          32.88332870475001
+        ],
+        "max": [
+          2.2117094727500017,
+          21.037,
+          34.70332870475001
+        ]
+      },
+      "catalogErrorMeters": 0.00022776200474305952,
+      "sourceErrorMeters": 0.00022776200474128316,
+      "generationErrorMeters": 0.00022776200474217134,
+      "triangles": 2942,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 17,
+      "retainedOccurrences": 17,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-02",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          1.7364817401216608,
+          -9.812999725341797,
+          32.883371419537276
+        ],
+        "max": [
+          2.211937234754743,
+          21.03700065612793,
+          34.70328324354866
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          1.7367094727500003,
+          -9.813,
+          32.88332870475001
+        ],
+        "max": [
+          2.2117094727500017,
+          21.037,
+          34.70332870475001
+        ]
+      },
+      "catalogErrorMeters": 0.00022776200474305952,
+      "sourceErrorMeters": 0.00022776200474128316,
+      "generationErrorMeters": 0.00022776200474217134,
+      "triangles": 1702,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 17,
+      "retainedOccurrences": 17,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-SILO-PIT-TUNNELS",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -15.304140090942383,
+          -6.764135442845491,
+          -13.412725173394179
+        ],
+        "max": [
+          15.086559295654297,
+          0.10013550537076332,
+          13.417382918755507
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -15.304140527249999,
+          -6.764,
+          -13.412711295250002
+        ],
+        "max": [
+          15.08655947275,
+          0.1,
+          13.41736870475
+        ]
+      },
+      "catalogErrorMeters": 0.00013550537076331692,
+      "sourceErrorMeters": 0.00013550537076331692,
+      "generationErrorMeters": 0.00013550537076331692,
+      "triangles": 188,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 1,
+      "retainedOccurrences": 1,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-SILO-PIT-TUNNELS",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -15.304140090942383,
+          -6.764135442845491,
+          -13.412725173394179
+        ],
+        "max": [
+          15.086559295654297,
+          0.10013550537076332,
+          13.417382918755507
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -15.304140527249999,
+          -6.764,
+          -13.412711295250002
+        ],
+        "max": [
+          15.08655947275,
+          0.1,
+          13.41736870475
+        ]
+      },
+      "catalogErrorMeters": 0.00013550537076331692,
+      "sourceErrorMeters": 0.00013550537076331692,
+      "generationErrorMeters": 0.00013559924807893253,
+      "triangles": 100,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 1,
+      "retainedOccurrences": 1,
+      "omittedMicroDetails": 0
+    },
+    {
+      "id": "CAD-HOPPER-CONNECTIONS",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -3.149668402615351,
+          -4.525831417004634,
+          9.221362113952637
+        ],
+        "max": [
+          8.145087189617914,
+          22.032062067563373,
+          49.280799865722656
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -3.1497905272500013,
+          -4.5258774410000004,
+          9.22136120807
+        ],
+        "max": [
+          8.14520947275,
+          22.032250390999998,
+          49.28080008968001
+        ]
+      },
+      "catalogErrorMeters": 0.00018832343662822382,
+      "sourceErrorMeters": 0.0001883234366246711,
+      "generationErrorMeters": 0.000188329540140586,
+      "triangles": 162900,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 803,
+      "retainedOccurrences": 467,
+      "omittedMicroDetails": 336
+    },
+    {
+      "id": "CAD-HOPPER-CONNECTIONS",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -3.149668402615351,
+          -4.525831417004634,
+          9.221362113952637
+        ],
+        "max": [
+          8.145087189617914,
+          22.032062067563373,
+          49.280799865722656
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -3.1497905272500013,
+          -4.5258774410000004,
+          9.22136120807
+        ],
+        "max": [
+          8.14520947275,
+          22.032250390999998,
+          49.28080008968001
+        ]
+      },
+      "catalogErrorMeters": 0.00018832343662822382,
+      "sourceErrorMeters": 0.0001883234366246711,
+      "generationErrorMeters": 0.000188329540140586,
+      "triangles": 59476,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 803,
+      "retainedOccurrences": 357,
+      "omittedMicroDetails": 446
+    },
+    {
+      "id": "CAD-WATER-TANK",
+      "sector": "grain-handling",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          -60.9810202574409,
+          0,
+          62.050382622758015
+        ],
+        "max": [
+          -59.14384461311446,
+          10.09688663482666,
+          63.6702747258748
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -60.98103376525001,
+          0,
+          62.05032870475
+        ],
+        "max": [
+          -59.14379052725,
+          10.09688709098145,
+          63.670328704750005
+        ]
+      },
+      "catalogErrorMeters": 0.000054085864462649624,
+      "sourceErrorMeters": 0.000054085864462649624,
+      "generationErrorMeters": 0.0000540882486461669,
+      "triangles": 34636,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 405,
+      "retainedOccurrences": 164,
+      "omittedMicroDetails": 241
+    },
+    {
+      "id": "CAD-WATER-TANK",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          -60.9810202574409,
+          0,
+          62.050382622758015
+        ],
+        "max": [
+          -59.14384461311446,
+          10.09688663482666,
+          63.6702747258748
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          -60.98103376525001,
+          0,
+          62.05032870475
+        ],
+        "max": [
+          -59.14379052725,
+          10.09688709098145,
+          63.670328704750005
+        ]
+      },
+      "catalogErrorMeters": 0.000054085864462649624,
+      "sourceErrorMeters": 0.000054085864462649624,
+      "generationErrorMeters": 0.0000540882486461669,
+      "triangles": 12704,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOccurrences": 405,
+      "retainedOccurrences": 78,
+      "omittedMicroDetails": 327
+    },
+    {
+      "id": "CAD-OFFICE-ROOF",
+      "sector": "buildings",
+      "lod": "high",
+      "bounds": {
+        "min": [
+          60.233141172418634,
+          3.864999667392585,
+          -15.8626708984375
+        ],
+        "max": [
+          60.38327575873371,
+          4.45965038181701,
+          -2.0826709270477295
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          60.233209472750005,
+          3.865,
+          -15.86267129525
+        ],
+        "max": [
+          60.38320947275,
+          4.45965,
+          -2.08267129525
+        ]
+      },
+      "catalogErrorMeters": 0.00006830033136395741,
+      "sourceErrorMeters": 0.00006830033137106284,
+      "generationErrorMeters": 0.00006829735113456081,
+      "triangles": 2790,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 48,
+      "retainedOccurrences": 12,
+      "omittedMicroDetails": 36
+    },
+    {
+      "id": "CAD-OFFICE-ROOF",
+      "sector": "blockout",
+      "lod": "low",
+      "bounds": {
+        "min": [
+          60.233141172418634,
+          3.864999667392585,
+          -15.8626708984375
+        ],
+        "max": [
+          60.38327575873371,
+          4.45965038181701,
+          -2.0826709270477295
+        ]
+      },
+      "expectedBounds": {
+        "min": [
+          60.233209472750005,
+          3.865,
+          -15.86267129525
+        ],
+        "max": [
+          60.38320947275,
+          4.45965,
+          -2.08267129525
+        ]
+      },
+      "catalogErrorMeters": 0.00006830033136395741,
+      "sourceErrorMeters": 0.00006830033137106284,
+      "generationErrorMeters": 0.00006829735113456081,
+      "triangles": 1494,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOccurrences": 48,
+      "retainedOccurrences": 8,
+      "omittedMicroDetails": 40
+    }
+  ],
+  "lod": [
+    {
+      "id": "SILO-01",
+      "highLowErrorMeters": 0.0004665008211048871,
+      "highBlockoutErrorMeters": 0.0004665008211048871
+    },
+    {
+      "id": "SILO-02",
+      "highLowErrorMeters": 0,
+      "highBlockoutErrorMeters": 0
+    },
+    {
+      "id": "SILO-03",
+      "highLowErrorMeters": 0,
+      "highBlockoutErrorMeters": 0
+    },
+    {
+      "id": "SILO-04",
+      "highLowErrorMeters": 0.00046596440112978144,
+      "highBlockoutErrorMeters": 0.00046596440112978144
+    }
+  ],
+  "siloParts": [
+    {
+      "id": "SILO-01",
+      "sector": "silos-high",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          -21.55148184299469,
+          0.10009852113889384,
+          -19.88898277282715
+        ],
+        "max": [
+          -2.768518567085266,
+          14.59990186182095,
+          -1.1060194969177246
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499803340682057,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00009852113889383118,
+      "topErrorMeters": 0.0000981381790499114,
+      "heightErrorMeters": 0.00019665931794321523,
+      "outerRadialEnvelopeDiameterMeters": 18.816197499549876,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "radialDiameterErrorMeters": 0.00018950355330815682,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 31113
+    },
+    {
+      "id": "SILO-01",
+      "sector": "silos-high",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          -21.514385223388672,
+          14.60002625163548,
+          -19.85188525915146
+        ],
+        "max": [
+          -2.8056163787841797,
+          20.102974770703387,
+          -1.1431164145469666
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502948519067907,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.00002625163548053422,
+      "topErrorMeters": 0.000025229296610973506,
+      "heightErrorMeters": 0.00005148093209328408,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-01",
+      "sector": "silos-low",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          -21.551481246948242,
+          0.10009945810346377,
+          -19.888516272006044
+        ],
+        "max": [
+          -2.768519163131714,
+          14.599901878530694,
+          -1.106127416195859
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.49980242042723,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00009945810346376205,
+      "topErrorMeters": 0.00009812146930521237,
+      "heightErrorMeters": 0.00019757957277022342,
+      "outerRadialEnvelopeDiameterMeters": 18.816348625226745,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "radialDiameterErrorMeters": 0.00034062923017685875,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17412
+    },
+    {
+      "id": "SILO-01",
+      "sector": "silos-low",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          -21.514385223388672,
+          14.60002625163548,
+          -19.85188525915146
+        ],
+        "max": [
+          -2.8056163787841797,
+          20.102974770703387,
+          -1.1431164145469666
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502948519067907,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.00002625163548053422,
+      "topErrorMeters": 0.000025229296610973506,
+      "heightErrorMeters": 0.00005148093209328408,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-01",
+      "sector": "blockout",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          -21.551481246948242,
+          0.10009945810346377,
+          -19.888516272006044
+        ],
+        "max": [
+          -2.768519163131714,
+          14.599901878530694,
+          -1.106127416195859
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.49980242042723,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00009945810346376205,
+      "topErrorMeters": 0.00009812146930521237,
+      "heightErrorMeters": 0.00019757957277022342,
+      "outerRadialEnvelopeDiameterMeters": 18.816348625226745,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "radialDiameterErrorMeters": 0.00034062923017685875,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17412
+    },
+    {
+      "id": "SILO-01",
+      "sector": "blockout",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          -21.514385223388672,
+          14.60002625163548,
+          -19.85188525915146
+        ],
+        "max": [
+          -2.8056163787841797,
+          20.102974770703387,
+          -1.1431164145469666
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502948519067907,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.00002625163548053422,
+      "topErrorMeters": 0.000025229296610973506,
+      "heightErrorMeters": 0.00005148093209328408,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-high",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          2.4414429664611816,
+          0.10008823287551394,
+          -19.896049797534943
+        ],
+        "max": [
+          21.23855209350586,
+          14.599912150084329,
+          -1.098940670490265
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499823917208815,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00008823287551393277,
+      "topErrorMeters": 0.00008784991567090117,
+      "heightErrorMeters": 0.00017608279118519476,
+      "outerRadialEnvelopeDiameterMeters": 18.8163072207451,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "radialDiameterErrorMeters": 0.000305804472471749,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 31525
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-high",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          2.485616445541382,
+          14.600027338616684,
+          -19.851875603199005
+        ],
+        "max": [
+          21.194377899169922,
+          20.102973683722183,
+          -1.143114149570465
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502946345105499,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000027338616684247086,
+      "topErrorMeters": 0.000026316277814686373,
+      "heightErrorMeters": 0.000053654894500709815,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-low",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          2.4414429664611816,
+          0.10008870971267214,
+          -19.896049797534943
+        ],
+        "max": [
+          21.23855209350586,
+          14.599912626921487,
+          -1.098940670490265
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499823917208815,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.0000887097126721359,
+      "topErrorMeters": 0.00008737307851269804,
+      "heightErrorMeters": 0.00017608279118519476,
+      "outerRadialEnvelopeDiameterMeters": 18.8163072207451,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "radialDiameterErrorMeters": 0.000305804472471749,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17385
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-low",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          2.485616445541382,
+          14.600027338616684,
+          -19.851875603199005
+        ],
+        "max": [
+          21.194377899169922,
+          20.102973683722183,
+          -1.143114149570465
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502946345105499,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000027338616684247086,
+      "topErrorMeters": 0.000026316277814686373,
+      "heightErrorMeters": 0.000053654894500709815,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-02",
+      "sector": "blockout",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          2.4414429664611816,
+          0.10008870971267214,
+          -19.896049797534943
+        ],
+        "max": [
+          21.23855209350586,
+          14.599912626921487,
+          -1.098940670490265
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499823917208815,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.0000887097126721359,
+      "topErrorMeters": 0.00008737307851269804,
+      "heightErrorMeters": 0.00017608279118519476,
+      "outerRadialEnvelopeDiameterMeters": 18.8163072207451,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "radialDiameterErrorMeters": 0.000305804472471749,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17385
+    },
+    {
+      "id": "SILO-02",
+      "sector": "blockout",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          2.485616445541382,
+          14.600027338616684,
+          -19.851875603199005
+        ],
+        "max": [
+          21.194377899169922,
+          20.102973683722183,
+          -1.143114149570465
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502946345105499,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000027338616684247086,
+      "topErrorMeters": 0.000026316277814686373,
+      "heightErrorMeters": 0.000053654894500709815,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-high",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          -21.558550000190735,
+          0.10008860070094805,
+          1.0989413261413574
+        ],
+        "max": [
+          -2.7614418268203735,
+          14.599911782258895,
+          19.89604949951172
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499823181557947,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00008860070094804384,
+      "topErrorMeters": 0.00008821774110501224,
+      "heightErrorMeters": 0.0001768184420534169,
+      "outerRadialEnvelopeDiameterMeters": 18.816306325009077,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "radialDiameterErrorMeters": 0.0003049087364495051,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 31487
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-high",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          -21.51437771320343,
+          14.600027198361044,
+          1.1431148052215576
+        ],
+        "max": [
+          -2.8056153059005737,
+          20.102973823977823,
+          19.851877212524414
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502946625616779,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000027198361044256103,
+      "topErrorMeters": 0.00002617602217469539,
+      "heightErrorMeters": 0.00005337438322072785,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-low",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          -21.558550000190735,
+          0.10008907753810625,
+          1.0989413261413574
+        ],
+        "max": [
+          -2.7614418268203735,
+          14.599912259096053,
+          19.89604949951172
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499823181557947,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00008907753810624697,
+      "topErrorMeters": 0.00008774090394680911,
+      "heightErrorMeters": 0.0001768184420534169,
+      "outerRadialEnvelopeDiameterMeters": 18.816306325009077,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "radialDiameterErrorMeters": 0.0003049087364495051,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17365
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-low",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          -21.51437771320343,
+          14.600027198361044,
+          1.1431148052215576
+        ],
+        "max": [
+          -2.8056153059005737,
+          20.102973823977823,
+          19.851877212524414
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502946625616779,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000027198361044256103,
+      "topErrorMeters": 0.00002617602217469539,
+      "heightErrorMeters": 0.00005337438322072785,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-03",
+      "sector": "blockout",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          -21.558550000190735,
+          0.10008907753810625,
+          1.0989413261413574
+        ],
+        "max": [
+          -2.7614418268203735,
+          14.599912259096053,
+          19.89604949951172
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499823181557947,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00008907753810624697,
+      "topErrorMeters": 0.00008774090394680911,
+      "heightErrorMeters": 0.0001768184420534169,
+      "outerRadialEnvelopeDiameterMeters": 18.816306325009077,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816001416272627,
+      "radialDiameterErrorMeters": 0.0003049087364495051,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17365
+    },
+    {
+      "id": "SILO-03",
+      "sector": "blockout",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          -21.51437771320343,
+          14.600027198361044,
+          1.1431148052215576
+        ],
+        "max": [
+          -2.8056153059005737,
+          20.102973823977823,
+          19.851877212524414
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502946625616779,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000027198361044256103,
+      "topErrorMeters": 0.00002617602217469539,
+      "heightErrorMeters": 0.00005337438322072785,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-high",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          2.4485179781913757,
+          0.10009838310067032,
+          1.106019139289856
+        ],
+        "max": [
+          21.231481611728668,
+          14.599901999859172,
+          19.88898277282715
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499803616758502,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00009838310067031286,
+      "topErrorMeters": 0.00009800014082728126,
+      "heightErrorMeters": 0.00019638324149795494,
+      "outerRadialEnvelopeDiameterMeters": 18.816198031671345,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "radialDiameterErrorMeters": 0.00019003567477682282,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 31337
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-high",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          2.4856154322624207,
+          14.600026339295255,
+          1.1431165933609009
+        ],
+        "max": [
+          21.194383680820465,
+          20.102974683043612,
+          19.851884841918945
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502948343748358,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000026339295255084494,
+      "topErrorMeters": 0.00002531695638552378,
+      "heightErrorMeters": 0.00005165625164238463,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-low",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          2.4485180377960205,
+          0.1000989059505697,
+          1.1061265221480152
+        ],
+        "max": [
+          21.231481552124023,
+          14.599902430683589,
+          19.88851680842602
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499803524733018,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00009890595056968876,
+      "topErrorMeters": 0.00009756931641113908,
+      "heightErrorMeters": 0.00019647526698207685,
+      "outerRadialEnvelopeDiameterMeters": 18.81634904258806,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "radialDiameterErrorMeters": 0.0003410465914939209,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17427
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-low",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          2.4856154322624207,
+          14.600026339295255,
+          1.1431165933609009
+        ],
+        "max": [
+          21.194383680820465,
+          20.102974683043612,
+          19.851884841918945
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502948343748358,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000026339295255084494,
+      "topErrorMeters": 0.00002531695638552378,
+      "heightErrorMeters": 0.00005165625164238463,
+      "referencedVertices": 1028
+    },
+    {
+      "id": "SILO-04",
+      "sector": "blockout",
+      "part": "body",
+      "sourceObjectId": 3730,
+      "bounds": {
+        "min": [
+          2.4485180377960205,
+          0.1000989059505697,
+          1.1061265221480152
+        ],
+        "max": [
+          21.231481552124023,
+          14.599902430683589,
+          19.88851680842602
+        ]
+      },
+      "expectedBaseY": 0.1,
+      "expectedTopY": 14.6,
+      "heightMeters": 14.499803524733018,
+      "expectedHeightMeters": 14.5,
+      "baseErrorMeters": 0.00009890595056968876,
+      "topErrorMeters": 0.00009756931641113908,
+      "heightErrorMeters": 0.00019647526698207685,
+      "outerRadialEnvelopeDiameterMeters": 18.81634904258806,
+      "expectedOuterRadialEnvelopeDiameterMeters": 18.816007995996568,
+      "radialDiameterErrorMeters": 0.0003410465914939209,
+      "diameterDefinition": "Twice maximum horizontal distance of mesh 3730 vertices from the modeled axis; includes external details, not nominal bin diameter.",
+      "referencedVertices": 17427
+    },
+    {
+      "id": "SILO-04",
+      "sector": "blockout",
+      "part": "roof",
+      "sourceObjectId": 3728,
+      "bounds": {
+        "min": [
+          2.4856154322624207,
+          14.600026339295255,
+          1.1431165933609009
+        ],
+        "max": [
+          21.194383680820465,
+          20.102974683043612,
+          19.851884841918945
+        ]
+      },
+      "expectedBaseY": 14.6,
+      "expectedTopY": 20.102999999999998,
+      "heightMeters": 5.502948343748358,
+      "expectedHeightMeters": 5.503,
+      "baseErrorMeters": 0.000026339295255084494,
+      "topErrorMeters": 0.00002531695638552378,
+      "heightErrorMeters": 0.00005165625164238463,
+      "referencedVertices": 1028
+    }
+  ],
+  "siloAxisDistances": [
+    {
+      "from": "SILO-04",
+      "to": "SILO-03",
+      "actualMeters": 23.999995773550523,
+      "expectedMeters": 23.9999957735474,
+      "errorMeters": 3.1228353236656403e-12
+    },
+    {
+      "from": "SILO-04",
+      "to": "SILO-02",
+      "actualMeters": 20.99499581502012,
+      "expectedMeters": 20.994995815025103,
+      "errorMeters": 4.984457291357103e-12
+    },
+    {
+      "from": "SILO-04",
+      "to": "SILO-01",
+      "actualMeters": 31.88714610176571,
+      "expectedMeters": 31.887146101765712,
+      "errorMeters": 3.552713678800501e-15
+    },
+    {
+      "from": "SILO-03",
+      "to": "SILO-02",
+      "actualMeters": 31.887134171807396,
+      "expectedMeters": 31.88713417180924,
+      "errorMeters": 1.84385839929746e-12
+    },
+    {
+      "from": "SILO-03",
+      "to": "SILO-01",
+      "actualMeters": 20.994996426020425,
+      "expectedMeters": 20.994996426025402,
+      "errorMeters": 4.977351863999502e-12
+    },
+    {
+      "from": "SILO-02",
+      "to": "SILO-01",
+      "actualMeters": 23.999997726550664,
+      "expectedMeters": 23.999997726547537,
+      "errorMeters": 3.126388037344441e-12
+    }
+  ],
+  "registration": {
+    "matrixColumnMajorMeters": [
+      -1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      -1,
+      0,
+      25.43320947275,
+      -0.01,
+      -6.15767129525,
+      1
+    ],
+    "goldenMaxErrorMeters": 0,
+    "axisMaxErrorMeters": 4.977351863999502e-12
+  },
+  "ownership": {
+    "sourceOccurrences": 15620,
+    "uniqueOwners": 16,
+    "duplicates": []
+  },
+  "errors": [],
+  "limits": "Decoded GLB bounds, partition ownership, metadata, source-derived anchors and LOD envelope agreement. This is not a complete surface-distance, nominal-dimension, triangle-intersection or performance certification. Default mode uses versioned source evidence; --source also checks the local original-CAD extraction manifest."
+}

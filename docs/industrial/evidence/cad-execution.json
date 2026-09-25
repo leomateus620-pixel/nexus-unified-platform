@@ -1,0 +1,176 @@
+{
+  "status": "completed",
+  "recordedAt": "2026-09-15T23:54:29.337Z",
+  "branch": "codex/3tentos-cad-incremental",
+  "baseCommit": "a6e7f5a5a95d547f93f5fa666f37511cdce46632",
+  "publication": {
+    "localEdits": true,
+    "generated": true,
+    "committed": false,
+    "pushed": false,
+    "merged": false,
+    "deployed": false
+  },
+  "commands": [
+    {
+      "command": "node scripts/cad/integrate-site.mjs --check",
+      "exitCode": 0,
+      "evidence": "Cadastro reproduzível; 27 IDs, correspondências e registro local"
+    },
+    {
+      "command": "npm run assets:generate -- --sectors silos-high,buildings,grain-handling,blockout,terrain,fences,grass",
+      "exitCode": 0,
+      "evidence": "Última geração concluída, 8 setores com dependências; session 36436"
+    },
+    {
+      "command": "npm run assets:optimize",
+      "exitCode": 0,
+      "evidence": "Última otimização/promocão validada; session 43298; 8 setores com zero erros/avisos decodificados"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "evidence": "Após lookup pelo nome original dos protótipos low; TypeScript sem erros"
+    },
+    {
+      "command": "npm run test:industrial",
+      "exitCode": 0,
+      "evidence": "16/16: 12 contratos industriais e 4 regressões de tangentes"
+    },
+    {
+      "command": "npx eslint src/industrial src/routes/mapas-3d.tsx tests/industrial playwright.industrial.config.ts",
+      "exitCode": 0,
+      "evidence": "Escopo industrial, após correção da legenda"
+    },
+    {
+      "command": "npm run test:industrial:cad",
+      "exitCode": 0,
+      "evidence": "Auditoria dos GLBs finais, referências compactas"
+    },
+    {
+      "command": "npm run test:industrial:cad -- --source",
+      "exitCode": 0,
+      "evidence": "Auditoria dos GLBs finais contra cache de fonte validado"
+    },
+    {
+      "command": "node scripts/audit-industrial-geometry.mjs",
+      "exitCode": 0,
+      "evidence": "Geometria/IDs e estrutura da cena"
+    },
+    {
+      "command": "node scripts/cad/audit-local-compatibility.mjs",
+      "exitCode": 0,
+      "evidence": "Intervenções locais e preservação cartográfica"
+    },
+    {
+      "command": "& 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe' --background --disable-autoexec assets/industrial/source/3tentos-reconstruction.blend --python scripts/cad/audit-export-topology.py",
+      "exitCode": 0,
+      "evidence": "Conciliação de faces degeneradas/duplicadas omitidas na exportação, sem alteração do blend"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "evidence": "Build final com invalidação das instâncias e lookup pelo nome original dos protótipos low; session 26528, exit0"
+    },
+    {
+      "command": "npx eslint src/industrial/vegetation/Vegetation.tsx",
+      "exitCode": 0,
+      "evidence": "Após invalidate das instâncias; demais arquivos industriais já lintados."
+    },
+    {
+      "command": "$env:MAP_URL='http://127.0.0.1:4173'; npm run test:industrial:ui",
+      "exitCode": 0,
+      "evidence": "Último build: 7/7, sem falhas, ignorados ou instáveis; start2026-09-16T00:17:45.356Z, duração75.392s"
+    },
+    {
+      "command": "$env:MAP_URL='http://127.0.0.1:4173/mapas-3d'; npm run test:industrial:views",
+      "exitCode": 0,
+      "evidence": "Vistas A–D finais após as duas correções da vegetação"
+    },
+    {
+      "command": "node 'C:\\Users\\Leonardo\\.codex\\visualizations\\2026\\09\\15\\01a0a6ea-9383-7232-b1c8-9172c314d8ba\\3tentos-review\\capture-cad-review.mjs'",
+      "exitCode": 0,
+      "evidence": "Capturas atuais overview, high, low, blockout e tanque; cad-visual-captures.json"
+    },
+    {
+      "command": "node 'C:\\Users\\Leonardo\\.codex\\visualizations\\2026\\09\\15\\01a0a6ea-9383-7232-b1c8-9172c314d8ba\\3tentos-review\\check-vegetation-profiles.mjs'",
+      "exitCode": 0,
+      "evidence": "Câmera imóvel, árvores em ambos os perfis e redução de42drawcalls ao ocultar vegetação; cad-vegetation-profiles.json"
+    },
+    {
+      "command": "git -c core.safecrlf=false diff --check",
+      "exitCode": 0,
+      "evidence": "Última conferência após consolidação: exit0, sem erros de whitespace"
+    },
+    {
+      "command": "$env:MAP_URL='http://127.0.0.1:4173/mapas-3d'; npm run test:industrial:performance",
+      "exitCode": 0,
+      "evidence": "Final após invalidação e nomes dos protótipos: session50328; 126.864s balanced e122.246s economy; zero erros/perdas de contexto; árvores presentes"
+    },
+    {
+      "command": "node scripts/report-industrial-validation.mjs",
+      "exitCode": 0,
+      "evidence": "Consolidação atual dos resultados, hashes e duas tabelas de27registros; não executa os testes"
+    }
+  ],
+  "extraction": {
+    "script": "scripts/cad/extract_model.py",
+    "python": "C:\\Users\\Leonardo\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "source": "C:\\Users\\Leonardo\\Downloads\\Planta 3D - 3Tentos Agroindustrial - Giruá.3MF\\3D\\3dmodel.model",
+    "referenceDirectory": "C:\\Users\\Leonardo\\Downloads",
+    "exitCode": null,
+    "durationSeconds": 49.766,
+    "completion": "Comprovada pelos artefatos gerados e revalidação posterior --source; retorno bruto inicial não preservado no contexto.",
+    "reproductionCommand": "npm run assets:extract -- --source \"C:\\Users\\Leonardo\\Downloads\\Planta 3D - 3Tentos Agroindustrial - Giruá.3MF\\3D\\3dmodel.model\" --reference-dir \"C:\\Users\\Leonardo\\Downloads\"",
+    "sourceHash": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+    "evidence": [
+      "assets/industrial/raw/cad/cad-cache-validation.json",
+      "docs/industrial/evidence/cad-source-goldens.json",
+      "docs/industrial/evidence/cad-glb-audit.json"
+    ]
+  },
+  "diagnosticAttempts": [
+    {
+      "stage": "Bootstrap guard",
+      "command": "node scripts/create-industrial-data.mjs",
+      "exitCode": 1,
+      "expected": true,
+      "result": "Bloqueado antes de escrever; hash de site.json permaneceu idêntico. Não houve recriação do cadastro."
+    },
+    {
+      "stage": "Preparatory generation",
+      "result": "Tentativas de redução, UV/tangentes e composição de fachadas foram descartadas antes da geração final. Limites e validação impediram promoção dos intermediários incompatíveis."
+    },
+    {
+      "stage": "Tangent regression development",
+      "exitCode": 1,
+      "result": "Uma expectativa inicial de sinal w estava errada e foi corrigida usando a derivada UV; depois 4/4 testes passaram, sem alterar o reparo para atender a expectativa incorreta."
+    },
+    {
+      "stage": "Interface rerun",
+      "exitCode": 1,
+      "result": "Falha real da legenda: width:min-content criou uma coluna sobre a cena. Corrigidos width:max-content e stopPropagation; suíte repetida passou7/7. Capturas posteriores identificaram atualização pendente da vegetação, registrada em item próprio."
+    },
+    {
+      "stage": "Vegetation first-frame inspection",
+      "result": "Instâncias vegetais só apareciam após movimento da câmera ou outro frame. Acrescentado invalidate() após matrix upload e bounding sphere. Typecheck/ESLint passaram. Evidência pré-correção em cad-before-vegetation-fix.json; UI, vistas e desempenho são repetidos após o ajuste.",
+      "supersededPerformance": {
+        "command": "$env:MAP_URL='http://127.0.0.1:4173/mapas-3d'; npm run test:industrial:performance",
+        "exitCode": 0,
+        "session": 25724,
+        "profiles": 2
+      }
+    },
+    {
+      "stage": "Vegetation low prototype names",
+      "result": "Nome original 'dense-0.001' é sanitizado pelo GLTFLoader para 'dense-0001', impedindo lookup anterior. Runtime agora usa userData.name original antes de remover .NNN. GLBs preservados; adicionado teste real de redução de draw calls ao ocultar árvores no perfil economy. Typecheck e ESLint passaram; suite e imagens são repetidas antes do benchmark final. Checagem visual posterior aprovada: árvores presentes na entrada e na alternância economy/balanced sem mover câmera; ocultar Vegetação reduz42 chamadas no enquadramento aferido. Evidência: cad-vegetation-profiles.json."
+    }
+  ],
+  "limitations": [
+    "Execução local no Windows; sem publicação remota.",
+    "Resultados antigos são identificados como baseline histórica; não são apresentados como verificações novas.",
+    "Precisão de exportação não certifica precisão de campo; suportes de redução não certificam toda superfície."
+  ],
+  "completedAt": "2026-09-16T00:29:02.977Z",
+  "scope": "Local CAD implementation completed; historical triangle budgets exceeded and recorded separately. No commit or remote publication."
+}

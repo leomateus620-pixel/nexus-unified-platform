@@ -1,0 +1,577 @@
+{
+  "status": "passed",
+  "sourceHash": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+  "generationSha256": "10e11fafebb157e894dadb74d37d154dfb9fc16259d6745d039157ed0edb77b2",
+  "blendSha256": "9bb492ef6d08d9fae088564cf7244fbd084c5c0a1ed40b10d6f4e4d66868df41",
+  "reductionCacheKey": "0655c257705402b3f0dee038",
+  "method": "Read-only inspection of final saved Blender loop triangles. Count differences exactly equal repeated-index input triangles and duplicate unordered vertex-index faces in the source reduction cache; no geometric tolerance is used.",
+  "definitions": [
+    {
+      "sourceObjectId": 873,
+      "lod": "high",
+      "inputSha256": "012c357b8c79e629712e18fe3c774bbf92e52d9b13a77a10a9551d9efb3a0613",
+      "inputTriangles": 300,
+      "repeatedIndexTriangles": [],
+      "duplicateFaceGroups": [
+        [
+          81,
+          234
+        ],
+        [
+          82,
+          236
+        ]
+      ],
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2
+    },
+    {
+      "sourceObjectId": 873,
+      "lod": "low",
+      "inputSha256": "1fa41bbb216fdbf214978fd128184ef4351c009f7f54eec00220b86c610ffcf5",
+      "inputTriangles": 140,
+      "repeatedIndexTriangles": [],
+      "duplicateFaceGroups": [
+        [
+          28,
+          119
+        ],
+        [
+          29,
+          121
+        ]
+      ],
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2
+    },
+    {
+      "sourceObjectId": 487,
+      "lod": "high",
+      "inputSha256": "b1571dbbe16a3b6e572e0cf31b0baa49a8716c2f507a518f9efd177323b602c5",
+      "inputTriangles": 414,
+      "repeatedIndexTriangles": [
+        11,
+        19,
+        33,
+        37,
+        337,
+        339,
+        398,
+        400
+      ],
+      "duplicateFaceGroups": [],
+      "omittedDegenerateTriangles": 8,
+      "omittedDuplicateTriangles": 0
+    },
+    {
+      "sourceObjectId": 487,
+      "lod": "low",
+      "inputSha256": "43425becdbbcf4f9a87a93317fd7914b7a61e751b3acbdca9c9cc1bee56acc5a",
+      "inputTriangles": 414,
+      "repeatedIndexTriangles": [
+        11,
+        19,
+        33,
+        37,
+        337,
+        339,
+        398,
+        400
+      ],
+      "duplicateFaceGroups": [],
+      "omittedDegenerateTriangles": 8,
+      "omittedDuplicateTriangles": 0
+    },
+    {
+      "sourceObjectId": 791,
+      "lod": "high",
+      "inputSha256": "b8b41dcb851d7542343ae9daf4563b1b227e50c70e9ad13ebbab7b077057475a",
+      "inputTriangles": 300,
+      "repeatedIndexTriangles": [],
+      "duplicateFaceGroups": [
+        [
+          148,
+          298
+        ],
+        [
+          149,
+          299
+        ]
+      ],
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2
+    },
+    {
+      "sourceObjectId": 791,
+      "lod": "low",
+      "inputSha256": "a42539e412f15e0098040999d505efd9565d6d89c643bd67ddba8667c8919c99",
+      "inputTriangles": 120,
+      "repeatedIndexTriangles": [],
+      "duplicateFaceGroups": [
+        [
+          70,
+          118
+        ],
+        [
+          71,
+          119
+        ]
+      ],
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2
+    }
+  ],
+  "partitions": [
+    {
+      "id": "SILO-01",
+      "sector": "silos-high",
+      "lod": "high",
+      "generatedInputTriangles": 233188,
+      "blenderTriangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/11:4136/1:858/7:873",
+          "definition": "873-high"
+        }
+      ]
+    },
+    {
+      "id": "SILO-01",
+      "sector": "silos-low",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/11:4136/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-01",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/11:4136/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-high",
+      "lod": "high",
+      "generatedInputTriangles": 233188,
+      "blenderTriangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/10:4125/1:858/7:873",
+          "definition": "873-high"
+        }
+      ]
+    },
+    {
+      "id": "SILO-02",
+      "sector": "silos-low",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/10:4125/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-02",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/10:4125/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-high",
+      "lod": "high",
+      "generatedInputTriangles": 233188,
+      "blenderTriangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/12:4147/1:858/7:873",
+          "definition": "873-high"
+        }
+      ]
+    },
+    {
+      "id": "SILO-03",
+      "sector": "silos-low",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/12:4147/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-03",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/12:4147/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-high",
+      "lod": "high",
+      "generatedInputTriangles": 233188,
+      "blenderTriangles": 233186,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/6:1531/1:858/7:873",
+          "definition": "873-high"
+        }
+      ]
+    },
+    {
+      "id": "SILO-04",
+      "sector": "silos-low",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/6:1531/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "SILO-04",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 114924,
+      "blenderTriangles": 114922,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/6:1531/1:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "EQ-01",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 3822,
+      "blenderTriangles": 3822,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "EQ-01",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 2202,
+      "blenderTriangles": 2202,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "EQ-02",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 302160,
+      "blenderTriangles": 302160,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "EQ-02",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 107886,
+      "blenderTriangles": 107886,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "ED-01",
+      "sector": "buildings",
+      "lod": "high",
+      "generatedInputTriangles": 152,
+      "blenderTriangles": 152,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "ED-01",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 152,
+      "blenderTriangles": 152,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "ED-04",
+      "sector": "buildings",
+      "lod": "high",
+      "generatedInputTriangles": 244,
+      "blenderTriangles": 244,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "ED-04",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 244,
+      "blenderTriangles": 244,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "ED-05",
+      "sector": "buildings",
+      "lod": "high",
+      "generatedInputTriangles": 100,
+      "blenderTriangles": 100,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "ED-05",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 100,
+      "blenderTriangles": 100,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-HOPPER-PITS",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 414,
+      "blenderTriangles": 406,
+      "omittedDegenerateTriangles": 8,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/1:5/8:480/3:487",
+          "definition": "487-high"
+        }
+      ]
+    },
+    {
+      "id": "CAD-HOPPER-PITS",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 414,
+      "blenderTriangles": 406,
+      "omittedDegenerateTriangles": 8,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/1:5/8:480/3:487",
+          "definition": "487-low"
+        }
+      ]
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-01",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 3294,
+      "blenderTriangles": 3294,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-01",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 1902,
+      "blenderTriangles": 1902,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-02",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 2942,
+      "blenderTriangles": 2942,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-HOPPER-ELEVATOR-02",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 1702,
+      "blenderTriangles": 1702,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-SILO-PIT-TUNNELS",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 188,
+      "blenderTriangles": 188,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-SILO-PIT-TUNNELS",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 100,
+      "blenderTriangles": 100,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-HOPPER-CONNECTIONS",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 162902,
+      "blenderTriangles": 162900,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/1:5/23:772/9:791",
+          "definition": "791-high"
+        }
+      ]
+    },
+    {
+      "id": "CAD-HOPPER-CONNECTIONS",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 59478,
+      "blenderTriangles": 59476,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/1:5/23:772/9:791",
+          "definition": "791-low"
+        }
+      ]
+    },
+    {
+      "id": "CAD-WATER-TANK",
+      "sector": "grain-handling",
+      "lod": "high",
+      "generatedInputTriangles": 34638,
+      "blenderTriangles": 34636,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/2:858/7:873",
+          "definition": "873-high"
+        }
+      ]
+    },
+    {
+      "id": "CAD-WATER-TANK",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 12706,
+      "blenderTriangles": 12704,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 2,
+      "sourceOmissions": [
+        {
+          "sourceInstancePath": "build0/1/2:858/7:873",
+          "definition": "873-low"
+        }
+      ]
+    },
+    {
+      "id": "CAD-OFFICE-ROOF",
+      "sector": "buildings",
+      "lod": "high",
+      "generatedInputTriangles": 2790,
+      "blenderTriangles": 2790,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    },
+    {
+      "id": "CAD-OFFICE-ROOF",
+      "sector": "blockout",
+      "lod": "low",
+      "generatedInputTriangles": 1494,
+      "blenderTriangles": 1494,
+      "omittedDegenerateTriangles": 0,
+      "omittedDuplicateTriangles": 0,
+      "sourceOmissions": []
+    }
+  ],
+  "limits": "Repeated-index and duplicate topology accounting only; other zero-area triangles already in CAD are not silently removed or certified here."
+}

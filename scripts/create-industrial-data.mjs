@@ -3,6 +3,15 @@ import path from "node:path";
 import crypto from "node:crypto";
 const root = process.cwd();
 const out = path.join(root, "src/industrial/data");
+const existingSite = path.join(out, "site.json");
+if (
+  fs.existsSync(existingSite) &&
+  JSON.parse(fs.readFileSync(existingSite, "utf8")).cadRegistration
+) {
+  throw new Error(
+    "Bootstrap interrompido: site.json contém integração CAD. Use scripts/cad/integrate-site.mjs; o cadastro e a base existentes não podem ser substituídos pelo bootstrap fotográfico.",
+  );
+}
 fs.mkdirSync(out, { recursive: true });
 // Photo B ground anchors, hand traced. Pixel coordinates are NOT an orthophoto.
 const origin = [616, 539];

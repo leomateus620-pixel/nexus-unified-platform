@@ -2,7 +2,7 @@ import { Component, memo, useCallback, useEffect, useMemo, useRef, useState } fr
 import type { MutableRefObject, ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import type { ThreeEvent } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { Html, Line } from "@react-three/drei";
 import {
   ACESFilmicToneMapping,
   Group,
@@ -10,9 +10,10 @@ import {
   MeshStandardMaterial,
   PCFSoftShadowMap,
   SRGBColorSpace,
+  Vector3,
 } from "three";
-import type { Material } from "three";
-import { byId, vec } from "../data";
+import type { Material, Object3D } from "three";
+import { byId, site, vec } from "../data";
 import { Lighting } from "../lighting/Lighting";
 import { Navigation } from "../navigation/Navigation";
 import type { Movement } from "../navigation/Navigation";
@@ -20,6 +21,14 @@ import { captureFrame, diagnostics, estimateResources, resetMetrics } from "../p
 import type { CameraRequest, Category, Layers, Quality } from "../types";
 import { Vegetation } from "../vegetation/Vegetation";
 import { useAsset } from "./assets";
+import {
+  elementBounds,
+  elementFootprint,
+  groundHeightAt,
+  identificationLabel,
+  industrialSpan,
+  siloCenter,
+} from "./spatial";
 
 interface Props {
   request: CameraRequest;
@@ -52,6 +61,14 @@ class SceneBoundary extends Component<
   override render() {
     return this.state.error ? null : this.props.children;
   }
+}
+function elementFromObject(object: Object3D) {
+  for (let ancestor: Object3D | null = object; ancestor; ancestor = ancestor.parent) {
+    const id = ancestor.userData["elementId"] ?? ancestor.userData["renderOwnerId"];
+    const element = typeof id === "string" ? byId.get(id) : undefined;
+    if (element) return element;
+  }
+  return undefined;
 }
 function Sector({
   file,
@@ -99,7 +116,7 @@ function Sector({
   useEffect(() => {
     if (asset && layers) {
       asset.traverse((o) => {
-        const element = byId.get(o.userData["elementId"] as string);
+        const element = elementFromObject(o);
         if (element) o.visible = layers[element.category];
       });
       invalidate();
@@ -113,16 +130,10 @@ function Sector({
       ancestor = ancestor.parent
     )
       if (!ancestor.visible) return;
-    let o = event.object;
-    while (o) {
-      const id = o.userData["elementId"] as string | undefined;
-      if (id && byId.has(id)) {
-        event.stopPropagation();
-        onSelect(id);
-        return;
-      }
-      if (!o.parent) break;
-      o = o.parent;
+    const element = elementFromObject(event.object);
+    if (element) {
+      event.stopPropagation();
+      onSelect(element.id);
     }
   };
   return asset ? (
@@ -137,7 +148,11 @@ function SiloLevels({ props }: { props: Props }) {
   const [detail, setDetail] = useState(false);
   const detailActive = useRef(false);
   useFrame(({ camera }) => {
-    const distance = Math.hypot(camera.position.x, camera.position.y - 10, camera.position.z);
+    const distance = Math.hypot(
+      camera.position.x - siloCenter[0],
+      camera.position.y - siloCenter[1],
+      camera.position.z - siloCenter[2],
+    );
     if (!detail && props.quality === "balanced" && distance < 115) setDetail(true);
     if (distance < 100) detailActive.current = true;
     else if (distance > 125) detailActive.current = false;
@@ -183,25 +198,57 @@ function Selection({
   layers: Layers;
   onSelect: (id: string) => void;
 }) {
+  const label = useRef<HTMLButtonElement>(null);
+  const projectedLabel = useMemo(() => new Vector3(), []);
   const element = id ? byId.get(id) : null;
   if (!element || !layers[element.category]) return null;
-  const height = Number(element.geometry["bodyHeight"] ?? element.geometry["height"] ?? 5);
-  const radius = Number(
-    element.geometry["radius"] ??
-      Math.max(Number(element.geometry["width"] ?? 5), Number(element.geometry["depth"] ?? 5)) *
-        0.6,
-  );
+  const bounds = elementBounds(element);
+  const footprint = elementFootprint(element);
+  const top = element.anchors?.top ?? [
+    (bounds.min[0] + bounds.max[0]) / 2,
+    bounds.max[1],
+    (bounds.min[2] + bounds.max[2]) / 2,
+  ];
   return (
-    <group position={element.position}>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.27, 0]}>
-        <ringGeometry args={[radius + 0.6, radius + 0.82, 72]} />
-        <meshBasicMaterial color="#f4b562" transparent opacity={0.9} depthWrite={false} />
-      </mesh>
+    <group>
+      <Line
+        points={[...footprint, footprint[0]!].map(([x, z]) => [x, groundHeightAt(x, z) + 0.27, z])}
+        color="#f4b562"
+        lineWidth={2}
+        transparent
+        opacity={0.9}
+        depthWrite={false}
+      />
       {layers.information && (
-        <Html position={[0, height + 5, 0]} center occlude zIndexRange={[20, 0]}>
-          <button className="industrial-label" onClick={() => onSelect(element.id)}>
+        <Html
+          position={[top[0]!, Math.max(top[1]!, groundHeightAt(top[0]!, top[2]!)) + 3, top[2]!]}
+          center
+          occlude
+          zIndexRange={[20, 0]}
+          calculatePosition={(object, camera, size) => {
+            projectedLabel.setFromMatrixPosition(object.matrixWorld).project(camera);
+            const x = ((projectedLabel.x + 1) * size.width) / 2;
+            const y = ((1 - projectedLabel.y) * size.height) / 2;
+            const halfWidth = (label.current?.offsetWidth ?? 160) / 2 + 8;
+            const halfHeight = (label.current?.offsetHeight ?? 48) / 2 + 8;
+            return [
+              Math.max(halfWidth, Math.min(size.width - halfWidth, x)),
+              Math.max(halfHeight, Math.min(size.height - halfHeight, y)),
+            ];
+          }}
+        >
+          <button
+            ref={label}
+            className="industrial-label"
+            onClick={(event) => {
+              event.stopPropagation();
+              onSelect(element.id);
+            }}
+          >
             {element.name}
-            <span>ID provisório · {element.id}</span>
+            <span>
+              {identificationLabel(element)} · {element.id}
+            </span>
           </button>
         </Html>
       )}
@@ -333,8 +380,9 @@ function Contents(props: Props) {
         <Sector
           key={file}
           file={file}
-          visible={props.layers[category] && (!props.blockout || category === "terrain")}
+          visible={!props.blockout || category === "terrain"}
           blockout={props.blockout}
+          layers={props.layers}
           onSelect={props.onSelect}
           onReady={ready}
         />
@@ -409,7 +457,12 @@ function IndustrialScene(props: Props) {
       <Canvas
         shadows
         frameloop="demand"
-        camera={{ position: vec([133, 124, 182]), fov: 43, near: 0.15, far: 900 }}
+        camera={{
+          position: vec(site.cameras.overview.position),
+          fov: site.cameras.overview.fov,
+          near: 0.15,
+          far: Math.max(900, industrialSpan * 6),
+        }}
         dpr={[0.85, 1.5]}
         gl={{
           antialias: true,

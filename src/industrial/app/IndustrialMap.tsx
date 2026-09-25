@@ -39,6 +39,7 @@ import { diagnostics } from "../performance/metrics";
 import type { CameraRequest, Category, Layers, PhotoId, Quality, ViewId } from "../types";
 import type { Movement } from "../navigation/Navigation";
 import { Minimap } from "../ui/Minimap";
+import { identificationLabel, matchesElement } from "../scene/spatial";
 import "./industrial.css";
 const Scene = lazy(() => import("../scene/IndustrialScene"));
 const initialLayers: Layers = {
@@ -59,6 +60,7 @@ const icons: Record<Category, LucideIcon> = {
   fences: Minus,
 };
 const necessary = ["terrain", "silos-low", "buildings", "grain-handling", "fences", "vegetation"];
+const metres = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 3 });
 function downloadJson(name: string, value: unknown) {
   const url = URL.createObjectURL(
     new Blob([JSON.stringify(value, null, 2)], { type: "application/json" }),
@@ -87,7 +89,10 @@ export default function IndustrialMap() {
   const [help, setHelp] = useState(false);
   const [compare, setCompare] = useState<PhotoId | null>(null);
   const [opacity, setOpacity] = useState(0.45);
-  const [camera, setCamera] = useState<[number, number]>([133, 182]);
+  const [camera, setCamera] = useState<[number, number]>([
+    site.cameras.overview.position[0]!,
+    site.cameras.overview.position[2]!,
+  ]);
   const [stats, setStats] = useState({ fps: 0, calls: 0, triangles: 0 });
   const movement = useRef<Movement>({ forward: 0, side: 0, turn: 0 });
   const app = useRef<HTMLDivElement>(null);
@@ -173,11 +178,7 @@ export default function IndustrialMap() {
     return () => clearInterval(timer);
   }, []);
   const photo = compare ? references.find((r) => r.id === compare) : null;
-  const filtered = elements.filter((e) =>
-    `${e.name} ${e.id} ${categoryNames[e.category]}`
-      .toLocaleLowerCase("pt-BR")
-      .includes(query.toLocaleLowerCase("pt-BR")),
-  );
+  const filtered = elements.filter((e) => matchesElement(e, query, categoryNames[e.category]));
   return (
     <div className="industrial-app" ref={app}>
       <header className="industrial-header industrial-overlay">
@@ -193,7 +194,7 @@ export default function IndustrialMap() {
         </span>
         <div className="industrial-header-end">
           <span className="industrial-referenced">
-            <i /> Reconstrução visual
+            <i /> Reconstrução CAD e fotográfica
           </span>
           <button aria-label="Ajuda de navegação" onClick={() => setHelp(true)}>
             <CircleHelp size={19} />
@@ -299,7 +300,9 @@ export default function IndustrialMap() {
                   </div>
                   <span className="industrial-eyebrow">{categoryNames[element.category]}</span>
                   <h2>{element.name}</h2>
-                  <span className="industrial-code">{element.id} · identificação provisória</span>
+                  <span className="industrial-code">
+                    {element.id} · {identificationLabel(element).toLocaleLowerCase("pt-BR")}
+                  </span>
                   <p className="industrial-description">{element.description}</p>
                   <button className="industrial-primary" onClick={() => view("focus", element.id)}>
                     <Focus size={16} /> Aproximar elemento
@@ -308,12 +311,27 @@ export default function IndustrialMap() {
                     <div>
                       <dt>Existência</dt>
                       <dd>
-                        <Check size={13} /> Visível nas fotos
+                        <Check size={13} />{" "}
+                        {element.existence === "cad_verified"
+                          ? "Presente no CAD"
+                          : element.existence === "visible"
+                            ? "Visível nas fotos"
+                            : "Inferida"}
                       </dd>
                     </div>
                     <div>
                       <dt>Dimensões</dt>
-                      <dd className="is-estimated">Estimadas</dd>
+                      <dd
+                        className={
+                          element.dimensionStatus === "estimated" ? "is-estimated" : undefined
+                        }
+                      >
+                        {element.dimensionStatus === "cad_verified"
+                          ? "Geometria CAD verificada"
+                          : element.dimensionStatus === "mixed"
+                            ? "CAD e estimativas"
+                            : "Estimadas"}
+                      </dd>
                     </div>
                     <div>
                       <dt>Função</dt>
@@ -325,21 +343,84 @@ export default function IndustrialMap() {
                             : "Não confirmada"}
                       </dd>
                     </div>
+                    {element.bounds && (
+                      <>
+                        <div>
+                          <dt>Envelope X × Y × Z</dt>
+                          <dd>
+                            {element.bounds.max
+                              .map((value, axis) =>
+                                metres.format(value - element.bounds!.min[axis]!),
+                              )
+                              .join(" × ")}{" "}
+                            m
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>Cotas Y no Nexus</dt>
+                          <dd>
+                            {metres.format(element.bounds.min[1])} a{" "}
+                            {metres.format(element.bounds.max[1])} m
+                          </dd>
+                        </div>
+                      </>
+                    )}
                   </dl>
-                  <h3>Referências do elemento</h3>
-                  <div className="industrial-photo-chips">
-                    {element.photos.map((id) => (
-                      <button
-                        key={id}
-                        onClick={() => {
-                          view(id);
-                          setCompare(id);
-                        }}
-                      >
-                        Foto {id} <Camera size={13} />
-                      </button>
-                    ))}
-                  </div>
+                  {element.identification && (
+                    <>
+                      <h3>Identificação de origem</h3>
+                      <p className="industrial-description">{element.identification.cadName}</p>
+                      <dl className="industrial-confirmation">
+                        <div>
+                          <dt>Identificador CAD</dt>
+                          <dd>{element.identification.technicalIdentifier}</dd>
+                        </div>
+                        <div>
+                          <dt>Nome apresentado</dt>
+                          <dd>Convenção técnica local</dd>
+                        </div>
+                        <div>
+                          <dt>Unidade</dt>
+                          <dd>Vínculo confirmado pelo usuário</dd>
+                        </div>
+                        <div>
+                          <dt>Associação</dt>
+                          <dd>
+                            {element.identification.associationStatus === "HIGH_CONFIDENCE"
+                              ? "Correspondência técnica"
+                              : "Pendente"}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>Implantação</dt>
+                          <dd>Integração local, sem georreferenciamento</dd>
+                        </div>
+                      </dl>
+                      {element.identification.aliases.length > 0 && (
+                        <p className="industrial-fine-print">
+                          Também identificado como: {element.identification.aliases.join(" · ")}
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {element.photos.length > 0 && (
+                    <>
+                      <h3>Referências do elemento</h3>
+                      <div className="industrial-photo-chips">
+                        {element.photos.map((id) => (
+                          <button
+                            key={id}
+                            onClick={() => {
+                              view(id);
+                              setCompare(id);
+                            }}
+                          >
+                            Foto {id} <Camera size={13} />
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
                   <h3>Hipóteses e pendências</h3>
                   <ul className="industrial-notes">
                     {[...element.assumptions, ...element.pending].map((s, i) => (
@@ -522,8 +603,8 @@ export default function IndustrialMap() {
                 <div className="industrial-scale-note">
                   <Info size={17} />
                   <p>
-                    Escala estimada. Medição desativada até receber dimensões confiáveis. Dados
-                    operacionais não disponíveis.
+                    Estruturas associadas usam medidas CAD. A base fotográfica mantém estimativas. A
+                    implantação usa uma convenção local; a medição permanece desativada.
                   </p>
                 </div>
               </>
@@ -531,7 +612,7 @@ export default function IndustrialMap() {
           </div>
           <div className="industrial-sidebar-footer">
             <Info size={14} />
-            <span>Modelo referenciado · dimensões estimadas</span>
+            <span>Medidas CAD · base fotográfica preservada</span>
           </div>
         </aside>
         {!sidebar && (
@@ -598,7 +679,9 @@ export default function IndustrialMap() {
             ))}
           </div>
         </div>
-        {!isWalk && <Minimap camera={camera} selected={selected} onSelect={select} />}
+        {!isWalk && (
+          <Minimap camera={camera} selected={selected} onSelect={select} layers={layers} />
+        )}
         <div className="industrial-bottom-bar industrial-overlay">
           <span>
             <MousePointer2 size={13} />
@@ -615,7 +698,7 @@ export default function IndustrialMap() {
         </div>
         {isWalk && (
           <div className="industrial-walk-controls industrial-overlay">
-            <p>Altura de observação estimada · colisões ativas</p>
+            <p>Olhos a 1,7 m do piso · colisões ativas</p>
             <div>
               <button
                 aria-label="Girar para a esquerda"
@@ -699,7 +782,10 @@ export default function IndustrialMap() {
                 }}
               />
             </div>
-            <small>{ready.filter((r) => necessary.includes(r)).length} de 6 setores prontos</small>
+            <small>
+              {ready.filter((r) => necessary.includes(r)).length} de {necessary.length} setores
+              prontos
+            </small>
           </div>
         )}
         {error && (
@@ -749,8 +835,8 @@ export default function IndustrialMap() {
             <div className="industrial-scale-note">
               <Info size={18} />
               <p>
-                Reconstrução visual com escala estimada. Não é levantamento cadastral, as built
-                validado ou modelo conectado à operação.
+                A geometria CAD está integrada por convenção local à base fotográfica preservada.
+                Consulte no elemento a fonte, suas medidas e o estado de identificação.
               </p>
             </div>
             <button className="industrial-primary" onClick={() => setHelp(false)}>

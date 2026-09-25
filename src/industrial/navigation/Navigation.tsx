@@ -5,8 +5,16 @@ import { OrbitControls } from "@react-three/drei";
 import { Euler, MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
 import { byId, site, vec } from "../data";
 import type { CameraRequest } from "../types";
-import { moveWithCollisions } from "./collision";
+import { blocked, moveWithCollisions } from "./collision";
 import { diagnostics } from "../performance/metrics";
+import {
+  boundsCenter,
+  elementBounds,
+  groundHeightAt,
+  industrialBounds,
+  industrialSpan,
+  navigationBounds,
+} from "../scene/spatial";
 export type Movement = { forward: number; side: number; turn: number };
 export function Navigation({
   request,
@@ -73,30 +81,48 @@ export function Navigation({
     const focus = request.elementId ? byId.get(request.elementId) : null;
     const from = get().camera.position.clone();
     const next = request.id === "B" ? cameras.orthographic : cameras.perspective;
+    const bounds = focus ? elementBounds(focus) : industrialBounds;
+    const focusCenter = focus?.anchors?.center ?? boundsCenter(bounds);
+    const toTarget = new Vector3(...(preset ? vec(preset.target) : focusCenter));
     const to = new Vector3(
-      ...(preset
-        ? vec(preset.position)
-        : focus
-          ? [
-              focus.position[0] + 28,
-              Number(focus.geometry["bodyHeight"] ?? focus.geometry["height"] ?? 8) + 20,
-              focus.position[2] + 32,
-            ]
-          : vec(site.cameras.overview.position)),
+      ...(preset ? vec(preset.position) : vec(site.cameras.overview.position)),
     );
-    const toTarget = new Vector3(
-      ...(preset
-        ? vec(preset.target)
-        : focus
-          ? [
-              focus.position[0],
-              Number(focus.geometry["bodyHeight"] ?? focus.geometry["height"] ?? 6) * 0.5,
-              focus.position[2],
-            ]
-          : [0, 0, 0]),
-    );
+    if (focus) {
+      const radius = Math.hypot(...bounds.max.map((value, axis) => value - bounds.min[axis]!)) / 2;
+      const verticalFov = MathUtils.degToRad(43);
+      const limitingFov = Math.min(
+        verticalFov,
+        2 * Math.atan(Math.tan(verticalFov / 2) * cameras.perspective.aspect),
+      );
+      const distance = Math.max(12, (radius / Math.sin(limitingFov / 2)) * 1.12);
+      to.copy(toTarget).add(new Vector3(0.68, 0.55, 0.75).normalize().multiplyScalar(distance));
+      to.y = Math.max(to.y, groundHeightAt(to.x, to.z) + 4);
+    }
+    if (walk) {
+      // Updated structures may occupy the old photo-derived start. Select the
+      // nearest free ground point, preserving the preset's viewing direction.
+      const original = to.clone();
+      if (blocked(to.x, to.z)) {
+        let found = false;
+        for (let radius = 1; radius <= industrialSpan && !found; radius++)
+          for (let i = 0; i < 32; i++) {
+            const angle = (i * Math.PI) / 16;
+            const x = original.x + Math.cos(angle) * radius,
+              z = original.z + Math.sin(angle) * radius;
+            if (!blocked(x, z)) {
+              to.x = x;
+              to.z = z;
+              found = true;
+              break;
+            }
+          }
+      }
+      to.y = groundHeightAt(to.x, to.z) + 1.7;
+      toTarget.add(to.clone().sub(original));
+    }
     cameras.perspective.fov = preset?.fov ?? 43;
     cameras.perspective.near = walk || request.id === "D" ? 0.15 : 1.2;
+    cameras.perspective.far = Math.max(2200, industrialSpan * 6);
     cameras.perspective.updateProjectionMatrix();
     set({ camera: next });
     if (!initialized.current || reducedMotion || request.id === "B" || walk) {
@@ -113,7 +139,7 @@ export function Navigation({
         targetTo: toTarget,
         elapsed: 0,
         duration: 1.7,
-        lift: Math.max(48, from.y, to.y),
+        lift: Math.max(industrialBounds.max[1] + 12, from.y, to.y),
       };
     }
     initialized.current = true;
@@ -261,13 +287,16 @@ export function Navigation({
       const dx = (vectors.forward.x * f + vectors.right.x * s) * dt * 5,
         dz = (vectors.forward.z * f + vectors.right.z * s) * dt * 5;
       const [x, z] = moveWithCollisions([camera.position.x, camera.position.z], [dx, dz]);
-      camera.position.set(x, 1.7, z);
+      camera.position.set(x, groundHeightAt(x, z) + 1.7, z);
       if (f || s || movement.current.turn) invalidate();
     } else if (c && !t) {
-      c.target.x = MathUtils.clamp(c.target.x, -100, 105);
-      c.target.z = MathUtils.clamp(c.target.z, -90, 90);
-      c.target.y = MathUtils.clamp(c.target.y, 0, 35);
-      camera.position.y = Math.max(0.5, camera.position.y);
+      c.target.x = MathUtils.clamp(c.target.x, navigationBounds.min[0], navigationBounds.max[0]);
+      c.target.z = MathUtils.clamp(c.target.z, navigationBounds.min[2], navigationBounds.max[2]);
+      c.target.y = MathUtils.clamp(c.target.y, navigationBounds.min[1], navigationBounds.max[1]);
+      camera.position.y = Math.max(
+        groundHeightAt(camera.position.x, camera.position.z) + 0.5,
+        camera.position.y,
+      );
       target.current.copy(c.target);
     }
     diagnostics.camera = camera.position.toArray();
@@ -286,7 +315,7 @@ export function Navigation({
       enableDamping
       dampingFactor={0.1}
       minDistance={4}
-      maxDistance={1100}
+      maxDistance={Math.max(1100, industrialSpan * 4)}
       maxPolarAngle={request.id === "B" ? 0 : Math.PI - 0.1}
       minPolarAngle={request.id === "B" ? 0 : 0.035}
       enableRotate={request.id !== "B"}

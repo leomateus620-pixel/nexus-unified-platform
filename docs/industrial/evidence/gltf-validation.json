@@ -1,15 +1,23 @@
 [
   {
     "file": "blockout.glb",
-    "sourceBytes": 121280,
-    "bytes": 34896,
+    "sourceBytes": 56243832,
+    "bytes": 9287628,
     "ids": [
+      "CAD-HOPPER-CONNECTIONS",
+      "CAD-HOPPER-ELEVATOR-01",
+      "CAD-HOPPER-ELEVATOR-02",
+      "CAD-HOPPER-PITS",
+      "CAD-OFFICE-ROOF",
+      "CAD-SILO-PIT-TUNNELS",
+      "CAD-WATER-TANK",
       "ED-01",
       "ED-02",
       "ED-03",
       "ED-04",
       "ED-05",
       "EQ-01",
+      "EQ-02",
       "EQ-03",
       "PV-01",
       "SILO-01",
@@ -47,13 +55,165 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 1108,
+      "geometryHashBefore": "7ff15ff970bbe0c65a1712d20a4c1a74e28bfe15cf98fb42ea508589c8bf0754",
+      "geometryHashAfter": "7ff15ff970bbe0c65a1712d20a4c1a74e28bfe15cf98fb42ea508589c8bf0754",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": [
+        {
+          "mesh": "SILO-01-yellow-cad.002",
+          "primitive": 0,
+          "repairedVertices": 18,
+          "maxLengthError": 3.092437339535792e-8,
+          "maxNormalDot": 1.5638168364418004e-8
+        },
+        {
+          "mesh": "SILO-01-zinc-cad.002",
+          "primitive": 0,
+          "repairedVertices": 32,
+          "maxLengthError": 2.933423948192626e-8,
+          "maxNormalDot": 3.2075975875400786e-8
+        },
+        {
+          "mesh": "SILO-01-zinc-edge-cad.002",
+          "primitive": 0,
+          "repairedVertices": 118,
+          "maxLengthError": 3.965988493170869e-8,
+          "maxNormalDot": 3.681818749878829e-8
+        },
+        {
+          "mesh": "SILO-02-yellow-cad.002",
+          "primitive": 0,
+          "repairedVertices": 12,
+          "maxLengthError": 3.0073443291200874e-8,
+          "maxNormalDot": 2.134352634908243e-8
+        },
+        {
+          "mesh": "SILO-02-zinc-cad.002",
+          "primitive": 0,
+          "repairedVertices": 33,
+          "maxLengthError": 2.4304318557710758e-8,
+          "maxNormalDot": 2.436793217208688e-8
+        },
+        {
+          "mesh": "SILO-02-zinc-edge-cad.002",
+          "primitive": 0,
+          "repairedVertices": 139,
+          "maxLengthError": 3.990576602497242e-8,
+          "maxNormalDot": 3.025513173326999e-8
+        },
+        {
+          "mesh": "SILO-03-yellow-cad.002",
+          "primitive": 0,
+          "repairedVertices": 12,
+          "maxLengthError": 3.334368536833665e-8,
+          "maxNormalDot": 3.409266477157405e-8
+        },
+        {
+          "mesh": "SILO-03-zinc-cad.002",
+          "primitive": 0,
+          "repairedVertices": 33,
+          "maxLengthError": 3.694692640721087e-8,
+          "maxNormalDot": 2.4437042556169075e-8
+        },
+        {
+          "mesh": "SILO-03-zinc-edge-cad.002",
+          "primitive": 0,
+          "repairedVertices": 139,
+          "maxLengthError": 3.986737240335714e-8,
+          "maxNormalDot": 3.025513173326999e-8
+        },
+        {
+          "mesh": "SILO-04-yellow-cad.002",
+          "primitive": 0,
+          "repairedVertices": 18,
+          "maxLengthError": 3.878050724992477e-8,
+          "maxNormalDot": 2.7521038378774954e-8
+        },
+        {
+          "mesh": "SILO-04-zinc-cad.002",
+          "primitive": 0,
+          "repairedVertices": 31,
+          "maxLengthError": 2.9334229711963644e-8,
+          "maxNormalDot": 3.525840225337973e-8
+        },
+        {
+          "mesh": "SILO-04-zinc-edge-cad.002",
+          "primitive": 0,
+          "repairedVertices": 163,
+          "maxLengthError": 3.601546638698494e-8,
+          "maxNormalDot": 3.758801231379394e-8
+        },
+        {
+          "mesh": "EQ-02-paint-cad.001",
+          "primitive": 0,
+          "repairedVertices": 169,
+          "maxLengthError": 3.5969648148892475e-8,
+          "maxNormalDot": 2.6765566096820237e-8
+        },
+        {
+          "mesh": "EQ-02-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 86,
+          "maxLengthError": 3.5029947831333175e-8,
+          "maxNormalDot": 2.1798082561197418e-8
+        },
+        {
+          "mesh": "ED-01-paint-cad.001",
+          "primitive": 0,
+          "repairedVertices": 4,
+          "maxLengthError": 0,
+          "maxNormalDot": 0
+        },
+        {
+          "mesh": "ED-04-white-cad.001",
+          "primitive": 0,
+          "repairedVertices": 1,
+          "maxLengthError": 0,
+          "maxNormalDot": 0
+        },
+        {
+          "mesh": "CAD-HOPPER-PITS-concrete-cad.001",
+          "primitive": 0,
+          "repairedVertices": 4,
+          "maxLengthError": 0,
+          "maxNormalDot": 0
+        },
+        {
+          "mesh": "CAD-HOPPER-CONNECTIONS-paint-cad.001",
+          "primitive": 0,
+          "repairedVertices": 35,
+          "maxLengthError": 1.2897880097284542e-8,
+          "maxNormalDot": 1.7414978958907312e-8
+        },
+        {
+          "mesh": "CAD-HOPPER-CONNECTIONS-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 36,
+          "maxLengthError": 3.402797643659028e-8,
+          "maxNormalDot": 2.5099441747222784e-8
+        },
+        {
+          "mesh": "CAD-WATER-TANK-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 25,
+          "maxLengthError": 3.0750978874394264e-8,
+          "maxNormalDot": 2.3094247569854787e-8
+        }
+      ]
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:24.412Z"
   },
   {
     "file": "buildings.glb",
-    "sourceBytes": 430152,
-    "bytes": 83736,
+    "sourceBytes": 369380,
+    "bytes": 82228,
     "ids": [
+      "CAD-OFFICE-ROOF",
       "ED-01",
       "ED-02",
       "ED-03",
@@ -90,12 +250,44 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 6,
+      "geometryHashBefore": "7bf978218cdbf3c308cb0821e93a7ed80297063159444607e4738aaecece5f8e",
+      "geometryHashAfter": "7bf978218cdbf3c308cb0821e93a7ed80297063159444607e4738aaecece5f8e",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": [
+        {
+          "mesh": "ED-01-paint-cad",
+          "primitive": 0,
+          "repairedVertices": 4,
+          "maxLengthError": 0,
+          "maxNormalDot": 0
+        },
+        {
+          "mesh": "ED-04-white-cad",
+          "primitive": 0,
+          "repairedVertices": 1,
+          "maxLengthError": 0,
+          "maxNormalDot": 0
+        },
+        {
+          "mesh": "CAD-OFFICE-ROOF-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 1,
+          "maxLengthError": 1.8433633841574704e-8,
+          "maxNormalDot": 7.551821668005942e-10
+        }
+      ]
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:24.468Z"
   },
   {
     "file": "fences.glb",
-    "sourceBytes": 351320,
-    "bytes": 46820,
+    "sourceBytes": 379708,
+    "bytes": 53628,
     "ids": [
       "CE-01",
       "CE-02"
@@ -130,13 +322,37 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 60,
+      "geometryHashBefore": "ff679796fa4a056ce42ebd8c12c5fd02af3c75977451be15d118f2223fc3d831",
+      "geometryHashAfter": "ff679796fa4a056ce42ebd8c12c5fd02af3c75977451be15d118f2223fc3d831",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": [
+        {
+          "mesh": "CE-01-zinc-edge",
+          "primitive": 0,
+          "repairedVertices": 60,
+          "maxLengthError": 2.8515582117805138e-8,
+          "maxNormalDot": 2.5661067664270275e-10
+        }
+      ]
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:24.517Z"
   },
   {
     "file": "grain-handling.glb",
-    "sourceBytes": 1036772,
-    "bytes": 149124,
+    "sourceBytes": 44903460,
+    "bytes": 6118104,
     "ids": [
+      "CAD-HOPPER-CONNECTIONS",
+      "CAD-HOPPER-ELEVATOR-01",
+      "CAD-HOPPER-ELEVATOR-02",
+      "CAD-HOPPER-PITS",
+      "CAD-SILO-PIT-TUNNELS",
+      "CAD-WATER-TANK",
       "EQ-01",
       "EQ-02",
       "EQ-03"
@@ -171,12 +387,65 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 981,
+      "geometryHashBefore": "e65e837830b15c8a9b000865743c743ee57ffad5321f36e0d7605e0670f420eb",
+      "geometryHashAfter": "e65e837830b15c8a9b000865743c743ee57ffad5321f36e0d7605e0670f420eb",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": [
+        {
+          "mesh": "EQ-02-paint-cad",
+          "primitive": 0,
+          "repairedVertices": 582,
+          "maxLengthError": 3.4406744009451984e-8,
+          "maxNormalDot": 4.014319016087953e-8
+        },
+        {
+          "mesh": "EQ-02-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 90,
+          "maxLengthError": 3.5029947831333175e-8,
+          "maxNormalDot": 2.1798082561197418e-8
+        },
+        {
+          "mesh": "CAD-HOPPER-PITS-concrete-cad",
+          "primitive": 0,
+          "repairedVertices": 4,
+          "maxLengthError": 0,
+          "maxNormalDot": 0
+        },
+        {
+          "mesh": "CAD-HOPPER-CONNECTIONS-paint-cad",
+          "primitive": 0,
+          "repairedVertices": 241,
+          "maxLengthError": 1.8007934921016044e-8,
+          "maxNormalDot": 2.11780937647843e-8
+        },
+        {
+          "mesh": "CAD-HOPPER-CONNECTIONS-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 39,
+          "maxLengthError": 3.402797643659028e-8,
+          "maxNormalDot": 2.5099441747222784e-8
+        },
+        {
+          "mesh": "CAD-WATER-TANK-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 25,
+          "maxLengthError": 3.0750978874394264e-8,
+          "maxNormalDot": 2.3094247569854787e-8
+        }
+      ]
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:26.678Z"
   },
   {
     "file": "grass.glb",
-    "sourceBytes": 1081972,
-    "bytes": 142380,
+    "sourceBytes": 1086520,
+    "bytes": 146952,
     "ids": [
       "VG-02"
     ],
@@ -210,12 +479,22 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 0,
+      "geometryHashBefore": "81a8fc59fb567d07f40e30bfe33ce40cfc24c06c8406aae967f29c155abd953d",
+      "geometryHashAfter": "81a8fc59fb567d07f40e30bfe33ce40cfc24c06c8406aae967f29c155abd953d",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": []
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:26.737Z"
   },
   {
     "file": "silos-high.glb",
-    "sourceBytes": 1894044,
-    "bytes": 270332,
+    "sourceBytes": 74996076,
+    "bytes": 13309176,
     "ids": [
       "SILO-01",
       "SILO-02",
@@ -246,12 +525,79 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 1073,
+      "geometryHashBefore": "9bea4de9e2a7f4d4f894989953e7c79d899a98701dd7e53b694676dd5de535fe",
+      "geometryHashAfter": "9bea4de9e2a7f4d4f894989953e7c79d899a98701dd7e53b694676dd5de535fe",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": [
+        {
+          "mesh": "SILO-01-yellow-cad",
+          "primitive": 0,
+          "repairedVertices": 7,
+          "maxLengthError": 2.89600409209001e-8,
+          "maxNormalDot": 1.098703716895244e-8
+        },
+        {
+          "mesh": "SILO-01-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 202,
+          "maxLengthError": 3.1931719490785326e-8,
+          "maxNormalDot": 3.681818749878829e-8
+        },
+        {
+          "mesh": "SILO-02-yellow-cad",
+          "primitive": 0,
+          "repairedVertices": 12,
+          "maxLengthError": 2.969887580306363e-8,
+          "maxNormalDot": 1.3195344116846697e-8
+        },
+        {
+          "mesh": "SILO-02-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 251,
+          "maxLengthError": 3.986737240335714e-8,
+          "maxNormalDot": 3.576571488972391e-8
+        },
+        {
+          "mesh": "SILO-03-yellow-cad",
+          "primitive": 0,
+          "repairedVertices": 11,
+          "maxLengthError": 3.334368536833665e-8,
+          "maxNormalDot": 3.2226030122206595e-8
+        },
+        {
+          "mesh": "SILO-03-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 253,
+          "maxLengthError": 3.986737240335714e-8,
+          "maxNormalDot": 3.025513173326999e-8
+        },
+        {
+          "mesh": "SILO-04-yellow-cad",
+          "primitive": 0,
+          "repairedVertices": 11,
+          "maxLengthError": 2.9085105879289586e-8,
+          "maxNormalDot": 3.518712989210304e-8
+        },
+        {
+          "mesh": "SILO-04-zinc-edge-cad",
+          "primitive": 0,
+          "repairedVertices": 326,
+          "maxLengthError": 3.702116790904597e-8,
+          "maxNormalDot": 3.758801231379394e-8
+        }
+      ]
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:30.407Z"
   },
   {
     "file": "silos-low.glb",
-    "sourceBytes": 1271336,
-    "bytes": 187036,
+    "sourceBytes": 39162232,
+    "bytes": 7560544,
     "ids": [
       "SILO-01",
       "SILO-02",
@@ -282,12 +628,107 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 748,
+      "geometryHashBefore": "3c7ba6ad3f40d9958575aec7c969a4cd8920573c17dbb2e161b8ec00845748ed",
+      "geometryHashAfter": "3c7ba6ad3f40d9958575aec7c969a4cd8920573c17dbb2e161b8ec00845748ed",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": [
+        {
+          "mesh": "SILO-01-yellow-cad.001",
+          "primitive": 0,
+          "repairedVertices": 18,
+          "maxLengthError": 3.092437339535792e-8,
+          "maxNormalDot": 1.5638168364418004e-8
+        },
+        {
+          "mesh": "SILO-01-zinc-cad.001",
+          "primitive": 0,
+          "repairedVertices": 32,
+          "maxLengthError": 2.933423948192626e-8,
+          "maxNormalDot": 3.2075975875400786e-8
+        },
+        {
+          "mesh": "SILO-01-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 118,
+          "maxLengthError": 3.965988493170869e-8,
+          "maxNormalDot": 3.681818749878829e-8
+        },
+        {
+          "mesh": "SILO-02-yellow-cad.001",
+          "primitive": 0,
+          "repairedVertices": 12,
+          "maxLengthError": 3.0073443291200874e-8,
+          "maxNormalDot": 2.134352634908243e-8
+        },
+        {
+          "mesh": "SILO-02-zinc-cad.001",
+          "primitive": 0,
+          "repairedVertices": 33,
+          "maxLengthError": 2.4304318557710758e-8,
+          "maxNormalDot": 2.436793217208688e-8
+        },
+        {
+          "mesh": "SILO-02-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 139,
+          "maxLengthError": 3.990576602497242e-8,
+          "maxNormalDot": 3.025513173326999e-8
+        },
+        {
+          "mesh": "SILO-03-yellow-cad.001",
+          "primitive": 0,
+          "repairedVertices": 12,
+          "maxLengthError": 3.334368536833665e-8,
+          "maxNormalDot": 3.409266477157405e-8
+        },
+        {
+          "mesh": "SILO-03-zinc-cad.001",
+          "primitive": 0,
+          "repairedVertices": 33,
+          "maxLengthError": 3.694692640721087e-8,
+          "maxNormalDot": 2.4437042556169075e-8
+        },
+        {
+          "mesh": "SILO-03-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 139,
+          "maxLengthError": 3.986737240335714e-8,
+          "maxNormalDot": 3.025513173326999e-8
+        },
+        {
+          "mesh": "SILO-04-yellow-cad.001",
+          "primitive": 0,
+          "repairedVertices": 18,
+          "maxLengthError": 3.878050724992477e-8,
+          "maxNormalDot": 2.7521038378774954e-8
+        },
+        {
+          "mesh": "SILO-04-zinc-cad.001",
+          "primitive": 0,
+          "repairedVertices": 31,
+          "maxLengthError": 2.9334229711963644e-8,
+          "maxNormalDot": 3.525840225337973e-8
+        },
+        {
+          "mesh": "SILO-04-zinc-edge-cad.001",
+          "primitive": 0,
+          "repairedVertices": 163,
+          "maxLengthError": 3.601546638698494e-8,
+          "maxNormalDot": 3.758801231379394e-8
+        }
+      ]
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:32.317Z"
   },
   {
     "file": "terrain.glb",
-    "sourceBytes": 4873396,
-    "bytes": 4780780,
+    "sourceBytes": 4878584,
+    "bytes": 4785628,
     "ids": [
       "PV-01",
       "TR-01",
@@ -318,7 +759,17 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "tangentRepairs": {
+      "method": "Invalid corners only: largest valid incident UV derivative, double precision Gram-Schmidt, bitangent handedness",
+      "repairedVertices": 0,
+      "geometryHashBefore": "8e12854ddd3848f92108fac61d9210d4b998796ff22f53d95b45f298cbde0e29",
+      "geometryHashAfter": "8e12854ddd3848f92108fac61d9210d4b998796ff22f53d95b45f298cbde0e29",
+      "unchangedAttributes": "All attributes except TANGENT, plus indices and primitive mode",
+      "primitives": []
+    },
+    "validationStatus": "validated-current-generation",
+    "validatedAt": "2026-09-15T23:38:32.432Z"
   },
   {
     "file": "vegetation-low.glb",
@@ -355,7 +806,8 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "validationStatus": "preserved-asset-prior-validation"
   },
   {
     "file": "vegetation-prototypes.glb",
@@ -392,6 +844,7 @@
       "numHints": 0,
       "messages": [],
       "truncated": false
-    }
+    },
+    "validationStatus": "preserved-asset-prior-validation"
   }
 ]

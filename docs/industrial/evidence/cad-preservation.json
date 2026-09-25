@@ -1,0 +1,245 @@
+{
+  "generatedAt": "2026-09-15T23:44:01.925Z",
+  "baselineCommit": "a6e7f5a5a95d547f93f5fa666f37511cdce46632",
+  "retainedIds": [
+    {
+      "id": "SILO-01",
+      "present": true
+    },
+    {
+      "id": "SILO-02",
+      "present": true
+    },
+    {
+      "id": "SILO-03",
+      "present": true
+    },
+    {
+      "id": "SILO-04",
+      "present": true
+    },
+    {
+      "id": "EQ-01",
+      "present": true
+    },
+    {
+      "id": "EQ-02",
+      "present": true
+    },
+    {
+      "id": "ED-01",
+      "present": true
+    },
+    {
+      "id": "ED-02",
+      "present": true
+    },
+    {
+      "id": "ED-03",
+      "present": true
+    },
+    {
+      "id": "ED-04",
+      "present": true
+    },
+    {
+      "id": "PV-01",
+      "present": true
+    },
+    {
+      "id": "ED-05",
+      "present": true
+    },
+    {
+      "id": "EQ-03",
+      "present": true
+    },
+    {
+      "id": "TR-01",
+      "present": true
+    },
+    {
+      "id": "TR-02",
+      "present": true
+    },
+    {
+      "id": "TR-03",
+      "present": true
+    },
+    {
+      "id": "VG-01",
+      "present": true
+    },
+    {
+      "id": "VG-02",
+      "present": true
+    },
+    {
+      "id": "CE-01",
+      "present": true
+    },
+    {
+      "id": "CE-02",
+      "present": true
+    }
+  ],
+  "unchangedTerrainFields": [
+    {
+      "field": "yard",
+      "identical": true
+    },
+    {
+      "field": "islands",
+      "identical": true
+    },
+    {
+      "field": "access",
+      "identical": true
+    },
+    {
+      "field": "highwayX",
+      "identical": true
+    }
+  ],
+  "changedTrees": [
+    {
+      "index": 70,
+      "before": {
+        "position": [
+          50.56,
+          0,
+          58.24
+        ],
+        "type": "trimmed",
+        "height": 1.8,
+        "variant": 2,
+        "rotation": 4.567182,
+        "id": "VG-02"
+      },
+      "after": {
+        "position": [
+          50.56,
+          0,
+          61
+        ],
+        "type": "trimmed",
+        "height": 1.8,
+        "variant": 2,
+        "rotation": 4.567182,
+        "id": "VG-02"
+      }
+    },
+    {
+      "index": 71,
+      "before": {
+        "position": [
+          54.4,
+          0,
+          58.24
+        ],
+        "type": "trimmed",
+        "height": 1.8,
+        "variant": 0,
+        "rotation": 0.682997,
+        "id": "VG-02"
+      },
+      "after": {
+        "position": [
+          54.4,
+          0,
+          61
+        ],
+        "type": "trimmed",
+        "height": 1.8,
+        "variant": 0,
+        "rotation": 0.682997,
+        "id": "VG-02"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "file": "public/models/3tentos/vegetation-low.glb",
+      "before": "d9bd395d2631e70d8bc87d16bd6509e1010f5b7fc6ccaa9001fed2c77fd4056c",
+      "after": "d9bd395d2631e70d8bc87d16bd6509e1010f5b7fc6ccaa9001fed2c77fd4056c"
+    },
+    {
+      "file": "public/models/3tentos/vegetation-prototypes.glb",
+      "before": "1e3d88a204dab77d10c2803b39e5800d87d169aeb417931eeae1fda79a8372b6",
+      "after": "1e3d88a204dab77d10c2803b39e5800d87d169aeb417931eeae1fda79a8372b6"
+    },
+    {
+      "file": "public/textures/3tentos/asphalt-base.png",
+      "before": "e2dad3d4ee667309e9100151d3e2a8028495e1cd6ce332dacd875c6a112157e4",
+      "after": "e2dad3d4ee667309e9100151d3e2a8028495e1cd6ce332dacd875c6a112157e4"
+    },
+    {
+      "file": "public/textures/3tentos/asphalt-normal.png",
+      "before": "99790cbc239fb1c38a40122eec01289ee340cfd0b53901d310afd0b0e9dba591",
+      "after": "99790cbc239fb1c38a40122eec01289ee340cfd0b53901d310afd0b0e9dba591"
+    },
+    {
+      "file": "public/textures/3tentos/crop-base.png",
+      "before": "2c58fafc140825e5240fb39c737f500e66f00ad2ba167f5413b334513bbb3293",
+      "after": "2c58fafc140825e5240fb39c737f500e66f00ad2ba167f5413b334513bbb3293"
+    },
+    {
+      "file": "public/textures/3tentos/crop-normal.png",
+      "before": "d370ce0435c1662fed90d9e6c22789facca6d3f0c76fc83d73e878b86a9baddd",
+      "after": "d370ce0435c1662fed90d9e6c22789facca6d3f0c76fc83d73e878b86a9baddd"
+    },
+    {
+      "file": "public/textures/3tentos/galvanized-normal.png",
+      "before": "6dca648076108e12ebbe3ea6a470365830740aa01bb25261d03f2c41b3db0407",
+      "after": "6dca648076108e12ebbe3ea6a470365830740aa01bb25261d03f2c41b3db0407"
+    },
+    {
+      "file": "public/textures/3tentos/grass-base.png",
+      "before": "358f0f3a065b6020cfe2a2a9ad2386d491a70481f142fe73c782823ddd5e98da",
+      "after": "358f0f3a065b6020cfe2a2a9ad2386d491a70481f142fe73c782823ddd5e98da"
+    },
+    {
+      "file": "public/textures/3tentos/grass-normal.png",
+      "before": "6b57de014078bb20c2daff913263c59de2a7edbd89a79b16549e01045e103307",
+      "after": "6b57de014078bb20c2daff913263c59de2a7edbd89a79b16549e01045e103307"
+    },
+    {
+      "file": "public/textures/3tentos/gravel-base.png",
+      "before": "1555bf8c7f6173bf360162b8130e18309a17fced2438d9df09b0542dc4d0b53c",
+      "after": "1555bf8c7f6173bf360162b8130e18309a17fced2438d9df09b0542dc4d0b53c"
+    },
+    {
+      "file": "public/textures/3tentos/gravel-normal.png",
+      "before": "f9d25a1569be2a0c8c9aed932b31b0cd9c4109e2354626799b8524da99f4f8cd",
+      "after": "f9d25a1569be2a0c8c9aed932b31b0cd9c4109e2354626799b8524da99f4f8cd"
+    },
+    {
+      "file": "public/textures/3tentos/soil-base.png",
+      "before": "dace7ec2905249fd5b8cd3f227ecfaa41eb46a2d2ca486e5c9d557fe653c3a7b",
+      "after": "dace7ec2905249fd5b8cd3f227ecfaa41eb46a2d2ca486e5c9d557fe653c3a7b"
+    },
+    {
+      "file": "public/textures/3tentos/soil-normal.png",
+      "before": "5bb5ef941c334363c7c7a72db530cdcf3cea6b888460bc01cdc45f9687d6c1de",
+      "after": "5bb5ef941c334363c7c7a72db530cdcf3cea6b888460bc01cdc45f9687d6c1de"
+    }
+  ],
+  "preservedUnassociatedElements": [
+    {
+      "id": "EQ-03",
+      "geometryPositionRotationUnchanged": true
+    },
+    {
+      "id": "ED-02",
+      "geometryPositionRotationUnchanged": true
+    },
+    {
+      "id": "ED-03",
+      "geometryPositionRotationUnchanged": true
+    },
+    {
+      "id": "PV-01",
+      "geometryPositionRotationUnchanged": true
+    }
+  ]
+}

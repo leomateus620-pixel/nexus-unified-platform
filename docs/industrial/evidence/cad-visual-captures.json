@@ -1,0 +1,6065 @@
+{
+  "timestamp": "2026-09-16T00:20:50.964Z",
+  "url": "http://127.0.0.1:4173/mapas-3d",
+  "scope": "Chrome headless desktop and mobile emulation; qualitative screenshots, not performance evidence.",
+  "captures": {
+    "cad-overview-ui": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        }
+      ],
+      "renderedFrames": 9,
+      "calls": 194,
+      "triangles": 2651552,
+      "geometries": 112,
+      "textures": 18,
+      "programs": 12,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        98.99999999999999,
+        119,
+        164
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        }
+      },
+      "estimatedGeometryBytes": 0,
+      "estimatedTextureBytes": 0,
+      "mainCalls": 103,
+      "shadowCalls": 91,
+      "mainTriangles": 1330116,
+      "shadowTriangles": 1321436
+    },
+    "cad-overview": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        }
+      ],
+      "renderedFrames": 9,
+      "calls": 194,
+      "triangles": 2651552,
+      "geometries": 112,
+      "textures": 18,
+      "programs": 12,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        98.99999999999999,
+        119,
+        164
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        }
+      },
+      "estimatedGeometryBytes": 0,
+      "estimatedTextureBytes": 0,
+      "mainCalls": 103,
+      "shadowCalls": 91,
+      "mainTriangles": 1330116,
+      "shadowTriangles": 1321436
+    },
+    "cad-silo-high-ui": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 6029.89999999851,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 25.700000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 349.40000000596046,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 12.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 41.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.70000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.800000004470348,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.20000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 3,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.80000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.299999997019768,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 30.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.29999999701977,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.30000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.600000001490116,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 35.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.29999999701977,
+          "calls": 194,
+          "triangles": 2652210,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330774,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 193,
+          "triangles": 2652178,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 102,
+          "shadowCalls": 91,
+          "mainTriangles": 1330742,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 44.399999998509884,
+          "calls": 190,
+          "triangles": 2651422,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 99,
+          "shadowCalls": 91,
+          "mainTriangles": 1329986,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 46,
+          "calls": 189,
+          "triangles": 2647346,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 98,
+          "shadowCalls": 91,
+          "mainTriangles": 1325910,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.899999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.200000002980232,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.5,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.099999994039536,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.900000005960464,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 59.600000001490116,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.399999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 102.5,
+          "calls": 184,
+          "triangles": 2613820,
+          "cpuRenderMs": 4.5,
+          "mainCalls": 93,
+          "shadowCalls": 91,
+          "mainTriangles": 1292384,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 52.30000000447035,
+          "calls": 181,
+          "triangles": 2583234,
+          "cpuRenderMs": 3.7000000029802322,
+          "mainCalls": 90,
+          "shadowCalls": 91,
+          "mainTriangles": 1261798,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.69999999552965,
+          "calls": 180,
+          "triangles": 2583222,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 89,
+          "shadowCalls": 91,
+          "mainTriangles": 1261786,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39,
+          "calls": 179,
+          "triangles": 2582830,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 88,
+          "shadowCalls": 91,
+          "mainTriangles": 1261394,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.600000001490116,
+          "calls": 176,
+          "triangles": 2533958,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 85,
+          "shadowCalls": 91,
+          "mainTriangles": 1212522,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 42.5,
+          "calls": 173,
+          "triangles": 2530146,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1208710,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.899999998509884,
+          "calls": 172,
+          "triangles": 2506850,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1185414,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 71.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 87.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 12.399999998509884,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 10,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 15,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        }
+      ],
+      "renderedFrames": 58,
+      "calls": 169,
+      "triangles": 3426858,
+      "geometries": 129,
+      "textures": 19,
+      "programs": 13,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        18.477647121863278,
+        35.470187772885744,
+        23.294022214139652
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        },
+        "silos-high": {
+          "bytes": 13309176,
+          "fetchMs": 537.8999999985099,
+          "decodeMs": 97.5
+        }
+      },
+      "estimatedGeometryBytes": 0,
+      "estimatedTextureBytes": 0,
+      "mainCalls": 78,
+      "shadowCalls": 91,
+      "mainTriangles": 1632366,
+      "shadowTriangles": 1794492
+    },
+    "cad-silo-high": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 6029.89999999851,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 25.700000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 349.40000000596046,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 12.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 41.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.70000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.800000004470348,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.20000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 3,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.80000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.299999997019768,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 30.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.29999999701977,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.30000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.600000001490116,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 35.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.29999999701977,
+          "calls": 194,
+          "triangles": 2652210,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330774,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 193,
+          "triangles": 2652178,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 102,
+          "shadowCalls": 91,
+          "mainTriangles": 1330742,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 44.399999998509884,
+          "calls": 190,
+          "triangles": 2651422,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 99,
+          "shadowCalls": 91,
+          "mainTriangles": 1329986,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 46,
+          "calls": 189,
+          "triangles": 2647346,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 98,
+          "shadowCalls": 91,
+          "mainTriangles": 1325910,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.899999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.200000002980232,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.5,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.099999994039536,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.900000005960464,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 59.600000001490116,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.399999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 102.5,
+          "calls": 184,
+          "triangles": 2613820,
+          "cpuRenderMs": 4.5,
+          "mainCalls": 93,
+          "shadowCalls": 91,
+          "mainTriangles": 1292384,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 52.30000000447035,
+          "calls": 181,
+          "triangles": 2583234,
+          "cpuRenderMs": 3.7000000029802322,
+          "mainCalls": 90,
+          "shadowCalls": 91,
+          "mainTriangles": 1261798,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.69999999552965,
+          "calls": 180,
+          "triangles": 2583222,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 89,
+          "shadowCalls": 91,
+          "mainTriangles": 1261786,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39,
+          "calls": 179,
+          "triangles": 2582830,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 88,
+          "shadowCalls": 91,
+          "mainTriangles": 1261394,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.600000001490116,
+          "calls": 176,
+          "triangles": 2533958,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 85,
+          "shadowCalls": 91,
+          "mainTriangles": 1212522,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 42.5,
+          "calls": 173,
+          "triangles": 2530146,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1208710,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.899999998509884,
+          "calls": 172,
+          "triangles": 2506850,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1185414,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 71.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 87.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 12.399999998509884,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 10,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 15,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        }
+      ],
+      "renderedFrames": 58,
+      "calls": 169,
+      "triangles": 3426858,
+      "geometries": 129,
+      "textures": 19,
+      "programs": 13,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        18.477647121863278,
+        35.470187772885744,
+        23.294022214139652
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        },
+        "silos-high": {
+          "bytes": 13309176,
+          "fetchMs": 537.8999999985099,
+          "decodeMs": 97.5
+        }
+      },
+      "estimatedGeometryBytes": 0,
+      "estimatedTextureBytes": 0,
+      "mainCalls": 78,
+      "shadowCalls": 91,
+      "mainTriangles": 1632366,
+      "shadowTriangles": 1794492
+    },
+    "cad-silo-low": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 6029.89999999851,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 25.700000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 349.40000000596046,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 12.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 41.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.70000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.800000004470348,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.20000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 3,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.80000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.299999997019768,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 30.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.29999999701977,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.30000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.600000001490116,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 35.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.29999999701977,
+          "calls": 194,
+          "triangles": 2652210,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330774,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 193,
+          "triangles": 2652178,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 102,
+          "shadowCalls": 91,
+          "mainTriangles": 1330742,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 44.399999998509884,
+          "calls": 190,
+          "triangles": 2651422,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 99,
+          "shadowCalls": 91,
+          "mainTriangles": 1329986,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 46,
+          "calls": 189,
+          "triangles": 2647346,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 98,
+          "shadowCalls": 91,
+          "mainTriangles": 1325910,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.899999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.200000002980232,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.5,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.099999994039536,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.900000005960464,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 59.600000001490116,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.399999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 102.5,
+          "calls": 184,
+          "triangles": 2613820,
+          "cpuRenderMs": 4.5,
+          "mainCalls": 93,
+          "shadowCalls": 91,
+          "mainTriangles": 1292384,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 52.30000000447035,
+          "calls": 181,
+          "triangles": 2583234,
+          "cpuRenderMs": 3.7000000029802322,
+          "mainCalls": 90,
+          "shadowCalls": 91,
+          "mainTriangles": 1261798,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.69999999552965,
+          "calls": 180,
+          "triangles": 2583222,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 89,
+          "shadowCalls": 91,
+          "mainTriangles": 1261786,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39,
+          "calls": 179,
+          "triangles": 2582830,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 88,
+          "shadowCalls": 91,
+          "mainTriangles": 1261394,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.600000001490116,
+          "calls": 176,
+          "triangles": 2533958,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 85,
+          "shadowCalls": 91,
+          "mainTriangles": 1212522,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 42.5,
+          "calls": 173,
+          "triangles": 2530146,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1208710,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.899999998509884,
+          "calls": 172,
+          "triangles": 2506850,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1185414,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 71.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 87.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 12.399999998509884,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 10,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 15,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 6690.9000000059605,
+          "calls": 146,
+          "triangles": 2265406,
+          "cpuRenderMs": 12.200000002980232,
+          "mainCalls": 69,
+          "shadowCalls": 77,
+          "mainTriangles": 1074144,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 39.5,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 15.199999995529652,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        }
+      ],
+      "renderedFrames": 60,
+      "calls": 142,
+      "triangles": 2213982,
+      "geometries": 115,
+      "textures": 19,
+      "programs": 13,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        18.477647121863278,
+        35.470187772885744,
+        23.294022214139652
+      ],
+      "quality": "economy",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        },
+        "silos-high": {
+          "bytes": 13309176,
+          "fetchMs": 537.8999999985099,
+          "decodeMs": 97.5
+        }
+      },
+      "estimatedGeometryBytes": 0,
+      "estimatedTextureBytes": 0,
+      "mainCalls": 65,
+      "shadowCalls": 77,
+      "mainTriangles": 1022720,
+      "shadowTriangles": 1191262
+    },
+    "cad-silo-blockout": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 6029.89999999851,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 25.700000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 349.40000000596046,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 12.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 41.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.70000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.800000004470348,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.20000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 3,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.80000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.299999997019768,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 30.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.29999999701977,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.30000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.600000001490116,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 35.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.29999999701977,
+          "calls": 194,
+          "triangles": 2652210,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330774,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 193,
+          "triangles": 2652178,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 102,
+          "shadowCalls": 91,
+          "mainTriangles": 1330742,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 44.399999998509884,
+          "calls": 190,
+          "triangles": 2651422,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 99,
+          "shadowCalls": 91,
+          "mainTriangles": 1329986,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 46,
+          "calls": 189,
+          "triangles": 2647346,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 98,
+          "shadowCalls": 91,
+          "mainTriangles": 1325910,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.899999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.200000002980232,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.5,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.099999994039536,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.900000005960464,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 59.600000001490116,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.399999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 102.5,
+          "calls": 184,
+          "triangles": 2613820,
+          "cpuRenderMs": 4.5,
+          "mainCalls": 93,
+          "shadowCalls": 91,
+          "mainTriangles": 1292384,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 52.30000000447035,
+          "calls": 181,
+          "triangles": 2583234,
+          "cpuRenderMs": 3.7000000029802322,
+          "mainCalls": 90,
+          "shadowCalls": 91,
+          "mainTriangles": 1261798,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.69999999552965,
+          "calls": 180,
+          "triangles": 2583222,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 89,
+          "shadowCalls": 91,
+          "mainTriangles": 1261786,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39,
+          "calls": 179,
+          "triangles": 2582830,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 88,
+          "shadowCalls": 91,
+          "mainTriangles": 1261394,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.600000001490116,
+          "calls": 176,
+          "triangles": 2533958,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 85,
+          "shadowCalls": 91,
+          "mainTriangles": 1212522,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 42.5,
+          "calls": 173,
+          "triangles": 2530146,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1208710,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.899999998509884,
+          "calls": 172,
+          "triangles": 2506850,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1185414,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 71.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 87.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 12.399999998509884,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 10,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 15,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 6690.9000000059605,
+          "calls": 146,
+          "triangles": 2265406,
+          "cpuRenderMs": 12.200000002980232,
+          "mainCalls": 69,
+          "shadowCalls": 77,
+          "mainTriangles": 1074144,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 39.5,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 15.199999995529652,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 3265.6999999955297,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 37,
+          "calls": 175,
+          "triangles": 3479066,
+          "cpuRenderMs": 15.5,
+          "mainCalls": 84,
+          "shadowCalls": 91,
+          "mainTriangles": 1684574,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.80000000447035,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 41.399999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 101.59999999403954,
+          "calls": 44,
+          "triangles": 297056,
+          "cpuRenderMs": 325.70000000298023,
+          "mainCalls": 44,
+          "shadowCalls": 0,
+          "mainTriangles": 297056,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 474.90000000596046,
+          "calls": 69,
+          "triangles": 895146,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 69,
+          "shadowCalls": 0,
+          "mainTriangles": 895146,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.099999994039536,
+          "calls": 69,
+          "triangles": 895146,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 69,
+          "shadowCalls": 0,
+          "mainTriangles": 895146,
+          "shadowTriangles": 0
+        }
+      ],
+      "renderedFrames": 66,
+      "calls": 69,
+      "triangles": 895146,
+      "geometries": 154,
+      "textures": 18,
+      "programs": 16,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        18.477647121863278,
+        35.470187772885744,
+        23.294022214139652
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        },
+        "silos-high": {
+          "bytes": 13309176,
+          "fetchMs": 537.8999999985099,
+          "decodeMs": 97.5
+        },
+        "blockout": {
+          "bytes": 9287628,
+          "fetchMs": 448.20000000298023,
+          "decodeMs": 28.299999997019768
+        }
+      },
+      "estimatedGeometryBytes": 0,
+      "estimatedTextureBytes": 0,
+      "mainCalls": 69,
+      "shadowCalls": 0,
+      "mainTriangles": 895146,
+      "shadowTriangles": 0
+    },
+    "cad-water-tank-ui": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 6029.89999999851,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 25.700000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 349.40000000596046,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 12.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 41.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.70000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.800000004470348,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.20000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 3,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.80000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.299999997019768,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 30.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.29999999701977,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.30000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.600000001490116,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 35.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.29999999701977,
+          "calls": 194,
+          "triangles": 2652210,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330774,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 193,
+          "triangles": 2652178,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 102,
+          "shadowCalls": 91,
+          "mainTriangles": 1330742,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 44.399999998509884,
+          "calls": 190,
+          "triangles": 2651422,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 99,
+          "shadowCalls": 91,
+          "mainTriangles": 1329986,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 46,
+          "calls": 189,
+          "triangles": 2647346,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 98,
+          "shadowCalls": 91,
+          "mainTriangles": 1325910,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.899999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.200000002980232,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.5,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.099999994039536,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.900000005960464,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 59.600000001490116,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.399999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 102.5,
+          "calls": 184,
+          "triangles": 2613820,
+          "cpuRenderMs": 4.5,
+          "mainCalls": 93,
+          "shadowCalls": 91,
+          "mainTriangles": 1292384,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 52.30000000447035,
+          "calls": 181,
+          "triangles": 2583234,
+          "cpuRenderMs": 3.7000000029802322,
+          "mainCalls": 90,
+          "shadowCalls": 91,
+          "mainTriangles": 1261798,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.69999999552965,
+          "calls": 180,
+          "triangles": 2583222,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 89,
+          "shadowCalls": 91,
+          "mainTriangles": 1261786,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39,
+          "calls": 179,
+          "triangles": 2582830,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 88,
+          "shadowCalls": 91,
+          "mainTriangles": 1261394,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.600000001490116,
+          "calls": 176,
+          "triangles": 2533958,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 85,
+          "shadowCalls": 91,
+          "mainTriangles": 1212522,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 42.5,
+          "calls": 173,
+          "triangles": 2530146,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1208710,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.899999998509884,
+          "calls": 172,
+          "triangles": 2506850,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1185414,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 71.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 87.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 12.399999998509884,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 10,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 15,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 6690.9000000059605,
+          "calls": 146,
+          "triangles": 2265406,
+          "cpuRenderMs": 12.200000002980232,
+          "mainCalls": 69,
+          "shadowCalls": 77,
+          "mainTriangles": 1074144,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 39.5,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 15.199999995529652,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 3265.6999999955297,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 37,
+          "calls": 175,
+          "triangles": 3479066,
+          "cpuRenderMs": 15.5,
+          "mainCalls": 84,
+          "shadowCalls": 91,
+          "mainTriangles": 1684574,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.80000000447035,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 41.399999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 101.59999999403954,
+          "calls": 44,
+          "triangles": 297056,
+          "cpuRenderMs": 325.70000000298023,
+          "mainCalls": 44,
+          "shadowCalls": 0,
+          "mainTriangles": 297056,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 474.90000000596046,
+          "calls": 69,
+          "triangles": 895146,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 69,
+          "shadowCalls": 0,
+          "mainTriangles": 895146,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.099999994039536,
+          "calls": 69,
+          "triangles": 895146,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 69,
+          "shadowCalls": 0,
+          "mainTriangles": 895146,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 3124.8000000044703,
+          "calls": 175,
+          "triangles": 3426930,
+          "cpuRenderMs": 15.100000001490116,
+          "mainCalls": 78,
+          "shadowCalls": 97,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794564
+        },
+        {
+          "ms": 108.69999999552965,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 107.30000000447035,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 81.69999999552965,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 2.5,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 2.5,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.79999999701977,
+          "calls": 169,
+          "triangles": 3426244,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1631752,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 30.100000001490116,
+          "calls": 169,
+          "triangles": 3426244,
+          "cpuRenderMs": 2.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1631752,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 7.800000004470348,
+          "calls": 170,
+          "triangles": 3449540,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1655048,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 10.5,
+          "calls": 170,
+          "triangles": 3449540,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1655048,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 13,
+          "calls": 172,
+          "triangles": 3455250,
+          "cpuRenderMs": 3.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1660758,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.899999998509884,
+          "calls": 172,
+          "triangles": 3455250,
+          "cpuRenderMs": 2.2999999970197678,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1660758,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.899999998509884,
+          "calls": 172,
+          "triangles": 3455250,
+          "cpuRenderMs": 4.100000001490116,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1660758,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.5,
+          "calls": 173,
+          "triangles": 3458192,
+          "cpuRenderMs": 3.6999999955296516,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1663700,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.299999997019768,
+          "calls": 173,
+          "triangles": 3458192,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1663700,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.30000000447035,
+          "calls": 173,
+          "triangles": 3458192,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1663700,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.79999999701977,
+          "calls": 173,
+          "triangles": 3499290,
+          "cpuRenderMs": 6.399999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1704798,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 35.30000000447035,
+          "calls": 173,
+          "triangles": 3476400,
+          "cpuRenderMs": 2.1999999955296516,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1681908,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.19999999552965,
+          "calls": 173,
+          "triangles": 3476400,
+          "cpuRenderMs": 2.2999999970197678,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1681908,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 36.30000000447035,
+          "calls": 172,
+          "triangles": 3473682,
+          "cpuRenderMs": 6.0999999940395355,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1679190,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.29999999701977,
+          "calls": 171,
+          "triangles": 3447474,
+          "cpuRenderMs": 3,
+          "mainCalls": 80,
+          "shadowCalls": 91,
+          "mainTriangles": 1652982,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.899999998509884,
+          "calls": 170,
+          "triangles": 3447082,
+          "cpuRenderMs": 2.3000000044703484,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1652590,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 35,
+          "calls": 170,
+          "triangles": 3447082,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1652590,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.899999998509884,
+          "calls": 170,
+          "triangles": 3447082,
+          "cpuRenderMs": 5.800000004470348,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1652590,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.70000000298023,
+          "calls": 169,
+          "triangles": 3446602,
+          "cpuRenderMs": 2,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1652110,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.600000001490116,
+          "calls": 168,
+          "triangles": 3409398,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1614906,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.600000001490116,
+          "calls": 166,
+          "triangles": 3343884,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 75,
+          "shadowCalls": 91,
+          "mainTriangles": 1549392,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.5,
+          "calls": 164,
+          "triangles": 3169990,
+          "cpuRenderMs": 2.3000000044703484,
+          "mainCalls": 73,
+          "shadowCalls": 91,
+          "mainTriangles": 1375498,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.099999994039536,
+          "calls": 161,
+          "triangles": 3129364,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 70,
+          "shadowCalls": 91,
+          "mainTriangles": 1334872,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.400000005960464,
+          "calls": 158,
+          "triangles": 2955838,
+          "cpuRenderMs": 2.2000000029802322,
+          "mainCalls": 67,
+          "shadowCalls": 91,
+          "mainTriangles": 1161346,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.79999999701977,
+          "calls": 156,
+          "triangles": 2936744,
+          "cpuRenderMs": 7.399999998509884,
+          "mainCalls": 65,
+          "shadowCalls": 91,
+          "mainTriangles": 1142252,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 32.100000001490116,
+          "calls": 153,
+          "triangles": 2980150,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 62,
+          "shadowCalls": 91,
+          "mainTriangles": 1185658,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 150,
+          "triangles": 2942886,
+          "cpuRenderMs": 2.2000000029802322,
+          "mainCalls": 59,
+          "shadowCalls": 91,
+          "mainTriangles": 1148394,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 32.19999999552965,
+          "calls": 149,
+          "triangles": 2942494,
+          "cpuRenderMs": 6.799999997019768,
+          "mainCalls": 58,
+          "shadowCalls": 91,
+          "mainTriangles": 1148002,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 72.10000000149012,
+          "calls": 150,
+          "triangles": 2979698,
+          "cpuRenderMs": 10.5,
+          "mainCalls": 59,
+          "shadowCalls": 91,
+          "mainTriangles": 1185206,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 11.799999997019768,
+          "calls": 150,
+          "triangles": 2979698,
+          "cpuRenderMs": 2.2000000029802322,
+          "mainCalls": 59,
+          "shadowCalls": 91,
+          "mainTriangles": 1185206,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.30000000447035,
+          "calls": 152,
+          "triangles": 3010258,
+          "cpuRenderMs": 2,
+          "mainCalls": 61,
+          "shadowCalls": 91,
+          "mainTriangles": 1215766,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 94.10000000149012,
+          "calls": 149,
+          "triangles": 2963442,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 58,
+          "shadowCalls": 91,
+          "mainTriangles": 1168950,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 10.099999994039536,
+          "calls": 147,
+          "triangles": 2953554,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 56,
+          "shadowCalls": 91,
+          "mainTriangles": 1159062,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 11.400000005960464,
+          "calls": 145,
+          "triangles": 2946860,
+          "cpuRenderMs": 3.100000001490116,
+          "mainCalls": 54,
+          "shadowCalls": 91,
+          "mainTriangles": 1152368,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.399999998509884,
+          "calls": 140,
+          "triangles": 2875816,
+          "cpuRenderMs": 3.5,
+          "mainCalls": 49,
+          "shadowCalls": 91,
+          "mainTriangles": 1081324,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.399999998509884,
+          "calls": 142,
+          "triangles": 2879900,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 1085408,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.5,
+          "calls": 142,
+          "triangles": 2879900,
+          "cpuRenderMs": 5,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 1085408,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 19.600000001490116,
+          "calls": 142,
+          "triangles": 2879900,
+          "cpuRenderMs": 2.8000000044703484,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 1085408,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 28.100000001490116,
+          "calls": 142,
+          "triangles": 2706656,
+          "cpuRenderMs": 46.79999999701977,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 912164,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 54,
+          "calls": 140,
+          "triangles": 2647452,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 49,
+          "shadowCalls": 91,
+          "mainTriangles": 852960,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 7.199999995529652,
+          "calls": 139,
+          "triangles": 2647308,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 48,
+          "shadowCalls": 91,
+          "mainTriangles": 852816,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 8.800000004470348,
+          "calls": 136,
+          "triangles": 2646388,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 45,
+          "shadowCalls": 91,
+          "mainTriangles": 851896,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.599999994039536,
+          "calls": 135,
+          "triangles": 2472886,
+          "cpuRenderMs": 3,
+          "mainCalls": 44,
+          "shadowCalls": 91,
+          "mainTriangles": 678394,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 26.700000002980232,
+          "calls": 134,
+          "triangles": 2472854,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 43,
+          "shadowCalls": 91,
+          "mainTriangles": 678362,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 9.5,
+          "calls": 133,
+          "triangles": 2472742,
+          "cpuRenderMs": 2.1999999955296516,
+          "mainCalls": 42,
+          "shadowCalls": 91,
+          "mainTriangles": 678250,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.399999998509884,
+          "calls": 132,
+          "triangles": 2383814,
+          "cpuRenderMs": 5.100000001490116,
+          "mainCalls": 41,
+          "shadowCalls": 91,
+          "mainTriangles": 589322,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 21.899999998509884,
+          "calls": 129,
+          "triangles": 2257752,
+          "cpuRenderMs": 4.300000004470348,
+          "mainCalls": 38,
+          "shadowCalls": 91,
+          "mainTriangles": 463260,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 8.300000004470348,
+          "calls": 129,
+          "triangles": 2257752,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 38,
+          "shadowCalls": 91,
+          "mainTriangles": 463260,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 18.399999998509884,
+          "calls": 129,
+          "triangles": 2257752,
+          "cpuRenderMs": 1,
+          "mainCalls": 38,
+          "shadowCalls": 91,
+          "mainTriangles": 463260,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.600000001490116,
+          "calls": 127,
+          "triangles": 2235564,
+          "cpuRenderMs": 1.0999999940395355,
+          "mainCalls": 36,
+          "shadowCalls": 91,
+          "mainTriangles": 441072,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 14.699999995529652,
+          "calls": 127,
+          "triangles": 2235564,
+          "cpuRenderMs": 3.600000001490116,
+          "mainCalls": 36,
+          "shadowCalls": 91,
+          "mainTriangles": 441072,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.100000001490116,
+          "calls": 126,
+          "triangles": 2055238,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 35,
+          "shadowCalls": 91,
+          "mainTriangles": 260746,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 19.399999998509884,
+          "calls": 126,
+          "triangles": 2055238,
+          "cpuRenderMs": 3.399999998509884,
+          "mainCalls": 35,
+          "shadowCalls": 91,
+          "mainTriangles": 260746,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.700000002980232,
+          "calls": 126,
+          "triangles": 2037014,
+          "cpuRenderMs": 1,
+          "mainCalls": 35,
+          "shadowCalls": 91,
+          "mainTriangles": 242522,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 12.700000002980232,
+          "calls": 121,
+          "triangles": 2002854,
+          "cpuRenderMs": 4.4000000059604645,
+          "mainCalls": 30,
+          "shadowCalls": 91,
+          "mainTriangles": 208362,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.599999994039536,
+          "calls": 119,
+          "triangles": 1996798,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 28,
+          "shadowCalls": 91,
+          "mainTriangles": 202306,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.100000001490116,
+          "calls": 115,
+          "triangles": 1945582,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 24,
+          "shadowCalls": 91,
+          "mainTriangles": 151090,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.30000000447035,
+          "calls": 115,
+          "triangles": 1945582,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 24,
+          "shadowCalls": 91,
+          "mainTriangles": 151090,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.399999998509884,
+          "calls": 115,
+          "triangles": 1945582,
+          "cpuRenderMs": 2,
+          "mainCalls": 24,
+          "shadowCalls": 91,
+          "mainTriangles": 151090,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.100000001490116,
+          "calls": 114,
+          "triangles": 1925870,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 23,
+          "shadowCalls": 91,
+          "mainTriangles": 131378,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.699999995529652,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.899999998509884,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.200000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 19.399999998509884,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 14.800000004470348,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.599999994039536,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 0.8999999985098839,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.700000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.700000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 3,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.899999998509884,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.5,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.299999997019768,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.1000000014901161,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.700000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        }
+      ],
+      "renderedFrames": 143,
+      "calls": 113,
+      "triangles": 1919974,
+      "geometries": 129,
+      "textures": 19,
+      "programs": 16,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        -50.692708124817116,
+        12.626880621648947,
+        73.19456108133039
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        },
+        "silos-high": {
+          "bytes": 13309176,
+          "fetchMs": 537.8999999985099,
+          "decodeMs": 97.5
+        },
+        "blockout": {
+          "bytes": 9287628,
+          "fetchMs": 448.20000000298023,
+          "decodeMs": 28.299999997019768
+        }
+      },
+      "estimatedGeometryBytes": 72158060,
+      "estimatedTextureBytes": 14680064.000000002,
+      "mainCalls": 22,
+      "shadowCalls": 91,
+      "mainTriangles": 125482,
+      "shadowTriangles": 1794492
+    },
+    "cad-water-tank": {
+      "samples": [
+        {
+          "ms": 605.3999999985099,
+          "calls": 7,
+          "triangles": 84,
+          "cpuRenderMs": 29.700000002980232,
+          "mainCalls": 7,
+          "shadowCalls": 0,
+          "mainTriangles": 84,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 87.70000000298023,
+          "calls": 39,
+          "triangles": 7040,
+          "cpuRenderMs": 151,
+          "mainCalls": 19,
+          "shadowCalls": 20,
+          "mainTriangles": 3514,
+          "shadowTriangles": 3526
+        },
+        {
+          "ms": 312.70000000298023,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 172.79999999701977,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 195.59999999403954,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 32.5,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 12.400000005960464,
+          "calls": 83,
+          "triangles": 1030740,
+          "cpuRenderMs": 10.799999997019768,
+          "mainCalls": 47,
+          "shadowCalls": 36,
+          "mainTriangles": 516110,
+          "shadowTriangles": 514630
+        },
+        {
+          "ms": 33.19999999552965,
+          "calls": 115,
+          "triangles": 1950116,
+          "cpuRenderMs": 163.5,
+          "mainCalls": 63,
+          "shadowCalls": 52,
+          "mainTriangles": 975798,
+          "shadowTriangles": 974318
+        },
+        {
+          "ms": 214,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 388.19999999552965,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 397,
+          "calls": 194,
+          "triangles": 2651552,
+          "cpuRenderMs": 4.700000002980232,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330116,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 6029.89999999851,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 25.700000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 349.40000000596046,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 12.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 41.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.70000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.299999997019768,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.800000004470348,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37.20000000298023,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 3,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.80000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.299999997019768,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 30.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 40.29999999701977,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 38.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.30000000447035,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.69999999552965,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.600000001490116,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.700000002980232,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 29.899999998509884,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 35.5,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 195,
+          "triangles": 2652278,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 104,
+          "shadowCalls": 91,
+          "mainTriangles": 1330842,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.29999999701977,
+          "calls": 194,
+          "triangles": 2652210,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 103,
+          "shadowCalls": 91,
+          "mainTriangles": 1330774,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 193,
+          "triangles": 2652178,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 102,
+          "shadowCalls": 91,
+          "mainTriangles": 1330742,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 44.399999998509884,
+          "calls": 190,
+          "triangles": 2651422,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 99,
+          "shadowCalls": 91,
+          "mainTriangles": 1329986,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 46,
+          "calls": 189,
+          "triangles": 2647346,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 98,
+          "shadowCalls": 91,
+          "mainTriangles": 1325910,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 37,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.899999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.200000002980232,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 31.5,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.099999994039536,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 32.900000005960464,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 36.19999999552965,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 59.600000001490116,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.399999998509884,
+          "calls": 187,
+          "triangles": 2616786,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 96,
+          "shadowCalls": 91,
+          "mainTriangles": 1295350,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 102.5,
+          "calls": 184,
+          "triangles": 2613820,
+          "cpuRenderMs": 4.5,
+          "mainCalls": 93,
+          "shadowCalls": 91,
+          "mainTriangles": 1292384,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 52.30000000447035,
+          "calls": 181,
+          "triangles": 2583234,
+          "cpuRenderMs": 3.7000000029802322,
+          "mainCalls": 90,
+          "shadowCalls": 91,
+          "mainTriangles": 1261798,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 43.69999999552965,
+          "calls": 180,
+          "triangles": 2583222,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 89,
+          "shadowCalls": 91,
+          "mainTriangles": 1261786,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39,
+          "calls": 179,
+          "triangles": 2582830,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 88,
+          "shadowCalls": 91,
+          "mainTriangles": 1261394,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.600000001490116,
+          "calls": 176,
+          "triangles": 2533958,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 85,
+          "shadowCalls": 91,
+          "mainTriangles": 1212522,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 42.5,
+          "calls": 173,
+          "triangles": 2530146,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1208710,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 39.899999998509884,
+          "calls": 172,
+          "triangles": 2506850,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1185414,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 71.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 87.5,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 12.399999998509884,
+          "calls": 169,
+          "triangles": 2480746,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1159310,
+          "shadowTriangles": 1321436
+        },
+        {
+          "ms": 10,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 15,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 6690.9000000059605,
+          "calls": 146,
+          "triangles": 2265406,
+          "cpuRenderMs": 12.200000002980232,
+          "mainCalls": 69,
+          "shadowCalls": 77,
+          "mainTriangles": 1074144,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 39.5,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 15.199999995529652,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 3265.6999999955297,
+          "calls": 142,
+          "triangles": 2213982,
+          "cpuRenderMs": 1.6999999955296516,
+          "mainCalls": 65,
+          "shadowCalls": 77,
+          "mainTriangles": 1022720,
+          "shadowTriangles": 1191262
+        },
+        {
+          "ms": 37,
+          "calls": 175,
+          "triangles": 3479066,
+          "cpuRenderMs": 15.5,
+          "mainCalls": 84,
+          "shadowCalls": 91,
+          "mainTriangles": 1684574,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.80000000447035,
+          "calls": 169,
+          "triangles": 3426858,
+          "cpuRenderMs": 41.399999998509884,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 101.59999999403954,
+          "calls": 44,
+          "triangles": 297056,
+          "cpuRenderMs": 325.70000000298023,
+          "mainCalls": 44,
+          "shadowCalls": 0,
+          "mainTriangles": 297056,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 474.90000000596046,
+          "calls": 69,
+          "triangles": 895146,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 69,
+          "shadowCalls": 0,
+          "mainTriangles": 895146,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.099999994039536,
+          "calls": 69,
+          "triangles": 895146,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 69,
+          "shadowCalls": 0,
+          "mainTriangles": 895146,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 3124.8000000044703,
+          "calls": 175,
+          "triangles": 3426930,
+          "cpuRenderMs": 15.100000001490116,
+          "mainCalls": 78,
+          "shadowCalls": 97,
+          "mainTriangles": 1632366,
+          "shadowTriangles": 1794564
+        },
+        {
+          "ms": 108.69999999552965,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 2.7000000029802322,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 107.30000000447035,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 81.69999999552965,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 2.5,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.20000000298023,
+          "calls": 168,
+          "triangles": 3426132,
+          "cpuRenderMs": 2.5,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1631640,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.79999999701977,
+          "calls": 169,
+          "triangles": 3426244,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1631752,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 30.100000001490116,
+          "calls": 169,
+          "triangles": 3426244,
+          "cpuRenderMs": 2.2999999970197678,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1631752,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 7.800000004470348,
+          "calls": 170,
+          "triangles": 3449540,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1655048,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 10.5,
+          "calls": 170,
+          "triangles": 3449540,
+          "cpuRenderMs": 3.2999999970197678,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1655048,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 13,
+          "calls": 172,
+          "triangles": 3455250,
+          "cpuRenderMs": 3.3000000044703484,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1660758,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.899999998509884,
+          "calls": 172,
+          "triangles": 3455250,
+          "cpuRenderMs": 2.2999999970197678,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1660758,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.899999998509884,
+          "calls": 172,
+          "triangles": 3455250,
+          "cpuRenderMs": 4.100000001490116,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1660758,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.5,
+          "calls": 173,
+          "triangles": 3458192,
+          "cpuRenderMs": 3.6999999955296516,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1663700,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.299999997019768,
+          "calls": 173,
+          "triangles": 3458192,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1663700,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.30000000447035,
+          "calls": 173,
+          "triangles": 3458192,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1663700,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.79999999701977,
+          "calls": 173,
+          "triangles": 3499290,
+          "cpuRenderMs": 6.399999998509884,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1704798,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 35.30000000447035,
+          "calls": 173,
+          "triangles": 3476400,
+          "cpuRenderMs": 2.1999999955296516,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1681908,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.19999999552965,
+          "calls": 173,
+          "triangles": 3476400,
+          "cpuRenderMs": 2.2999999970197678,
+          "mainCalls": 82,
+          "shadowCalls": 91,
+          "mainTriangles": 1681908,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 36.30000000447035,
+          "calls": 172,
+          "triangles": 3473682,
+          "cpuRenderMs": 6.0999999940395355,
+          "mainCalls": 81,
+          "shadowCalls": 91,
+          "mainTriangles": 1679190,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.29999999701977,
+          "calls": 171,
+          "triangles": 3447474,
+          "cpuRenderMs": 3,
+          "mainCalls": 80,
+          "shadowCalls": 91,
+          "mainTriangles": 1652982,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.899999998509884,
+          "calls": 170,
+          "triangles": 3447082,
+          "cpuRenderMs": 2.3000000044703484,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1652590,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 35,
+          "calls": 170,
+          "triangles": 3447082,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1652590,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.899999998509884,
+          "calls": 170,
+          "triangles": 3447082,
+          "cpuRenderMs": 5.800000004470348,
+          "mainCalls": 79,
+          "shadowCalls": 91,
+          "mainTriangles": 1652590,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.70000000298023,
+          "calls": 169,
+          "triangles": 3446602,
+          "cpuRenderMs": 2,
+          "mainCalls": 78,
+          "shadowCalls": 91,
+          "mainTriangles": 1652110,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.600000001490116,
+          "calls": 168,
+          "triangles": 3409398,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 77,
+          "shadowCalls": 91,
+          "mainTriangles": 1614906,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.600000001490116,
+          "calls": 166,
+          "triangles": 3343884,
+          "cpuRenderMs": 1.8000000044703484,
+          "mainCalls": 75,
+          "shadowCalls": 91,
+          "mainTriangles": 1549392,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.5,
+          "calls": 164,
+          "triangles": 3169990,
+          "cpuRenderMs": 2.3000000044703484,
+          "mainCalls": 73,
+          "shadowCalls": 91,
+          "mainTriangles": 1375498,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 34.099999994039536,
+          "calls": 161,
+          "triangles": 3129364,
+          "cpuRenderMs": 2.399999998509884,
+          "mainCalls": 70,
+          "shadowCalls": 91,
+          "mainTriangles": 1334872,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.400000005960464,
+          "calls": 158,
+          "triangles": 2955838,
+          "cpuRenderMs": 2.2000000029802322,
+          "mainCalls": 67,
+          "shadowCalls": 91,
+          "mainTriangles": 1161346,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.79999999701977,
+          "calls": 156,
+          "triangles": 2936744,
+          "cpuRenderMs": 7.399999998509884,
+          "mainCalls": 65,
+          "shadowCalls": 91,
+          "mainTriangles": 1142252,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 32.100000001490116,
+          "calls": 153,
+          "triangles": 2980150,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 62,
+          "shadowCalls": 91,
+          "mainTriangles": 1185658,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 32.600000001490116,
+          "calls": 150,
+          "triangles": 2942886,
+          "cpuRenderMs": 2.2000000029802322,
+          "mainCalls": 59,
+          "shadowCalls": 91,
+          "mainTriangles": 1148394,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 32.19999999552965,
+          "calls": 149,
+          "triangles": 2942494,
+          "cpuRenderMs": 6.799999997019768,
+          "mainCalls": 58,
+          "shadowCalls": 91,
+          "mainTriangles": 1148002,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 72.10000000149012,
+          "calls": 150,
+          "triangles": 2979698,
+          "cpuRenderMs": 10.5,
+          "mainCalls": 59,
+          "shadowCalls": 91,
+          "mainTriangles": 1185206,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 11.799999997019768,
+          "calls": 150,
+          "triangles": 2979698,
+          "cpuRenderMs": 2.2000000029802322,
+          "mainCalls": 59,
+          "shadowCalls": 91,
+          "mainTriangles": 1185206,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.30000000447035,
+          "calls": 152,
+          "triangles": 3010258,
+          "cpuRenderMs": 2,
+          "mainCalls": 61,
+          "shadowCalls": 91,
+          "mainTriangles": 1215766,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 94.10000000149012,
+          "calls": 149,
+          "triangles": 2963442,
+          "cpuRenderMs": 2.9000000059604645,
+          "mainCalls": 58,
+          "shadowCalls": 91,
+          "mainTriangles": 1168950,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 10.099999994039536,
+          "calls": 147,
+          "triangles": 2953554,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 56,
+          "shadowCalls": 91,
+          "mainTriangles": 1159062,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 11.400000005960464,
+          "calls": 145,
+          "triangles": 2946860,
+          "cpuRenderMs": 3.100000001490116,
+          "mainCalls": 54,
+          "shadowCalls": 91,
+          "mainTriangles": 1152368,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.399999998509884,
+          "calls": 140,
+          "triangles": 2875816,
+          "cpuRenderMs": 3.5,
+          "mainCalls": 49,
+          "shadowCalls": 91,
+          "mainTriangles": 1081324,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.399999998509884,
+          "calls": 142,
+          "triangles": 2879900,
+          "cpuRenderMs": 1.6000000014901161,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 1085408,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.5,
+          "calls": 142,
+          "triangles": 2879900,
+          "cpuRenderMs": 5,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 1085408,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 19.600000001490116,
+          "calls": 142,
+          "triangles": 2879900,
+          "cpuRenderMs": 2.8000000044703484,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 1085408,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 28.100000001490116,
+          "calls": 142,
+          "triangles": 2706656,
+          "cpuRenderMs": 46.79999999701977,
+          "mainCalls": 51,
+          "shadowCalls": 91,
+          "mainTriangles": 912164,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 54,
+          "calls": 140,
+          "triangles": 2647452,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 49,
+          "shadowCalls": 91,
+          "mainTriangles": 852960,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 7.199999995529652,
+          "calls": 139,
+          "triangles": 2647308,
+          "cpuRenderMs": 1.7999999970197678,
+          "mainCalls": 48,
+          "shadowCalls": 91,
+          "mainTriangles": 852816,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 8.800000004470348,
+          "calls": 136,
+          "triangles": 2646388,
+          "cpuRenderMs": 5.5,
+          "mainCalls": 45,
+          "shadowCalls": 91,
+          "mainTriangles": 851896,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.599999994039536,
+          "calls": 135,
+          "triangles": 2472886,
+          "cpuRenderMs": 3,
+          "mainCalls": 44,
+          "shadowCalls": 91,
+          "mainTriangles": 678394,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 26.700000002980232,
+          "calls": 134,
+          "triangles": 2472854,
+          "cpuRenderMs": 2.899999998509884,
+          "mainCalls": 43,
+          "shadowCalls": 91,
+          "mainTriangles": 678362,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 9.5,
+          "calls": 133,
+          "triangles": 2472742,
+          "cpuRenderMs": 2.1999999955296516,
+          "mainCalls": 42,
+          "shadowCalls": 91,
+          "mainTriangles": 678250,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 33.399999998509884,
+          "calls": 132,
+          "triangles": 2383814,
+          "cpuRenderMs": 5.100000001490116,
+          "mainCalls": 41,
+          "shadowCalls": 91,
+          "mainTriangles": 589322,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 21.899999998509884,
+          "calls": 129,
+          "triangles": 2257752,
+          "cpuRenderMs": 4.300000004470348,
+          "mainCalls": 38,
+          "shadowCalls": 91,
+          "mainTriangles": 463260,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 8.300000004470348,
+          "calls": 129,
+          "triangles": 2257752,
+          "cpuRenderMs": 1.1999999955296516,
+          "mainCalls": 38,
+          "shadowCalls": 91,
+          "mainTriangles": 463260,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 18.399999998509884,
+          "calls": 129,
+          "triangles": 2257752,
+          "cpuRenderMs": 1,
+          "mainCalls": 38,
+          "shadowCalls": 91,
+          "mainTriangles": 463260,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.600000001490116,
+          "calls": 127,
+          "triangles": 2235564,
+          "cpuRenderMs": 1.0999999940395355,
+          "mainCalls": 36,
+          "shadowCalls": 91,
+          "mainTriangles": 441072,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 14.699999995529652,
+          "calls": 127,
+          "triangles": 2235564,
+          "cpuRenderMs": 3.600000001490116,
+          "mainCalls": 36,
+          "shadowCalls": 91,
+          "mainTriangles": 441072,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.100000001490116,
+          "calls": 126,
+          "triangles": 2055238,
+          "cpuRenderMs": 4.200000002980232,
+          "mainCalls": 35,
+          "shadowCalls": 91,
+          "mainTriangles": 260746,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 19.399999998509884,
+          "calls": 126,
+          "triangles": 2055238,
+          "cpuRenderMs": 3.399999998509884,
+          "mainCalls": 35,
+          "shadowCalls": 91,
+          "mainTriangles": 260746,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 20.700000002980232,
+          "calls": 126,
+          "triangles": 2037014,
+          "cpuRenderMs": 1,
+          "mainCalls": 35,
+          "shadowCalls": 91,
+          "mainTriangles": 242522,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 12.700000002980232,
+          "calls": 121,
+          "triangles": 2002854,
+          "cpuRenderMs": 4.4000000059604645,
+          "mainCalls": 30,
+          "shadowCalls": 91,
+          "mainTriangles": 208362,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.599999994039536,
+          "calls": 119,
+          "triangles": 1996798,
+          "cpuRenderMs": 1.3000000044703484,
+          "mainCalls": 28,
+          "shadowCalls": 91,
+          "mainTriangles": 202306,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.100000001490116,
+          "calls": 115,
+          "triangles": 1945582,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 24,
+          "shadowCalls": 91,
+          "mainTriangles": 151090,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.30000000447035,
+          "calls": 115,
+          "triangles": 1945582,
+          "cpuRenderMs": 1.7000000029802322,
+          "mainCalls": 24,
+          "shadowCalls": 91,
+          "mainTriangles": 151090,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.399999998509884,
+          "calls": 115,
+          "triangles": 1945582,
+          "cpuRenderMs": 2,
+          "mainCalls": 24,
+          "shadowCalls": 91,
+          "mainTriangles": 151090,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.100000001490116,
+          "calls": 114,
+          "triangles": 1925870,
+          "cpuRenderMs": 1.8999999985098839,
+          "mainCalls": 23,
+          "shadowCalls": 91,
+          "mainTriangles": 131378,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.699999995529652,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.899999998509884,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.4000000059604645,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.200000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.5,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 19.399999998509884,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.5999999940395355,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 14.800000004470348,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.599999994039536,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 0.8999999985098839,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.700000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.2000000029802322,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.700000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 3,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.899999998509884,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.3999999985098839,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 17.5,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 2.100000001490116,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 16.299999997019768,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.1000000014901161,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        },
+        {
+          "ms": 15.700000002980232,
+          "calls": 113,
+          "triangles": 1919974,
+          "cpuRenderMs": 1.2999999970197678,
+          "mainCalls": 22,
+          "shadowCalls": 91,
+          "mainTriangles": 125482,
+          "shadowTriangles": 1794492
+        }
+      ],
+      "renderedFrames": 143,
+      "calls": 113,
+      "triangles": 1919974,
+      "geometries": 129,
+      "textures": 19,
+      "programs": 16,
+      "contextLosses": 0,
+      "readyAt": 3445,
+      "startedAt": 1292,
+      "camera": [
+        -50.692708124817116,
+        12.626880621648947,
+        73.19456108133039
+      ],
+      "quality": "balanced",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "status": "ready",
+      "assets": {
+        "buildings": {
+          "bytes": 82228,
+          "fetchMs": 72.89999999850988,
+          "decodeMs": 10.200000002980232
+        },
+        "grain-handling": {
+          "bytes": 6118104,
+          "fetchMs": 368.3999999985099,
+          "decodeMs": 24.700000002980232
+        },
+        "terrain": {
+          "bytes": 4785628,
+          "fetchMs": 304.3999999985099,
+          "decodeMs": 103.39999999850988
+        },
+        "silos-low": {
+          "bytes": 7560544,
+          "fetchMs": 606.2000000029802,
+          "decodeMs": 66.39999999850988
+        },
+        "fences": {
+          "bytes": 53628,
+          "fetchMs": 218.5,
+          "decodeMs": 1.5
+        },
+        "grass": {
+          "bytes": 146952,
+          "fetchMs": 214.19999999552965,
+          "decodeMs": 1.8000000044703484
+        },
+        "vegetation-low": {
+          "bytes": 391596,
+          "fetchMs": 218.20000000298023,
+          "decodeMs": 3.7000000029802322
+        },
+        "vegetation-prototypes": {
+          "bytes": 570884,
+          "fetchMs": 223.5,
+          "decodeMs": 3.7000000029802322
+        },
+        "silos-high": {
+          "bytes": 13309176,
+          "fetchMs": 537.8999999985099,
+          "decodeMs": 97.5
+        },
+        "blockout": {
+          "bytes": 9287628,
+          "fetchMs": 448.20000000298023,
+          "decodeMs": 28.299999997019768
+        }
+      },
+      "estimatedGeometryBytes": 72158060,
+      "estimatedTextureBytes": 14680064.000000002,
+      "mainCalls": 22,
+      "shadowCalls": 91,
+      "mainTriangles": 125482,
+      "shadowTriangles": 1794492
+    }
+  },
+  "errors": []
+}

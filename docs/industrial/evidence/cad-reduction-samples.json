@@ -1,0 +1,330 @@
+{
+  "sourceSha256": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
+  "blenderVersion": "4.5.10 LTS",
+  "scope": "Definition-local experiments; not complete-asset or browser performance validation",
+  "envelopeToleranceMeters": 0.002,
+  "sampledSupportDirections": 518,
+  "surfaceErrorCertified": false,
+  "samples": [
+    {
+      "sourceObjectId": 1546,
+      "lod": "high",
+      "sourceTriangles": 71378,
+      "triangles": 1134,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 32,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 16,
+      "maxProjectionMeters": 0.0006660223007202148,
+      "localEnvelopeErrorMeters": 5.461120600180891e-08,
+      "sampledSupportErrorMeters": 0.0007835325489976563,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 300,
+          "triangles": 1134,
+          "protectedVertices": 32,
+          "sampledSupportErrorMeters": 0.0007835325489976563
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 1548,
+      "lod": "high",
+      "sourceTriangles": 71378,
+      "triangles": 1150,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 32,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 16,
+      "maxProjectionMeters": 0.0005943258875049651,
+      "localEnvelopeErrorMeters": 3.5762786843029915e-08,
+      "sampledSupportErrorMeters": 0.0007720704244330578,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 300,
+          "triangles": 1150,
+          "protectedVertices": 32,
+          "sampledSupportErrorMeters": 0.0007720704244330578
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 3730,
+      "lod": "high",
+      "sourceTriangles": 87616,
+      "triangles": 22000,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 386,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 53,
+      "maxProjectionMeters": 0.0019763177260756493,
+      "localEnvelopeErrorMeters": 7.629394005448376e-09,
+      "sampledSupportErrorMeters": 0.0,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 22000,
+          "triangles": 22000,
+          "protectedVertices": 386,
+          "sampledSupportErrorMeters": 0.0
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 3730,
+      "lod": "low",
+      "sourceTriangles": 87616,
+      "triangles": 7998,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 386,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 61,
+      "maxProjectionMeters": 0.02242429554462433,
+      "localEnvelopeErrorMeters": 9.5367431640625e-07,
+      "sampledSupportErrorMeters": 9.5367431640625e-07,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 8000,
+          "triangles": 7998,
+          "protectedVertices": 386,
+          "sampledSupportErrorMeters": 9.5367431640625e-07
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 3728,
+      "lod": "low",
+      "sourceTriangles": 480,
+      "triangles": 480,
+      "method": "source below target",
+      "localEnvelopeErrorMeters": 0.0
+    },
+    {
+      "sourceObjectId": 1496,
+      "lod": "high",
+      "sourceTriangles": 254640,
+      "triangles": 13892,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 44,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 1649,
+      "maxProjectionMeters": 0.004347801208496094,
+      "localEnvelopeErrorMeters": 1.0719299314843056e-07,
+      "sampledSupportErrorMeters": 0.0002848753969044715,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 300,
+          "triangles": 13892,
+          "protectedVertices": 44,
+          "sampledSupportErrorMeters": 0.0002848753969044715
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 640,
+      "lod": "low",
+      "sourceTriangles": 21120,
+      "triangles": 12,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "PLTF4X2-ST-M000 Superior Elevador: 2x1m floor panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 2.216796868292903e-08,
+      "sampledSupportErrorMeters": 0.0,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 752,
+      "lod": "low",
+      "sourceTriangles": 21120,
+      "triangles": 12,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "PLTF4X2-ST-M000 Superior Elevador: second 2x1m floor panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 2.216796868292903e-08,
+      "sampledSupportErrorMeters": 0.0,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 1041,
+      "lod": "low",
+      "sourceTriangles": 10848,
+      "triangles": 12,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "PLTF2X1-ST-M000 Lat Dir Aberta Elevador: 1.025x1m floor panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 2.216796868292903e-08,
+      "sampledSupportErrorMeters": 0.0,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 1381,
+      "lod": "low",
+      "sourceTriangles": 21120,
+      "triangles": 12,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "PLTF2X1-ST-M000 Lat Dir Aberta: 2x1m floor panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 2.216796868292903e-08,
+      "sampledSupportErrorMeters": 0.0,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 3747,
+      "lod": "low",
+      "sourceTriangles": 21120,
+      "triangles": 12,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "PLTF2X1-ST-M000 Esquerda: 2x1m floor panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 2.216796868292903e-08,
+      "sampledSupportErrorMeters": 0.0,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 1496,
+      "lod": "low",
+      "sourceTriangles": 254640,
+      "triangles": 228,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "Grade de Protecao: 1x2.23m thin perforated panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 1.0719299314843056e-07,
+      "sampledSupportErrorMeters": 9.480140134021653e-05,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 1498,
+      "lod": "low",
+      "sourceTriangles": 222384,
+      "triangles": 244,
+      "method": "allowlisted low perforated leaf panel, original convex outer contour and thickness",
+      "panelIdentification": "Grade de Protecao: 0.89x2.23m thin perforated panel",
+      "perforationsOmitted": true,
+      "localEnvelopeErrorMeters": 5.5694580058940346e-08,
+      "sampledSupportErrorMeters": 9.480140134043857e-05,
+      "surfaceErrorCertified": false
+    },
+    {
+      "sourceObjectId": 303,
+      "lod": "high",
+      "sourceTriangles": 5318,
+      "triangles": 168,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 46,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 16,
+      "maxProjectionMeters": 0.00015207957767415792,
+      "localEnvelopeErrorMeters": 1.2874603272372553e-08,
+      "sampledSupportErrorMeters": 0.0012853909766141324,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 100,
+          "triangles": 168,
+          "protectedVertices": 46,
+          "sampledSupportErrorMeters": 0.0012853909766141324
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 303,
+      "lod": "low",
+      "sourceTriangles": 5318,
+      "triangles": 168,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 46,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 16,
+      "maxProjectionMeters": 0.00015207957767415792,
+      "localEnvelopeErrorMeters": 1.2874603272372553e-08,
+      "sampledSupportErrorMeters": 0.0012853909766141324,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 40,
+          "triangles": 168,
+          "protectedVertices": 46,
+          "sampledSupportErrorMeters": 0.0012853909766141324
+        }
+      ]
+    },
+    {
+      "sourceObjectId": 307,
+      "lod": "high",
+      "sourceTriangles": 2040,
+      "triangles": 338,
+      "method": "original topology, adaptive protected supports, exterior-point projection",
+      "protectedVertices": 22,
+      "protectedVertexMaxErrorMeters": 0.0,
+      "projectedVertices": 6,
+      "maxProjectionMeters": 7.043799996608868e-05,
+      "localEnvelopeErrorMeters": 2.479553229406406e-08,
+      "sampledSupportErrorMeters": 0.00010320998467516773,
+      "degenerateTriangles": 0,
+      "surfaceErrorCertified": false,
+      "attempts": [
+        {
+          "targetTriangles": 300,
+          "triangles": 338,
+          "protectedVertices": 22,
+          "sampledSupportErrorMeters": 0.00010320998467516773
+        }
+      ]
+    }
+  ],
+  "lowPanelGeometryValidation": [
+    {
+      "objectId": 640,
+      "triangles": 12,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    },
+    {
+      "objectId": 752,
+      "triangles": 12,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    },
+    {
+      "objectId": 1041,
+      "triangles": 12,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    },
+    {
+      "objectId": 1381,
+      "triangles": 12,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    },
+    {
+      "objectId": 3747,
+      "triangles": 12,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    },
+    {
+      "objectId": 1496,
+      "triangles": 228,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    },
+    {
+      "objectId": 1498,
+      "triangles": 244,
+      "degenerateTriangles": 0,
+      "meshRequiredRepair": false
+    }
+  ]
+}

@@ -11,10 +11,12 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
+    "assets:extract": "node scripts/run-cad.mjs",
     "assets:generate": "node scripts/run-blender.mjs",
     "assets:optimize": "node scripts/optimize-industrial.mjs",
     "assets:prepare": "npm run assets:generate && npm run assets:optimize",
-    "test:industrial": "tsx --test tests/industrial/contracts.test.ts",
+    "test:industrial": "tsx --test tests/industrial/contracts.test.ts tests/industrial/tangent-repair.test.mjs",
+    "test:industrial:cad": "node scripts/audit-industrial-cad.mjs",
     "test:industrial:ui": "playwright test --config playwright.industrial.config.ts",
     "test:industrial:performance": "node scripts/benchmark-industrial.mjs",
     "test:industrial:views": "node scripts/capture-industrial-views.mjs"

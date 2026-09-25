@@ -1,59 +1,109 @@
-# Leitura das referências e hipóteses
+# Reconstrução incremental, proveniência e limites
 
-## Convenções e escala
+## Referências e identificação
 
-Origem próxima ao centro dos quatro silos. +X aponta para a direita e +Z para baixo na Foto B; Y é vertical. Não se atribui norte/leste geográfico. Um diâmetro de **17,6 unidades** foi adotado como hipótese de trabalho, com corpo de 17,6 e cone de 3,8 unidades. A convenção de metro é **estimada**, sem medida de campo. Não há capacidades, áreas, cotas oficiais ou ferramenta de medição ativa.
+A primeira versão reconstruiu quatro fotografias com escala estimada. A revisão mantém esse mapa e usa o CAD confirmado da mesma unidade para corrigir estruturas associadas e acrescentar componentes ausentes. O usuário autorizou uma convenção local; o frame fotográfico não é tratado como levantamento geográfico.
 
-A Foto B não é ortofoto. Os pontos de apoio foram traçados manualmente, usando 0,16 unidade/pixel como conveniência de implantação. Os pontos altos dos silos são tratados como correspondências elevadas, sem aplicar a eles uma homografia do solo. O terreno é conservador e plano; pequenas separações entre superfícies são construtivas/renderização, não altimetria medida.
+O CAD fornece geometria, cotas relativas e relações entre ocorrências. Fotos continuam orientando materiais, aparência e a base sem correspondente CAD. Nomes da fonte são identificação técnica; capacidade, fluxo, numeração operacional de silo e conformidade não são deduzidos deles.
 
-## Leitura por fotografia
+Em [`site.json`](../../src/industrial/data/site.json), `name` é o nome exibido; `identification` separa nome CAD, identificador, aliases, convenção e associação. `cad` registra fonte/hash, ocorrência, matriz, partição e exclusões. **Os 20 IDs históricos permanecem**, com sete novos componentes; não se transfere identidade por proximidade.
 
-**A — aérea oblíqua:** quatro silos, galpão na frente, rodovia à direita, entrada superior e circulação envolvente. Permite comparar bases, largura dos pátios e relação de altura entre silos, distribuição central e galpão. O bosque à esquerda e o alinhamento de palmeiras à direita são distintos.
+## Coordenadas e unidade
 
-**B — superior:** principal referência de implantação. Conjunto 2 × 2, galpão abaixo, edificação lateral e faixa longitudinal à direita; dois volumes no setor superior esquerdo e edificação/elemento circular no inferior direito. Ilhas verdes foram traçadas separadamente da circulação. A faixa externa de acesso não é confundida com a rodovia nem com a via interna.
+| Frame        | Definição                                                                                                  |
+| ------------ | ---------------------------------------------------------------------------------------------------------- |
+| CAD original | Milímetros e origem preservada; +Y vertical é sustentado pela geometria, sem atributo explícito de up-axis |
+| CAD métrico  | Vértices/translações convertidos uma vez por 0,001; matrizes afins preservadas                             |
+| Nexus        | +X à direita, +Z abaixo na Foto B, +Y vertical; norte/UTM e datum de campo não determinados                |
 
-**C — lado oposto:** mesma implantação vista com câmera do outro lado. Confirma cobertura do galpão e circulação atrás dele, os volumes periféricos, a relação do elemento circular e as conexões metálicas longitudinais. Nenhum espelhamento da geometria foi empregado.
+`3tentos-local-cad-v1` usa rotação horizontal de π e translação `[25.43320947275, −0.01, −6.15767129525]` m, com escala 1. A média dos eixos de silo permanece no centro histórico Nexus `[-0.16,0,0]`; os setores de moegas/escritório/agrotóxicos sustentam a orientação local autorizada. Não é ajuste georreferenciado por pontos levantados.
 
-**D — solo:** comprova a leitura das chapas corrugadas, montantes, juntas entre anéis, cones, tubulações inclinadas, escadas e elementos amarelos. A correspondência exata entre os dois silos desta foto e os quatro IDs do cadastro permanece pendente. Vegetação podada e cercamento são representados; não se deduz espécie botânica ou conformidade de segurança.
+Solo CAD Y=0,010 corresponde ao datum Nexus Y=0; base de silo CAD Y=0,110 chega a Nexus Y=0,100. Altura, cota absoluta, pivô, centro de eixo e centro de envelope são grandezas diferentes. Não recentrar filhos individualmente nem tomar o pivô de montagem como eixo do silo.
 
-## Inventário
+Blender aplica `(x,y,z) → (x,−z,y)` e exporta glTF Y-up com placement incorporado. React não repete a transformação. Bounds, anchors, contornos e colliders usam o mesmo frame Nexus.
 
-O cadastro completo por elemento, com posição/rotação/parâmetros e pendências, está em [`site.json`](../../src/industrial/data/site.json). As funções da tabela são deliberadamente conservadoras.
+| ID Nexus | Montagem CAD | Convenção local |
+| -------- | ------------ | --------------- |
+| SILO-01  | 4136         | Quadrante −X/−Z |
+| SILO-02  | 4125         | Quadrante +X/−Z |
+| SILO-03  | 4147         | Quadrante −X/+Z |
+| SILO-04  | 1531         | Quadrante +X/+Z |
 
-| ID provisório | Existência e forma | Fotos | Função |
-|---|---|---|---|
-| SILO-01 a SILO-04 | Quatro cilindros com cone, base e coroamento em 2 × 2 | A, B, C; detalhes tipológicos D | Silo identificável; capacidade desconhecida |
-| EQ-01 | Conjunto central de estruturas verticais, plataformas e quatro tubos inclinados | A–D | Elevação/distribuição provável; fluxo não modelado |
-| EQ-02 | Ligação longitudinal elevada e suportes junto ao galpão | A, B, C | Tipo de transporte não confirmado |
-| ED-01 | Galpão adjacente, cobertura em duas águas, fachadas e portas aparentes | A, B, C | Uso interno desconhecido |
-| ED-02, ED-03 | Dois edifícios no setor superior esquerdo, coberturas baixas | A, B, C | Não classificados como escritório/laboratório/residência |
-| ED-04 | Edificação lateral com cobertura e faixa adjacente | A, B, C | Não confirmada |
-| PV-01 | Faixa estreita de concreto, alinhada à ED-04 | A, B, C | Pesagem provável; mecanismo não representado |
-| ED-05 | Edificação inferior direita com cobertura clara | A, B, C | Não confirmada |
-| EQ-03 | Elemento circular junto à ED-05 | A, B, C | Reservatório possível; conteúdo desconhecido |
-| TR-01 | Pátio cinza, solo vermelho e ilhas verdes | A, B, C | Circulação identificável |
-| TR-02 | Acesso superior externo curvo | A, B, C | Acesso identificável |
-| TR-03 | Rodovia lateral contínua | A, B, C | Rodovia; identificação geográfica desconhecida |
-| VG-01 | Palmeiras ancoradas nos alinhamentos visíveis | A–D | Grupo vegetal; espécie desconhecida |
-| VG-02 | Bosque, árvores podadas, canteiros e gramados | A–D | Grupo vegetal; espécies desconhecidas |
-| CE-01 | Trechos de postes/fios do cercamento aparente | A–D | Não é divisa jurídica |
-| CE-02 | Subdivisões do acesso e portões | A, B, C | Operação e limites não confirmados |
+Os nomes CAD-SILO-01…04 da auditoria não são IDs Nexus nem numeração operacional homologada. A convenção acima mantém as identidades do mapa.
 
-## Modelagem e limites de evidência
+## Inventário e propriedade da geometria
 
-- Silos paramétricos separados: base, corpo, cone, equipamentos superiores, montantes, juntas, guarda-corpos e acessos. Corrugação por normal map, sem nervuras profundas artificiais. Seções de tubos/perfis, número exato de chapas/ventiladores e detalhes ocultos são estimados. Fixadores individuais não foram acrescentados em massa.
-- Tubos partem da estrutura central e encontram os coroamentos. Ligação elevada específica da unidade, com suportes e contraventamentos. Nenhum fluxo de grãos ou mecanismo operacional animado.
-- Cinco edificações, com coberturas conforme o tipo configurado, espessuras aparentes e portas/janelas nas faces interpretadas. Sem interiores. A inclinação exata, os recuos das portas e as fachadas ocultas precisam de documentação adicional.
-- Pátios por polígonos e curvas controlados; vias cinza distintas do asfalto da rodovia. Ilhas, gramados e concreto são superfícies separadas. Arredondamento conservador do traçado; não é pavimentação executiva. Texturas são autorais, não recortes fotográficos com sombras incorporadas.
-- Vegetação ancorada, três variantes por grupo, rotações explícitas independentes de setor/qualidade e semente 31028. Palmeiras possuem frondes curvas; copas usam folhas com orientação variada. A vegetação junto à ED-05 foi reduzida a porte baixo e afastada dentro da margem estimada para impedir penetração nas paredes. Espécies/alturas reais continuam pendentes.
-- Tufo de grama gerado antecipadamente com exclusões de vias, concreto, silos e edifícios. A versão econômica reduz folhagem e grama antes dos componentes principais dos silos.
-- A modelagem das cercas distingue os trechos e portões observáveis. A malha fina exata e alguns apoios pequenos não podem ser resolvidos nas fotos aéreas; fios representativos têm seção estimada. Pequenos equipamentos não identificados e postes isolados sem leitura segura não receberam funções inventadas.
-- Iluminação diurna ilustrativa, sem latitude/azimute geográfico confirmado. Ambiente PMREM autoral estático. Reflexos locais dos edifícios não são reconstruídos por sondas dinâmicas; não há custo de recaptura por quadro. Sem bloom, profundidade de campo ou motion blur.
+| ID Nexus                  | Nome/componente                              | Fonte e escopo                                                            |
+| ------------------------- | -------------------------------------------- | ------------------------------------------------------------------------- |
+| SILO-01…04                | Silo 01…04                                   | Montagens 4136/4125/4147/1531, com corpo, cobertura e acessórios          |
+| EQ-01                     | Elevador dos silos                           | 1511, separado das conexões e dos túneis                                  |
+| EQ-02                     | Conexões e acessos dos silos                 | 1009, excluindo 1508 e 1511                                               |
+| ED-01                     | Pavilhão das moegas                          | Arquitetura 480, excluindo moegas/poços 487                               |
+| ED-02, ED-03              | Edificações superiores 01/02                 | Geometria/nome fotográficos preservados, sem associação CAD comprovada    |
+| ED-04                     | Escritório                                   | 4120, paredes 4123 e cobertura 4121                                       |
+| PV-01                     | Faixa de provável pesagem                    | Preservada; função provável e sem dimensão CAD associada                  |
+| ED-05                     | Pavilhão de agrotóxicos                      | 903, paredes 906 e cobertura 910                                          |
+| EQ-03                     | Elemento circular                            | Preservado; não substituído pela caixa d’água CAD                         |
+| TR-01…03                  | Pátio, acesso e rodovia                      | Base fotográfica preservada; remendo local documentado                    |
+| VG-01, VG-02              | Palmeiras e demais árvores/vegetação         | Semente/famílias preservadas; dois deslocamentos locais registrados       |
+| CE-01, CE-02              | Cercamento e subdivisões/portões             | Preservados com desvio local junto à caixa d’água                         |
+| CAD-HOPPER-PITS           | Moegas e poços                               | 487, separado da arquitetura ED-01                                        |
+| CAD-HOPPER-ELEVATOR-01/02 | Elevadores das moegas 01/02                  | 489 e 505, com ocorrências/cotas próprias                                 |
+| CAD-SILO-PIT-TUNNELS      | Poço e túneis dos silos                      | 1508, separado de EQ-01/EQ-02                                             |
+| CAD-HOPPER-CONNECTIONS    | Conexões e acessos das moegas                | Montagem 5, excluindo 480/489/505                                         |
+| CAD-WATER-TANK            | Caixa d’água                                 | 4117, escada 4113 e ocorrência raiz 858 sob um mesmo dono de renderização |
+| CAD-OFFICE-ROOF           | Conjunto superior da cobertura do escritório | 912, distinto da cobertura arquitetônica 4121                             |
 
-## Comparação e próximos dados necessários
+Uma ocorrência pertence a uma única partição. IDs CAD reutilizados exigem `sourceInstancePath`; a mesma peça não é importada como filho e novamente como equipamento independente. Exclusões definem a geometria de cada elemento, preservando `elementId` para seleção.
 
-As câmeras A/C foram ajustadas com geometria fixa, usando quatro correspondências de solo e quatro ápices de cobertura por foto. A função minimiza erro de projeção em pixels e limita a câmera ao lado apropriado. Os resíduos estão em `evidence/camera-fitting.json`. São **resíduos do próprio ajuste**, sujeitos a escolha manual de pixels, e não validação independente. A solução A atingiu o limite inferior de FOV de 18°, evidenciando ambiguidade entre distância/focal e dimensões estimadas.
+Projeções do minimapa vêm dos vértices da partição após excluir filhos. Um envelope convexo de tubos descontínuos pode conter vazios: não é contato com o chão. Colliders permanecem separados, específicos a paredes/torres ou `none` para conjuntos que não devem bloquear todo o solo.
 
-B é um enquadramento ortográfico de comparação da implantação, sem correção artificial dos topos. D aproxima uma vista frontal em relação à estrutura central; seu registro exato e a identidade dos dois silos visíveis continuam pendentes. Todos os enquadramentos têm botão de sobreposição e permitem inspeção de silhueta, profundidade e acabamento.
+## Referências dimensionais
 
-Para a próxima calibração: diâmetro externo e altura de corpo de um silo; distância entre centros; dimensões do galpão/faixa pavimentada; fotos de fachadas ocultas, equipamentos e cercamentos; origem/autoria das fotos; localização e orientação confirmadas. Nenhuma dessas pendências foi preenchida com dados operacionais fictícios.
+São valores da malha CAD, não medidas nominais ou certificadas em campo. A geometria final dos GLBs deve ser comparada aos goldens após simplificação/compressão.
+
+| Grandeza                           | Referência CAD                                 | Interpretação                                                          |
+| ---------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------- |
+| Distâncias entre eixos de silo     | Aproximadamente 24 × 20,995 m                  | Substituem o arranjo estimado 20,8 × 20,48, preservando escala métrica |
+| Envolvente radial externa do corpo | Aproximadamente 18,816 m                       | Inclui detalhes da malha; não é diâmetro nominal/interno               |
+| Extensão Y do corpo/base 3730      | 14,5 m                                         | Não separar nominalmente base e chaparia sem evidência                 |
+| Extensão Y da cobertura 3728       | 5,503 m                                        | Preservar forma e posição, sem escalar toda a montagem                 |
+| Extensão Y da montagem de silo     | 21,179475 m                                    | High/low/blockout usam os mesmos anchors e cotas críticas              |
+| Paredes do pavilhão481             | XZ 24,2 × 18,3 m; extensão Y 6 m               | Separadas de cobertura, moegas e elevadores                            |
+| Cobertura do pavilhão485           | XZ 26,2 × 18,82 m; extensão Y 5,95 m           | Não confundir com montagem5 inteira                                    |
+| Moegas/poços 487                   | Mínimo CAD Y −9,815;9,825 m abaixo do solo CAD | Nexus Y −9,825, mantendo o subterrâneo                                 |
+| Poço/túneis 1508                   | Mínimo CAD Y −6,754;6,764 m abaixo do solo CAD | Nexus Y −6,764; não elevar para tornar visível                         |
+| Elevador 1511                      | CAD Y −6,753…35,097                            | Nexus Y −6,763…35,087; torre não é envelope de todos os tubos          |
+| Escritório 4120                    | Extensão Y 3,85 m                              | Acessório 912 separado das paredes/cobertura                           |
+| Pavilhão agrotóxicos 903           | Extensão Y 7,5 m                               | Paredes/cobertura tratadas por parte                                   |
+| Caixa d’água4117                   | Extensão Y 7,8 m; XZ 1,62 × 1,62 m             | Forma de seções variáveis; escada e acessório têm topos próprios       |
+
+XZ nessa tabela está no frame CAD. O registro atual de π conserva essas extensões; outro yaw exigiria recalcular envelopes Nexus. Distâncias e extensões verticais não são posições absolutas.
+
+## Base cartográfica e aparência
+
+A escala inicial 0,16 unidade/pixel e os traçados da Foto B permanecem como proveniência da base, não calibração do CAD. Terreno CAD 190 × 154 m não substitui o contorno existente. Entorno procedural 1800 × 1600 m não determina minimapa/navegação.
+
+Os únicos remendos locais ficam em `cadRegistration.localAdjustments`: piso `CAD-WATER-TANK-PAD`, pequeno desvio de CE-01/contorno junto à caixa e árvores de índices 70/71 deslocadas para Z 61, com características preservadas. A cerca não é divisa jurídica. TR-02 conserva largura renderizada 9 m, distinta da estimativa fotográfica 7,2 m; isso não constitui nova medida CAD da via.
+
+Fotos orientam PBR, chapas/corrugação, perfis, telhas, tubos, escadas, guarda-corpos e paleta, sem substituir medidas CAD. Componentes procedurais e materiais compatíveis são reutilizados. Repetições/detalhes secundários devem ser otimizados sem deformar eixos, conexões ou alturas.
+
+O passeio usa pisos conhecidos e o remendo registrado, com olhos 1,7 m acima da superfície. Colisões mantêm edifícios fechados e não autorizam interiores/subterrâneos. Não são simulação de cada corrimão/fixador nem certificação de segurança.
+
+## Papel das fotografias
+
+- **A — aérea oblíqua:** silos, recebimento, pátios, rodovia e relação geral dos volumes.
+- **B — superior:** origem da base; conjunto 2 × 2, edificações, provável pesagem, ilhas, acesso e rodovia. Não é ortofoto.
+- **C — lado oposto:** complementa leitura de coberturas, circulação e volumes periféricos sem espelhar geometria.
+- **D — solo:** aparência de chapas, montantes, juntas, tubos, escadas e elementos amarelos. A correspondência individual dos dois silos permanece pendente; confirmar a unidade não resolve essa numeração.
+
+Os ajustes históricos A/C por pixels usavam geometria estimada; seus resíduos não validam a implantação CAD. Modos A–D e sobreposição permanecem para inspeção aproximada. Foco/limites seguem anchors/bounds do cadastro.
+
+## Limites de evidência
+
+- Dimensão de malha não equivale a capacidade, dimensão interna/nominal ou confirmação da obra executada.
+- Convenção local aprovada não é norte/UTM, levantamento cadastral ou datum de campo.
+- Unidade confirmada não transforma nomes CAD em designações operacionais homologadas.
+- Bounds/projeções convexas não certificam folga 3D entre sólidos ou volume útil.
+- A fonte extraída é a referência geométrica; os GLBs precisam de medição após otimização. Exportação rejeitada pelo validador não é resultado aprovado.
+- Capturas/benchmarks da primeira versão são históricos. Consulte [validation.md](validation.md) para checks reexecutados; este documento não anuncia aprovação final da geração em curso. O [método CAD](cad-geometry.md) detalha extração e redução.

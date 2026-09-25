@@ -1,5 +1,10 @@
 import fs from "node:fs/promises";
 import { createHash } from "node:crypto";
+const currentSite = JSON.parse(await fs.readFile("src/industrial/data/site.json", "utf8"));
+if (currentSite.cadRegistration) {
+  await import("./report-industrial-cad.mjs");
+  process.exit(0);
+}
 const dir = "docs/industrial/evidence";
 const read = async (name) => JSON.parse(await fs.readFile(`${dir}/${name}`, "utf8"));
 const profiles = await read("performance-summary.json");
@@ -11,20 +16,44 @@ if (ui.stats.unexpected || glbs.some((g) => g.errors || g.warnings))
   throw new Error("Resolve validation failures before reporting delivery.");
 const n = (v, digits = 1) => Number(v).toLocaleString("pt-BR", { maximumFractionDigits: digits });
 const mb = (v) => n(v / 1e6, 2);
-const network = (p) => p.loading.resources.concat(p.loading.navigation).reduce((s, r) => s + (r.transferSize || 0), 0);
+const network = (p) =>
+  p.loading.resources.concat(p.loading.navigation).reduce((s, r) => s + (r.transferSize || 0), 0);
 const modelBytes = (p) => Object.values(p.loading.assets).reduce((s, a) => s + a.bytes, 0);
 const row = (label, fn) => `| ${label} | ${profiles.map(fn).join(" | ")} |`;
-const files = ["package.json", "package-lock.json", "bun.lock", "src/industrial/data/site.json", "scripts/blender/generate_unit.py", "scripts/optimize-industrial.mjs", "scripts/benchmark-industrial.mjs", "scripts/capture-industrial-views.mjs", "scripts/audit-industrial-geometry.mjs", "tests/industrial/contracts.test.ts", "tests/industrial/interface.spec.ts"];
-for (const base of ["src/industrial", "public/models/3tentos", "public/textures/3tentos", "assets/industrial/source"]) {
+const files = [
+  "package.json",
+  "package-lock.json",
+  "bun.lock",
+  "src/industrial/data/site.json",
+  "scripts/blender/generate_unit.py",
+  "scripts/optimize-industrial.mjs",
+  "scripts/benchmark-industrial.mjs",
+  "scripts/capture-industrial-views.mjs",
+  "scripts/audit-industrial-geometry.mjs",
+  "tests/industrial/contracts.test.ts",
+  "tests/industrial/interface.spec.ts",
+];
+for (const base of [
+  "src/industrial",
+  "public/models/3tentos",
+  "public/textures/3tentos",
+  "assets/industrial/source",
+]) {
   for (const entry of await fs.readdir(base, { recursive: true, withFileTypes: true }))
-    if (entry.isFile() && !/\.blend\d+$/.test(entry.name)) files.push(`${entry.parentPath}/${entry.name}`.replaceAll("\\", "/"));
+    if (entry.isFile() && !/\.blend\d+$/.test(entry.name))
+      files.push(`${entry.parentPath}/${entry.name}`.replaceAll("\\", "/"));
 }
 const manifest = [];
 for (const file of [...new Set(files)].sort()) {
   const raw = await fs.readFile(file);
   const binary = /\.(blend|glb|png)$/.test(file);
   const bytes = binary ? raw : Buffer.from(raw.toString("utf8").replace(/\r\n/g, "\n"));
-  manifest.push({ file, normalization: binary ? "binary" : "UTF-8, LF line endings", bytes: bytes.length, sha256: createHash("sha256").update(bytes).digest("hex") });
+  manifest.push({
+    file,
+    normalization: binary ? "binary" : "UTF-8, LF line endings",
+    bytes: bytes.length,
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+  });
 }
 await fs.writeFile(`${dir}/delivery-manifest.json`, JSON.stringify(manifest, null, 2));
 const report = `# Auditoria da reconstrução 3D
@@ -48,18 +77,18 @@ Percurso automatizado de passeio com comandos de movimento e rotação, por pelo
 
 | Medida do percurso | Desktop equilibrado | Econômico emulado |
 |---|---:|---:|
-${row("Duração (s)", p => n(p.summary.durationMs / 1000))}
-${row("Quadros amostrados", p => n(p.summary.sampledFrames, 0))}
-${row("FPS pela mediana dos intervalos", p => n(p.summary.medianFps))}
-${row("Intervalo p50 / p95 / p99 (ms)", p => [p.summary.p50Ms, p.summary.p95Ms, p.summary.p99Ms].map(v => n(v)).join(" / "))}
-${row("Maior intervalo (ms)", p => n(p.summary.maxMs))}
-${row("Intervalos acima de 50 ms", p => n(p.summary.framesOver50Ms, 0))}
-${row("Máximo de chamadas, incluindo sombras", p => n(p.summary.maxCalls, 0))}
-${row("Máximos de chamadas: principal / sombras", p => n(p.summary.maxMainCalls, 0) + " / " + n(p.summary.maxShadowCalls, 0))}
-${row("Máximo de triângulos, incluindo sombras", p => n(p.summary.maxTriangles, 0))}
-${row("Máximos de triângulos: principal / sombras", p => n(p.summary.maxMainTriangles, 0) + " / " + n(p.summary.maxShadowTriangles, 0))}
-${row("Novos quadros em 2,5 s de repouso", p => p.idleFrames)}
-${row("Perdas de contexto / erros JS", p => p.contextLosses + " / " + p.errors.length)}
+${row("Duração (s)", (p) => n(p.summary.durationMs / 1000))}
+${row("Quadros amostrados", (p) => n(p.summary.sampledFrames, 0))}
+${row("FPS pela mediana dos intervalos", (p) => n(p.summary.medianFps))}
+${row("Intervalo p50 / p95 / p99 (ms)", (p) => [p.summary.p50Ms, p.summary.p95Ms, p.summary.p99Ms].map((v) => n(v)).join(" / "))}
+${row("Maior intervalo (ms)", (p) => n(p.summary.maxMs))}
+${row("Intervalos acima de 50 ms", (p) => n(p.summary.framesOver50Ms, 0))}
+${row("Máximo de chamadas, incluindo sombras", (p) => n(p.summary.maxCalls, 0))}
+${row("Máximos de chamadas: principal / sombras", (p) => n(p.summary.maxMainCalls, 0) + " / " + n(p.summary.maxShadowCalls, 0))}
+${row("Máximo de triângulos, incluindo sombras", (p) => n(p.summary.maxTriangles, 0))}
+${row("Máximos de triângulos: principal / sombras", (p) => n(p.summary.maxMainTriangles, 0) + " / " + n(p.summary.maxShadowTriangles, 0))}
+${row("Novos quadros em 2,5 s de repouso", (p) => p.idleFrames)}
+${row("Perdas de contexto / erros JS", (p) => p.contextLosses + " / " + p.errors.length)}
 
 Os máximos de cada coluna são calculados separadamente e podem ocorrer em quadros diferentes. A quantidade visível depende do enquadramento; o perfil móvel possui campo de visão horizontal menor. Estes números não são uma comparação isolada do custo dos perfis, nem garantem 60 FPS constantes. Os picos longos permanecem na amostra; a causa de cada pausa não foi atribuída a GPU, compilação, GC ou automação sem perfilamento adicional. Os JSONs completos contêm os intervalos e tempos de submissão CPU; não são tempos de GPU.
 
@@ -69,14 +98,14 @@ As vistas amplas A/B/C no perfil equilibrado registraram 214 chamadas e 761.250 
 
 | Medida | Desktop equilibrado | Econômico emulado |
 |---|---:|---:|
-${row("Estado pronto desde navigationStart (s)", p => n(p.loading.readyMs / 1000, 2))}
-${row("Carga dos setores desde montagem da cena (s)", p => n(p.loading.modelLoadMs / 1000, 2))}
-${row("GLBs disponíveis ao ficar pronto (MB)", p => mb(modelBytes(p)))}
-${row("Transferência Resource/Navigation Timing até pronto (MB)", p => mb(network(p)))}
-${row("Decodificação/parse do setor terreno (ms)", p => n(p.loading.assets.terrain.decodeMs))}
-${row("Buffers de geometria estimados (MB)", p => mb(p.estimatedGeometryBytes))}
-${row("Texturas de materiais estimadas (MB)", p => mb(p.estimatedTextureBytes))}
-${row("Heap JavaScript usado no fim (MB)", p => mb(p.jsHeap.usedJSHeapSize))}
+${row("Estado pronto desde navigationStart (s)", (p) => n(p.loading.readyMs / 1000, 2))}
+${row("Carga dos setores desde montagem da cena (s)", (p) => n(p.loading.modelLoadMs / 1000, 2))}
+${row("GLBs disponíveis ao ficar pronto (MB)", (p) => mb(modelBytes(p)))}
+${row("Transferência Resource/Navigation Timing até pronto (MB)", (p) => mb(network(p)))}
+${row("Decodificação/parse do setor terreno (ms)", (p) => n(p.loading.assets.terrain.decodeMs))}
+${row("Buffers de geometria estimados (MB)", (p) => mb(p.estimatedGeometryBytes))}
+${row("Texturas de materiais estimadas (MB)", (p) => mb(p.estimatedTextureBytes))}
+${row("Heap JavaScript usado no fim (MB)", (p) => mb(p.jsHeap.usedJSHeapSize))}
 
 MB decimais. A transferência observada fica abaixo da referência inicial de aproximadamente 8 MB nesta prévia; não inclui fotos abertas posteriormente, detalhes carregados depois ou garantia de cache/rede de produção. Recursos de fontes existentes no shell podem não expor todos os bytes entre origens. O estado pronto confirma carregamento da cena, não mede isoladamente a primeira apresentação GPU. Fetch e decodificação estão separados por setor nos JSONs; tempo de compilação de shaders não foi isolado.
 

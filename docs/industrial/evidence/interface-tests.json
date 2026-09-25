@@ -88,12 +88,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7535,
+                  "duration": 7612,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-09-14T03:52:45.643Z",
+                  "startTime": "2026-09-16T00:17:46.126Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -103,7 +103,7 @@
           ],
           "id": "07743df4f35bb054ea2e-b04b9cc47b8096f21100",
           "file": "interface.spec.ts",
-          "line": 8,
+          "line": 14,
           "column": 1
         },
         {
@@ -122,12 +122,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 20219,
+                  "duration": 21173,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-09-14T03:52:53.575Z",
+                  "startTime": "2026-09-16T00:17:54.014Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -137,7 +137,7 @@
           ],
           "id": "07743df4f35bb054ea2e-fa0ac55d26e48e0311b2",
           "file": "interface.spec.ts",
-          "line": 43,
+          "line": 68,
           "column": 1
         },
         {
@@ -156,12 +156,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10647,
+                  "duration": 14202,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-09-14T03:53:13.816Z",
+                  "startTime": "2026-09-16T00:18:15.204Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -171,7 +171,7 @@
           ],
           "id": "07743df4f35bb054ea2e-387b39af0dc4b92ab62d",
           "file": "interface.spec.ts",
-          "line": 89,
+          "line": 114,
           "column": 1
         },
         {
@@ -190,12 +190,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10050,
+                  "duration": 10446,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-09-14T03:53:24.488Z",
+                  "startTime": "2026-09-16T00:18:29.437Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -205,7 +205,41 @@
           ],
           "id": "07743df4f35bb054ea2e-abd4fc57c052bdea811a",
           "file": "interface.spec.ts",
-          "line": 126,
+          "line": 184,
+          "column": 1
+        },
+        {
+          "title": "CAD names and historical aliases select the same stable identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3902,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-16T00:18:39.915Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "07743df4f35bb054ea2e-ef80afa3252bf4ef4dda",
+          "file": "interface.spec.ts",
+          "line": 203,
           "column": 1
         },
         {
@@ -224,12 +258,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5602,
+                  "duration": 8255,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-09-14T03:53:34.556Z",
+                  "startTime": "2026-09-16T00:18:43.835Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -239,7 +273,7 @@
           ],
           "id": "07743df4f35bb054ea2e-4743367dd16cbb293425",
           "file": "interface.spec.ts",
-          "line": 144,
+          "line": 230,
           "column": 1
         },
         {
@@ -258,12 +292,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4738,
+                  "duration": 8151,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-09-14T03:53:40.175Z",
+                  "startTime": "2026-09-16T00:18:52.103Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -273,7 +307,7 @@
           ],
           "id": "07743df4f35bb054ea2e-e472f589a0e8ca3c686f",
           "file": "interface.spec.ts",
-          "line": 167,
+          "line": 253,
           "column": 1
         }
       ]
@@ -281,9 +315,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-14T03:52:44.785Z",
-    "duration": 60834.444,
-    "expected": 6,
+    "startTime": "2026-09-16T00:17:45.356Z",
+    "duration": 75392.36300000001,
+    "expected": 7,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

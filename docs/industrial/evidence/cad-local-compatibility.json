@@ -1,0 +1,105 @@
+{
+  "source": "preserved vegetation-prototypes.glb decoded positions, CAD registry bounds and local Nexus fence/site geometry",
+  "limits": "Tree checks count mesh vertices within the closed wall footprint and measure projected fence distance. Tank clearance uses the full assembly bounding rectangle; no claim of a full triangle intersection audit.",
+  "trees": [
+    {
+      "index": 70,
+      "before": [
+        50.56,
+        0,
+        58.24
+      ],
+      "after": [
+        50.56,
+        0,
+        61
+      ],
+      "verticesBeforeInsideWalls": 5225,
+      "verticesAfterInsideWalls": 0,
+      "minFenceDistance": 3.06234910987722,
+      "min": [
+        49.63472499352574,
+        -0.0013682601973414865,
+        60.050955635725224
+      ],
+      "max": [
+        51.50305932650158,
+        1.8648886133624407,
+        61.7949243959945
+      ]
+    },
+    {
+      "index": 71,
+      "before": [
+        54.4,
+        0,
+        58.24
+      ],
+      "after": [
+        54.4,
+        0,
+        61
+      ],
+      "verticesBeforeInsideWalls": 5170,
+      "verticesAfterInsideWalls": 0,
+      "minFenceDistance": 2.942075846614531,
+      "min": [
+        53.36128843203441,
+        -0.0013682601973414865,
+        60.15154833322215
+      ],
+      "max": [
+        55.44492368128751,
+        1.9681192178981881,
+        61.973761799034975
+      ]
+    }
+  ],
+  "tank": {
+    "axis": [
+      -59.95379052725,
+      0,
+      62.86032870475
+    ],
+    "bounds": {
+      "min": [
+        -60.98103376525,
+        0,
+        62.05032870475
+      ],
+      "max": [
+        -59.14379052725,
+        10.09688709098,
+        63.67032870475
+      ]
+    },
+    "minFenceClearanceMeters": 1.3296712952500016,
+    "allBoundsCornersInsideSite": true
+  },
+  "siteExtensionAreaSquareMeters": 15.896639999999934,
+  "patch": {
+    "id": "CAD-WATER-TANK-PAD",
+    "relatedElementId": "CAD-WATER-TANK",
+    "material": "concrete",
+    "height": 0.008,
+    "points": [
+      [
+        -61.48103376525,
+        61.55032870475
+      ],
+      [
+        -58.64379052725,
+        61.55032870475
+      ],
+      [
+        -58.64379052725,
+        64.17032870475
+      ],
+      [
+        -61.48103376525,
+        64.17032870475
+      ]
+    ]
+  },
+  "originalBoundaryVerticesRetained": true
+}

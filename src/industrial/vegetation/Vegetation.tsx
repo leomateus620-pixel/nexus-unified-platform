@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import {
   DoubleSide,
   InstancedMesh,
@@ -32,6 +32,7 @@ function Batch({
   quality: Quality;
   onSelect: (id: string) => void;
 }) {
+  const { invalidate } = useThree();
   const ref = useRef<InstancedMesh>(null);
   const time = useRef({ value: 0 });
   const strength = useRef({ value: 0 });
@@ -84,8 +85,11 @@ function Batch({
     if (ref.current) {
       ref.current.instanceMatrix.needsUpdate = true;
       ref.current.computeBoundingSphere();
+      // The instance transforms are populated after commit. Request the frame
+      // that uploads them even when the camera and wind are both stationary.
+      invalidate();
     }
-  }, [trees]);
+  }, [trees, invalidate]);
   useFrame((state) => {
     strength.current.value = wind && leaf && quality === "balanced" ? 1 : 0;
     if (wind && leaf && quality === "balanced") time.current.value = state.clock.elapsedTime * 0.65;
@@ -142,9 +146,10 @@ export function Vegetation({
       trees: typeof site.trees;
     }[] = [];
     asset.children.forEach((group) => {
-      const trees = site.trees.filter(
-        (t) => `${t.type}-${t.variant}` === group.name.replace(/\.\d+$/, ""),
-      );
+      // GLTFLoader sanitizes dots from Object3D.name but retains the original
+      // Blender name here, including the .001 suffix on preserved low assets.
+      const sourceName = String(group.userData["name"] ?? group.name).replace(/\.\d+$/, "");
+      const trees = site.trees.filter((t) => `${t.type}-${t.variant}` === sourceName);
       // Divide instances geographically so a far sector can be frustum culled.
       const sectors = quality === "economy" ? 1 : 2;
       for (let sector = 0; sector < sectors; sector++) {

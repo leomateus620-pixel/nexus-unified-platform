@@ -36,3 +36,4 @@ dist-ssr
 /test-results/
 *.blend1
 *.blend2
+__pycache__/

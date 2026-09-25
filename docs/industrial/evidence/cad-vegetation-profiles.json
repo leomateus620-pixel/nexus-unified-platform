@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-09-16T00:16:11.634Z",
+  "scope": "Stationary camera profile-switch vegetation check; no performance claim",
+  "captures": {
+    "cad-vegetation-initial": {
+      "camera": [
+        98.99999999999999,
+        119,
+        164
+      ],
+      "quality": "balanced",
+      "calls": 194,
+      "status": "ready"
+    },
+    "cad-vegetation-economy": {
+      "camera": [
+        98.99999999999999,
+        119,
+        164
+      ],
+      "quality": "economy",
+      "calls": 165,
+      "status": "ready"
+    },
+    "cad-vegetation-balanced-return": {
+      "camera": [
+        98.99999999999999,
+        119,
+        164
+      ],
+      "quality": "balanced",
+      "calls": 194,
+      "status": "ready"
+    }
+  },
+  "economyVegetationDraws": {
+    "visibleCalls": 165,
+    "hiddenCalls": 123,
+    "additionalCalls": 42
+  },
+  "cameraUnchanged": true
+}

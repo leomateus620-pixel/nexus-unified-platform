@@ -591,6 +591,9 @@
   gap: 3px;
   align-items: center;
   text-align: right;
+  min-width: 0;
+  max-width: 68%;
+  overflow-wrap: anywhere;
 }
 .industrial-confirmation .is-estimated {
   color: #ae8040;
@@ -740,7 +743,11 @@
   border: 1px solid #d6e3c6 !important;
   box-shadow: 0 3px 20px #17332a30;
   background: #f6faeef5 !important;
-  white-space: nowrap;
+  white-space: normal;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 24px));
+  overflow-wrap: anywhere;
+  text-align: left;
   padding: 9px 12px;
   border-radius: 6px;
   font-size: 12px !important;

@@ -170,8 +170,8 @@
   {
     "file": "scripts/audit-industrial-cad.mjs",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 24881,
-    "sha256": "703a5f9d347fdfa2d84f549976d8f776317e71c8baf9b0875fdfaad97a4a5a84"
+    "bytes": 25036,
+    "sha256": "abd74f62d7778cbc1c90928bab36c1257b1b2d13598bf94c5f1cf814681cc80f"
   },
   {
     "file": "scripts/audit-industrial-geometry.mjs",
@@ -200,8 +200,8 @@
   {
     "file": "scripts/cad/audit-export-topology.py",
     "normalization": "UTF-8, LF line endings",
-    "bytes": 4956,
-    "sha256": "b242a50dea71b03e7e1d652a709067c7c9c4b002ee6df4354defc7ed91ab41e2"
+    "bytes": 5187,
+    "sha256": "d0fc02ad472917103cc1177a45576a7888044387c3545480649872809a16b2f7"
   },
   {
     "file": "scripts/cad/audit-local-compatibility.mjs",

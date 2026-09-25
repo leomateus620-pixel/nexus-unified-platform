@@ -101,9 +101,14 @@ check(
 check(
   topology.status === "passed" &&
     topology.sourceHash === report.sourceHash &&
+    topology.generationHashNormalization === "UTF-8 with LF line endings" &&
     topology.generationSha256 ===
       createHash("sha256")
-        .update(fs.readFileSync(path.join(root, "docs/industrial/evidence/cad-generation.json")))
+        .update(
+          fs
+            .readFileSync(path.join(root, "docs/industrial/evidence/cad-generation.json"), "utf8")
+            .replace(/\r\n/g, "\n"),
+        )
         .digest("hex"),
   "Blender topology inspection is missing or refers to another generation",
 );

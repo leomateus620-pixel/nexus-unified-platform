@@ -13,8 +13,11 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def sha(path, normalize_text=False):
+    content = path.read_bytes()
+    if normalize_text:
+        content = content.decode('utf8').replace('\r\n', '\n').encode('utf8')
+    return hashlib.sha256(content).hexdigest()
 
 generation_path = ROOT / 'docs/industrial/evidence/cad-generation.json'
 generation = json.loads(generation_path.read_text(encoding='utf8'))
@@ -69,7 +72,8 @@ for partition in generation['partitions']:
                  'sourceOmissions': source_omissions})
 
 report = {
-    'status': 'passed', 'sourceHash': generation['sourceHash'], 'generationSha256': sha(generation_path),
+    'status': 'passed', 'sourceHash': generation['sourceHash'], 'generationSha256': sha(generation_path, normalize_text=True),
+    'generationHashNormalization': 'UTF-8 with LF line endings',
     'blendSha256': sha(Path(bpy.data.filepath)), 'reductionCacheKey': cache_key,
     'method': 'Read-only inspection of final saved Blender loop triangles. Count differences exactly equal repeated-index input triangles and duplicate unordered vertex-index faces in the source reduction cache; no geometric tolerance is used.',
     'definitions': [d for d in definitions.values() if d['omittedDegenerateTriangles'] or d['omittedDuplicateTriangles']],

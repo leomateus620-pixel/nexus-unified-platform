@@ -1,7 +1,8 @@
 {
   "status": "passed",
   "sourceHash": "bd6767218d609c1e4180e27169fcc5345c56e554e6f320a812e7a7da1ae2702b",
-  "generationSha256": "10e11fafebb157e894dadb74d37d154dfb9fc16259d6745d039157ed0edb77b2",
+  "generationSha256": "2279b7822a38f7f5ac250a08f3f6573c94f129daba937902205f92aab22e48aa",
+  "generationHashNormalization": "UTF-8 with LF line endings",
   "blendSha256": "9bb492ef6d08d9fae088564cf7244fbd084c5c0a1ed40b10d6f4e4d66868df41",
   "reductionCacheKey": "0655c257705402b3f0dee038",
   "method": "Read-only inspection of final saved Blender loop triangles. Count differences exactly equal repeated-index input triangles and duplicate unordered vertex-index faces in the source reduction cache; no geometric tolerance is used.",

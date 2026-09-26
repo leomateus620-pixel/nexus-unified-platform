@@ -190,7 +190,14 @@ export default function IndustrialMap() {
         </Link>
         <span className="industrial-header-divider" />
         <span className="industrial-breadcrumb">
-          Mapas 3D <ChevronRight size={13} /> <strong>3 Tentos</strong>
+          <Link
+            to="/mapas-3d/unidades"
+            aria-label="Escolher unidade 3D"
+            className="text-xs underline underline-offset-4"
+          >
+            Mapas 3D
+          </Link>
+          <ChevronRight size={13} /> <strong>3 Tentos</strong>
         </span>
         <div className="industrial-header-end">
           <span className="industrial-referenced">

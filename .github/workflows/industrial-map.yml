@@ -17,7 +17,9 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run test:industrial
+      - run: npm run test:trevisan
       - run: node scripts/audit-industrial-geometry.mjs
       - run: npm run test:industrial:cad
       - run: npx eslint src/industrial src/routes/mapas-3d.tsx tests/industrial playwright.industrial.config.ts
+      - run: npx eslint src/trevisan src/routes/mapas-3d_.trevisan.tsx src/routes/mapas-3d_.unidades.tsx src/routes/__root.tsx tests/trevisan.test.mjs
       - run: npm run build

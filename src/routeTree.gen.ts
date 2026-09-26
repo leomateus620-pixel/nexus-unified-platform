@@ -24,6 +24,8 @@ import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
+import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -100,6 +102,16 @@ const RelatoriosRoute = RelatoriosRouteImport.update({
   path: '/relatorios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
+  id: '/mapas-3d_/trevisan',
+  path: '/mapas-3d/trevisan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Mapas3dUnidadesRoute = Mapas3dUnidadesRouteImport.update({
+  id: '/mapas-3d_/unidades',
+  path: '/mapas-3d/unidades',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -117,6 +129,8 @@ export interface FileRoutesByFullPath {
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
+  '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
+  '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,6 +148,8 @@ export interface FileRoutesByTo {
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
+  '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
+  '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -152,6 +168,8 @@ export interface FileRoutesById {
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
+  '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
+  '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,6 +189,8 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d/trevisan'
+    | '/mapas-3d/unidades'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -188,6 +208,8 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d/trevisan'
+    | '/mapas-3d/unidades'
   id:
     | '__root__'
     | '/'
@@ -205,6 +227,8 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d_/trevisan'
+    | '/mapas-3d_/unidades'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -223,6 +247,8 @@ export interface RootRouteChildren {
   ProdutosRoute: typeof ProdutosRoute
   ProjetosRoute: typeof ProjetosRoute
   RelatoriosRoute: typeof RelatoriosRoute
+  Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
+  Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -332,6 +358,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelatoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mapas-3d_/trevisan': {
+      id: '/mapas-3d_/trevisan'
+      path: '/mapas-3d/trevisan'
+      fullPath: '/mapas-3d/trevisan'
+      preLoaderRoute: typeof Mapas3dTrevisanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mapas-3d_/unidades': {
+      id: '/mapas-3d_/unidades'
+      path: '/mapas-3d/unidades'
+      fullPath: '/mapas-3d/unidades'
+      preLoaderRoute: typeof Mapas3dUnidadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -351,6 +391,8 @@ const rootRouteChildren: RootRouteChildren = {
   ProdutosRoute: ProdutosRoute,
   ProjetosRoute: ProjetosRoute,
   RelatoriosRoute: RelatoriosRoute,
+  Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
+  Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

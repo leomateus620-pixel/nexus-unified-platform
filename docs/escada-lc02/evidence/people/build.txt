@@ -1,0 +1,191 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+vite v8.1.5 building client environment for production...
+[2K
+transforming...✓ 3083 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/TrevisanViewer-PJTJattx.css         12.02 kB │ gzip:   3.33 kB
+.output/public/assets/EscadaViewer-SeAZmEnY.css           16.21 kB │ gzip:   4.04 kB
+.output/public/assets/IndustrialMap-BSoWcYsp.css          18.28 kB │ gzip:   4.37 kB
+.output/public/assets/styles-GXyvfnDm.css                 81.91 kB │ gzip:  13.63 kB
+.output/public/assets/plus-S2OQbzpu.js                     0.14 kB │ gzip:   0.14 kB
+.output/public/assets/arrow-up-right-Cy2a8EXD.js           0.15 kB │ gzip:   0.15 kB
+.output/public/assets/info-DMgtPeOb.js                     0.26 kB │ gzip:   0.20 kB
+.output/public/assets/box-B_Okva0Z.js                      0.29 kB │ gzip:   0.21 kB
+.output/public/assets/layers-CphfdazC.js                   0.41 kB │ gzip:   0.23 kB
+.output/public/assets/mouse-pointer-2-BWgpCpB7.js          0.75 kB │ gzip:   0.41 kB
+.output/public/assets/escada-lc02-BC_6Oolo.js              0.76 kB │ gzip:   0.46 kB
+.output/public/assets/mapas-3d-DES6bbB2.js                 0.78 kB │ gzip:   0.47 kB
+.output/public/assets/x-DB8bMDbr.js                        0.93 kB │ gzip:   0.46 kB
+.output/public/assets/mapas-3d_.trevisan-Cr8BSoye.js       0.93 kB │ gzip:   0.54 kB
+.output/public/assets/inspecoes-B4E5elDn.js                1.12 kB │ gzip:   0.59 kB
+.output/public/assets/compras-B0iX9d4-.js                  1.22 kB │ gzip:   0.63 kB
+.output/public/assets/execucao-DYe5pVrh.js                 1.54 kB │ gzip:   0.75 kB
+.output/public/assets/documentacao-Cw8Amb2i.js             1.55 kB │ gzip:   0.76 kB
+.output/public/assets/configuracoes-BbZeaLjp.js            1.61 kB │ gzip:   0.79 kB
+.output/public/assets/relatorios-BUtv1kDb.js               1.62 kB │ gzip:   0.83 kB
+.output/public/assets/projetos-lE6kz4AU.js                 1.67 kB │ gzip:   0.80 kB
+.output/public/assets/produtos-B1sYF-T2.js                 1.68 kB │ gzip:   0.84 kB
+.output/public/assets/clientes-BWbOnvWy.js                 1.77 kB │ gzip:   0.73 kB
+.output/public/assets/levantamentos-DMJRviFB.js            1.84 kB │ gzip:   0.91 kB
+.output/public/assets/financeiro-CYhMa1ZN.js               1.96 kB │ gzip:   0.87 kB
+.output/public/assets/engenharia-Bz-RRmB4.js               2.00 kB │ gzip:   0.93 kB
+.output/public/assets/comercial-E0fy3-8r.js                2.12 kB │ gzip:   0.88 kB
+.output/public/assets/Page-CEdZQNWY.js                     3.67 kB │ gzip:   1.28 kB
+.output/public/assets/mapas-3d_.unidades-Bac4CKV0.js       4.31 kB │ gzip:   1.75 kB
+.output/public/assets/lc02-walkway-aYWWSxkD.js             5.65 kB │ gzip:   2.50 kB
+.output/public/assets/nexus-data-PUY21Sn7.js               7.26 kB │ gzip:   2.60 kB
+.output/public/assets/react-SIfiwpqq.js                    8.18 kB │ gzip:   3.16 kB
+.output/public/assets/data-BZUl9xrP.js                     9.06 kB │ gzip:   3.58 kB
+.output/public/assets/TrevisanViewer-BeKJT-fL.js          12.31 kB │ gzip:   4.23 kB
+.output/public/assets/routes-bNOquHeI.js                  14.74 kB │ gzip:   5.44 kB
+.output/public/assets/TrevisanScene-Bs1m7eLH.js           17.84 kB │ gzip:   6.97 kB
+.output/public/assets/EscadaViewer-D3nF7ekZ.js            22.04 kB │ gzip:   7.16 kB
+.output/public/assets/OrbitControls-BDM83C-1.js           23.07 kB │ gzip:   7.57 kB
+.output/public/assets/IndustrialMap-41k_snQU.js           26.65 kB │ gzip:   8.73 kB
+.output/public/assets/EscadaScene-BmGx4d1y.js             44.14 kB │ gzip:  13.69 kB
+.output/public/assets/GLTFLoader-BJVGCGIT.js              48.98 kB │ gzip:  14.32 kB
+.output/public/assets/IndustrialScene-DaDRTdV9.js         66.96 kB │ gzip:  21.65 kB
+.output/public/assets/spatial-ggJm29VR.js                105.59 kB │ gzip:  24.50 kB
+.output/public/assets/BarChart-C7Lh5Fd8.js               368.12 kB │ gzip:  98.07 kB
+.output/public/assets/three.core-DOQ_Anfr.js             377.36 kB │ gzip: 100.68 kB
+.output/public/assets/index-ILICvoix.js                  391.18 kB │ gzip: 122.74 kB
+.output/public/assets/react-three-fiber.esm-SSRJzCAL.js  519.74 kB │ gzip: 138.03 kB
+
+✓ built in 4.88s
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+vite v8.1.5 building ssr environment for production...
+[2K
+transforming...✓ 121 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/EscadaViewer-SeAZmEnY.css                16.21 kB │ gzip:  4.04 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialMap-BSoWcYsp.css               18.28 kB │ gzip:  4.37 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-GXyvfnDm.css                      81.91 kB │ gzip: 13.63 kB
+node_modules/.nitro/vite/services/ssr/assets/utils-C_uf36nf.js                         0.18 kB │ gzip:  0.15 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js         0.22 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/escada-lc02-CX7pXOCt.js                   0.45 kB │ gzip:  0.29 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d-Do0LjlXb.js                      0.48 kB │ gzip:  0.31 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.trevisan-ByETU91o.js            0.54 kB │ gzip:  0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/start-RKGGYzjZ.js                         1.57 kB │ gzip:  0.71 kB
+node_modules/.nitro/vite/services/ssr/assets/inspecoes-0hQhStQ_.js                     1.95 kB │ gzip:  0.77 kB
+node_modules/.nitro/vite/services/ssr/assets/compras-Fso5b-a0.js                       2.08 kB │ gzip:  0.81 kB
+node_modules/.nitro/vite/services/ssr/assets/relatorios-BJIHeLoy.js                    2.38 kB │ gzip:  1.02 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes-C8m5uInl.js                 2.49 kB │ gzip:  0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao-DNZEwsdM.js                      2.53 kB │ gzip:  0.96 kB
+node_modules/.nitro/vite/services/ssr/assets/documentacao-CR05mtlC.js                  2.55 kB │ gzip:  0.96 kB
+node_modules/.nitro/vite/services/ssr/assets/nexus-nav-CaCK0nWa.js                     2.63 kB │ gzip:  0.97 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos-M1bHSiIB.js                      2.66 kB │ gzip:  1.04 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos-M48f72JM.js                      2.80 kB │ gzip:  1.04 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos-mmYRrxLV.js                 2.91 kB │ gzip:  1.12 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia-DpuLHlm3.js                    3.17 kB │ gzip:  1.15 kB
+node_modules/.nitro/vite/services/ssr/assets/clientes-XMcd9Cb2.js                      3.18 kB │ gzip:  0.95 kB
+node_modules/.nitro/vite/services/ssr/assets/createCsrfMiddleware-B2To0gPJ.js          3.19 kB │ gzip:  1.01 kB
+node_modules/.nitro/vite/services/ssr/assets/financeiro-BRQXBpcj.js                    3.54 kB │ gzip:  1.11 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial-YRc6u4N_.js                     3.66 kB │ gzip:  1.12 kB
+node_modules/.nitro/vite/services/ssr/index.js                                         4.61 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/Page-BX6FwHuW.js                          4.94 kB │ gzip:  1.55 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-Dd7MAfIT.js    5.40 kB │ gzip:  0.97 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.unidades-B70A0sY8.js            6.36 kB │ gzip:  2.04 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-u79hklBw.js                        6.69 kB │ gzip:  1.88 kB
+node_modules/.nitro/vite/services/ssr/assets/lc02-walkway-C7CNFSzG.js                  8.55 kB │ gzip:  3.11 kB
+node_modules/.nitro/vite/services/ssr/assets/nexus-data-HFmKYtwu.js                    9.34 kB │ gzip:  2.83 kB
+node_modules/.nitro/vite/services/ssr/assets/router-BpD78F-R.js                       25.32 kB │ gzip:  5.98 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaViewer-DMH6JsV9.js                 33.16 kB │ gzip:  8.11 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialScene-DD4l4BWr.js              36.06 kB │ gzip: 10.94 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialMap-umVr5wil.js                38.93 kB │ gzip:  9.34 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaScene-BABHHdTO.js                  40.52 kB │ gzip: 12.35 kB
+node_modules/.nitro/vite/services/ssr/assets/server-B-GUijOt.js                       56.40 kB │ gzip: 14.53 kB
+node_modules/.nitro/vite/services/ssr/assets/spatial-D0MGp2sa.js                     147.07 kB │ gzip: 27.63 kB
+
+✓ built in 1.83s
+[nitro] o Building [Nitro] (preset: cloudflare-module, compatibility: 2026-09-21)
+[nitro] √ Generated public .output/public
+vite v8.1.5 building nitro environment for production...
+
+ WARN  inlineDynamicImports option is ignored because the codeSplitting option is specified.
+
+[2K
+transforming...✓ 3110 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs      0.23 kB │ gzip:   0.16 kB
+.output/server/_ssr/utils-C_uf36nf.mjs                      0.27 kB │ gzip:   0.19 kB
+.output/server/_libs/babel__runtime.mjs                     0.39 kB │ gzip:   0.26 kB
+.output/server/_libs/clsx.mjs                               0.55 kB │ gzip:   0.31 kB
+.output/server/_chunks/ssr-renderer.mjs                     0.60 kB │ gzip:   0.36 kB
+.output/server/_libs/tanstack__react-query.mjs              0.72 kB │ gzip:   0.37 kB
+.output/server/_ssr/mapas-3d_.trevisan-ByETU91o.mjs         0.75 kB │ gzip:   0.44 kB
+.output/server/_ssr/escada-lc02-CX7pXOCt.mjs                0.75 kB │ gzip:   0.40 kB
+.output/server/_ssr/mapas-3d-Do0LjlXb.mjs                   0.79 kB │ gzip:   0.42 kB
+.output/server/_libs/hookable.mjs                           1.16 kB │ gzip:   0.51 kB
+.output/server/_ssr/start-RKGGYzjZ.mjs                      1.53 kB │ gzip:   0.70 kB
+.output/server/_runtime.mjs                                 1.61 kB │ gzip:   0.74 kB
+.output/server/_libs/react-is.mjs                           1.67 kB │ gzip:   0.65 kB
+.output/server/_libs/prop-types.mjs                         2.27 kB │ gzip:   0.84 kB
+.output/server/_ssr/inspecoes-0hQhStQ_.mjs                  2.32 kB │ gzip:   0.85 kB
+.output/server/_ssr/compras-Fso5b-a0.mjs                    2.45 kB │ gzip:   0.88 kB
+.output/server/_ssr/nexus-nav-CaCK0nWa.mjs                  2.76 kB │ gzip:   1.05 kB
+.output/server/_ssr/relatorios-BJIHeLoy.mjs                 2.77 kB │ gzip:   1.09 kB
+.output/server/_ssr/configuracoes-C8m5uInl.mjs              2.89 kB │ gzip:   1.06 kB
+.output/server/_ssr/execucao-DNZEwsdM.mjs                   2.98 kB │ gzip:   1.03 kB
+.output/server/_ssr/documentacao-CR05mtlC.mjs               2.99 kB │ gzip:   1.04 kB
+.output/server/_ssr/produtos-M1bHSiIB.mjs                   3.08 kB │ gzip:   1.11 kB
+.output/server/_ssr/createCsrfMiddleware-B2To0gPJ.mjs       3.11 kB │ gzip:   1.01 kB
+.output/server/_libs/d3-path.mjs                            3.25 kB │ gzip:   1.16 kB
+.output/server/_ssr/projetos-M48f72JM.mjs                   3.26 kB │ gzip:   1.11 kB
+.output/server/_ssr/levantamentos-mmYRrxLV.mjs              3.38 kB │ gzip:   1.20 kB
+.output/server/_ssr/engenharia-DpuLHlm3.mjs                 3.69 kB │ gzip:   1.23 kB
+.output/server/_ssr/clientes-XMcd9Cb2.mjs                   3.72 kB │ gzip:   1.03 kB
+.output/server/_ssr/financeiro-BRQXBpcj.mjs                 4.16 kB │ gzip:   1.20 kB
+.output/server/_ssr/comercial-YRc6u4N_.mjs                  4.25 kB │ gzip:   1.19 kB
+.output/server/_ssr/ssr.mjs                                 4.55 kB │ gzip:   1.92 kB
+.output/server/_libs/d3-interpolate.mjs                     5.02 kB │ gzip:   1.61 kB
+.output/server/_tanstack-start-manifest_v-Dd7MAfIT.mjs      5.45 kB │ gzip:   1.00 kB
+.output/server/_ssr/Page-BX6FwHuW.mjs                       5.75 kB │ gzip:   1.63 kB
+.output/server/_ssr/mapas-3d_.unidades-B70A0sY8.mjs         7.50 kB │ gzip:   2.13 kB
+.output/server/_ssr/routes-u79hklBw.mjs                     7.93 kB │ gzip:   1.99 kB
+.output/server/_libs/d3-array.mjs                           8.05 kB │ gzip:   2.25 kB
+.output/server/_libs/eventemitter3.mjs                      8.31 kB │ gzip:   2.05 kB
+.output/server/_ssr/lc02-walkway-C7CNFSzG.mjs               8.54 kB │ gzip:   3.13 kB
+.output/server/_ssr/nexus-data-HFmKYtwu.mjs                 9.39 kB │ gzip:   2.86 kB
+.output/server/_libs/h3-v2+rou3+srvx.mjs                    9.87 kB │ gzip:   3.06 kB
+.output/server/_libs/d3-color.mjs                          10.38 kB │ gzip:   3.57 kB
+.output/server/_libs/d3-format.mjs                         10.56 kB │ gzip:   3.02 kB
+.output/server/_libs/tanstack__history.mjs                 12.09 kB │ gzip:   3.48 kB
+.output/server/_libs/fast-equals.mjs                       15.91 kB │ gzip:   4.13 kB
+.output/server/_libs/h3+rou3+srvx.mjs                      17.30 kB │ gzip:   4.98 kB
+.output/server/_libs/decimal.js-light.mjs                  23.31 kB │ gzip:   6.89 kB
+.output/server/_libs/d3-shape.mjs                          24.56 kB │ gzip:   5.02 kB
+.output/server/_ssr/router-BpD78F-R.mjs                    26.22 kB │ gzip:   6.03 kB
+.output/server/index.mjs                                   27.81 kB │ gzip:   7.41 kB
+.output/server/_libs/lucide-react.mjs                      30.19 kB │ gzip:   6.07 kB
+.output/server/_ssr/IndustrialScene-DD4l4BWr.mjs           37.66 kB │ gzip:  10.99 kB
+.output/server/_libs/react-smooth.mjs                      37.82 kB │ gzip:   8.14 kB
+.output/server/_ssr/EscadaViewer-DMH6JsV9.mjs              39.15 kB │ gzip:   8.36 kB
+.output/server/_ssr/EscadaScene-BABHHdTO.mjs               41.26 kB │ gzip:  12.53 kB
+.output/server/_ssr/IndustrialMap-umVr5wil.mjs             46.11 kB │ gzip:   9.65 kB
+.output/server/_libs/tanstack__query-core.mjs              49.84 kB │ gzip:  11.12 kB
+.output/server/_ssr/server-B-GUijOt.mjs                    54.76 kB │ gzip:  14.39 kB
+.output/server/_libs/d3-scale+[...].mjs                    58.22 kB │ gzip:  12.11 kB
+.output/server/_libs/tailwind-merge.mjs                    88.92 kB │ gzip:  15.71 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs      125.35 kB │ gzip:  26.53 kB
+.output/server/_ssr/spatial-D0MGp2sa.mjs                  147.04 kB │ gzip:  27.71 kB
+.output/server/_libs/lodash.mjs                           161.80 kB │ gzip:  29.45 kB
+.output/server/_libs/three.mjs                            175.35 kB │ gzip:  38.87 kB
+.output/server/_libs/recharts+[...].mjs                   515.71 kB │ gzip:  96.80 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs     638.43 kB │ gzip: 134.42 kB
+.output/server/_libs/@react-three/drei+[...].mjs        2,716.42 kB │ gzip: 545.95 kB
+
+✓ built in 14.63s
+[nitro] i Using auto generated worker name: tanstack-start-ts
+i Generated .output/server/wrangler.json
+i Generated .wrangler/deploy/config.json
+i Generated .output/public/_headers
+i Generated .output/nitro.json
+[nitro] √ You can preview this build using npx vite preview
+[nitro] √ You can deploy this build using npx nitro deploy --prebuilt

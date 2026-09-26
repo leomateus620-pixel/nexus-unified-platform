@@ -1,0 +1,42 @@
+[
+  {
+    "count": 1,
+    "errors": [],
+    "final": {
+      "engine": "three.js r186",
+      "simulation": "completed",
+      "people": "[{\"id\":0,\"s\":16.695,\"state\":\"entered\"}]",
+      "door": "0.000",
+      "peopleCamera": "wide",
+      "selectedPerson": "0",
+      "peopleMeshes": "0",
+      "footError": "0.0000",
+      "camera": "-11.000,11.500,17.000",
+      "calls": "18",
+      "triangles": "10290",
+      "geometries": "32",
+      "textures": "10",
+      "ready": "true"
+    }
+  },
+  {
+    "count": 10,
+    "errors": [],
+    "final": {
+      "engine": "three.js r186",
+      "simulation": "running",
+      "people": "[{\"id\":0,\"s\":16.695,\"state\":\"entered\"},{\"id\":1,\"s\":16.695,\"state\":\"entered\"},{\"id\":2,\"s\":15.112,\"state\":\"walking\"},{\"id\":3,\"s\":13.18,\"state\":\"walking\"},{\"id\":4,\"s\":11.865,\"state\":\"walking\"},{\"id\":5,\"s\":10.965,\"state\":\"walking\"},{\"id\":6,\"s\":10.065,\"state\":\"walking\"},{\"id\":7,\"s\":9.165,\"state\":\"walking\"},{\"id\":8,\"s\":8.265,\"state\":\"walking\"},{\"id\":9,\"s\":7.241,\"state\":\"walking\"}]",
+      "door": "1.000",
+      "peopleCamera": "wide",
+      "selectedPerson": "0",
+      "peopleMeshes": "48",
+      "footError": "0.0000",
+      "camera": "-11.000,11.500,17.000",
+      "calls": "74",
+      "triangles": "71426",
+      "geometries": "44",
+      "textures": "24",
+      "ready": "true"
+    }
+  }
+]

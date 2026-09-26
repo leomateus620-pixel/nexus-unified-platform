@@ -16,6 +16,7 @@ import { Route as ComprasRouteImport } from './routes/compras'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as DocumentacaoRouteImport } from './routes/documentacao'
 import { Route as EngenhariaRouteImport } from './routes/engenharia'
+import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as ExecucaoRouteImport } from './routes/execucao'
 import { Route as FinanceiroRouteImport } from './routes/financeiro'
 import { Route as InspecoesRouteImport } from './routes/inspecoes'
@@ -60,6 +61,11 @@ const DocumentacaoRoute = DocumentacaoRouteImport.update({
 const EngenhariaRoute = EngenhariaRouteImport.update({
   id: '/engenharia',
   path: '/engenharia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EscadaLc02Route = EscadaLc02RouteImport.update({
+  id: '/escada-lc02',
+  path: '/escada-lc02',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExecucaoRoute = ExecucaoRouteImport.update({
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/configuracoes': typeof ConfiguracoesRoute
   '/documentacao': typeof DocumentacaoRoute
   '/engenharia': typeof EngenhariaRoute
+  '/escada-lc02': typeof EscadaLc02Route
   '/execucao': typeof ExecucaoRoute
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof ConfiguracoesRoute
   '/documentacao': typeof DocumentacaoRoute
   '/engenharia': typeof EngenhariaRoute
+  '/escada-lc02': typeof EscadaLc02Route
   '/execucao': typeof ExecucaoRoute
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/configuracoes': typeof ConfiguracoesRoute
   '/documentacao': typeof DocumentacaoRoute
   '/engenharia': typeof EngenhariaRoute
+  '/escada-lc02': typeof EscadaLc02Route
   '/execucao': typeof ExecucaoRoute
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/documentacao'
     | '/engenharia'
+    | '/escada-lc02'
     | '/execucao'
     | '/financeiro'
     | '/inspecoes'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/documentacao'
     | '/engenharia'
+    | '/escada-lc02'
     | '/execucao'
     | '/financeiro'
     | '/inspecoes'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/documentacao'
     | '/engenharia'
+    | '/escada-lc02'
     | '/execucao'
     | '/financeiro'
     | '/inspecoes'
@@ -239,6 +251,7 @@ export interface RootRouteChildren {
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   DocumentacaoRoute: typeof DocumentacaoRoute
   EngenhariaRoute: typeof EngenhariaRoute
+  EscadaLc02Route: typeof EscadaLc02Route
   ExecucaoRoute: typeof ExecucaoRoute
   FinanceiroRoute: typeof FinanceiroRoute
   InspecoesRoute: typeof InspecoesRoute
@@ -300,6 +313,13 @@ declare module '@tanstack/react-router' {
       path: '/engenharia'
       fullPath: '/engenharia'
       preLoaderRoute: typeof EngenhariaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/escada-lc02': {
+      id: '/escada-lc02'
+      path: '/escada-lc02'
+      fullPath: '/escada-lc02'
+      preLoaderRoute: typeof EscadaLc02RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/execucao': {
@@ -383,6 +403,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfiguracoesRoute: ConfiguracoesRoute,
   DocumentacaoRoute: DocumentacaoRoute,
   EngenhariaRoute: EngenhariaRoute,
+  EscadaLc02Route: EscadaLc02Route,
   ExecucaoRoute: ExecucaoRoute,
   FinanceiroRoute: FinanceiroRoute,
   InspecoesRoute: InspecoesRoute,

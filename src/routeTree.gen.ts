@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
@@ -66,6 +67,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EscadaLc02Route = EscadaLc02RouteImport.update({
+  id: '/escada-lc02',
+  path: '/escada-lc02',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Mapas3dRoute = Mapas3dRouteImport.update({
@@ -367,6 +373,7 @@ const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoR
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/auth': typeof AuthRoute
+  '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comercial': typeof AuthenticatedComercialRouteWithChildren
@@ -416,6 +423,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
+  '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
@@ -461,6 +469,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
@@ -514,6 +523,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/escada-lc02'
     | '/mapas-3d'
     | '/clientes'
     | '/comercial'
@@ -563,6 +573,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
+    | '/escada-lc02'
     | '/mapas-3d'
     | '/clientes'
     | '/documentacao'
@@ -607,6 +618,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/auth'
+    | '/escada-lc02'
     | '/mapas-3d'
     | '/_authenticated/clientes'
     | '/_authenticated/comercial'
@@ -659,6 +671,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  EscadaLc02Route: typeof EscadaLc02Route
   Mapas3dRoute: typeof Mapas3dRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
@@ -678,6 +691,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/escada-lc02': {
+      id: '/escada-lc02'
+      path: '/escada-lc02'
+      fullPath: '/escada-lc02'
+      preLoaderRoute: typeof EscadaLc02RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mapas-3d': {
@@ -1211,6 +1231,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  EscadaLc02Route: EscadaLc02Route,
   Mapas3dRoute: Mapas3dRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,

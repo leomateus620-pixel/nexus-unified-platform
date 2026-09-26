@@ -1,0 +1,82 @@
+{
+  "desktop": {
+    "engine": "three.js r186",
+    "calls": "152",
+    "triangles": "76460",
+    "geometries": "73",
+    "textures": "4",
+    "camera": "-95.000,116.000,-124.000",
+    "instances": "3231",
+    "model": "trevisan",
+    "ready": "true"
+  },
+  "presets": 6,
+  "navigation": {
+    "orbit": true,
+    "pan": true,
+    "zoom": true
+  },
+  "economy": {
+    "engine": "three.js r186",
+    "calls": "81",
+    "triangles": "38987",
+    "geometries": "73",
+    "textures": "4",
+    "camera": "12.450,27.150,-38.450",
+    "instances": "3231",
+    "model": "trevisan",
+    "ready": "true"
+  },
+  "source": true,
+  "recovery": [
+    {
+      "engine": "three.js r186",
+      "calls": "152",
+      "triangles": "76460",
+      "geometries": "73",
+      "textures": "4",
+      "camera": "-95.000,116.000,-124.000",
+      "instances": "3231",
+      "model": "trevisan",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "calls": "152",
+      "triangles": "76460",
+      "geometries": "73",
+      "textures": "4",
+      "camera": "-95.000,116.000,-124.000",
+      "instances": "3231",
+      "model": "trevisan",
+      "ready": "true"
+    }
+  ],
+  "orbitFrameIntervals": {
+    "samples": 925,
+    "p50": 16.69999999999709,
+    "p95": 33.29999999998836,
+    "max": 249.90000000000873
+  },
+  "unmount": true,
+  "sidebar": true,
+  "mobile": {
+    "viewport": "390x844 emulated",
+    "overflow": false,
+    "controls": true,
+    "stats": {
+      "engine": "three.js r186",
+      "calls": "95",
+      "triangles": "75922",
+      "geometries": "73",
+      "textures": "4",
+      "camera": "-32.562,50.895,-77.412",
+      "instances": "3231",
+      "model": "trevisan",
+      "ready": "true"
+    },
+    "touchOrbit": true
+  },
+  "errors": [],
+  "failedRequests": []
+}

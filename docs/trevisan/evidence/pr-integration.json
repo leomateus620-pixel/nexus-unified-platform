@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-26T01:37:58.822Z",
+  "upstream": "833389b2ea60df15cb910e41265c774b276d51a6",
+  "environment": "Local Chrome, 1440x1000 and 390x844 viewport; not physical device",
+  "checks": [
+    "3Tentos existing /mapas-3d route renders one ready Canvas",
+    "catalog exposes both units and unmounts 3Tentos Canvas",
+    "dedicated Trevisan loads a single ready Canvas through catalog",
+    "Trevisan return restores catalog without residual Canvas",
+    "catalog returns to existing 3Tentos renderer",
+    "existing Nexus menu still enters 3Tentos directly",
+    "390px catalog access remains usable and Trevisan loads"
+  ],
+  "errors": [],
+  "failed": [],
+  "trevisan": {
+    "engine": "three.js r186",
+    "frames": "11",
+    "calls": "152",
+    "triangles": "76460",
+    "geometries": "73",
+    "textures": "4",
+    "camera": "-210.229,217.261,-220.897",
+    "instances": "3231",
+    "model": "trevisan",
+    "ready": "true"
+  }
+}

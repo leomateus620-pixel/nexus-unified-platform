@@ -1,0 +1,27 @@
+{
+  "before": {
+    "engine": "three.js r186",
+    "frames": "75",
+    "calls": "152",
+    "triangles": "76460",
+    "geometries": "73",
+    "textures": "4",
+    "camera": "-236.646,240.477,-243.112",
+    "instances": "3231",
+    "model": "trevisan",
+    "ready": "true"
+  },
+  "after": {
+    "engine": "three.js r186",
+    "frames": "75",
+    "calls": "152",
+    "triangles": "76460",
+    "geometries": "73",
+    "textures": "4",
+    "camera": "-236.646,240.477,-243.112",
+    "instances": "3231",
+    "model": "trevisan",
+    "ready": "true"
+  },
+  "idleRenders": 0
+}

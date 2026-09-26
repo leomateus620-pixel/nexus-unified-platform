@@ -2,9 +2,13 @@ import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 const base = process.env.LC02_URL ?? "http://127.0.0.1:5183";
-const out = "docs/escada-lc02/evidence/people";
+const out = process.env.LC02_OUTPUT ?? "docs/escada-lc02/evidence/people";
 await mkdir(out, { recursive: true });
 const software = process.env.LC02_SOFTWARE === "1";
+// SwiftShader is a functional fallback, not the native performance benchmark.
+// Keep its frame sample shorter than the interval when all ten are on the route.
+const sampleFrames = software ? 30 : 150;
+const traversalTimeout = software ? 240000 : 90000;
 const browser = await chromium.launch({
   headless: true,
   ...(process.env.LC02_BROWSER === "chromium" ? {} : { channel: "chrome" }),
@@ -19,10 +23,13 @@ page.setDefaultTimeout(20000);
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 const report = { software, checks: [], samples: [], errors };
-const watchdog = setTimeout(() => {
-  console.error("UI test exceeded 10 minutes");
-  process.exit(1);
-}, 600000);
+const watchdog = setTimeout(
+  () => {
+    console.error("UI test exceeded its execution budget");
+    process.exit(1);
+  },
+  software ? 1080000 : 600000,
+);
 const stats = () => page.locator("canvas").evaluate((c) => ({ ...c.dataset }));
 const people = async () => JSON.parse((await stats()).people);
 const button = (name) => page.getByRole("button", { name, exact: true });
@@ -35,7 +42,7 @@ const start = async (count) => {
 const shot = (name) => page.screenshot({ path: `${out}/${name}.png` });
 const sample = async (count, orbit = false) =>
   page.evaluate(
-    async ({ count, orbit }) => {
+    async ({ count, orbit, sampleFrames }) => {
       const canvas = document.querySelector("canvas");
       const samples = [];
       let last = performance.now(),
@@ -53,7 +60,7 @@ const sample = async (count, orbit = false) =>
                 cancelable: true,
               }),
             );
-          if (samples.length < 151) requestAnimationFrame(frame);
+          if (samples.length < sampleFrames + 1) requestAnimationFrame(frame);
           else resolve();
         };
         requestAnimationFrame(frame);
@@ -72,7 +79,7 @@ const sample = async (count, orbit = false) =>
         stats: { ...canvas.dataset },
       };
     },
-    { count, orbit },
+    { count, orbit, sampleFrames },
   );
 try {
   await page.goto(`${base}/escada-lc02`);
@@ -92,7 +99,7 @@ try {
           (p) => p.state === "walking",
         ).length === n,
       count,
-      { timeout: 90000 },
+      { timeout: traversalTimeout },
     );
     report.samples.push(await sample(count));
     assert.equal(
@@ -101,6 +108,9 @@ try {
       "Every worker renders skin, uniform, eyes, helmet and both boot material primitives",
     );
     await button("Pausar").click();
+    await page.waitForFunction(
+      () => document.querySelector("canvas").dataset.simulation === "paused",
+    );
     await page.waitForTimeout(250);
     await shot(`scenario-${count}`);
     const initial = await people();
@@ -142,7 +152,7 @@ try {
     };
   });
   await page.mouse.click(pick.x, pick.y);
-  await page.waitForTimeout(150);
+  await page.waitForFunction(() => document.querySelector("canvas").dataset.selectedPerson === "3");
   assert.equal((await stats()).selectedPerson, "3");
   report.checks.push("click on a rendered worker selects it");
   await page.getByLabel("Pessoa em destaque", { exact: true }).selectOption("9");
@@ -153,12 +163,18 @@ try {
   await page.waitForTimeout(300);
   assert.equal((await people())[9].s, held);
   await page.keyboard.down("KeyW");
-  await page.waitForTimeout(1000);
+  await page.waitForFunction(
+    (s) => JSON.parse(document.querySelector("canvas").dataset.people)[9].s > s + 0.14,
+    held,
+  );
   await page.keyboard.up("KeyW");
   const forward = (await people())[9].s;
   assert.ok(forward > held + 0.1);
   await page.keyboard.down("KeyS");
-  await page.waitForTimeout(500);
+  await page.waitForFunction(
+    (s) => JSON.parse(document.querySelector("canvas").dataset.people)[9].s < s - 0.08,
+    forward,
+  );
   await page.keyboard.up("KeyS");
   assert.ok((await people())[9].s < forward - 0.05);
   await page.waitForTimeout(300);
@@ -174,20 +190,22 @@ try {
   await page.waitForFunction(
     () => Number(document.querySelector("canvas").dataset.door) > 0.1,
     null,
-    { timeout: 60000 },
+    { timeout: traversalTimeout },
   );
   await shot("door-opening");
   await page.waitForFunction(
     () => JSON.parse(document.querySelector("canvas").dataset.people)[0].state === "entered",
     null,
-    { timeout: 20000 },
+    { timeout: traversalTimeout },
   );
-  await page.waitForTimeout(300);
+  await page.waitForFunction(
+    () => document.querySelector("canvas").dataset.peopleCamera === "wide",
+  );
   assert.equal((await stats()).peopleCamera, "wide");
   await page.waitForFunction(
     () => document.querySelector("canvas").dataset.simulation === "completed",
     null,
-    { timeout: 90000 },
+    { timeout: traversalTimeout },
   );
   assert.equal((await people()).filter((p) => p.state === "entered").length, 10);
   assert.equal((await stats()).door, "0.000");
@@ -198,13 +216,13 @@ try {
   await page.waitForFunction(
     () => JSON.parse(document.querySelector("canvas").dataset.people)[9].state === "walking",
     null,
-    { timeout: 90000 },
+    { timeout: traversalTimeout },
   );
   await button("Pausar").click();
   for (const id of ["0", "1"]) {
     await page.getByLabel("Pessoa em destaque", { exact: true }).selectOption(id);
     await button("Acompanhar").click();
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(software ? 3000 : 1200);
   }
   await button("Visão geral").click();
   await page.waitForTimeout(1300);
@@ -230,7 +248,7 @@ try {
     for (const id of ["0", "1"]) {
       await page.getByLabel("Pessoa em destaque", { exact: true }).selectOption(id);
       await button("Acompanhar").click();
-      await page.waitForTimeout(1200);
+      await page.waitForTimeout(software ? 3000 : 1200);
     }
     await button("Visão geral").click();
     await page.waitForTimeout(1300);
@@ -248,6 +266,7 @@ try {
   assert.equal((await people()).length, 10);
   assert.equal(await page.locator("canvas").count(), 1);
   await button("Encerrar").click();
+  await page.waitForFunction(() => document.querySelector("canvas").dataset.simulation === "idle");
   assert.deepEqual(await people(), []);
   report.checks.push("rapid scenario replacement and stop");
   // Existing navigation remains available after a simulation.
@@ -280,7 +299,10 @@ try {
     type: "touchStart",
     touchPoints: [{ x: box.x + box.width / 2, y: box.y + box.height / 2, id: 1 }],
   });
-  await page.waitForTimeout(600);
+  await page.waitForFunction(
+    (s) => JSON.parse(document.querySelector("canvas").dataset.people)[0].s > s + 0.14,
+    mobileHeld,
+  );
   await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   assert.ok((await people())[0].s > mobileHeld + 0.1);
   await page.waitForTimeout(150);
@@ -293,6 +315,9 @@ try {
     Object.defineProperty(document, "hidden", { configurable: true, get: () => true });
     document.dispatchEvent(new Event("visibilitychange"));
   });
+  await page.waitForFunction(
+    () => document.querySelector("canvas").dataset.simulation === "paused",
+  );
   assert.equal((await stats()).simulation, "paused");
   await page.evaluate(() => {
     delete document.hidden;

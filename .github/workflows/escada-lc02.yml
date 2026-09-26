@@ -26,6 +26,7 @@ jobs:
           LC02_URL: http://127.0.0.1:5183
           LC02_BROWSER: chromium
           LC02_SOFTWARE: '1'
+          LC02_OUTPUT: test-results/escada-lc02
         run: |
           npm run dev -- --host 127.0.0.1 --port 5183 > /tmp/lc02-vite.log 2>&1 &
           server_pid=$!
@@ -35,3 +36,10 @@ jobs:
             sleep 1
           done
           npm run test:escada:ui
+      - name: Browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: escada-lc02-browser
+          path: test-results/escada-lc02
+          if-no-files-found: ignore

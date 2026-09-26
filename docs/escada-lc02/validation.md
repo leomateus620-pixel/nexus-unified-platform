@@ -40,6 +40,8 @@ A GPU local reportada é **ANGLE / Intel UHD Graphics / Direct3D 11**. As amostr
 
 A comparação usa a vista ampla, com LOD distante. Depois de visitar ambos os personagens em detalhe, o conjunto aquecido registra 44 geometrias / 24 texturas; os mesmos contadores voltam após cada recuperação e novo aquecimento. O erro de alcance dos alvos IK foi 0,0000 m na precisão registrada durante as amostras; isso não é uma medição completa de deformação ou de folga do corpo.
 
+O primeiro ensaio remoto em SwiftShader apresentou p95 de 700 ms com pessoas e 550 ms até na cena vazia, sem fluidez. Expôs também uma suposição inválida do teste: durante a coleta de 150 quadros, a primeira pessoa já havia chegado à porta antes da conferência de dez malhas humanas. O ensaio de software passou a usar 30 quadros e esperas por progresso real de entrada, preservando a amostra nativa de 150. Relatórios e capturas remotos são disponibilizados pelo workflow; o desempenho por software não é apresentado como equivalente à GPU local.
+
 O cache mantém as sombras estáticas da estrutura. A porta renova a sombra em até 10 Hz enquanto abre; pessoas têm sombra leve de contato. Ao pausar ou encerrar, a renderização volta a ocorrer sob demanda. Contadores estáveis após recuperação com os mesmos elementos visíveis não constituem prova absoluta de ausência de vazamentos de memória.
 
 ## Geometria e recursos locais

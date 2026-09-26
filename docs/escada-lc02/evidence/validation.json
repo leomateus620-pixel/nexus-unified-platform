@@ -1,0 +1,256 @@
+{
+  "desktop": {
+    "engine": "three.js r186",
+    "simulation": "idle",
+    "people": "[]",
+    "door": "0.000",
+    "peopleCamera": "wide",
+    "selectedPerson": "0",
+    "peopleMeshes": "0",
+    "footError": "0.0000",
+    "camera": "-10.000,10.000,15.000",
+    "calls": "18",
+    "triangles": "10290",
+    "geometries": "18",
+    "textures": "3",
+    "ready": "true"
+  },
+  "views": [
+    {
+      "name": "Lado oposto",
+      "stats": {
+        "engine": "three.js r186",
+        "simulation": "idle",
+        "people": "[]",
+        "door": "0.000",
+        "peopleCamera": "wide",
+        "selectedPerson": "0",
+        "peopleMeshes": "0",
+        "footError": "0.0000",
+        "camera": "16.000,10.000,-15.000",
+        "calls": "20",
+        "triangles": "13158",
+        "geometries": "18",
+        "textures": "3",
+        "ready": "true"
+      }
+    },
+    {
+      "name": "Frontal",
+      "stats": {
+        "engine": "three.js r186",
+        "simulation": "idle",
+        "people": "[]",
+        "door": "0.000",
+        "peopleCamera": "wide",
+        "selectedPerson": "0",
+        "peopleMeshes": "0",
+        "footError": "0.0000",
+        "camera": "4.500,3.800,23.000",
+        "calls": "20",
+        "triangles": "13158",
+        "geometries": "18",
+        "textures": "3",
+        "ready": "true"
+      }
+    },
+    {
+      "name": "Lateral",
+      "stats": {
+        "engine": "three.js r186",
+        "simulation": "idle",
+        "people": "[]",
+        "door": "0.000",
+        "peopleCamera": "wide",
+        "selectedPerson": "0",
+        "peopleMeshes": "0",
+        "footError": "0.0000",
+        "camera": "-20.000,4.800,-1.700",
+        "calls": "20",
+        "triangles": "13158",
+        "geometries": "18",
+        "textures": "3",
+        "ready": "true"
+      }
+    },
+    {
+      "name": "Superior",
+      "stats": {
+        "engine": "three.js r186",
+        "simulation": "idle",
+        "people": "[]",
+        "door": "0.000",
+        "peopleCamera": "wide",
+        "selectedPerson": "0",
+        "peopleMeshes": "0",
+        "footError": "0.0000",
+        "camera": "4.400,28.000,-1.200",
+        "calls": "21",
+        "triangles": "13158",
+        "geometries": "19",
+        "textures": "3",
+        "ready": "true"
+      }
+    },
+    {
+      "name": "Isométrica",
+      "stats": {
+        "engine": "three.js r186",
+        "simulation": "idle",
+        "people": "[]",
+        "door": "0.000",
+        "peopleCamera": "wide",
+        "selectedPerson": "0",
+        "peopleMeshes": "0",
+        "footError": "0.0000",
+        "camera": "-10.000,10.000,15.000",
+        "calls": "21",
+        "triangles": "13158",
+        "geometries": "19",
+        "textures": "3",
+        "ready": "true"
+      }
+    }
+  ],
+  "navigation": {
+    "orbit": true,
+    "pan": true,
+    "zoomButton": true,
+    "zoomWheel": true
+  },
+  "labels": {
+    "visible": [
+      "Novo patamar",
+      "Patamar +3,00 m",
+      "Porta +6,00 m",
+      "3,00 m",
+      "5,00 m entre P1 e P2",
+      "6,00 m",
+      "Existente",
+      "Lance 1",
+      "Lance 2",
+      "Patamar superior único",
+      "Edificação existente",
+      "P1",
+      "P2",
+      "Guarda-corpo / corrimão",
+      "Apoios e diagonais"
+    ],
+    "overlap": 0
+  },
+  "layers": 6,
+  "downloads": true,
+  "contextRecovery": [
+    {
+      "engine": "three.js r186",
+      "simulation": "idle",
+      "people": "[]",
+      "door": "0.000",
+      "peopleCamera": "wide",
+      "selectedPerson": "0",
+      "peopleMeshes": "0",
+      "footError": "0.0000",
+      "camera": "-10.000,10.000,15.000",
+      "calls": "20",
+      "triangles": "10290",
+      "geometries": "20",
+      "textures": "3",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "simulation": "idle",
+      "people": "[]",
+      "door": "0.000",
+      "peopleCamera": "wide",
+      "selectedPerson": "0",
+      "peopleMeshes": "0",
+      "footError": "0.0000",
+      "camera": "-10.000,10.000,15.000",
+      "calls": "20",
+      "triangles": "10290",
+      "geometries": "20",
+      "textures": "3",
+      "ready": "true"
+    }
+  ],
+  "frameIntervals": {
+    "samples": 229,
+    "p50": 16.69999999999709,
+    "p95": 16.700000000004366,
+    "max": 16.80000000000291,
+    "scope": "Local headless Chrome with SwiftShader software renderer, short orbit sample; not native GPU or physical mobile proof"
+  },
+  "routeAndUnmount": true,
+  "mobile": {
+    "viewport": "390x844 emulated",
+    "overflow": false,
+    "touchOrbit": true,
+    "controls": true,
+    "stats": {
+      "engine": "three.js r186",
+      "simulation": "idle",
+      "people": "[]",
+      "door": "0.000",
+      "peopleCamera": "wide",
+      "selectedPerson": "0",
+      "peopleMeshes": "0",
+      "footError": "0.0000",
+      "camera": "-20.650,18.905,5.307",
+      "calls": "18",
+      "triangles": "10290",
+      "geometries": "18",
+      "textures": "3",
+      "ready": "true"
+    }
+  },
+  "glb": {
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 2,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/14/primitives/0/attributes/TEXCOORD_0"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/15/primitives/0/attributes/TEXCOORD_0"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "THREE.GLTFExporter r186",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 525984
+        }
+      ],
+      "animationCount": 0,
+      "materialCount": 8,
+      "hasMorphTargets": false,
+      "hasSkins": false,
+      "hasTextures": false,
+      "hasDefaultScene": true,
+      "drawCallCount": 16,
+      "totalVertexCount": 19328,
+      "totalTriangleCount": 10288,
+      "maxUVs": 1,
+      "maxInfluences": 0,
+      "maxAttributes": 3
+    }
+  },
+  "errors": [],
+  "failedRequests": []
+}

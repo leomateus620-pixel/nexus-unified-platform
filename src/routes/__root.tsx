@@ -127,7 +127,8 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const dedicatedModel = useRouterState({
-    select: (state) => state.location.pathname.replace(/\/$/, "") === "/mapas-3d/trevisan",
+    select: (state) =>
+      ["/mapas-3d/trevisan", "/escada-lc02"].includes(state.location.pathname.replace(/\/$/, "")),
   });
 
   return (

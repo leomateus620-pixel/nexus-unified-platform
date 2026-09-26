@@ -65,6 +65,12 @@ export const navGroups: NavGroup[] = [
       },
       { to: "/engenharia", label: "Engenharia", icon: Ruler, hint: "Normas e dimensionamentos" },
       { to: "/mapas-3d", label: "Mapas 3D das Unidades", icon: Boxes, hint: "Unidades em 3D" },
+      {
+        to: "/escada-lc02",
+        label: "Escada LC-02",
+        icon: Boxes,
+        hint: "Acesso externo e circulação",
+      },
     ],
   },
   {
@@ -97,7 +103,12 @@ export const navGroups: NavGroup[] = [
     items: [
       { to: "/financeiro", label: "Financeiro", icon: Wallet, hint: "Custos e margens" },
       { to: "/relatorios", label: "Relatórios", icon: BarChart3, hint: "Desempenho" },
-      { to: "/configuracoes", label: "Configurações", icon: Settings, hint: "Usuários e parâmetros" },
+      {
+        to: "/configuracoes",
+        label: "Configurações",
+        icon: Settings,
+        hint: "Usuários e parâmetros",
+      },
     ],
   },
 ];

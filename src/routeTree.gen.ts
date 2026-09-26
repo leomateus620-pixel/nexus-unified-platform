@@ -20,9 +20,11 @@ import { Route as ExecucaoRouteImport } from './routes/execucao'
 import { Route as FinanceiroRouteImport } from './routes/financeiro'
 import { Route as InspecoesRouteImport } from './routes/inspecoes'
 import { Route as LevantamentosRouteImport } from './routes/levantamentos'
+import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -79,6 +81,11 @@ const LevantamentosRoute = LevantamentosRouteImport.update({
   path: '/levantamentos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Mapas3dRoute = Mapas3dRouteImport.update({
+  id: '/mapas-3d',
+  path: '/mapas-3d',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutosRoute = ProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -94,6 +101,11 @@ const RelatoriosRoute = RelatoriosRouteImport.update({
   path: '/relatorios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
+  id: '/mapas-3d_/trevisan',
+  path: '/mapas-3d/trevisan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -107,9 +119,11 @@ export interface FileRoutesByFullPath {
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
   '/levantamentos': typeof LevantamentosRoute
+  '/mapas-3d': typeof Mapas3dRoute
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
+  '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -123,9 +137,11 @@ export interface FileRoutesByTo {
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
   '/levantamentos': typeof LevantamentosRoute
+  '/mapas-3d': typeof Mapas3dRoute
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
+  '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,9 +156,11 @@ export interface FileRoutesById {
   '/financeiro': typeof FinanceiroRoute
   '/inspecoes': typeof InspecoesRoute
   '/levantamentos': typeof LevantamentosRoute
+  '/mapas-3d': typeof Mapas3dRoute
   '/produtos': typeof ProdutosRoute
   '/projetos': typeof ProjetosRoute
   '/relatorios': typeof RelatoriosRoute
+  '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -158,9 +176,11 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d/trevisan'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -174,9 +194,11 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d/trevisan'
   id:
     | '__root__'
     | '/'
@@ -190,9 +212,11 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d_/trevisan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -207,9 +231,11 @@ export interface RootRouteChildren {
   FinanceiroRoute: typeof FinanceiroRoute
   InspecoesRoute: typeof InspecoesRoute
   LevantamentosRoute: typeof LevantamentosRoute
+  Mapas3dRoute: typeof Mapas3dRoute
   ProdutosRoute: typeof ProdutosRoute
   ProjetosRoute: typeof ProjetosRoute
   RelatoriosRoute: typeof RelatoriosRoute
+  Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -291,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LevantamentosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mapas-3d': {
+      id: '/mapas-3d'
+      path: '/mapas-3d'
+      fullPath: '/mapas-3d'
+      preLoaderRoute: typeof Mapas3dRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtos': {
       id: '/produtos'
       path: '/produtos'
@@ -312,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelatoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mapas-3d_/trevisan': {
+      id: '/mapas-3d_/trevisan'
+      path: '/mapas-3d/trevisan'
+      fullPath: '/mapas-3d/trevisan'
+      preLoaderRoute: typeof Mapas3dTrevisanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -327,9 +367,11 @@ const rootRouteChildren: RootRouteChildren = {
   FinanceiroRoute: FinanceiroRoute,
   InspecoesRoute: InspecoesRoute,
   LevantamentosRoute: LevantamentosRoute,
+  Mapas3dRoute: Mapas3dRoute,
   ProdutosRoute: ProdutosRoute,
   ProjetosRoute: ProjetosRoute,
   RelatoriosRoute: RelatoriosRoute,
+  Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -9,32 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as ClientesRouteImport } from './routes/clientes'
-import { Route as ComercialRouteImport } from './routes/comercial'
-import { Route as ComprasRouteImport } from './routes/compras'
-import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
-import { Route as DocumentacaoRouteImport } from './routes/documentacao'
-import { Route as EngenhariaRouteImport } from './routes/engenharia'
-import { Route as ExecucaoRouteImport } from './routes/execucao'
-import { Route as FinanceiroRouteImport } from './routes/financeiro'
-import { Route as InspecoesRouteImport } from './routes/inspecoes'
-import { Route as LevantamentosRouteImport } from './routes/levantamentos'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
-import { Route as ProdutosRouteImport } from './routes/produtos'
-import { Route as ProjetosRouteImport } from './routes/projetos'
-import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
+import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
+import { Route as AuthenticatedComprasRouteImport } from './routes/_authenticated/compras'
+import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated/configuracoes'
+import { Route as AuthenticatedDocumentacaoRouteImport } from './routes/_authenticated/documentacao'
+import { Route as AuthenticatedEngenhariaRouteImport } from './routes/_authenticated/engenharia'
+import { Route as AuthenticatedExecucaoRouteImport } from './routes/_authenticated/execucao'
+import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
+import { Route as AuthenticatedInspecoesRouteImport } from './routes/_authenticated/inspecoes'
+import { Route as AuthenticatedLevantamentosRouteImport } from './routes/_authenticated/levantamentos'
+import { Route as AuthenticatedProdutosRouteImport } from './routes/_authenticated/produtos'
+import { Route as AuthenticatedProjetosRouteImport } from './routes/_authenticated/projetos'
+import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
+import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
+import { Route as AuthenticatedComprasIndexRouteImport } from './routes/_authenticated/compras.index'
+import { Route as AuthenticatedComprasDemandasRouteImport } from './routes/_authenticated/compras.demandas'
+import { Route as AuthenticatedComprasFornecedoresRouteImport } from './routes/_authenticated/compras.fornecedores'
+import { Route as AuthenticatedConfiguracoesIndexRouteImport } from './routes/_authenticated/configuracoes.index'
+import { Route as AuthenticatedConfiguracoesOrcamentosRouteImport } from './routes/_authenticated/configuracoes.orcamentos'
+import { Route as AuthenticatedEngenhariaIndexRouteImport } from './routes/_authenticated/engenharia.index'
+import { Route as AuthenticatedEngenhariaDimensionamentosRouteImport } from './routes/_authenticated/engenharia.dimensionamentos'
+import { Route as AuthenticatedEngenhariaRegrasDimensionamentoRouteImport } from './routes/_authenticated/engenharia.regras-dimensionamento'
+import { Route as AuthenticatedProdutosIndexRouteImport } from './routes/_authenticated/produtos.index'
+import { Route as AuthenticatedProdutosProdutoIdRouteImport } from './routes/_authenticated/produtos.$produtoId'
+import { Route as AuthenticatedProjetosIndexRouteImport } from './routes/_authenticated/projetos.index'
+import { Route as AuthenticatedProjetosProjetoIdRouteImport } from './routes/_authenticated/projetos.$projetoId'
+import { Route as AuthenticatedComercialPropostasIndexRouteImport } from './routes/_authenticated/comercial.propostas.index'
+import { Route as AuthenticatedComercialPropostasNovaRouteImport } from './routes/_authenticated/comercial.propostas.nova'
+import { Route as AuthenticatedComprasOrdensCompraIndexRouteImport } from './routes/_authenticated/compras.ordens-compra.index'
+import { Route as AuthenticatedComprasOrdensCompraOrdemIdRouteImport } from './routes/_authenticated/compras.ordens-compra.$ordemId'
+import { Route as AuthenticatedComprasOrdensProducaoIndexRouteImport } from './routes/_authenticated/compras.ordens-producao.index'
+import { Route as AuthenticatedComprasOrdensProducaoOrdemIdRouteImport } from './routes/_authenticated/compras.ordens-producao.$ordemId'
+import { Route as AuthenticatedComercialPropostasPropostaIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.index'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.index'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.compras'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.dimensionamento'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.historico'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.itens-comerciais'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.orcamento'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.parametros'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.producao'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.resumo-executivo'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -44,75 +68,83 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ClientesRoute = ClientesRouteImport.update({
-  id: '/clientes',
-  path: '/clientes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComercialRoute = ComercialRouteImport.update({
-  id: '/comercial',
-  path: '/comercial',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComprasRoute = ComprasRouteImport.update({
-  id: '/compras',
-  path: '/compras',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DocumentacaoRoute = DocumentacaoRouteImport.update({
-  id: '/documentacao',
-  path: '/documentacao',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EngenhariaRoute = EngenhariaRouteImport.update({
-  id: '/engenharia',
-  path: '/engenharia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExecucaoRoute = ExecucaoRouteImport.update({
-  id: '/execucao',
-  path: '/execucao',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FinanceiroRoute = FinanceiroRouteImport.update({
-  id: '/financeiro',
-  path: '/financeiro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InspecoesRoute = InspecoesRouteImport.update({
-  id: '/inspecoes',
-  path: '/inspecoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LevantamentosRoute = LevantamentosRouteImport.update({
-  id: '/levantamentos',
-  path: '/levantamentos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const Mapas3dRoute = Mapas3dRouteImport.update({
   id: '/mapas-3d',
   path: '/mapas-3d',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProdutosRoute = ProdutosRouteImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedComercialRoute = AuthenticatedComercialRouteImport.update({
+  id: '/comercial',
+  path: '/comercial',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedComprasRoute = AuthenticatedComprasRouteImport.update({
+  id: '/compras',
+  path: '/compras',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedConfiguracoesRoute =
+  AuthenticatedConfiguracoesRouteImport.update({
+    id: '/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDocumentacaoRoute =
+  AuthenticatedDocumentacaoRouteImport.update({
+    id: '/documentacao',
+    path: '/documentacao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEngenhariaRoute = AuthenticatedEngenhariaRouteImport.update({
+  id: '/engenharia',
+  path: '/engenharia',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedExecucaoRoute = AuthenticatedExecucaoRouteImport.update({
+  id: '/execucao',
+  path: '/execucao',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInspecoesRoute = AuthenticatedInspecoesRouteImport.update({
+  id: '/inspecoes',
+  path: '/inspecoes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLevantamentosRoute =
+  AuthenticatedLevantamentosRouteImport.update({
+    id: '/levantamentos',
+    path: '/levantamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProdutosRoute = AuthenticatedProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ProjetosRoute = ProjetosRouteImport.update({
+const AuthenticatedProjetosRoute = AuthenticatedProjetosRouteImport.update({
   id: '/projetos',
   path: '/projetos',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const RelatoriosRoute = RelatoriosRouteImport.update({
+const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
   id: '/mapas-3d_/trevisan',
@@ -124,83 +156,365 @@ const Mapas3dUnidadesRoute = Mapas3dUnidadesRouteImport.update({
   path: '/mapas-3d/unidades',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedComercialIndexRoute =
+  AuthenticatedComercialIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
+const AuthenticatedComprasIndexRoute =
+  AuthenticatedComprasIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedComprasDemandasRoute =
+  AuthenticatedComprasDemandasRouteImport.update({
+    id: '/demandas',
+    path: '/demandas',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedComprasFornecedoresRoute =
+  AuthenticatedComprasFornecedoresRouteImport.update({
+    id: '/fornecedores',
+    path: '/fornecedores',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedConfiguracoesIndexRoute =
+  AuthenticatedConfiguracoesIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedConfiguracoesRoute,
+  } as any)
+const AuthenticatedConfiguracoesOrcamentosRoute =
+  AuthenticatedConfiguracoesOrcamentosRouteImport.update({
+    id: '/orcamentos',
+    path: '/orcamentos',
+    getParentRoute: () => AuthenticatedConfiguracoesRoute,
+  } as any)
+const AuthenticatedEngenhariaIndexRoute =
+  AuthenticatedEngenhariaIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedEngenhariaRoute,
+  } as any)
+const AuthenticatedEngenhariaDimensionamentosRoute =
+  AuthenticatedEngenhariaDimensionamentosRouteImport.update({
+    id: '/dimensionamentos',
+    path: '/dimensionamentos',
+    getParentRoute: () => AuthenticatedEngenhariaRoute,
+  } as any)
+const AuthenticatedEngenhariaRegrasDimensionamentoRoute =
+  AuthenticatedEngenhariaRegrasDimensionamentoRouteImport.update({
+    id: '/regras-dimensionamento',
+    path: '/regras-dimensionamento',
+    getParentRoute: () => AuthenticatedEngenhariaRoute,
+  } as any)
+const AuthenticatedProdutosIndexRoute =
+  AuthenticatedProdutosIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedProdutosRoute,
+  } as any)
+const AuthenticatedProdutosProdutoIdRoute =
+  AuthenticatedProdutosProdutoIdRouteImport.update({
+    id: '/$produtoId',
+    path: '/$produtoId',
+    getParentRoute: () => AuthenticatedProdutosRoute,
+  } as any)
+const AuthenticatedProjetosIndexRoute =
+  AuthenticatedProjetosIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedProjetosRoute,
+  } as any)
+const AuthenticatedProjetosProjetoIdRoute =
+  AuthenticatedProjetosProjetoIdRouteImport.update({
+    id: '/$projetoId',
+    path: '/$projetoId',
+    getParentRoute: () => AuthenticatedProjetosRoute,
+  } as any)
+const AuthenticatedComercialPropostasIndexRoute =
+  AuthenticatedComercialPropostasIndexRouteImport.update({
+    id: '/propostas/',
+    path: '/propostas/',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
+const AuthenticatedComercialPropostasNovaRoute =
+  AuthenticatedComercialPropostasNovaRouteImport.update({
+    id: '/propostas/nova',
+    path: '/propostas/nova',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
+const AuthenticatedComprasOrdensCompraIndexRoute =
+  AuthenticatedComprasOrdensCompraIndexRouteImport.update({
+    id: '/ordens-compra/',
+    path: '/ordens-compra/',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedComprasOrdensCompraOrdemIdRoute =
+  AuthenticatedComprasOrdensCompraOrdemIdRouteImport.update({
+    id: '/ordens-compra/$ordemId',
+    path: '/ordens-compra/$ordemId',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedComprasOrdensProducaoIndexRoute =
+  AuthenticatedComprasOrdensProducaoIndexRouteImport.update({
+    id: '/ordens-producao/',
+    path: '/ordens-producao/',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedComprasOrdensProducaoOrdemIdRoute =
+  AuthenticatedComprasOrdensProducaoOrdemIdRouteImport.update({
+    id: '/ordens-producao/$ordemId',
+    path: '/ordens-producao/$ordemId',
+    getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedComercialPropostasPropostaIdIndexRoute =
+  AuthenticatedComercialPropostasPropostaIdIndexRouteImport.update({
+    id: '/propostas/$propostaId/',
+    path: '/propostas/$propostaId/',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
 const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute =
   AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport.update({
-    id: '/comercial/propostas/$propostaId/revisoes/$revisaoId',
-    path: '/comercial/propostas/$propostaId/revisoes/$revisaoId',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/propostas/$propostaId/revisoes/$revisaoId',
+    path: '/propostas/$propostaId/revisoes/$revisaoId',
+    getParentRoute: () => AuthenticatedComercialRoute,
   } as any)
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport.update(
+    {
+      id: '/',
+      path: '/',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRouteImport.update(
+    {
+      id: '/compras',
+      path: '/compras',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRouteImport.update(
+    {
+      id: '/dimensionamento',
+      path: '/dimensionamento',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRouteImport.update(
+    {
+      id: '/historico',
+      path: '/historico',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRouteImport.update(
+    {
+      id: '/itens-comerciais',
+      path: '/itens-comerciais',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRouteImport.update(
+    {
+      id: '/orcamento',
+      path: '/orcamento',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRouteImport.update(
+    {
+      id: '/parametros',
+      path: '/parametros',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRouteImport.update(
+    {
+      id: '/producao',
+      path: '/producao',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRouteImport.update(
+    {
+      id: '/resumo-executivo',
+      path: '/resumo-executivo',
+      getParentRoute: () =>
+        AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
   '/auth': typeof AuthRoute
-  '/clientes': typeof ClientesRoute
-  '/comercial': typeof ComercialRoute
-  '/compras': typeof ComprasRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/documentacao': typeof DocumentacaoRoute
-  '/engenharia': typeof EngenhariaRoute
-  '/execucao': typeof ExecucaoRoute
-  '/financeiro': typeof FinanceiroRoute
-  '/inspecoes': typeof InspecoesRoute
-  '/levantamentos': typeof LevantamentosRoute
   '/mapas-3d': typeof Mapas3dRoute
-  '/produtos': typeof ProdutosRoute
-  '/projetos': typeof ProjetosRoute
-  '/relatorios': typeof RelatoriosRoute
+  '/clientes': typeof AuthenticatedClientesRoute
+  '/comercial': typeof AuthenticatedComercialRouteWithChildren
+  '/compras': typeof AuthenticatedComprasRouteWithChildren
+  '/configuracoes': typeof AuthenticatedConfiguracoesRouteWithChildren
+  '/documentacao': typeof AuthenticatedDocumentacaoRoute
+  '/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
+  '/execucao': typeof AuthenticatedExecucaoRoute
+  '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/inspecoes': typeof AuthenticatedInspecoesRoute
+  '/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/produtos': typeof AuthenticatedProdutosRouteWithChildren
+  '/projetos': typeof AuthenticatedProjetosRouteWithChildren
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
-  '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+  '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
+  '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
+  '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
+  '/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
+  '/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  '/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
+  '/projetos/$projetoId': typeof AuthenticatedProjetosProjetoIdRoute
+  '/comercial/': typeof AuthenticatedComercialIndexRoute
+  '/compras/': typeof AuthenticatedComprasIndexRoute
+  '/configuracoes/': typeof AuthenticatedConfiguracoesIndexRoute
+  '/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
+  '/produtos/': typeof AuthenticatedProdutosIndexRoute
+  '/projetos/': typeof AuthenticatedProjetosIndexRoute
+  '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
+  '/compras/ordens-compra/$ordemId': typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
+  '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  '/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
+  '/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
+  '/compras/ordens-producao/': typeof AuthenticatedComprasOrdensProducaoIndexRoute
+  '/comercial/propostas/$propostaId/': typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/historico': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/producao': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/clientes': typeof ClientesRoute
-  '/comercial': typeof ComercialRoute
-  '/compras': typeof ComprasRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/documentacao': typeof DocumentacaoRoute
-  '/engenharia': typeof EngenhariaRoute
-  '/execucao': typeof ExecucaoRoute
-  '/financeiro': typeof FinanceiroRoute
-  '/inspecoes': typeof InspecoesRoute
-  '/levantamentos': typeof LevantamentosRoute
   '/mapas-3d': typeof Mapas3dRoute
-  '/produtos': typeof ProdutosRoute
-  '/projetos': typeof ProjetosRoute
-  '/relatorios': typeof RelatoriosRoute
+  '/clientes': typeof AuthenticatedClientesRoute
+  '/documentacao': typeof AuthenticatedDocumentacaoRoute
+  '/execucao': typeof AuthenticatedExecucaoRoute
+  '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/inspecoes': typeof AuthenticatedInspecoesRoute
+  '/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
-  '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
+  '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
+  '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
+  '/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
+  '/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  '/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
+  '/projetos/$projetoId': typeof AuthenticatedProjetosProjetoIdRoute
+  '/comercial': typeof AuthenticatedComercialIndexRoute
+  '/compras': typeof AuthenticatedComprasIndexRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesIndexRoute
+  '/engenharia': typeof AuthenticatedEngenhariaIndexRoute
+  '/produtos': typeof AuthenticatedProdutosIndexRoute
+  '/projetos': typeof AuthenticatedProjetosIndexRoute
+  '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
+  '/compras/ordens-compra/$ordemId': typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
+  '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  '/comercial/propostas': typeof AuthenticatedComercialPropostasIndexRoute
+  '/compras/ordens-compra': typeof AuthenticatedComprasOrdensCompraIndexRoute
+  '/compras/ordens-producao': typeof AuthenticatedComprasOrdensProducaoIndexRoute
+  '/comercial/propostas/$propostaId': typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/historico': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/producao': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/clientes': typeof ClientesRoute
-  '/comercial': typeof ComercialRoute
-  '/compras': typeof ComprasRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/documentacao': typeof DocumentacaoRoute
-  '/engenharia': typeof EngenhariaRoute
-  '/execucao': typeof ExecucaoRoute
-  '/financeiro': typeof FinanceiroRoute
-  '/inspecoes': typeof InspecoesRoute
-  '/levantamentos': typeof LevantamentosRoute
   '/mapas-3d': typeof Mapas3dRoute
-  '/produtos': typeof ProdutosRoute
-  '/projetos': typeof ProjetosRoute
-  '/relatorios': typeof RelatoriosRoute
+  '/_authenticated/clientes': typeof AuthenticatedClientesRoute
+  '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
+  '/_authenticated/compras': typeof AuthenticatedComprasRouteWithChildren
+  '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRouteWithChildren
+  '/_authenticated/documentacao': typeof AuthenticatedDocumentacaoRoute
+  '/_authenticated/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
+  '/_authenticated/execucao': typeof AuthenticatedExecucaoRoute
+  '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/_authenticated/inspecoes': typeof AuthenticatedInspecoesRoute
+  '/_authenticated/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/_authenticated/produtos': typeof AuthenticatedProdutosRouteWithChildren
+  '/_authenticated/projetos': typeof AuthenticatedProjetosRouteWithChildren
+  '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
-  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/compras/demandas': typeof AuthenticatedComprasDemandasRoute
+  '/_authenticated/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
+  '/_authenticated/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
+  '/_authenticated/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
+  '/_authenticated/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  '/_authenticated/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
+  '/_authenticated/projetos/$projetoId': typeof AuthenticatedProjetosProjetoIdRoute
+  '/_authenticated/comercial/': typeof AuthenticatedComercialIndexRoute
+  '/_authenticated/compras/': typeof AuthenticatedComprasIndexRoute
+  '/_authenticated/configuracoes/': typeof AuthenticatedConfiguracoesIndexRoute
+  '/_authenticated/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
+  '/_authenticated/produtos/': typeof AuthenticatedProdutosIndexRoute
+  '/_authenticated/projetos/': typeof AuthenticatedProjetosIndexRoute
+  '/_authenticated/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
+  '/_authenticated/compras/ordens-compra/$ordemId': typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
+  '/_authenticated/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  '/_authenticated/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
+  '/_authenticated/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
+  '/_authenticated/compras/ordens-producao/': typeof AuthenticatedComprasOrdensProducaoIndexRoute
+  '/_authenticated/comercial/propostas/$propostaId/': typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/historico': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/producao': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
+    | '/mapas-3d'
     | '/clientes'
     | '/comercial'
     | '/compras'
@@ -211,89 +525,147 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
-    | '/mapas-3d'
     | '/produtos'
     | '/projetos'
     | '/relatorios'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/compras/demandas'
+    | '/compras/fornecedores'
+    | '/configuracoes/orcamentos'
+    | '/engenharia/dimensionamentos'
+    | '/engenharia/regras-dimensionamento'
+    | '/produtos/$produtoId'
+    | '/projetos/$projetoId'
+    | '/comercial/'
+    | '/compras/'
+    | '/configuracoes/'
+    | '/engenharia/'
+    | '/produtos/'
+    | '/projetos/'
+    | '/comercial/propostas/nova'
+    | '/compras/ordens-compra/$ordemId'
+    | '/compras/ordens-producao/$ordemId'
+    | '/comercial/propostas/'
+    | '/compras/ordens-compra/'
+    | '/compras/ordens-producao/'
+    | '/comercial/propostas/$propostaId/'
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/historico'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/producao'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/auth'
+    | '/mapas-3d'
     | '/clientes'
-    | '/comercial'
-    | '/compras'
-    | '/configuracoes'
     | '/documentacao'
-    | '/engenharia'
     | '/execucao'
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
-    | '/mapas-3d'
-    | '/produtos'
-    | '/projetos'
     | '/relatorios'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/'
+    | '/compras/demandas'
+    | '/compras/fornecedores'
+    | '/configuracoes/orcamentos'
+    | '/engenharia/dimensionamentos'
+    | '/engenharia/regras-dimensionamento'
+    | '/produtos/$produtoId'
+    | '/projetos/$projetoId'
+    | '/comercial'
+    | '/compras'
+    | '/configuracoes'
+    | '/engenharia'
+    | '/produtos'
+    | '/projetos'
+    | '/comercial/propostas/nova'
+    | '/compras/ordens-compra/$ordemId'
+    | '/compras/ordens-producao/$ordemId'
+    | '/comercial/propostas'
+    | '/compras/ordens-compra'
+    | '/compras/ordens-producao'
+    | '/comercial/propostas/$propostaId'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/historico'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/producao'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo'
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId'
   id:
     | '__root__'
-    | '/'
     | '/_authenticated'
     | '/auth'
-    | '/clientes'
-    | '/comercial'
-    | '/compras'
-    | '/configuracoes'
-    | '/documentacao'
-    | '/engenharia'
-    | '/execucao'
-    | '/financeiro'
-    | '/inspecoes'
-    | '/levantamentos'
     | '/mapas-3d'
-    | '/produtos'
-    | '/projetos'
-    | '/relatorios'
+    | '/_authenticated/clientes'
+    | '/_authenticated/comercial'
+    | '/_authenticated/compras'
+    | '/_authenticated/configuracoes'
+    | '/_authenticated/documentacao'
+    | '/_authenticated/engenharia'
+    | '/_authenticated/execucao'
+    | '/_authenticated/financeiro'
+    | '/_authenticated/inspecoes'
+    | '/_authenticated/levantamentos'
+    | '/_authenticated/produtos'
+    | '/_authenticated/projetos'
+    | '/_authenticated/relatorios'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
+    | '/_authenticated/'
+    | '/_authenticated/compras/demandas'
+    | '/_authenticated/compras/fornecedores'
+    | '/_authenticated/configuracoes/orcamentos'
+    | '/_authenticated/engenharia/dimensionamentos'
+    | '/_authenticated/engenharia/regras-dimensionamento'
+    | '/_authenticated/produtos/$produtoId'
+    | '/_authenticated/projetos/$projetoId'
+    | '/_authenticated/comercial/'
+    | '/_authenticated/compras/'
+    | '/_authenticated/configuracoes/'
+    | '/_authenticated/engenharia/'
+    | '/_authenticated/produtos/'
+    | '/_authenticated/projetos/'
+    | '/_authenticated/comercial/propostas/nova'
+    | '/_authenticated/compras/ordens-compra/$ordemId'
+    | '/_authenticated/compras/ordens-producao/$ordemId'
+    | '/_authenticated/comercial/propostas/'
+    | '/_authenticated/compras/ordens-compra/'
+    | '/_authenticated/compras/ordens-producao/'
+    | '/_authenticated/comercial/propostas/$propostaId/'
     | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/historico'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/producao'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  ClientesRoute: typeof ClientesRoute
-  ComercialRoute: typeof ComercialRoute
-  ComprasRoute: typeof ComprasRoute
-  ConfiguracoesRoute: typeof ConfiguracoesRoute
-  DocumentacaoRoute: typeof DocumentacaoRoute
-  EngenhariaRoute: typeof EngenhariaRoute
-  ExecucaoRoute: typeof ExecucaoRoute
-  FinanceiroRoute: typeof FinanceiroRoute
-  InspecoesRoute: typeof InspecoesRoute
-  LevantamentosRoute: typeof LevantamentosRoute
   Mapas3dRoute: typeof Mapas3dRoute
-  ProdutosRoute: typeof ProdutosRoute
-  ProjetosRoute: typeof ProjetosRoute
-  RelatoriosRoute: typeof RelatoriosRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -308,76 +680,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clientes': {
-      id: '/clientes'
-      path: '/clientes'
-      fullPath: '/clientes'
-      preLoaderRoute: typeof ClientesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/comercial': {
-      id: '/comercial'
-      path: '/comercial'
-      fullPath: '/comercial'
-      preLoaderRoute: typeof ComercialRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compras': {
-      id: '/compras'
-      path: '/compras'
-      fullPath: '/compras'
-      preLoaderRoute: typeof ComprasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/configuracoes': {
-      id: '/configuracoes'
-      path: '/configuracoes'
-      fullPath: '/configuracoes'
-      preLoaderRoute: typeof ConfiguracoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/documentacao': {
-      id: '/documentacao'
-      path: '/documentacao'
-      fullPath: '/documentacao'
-      preLoaderRoute: typeof DocumentacaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/engenharia': {
-      id: '/engenharia'
-      path: '/engenharia'
-      fullPath: '/engenharia'
-      preLoaderRoute: typeof EngenhariaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/execucao': {
-      id: '/execucao'
-      path: '/execucao'
-      fullPath: '/execucao'
-      preLoaderRoute: typeof ExecucaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/financeiro': {
-      id: '/financeiro'
-      path: '/financeiro'
-      fullPath: '/financeiro'
-      preLoaderRoute: typeof FinanceiroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/inspecoes': {
-      id: '/inspecoes'
-      path: '/inspecoes'
-      fullPath: '/inspecoes'
-      preLoaderRoute: typeof InspecoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/levantamentos': {
-      id: '/levantamentos'
-      path: '/levantamentos'
-      fullPath: '/levantamentos'
-      preLoaderRoute: typeof LevantamentosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/mapas-3d': {
       id: '/mapas-3d'
       path: '/mapas-3d'
@@ -385,26 +687,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Mapas3dRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/produtos': {
-      id: '/produtos'
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/clientes': {
+      id: '/_authenticated/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof AuthenticatedClientesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/comercial': {
+      id: '/_authenticated/comercial'
+      path: '/comercial'
+      fullPath: '/comercial'
+      preLoaderRoute: typeof AuthenticatedComercialRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/compras': {
+      id: '/_authenticated/compras'
+      path: '/compras'
+      fullPath: '/compras'
+      preLoaderRoute: typeof AuthenticatedComprasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/configuracoes': {
+      id: '/_authenticated/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/documentacao': {
+      id: '/_authenticated/documentacao'
+      path: '/documentacao'
+      fullPath: '/documentacao'
+      preLoaderRoute: typeof AuthenticatedDocumentacaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/engenharia': {
+      id: '/_authenticated/engenharia'
+      path: '/engenharia'
+      fullPath: '/engenharia'
+      preLoaderRoute: typeof AuthenticatedEngenhariaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/execucao': {
+      id: '/_authenticated/execucao'
+      path: '/execucao'
+      fullPath: '/execucao'
+      preLoaderRoute: typeof AuthenticatedExecucaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/financeiro': {
+      id: '/_authenticated/financeiro'
+      path: '/financeiro'
+      fullPath: '/financeiro'
+      preLoaderRoute: typeof AuthenticatedFinanceiroRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inspecoes': {
+      id: '/_authenticated/inspecoes'
+      path: '/inspecoes'
+      fullPath: '/inspecoes'
+      preLoaderRoute: typeof AuthenticatedInspecoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/levantamentos': {
+      id: '/_authenticated/levantamentos'
+      path: '/levantamentos'
+      fullPath: '/levantamentos'
+      preLoaderRoute: typeof AuthenticatedLevantamentosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/produtos': {
+      id: '/_authenticated/produtos'
       path: '/produtos'
       fullPath: '/produtos'
-      preLoaderRoute: typeof ProdutosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedProdutosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/projetos': {
-      id: '/projetos'
+    '/_authenticated/projetos': {
+      id: '/_authenticated/projetos'
       path: '/projetos'
       fullPath: '/projetos'
-      preLoaderRoute: typeof ProjetosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedProjetosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/relatorios': {
-      id: '/relatorios'
+    '/_authenticated/relatorios': {
+      id: '/_authenticated/relatorios'
       path: '/relatorios'
       fullPath: '/relatorios'
-      preLoaderRoute: typeof RelatoriosRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/mapas-3d_/trevisan': {
       id: '/mapas-3d_/trevisan'
@@ -420,46 +799,419 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Mapas3dUnidadesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/comercial/': {
+      id: '/_authenticated/comercial/'
+      path: '/'
+      fullPath: '/comercial/'
+      preLoaderRoute: typeof AuthenticatedComercialIndexRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/compras/': {
+      id: '/_authenticated/compras/'
+      path: '/'
+      fullPath: '/compras/'
+      preLoaderRoute: typeof AuthenticatedComprasIndexRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/compras/demandas': {
+      id: '/_authenticated/compras/demandas'
+      path: '/demandas'
+      fullPath: '/compras/demandas'
+      preLoaderRoute: typeof AuthenticatedComprasDemandasRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/compras/fornecedores': {
+      id: '/_authenticated/compras/fornecedores'
+      path: '/fornecedores'
+      fullPath: '/compras/fornecedores'
+      preLoaderRoute: typeof AuthenticatedComprasFornecedoresRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/configuracoes/': {
+      id: '/_authenticated/configuracoes/'
+      path: '/'
+      fullPath: '/configuracoes/'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesIndexRouteImport
+      parentRoute: typeof AuthenticatedConfiguracoesRoute
+    }
+    '/_authenticated/configuracoes/orcamentos': {
+      id: '/_authenticated/configuracoes/orcamentos'
+      path: '/orcamentos'
+      fullPath: '/configuracoes/orcamentos'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesOrcamentosRouteImport
+      parentRoute: typeof AuthenticatedConfiguracoesRoute
+    }
+    '/_authenticated/engenharia/': {
+      id: '/_authenticated/engenharia/'
+      path: '/'
+      fullPath: '/engenharia/'
+      preLoaderRoute: typeof AuthenticatedEngenhariaIndexRouteImport
+      parentRoute: typeof AuthenticatedEngenhariaRoute
+    }
+    '/_authenticated/engenharia/dimensionamentos': {
+      id: '/_authenticated/engenharia/dimensionamentos'
+      path: '/dimensionamentos'
+      fullPath: '/engenharia/dimensionamentos'
+      preLoaderRoute: typeof AuthenticatedEngenhariaDimensionamentosRouteImport
+      parentRoute: typeof AuthenticatedEngenhariaRoute
+    }
+    '/_authenticated/engenharia/regras-dimensionamento': {
+      id: '/_authenticated/engenharia/regras-dimensionamento'
+      path: '/regras-dimensionamento'
+      fullPath: '/engenharia/regras-dimensionamento'
+      preLoaderRoute: typeof AuthenticatedEngenhariaRegrasDimensionamentoRouteImport
+      parentRoute: typeof AuthenticatedEngenhariaRoute
+    }
+    '/_authenticated/produtos/': {
+      id: '/_authenticated/produtos/'
+      path: '/'
+      fullPath: '/produtos/'
+      preLoaderRoute: typeof AuthenticatedProdutosIndexRouteImport
+      parentRoute: typeof AuthenticatedProdutosRoute
+    }
+    '/_authenticated/produtos/$produtoId': {
+      id: '/_authenticated/produtos/$produtoId'
+      path: '/$produtoId'
+      fullPath: '/produtos/$produtoId'
+      preLoaderRoute: typeof AuthenticatedProdutosProdutoIdRouteImport
+      parentRoute: typeof AuthenticatedProdutosRoute
+    }
+    '/_authenticated/projetos/': {
+      id: '/_authenticated/projetos/'
+      path: '/'
+      fullPath: '/projetos/'
+      preLoaderRoute: typeof AuthenticatedProjetosIndexRouteImport
+      parentRoute: typeof AuthenticatedProjetosRoute
+    }
+    '/_authenticated/projetos/$projetoId': {
+      id: '/_authenticated/projetos/$projetoId'
+      path: '/$projetoId'
+      fullPath: '/projetos/$projetoId'
+      preLoaderRoute: typeof AuthenticatedProjetosProjetoIdRouteImport
+      parentRoute: typeof AuthenticatedProjetosRoute
+    }
+    '/_authenticated/comercial/propostas/': {
+      id: '/_authenticated/comercial/propostas/'
+      path: '/propostas'
+      fullPath: '/comercial/propostas/'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasIndexRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/comercial/propostas/nova': {
+      id: '/_authenticated/comercial/propostas/nova'
+      path: '/propostas/nova'
+      fullPath: '/comercial/propostas/nova'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasNovaRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/compras/ordens-compra/': {
+      id: '/_authenticated/compras/ordens-compra/'
+      path: '/ordens-compra'
+      fullPath: '/compras/ordens-compra/'
+      preLoaderRoute: typeof AuthenticatedComprasOrdensCompraIndexRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/compras/ordens-compra/$ordemId': {
+      id: '/_authenticated/compras/ordens-compra/$ordemId'
+      path: '/ordens-compra/$ordemId'
+      fullPath: '/compras/ordens-compra/$ordemId'
+      preLoaderRoute: typeof AuthenticatedComprasOrdensCompraOrdemIdRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/compras/ordens-producao/': {
+      id: '/_authenticated/compras/ordens-producao/'
+      path: '/ordens-producao'
+      fullPath: '/compras/ordens-producao/'
+      preLoaderRoute: typeof AuthenticatedComprasOrdensProducaoIndexRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/compras/ordens-producao/$ordemId': {
+      id: '/_authenticated/compras/ordens-producao/$ordemId'
+      path: '/ordens-producao/$ordemId'
+      fullPath: '/compras/ordens-producao/$ordemId'
+      preLoaderRoute: typeof AuthenticatedComprasOrdensProducaoOrdemIdRouteImport
+      parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/': {
+      id: '/_authenticated/comercial/propostas/$propostaId/'
+      path: '/propostas/$propostaId'
+      fullPath: '/comercial/propostas/$propostaId/'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdIndexRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
     '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': {
       id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId'
-      path: '/comercial/propostas/$propostaId/revisoes/$revisaoId'
+      path: '/propostas/$propostaId/revisoes/$revisaoId'
       fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId'
       preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/'
+      path: '/'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
+      path: '/compras'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento'
+      path: '/dimensionamento'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/historico': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/historico'
+      path: '/historico'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/historico'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais'
+      path: '/itens-comerciais'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento'
+      path: '/orcamento'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros'
+      path: '/parametros'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/producao': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/producao'
+      path: '/producao'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/producao'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+    }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo'
+      path: '/resumo-executivo'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRouteImport
+      parentRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
     }
   }
 }
 
+interface AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteChildren {
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute
+}
+
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteChildren: AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteChildren =
+  {
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdHistoricoRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdItensComerciaisRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdOrcamentoRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdParametrosRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdProducaoRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute,
+  }
+
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute._addFileChildren(
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteChildren,
+  )
+
+interface AuthenticatedComercialRouteChildren {
+  AuthenticatedComercialIndexRoute: typeof AuthenticatedComercialIndexRoute
+  AuthenticatedComercialPropostasNovaRoute: typeof AuthenticatedComercialPropostasNovaRoute
+  AuthenticatedComercialPropostasIndexRoute: typeof AuthenticatedComercialPropostasIndexRoute
+  AuthenticatedComercialPropostasPropostaIdIndexRoute: typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren
+}
+
+const AuthenticatedComercialRouteChildren: AuthenticatedComercialRouteChildren =
+  {
+    AuthenticatedComercialIndexRoute: AuthenticatedComercialIndexRoute,
+    AuthenticatedComercialPropostasNovaRoute:
+      AuthenticatedComercialPropostasNovaRoute,
+    AuthenticatedComercialPropostasIndexRoute:
+      AuthenticatedComercialPropostasIndexRoute,
+    AuthenticatedComercialPropostasPropostaIdIndexRoute:
+      AuthenticatedComercialPropostasPropostaIdIndexRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren,
+  }
+
+const AuthenticatedComercialRouteWithChildren =
+  AuthenticatedComercialRoute._addFileChildren(
+    AuthenticatedComercialRouteChildren,
+  )
+
+interface AuthenticatedComprasRouteChildren {
+  AuthenticatedComprasDemandasRoute: typeof AuthenticatedComprasDemandasRoute
+  AuthenticatedComprasFornecedoresRoute: typeof AuthenticatedComprasFornecedoresRoute
+  AuthenticatedComprasIndexRoute: typeof AuthenticatedComprasIndexRoute
+  AuthenticatedComprasOrdensCompraOrdemIdRoute: typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
+  AuthenticatedComprasOrdensProducaoOrdemIdRoute: typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  AuthenticatedComprasOrdensCompraIndexRoute: typeof AuthenticatedComprasOrdensCompraIndexRoute
+  AuthenticatedComprasOrdensProducaoIndexRoute: typeof AuthenticatedComprasOrdensProducaoIndexRoute
+}
+
+const AuthenticatedComprasRouteChildren: AuthenticatedComprasRouteChildren = {
+  AuthenticatedComprasDemandasRoute: AuthenticatedComprasDemandasRoute,
+  AuthenticatedComprasFornecedoresRoute: AuthenticatedComprasFornecedoresRoute,
+  AuthenticatedComprasIndexRoute: AuthenticatedComprasIndexRoute,
+  AuthenticatedComprasOrdensCompraOrdemIdRoute:
+    AuthenticatedComprasOrdensCompraOrdemIdRoute,
+  AuthenticatedComprasOrdensProducaoOrdemIdRoute:
+    AuthenticatedComprasOrdensProducaoOrdemIdRoute,
+  AuthenticatedComprasOrdensCompraIndexRoute:
+    AuthenticatedComprasOrdensCompraIndexRoute,
+  AuthenticatedComprasOrdensProducaoIndexRoute:
+    AuthenticatedComprasOrdensProducaoIndexRoute,
+}
+
+const AuthenticatedComprasRouteWithChildren =
+  AuthenticatedComprasRoute._addFileChildren(AuthenticatedComprasRouteChildren)
+
+interface AuthenticatedConfiguracoesRouteChildren {
+  AuthenticatedConfiguracoesOrcamentosRoute: typeof AuthenticatedConfiguracoesOrcamentosRoute
+  AuthenticatedConfiguracoesIndexRoute: typeof AuthenticatedConfiguracoesIndexRoute
+}
+
+const AuthenticatedConfiguracoesRouteChildren: AuthenticatedConfiguracoesRouteChildren =
+  {
+    AuthenticatedConfiguracoesOrcamentosRoute:
+      AuthenticatedConfiguracoesOrcamentosRoute,
+    AuthenticatedConfiguracoesIndexRoute: AuthenticatedConfiguracoesIndexRoute,
+  }
+
+const AuthenticatedConfiguracoesRouteWithChildren =
+  AuthenticatedConfiguracoesRoute._addFileChildren(
+    AuthenticatedConfiguracoesRouteChildren,
+  )
+
+interface AuthenticatedEngenhariaRouteChildren {
+  AuthenticatedEngenhariaDimensionamentosRoute: typeof AuthenticatedEngenhariaDimensionamentosRoute
+  AuthenticatedEngenhariaRegrasDimensionamentoRoute: typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  AuthenticatedEngenhariaIndexRoute: typeof AuthenticatedEngenhariaIndexRoute
+}
+
+const AuthenticatedEngenhariaRouteChildren: AuthenticatedEngenhariaRouteChildren =
+  {
+    AuthenticatedEngenhariaDimensionamentosRoute:
+      AuthenticatedEngenhariaDimensionamentosRoute,
+    AuthenticatedEngenhariaRegrasDimensionamentoRoute:
+      AuthenticatedEngenhariaRegrasDimensionamentoRoute,
+    AuthenticatedEngenhariaIndexRoute: AuthenticatedEngenhariaIndexRoute,
+  }
+
+const AuthenticatedEngenhariaRouteWithChildren =
+  AuthenticatedEngenhariaRoute._addFileChildren(
+    AuthenticatedEngenhariaRouteChildren,
+  )
+
+interface AuthenticatedProdutosRouteChildren {
+  AuthenticatedProdutosProdutoIdRoute: typeof AuthenticatedProdutosProdutoIdRoute
+  AuthenticatedProdutosIndexRoute: typeof AuthenticatedProdutosIndexRoute
+}
+
+const AuthenticatedProdutosRouteChildren: AuthenticatedProdutosRouteChildren = {
+  AuthenticatedProdutosProdutoIdRoute: AuthenticatedProdutosProdutoIdRoute,
+  AuthenticatedProdutosIndexRoute: AuthenticatedProdutosIndexRoute,
+}
+
+const AuthenticatedProdutosRouteWithChildren =
+  AuthenticatedProdutosRoute._addFileChildren(
+    AuthenticatedProdutosRouteChildren,
+  )
+
+interface AuthenticatedProjetosRouteChildren {
+  AuthenticatedProjetosProjetoIdRoute: typeof AuthenticatedProjetosProjetoIdRoute
+  AuthenticatedProjetosIndexRoute: typeof AuthenticatedProjetosIndexRoute
+}
+
+const AuthenticatedProjetosRouteChildren: AuthenticatedProjetosRouteChildren = {
+  AuthenticatedProjetosProjetoIdRoute: AuthenticatedProjetosProjetoIdRoute,
+  AuthenticatedProjetosIndexRoute: AuthenticatedProjetosIndexRoute,
+}
+
+const AuthenticatedProjetosRouteWithChildren =
+  AuthenticatedProjetosRoute._addFileChildren(
+    AuthenticatedProjetosRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+  AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
+  AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
+  AuthenticatedComprasRoute: typeof AuthenticatedComprasRouteWithChildren
+  AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRouteWithChildren
+  AuthenticatedDocumentacaoRoute: typeof AuthenticatedDocumentacaoRoute
+  AuthenticatedEngenhariaRoute: typeof AuthenticatedEngenhariaRouteWithChildren
+  AuthenticatedExecucaoRoute: typeof AuthenticatedExecucaoRoute
+  AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
+  AuthenticatedInspecoesRoute: typeof AuthenticatedInspecoesRoute
+  AuthenticatedLevantamentosRoute: typeof AuthenticatedLevantamentosRoute
+  AuthenticatedProdutosRoute: typeof AuthenticatedProdutosRouteWithChildren
+  AuthenticatedProjetosRoute: typeof AuthenticatedProjetosRouteWithChildren
+  AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute:
-    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+  AuthenticatedClientesRoute: AuthenticatedClientesRoute,
+  AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,
+  AuthenticatedComprasRoute: AuthenticatedComprasRouteWithChildren,
+  AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRouteWithChildren,
+  AuthenticatedDocumentacaoRoute: AuthenticatedDocumentacaoRoute,
+  AuthenticatedEngenhariaRoute: AuthenticatedEngenhariaRouteWithChildren,
+  AuthenticatedExecucaoRoute: AuthenticatedExecucaoRoute,
+  AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
+  AuthenticatedInspecoesRoute: AuthenticatedInspecoesRoute,
+  AuthenticatedLevantamentosRoute: AuthenticatedLevantamentosRoute,
+  AuthenticatedProdutosRoute: AuthenticatedProdutosRouteWithChildren,
+  AuthenticatedProjetosRoute: AuthenticatedProjetosRouteWithChildren,
+  AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  ClientesRoute: ClientesRoute,
-  ComercialRoute: ComercialRoute,
-  ComprasRoute: ComprasRoute,
-  ConfiguracoesRoute: ConfiguracoesRoute,
-  DocumentacaoRoute: DocumentacaoRoute,
-  EngenhariaRoute: EngenhariaRoute,
-  ExecucaoRoute: ExecucaoRoute,
-  FinanceiroRoute: FinanceiroRoute,
-  InspecoesRoute: InspecoesRoute,
-  LevantamentosRoute: LevantamentosRoute,
   Mapas3dRoute: Mapas3dRoute,
-  ProdutosRoute: ProdutosRoute,
-  ProjetosRoute: ProjetosRoute,
-  RelatoriosRoute: RelatoriosRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
 }

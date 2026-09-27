@@ -43,7 +43,7 @@ function Page() {
   const rascunho = o.status === "rascunho";
   const upd = async (tabela: "ordens_producao" | "ordem_producao_itens", id: string, patch: Record<string, unknown>) => {
     setErro(null);
-    const { error } = await supabase.from(tabela).update(patch).eq("id", id);
+    const { error } = await supabase.from(tabela).update(patch as never).eq("id", id);
     if (error) return setErro(error.message);
     inval();
   };

@@ -34,7 +34,7 @@ function Produto() {
   const custos = [...p.produto_custos].sort((a, b) => (a.vigencia < b.vigencia ? 1 : -1));
   const atualizar = async (patch: Record<string, unknown>) => {
     setErro(null);
-    const { error } = await supabase.from("produtos").update(patch).eq("id", p.id);
+    const { error } = await supabase.from("produtos").update(patch as never).eq("id", p.id);
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["produto", produtoId] });
     qc.invalidateQueries({ queryKey: ["produtos", orgId] });
@@ -46,7 +46,7 @@ function Produto() {
     if (!Number.isFinite(n) || n < 0) return setErro("Custo inválido");
     const vig = window.prompt("Vigência (AAAA-MM-DD):", new Date().toISOString().slice(0, 10)) ?? "";
     const origem = window.prompt("Origem (cotação, fornecedor, documento):") ?? "";
-    const { error } = await supabase.from("produto_custos").insert({ organization_id: orgId, produto_id: p.id, custo: n, vigencia: vig || undefined, origem: origem || null });
+    const { error } = await supabase.from("produto_custos").insert({ organization_id: orgId, produto_id: p.id, custo: n, ...(vig ? { vigencia: vig } : {}), origem: origem || null });
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["produto", produtoId] });
   };

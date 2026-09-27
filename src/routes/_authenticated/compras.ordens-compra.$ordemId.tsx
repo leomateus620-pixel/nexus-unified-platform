@@ -50,7 +50,7 @@ function Page() {
   const total = o.ordem_compra_itens.reduce((s, i) => s + (Number(i.quantidade) - Number(i.quantidade_cancelada)) * Number(i.preco_unitario), 0) + Number(o.frete);
   const upd = async (patch: Record<string, unknown>) => {
     setErro(null);
-    const { error } = await supabase.from("ordens_compra").update(patch).eq("id", o.id);
+    const { error } = await supabase.from("ordens_compra").update(patch as never).eq("id", o.id);
     if (error) return setErro(error.message);
     inval();
   };

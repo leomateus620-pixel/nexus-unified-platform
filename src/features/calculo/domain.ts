@@ -2,7 +2,7 @@
 // Usado tanto na prévia (navegador) quanto no cálculo canônico (servidor).
 // Categorias: EXISTENTE (planilha), CORREÇÃO (auditoria), EVOLUÇÃO (nova capacidade).
 
-export const MOTOR_VERSAO = "nexus-calc-1.0.0";
+export const MOTOR_VERSAO = "nexus-calc-1.1.0";
 
 export type TipoSistema = "TELHADO" | "OVERHEAD";
 
@@ -18,6 +18,8 @@ export type Regras = {
     placas_por_sistema: number;
     lacres_por_sistema: number;
     mosquetoes_por_sistema: number;
+    /** COMP-08 por pilar (LISTA_COMPRAS!G21 = DIMENSIONAMENTO!F44). Ausente = 1 (legado). */
+    fixadores_por_pilar?: number;
   };
   overhead: {
     cabo_extra_m_por_trecho: number;
@@ -27,6 +29,8 @@ export type Regras = {
     absorvedores_por_trecho: number;
     esticadores_por_trecho: number;
     proll_por_sistema: number;
+    /** LISTA_COMPRAS!G20 = COUNTA(sistemas)×2 inclui OVERHEAD. Ausente = 2 (legado). */
+    links_por_sistema?: number;
     placas_por_sistema: number;
     lacres_por_sistema: number;
     mosquetoes_por_sistema: number;
@@ -40,6 +44,7 @@ export type Regras = {
 export type ChaveSaida =
   | "pilar_telhado"
   | "flange"
+  | "fixador"
   | "cabo"
   | "intermediaria"
   | "interface_montante"
@@ -136,6 +141,7 @@ export const REGRAS_MODELO: Regras = {
   componentes: {
     pilar_telhado: "COMP-01",
     flange: "COMP-02",
+    fixador: "COMP-08",
     absorvedor: "COMP-03",
     esticador: "COMP-04",
     cabo: "COMP-05",
@@ -185,30 +191,44 @@ export function consumoCabo(s: Pick<SistemaEntrada, "tipo" | "metragem" | "trech
   return (m + r.overhead.cabo_extra_m_por_trecho) * Math.max(1, Math.floor(s.trechos));
 }
 
-/** Um sistema sem identificação ou sem metragem é rascunho parcial e não gera composição (CORREÇÃO F13). */
+/** Sistema incompleto ou inválido não gera composição (CORREÇÃO F13). */
 export function sistemaValido(s: SistemaEntrada) {
-  return s.identificacao.trim().length > 0 && pos(s.metragem) > 0 && s.trechos >= 1;
+  if (s.identificacao.trim().length === 0) return false;
+  if (!Number.isFinite(s.metragem) || s.metragem <= 0) return false;
+  if (!Number.isInteger(s.trechos) || s.trechos < 1) return false;
+  // Modo legado: TELHADO tem um único trecho; multiplicidade é ambígua e rejeitada.
+  if (s.tipo === "TELHADO" && s.trechos !== 1) return false;
+  return s.tipo === "TELHADO" || s.tipo === "OVERHEAD";
+}
+
+/** Divisão por espaçamento exige espaçamento finito e positivo (nunca vira zero silencioso). */
+function ceilDiv(m: number, esp: number, nome: string) {
+  if (!Number.isFinite(esp) || esp <= 0) throw new Error(`Espaçamento inválido: ${nome}`);
+  return Math.ceil(m / esp);
 }
 
 export function composicaoSistema(s: SistemaEntrada, r: Regras): LinhaComposicao[] {
   if (!sistemaValido(s)) return [];
   const out: LinhaComposicao[] = [];
   const add = (chave: ChaveSaida, q: number, memoria: string) => {
-    if (q > 0) out.push({ chave, codigo: r.componentes[chave], quantidade_tecnica: q, memoria });
+    const codigo = r.componentes[chave] ?? REGRAS_MODELO.componentes[chave];
+    if (q > 0) out.push({ chave, codigo, quantidade_tecnica: q, memoria });
   };
   const m = s.metragem;
   const cabo = consumoCabo(s, r);
 
   if (s.tipo === "TELHADO") {
     const t = r.telhado;
-    const pilares = vaos(m, t.espacamento_pilar_m) + 1;
-    add("pilar_telhado", pilares, `⌈${m} ÷ ${t.espacamento_pilar_m}⌉ + 1`);
-    add("flange", pilares, `1 por pilar = ${pilares}`);
+    const pilares = ceilDiv(m, t.espacamento_pilar_m, "pilar (telhado)") + 1;
+    add("pilar_telhado", pilares, `⌈${m} ÷ ${t.espacamento_pilar_m}⌉ + 1 (F)`);
+    add("flange", pilares, `1 por pilar = ${pilares} (G)`);
+    const fx = t.fixadores_por_pilar ?? 1;
+    add("fixador", pilares * fx, `${pilares} pilares × ${fx} (LISTA_COMPRAS!G21 = F44)`);
     add("cabo", cabo, `${m} + ${t.cabo_extra_m} m`);
     add(
       "intermediaria",
-      Math.max(0, vaos(m, t.espacamento_intermediaria_m) - 1),
-      `⌈${m} ÷ ${t.espacamento_intermediaria_m}⌉ − 1`,
+      Math.max(0, ceilDiv(m, t.espacamento_intermediaria_m, "intermediária (telhado)") - 1),
+      `⌈${m} ÷ ${t.espacamento_intermediaria_m}⌉ − 1 (I)`,
     );
     add(
       "interface_montante",
@@ -217,29 +237,21 @@ export function composicaoSistema(s: SistemaEntrada, r: Regras): LinhaComposicao
     );
     add("absorvedor", t.absorvedores_por_sistema, "por sistema");
     add("esticador", t.esticadores_por_sistema, "por sistema");
-    add("link", t.links_por_sistema, "por sistema (CORREÇÃO F04)");
-    add("placa", t.placas_por_sistema, "por sistema (CORREÇÃO F04)");
-    add("lacre", t.lacres_por_sistema, "por sistema (CORREÇÃO F04)");
-    add("mosquetao", t.mosquetoes_por_sistema, "por sistema (CORREÇÃO F04)");
+    add("link", t.links_por_sistema, "por sistema (LISTA_COMPRAS!G20)");
+    add("placa", t.placas_por_sistema, "por sistema (LISTA_COMPRAS!G18)");
+    add("lacre", t.lacres_por_sistema, "por sistema (LISTA_COMPRAS!G19)");
+    add("mosquetao", t.mosquetoes_por_sistema, "por sistema (LISTA_COMPRAS!G17)");
   } else {
     const o = r.overhead;
-    const n = Math.max(1, Math.floor(s.trechos));
+    const n = s.trechos;
     add("cabo", cabo, `(${m} + ${o.cabo_extra_m_por_trecho}) × ${n} trechos`);
-    add(
-      "ancoragem_trelica",
-      (vaos(m, o.espacamento_ancoragem_trelica_m) + 1) * n,
-      `(⌈${m} ÷ ${o.espacamento_ancoragem_trelica_m}⌉ + 1) × ${n}`,
-    );
-    add(
-      "intermediaria",
-      Math.max(0, vaos(m, o.espacamento_intermediaria_m) - 1) * n,
-      `(⌈${m} ÷ ${o.espacamento_intermediaria_m}⌉ − 1) × ${n}`,
-    );
-    add(
-      "pilar_alongador",
-      (vaos(m, o.espacamento_pilar_alongador_m) + 1) * n,
-      `(⌈${m} ÷ ${o.espacamento_pilar_alongador_m}⌉ + 1) × ${n}`,
-    );
+    // Legado (DIMENSIONAMENTO!I/M/N): ⌈metragem_por_trecho ÷ espaçamento⌉ × trechos, sem ±1.
+    const tre = ceilDiv(m, o.espacamento_ancoragem_trelica_m, "treliça");
+    const itm = ceilDiv(m, o.espacamento_intermediaria_m, "intermediária (overhead)");
+    const alo = ceilDiv(m, o.espacamento_pilar_alongador_m, "alongador");
+    add("ancoragem_trelica", tre * n, `⌈${m} ÷ ${o.espacamento_ancoragem_trelica_m}⌉ × ${n} (M)`);
+    add("intermediaria", itm * n, `⌈${m} ÷ ${o.espacamento_intermediaria_m}⌉ × ${n} (I)`);
+    add("pilar_alongador", alo * n, `⌈${m} ÷ ${o.espacamento_pilar_alongador_m}⌉ × ${n} (N)`);
     add("absorvedor", o.absorvedores_por_trecho * n, `${o.absorvedores_por_trecho} × ${n} trechos`);
     add("esticador", o.esticadores_por_trecho * n, `${o.esticadores_por_trecho} × ${n} trechos`);
     add("proll", o.proll_por_sistema, "por sistema");

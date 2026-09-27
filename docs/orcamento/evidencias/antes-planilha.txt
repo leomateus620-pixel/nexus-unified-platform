@@ -1,0 +1,8 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/planilha.test.ts > C01 — fidelidade à planilha (17 sistemas originais) > OVERHEAD 4×120 m: 40 intermediárias, 56 treliças, 48 alongadores
+ FAIL  tests/planilha.test.ts > C01 — fidelidade à planilha (17 sistemas originais) > sete registros OVERHEAD: 158 / 219 / 187
+ FAIL  tests/planilha.test.ts > C01 — fidelidade à planilha (17 sistemas originais) > todas as famílias batem com LISTA_COMPRAS
+ FAIL  tests/planilha.test.ts > C01 — fidelidade à planilha (17 sistemas originais) > COMP-08: 81 conjuntos e R$ 10.145,25 de custo bruto histórico
+ FAIL  tests/planilha.test.ts > C05 — entradas inválidas > rejeita trechos não inteiros, zero e TELHADO com vários trechos (legado)
+ FAIL  tests/planilha.test.ts > C05 — entradas inválidas > espaçamento zero não gera quantidade infinita
+      Tests  6 failed (6)

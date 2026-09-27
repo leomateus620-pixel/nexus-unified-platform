@@ -13,13 +13,15 @@ jobs:
       - uses: actions/setup-node@v7.0.0
         with:
           node-version: '24'
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run test:industrial
-      - run: npm run test:trevisan
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bun run test:orcamento
+      - run: bun run test:industrial
+      - run: bun run test:trevisan
       - run: node scripts/audit-industrial-geometry.mjs
-      - run: npm run test:industrial:cad
-      - run: npx eslint src/industrial src/routes/mapas-3d.tsx tests/industrial playwright.industrial.config.ts
-      - run: npx eslint src/trevisan src/routes/mapas-3d_.trevisan.tsx src/routes/mapas-3d_.unidades.tsx src/routes/__root.tsx tests/trevisan.test.mjs
-      - run: npm run build
+      - run: bun run test:industrial:cad
+      - run: bunx eslint src/industrial src/routes/mapas-3d.tsx tests/industrial playwright.industrial.config.ts
+      - run: bunx eslint src/trevisan src/routes/mapas-3d_.trevisan.tsx src/routes/mapas-3d_.unidades.tsx src/routes/__root.tsx tests/trevisan.test.mjs
+      - run: bunx eslint src/features tests/calculo.test.ts tests/planilha.test.ts tests/autorizacao.test.ts
+      - run: bun run build

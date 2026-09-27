@@ -13,13 +13,15 @@ import {
   TOTAIS_PLANILHA,
 } from "./fixtures/planilha-referencia";
 
-const sis: SistemaEntrada[] = SISTEMAS_PLANILHA.map(([identificacao, tipo, metragem, trechos], i) => ({
-  id: `s${i}`,
-  identificacao,
-  tipo,
-  metragem,
-  trechos,
-}));
+const sis: SistemaEntrada[] = SISTEMAS_PLANILHA.map(
+  ([identificacao, tipo, metragem, trechos], i) => ({
+    id: `s${i}`,
+    identificacao,
+    tipo,
+    metragem,
+    trechos,
+  }),
+);
 
 function somar(lista: SistemaEntrada[]) {
   const t = new Map<string, number>();
@@ -68,11 +70,16 @@ describe("C05 — entradas inválidas", () => {
     expect(sistemaValido({ ...base, tipo: "OVERHEAD", trechos: 1.5 })).toBe(false);
     expect(sistemaValido({ ...base, tipo: "OVERHEAD", trechos: 0 })).toBe(false);
     expect(sistemaValido({ ...base, tipo: "TELHADO", trechos: 3 })).toBe(false);
-    expect(sistemaValido({ ...base, tipo: "TELHADO", metragem: Number.NaN, trechos: 1 })).toBe(false);
+    expect(sistemaValido({ ...base, tipo: "TELHADO", metragem: Number.NaN, trechos: 1 })).toBe(
+      false,
+    );
     expect(sistemaValido({ ...base, tipo: "TELHADO", metragem: -5, trechos: 1 })).toBe(false);
   });
   it("espaçamento zero não gera quantidade infinita", () => {
-    const r = { ...REGRAS_MODELO, overhead: { ...REGRAS_MODELO.overhead, espacamento_intermediaria_m: 0 } };
+    const r = {
+      ...REGRAS_MODELO,
+      overhead: { ...REGRAS_MODELO.overhead, espacamento_intermediaria_m: 0 },
+    };
     expect(() => composicaoSistema({ ...base, tipo: "OVERHEAD", trechos: 2 }, r)).toThrow();
   });
 });

@@ -14,7 +14,6 @@ import {
 import { exigirAcao } from "@/features/auth/autorizacao";
 import { CATALOGO_MODELO, ORIGEM_PLANILHA } from "@/features/calculo/catalogo-modelo";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Db = any;
 
 async function orgDoUsuario(db: Db, userId: string): Promise<string> {
@@ -856,7 +855,9 @@ export const registrarMovimento = createServerFn({ method: "POST" })
 export const aprovarTecnica = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
-    z.object({ revisao_id: z.string().uuid(), observacao: z.string().max(500).optional() }).parse(d),
+    z
+      .object({ revisao_id: z.string().uuid(), observacao: z.string().max(500).optional() })
+      .parse(d),
   )
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;

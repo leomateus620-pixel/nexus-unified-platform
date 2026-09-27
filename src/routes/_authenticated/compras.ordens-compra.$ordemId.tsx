@@ -58,8 +58,10 @@ function Page() {
     mutationFn: (v: { item_id: string; quantidade: number; chave?: string }) => {
       // chave fixada no objeto: retries reenviam a mesma chave (idempotência)
       v.chave ??= crypto.randomUUID();
-      return mov({ data: { tipo: "recebimento", item_id: v.item_id, quantidade: v.quantidade, chave: v.chave } });
-      },
+      return mov({
+        data: { tipo: "recebimento", item_id: v.item_id, quantidade: v.quantidade, chave: v.chave },
+      });
+    },
     onSuccess: inval,
     onError: (e) => setErro(e instanceof Error ? e.message : String(e)),
   });

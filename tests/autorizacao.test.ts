@@ -37,7 +37,9 @@ describe("S02 — autorização considera só o usuário atual", () => {
   it("comercial não emite OC nem aprova tecnicamente", async () => {
     await expect(exigirAcao(fakeDb(rows), "comercial", ORG, "emitir_ordem")).rejects.toThrow();
     await expect(exigirAcao(fakeDb(rows), "comercial", ORG, "aprovar_tecnica")).rejects.toThrow();
-    await expect(exigirAcao(fakeDb(rows), "comercial", ORG, "criar_proposta")).resolves.toBeUndefined();
+    await expect(
+      exigirAcao(fakeDb(rows), "comercial", ORG, "criar_proposta"),
+    ).resolves.toBeUndefined();
   });
   it("admin de outra organização não tem acesso (S03)", async () => {
     await expect(exigirAcao(fakeDb(rows), "outro", ORG, "criar_proposta")).rejects.toThrow();

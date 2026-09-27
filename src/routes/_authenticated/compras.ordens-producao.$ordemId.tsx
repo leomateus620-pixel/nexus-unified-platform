@@ -159,7 +159,7 @@ function Page() {
         {rascunho && (
           <div className="mt-3 flex flex-wrap gap-2">
             <ActionButton
-              variant="secondary"
+              variant="ghost"
               loading={apr.isPending}
               onClick={() => apr.mutate(rev.id)}
             >

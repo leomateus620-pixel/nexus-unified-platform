@@ -75,7 +75,7 @@ export const importarModeloPlanilha = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, []);
+    await exigirAcao(db, context.userId, org, "importar_catalogo");
     const fabs = [...new Set(CATALOGO_MODELO.map((c) => c.fabricante))];
     ok(
       await db.from("fabricantes").upsert(
@@ -170,7 +170,7 @@ export const criarProposta = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["comercial", "engenharia"]);
+    await exigirAcao(db, context.userId, org, "criar_proposta");
     const numero = ok(await db.rpc("proximo_numero_proposta", { _org: org })) as string;
     const cfg = ok(
       await db
@@ -475,7 +475,7 @@ export const transicionarRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["comercial"]);
+    await exigirAcao(db, context.userId, org, "aceitar_comercial");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (data.acao === "enviar") {
       if (rev.status === "enviada") return { status: rev.status };
@@ -653,7 +653,7 @@ export const gerarOrdens = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["compras"]);
+    await exigirAcao(db, context.userId, org, "emitir_ordem");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (rev.status !== "aceita")
       throw new Error("Liberação operacional exige a revisão aceita pelo cliente.");
@@ -761,7 +761,7 @@ export const emitirOrdemCompra = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["compras"]);
+    await exigirAcao(db, context.userId, org, "emitir_ordem");
     const oc = ok(
       await db
         .from("ordens_compra")
@@ -793,7 +793,7 @@ export const liberarOrdemProducao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["compras", "engenharia"]);
+    await exigirAcao(db, context.userId, org, "planejar_suprimentos");
     const op = ok(
       await db
         .from("ordens_producao")

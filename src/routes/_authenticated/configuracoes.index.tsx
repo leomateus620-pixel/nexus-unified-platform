@@ -48,9 +48,20 @@ function Page() {
   };
   return (
     <div className="space-y-4">
-      <PageHeader eyebrow="Configurações" title={`Organização: ${org.data?.orgNome ?? "—"}`} description="Papéis definem acesso a custos, margens, aprovações e ordens. A organização proprietária não se confunde com clientes." />
+      <PageHeader
+        eyebrow="Configurações"
+        title={`Organização: ${org.data?.orgNome ?? "—"}`}
+        description="Papéis definem acesso a custos, margens, aprovações e ordens. A organização proprietária não se confunde com clientes."
+      />
       {erro && <p className="text-sm text-destructive">{erro}</p>}
-      <Section title="Membros e papéis" description={org.data?.isAdmin ? "Clique em um papel para conceder ou remover." : "Somente administradores alteram papéis."}>
+      <Section
+        title="Membros e papéis"
+        description={
+          org.data?.isAdmin
+            ? "Clique em um papel para conceder ou remover."
+            : "Somente administradores alteram papéis."
+        }
+      >
         <QueryView query={q} empty={<EmptyState title="Nenhum membro" />}>
           {(rows) => (
             <table className="w-full text-sm">
@@ -62,7 +73,12 @@ function Page() {
                       {PAPEIS.map((p) => {
                         const r = m.roles.find((x) => x.role === p);
                         return (
-                          <button key={p} disabled={!org.data?.isAdmin} onClick={() => toggle(m.user_id, p, r?.id)} className={`rounded-full border px-2 py-0.5 text-xs ${r ? "border-primary/50 bg-primary/10 text-primary" : "border-border text-muted-foreground"} disabled:cursor-default`}>
+                          <button
+                            key={p}
+                            disabled={!org.data?.isAdmin}
+                            onClick={() => toggle(m.user_id, p, r?.id)}
+                            className={`rounded-full border px-2 py-0.5 text-xs ${r ? "border-primary/50 bg-primary/10 text-primary" : "border-border text-muted-foreground"} disabled:cursor-default`}
+                          >
                             {p}
                           </button>
                         );
@@ -74,7 +90,10 @@ function Page() {
             </table>
           )}
         </QueryView>
-        <p className="mt-3 text-xs text-muted-foreground">Convite de novos usuários por e-mail ainda não está disponível: o usuário cria a conta e um administrador o inclui.</p>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Convite de novos usuários por e-mail ainda não está disponível: o usuário cria a conta e
+          um administrador o inclui.
+        </p>
       </Section>
     </div>
   );

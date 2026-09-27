@@ -13,17 +13,40 @@ import {
 } from "../src/features/calculo/domain";
 import { CATALOGO_MODELO } from "../src/features/calculo/catalogo-modelo";
 
-const comps = CATALOGO_MODELO.map((c) => ({ id: c.codigo, codigo: c.codigo, custo: c.custo, indivisivel: c.indivisivel, multiplo: 1 }));
+const comps = CATALOGO_MODELO.map((c) => ({
+  id: c.codigo,
+  codigo: c.codigo,
+  custo: c.custo,
+  indivisivel: c.indivisivel,
+  multiplo: 1,
+}));
 
 const anexoD: [string, "TELHADO" | "OVERHEAD", number, number][] = [
-  ["Pav.I", "TELHADO", 60, 1], ["Pav.II", "TELHADO", 80, 1], ["Pav.III", "TELHADO", 105, 1],
-  ["Pav.IV O", "OVERHEAD", 120, 4], ["Pav.IV", "TELHADO", 120, 1], ["Pav.V", "TELHADO", 65, 1],
-  ["Pav.VI", "TELHADO", 60, 1], ["Pav.VII O", "OVERHEAD", 100, 4], ["Pav.VII", "TELHADO", 100, 1],
-  ["IBS", "TELHADO", 40, 1], ["Receb", "TELHADO", 25, 1], ["Receb O", "OVERHEAD", 25, 1],
-  ["Pav.I O", "OVERHEAD", 60, 2], ["Pav.II O", "OVERHEAD", 80, 4], ["Pav.III O", "OVERHEAD", 105, 4],
-  ["Pav.VI O", "OVERHEAD", 60, 2], ["TSI", "TELHADO", 40, 1],
+  ["Pav.I", "TELHADO", 60, 1],
+  ["Pav.II", "TELHADO", 80, 1],
+  ["Pav.III", "TELHADO", 105, 1],
+  ["Pav.IV O", "OVERHEAD", 120, 4],
+  ["Pav.IV", "TELHADO", 120, 1],
+  ["Pav.V", "TELHADO", 65, 1],
+  ["Pav.VI", "TELHADO", 60, 1],
+  ["Pav.VII O", "OVERHEAD", 100, 4],
+  ["Pav.VII", "TELHADO", 100, 1],
+  ["IBS", "TELHADO", 40, 1],
+  ["Receb", "TELHADO", 25, 1],
+  ["Receb O", "OVERHEAD", 25, 1],
+  ["Pav.I O", "OVERHEAD", 60, 2],
+  ["Pav.II O", "OVERHEAD", 80, 4],
+  ["Pav.III O", "OVERHEAD", 105, 4],
+  ["Pav.VI O", "OVERHEAD", 60, 2],
+  ["TSI", "TELHADO", 40, 1],
 ];
-const sistemas: SistemaEntrada[] = anexoD.map(([identificacao, tipo, metragem, trechos], i) => ({ id: `s${i}`, identificacao, tipo, metragem, trechos }));
+const sistemas: SistemaEntrada[] = anexoD.map(([identificacao, tipo, metragem, trechos], i) => ({
+  id: `s${i}`,
+  identificacao,
+  tipo,
+  metragem,
+  trechos,
+}));
 
 describe("dimensionamento", () => {
   it("OVERHEAD 4×120 m: 480 m instalados e 500 m de cabo", () => {
@@ -42,14 +65,25 @@ describe("dimensionamento", () => {
     expect(r.totais.dias_equipe).toBe(93);
   });
   it("trocar TELHADO→OVERHEAD remove componentes não aplicáveis", () => {
-    const t = composicaoSistema({ id: "a", identificacao: "X", tipo: "TELHADO", metragem: 50, trechos: 1 }, REGRAS_MODELO);
-    const o = composicaoSistema({ id: "a", identificacao: "X", tipo: "OVERHEAD", metragem: 50, trechos: 1 }, REGRAS_MODELO);
+    const t = composicaoSistema(
+      { id: "a", identificacao: "X", tipo: "TELHADO", metragem: 50, trechos: 1 },
+      REGRAS_MODELO,
+    );
+    const o = composicaoSistema(
+      { id: "a", identificacao: "X", tipo: "OVERHEAD", metragem: 50, trechos: 1 },
+      REGRAS_MODELO,
+    );
     expect(t.some((l) => l.chave === "flange")).toBe(true);
     expect(o.some((l) => l.chave === "flange")).toBe(false);
     expect(o.some((l) => l.chave === "proll")).toBe(true);
   });
   it("sistema parcial não gera composição", () => {
-    expect(composicaoSistema({ id: "a", identificacao: "", tipo: "TELHADO", metragem: 50, trechos: 1 }, REGRAS_MODELO)).toEqual([]);
+    expect(
+      composicaoSistema(
+        { id: "a", identificacao: "", tipo: "TELHADO", metragem: 50, trechos: 1 },
+        REGRAS_MODELO,
+      ),
+    ).toEqual([]);
   });
   it("não fraciona peças indivisíveis", () => {
     expect(quantidadeOperacional(163.5, true)).toBe(164);
@@ -60,7 +94,13 @@ describe("dimensionamento", () => {
 
 describe("orçamento", () => {
   it("inclui 18º e 26º sistemas em venda e custo (sem limite de linhas)", () => {
-    const extras = Array.from({ length: 9 }, (_, i) => ({ id: `x${i}`, identificacao: `Extra ${i}`, tipo: "TELHADO" as const, metragem: 30, trechos: 1 }));
+    const extras = Array.from({ length: 9 }, (_, i) => ({
+      id: `x${i}`,
+      identificacao: `Extra ${i}`,
+      tipo: "TELHADO" as const,
+      metragem: 30,
+      trechos: 1,
+    }));
     const base = calcularRevisao(sistemas, comps, REGRAS_MODELO, PARAMETROS_MODELO);
     const r = calcularRevisao([...sistemas, ...extras], comps, REGRAS_MODELO, PARAMETROS_MODELO);
     expect(r.por_sistema).toHaveLength(26);
@@ -83,12 +123,18 @@ describe("orçamento", () => {
   });
   it("desconto altera bases comerciais, não a composição", () => {
     const a = calcularRevisao(sistemas, comps, REGRAS_MODELO, PARAMETROS_MODELO);
-    const b = calcularRevisao(sistemas, comps, REGRAS_MODELO, { ...PARAMETROS_MODELO, desconto: 0.05 });
+    const b = calcularRevisao(sistemas, comps, REGRAS_MODELO, {
+      ...PARAMETROS_MODELO,
+      desconto: 0.05,
+    });
     expect(b.itens).toEqual(a.itens);
     expect(b.totais.final).toBeCloseTo(a.totais.base * 0.95, 1);
   });
   it("montagem independe do markup (CORREÇÃO F11)", () => {
-    const r = calcularRevisao(sistemas, comps, REGRAS_MODELO, { ...PARAMETROS_MODELO, markup: 0.6 });
+    const r = calcularRevisao(sistemas, comps, REGRAS_MODELO, {
+      ...PARAMETROS_MODELO,
+      markup: 0.6,
+    });
     expect(r.totais.montagem).toBeCloseTo(r.totais.materiais * 0.4, 2);
   });
   it("parcelas somam exatamente o total", () => {

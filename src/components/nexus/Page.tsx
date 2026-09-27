@@ -49,7 +49,8 @@ export function ActionButton({
         "rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         variant === "primary" && "bg-primary text-primary-foreground hover:bg-primary/90",
         variant === "ghost" && "border border-border text-foreground hover:bg-accent",
-        variant === "danger" && "border border-destructive/50 text-destructive hover:bg-destructive/10",
+        variant === "danger" &&
+          "border border-destructive/50 text-destructive hover:bg-destructive/10",
         className,
       )}
       {...rest}
@@ -137,7 +138,10 @@ export function DataTable<T>({
         <thead className="sticky top-0 z-10 bg-card">
           <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
             {columns.map((c) => (
-              <th key={c.key} className={cn("px-3 py-2 font-medium", c.align === "right" && "text-right")}>
+              <th
+                key={c.key}
+                className={cn("px-3 py-2 font-medium", c.align === "right" && "text-right")}
+              >
                 {c.label}
               </th>
             ))}
@@ -157,8 +161,16 @@ export function DataTable<T>({
                 )}
               >
                 {columns.map((c) => (
-                  <td key={c.key} className={cn("px-3 py-3 text-foreground/90", c.align === "right" && "text-right tabular-nums")}>
-                    {c.render ? c.render(row) : String((row as Record<string, unknown>)[c.key] ?? "—")}
+                  <td
+                    key={c.key}
+                    className={cn(
+                      "px-3 py-3 text-foreground/90",
+                      c.align === "right" && "text-right tabular-nums",
+                    )}
+                  >
+                    {c.render
+                      ? c.render(row)
+                      : String((row as Record<string, unknown>)[c.key] ?? "—")}
                   </td>
                 ))}
               </tr>
@@ -182,12 +194,23 @@ export function LoadingState({ label = "Carregando…" }: { label?: string }) {
 }
 
 export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
-  const msg = error instanceof Error ? error.message : typeof error === "object" && error && "message" in error ? String((error as { message: unknown }).message) : "Erro inesperado.";
+  const msg =
+    error instanceof Error
+      ? error.message
+      : typeof error === "object" && error && "message" in error
+        ? String((error as { message: unknown }).message)
+        : "Erro inesperado.";
   return (
-    <div role="alert" className="rounded-md border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">
+    <div
+      role="alert"
+      className="rounded-md border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive"
+    >
       <p>Não foi possível carregar: {msg}</p>
       {onRetry && (
-        <button onClick={onRetry} className="mt-2 rounded border border-destructive/50 px-3 py-1 text-xs">
+        <button
+          onClick={onRetry}
+          className="mt-2 rounded border border-destructive/50 px-3 py-1 text-xs"
+        >
           Tentar novamente
         </button>
       )}
@@ -195,7 +218,15 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
   );
 }
 
-export function EmptyState({ title, hint, action }: { title: string; hint?: string; action?: ReactNode }) {
+export function EmptyState({
+  title,
+  hint,
+  action,
+}: {
+  title: string;
+  hint?: string;
+  action?: ReactNode;
+}) {
   return (
     <div className="rounded-md border border-dashed border-border p-6 text-center">
       <p className="text-sm font-medium text-foreground">{title}</p>
@@ -220,7 +251,13 @@ export function QueryView<T>({
   empty,
   children,
 }: {
-  query: { isPending: boolean; isError: boolean; error: unknown; data: T[] | undefined; refetch: () => unknown };
+  query: {
+    isPending: boolean;
+    isError: boolean;
+    error: unknown;
+    data: T[] | undefined;
+    refetch: () => unknown;
+  };
   empty: ReactNode;
   children: (data: T[]) => ReactNode;
 }) {
@@ -241,7 +278,11 @@ export function StatusBadge({ value }: { value: string }) {
   const v = value.toLowerCase();
   let tone = "neutral";
   if (/(aprovad|conclu|em dia|ativo|emitid|aceit|liberad)/.test(v)) tone = "ok";
-  if (/(aguard|revis|análise|analise|em elabora|negocia|cotação|cotacao|vencendo|em campo|em fabrica|prospec|rascunho|enviad|planejad)/.test(v))
+  if (
+    /(aguard|revis|análise|analise|em elabora|negocia|cotação|cotacao|vencendo|em campo|em fabrica|prospec|rascunho|enviad|planejad)/.test(
+      v,
+    )
+  )
     tone = "warn";
   if (/(vencid|crític|critic|atras|reprov|recusad)/.test(v)) tone = "danger";
 

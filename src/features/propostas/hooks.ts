@@ -7,7 +7,11 @@ import { recalcularRevisao } from "./propostas.functions";
 import type { Parametros, Regras, Totais } from "@/features/calculo/domain";
 
 export type SaveStatus = "idle" | "salvando" | "salvo" | "erro" | "conflito";
-export const SaveCtx = createContext<{ status: SaveStatus; set: (s: SaveStatus, msg?: string) => void; msg: string | null }>({
+export const SaveCtx = createContext<{
+  status: SaveStatus;
+  set: (s: SaveStatus, msg?: string) => void;
+  msg: string | null;
+}>({
   status: "idle",
   set: () => {},
   msg: null,
@@ -17,8 +21,22 @@ export const useSave = () => useContext(SaveCtx);
 export type ResumoCalculo = {
   totais: Totais;
   pendencias: string[];
-  por_sistema: { sistema_id: string; extensao_m: number; cabo_m: number; venda_materiais: number; custo_materiais: number }[];
-  por_componente: { componente_id: string; codigo: string; quantidade: number; custo: number; preco_unit: number; total_venda: number; total_custo: number }[];
+  por_sistema: {
+    sistema_id: string;
+    extensao_m: number;
+    cabo_m: number;
+    venda_materiais: number;
+    custo_materiais: number;
+  }[];
+  por_componente: {
+    componente_id: string;
+    codigo: string;
+    quantidade: number;
+    custo: number;
+    preco_unit: number;
+    total_venda: number;
+    total_custo: number;
+  }[];
 };
 
 export const revKeys = {
@@ -36,7 +54,9 @@ export function useRevisao(id: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("proposta_revisoes")
-        .select("*, propostas!proposta_revisoes_proposta_id_fkey(id,numero,titulo,revisao_corrente_id,projeto_id,clientes(razao_social,cnpj,cidade,uf),unidades(nome,endereco),contatos(nome,email))")
+        .select(
+          "*, propostas!proposta_revisoes_proposta_id_fkey(id,numero,titulo,revisao_corrente_id,projeto_id,clientes(razao_social,cnpj,cidade,uf),unidades(nome,endereco),contatos(nome,email))",
+        )
         .eq("id", id)
         .single();
       if (error) throw error;
@@ -46,7 +66,12 @@ export function useRevisao(id: string) {
         titulo: string | null;
         revisao_corrente_id: string | null;
         projeto_id: string | null;
-        clientes: { razao_social: string; cnpj: string | null; cidade: string | null; uf: string | null } | null;
+        clientes: {
+          razao_social: string;
+          cnpj: string | null;
+          cidade: string | null;
+          uf: string | null;
+        } | null;
         unidades: { nome: string; endereco: string | null } | null;
         contatos: { nome: string; email: string | null } | null;
       };
@@ -68,7 +93,11 @@ export function useComponentes(id: string) {
   return useQuery({
     queryKey: revKeys.comps(id),
     queryFn: async () => {
-      const { data, error } = await supabase.from("revisao_componentes").select("*, fornecedores(nome)").eq("revisao_id", id).order("codigo");
+      const { data, error } = await supabase
+        .from("revisao_componentes")
+        .select("*, fornecedores(nome)")
+        .eq("revisao_id", id)
+        .order("codigo");
       if (error) throw error;
       return data;
     },
@@ -78,7 +107,11 @@ export function useSistemas(id: string) {
   return useQuery({
     queryKey: revKeys.sis(id),
     queryFn: async () => {
-      const { data, error } = await supabase.from("sistemas_dimensionados").select("*").eq("revisao_id", id).order("ordem");
+      const { data, error } = await supabase
+        .from("sistemas_dimensionados")
+        .select("*")
+        .eq("revisao_id", id)
+        .order("ordem");
       if (error) throw error;
       return data;
     },
@@ -88,7 +121,10 @@ export function useItens(id: string) {
   return useQuery({
     queryKey: revKeys.itens(id),
     queryFn: async () => {
-      const { data, error } = await supabase.from("sistema_componentes").select("*, revisao_componentes(codigo,descricao,unidade)").eq("revisao_id", id);
+      const { data, error } = await supabase
+        .from("sistema_componentes")
+        .select("*, revisao_componentes(codigo,descricao,unidade)")
+        .eq("revisao_id", id);
       if (error) throw error;
       return data;
     },
@@ -116,7 +152,11 @@ export function useFornecedores(orgId: string) {
     queryKey: ["fornecedores", orgId],
     enabled: !!orgId,
     queryFn: async () => {
-      const { data, error } = await supabase.from("fornecedores").select("id,nome,cnpj,contato").eq("organization_id", orgId).order("nome");
+      const { data, error } = await supabase
+        .from("fornecedores")
+        .select("id,nome,cnpj,contato")
+        .eq("organization_id", orgId)
+        .order("nome");
       if (error) throw error;
       return data;
     },

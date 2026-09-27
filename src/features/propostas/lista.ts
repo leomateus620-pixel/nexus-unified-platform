@@ -9,12 +9,20 @@ export function usePropostas(orgId: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("propostas")
-        .select("id,numero,titulo,created_at,projeto_id,clientes(razao_social),unidades(nome),revisao:proposta_revisoes!propostas_rev_fk(id,numero,status,totais,desatualizada)")
+        .select(
+          "id,numero,titulo,created_at,projeto_id,clientes(razao_social),unidades(nome),revisao:proposta_revisoes!propostas_rev_fk(id,numero,status,totais,desatualizada)",
+        )
         .eq("organization_id", orgId)
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data.map((p) => {
-        const rev = p.revisao as unknown as { id: string; numero: number; status: string; totais: { totais?: { final?: number } } | null; desatualizada: boolean } | null;
+        const rev = p.revisao as unknown as {
+          id: string;
+          numero: number;
+          status: string;
+          totais: { totais?: { final?: number } } | null;
+          desatualizada: boolean;
+        } | null;
         return {
           id: p.id,
           numero: p.numero,

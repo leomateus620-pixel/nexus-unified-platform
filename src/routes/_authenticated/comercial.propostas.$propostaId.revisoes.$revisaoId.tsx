@@ -5,8 +5,15 @@ import { ErrorState, LoadingState, StatusBadge } from "@/components/nexus/Page";
 import { SaveCtx, useRevisao, type SaveStatus } from "@/features/propostas/hooks";
 import { brl } from "@/lib/format";
 
-export const Route = createFileRoute("/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId")({
-  head: () => ({ meta: [{ title: "Proposta — Sistema Nexus" }, { name: "description", content: "Área de trabalho da revisão da proposta." }] }),
+export const Route = createFileRoute(
+  "/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId",
+)({
+  head: () => ({
+    meta: [
+      { title: "Proposta — Sistema Nexus" },
+      { name: "description", content: "Área de trabalho da revisão da proposta." },
+    ],
+  }),
   component: Workspace,
 });
 
@@ -19,7 +26,8 @@ const statusLabel: Record<string, string> = {
   substituida: "Substituída",
 };
 
-const tab = "whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground";
+const tab =
+  "whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground";
 const tabActive = { className: "bg-accent text-foreground font-medium" };
 
 function Workspace() {
@@ -34,7 +42,8 @@ function Workspace() {
   const ctx = useMemo(() => ({ status, set, msg }), [status, set, msg]);
 
   useBlocker({
-    shouldBlockFn: () => status === "salvando" && !window.confirm("Há alterações sendo salvas. Sair mesmo assim?"),
+    shouldBlockFn: () =>
+      status === "salvando" && !window.confirm("Há alterações sendo salvas. Sair mesmo assim?"),
     enableBeforeUnload: () => status === "salvando",
   });
 
@@ -49,39 +58,116 @@ function Workspace() {
     <SaveCtx.Provider value={ctx}>
       <div className="space-y-4">
         <nav aria-label="breadcrumb" className="text-xs text-muted-foreground">
-          <Link to="/comercial" className="hover:text-foreground">Comercial</Link> /{" "}
-          <Link to="/comercial/propostas" className="hover:text-foreground">Propostas</Link> / <span className="text-foreground">{p.numero}</span>
+          <Link to="/comercial" className="hover:text-foreground">
+            Comercial
+          </Link>{" "}
+          /{" "}
+          <Link to="/comercial/propostas" className="hover:text-foreground">
+            Propostas
+          </Link>{" "}
+          / <span className="text-foreground">{p.numero}</span>
         </nav>
         <header className="sticky top-16 z-20 -mx-4 border-b border-border bg-background/95 px-4 pb-3 backdrop-blur md:-mx-6 md:px-6 lg:-mx-8 lg:px-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-primary">Proposta {p.numero} · Rev. {String(r.numero).padStart(2, "0")}</p>
-              <h1 className="text-xl font-bold text-foreground">{p.clientes?.razao_social ?? "—"}</h1>
-              <p className="text-xs text-muted-foreground">{p.unidades?.nome ?? "Sem unidade"}{p.titulo ? ` · ${p.titulo}` : ""}</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-primary">
+                Proposta {p.numero} · Rev. {String(r.numero).padStart(2, "0")}
+              </p>
+              <h1 className="text-xl font-bold text-foreground">
+                {p.clientes?.razao_social ?? "—"}
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                {p.unidades?.nome ?? "Sem unidade"}
+                {p.titulo ? ` · ${p.titulo}` : ""}
+              </p>
             </div>
             <StatusBadge value={statusLabel[r.status] ?? r.status} />
             <div className="text-xs">
               <p className="text-muted-foreground">Total final</p>
-              <p className="font-semibold tabular-nums text-foreground">{r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}</p>
+              <p className="font-semibold tabular-nums text-foreground">
+                {r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}
+              </p>
             </div>
             <div className="text-xs">
               <p className="text-muted-foreground">Pendências</p>
-              <p className={pend ? "font-semibold text-warning" : "text-foreground"}>{pend == null ? "—" : pend}</p>
+              <p className={pend ? "font-semibold text-warning" : "text-foreground"}>
+                {pend == null ? "—" : pend}
+              </p>
             </div>
-            {r.desatualizada && r.editavel && <span className="text-xs text-warning">Cálculo desatualizado</span>}
-            {p.revisao_corrente_id !== r.id && <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>}
+            {r.desatualizada && r.editavel && (
+              <span className="text-xs text-warning">Cálculo desatualizado</span>
+            )}
+            {p.revisao_corrente_id !== r.id && (
+              <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>
+            )}
             <SaveIndicator status={status} msg={msg} />
           </div>
           <div className="mt-3 flex gap-1 overflow-x-auto">
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais" params={params} className={tab} activeProps={tabActive}>1. Itens comerciais</Link>
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento" params={params} className={tab} activeProps={tabActive}>2. Dimensionamento</Link>
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento" params={params} className={tab} activeProps={tabActive}>3. Orçamento</Link>
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/compras" params={params} className={tab} activeProps={tabActive}>4. Planejamento de compras</Link>
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/producao" params={params} className={tab} activeProps={tabActive}>5. Planejamento de produção</Link>
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo" params={params} className={tab} activeProps={tabActive}>6. Resumo executivo</Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              1. Itens comerciais
+            </Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              2. Dimensionamento
+            </Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              3. Orçamento
+            </Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/compras"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              4. Planejamento de compras
+            </Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/producao"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              5. Planejamento de produção
+            </Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              6. Resumo executivo
+            </Link>
             <span className="mx-2 border-l border-border" />
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros" params={params} className={tab} activeProps={tabActive}>Parâmetros</Link>
-            <Link to="/comercial/propostas/$propostaId/revisoes/$revisaoId/historico" params={params} className={tab} activeProps={tabActive}>Histórico</Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              Parâmetros
+            </Link>
+            <Link
+              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/historico"
+              params={params}
+              className={tab}
+              activeProps={tabActive}
+            >
+              Histórico
+            </Link>
           </div>
         </header>
         <Outlet />

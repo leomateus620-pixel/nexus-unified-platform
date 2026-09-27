@@ -1,5 +1,10 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, Search, Bell, ChevronDown } from "lucide-react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { LogOut } from "lucide-react";
+
+import { supabase } from "@/integrations/supabase/client";
+import { useOrg, useSessionUser } from "@/features/org/session";
+import { Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
 import { navGroups } from "@/lib/nexus-nav";
@@ -32,8 +37,7 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           </p>
           <ul className="space-y-1">
             {group.items.map((item) => {
-              const active =
-                item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+              const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
               const Icon = item.icon;
               return (
                 <li key={item.to}>
@@ -68,9 +72,8 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const immersive = useRouterState({ select: (s) => s.location.pathname === '/mapas-3d' });
-
-  if (immersive) return <main>{children}</main>;
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (pathname === "/mapas-3d" || pathname === "/auth") return <main>{children}</main>;
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,38 +106,55 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Menu className="size-4" />
           </button>
 
-          <div className="relative hidden max-w-md flex-1 md:block">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="search"
-              placeholder="Buscar cliente, projeto, proposta ou documento"
-              className="h-9 w-full rounded-md border border-input bg-card pl-9 pr-3 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
-            />
-          </div>
-
-          <div className="ml-auto flex items-center gap-3">
-            <button className="hidden items-center gap-2 rounded-md border border-border px-3 py-1.5 text-xs text-muted-foreground sm:flex">
-              Contexto: <span className="text-foreground">Cooperativa Vale Verde</span>
-              <ChevronDown className="size-3" />
-            </button>
-            <button className="relative rounded-md border border-border p-2 text-muted-foreground">
-              <Bell className="size-4" />
-              <span className="absolute right-1 top-1 size-1.5 rounded-full bg-primary" />
-            </button>
-            <div className="flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                LS
-              </div>
-              <div className="hidden text-xs leading-tight sm:block">
-                <p className="font-medium text-foreground">Leonardo S.</p>
-                <p className="text-muted-foreground">Administrador</p>
-              </div>
-            </div>
-          </div>
+          <UserArea />
         </header>
 
         <main className="px-4 py-6 md:px-6 lg:px-8">{children}</main>
       </div>
+    </div>
+  );
+}
+
+function UserArea() {
+  const user = useSessionUser();
+  const org = useOrg();
+  const qc = useQueryClient();
+  const navigate = useNavigate();
+  if (user === undefined) return <div className="ml-auto" />;
+  if (!user)
+    return (
+      <Link
+        to="/auth"
+        className="ml-auto rounded-md border border-border px-3 py-1.5 text-xs text-foreground"
+      >
+        Entrar
+      </Link>
+    );
+  const sair = async () => {
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
+  const email = user.email ?? "";
+  return (
+    <div className="ml-auto flex items-center gap-3">
+      <div className="hidden text-right text-xs leading-tight sm:block">
+        <p className="font-medium text-foreground">{email}</p>
+        <p className="text-muted-foreground">
+          {org.data ? `${org.data.orgNome} · ${org.data.roles.join(", ") || "sem papel"}` : "—"}
+        </p>
+      </div>
+      <div className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-bold uppercase text-primary-foreground">
+        {email.slice(0, 2)}
+      </div>
+      <button
+        onClick={sair}
+        aria-label="Sair"
+        className="rounded-md border border-border p-2 text-muted-foreground hover:text-foreground"
+      >
+        <LogOut className="size-4" />
+      </button>
     </div>
   );
 }

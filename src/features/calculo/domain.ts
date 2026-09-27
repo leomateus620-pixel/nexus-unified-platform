@@ -205,8 +205,16 @@ export function composicaoSistema(s: SistemaEntrada, r: Regras): LinhaComposicao
     add("pilar_telhado", pilares, `⌈${m} ÷ ${t.espacamento_pilar_m}⌉ + 1`);
     add("flange", pilares, `1 por pilar = ${pilares}`);
     add("cabo", cabo, `${m} + ${t.cabo_extra_m} m`);
-    add("intermediaria", Math.max(0, vaos(m, t.espacamento_intermediaria_m) - 1), `⌈${m} ÷ ${t.espacamento_intermediaria_m}⌉ − 1`);
-    add("interface_montante", pilares * t.interfaces_por_pilar, `${pilares} pilares × ${t.interfaces_por_pilar}`);
+    add(
+      "intermediaria",
+      Math.max(0, vaos(m, t.espacamento_intermediaria_m) - 1),
+      `⌈${m} ÷ ${t.espacamento_intermediaria_m}⌉ − 1`,
+    );
+    add(
+      "interface_montante",
+      pilares * t.interfaces_por_pilar,
+      `${pilares} pilares × ${t.interfaces_por_pilar}`,
+    );
     add("absorvedor", t.absorvedores_por_sistema, "por sistema");
     add("esticador", t.esticadores_por_sistema, "por sistema");
     add("link", t.links_por_sistema, "por sistema (CORREÇÃO F04)");
@@ -217,9 +225,21 @@ export function composicaoSistema(s: SistemaEntrada, r: Regras): LinhaComposicao
     const o = r.overhead;
     const n = Math.max(1, Math.floor(s.trechos));
     add("cabo", cabo, `(${m} + ${o.cabo_extra_m_por_trecho}) × ${n} trechos`);
-    add("ancoragem_trelica", (vaos(m, o.espacamento_ancoragem_trelica_m) + 1) * n, `(⌈${m} ÷ ${o.espacamento_ancoragem_trelica_m}⌉ + 1) × ${n}`);
-    add("intermediaria", Math.max(0, vaos(m, o.espacamento_intermediaria_m) - 1) * n, `(⌈${m} ÷ ${o.espacamento_intermediaria_m}⌉ − 1) × ${n}`);
-    add("pilar_alongador", (vaos(m, o.espacamento_pilar_alongador_m) + 1) * n, `(⌈${m} ÷ ${o.espacamento_pilar_alongador_m}⌉ + 1) × ${n}`);
+    add(
+      "ancoragem_trelica",
+      (vaos(m, o.espacamento_ancoragem_trelica_m) + 1) * n,
+      `(⌈${m} ÷ ${o.espacamento_ancoragem_trelica_m}⌉ + 1) × ${n}`,
+    );
+    add(
+      "intermediaria",
+      Math.max(0, vaos(m, o.espacamento_intermediaria_m) - 1) * n,
+      `(⌈${m} ÷ ${o.espacamento_intermediaria_m}⌉ − 1) × ${n}`,
+    );
+    add(
+      "pilar_alongador",
+      (vaos(m, o.espacamento_pilar_alongador_m) + 1) * n,
+      `(⌈${m} ÷ ${o.espacamento_pilar_alongador_m}⌉ + 1) × ${n}`,
+    );
     add("absorvedor", o.absorvedores_por_trecho * n, `${o.absorvedores_por_trecho} × ${n} trechos`);
     add("esticador", o.esticadores_por_trecho * n, `${o.esticadores_por_trecho} × ${n} trechos`);
     add("proll", o.proll_por_sistema, "por sistema");
@@ -259,7 +279,9 @@ export function precoUnitario(custo: number, p: Parametros) {
   const frete = custo * p.frete_materiais;
   const base = custo + frete;
   const imposto = base * p.aliquota_precificacao;
-  const difal = p.difal_ativo ? base * Math.max(0, p.aliquota_interna_destino - p.aliquota_interestadual) : 0;
+  const difal = p.difal_ativo
+    ? base * Math.max(0, p.aliquota_interna_destino - p.aliquota_interestadual)
+    : 0;
   const composto = base + imposto + difal;
   return { frete, imposto, difal, composto, preco: composto * (1 + p.markup) };
 }
@@ -278,8 +300,22 @@ export type Override = { sistema_id: string; componente_id: string; quantidade: 
 export type ResultadoRevisao = {
   itens: ItemCalculado[];
   pendencias: string[];
-  por_componente: { componente_id: string; codigo: string; quantidade: number; custo: number; preco_unit: number; total_venda: number; total_custo: number }[];
-  por_sistema: { sistema_id: string; extensao_m: number; cabo_m: number; venda_materiais: number; custo_materiais: number }[];
+  por_componente: {
+    componente_id: string;
+    codigo: string;
+    quantidade: number;
+    custo: number;
+    preco_unit: number;
+    total_venda: number;
+    total_custo: number;
+  }[];
+  por_sistema: {
+    sistema_id: string;
+    extensao_m: number;
+    cabo_m: number;
+    venda_materiais: number;
+    custo_materiais: number;
+  }[];
   totais: Totais;
 };
 
@@ -339,8 +375,16 @@ export function calcularRevisao(
 
   for (const s of sistemas) {
     if (!sistemaValido(s)) {
-      pendencias.add(`Sistema ${s.identificacao || "(sem identificação)"}: informe identificação e metragem.`);
-      porSistema.push({ sistema_id: s.id, extensao_m: 0, cabo_m: 0, venda_materiais: 0, custo_materiais: 0 });
+      pendencias.add(
+        `Sistema ${s.identificacao || "(sem identificação)"}: informe identificação e metragem.`,
+      );
+      porSistema.push({
+        sistema_id: s.id,
+        extensao_m: 0,
+        cabo_m: 0,
+        venda_materiais: 0,
+        custo_materiais: 0,
+      });
       continue;
     }
     const ext = extensaoInstalada(s);
@@ -353,21 +397,37 @@ export function calcularRevisao(
     for (const l of composicaoSistema(s, regras)) {
       const comp = porCodigo.get(l.codigo);
       if (!comp) {
-        pendencias.add(`Componente ${l.codigo} exigido pela regra "${l.chave}" não está na revisão.`);
+        pendencias.add(
+          `Componente ${l.codigo} exigido pela regra "${l.chave}" não está na revisão.`,
+        );
         continue;
       }
       const auto = quantidadeOperacional(l.quantidade_tecnica, comp.indivisivel, comp.multiplo);
       const q = ov.get(`${s.id}:${comp.id}`) ?? auto;
-      itens.push({ sistema_id: s.id, componente_id: comp.id, chave: l.chave, quantidade_tecnica: round(l.quantidade_tecnica, 6), quantidade: q, memoria: l.memoria });
+      itens.push({
+        sistema_id: s.id,
+        componente_id: comp.id,
+        chave: l.chave,
+        quantidade_tecnica: round(l.quantidade_tecnica, 6),
+        quantidade: q,
+        memoria: l.memoria,
+      });
       const pu = precoUnitario(comp.custo, p);
       venda += q * pu.preco;
       custo += q * comp.custo;
     }
-    porSistema.push({ sistema_id: s.id, extensao_m: ext, cabo_m: cabo, venda_materiais: round(venda), custo_materiais: round(custo) });
+    porSistema.push({
+      sistema_id: s.id,
+      extensao_m: ext,
+      cabo_m: cabo,
+      venda_materiais: round(venda),
+      custo_materiais: round(custo),
+    });
   }
 
   const agreg = new Map<string, number>();
-  for (const i of itens) agreg.set(i.componente_id, (agreg.get(i.componente_id) ?? 0) + i.quantidade);
+  for (const i of itens)
+    agreg.set(i.componente_id, (agreg.get(i.componente_id) ?? 0) + i.quantidade);
 
   let materiais = 0;
   let custoMat = 0;
@@ -381,7 +441,15 @@ export function calcularRevisao(
     materiais += q * pu.preco;
     custoMat += q * (c.custo + pu.frete); // CORREÇÃO F06: frete integra custo
     impMat += q * (pu.imposto + pu.difal); // CORREÇÃO F06: DIFAL deduzido
-    porComponente.push({ componente_id: c.id, codigo: c.codigo, quantidade: q, custo: c.custo, preco_unit: round(pu.preco, 6), total_venda: round(q * pu.preco), total_custo: round(q * c.custo) });
+    porComponente.push({
+      componente_id: c.id,
+      codigo: c.codigo,
+      quantidade: q,
+      custo: c.custo,
+      preco_unit: round(pu.preco, 6),
+      total_venda: round(q * pu.preco),
+      total_custo: round(q * c.custo),
+    });
   }
 
   materiais = round(materiais);
@@ -394,13 +462,22 @@ export function calcularRevisao(
 
   const dias =
     mTelhado + mOverhead > 0
-      ? Math.ceil(round(mTelhado / p.produtividade_telhado_m_dia + mOverhead / p.produtividade_overhead_m_dia, 9))
+      ? Math.ceil(
+          round(
+            mTelhado / p.produtividade_telhado_m_dia + mOverhead / p.produtividade_overhead_m_dia,
+            9,
+          ),
+        )
       : 0;
   const viagens = dias > 0 ? Math.max(1, Math.ceil(dias / p.dias_por_viagem)) : 0; // CORREÇÃO F17
   const maoDeObra = round(dias * p.horas_por_dia * p.tecnicos_por_equipe * p.custo_hora_tecnico);
   const alimentacao = round(dias * p.tecnicos_por_equipe * p.alimentacao_dia);
   const hospedagem = round(dias * p.tecnicos_por_equipe * p.hospedagem_dia);
-  const combustivel = round(p.km_por_litro > 0 ? (viagens * p.distancia_ida_volta_km * p.preco_combustivel) / p.km_por_litro : 0);
+  const combustivel = round(
+    p.km_por_litro > 0
+      ? (viagens * p.distancia_ida_volta_km * p.preco_combustivel) / p.km_por_litro
+      : 0,
+  );
   const engenharia = round(dias > 0 ? p.horas_engenharia * p.custo_hora_engenheiro : 0);
   const operacao = round(maoDeObra + alimentacao + hospedagem + combustivel + engenharia);
   const resultado = round(final - round(custoMat) - round(impMat) - impServ - operacao);
@@ -451,7 +528,10 @@ export function mesclarRegras(r: unknown): Regras {
   return {
     telhado: { ...REGRAS_MODELO.telhado, ...o.telhado },
     overhead: { ...REGRAS_MODELO.overhead, ...o.overhead },
-    consumiveis_por_m_cabo: { ...REGRAS_MODELO.consumiveis_por_m_cabo, ...o.consumiveis_por_m_cabo },
+    consumiveis_por_m_cabo: {
+      ...REGRAS_MODELO.consumiveis_por_m_cabo,
+      ...o.consumiveis_por_m_cabo,
+    },
     componentes: { ...REGRAS_MODELO.componentes, ...o.componentes },
   };
 }

@@ -5,7 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 
-import { ActionButton, DataTable, EmptyState, PageHeader, QueryView, Section } from "@/components/nexus/Page";
+import {
+  ActionButton,
+  DataTable,
+  EmptyState,
+  PageHeader,
+  QueryView,
+  Section,
+} from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
 import { useOrgId } from "@/features/org/session";
 
@@ -21,7 +28,12 @@ export const Route = createFileRoute("/_authenticated/clientes")({
   component: Clientes,
 });
 
-const clienteSchema = z.object({ razao_social: z.string().trim().min(2, "Obrigatório").max(200), cnpj: z.string().max(20), cidade: z.string().max(100), uf: z.string().max(2) });
+const clienteSchema = z.object({
+  razao_social: z.string().trim().min(2, "Obrigatório").max(200),
+  cnpj: z.string().max(20),
+  cidade: z.string().max(100),
+  uf: z.string().max(2),
+});
 
 function Clientes() {
   const orgId = useOrgId();
@@ -32,15 +44,30 @@ function Clientes() {
     queryKey: ["clientes", orgId],
     enabled: !!orgId,
     queryFn: async () => {
-      const { data, error } = await supabase.from("clientes").select("*, unidades(id,nome,endereco,distancia_ida_volta_km), contatos(id,nome,email,telefone)").eq("organization_id", orgId).order("razao_social");
+      const { data, error } = await supabase
+        .from("clientes")
+        .select(
+          "*, unidades(id,nome,endereco,distancia_ida_volta_km), contatos(id,nome,email,telefone)",
+        )
+        .eq("organization_id", orgId)
+        .order("razao_social");
       if (error) throw error;
       return data;
     },
   });
-  const form = useForm<z.infer<typeof clienteSchema>>({ resolver: zodResolver(clienteSchema), defaultValues: { razao_social: "", cnpj: "", cidade: "", uf: "" } });
+  const form = useForm<z.infer<typeof clienteSchema>>({
+    resolver: zodResolver(clienteSchema),
+    defaultValues: { razao_social: "", cnpj: "", cidade: "", uf: "" },
+  });
   const salvar = form.handleSubmit(async (v) => {
     setErro(null);
-    const { error } = await supabase.from("clientes").insert({ ...v, uf: v.uf.toUpperCase() || null, cnpj: v.cnpj || null, cidade: v.cidade || null, organization_id: orgId });
+    const { error } = await supabase.from("clientes").insert({
+      ...v,
+      uf: v.uf.toUpperCase() || null,
+      cnpj: v.cnpj || null,
+      cidade: v.cidade || null,
+      organization_id: orgId,
+    });
     if (error) return setErro(error.message);
     form.reset();
     qc.invalidateQueries({ queryKey: ["clientes", orgId] });
@@ -54,7 +81,13 @@ function Clientes() {
     if (!nome?.trim()) return;
     const endereco = window.prompt("Endereço (opcional):") ?? "";
     const km = window.prompt("Distância ida e volta em km (opcional):") ?? "";
-    const { error } = await supabase.from("unidades").insert({ organization_id: orgId, cliente_id: cli.id, nome: nome.trim(), endereco: endereco || null, distancia_ida_volta_km: km ? Number(km.replace(",", ".")) : null });
+    const { error } = await supabase.from("unidades").insert({
+      organization_id: orgId,
+      cliente_id: cli.id,
+      nome: nome.trim(),
+      endereco: endereco || null,
+      distancia_ida_volta_km: km ? Number(km.replace(",", ".")) : null,
+    });
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["clientes", orgId] });
   }
@@ -63,27 +96,74 @@ function Clientes() {
     const nome = window.prompt("Nome do contato:");
     if (!nome?.trim()) return;
     const email = window.prompt("E-mail (opcional):") ?? "";
-    const { error } = await supabase.from("contatos").insert({ organization_id: orgId, cliente_id: cli.id, nome: nome.trim(), email: email || null });
+    const { error } = await supabase.from("contatos").insert({
+      organization_id: orgId,
+      cliente_id: cli.id,
+      nome: nome.trim(),
+      email: email || null,
+    });
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["clientes", orgId] });
   }
 
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow="Clientes" title="Clientes, unidades e contatos" description="Dados usados pelas propostas sem redigitação." />
+      <PageHeader
+        eyebrow="Clientes"
+        title="Clientes, unidades e contatos"
+        description="Dados usados pelas propostas sem redigitação."
+      />
       <Section title="Novo cliente">
         <form onSubmit={salvar} className="flex flex-wrap items-start gap-2">
-          <div><input aria-label="Razão social" placeholder="Razão social" className={`${input} w-72`} {...form.register("razao_social")} />{form.formState.errors.razao_social && <p className="text-xs text-destructive">{form.formState.errors.razao_social.message}</p>}</div>
-          <input aria-label="CNPJ" placeholder="CNPJ" className={input} {...form.register("cnpj")} />
-          <input aria-label="Cidade" placeholder="Cidade" className={input} {...form.register("cidade")} />
-          <input aria-label="UF" placeholder="UF" maxLength={2} className={`${input} w-16`} {...form.register("uf")} />
-          <ActionButton type="submit" loading={form.formState.isSubmitting}>Cadastrar</ActionButton>
+          <div>
+            <input
+              aria-label="Razão social"
+              placeholder="Razão social"
+              className={`${input} w-72`}
+              {...form.register("razao_social")}
+            />
+            {form.formState.errors.razao_social && (
+              <p className="text-xs text-destructive">
+                {form.formState.errors.razao_social.message}
+              </p>
+            )}
+          </div>
+          <input
+            aria-label="CNPJ"
+            placeholder="CNPJ"
+            className={input}
+            {...form.register("cnpj")}
+          />
+          <input
+            aria-label="Cidade"
+            placeholder="Cidade"
+            className={input}
+            {...form.register("cidade")}
+          />
+          <input
+            aria-label="UF"
+            placeholder="UF"
+            maxLength={2}
+            className={`${input} w-16`}
+            {...form.register("uf")}
+          />
+          <ActionButton type="submit" loading={form.formState.isSubmitting}>
+            Cadastrar
+          </ActionButton>
         </form>
         {erro && <p className="mt-2 text-sm text-destructive">{erro}</p>}
       </Section>
       <div className="grid gap-4 xl:grid-cols-[1fr_380px]">
         <Section title="Clientes">
-          <QueryView query={q} empty={<EmptyState title="Nenhum cliente cadastrado" hint="Cadastre o primeiro cliente acima." />}>
+          <QueryView
+            query={q}
+            empty={
+              <EmptyState
+                title="Nenhum cliente cadastrado"
+                hint="Cadastre o primeiro cliente acima."
+              />
+            }
+          >
             {(rows) => (
               <DataTable
                 getRowId={(c) => c.id}
@@ -93,7 +173,11 @@ function Clientes() {
                 columns={[
                   { key: "razao_social", label: "Razão social" },
                   { key: "cnpj", label: "CNPJ", render: (c) => c.cnpj ?? "—" },
-                  { key: "cidade", label: "Cidade/UF", render: (c) => [c.cidade, c.uf].filter(Boolean).join(" / ") || "—" },
+                  {
+                    key: "cidade",
+                    label: "Cidade/UF",
+                    render: (c) => [c.cidade, c.uf].filter(Boolean).join(" / ") || "—",
+                  },
                   { key: "u", label: "Unidades", align: "right", render: (c) => c.unidades.length },
                   { key: "situacao", label: "Situação" },
                 ]}
@@ -103,17 +187,54 @@ function Clientes() {
         </Section>
         <aside className="rounded-lg border border-border bg-card p-4 text-sm xl:sticky xl:top-20 xl:self-start">
           {!cli ? (
-            <p className="text-muted-foreground">Selecione um cliente para ver unidades e contatos.</p>
+            <p className="text-muted-foreground">
+              Selecione um cliente para ver unidades e contatos.
+            </p>
           ) : (
             <div className="space-y-3">
               <p className="font-medium text-foreground">{cli.razao_social}</p>
               <div>
-                <div className="flex justify-between"><p className="text-xs uppercase text-muted-foreground">Unidades</p><button className="text-xs text-primary" onClick={addUnidade}>+ Unidade</button></div>
-                {cli.unidades.length ? <ul className="text-xs">{cli.unidades.map((u) => <li key={u.id}>{u.nome}{u.endereco ? ` · ${u.endereco}` : ""}{u.distancia_ida_volta_km != null ? ` · ${u.distancia_ida_volta_km} km` : ""}</li>)}</ul> : <p className="text-xs text-muted-foreground">Nenhuma unidade.</p>}
+                <div className="flex justify-between">
+                  <p className="text-xs uppercase text-muted-foreground">Unidades</p>
+                  <button className="text-xs text-primary" onClick={addUnidade}>
+                    + Unidade
+                  </button>
+                </div>
+                {cli.unidades.length ? (
+                  <ul className="text-xs">
+                    {cli.unidades.map((u) => (
+                      <li key={u.id}>
+                        {u.nome}
+                        {u.endereco ? ` · ${u.endereco}` : ""}
+                        {u.distancia_ida_volta_km != null
+                          ? ` · ${u.distancia_ida_volta_km} km`
+                          : ""}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Nenhuma unidade.</p>
+                )}
               </div>
               <div>
-                <div className="flex justify-between"><p className="text-xs uppercase text-muted-foreground">Contatos</p><button className="text-xs text-primary" onClick={addContato}>+ Contato</button></div>
-                {cli.contatos.length ? <ul className="text-xs">{cli.contatos.map((c) => <li key={c.id}>{c.nome}{c.email ? ` · ${c.email}` : ""}</li>)}</ul> : <p className="text-xs text-muted-foreground">Nenhum contato.</p>}
+                <div className="flex justify-between">
+                  <p className="text-xs uppercase text-muted-foreground">Contatos</p>
+                  <button className="text-xs text-primary" onClick={addContato}>
+                    + Contato
+                  </button>
+                </div>
+                {cli.contatos.length ? (
+                  <ul className="text-xs">
+                    {cli.contatos.map((c) => (
+                      <li key={c.id}>
+                        {c.nome}
+                        {c.email ? ` · ${c.email}` : ""}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Nenhum contato.</p>
+                )}
               </div>
             </div>
           )}

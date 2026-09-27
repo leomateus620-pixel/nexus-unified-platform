@@ -33,7 +33,7 @@ const schema = z.object({
   custo: z.coerce.number().min(0),
 });
 
-export function useProdutos(orgId: string) {
+function useProdutos(orgId: string) {
   return useQuery({
     queryKey: ["produtos", orgId],
     enabled: !!orgId,

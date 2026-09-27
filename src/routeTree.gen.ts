@@ -12,13 +12,20 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
 import { Route as AuthenticatedComprasRouteImport } from './routes/_authenticated/compras'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated/configuracoes'
+import { Route as AuthenticatedDocumentacaoRouteImport } from './routes/_authenticated/documentacao'
 import { Route as AuthenticatedEngenhariaRouteImport } from './routes/_authenticated/engenharia'
+import { Route as AuthenticatedExecucaoRouteImport } from './routes/_authenticated/execucao'
+import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
+import { Route as AuthenticatedInspecoesRouteImport } from './routes/_authenticated/inspecoes'
+import { Route as AuthenticatedLevantamentosRouteImport } from './routes/_authenticated/levantamentos'
 import { Route as AuthenticatedProdutosRouteImport } from './routes/_authenticated/produtos'
 import { Route as AuthenticatedProjetosRouteImport } from './routes/_authenticated/projetos'
+import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
 import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
@@ -66,6 +73,11 @@ const Mapas3dRoute = Mapas3dRouteImport.update({
   path: '/mapas-3d',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
   id: '/clientes',
   path: '/clientes',
@@ -87,11 +99,38 @@ const AuthenticatedConfiguracoesRoute =
     path: '/configuracoes',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDocumentacaoRoute =
+  AuthenticatedDocumentacaoRouteImport.update({
+    id: '/documentacao',
+    path: '/documentacao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEngenhariaRoute = AuthenticatedEngenhariaRouteImport.update({
   id: '/engenharia',
   path: '/engenharia',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedExecucaoRoute = AuthenticatedExecucaoRouteImport.update({
+  id: '/execucao',
+  path: '/execucao',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInspecoesRoute = AuthenticatedInspecoesRouteImport.update({
+  id: '/inspecoes',
+  path: '/inspecoes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLevantamentosRoute =
+  AuthenticatedLevantamentosRouteImport.update({
+    id: '/levantamentos',
+    path: '/levantamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedProdutosRoute = AuthenticatedProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -100,6 +139,11 @@ const AuthenticatedProdutosRoute = AuthenticatedProdutosRouteImport.update({
 const AuthenticatedProjetosRoute = AuthenticatedProjetosRouteImport.update({
   id: '/projetos',
   path: '/projetos',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
@@ -321,16 +365,22 @@ const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdResumoExecutivoR
   )
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedRouteRouteWithChildren
+  '/': typeof AuthenticatedIndexRoute
   '/auth': typeof AuthRoute
   '/mapas-3d': typeof Mapas3dRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/compras': typeof AuthenticatedComprasRouteWithChildren
   '/configuracoes': typeof AuthenticatedConfiguracoesRouteWithChildren
+  '/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
+  '/execucao': typeof AuthenticatedExecucaoRoute
+  '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/inspecoes': typeof AuthenticatedInspecoesRoute
+  '/levantamentos': typeof AuthenticatedLevantamentosRoute
   '/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/projetos': typeof AuthenticatedProjetosRouteWithChildren
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
@@ -365,12 +415,18 @@ export interface FileRoutesByFullPath {
   '/comercial/propostas/$propostaId/revisoes/$revisaoId/': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/mapas-3d': typeof Mapas3dRoute
   '/clientes': typeof AuthenticatedClientesRoute
+  '/documentacao': typeof AuthenticatedDocumentacaoRoute
+  '/execucao': typeof AuthenticatedExecucaoRoute
+  '/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/inspecoes': typeof AuthenticatedInspecoesRoute
+  '/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/': typeof AuthenticatedIndexRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -410,11 +466,18 @@ export interface FileRoutesById {
   '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/_authenticated/compras': typeof AuthenticatedComprasRouteWithChildren
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRouteWithChildren
+  '/_authenticated/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/_authenticated/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
+  '/_authenticated/execucao': typeof AuthenticatedExecucaoRoute
+  '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
+  '/_authenticated/inspecoes': typeof AuthenticatedInspecoesRoute
+  '/_authenticated/levantamentos': typeof AuthenticatedLevantamentosRoute
   '/_authenticated/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/_authenticated/projetos': typeof AuthenticatedProjetosRouteWithChildren
+  '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/_authenticated/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/_authenticated/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -456,9 +519,15 @@ export interface FileRouteTypes {
     | '/comercial'
     | '/compras'
     | '/configuracoes'
+    | '/documentacao'
     | '/engenharia'
+    | '/execucao'
+    | '/financeiro'
+    | '/inspecoes'
+    | '/levantamentos'
     | '/produtos'
     | '/projetos'
+    | '/relatorios'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/compras/demandas'
@@ -493,12 +562,18 @@ export interface FileRouteTypes {
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/auth'
     | '/mapas-3d'
     | '/clientes'
+    | '/documentacao'
+    | '/execucao'
+    | '/financeiro'
+    | '/inspecoes'
+    | '/levantamentos'
+    | '/relatorios'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/'
     | '/compras/demandas'
     | '/compras/fornecedores'
     | '/configuracoes/orcamentos'
@@ -537,11 +612,18 @@ export interface FileRouteTypes {
     | '/_authenticated/comercial'
     | '/_authenticated/compras'
     | '/_authenticated/configuracoes'
+    | '/_authenticated/documentacao'
     | '/_authenticated/engenharia'
+    | '/_authenticated/execucao'
+    | '/_authenticated/financeiro'
+    | '/_authenticated/inspecoes'
+    | '/_authenticated/levantamentos'
     | '/_authenticated/produtos'
     | '/_authenticated/projetos'
+    | '/_authenticated/relatorios'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
+    | '/_authenticated/'
     | '/_authenticated/compras/demandas'
     | '/_authenticated/compras/fornecedores'
     | '/_authenticated/configuracoes/orcamentos'
@@ -605,6 +687,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Mapas3dRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/clientes': {
       id: '/_authenticated/clientes'
       path: '/clientes'
@@ -633,11 +722,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/documentacao': {
+      id: '/_authenticated/documentacao'
+      path: '/documentacao'
+      fullPath: '/documentacao'
+      preLoaderRoute: typeof AuthenticatedDocumentacaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/engenharia': {
       id: '/_authenticated/engenharia'
       path: '/engenharia'
       fullPath: '/engenharia'
       preLoaderRoute: typeof AuthenticatedEngenhariaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/execucao': {
+      id: '/_authenticated/execucao'
+      path: '/execucao'
+      fullPath: '/execucao'
+      preLoaderRoute: typeof AuthenticatedExecucaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/financeiro': {
+      id: '/_authenticated/financeiro'
+      path: '/financeiro'
+      fullPath: '/financeiro'
+      preLoaderRoute: typeof AuthenticatedFinanceiroRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inspecoes': {
+      id: '/_authenticated/inspecoes'
+      path: '/inspecoes'
+      fullPath: '/inspecoes'
+      preLoaderRoute: typeof AuthenticatedInspecoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/levantamentos': {
+      id: '/_authenticated/levantamentos'
+      path: '/levantamentos'
+      fullPath: '/levantamentos'
+      preLoaderRoute: typeof AuthenticatedLevantamentosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/produtos': {
@@ -652,6 +776,13 @@ declare module '@tanstack/react-router' {
       path: '/projetos'
       fullPath: '/projetos'
       preLoaderRoute: typeof AuthenticatedProjetosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/relatorios': {
+      id: '/_authenticated/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/mapas-3d_/trevisan': {
@@ -1045,9 +1176,16 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
   AuthenticatedComprasRoute: typeof AuthenticatedComprasRouteWithChildren
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRouteWithChildren
+  AuthenticatedDocumentacaoRoute: typeof AuthenticatedDocumentacaoRoute
   AuthenticatedEngenhariaRoute: typeof AuthenticatedEngenhariaRouteWithChildren
+  AuthenticatedExecucaoRoute: typeof AuthenticatedExecucaoRoute
+  AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
+  AuthenticatedInspecoesRoute: typeof AuthenticatedInspecoesRoute
+  AuthenticatedLevantamentosRoute: typeof AuthenticatedLevantamentosRoute
   AuthenticatedProdutosRoute: typeof AuthenticatedProdutosRouteWithChildren
   AuthenticatedProjetosRoute: typeof AuthenticatedProjetosRouteWithChildren
+  AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1055,9 +1193,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,
   AuthenticatedComprasRoute: AuthenticatedComprasRouteWithChildren,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRouteWithChildren,
+  AuthenticatedDocumentacaoRoute: AuthenticatedDocumentacaoRoute,
   AuthenticatedEngenhariaRoute: AuthenticatedEngenhariaRouteWithChildren,
+  AuthenticatedExecucaoRoute: AuthenticatedExecucaoRoute,
+  AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
+  AuthenticatedInspecoesRoute: AuthenticatedInspecoesRoute,
+  AuthenticatedLevantamentosRoute: AuthenticatedLevantamentosRoute,
   AuthenticatedProdutosRoute: AuthenticatedProdutosRouteWithChildren,
   AuthenticatedProjetosRoute: AuthenticatedProjetosRouteWithChildren,
+  AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

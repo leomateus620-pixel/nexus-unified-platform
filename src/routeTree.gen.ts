@@ -12,8 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
+import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
+import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
+import { Route as AuthenticatedComercialPropostasIndexRouteImport } from './routes/_authenticated/comercial.propostas.index'
+import { Route as AuthenticatedComercialPropostasNovaRouteImport } from './routes/_authenticated/comercial.propostas.nova'
 import { Route as AuthenticatedComercialPropostasPropostaIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.index'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.index'
@@ -40,6 +44,11 @@ const Mapas3dRoute = Mapas3dRouteImport.update({
   path: '/mapas-3d',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedComercialRoute = AuthenticatedComercialRouteImport.update({
+  id: '/comercial',
+  path: '/comercial',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
   id: '/mapas-3d_/trevisan',
   path: '/mapas-3d/trevisan',
@@ -50,17 +59,35 @@ const Mapas3dUnidadesRoute = Mapas3dUnidadesRouteImport.update({
   path: '/mapas-3d/unidades',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedComercialIndexRoute =
+  AuthenticatedComercialIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
+const AuthenticatedComercialPropostasIndexRoute =
+  AuthenticatedComercialPropostasIndexRouteImport.update({
+    id: '/propostas/',
+    path: '/propostas/',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
+const AuthenticatedComercialPropostasNovaRoute =
+  AuthenticatedComercialPropostasNovaRouteImport.update({
+    id: '/propostas/nova',
+    path: '/propostas/nova',
+    getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
 const AuthenticatedComercialPropostasPropostaIdIndexRoute =
   AuthenticatedComercialPropostasPropostaIdIndexRouteImport.update({
-    id: '/comercial/propostas/$propostaId/',
-    path: '/comercial/propostas/$propostaId/',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/propostas/$propostaId/',
+    path: '/propostas/$propostaId/',
+    getParentRoute: () => AuthenticatedComercialRoute,
   } as any)
 const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute =
   AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport.update({
-    id: '/comercial/propostas/$propostaId/revisoes/$revisaoId',
-    path: '/comercial/propostas/$propostaId/revisoes/$revisaoId',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/propostas/$propostaId/revisoes/$revisaoId',
+    path: '/propostas/$propostaId/revisoes/$revisaoId',
+    getParentRoute: () => AuthenticatedComercialRoute,
   } as any)
 const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRoute =
   AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport.update(
@@ -148,8 +175,12 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/mapas-3d': typeof Mapas3dRoute
+  '/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/comercial/': typeof AuthenticatedComercialIndexRoute
+  '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
+  '/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/comercial/propostas/$propostaId/': typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
   '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren
   '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
@@ -168,6 +199,9 @@ export interface FileRoutesByTo {
   '/mapas-3d': typeof Mapas3dRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/comercial': typeof AuthenticatedComercialIndexRoute
+  '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
+  '/comercial/propostas': typeof AuthenticatedComercialPropostasIndexRoute
   '/comercial/propostas/$propostaId': typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
   '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
   '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdDimensionamentoRoute
@@ -184,8 +218,12 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/mapas-3d': typeof Mapas3dRoute
+  '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
+  '/_authenticated/comercial/': typeof AuthenticatedComercialIndexRoute
+  '/_authenticated/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
+  '/_authenticated/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/_authenticated/comercial/propostas/$propostaId/': typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
   '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren
   '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/compras': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdComprasRoute
@@ -204,8 +242,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/mapas-3d'
+    | '/comercial'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/comercial/'
+    | '/comercial/propostas/nova'
+    | '/comercial/propostas/'
     | '/comercial/propostas/$propostaId/'
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId'
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
@@ -224,6 +266,9 @@ export interface FileRouteTypes {
     | '/mapas-3d'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/comercial'
+    | '/comercial/propostas/nova'
+    | '/comercial/propostas'
     | '/comercial/propostas/$propostaId'
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
     | '/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento'
@@ -239,8 +284,12 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/mapas-3d'
+    | '/_authenticated/comercial'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
+    | '/_authenticated/comercial/'
+    | '/_authenticated/comercial/propostas/nova'
+    | '/_authenticated/comercial/propostas/'
     | '/_authenticated/comercial/propostas/$propostaId/'
     | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId'
     | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/compras'
@@ -285,6 +334,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Mapas3dRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/comercial': {
+      id: '/_authenticated/comercial'
+      path: '/comercial'
+      fullPath: '/comercial'
+      preLoaderRoute: typeof AuthenticatedComercialRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/mapas-3d_/trevisan': {
       id: '/mapas-3d_/trevisan'
       path: '/mapas-3d/trevisan'
@@ -299,19 +355,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Mapas3dUnidadesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/comercial/': {
+      id: '/_authenticated/comercial/'
+      path: '/'
+      fullPath: '/comercial/'
+      preLoaderRoute: typeof AuthenticatedComercialIndexRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/comercial/propostas/': {
+      id: '/_authenticated/comercial/propostas/'
+      path: '/propostas'
+      fullPath: '/comercial/propostas/'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasIndexRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/comercial/propostas/nova': {
+      id: '/_authenticated/comercial/propostas/nova'
+      path: '/propostas/nova'
+      fullPath: '/comercial/propostas/nova'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasNovaRouteImport
+      parentRoute: typeof AuthenticatedComercialRoute
+    }
     '/_authenticated/comercial/propostas/$propostaId/': {
       id: '/_authenticated/comercial/propostas/$propostaId/'
-      path: '/comercial/propostas/$propostaId'
+      path: '/propostas/$propostaId'
       fullPath: '/comercial/propostas/$propostaId/'
       preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedComercialRoute
     }
     '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': {
       id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId'
-      path: '/comercial/propostas/$propostaId/revisoes/$revisaoId'
+      path: '/propostas/$propostaId/revisoes/$revisaoId'
       fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId'
       preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedComercialRoute
     }
     '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/': {
       id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId/'
@@ -418,16 +495,38 @@ const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildre
     AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteChildren,
   )
 
-interface AuthenticatedRouteRouteChildren {
+interface AuthenticatedComercialRouteChildren {
+  AuthenticatedComercialIndexRoute: typeof AuthenticatedComercialIndexRoute
+  AuthenticatedComercialPropostasNovaRoute: typeof AuthenticatedComercialPropostasNovaRoute
+  AuthenticatedComercialPropostasIndexRoute: typeof AuthenticatedComercialPropostasIndexRoute
   AuthenticatedComercialPropostasPropostaIdIndexRoute: typeof AuthenticatedComercialPropostasPropostaIdIndexRoute
   AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren
 }
 
+const AuthenticatedComercialRouteChildren: AuthenticatedComercialRouteChildren =
+  {
+    AuthenticatedComercialIndexRoute: AuthenticatedComercialIndexRoute,
+    AuthenticatedComercialPropostasNovaRoute:
+      AuthenticatedComercialPropostasNovaRoute,
+    AuthenticatedComercialPropostasIndexRoute:
+      AuthenticatedComercialPropostasIndexRoute,
+    AuthenticatedComercialPropostasPropostaIdIndexRoute:
+      AuthenticatedComercialPropostasPropostaIdIndexRoute,
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute:
+      AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren,
+  }
+
+const AuthenticatedComercialRouteWithChildren =
+  AuthenticatedComercialRoute._addFileChildren(
+    AuthenticatedComercialRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
+}
+
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedComercialPropostasPropostaIdIndexRoute:
-    AuthenticatedComercialPropostasPropostaIdIndexRoute,
-  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute:
-    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteWithChildren,
+  AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =

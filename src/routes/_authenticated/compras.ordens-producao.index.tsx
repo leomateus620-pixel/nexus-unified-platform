@@ -11,6 +11,7 @@ import {
 import { useOrgId } from "@/features/org/session";
 import { useOrdensProducao } from "@/features/suprimentos/queries";
 import { dataBR } from "@/lib/format";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 
 export const Route = createFileRoute("/_authenticated/compras/ordens-producao/")({
   head: () => ({
@@ -52,8 +53,11 @@ function Page() {
                 navigate({ to: "/compras/ordens-producao/$ordemId", params: { ordemId: o.id } })
               }
               columns={[
-                { key: "numero", label: "Número" },
-                { key: "origem", label: "Origem" },
+                {
+                  key: "numero",
+                  label: "Ordem / origem",
+                  render: (o) => <RecordIdentity code primary={o.numero} secondary={o.origem} />,
+                },
                 { key: "responsavel", label: "Responsável", render: (o) => o.responsavel ?? "—" },
                 { key: "prazo", label: "Prazo", render: (o) => dataBR(o.prazo) },
                 { key: "itens", label: "Itens", align: "right" },

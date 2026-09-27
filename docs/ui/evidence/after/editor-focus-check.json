@@ -1,0 +1,16 @@
+{
+  "resized": {
+    "same": true,
+    "value": "98765.4321",
+    "focused": true,
+    "modal": true,
+    "calls": [],
+    "draft": "Edição local"
+  },
+  "resizePrompts": 0,
+  "close": {
+    "prompts": 1,
+    "dialogCount": 0,
+    "focus": "Editar item COMP-001"
+  }
+}

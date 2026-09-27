@@ -1,0 +1,3045 @@
+{
+  "label": "before",
+  "base": "http://127.0.0.1:4181",
+  "date": "2026-09-27T22:45:56.471Z",
+  "browser": "149.0.7827.55",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpus": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logicalCpus": 4
+  },
+  "methodology": "Synthetic presentation-only fixtures; actual source components/hooks/handlers. Browser events to second requestAnimationFrame (conservative local paint proxy, not server time). No CPU throttle. Five observations including the first interaction per count/action, 1366×768. Physical keyboard/zoom/mobile device unavailable. No production backend reachable.",
+  "blocked": [
+    "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "screen": "list",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 1009,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 950,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 690,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 1009,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 950,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 690,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 1017,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 958,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1281,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1222,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1677,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1598,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1677,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1598,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Propostas"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "COMP-05\t12,94"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de compras"
+      ],
+      "rows": 11,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Planejamento de produção"
+      ],
+      "rows": 6,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Ações",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Revisões",
+        "Alterações registradas",
+        "Execuções de cálculo"
+      ],
+      "rows": 1,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "number",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "placeholder": null
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "screen": "dimensionamento",
+      "scenario": "pending",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\n—\n\nPendências\n\n1\n\nCálculo desatualizado\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\nSistemas dimensionados\n\nTELHADO: metragem total do sistema (trechos não multiplicam). OVERHEAD: metragem de cada trecho × número de trechos.\n\nAdicionar sistema\nRecalcular agora\n#\tIDENTIFICAÇÃO / LOCAL\tTIPO\tMETRAGEM\tTRECHOS\tEXTENSÃO INSTALADA\tCONSUMO DE CABO\t\n1\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n2\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n3\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n4\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n5\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n6\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n7\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n8\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n9\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n10\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n11\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n12\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n13\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n14\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n15\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n16\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n17\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\nColar sistemas (identificação ⇥ tipo ⇥ metragem ⇥ trechos)\n\nAbra “Composição” para ver componentes, memória de cálculo e ajustes.",
+      "viewport": 1366,
+      "pageWidth": 1677,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "empty",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\nSistemas dimensionados\n\nTELHADO: metragem total do sistema (trechos não multiplicam). OVERHEAD: metragem de cada trecho × número de trechos.\n\nAdicionar sistema\nRecalcular agora\n\nNenhum sistema dimensionado\n\nAdicione sistemas manualmente ou cole linhas de uma planilha. Dimensionamento manual fica identificado como tal.\n\nColar sistemas (identificação ⇥ tipo ⇥ metragem ⇥ trechos)\n\nAbra “Composição” para ver componentes, memória de cálculo e ajustes.",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 0,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "readonly",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nEnviada\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\nSistemas dimensionados\n\nTELHADO: metragem total do sistema (trechos não multiplicam). OVERHEAD: metragem de cada trecho × número de trechos.\n\n#\tIDENTIFICAÇÃO / LOCAL\tTIPO\tMETRAGEM\tTRECHOS\tEXTENSÃO INSTALADA\tCONSUMO DE CABO\t\n1\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n2\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n3\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n4\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n5\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n6\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n7\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n8\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n9\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n10\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n11\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n12\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n13\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n14\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n15\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n16\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposição\n17\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposição\n\nAbra “Composição” para ver componentes, memória de cálculo e ajustes.",
+      "viewport": 1366,
+      "pageWidth": 1582,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "error",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\n\nNão foi possível carregar: Falha simulada no ambiente isolado de teste\n\nTentar novamente",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "conflict",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\nConflito: outro usuário alterou. Recarregue. — Conflito simulado: outra sessão atualizou esta revisão.\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\nSistemas dimensionados\n\nTELHADO: metragem total do sistema (trechos não multiplicam). OVERHEAD: metragem de cada trecho × número de trechos.\n\nAdicionar sistema\nRecalcular agora\n#\tIDENTIFICAÇÃO / LOCAL\tTIPO\tMETRAGEM\tTRECHOS\tEXTENSÃO INSTALADA\tCONSUMO DE CABO\t\n1\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n2\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n3\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n4\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n5\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n6\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n7\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n8\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n9\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n10\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n11\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n12\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n13\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n14\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n15\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\n16\t\t\nTELHADO\nOVERHEAD\n\t\nm total\n\t\t80 m\t84 m\tComposiçãoDuplicarExcluir\n17\t\t\nTELHADO\nOVERHEAD\n\t\nm/trecho\n\t\t480 m\t500 m\tComposiçãoDuplicarExcluir\nColar sistemas (identificação ⇥ tipo ⇥ metragem ⇥ trechos)\n\nAbra “Composição” para ver componentes, memória de cálculo e ajustes.",
+      "viewport": 1366,
+      "pageWidth": 1677,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Sistemas dimensionados"
+      ],
+      "rows": 17,
+      "unnamedInputs": [
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+        }
+      ],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "scenario": "restricted",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · comercial\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\nItens comerciais\n\nCópia versionada do catálogo para esta revisão. Custos editados aqui não alteram o catálogo.\n\nTodas as modalidades\nComprar\nFabricar\nTerceirizar\n\tCÓDIGO\tDESCRIÇÃO\tUN.\tMODALIDADE\tFORNECEDOR\tPREÇO UNIT. (CALC.)\n\tCOMP-001\tConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 20.395,0615\n\tCOMP-002\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 37,8969\n\tCOMP-003\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 54,4169\n\tCOMP-004\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 70,9369\n\tCOMP-005\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 87,4569\n\tCOMP-006\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 103,9769\n\tCOMP-007\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 120,4969\n\tCOMP-008\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 137,0169\n\tCOMP-009\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 153,5369\n\tCOMP-010\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 170,0569\n\tCOMP-011\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 186,5769\n\tCOMP-012\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 203,0969\n\tCOMP-013\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 219,6169\n\tCOMP-014\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 236,1369\n\tCOMP-015\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 252,6569\n\tCOMP-016\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 269,1769\n\tCOMP-017\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\tR$ 285,6969\n\nSelecione um código para ver o cálculo do preço.",
+      "viewport": 1366,
+      "pageWidth": 1598,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "scenario": "readonly",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nEnviada\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\nItens comerciais\n\nCópia versionada do catálogo para esta revisão. Custos editados aqui não alteram o catálogo.\n\nTodas as modalidades\nComprar\nFabricar\nTerceirizar\n\tCÓDIGO\tDESCRIÇÃO\tUN.\tMODALIDADE\tFORNECEDOR\tCUSTO ADOTADO\tPREÇO UNIT. (CALC.)\n\tCOMP-001\tConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 20.395,0615\n\tCOMP-002\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 37,8969\n\tCOMP-003\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 54,4169\n\tCOMP-004\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 70,9369\n\tCOMP-005\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 87,4569\n\tCOMP-006\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 103,9769\n\tCOMP-007\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 120,4969\n\tCOMP-008\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 137,0169\n\tCOMP-009\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 153,5369\n\tCOMP-010\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 170,0569\n\tCOMP-011\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 186,5769\n\tCOMP-012\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 203,0969\n\tCOMP-013\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 219,6169\n\tCOMP-014\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\nFornecedor de teste · NCM 7326.90.90\n\tm\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 236,1369\n\tCOMP-015\tConjunto de fixação e interface para cobertura metálica\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 252,6569\n\tCOMP-016\tAbsorvedor de energia com indicador de impacto\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 269,1769\n\tCOMP-017\tPilar de ancoragem para sistema de proteção contra quedas\nFornecedor de teste · NCM 7326.90.90\n\tun\t\nComprar\nFabricar\nTerceirizar\n\t\n—\nSuprimentos industriais — teste\n\t\tR$ 285,6969\n\nSelecione um código para ver o cálculo do preço.",
+      "viewport": 1366,
+      "pageWidth": 1598,
+      "overflow": true,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Itens comerciais"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "scenario": "empty",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\n\nEsta revisão não tem componentes\n\nOs componentes são copiados do catálogo de Produtos e Soluções ao criar a proposta. Cadastre ou importe o catálogo e crie uma nova revisão.",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "scenario": "pending",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\n—\n\nPendências\n\n1\n\nCálculo desatualizado\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\n\nHá alterações não refletidas nos valores abaixo. Recalcular\n\nPendências\nValidação da Engenharia pendente para fórmulas de pilares/intermediárias.\n\nMATERIAIS\n\nR$ 1.245.789,12\n\nMONTAGEM\n\nR$ 498.315,65\n\n40% dos materiais\n\nITEM TÉCNICO\n\nR$ 19.750,00\n\nDESCONTO\n\nR$ 12.500,00\n\nTOTAL FINAL\n\nR$ 1.751.354,77\n\nMARGEM ESTIMADA\n\n28%\n\nResultado R$ 490.379,34\n\nPor sistema\nPor componente\nMateriais por sistema\nSISTEMA\tTIPO\tEXTENSÃO\tCABO\tVENDA MATERIAIS\tCUSTO MATERIAIS\nPavilhão de recebimento • passarela norte\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 02 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 03 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 04 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 05 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 06 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 07 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 08 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 09 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 10 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 11 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 12 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 13 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 14 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 15 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 16 — cobertura industrial\tTELHADO\t80 m\t84 m\tR$ 73.500,00\tR$ 41.000,00\nSetor 17 — cobertura industrial\tOVERHEAD\t480 m\t500 m\tR$ 73.500,00\tR$ 41.000,00\nOperação prevista (recursos)\nMetragem telhado\n640 m\nMetragem overhead (equivalente)\n4.320 m\nCabo total\n5.172 m\nDias-equipe\n43 dias\nViagens\n9\nMão de obra\nR$ 54.123,45\nAlimentação\nR$ 9.675,00\nHospedagem\nR$ 18.060,00\nCombustível\nR$ 1.595,36\nEngenharia (custo)\nR$ 4.320,00\nTotal operação\nR$ 87.773,81\nResultado calculado pelo modelo\n\nNão é demonstração contábil. Tributos são provisões parametrizadas, sem validação fiscal.\n\nPreço-base\nR$ 1.763.854,77\n(−) Desconto\nR$ 12.500,00\nPreço final\nR$ 1.751.354,77\n(−) Custo de materiais + frete\nR$ 923.410,17\n(−) Provisão tributos materiais\nR$ 121.223,40\n(−) Provisão tributos serviços\nR$ 45.223,81\n(−) Operação\nR$ 87.773,81\nResultado\nR$ 490.379,34\nMargem\n28%",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "scenario": "unavailable",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\n—\n\nPendências\n\n—\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\n\nRevisão ainda não calculada\n\nDimensione ao menos um sistema. O cálculo é feito no servidor e registrado com a versão do motor.\n\nCalcular",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Cooperativa Industrial — Unidade de teste"
+      ],
+      "rows": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        },
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "scenario": "issued",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nOrdens de compra / OC-2026-0042 · Origem 054/26 Rev. 05 · Projeto PRJ-054\n\nORDEM DE COMPRA\n\nOC-2026-0042 · Suprimentos industriais — teste\n\nCusto de aquisição, não preço de venda. Após emitida, a OC não é alterada.\n\nemitida\nCondições\nEntrega prevista \nFrete (R$) \nCondições \n\nTotal: R$ 20.388,76\n\nItens\nCÓDIGO\tDESCRIÇÃO\tQUANTIDADE\tPREÇO UNIT.\tRECEBIDA\tPENDENTE\t\nCOMP-001\tConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\t20 un\tR$ 249,2345\t7\t13\tRegistrar recebimento\nCOMP-002\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\t20 m\tR$ 249,2345\t7\t13\tRegistrar recebimento\nCOMP-003\tConjunto de fixação e interface para cobertura metálica\t20 un\tR$ 249,2345\t7\t13\tRegistrar recebimento\nCOMP-004\tAbsorvedor de energia com indicador de impacto\t20 un\tR$ 249,2345\t7\t13\tRegistrar recebimento",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "scenario": "issued",
+      "text": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nOrdens de produção / OP-2026-0011 · Origem 054/26 Rev. 05 · Projeto PRJ-054\n\nORDEM DE PRODUÇÃO\n\nOP-2026-0011\n\nMatéria-prima e roteiro não são inferidos do nome do componente (F15).\n\nliberada\nPlanejamento\nResponsável \nPrazo \nItens\nCÓDIGO\tDESCRIÇÃO\tQUANTIDADE\tFICHA TÉCNICA / MATÉRIA-PRIMA\tPRODUZIDA\t\nCOMP-001\tConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\t20 un\t—\t5\tApontar\nCOMP-002\tCabo de aço galvanizado com alma de fibra — fornecimento por metro\t20 m\tFicha de teste — sem validação técnica\t5\tApontar\nCOMP-003\tConjunto de fixação e interface para cobertura metálica\t20 un\tFicha de teste — sem validação técnica\t5\tApontar\nCOMP-004\tAbsorvedor de energia com indicador de impacto\t20 un\tFicha de teste — sem validação técnica\t5\tApontar",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Planejamento",
+        "Itens"
+      ],
+      "rows": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+          "backdrop": "blur(8px)"
+        }
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "count": 17,
+      "action": "input",
+      "medianMs": 28.700000047683716,
+      "maxMs": 31.299999952316284,
+      "samples": [
+        {
+          "ms": 21.90000009536743,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 19.799999952316284,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 28.700000047683716,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.299999952316284,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "selection",
+      "medianMs": 25.399999856948853,
+      "maxMs": 31.700000047683716,
+      "samples": [
+        {
+          "ms": 25.399999856948853,
+          "nodes": 591,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 17.200000047683716,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 20.200000047683716,
+          "nodes": 591,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 31.399999856948853,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 31.700000047683716,
+          "nodes": 591,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "panel",
+      "medianMs": 27.300000190734863,
+      "maxMs": 32,
+      "samples": [
+        {
+          "ms": 18,
+          "nodes": 608,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 27.300000190734863,
+          "nodes": 608,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 18.700000047683716,
+          "nodes": 608,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 32,
+          "nodes": 608,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 27.700000047683716,
+          "nodes": 608,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "scroll",
+      "medianMs": 31.59999990463257,
+      "maxMs": 32,
+      "samples": [
+        {
+          "ms": 7.799999952316284,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.59999990463257,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.800000190734863,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.5,
+          "nodes": 582,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "input",
+      "medianMs": 64.89999985694885,
+      "maxMs": 91.09999990463257,
+      "samples": [
+        {
+          "ms": 64.89999985694885,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 64,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 61.30000019073486,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 66.5,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 91.09999990463257,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "selection",
+      "medianMs": 64.5,
+      "maxMs": 67.70000004768372,
+      "samples": [
+        {
+          "ms": 67.70000004768372,
+          "nodes": 2251,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 63.299999952316284,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 64.5,
+          "nodes": 2251,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 66.20000004768372,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 61.200000047683716,
+          "nodes": 2251,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "panel",
+      "medianMs": 53.700000047683716,
+      "maxMs": 64.60000014305115,
+      "samples": [
+        {
+          "ms": 64.60000014305115,
+          "nodes": 2268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 63,
+          "nodes": 2268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 53.700000047683716,
+          "nodes": 2268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 25.5,
+          "nodes": 2268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 24,
+          "nodes": 2268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "scroll",
+      "medianMs": 31.299999952316284,
+      "maxMs": 32.299999952316284,
+      "samples": [
+        {
+          "ms": 11.799999952316284,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.600000143051147,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.100000143051147,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.299999952316284,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.299999952316284,
+          "nodes": 2242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "input",
+      "medianMs": 73.09999990463257,
+      "maxMs": 341.89999985694885,
+      "samples": [
+        {
+          "ms": 341.89999985694885,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 110.20000004768372,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 73.09999990463257,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 69.20000004768372,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 72.20000004768372,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "selection",
+      "medianMs": 80.09999990463257,
+      "maxMs": 314.40000009536743,
+      "samples": [
+        {
+          "ms": 314.40000009536743,
+          "nodes": 10251,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 120.29999995231628,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 79.60000014305115,
+          "nodes": 10251,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 80.09999990463257,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        },
+        {
+          "ms": 78.59999990463257,
+          "nodes": 10251,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.009847499083579677
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "panel",
+      "medianMs": 87.30000019073486,
+      "maxMs": 282.2999999523163,
+      "samples": [
+        {
+          "ms": 282.2999999523163,
+          "nodes": 10268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 87.30000019073486,
+          "nodes": 10268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 83.60000014305115,
+          "nodes": 10268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 82.89999985694885,
+          "nodes": 10268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        },
+        {
+          "ms": 277.40000009536743,
+          "nodes": 10268,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0.0007683728876779517
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "scroll",
+      "medianMs": 31.200000047683716,
+      "maxMs": 31.399999856948853,
+      "samples": [
+        {
+          "ms": 6,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 30.40000009536743,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.300000190734863,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.399999856948853,
+          "nodes": 10242,
+          "width": 1598,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    }
+  ],
+  "editPayload": [
+    {
+      "table": "sistemas_dimensionados",
+      "mutation": "update",
+      "payload": {
+        "identificacao": "Identificação editada no teste"
+      },
+      "filters": [
+        [
+          "eq",
+          "id",
+          "system-0"
+        ]
+      ]
+    },
+    {
+      "name": "recalcularRevisao",
+      "payload": {
+        "data": {
+          "revisao_id": "rev-fixture"
+        }
+      }
+    }
+  ],
+  "pastePayload": [
+    {
+      "table": "sistemas_dimensionados",
+      "mutation": "update",
+      "payload": {
+        "identificacao": "Identificação editada no teste"
+      },
+      "filters": [
+        [
+          "eq",
+          "id",
+          "system-0"
+        ]
+      ]
+    },
+    {
+      "name": "recalcularRevisao",
+      "payload": {
+        "data": {
+          "revisao_id": "rev-fixture"
+        }
+      }
+    },
+    {
+      "table": "sistemas_dimensionados",
+      "mutation": "insert",
+      "payload": [
+        {
+          "identificacao": "Setor colado",
+          "tipo": "OVERHEAD",
+          "metragem": 120,
+          "trechos": 4,
+          "organization_id": "org-fixture",
+          "revisao_id": "rev-fixture",
+          "ordem": 18,
+          "origem": "manual"
+        }
+      ],
+      "filters": []
+    },
+    {
+      "name": "recalcularRevisao",
+      "payload": {
+        "data": {
+          "revisao_id": "rev-fixture"
+        }
+      }
+    }
+  ],
+  "internalSummary": "NEXUS\nTecnologia em Segurança\npara o Agroindustrial\n\nVISÃO GERAL\n\nDashboard\n\nCOMERCIAL\n\nComercial\nClientes\nProdutos e Soluções\n\nTÉCNICO\n\nLevantamentos Técnicos\nEngenharia\nMapas 3D das Unidades\n\nOPERAÇÃO\n\nProjetos\nCompras e Produção\nExecução / OS\n\nCONFORMIDADE\n\nDocumentação Técnica\nInspeções\n\nGESTÃO\n\nFinanceiro\nRelatórios\nConfigurações\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nComercial / Propostas / 054/26\n\nPROPOSTA 054/26 · REV. 05\n\nCooperativa Industrial — Unidade de teste\n\nRecebimento e armazenagem de grãos · Proteção de acesso e manutenção industrial\n\nRascunho\n\nTotal final\n\nR$ 1.751.354,77\n\nPendências\n\n1\n\n1. Itens comerciais\n2. Dimensionamento\n3. Orçamento\n4. Planejamento de compras\n5. Planejamento de produção\n6. Resumo executivo\nParâmetros\nHistórico\n\nNEXUS\n\nVisão interna (contém custos) · RASCUNHO\n\nProposta 054/26 · Rev. 05\n\nNão emitida\n\nCliente: Cooperativa Industrial — Unidade de teste · CNPJ 00.000.000/0000-00\n\nObra: Recebimento e armazenagem de grãos · Endereço sintético para revisão visual\n\nContato: Contato de teste contato@example.invalid\n\nInstalação de sistemas de proteção para manutenção e acesso industrial.\n\nSistemas\n1\tPavilhão de recebimento • passarela norte\tOVERHEAD\t480 m\n2\tSetor 02 — cobertura industrial\tTELHADO\t80 m\n3\tSetor 03 — cobertura industrial\tOVERHEAD\t480 m\n4\tSetor 04 — cobertura industrial\tTELHADO\t80 m\n5\tSetor 05 — cobertura industrial\tOVERHEAD\t480 m\n6\tSetor 06 — cobertura industrial\tTELHADO\t80 m\n7\tSetor 07 — cobertura industrial\tOVERHEAD\t480 m\n8\tSetor 08 — cobertura industrial\tTELHADO\t80 m\n9\tSetor 09 — cobertura industrial\tOVERHEAD\t480 m\n10\tSetor 10 — cobertura industrial\tTELHADO\t80 m\n11\tSetor 11 — cobertura industrial\tOVERHEAD\t480 m\n12\tSetor 12 — cobertura industrial\tTELHADO\t80 m\n13\tSetor 13 — cobertura industrial\tOVERHEAD\t480 m\n14\tSetor 14 — cobertura industrial\tTELHADO\t80 m\n15\tSetor 15 — cobertura industrial\tOVERHEAD\t480 m\n16\tSetor 16 — cobertura industrial\tTELHADO\t80 m\n17\tSetor 17 — cobertura industrial\tOVERHEAD\t480 m\nInvestimento\nItem técnico\nR$ 19.750,00\nMateriais\nR$ 1.245.789,12\nMontagem\nR$ 498.315,65\nDesconto\nR$ 12.500,00\nTotal\nR$ 1.751.354,77\nResultado (interno)\nR$ 490.379,34\nMargem (interno)\n28%\nFormas de pagamento\n\nOpção 1: 12 parcelas sem juros — R$ 145.946,23 a R$ 145.946,23.\n\nOpção 2: item técnico + materiais em 50% / 30% / 20% (R$ 632.769,56 / R$ 379.661,74 / R$ 253.107,82); montagem por medições quinzenais.\n\nCondições\n\nValidade: 30 dias · Garantia: 5 anos\n\nFrete incluso. Condições comerciais sujeitas à emissão da proposta.\n\nResponsável técnico: Responsável de teste\n\nAções\nVer documento do cliente\nImprimir\nEmitir e enviar ao cliente\nTextos do documento\n\nSomente textos e condições previstos no modelo.\n\nObjeto\nValidade\nGarantia\nCondicoes\nResponsável técnico\nSalvar textos\nDocumentos emitidos\n\nNenhum documento emitido.",
+  "keyboardFirstFocus": {
+    "tag": "A",
+    "text": "NEXUSTecnologia em Segurançapara o Agroindustrial",
+    "label": null,
+    "outline": "rgb(16, 16, 16) auto 1px"
+  },
+  "zoom200": {
+    "viewport": 1366,
+    "pageWidth": 3196,
+    "overflow": true,
+    "headings": [
+      "Cooperativa Industrial — Unidade de teste",
+      "Itens comerciais"
+    ],
+    "rows": 17,
+    "unnamedInputs": [
+      {
+        "tag": "TEXTAREA",
+        "type": "textarea",
+        "placeholder": "COMP-05\t12,94"
+      }
+    ],
+    "opaqueHeader": [
+      {
+        "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+        "backdrop": "blur(8px)"
+      },
+      {
+        "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+        "backdrop": "blur(8px)"
+      }
+    ]
+  },
+  "keyboardViewportProxy": {
+    "viewport": 390,
+    "pageWidth": 1009,
+    "overflow": true,
+    "headings": [
+      "Cooperativa Industrial — Unidade de teste",
+      "Sistemas dimensionados"
+    ],
+    "rows": 17,
+    "unnamedInputs": [
+      {
+        "tag": "TEXTAREA",
+        "type": "textarea",
+        "placeholder": "Pav.IV - Overhead\tOVERHEAD\t120\t4"
+      }
+    ],
+    "opaqueHeader": [
+      {
+        "background": "oklab(0.18 -0.0275746 0.00486215 / 0.9)",
+        "backdrop": "blur(8px)"
+      },
+      {
+        "background": "oklab(0.18 -0.0275746 0.00486215 / 0.95)",
+        "backdrop": "blur(8px)"
+      }
+    ]
+  },
+  "assertions": {
+    "viewportMatrixComplete": true,
+    "scenariosComplete": true,
+    "noBrowserErrors": true,
+    "noExternalApplicationRequests": true,
+    "noPageOverflow": false,
+    "editUsesOriginalPatch": true,
+    "pasteUsesOriginalInsert": true
+  },
+  "environmentNote": "Windows antivirus injected Kaspersky script attempts; all aborted. No application API/backend request was made."
+}

@@ -1,0 +1,470 @@
+{
+  "date": "2026-09-27T22:59:54.782Z",
+  "browser": "149.0.7827.55",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpus": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logicalCpus": 4
+  },
+  "methodology": "Synthetic presentation-only fixtures; actual source components/hooks/handlers. Browser events to second requestAnimationFrame (conservative local paint proxy, not server time). No CPU throttle. Five observations including the first interaction per count/action, 1366×768. Physical keyboard/zoom/mobile device unavailable. No production backend reachable.",
+  "performance": [
+    {
+      "count": 17,
+      "action": "input",
+      "medianMs": 31.699999809265137,
+      "maxMs": 31.800000190734863,
+      "samples": [
+        {
+          "ms": 12.199999809265137,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.700000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.40000009536743,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.699999809265137,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.800000190734863,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "selection",
+      "medianMs": 31.699999809265137,
+      "maxMs": 31.800000190734863,
+      "samples": [
+        {
+          "ms": 17.90000009536743,
+          "nodes": 557,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 28.300000190734863,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 31.699999809265137,
+          "nodes": 557,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 31.700000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 31.800000190734863,
+          "nodes": 557,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "panel",
+      "medianMs": 20.100000143051147,
+      "maxMs": 28.600000143051147,
+      "samples": [
+        {
+          "ms": 28.600000143051147,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 23.799999952316284,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 19.300000190734863,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 20.100000143051147,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 19.700000047683716,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "scroll",
+      "medianMs": 31.200000047683716,
+      "maxMs": 31.899999856948853,
+      "samples": [
+        {
+          "ms": 2.700000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.899999856948853,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.899999856948853,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "input",
+      "medianMs": 31.59999990463257,
+      "maxMs": 31.699999809265137,
+      "samples": [
+        {
+          "ms": 21.299999952316284,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 25.699999809265137,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.59999990463257,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.600000143051147,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.699999809265137,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "selection",
+      "medianMs": 47.10000014305115,
+      "maxMs": 56.39999985694885,
+      "samples": [
+        {
+          "ms": 56.39999985694885,
+          "nodes": 1885,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 47.10000014305115,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 47.89999985694885,
+          "nodes": 1885,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 45.700000047683716,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 43.89999985694885,
+          "nodes": 1885,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "panel",
+      "medianMs": 24.800000190734863,
+      "maxMs": 32.80000019073486,
+      "samples": [
+        {
+          "ms": 32.80000019073486,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 24.5,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 24.800000190734863,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 24.09999990463257,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "scroll",
+      "medianMs": 31.5,
+      "maxMs": 32.299999952316284,
+      "samples": [
+        {
+          "ms": 4.200000047683716,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.5,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.09999990463257,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.299999952316284,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.59999990463257,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "input",
+      "medianMs": 45.09999990463257,
+      "maxMs": 53.5,
+      "samples": [
+        {
+          "ms": 53.5,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 46.10000014305115,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 45.09999990463257,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 44.5,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 43.799999952316284,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "selection",
+      "medianMs": 63.299999952316284,
+      "maxMs": 215.70000004768372,
+      "samples": [
+        {
+          "ms": 215.70000004768372,
+          "nodes": 8285,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 129.59999990463257,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 63.299999952316284,
+          "nodes": 8285,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 58.09999990463257,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 59.59999990463257,
+          "nodes": 8285,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "panel",
+      "medianMs": 74.60000014305115,
+      "maxMs": 81.89999985694885,
+      "samples": [
+        {
+          "ms": 81.89999985694885,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 78,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 74.29999995231628,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 74.60000014305115,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 72.19999980926514,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "scroll",
+      "medianMs": 31.199999809265137,
+      "maxMs": 31.5,
+      "samples": [
+        {
+          "ms": 7.300000190734863,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.199999809265137,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.5,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.09999990463257,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    }
+  ],
+  "note": "Measurement after row memoization, before separate static-cell memoization for bulk selection."
+}

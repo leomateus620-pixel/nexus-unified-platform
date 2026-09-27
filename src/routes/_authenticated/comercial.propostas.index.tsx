@@ -10,6 +10,7 @@ import {
   StatusBadge,
 } from "@/components/nexus/Page";
 import { useOrgId } from "@/features/org/session";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 import { usePropostas } from "@/features/propostas/lista";
 import { brl, dataBR } from "@/lib/format";
 
@@ -49,7 +50,7 @@ function Propostas() {
       <PageHeader
         eyebrow="Comercial"
         title="Propostas"
-        description="Cada proposta tem revisões; a revisão corrente abre a área de trabalho."
+        description="Cliente, obra e revisão corrente. Abra uma proposta para continuar o orçamento."
         actions={
           <Link
             to="/comercial/propostas/nova"
@@ -59,44 +60,60 @@ function Propostas() {
           </Link>
         }
       />
-      <Section title="Propostas">
-        <div className="mb-3 flex flex-wrap gap-2">
-          <input
-            aria-label="Buscar"
-            placeholder="Buscar número ou cliente"
-            defaultValue={texto ?? ""}
-            onChange={(e) =>
-              navigate({ search: (s) => ({ ...s, q: e.target.value || undefined }), replace: true })
-            }
-            className="h-8 w-64 rounded border border-input bg-background px-2 text-sm text-foreground"
-          />
-          <select
-            aria-label="Status"
-            value={status ?? ""}
-            onChange={(e) =>
-              navigate({
-                search: (s) => ({
-                  ...s,
-                  status: (e.target.value || undefined) as z.infer<typeof search>["status"],
-                }),
-                replace: true,
-              })
-            }
-            className="h-8 rounded border border-input bg-background px-2 text-sm text-foreground"
-          >
-            <option value="">Todos os status</option>
-            <option value="rascunho">Rascunho</option>
-            <option value="enviada">Enviada</option>
-            <option value="aceita">Aceita</option>
-            <option value="recusada">Recusada</option>
-          </select>
+      <Section title="Carteira de propostas" className="nx-proposals-list">
+        <div className="nx-filter-bar">
+          <label>
+            Buscar proposta
+            <input
+              aria-label="Buscar"
+              placeholder="Buscar número ou cliente"
+              defaultValue={texto ?? ""}
+              onChange={(e) =>
+                navigate({
+                  search: (s) => ({ ...s, q: e.target.value || undefined }),
+                  replace: true,
+                })
+              }
+              className="h-10 rounded border border-input bg-background px-3 text-sm text-foreground"
+            />
+          </label>
+          <label>
+            Estado da revisão
+            <select
+              aria-label="Status"
+              value={status ?? ""}
+              onChange={(e) =>
+                navigate({
+                  search: (s) => ({
+                    ...s,
+                    status: (e.target.value || undefined) as z.infer<typeof search>["status"],
+                  }),
+                  replace: true,
+                })
+              }
+              className="h-10 rounded border border-input bg-background px-3 text-sm text-foreground"
+            >
+              <option value="">Todos os status</option>
+              <option value="rascunho">Rascunho</option>
+              <option value="enviada">Enviada</option>
+              <option value="aceita">Aceita</option>
+              <option value="recusada">Recusada</option>
+            </select>
+          </label>
+          {q.data && <p className="nx-filter-count">{filtradas.length} proposta(s)</p>}
         </div>
         <QueryView
           query={{ ...q, data: q.data ? filtradas : undefined }}
           empty={
             <EmptyState
-              title="Nenhuma proposta encontrada"
-              hint="Crie uma proposta a partir de um cliente cadastrado."
+              title={
+                q.data?.length ? "Nenhum resultado para os filtros" : "Nenhuma proposta cadastrada"
+              }
+              hint={
+                q.data?.length
+                  ? "Ajuste a busca ou o estado da revisão para encontrar sua proposta."
+                  : "Crie uma proposta a partir de um cliente cadastrado."
+              }
             />
           }
         >
@@ -108,20 +125,42 @@ function Propostas() {
                 navigate({ to: "/comercial/propostas/$propostaId", params: { propostaId: p.id } })
               }
               columns={[
-                { key: "numero", label: "Número" },
-                { key: "cliente", label: "Cliente" },
-                { key: "unidade", label: "Unidade", render: (p) => p.unidade ?? "—" },
                 {
-                  key: "rev",
-                  label: "Rev.",
-                  render: (p) => (p.revisao ? String(p.revisao.numero).padStart(2, "0") : "—"),
+                  key: "cliente",
+                  label: "Cliente / obra",
+                  render: (p) => (
+                    <RecordIdentity
+                      primary={p.cliente}
+                      secondary={p.unidade ?? "Unidade não informada"}
+                    />
+                  ),
+                },
+                {
+                  key: "numero",
+                  label: "Proposta / revisão",
+                  render: (p) => (
+                    <RecordIdentity
+                      code
+                      primary={p.numero}
+                      secondary={
+                        p.revisao
+                          ? `Revisão ${String(p.revisao.numero).padStart(2, "0")}`
+                          : "Sem revisão"
+                      }
+                    />
+                  ),
                 },
                 {
                   key: "status",
                   label: "Status",
                   render: (p) => (p.revisao ? <StatusBadge value={p.revisao.status} /> : "—"),
                 },
-                { key: "final", label: "Total", align: "right", render: (p) => brl(p.final) },
+                {
+                  key: "final",
+                  label: "Valor da revisão",
+                  align: "right",
+                  render: (p) => <strong className="font-medium">{brl(p.final)}</strong>,
+                },
                 { key: "created_at", label: "Criada", render: (p) => dataBR(p.created_at) },
               ]}
             />

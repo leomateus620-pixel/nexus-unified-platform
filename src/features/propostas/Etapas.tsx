@@ -14,11 +14,12 @@ import {
   LoadingState,
   QueryView,
   Section,
-  StatCard,
   StatusBadge,
 } from "@/components/nexus/Page";
+import { PromptAction, ValuesBand } from "@/components/nexus/OperationalDetails";
+import { SaveFeedback } from "@/components/nexus/Workspace";
 import { supabase } from "@/integrations/supabase/client";
-import { mesclarParametros, PARAMETROS_MODELO, type Parametros } from "@/features/calculo/domain";
+import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brl, dataBR, pct, qtd } from "@/lib/format";
 import { gerarDemanda, gerarOrdens, novaRevisao, transicionarRevisao } from "./propostas.functions";
@@ -60,7 +61,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
   return (
     <div className="space-y-4">
       {r.desatualizada && (
-        <p className="rounded border border-warning/40 bg-warning/10 p-2 text-sm text-warning">
+        <p className="nx-inline-notice" role="status">
           Há alterações não refletidas nos valores abaixo.{" "}
           {r.editavel && (
             <button className="underline" onClick={() => recalc.mutate()}>
@@ -78,33 +79,43 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
           </ul>
         </Section>
       )}
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
-        <StatCard label="Materiais" value={brl(t.materiais)} />
-        <StatCard
-          label="Montagem"
-          value={brl(t.montagem)}
-          hint={pct(mesclarParametros(r.parametros).montagem_percentual) + " dos materiais"}
-        />
-        <StatCard label="Item técnico" value={brl(t.item_tecnico)} />
-        <StatCard label="Desconto" value={brl(t.desconto)} />
-        <StatCard label="Total final" value={brl(t.final)} tone="primary" />
+      <ValuesBand
+        items={[
+          { label: "Materiais", value: brl(t.materiais) },
+          {
+            label: "Montagem",
+            value: brl(t.montagem),
+            hint: pct(mesclarParametros(r.parametros).montagem_percentual) + " dos materiais",
+          },
+          { label: "Item técnico", value: brl(t.item_tecnico) },
+          { label: "Desconto", value: brl(t.desconto) },
+        ]}
+        total={brl(t.final)}
+        pending={r.desatualizada}
+      >
         {verCusto && (
-          <StatCard
-            label="Margem estimada"
-            value={pct(t.margem)}
-            hint={`Resultado ${brl(t.resultado)}`}
-          />
+          <>
+            <span>Análise interna</span>
+            <span>
+              Margem estimada <strong>{pct(t.margem)}</strong>
+            </span>
+            <span>
+              Resultado <strong>{brl(t.resultado)}</strong>
+            </span>
+          </>
         )}
-      </div>
-      <div className="flex gap-2">
+      </ValuesBand>
+      <div className="nx-segmented" role="group" aria-label="Agrupar orçamento">
         <ActionButton
           variant={visao === "sistema" ? "primary" : "ghost"}
+          aria-pressed={visao === "sistema"}
           onClick={() => setVisao("sistema")}
         >
           Por sistema
         </ActionButton>
         <ActionButton
           variant={visao === "componente" ? "primary" : "ghost"}
+          aria-pressed={visao === "componente"}
           onClick={() => setVisao("componente")}
         >
           Por componente
@@ -194,7 +205,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
       )}
       <div className="grid gap-4 lg:grid-cols-2">
         <Section title="Operação prevista (recursos)">
-          <dl className="grid grid-cols-2 gap-y-1 text-sm">
+          <dl className="nx-number-list">
             {(
               [
                 ["Metragem telhado", qtd(t.metragem_telhado, "m")],
@@ -214,7 +225,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
                   : []),
               ] as [string, string][]
             ).map(([k, v]) => (
-              <div key={k} className="contents">
+              <div key={k}>
                 <dt className="text-muted-foreground">{k}</dt>
                 <dd className="text-right tabular-nums text-foreground">{v}</dd>
               </div>
@@ -226,7 +237,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
             title="Resultado calculado pelo modelo"
             description="Não é demonstração contábil. Tributos são provisões parametrizadas, sem validação fiscal."
           >
-            <dl className="grid grid-cols-2 gap-y-1 text-sm">
+            <dl className="nx-number-list">
               {(
                 [
                   ["Preço-base", brl(t.base)],
@@ -240,7 +251,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
                   ["Margem", pct(t.margem)],
                 ] as [string, string][]
               ).map(([k, v]) => (
-                <div key={k} className="contents">
+                <div key={k}>
                   <dt className="text-muted-foreground">{k}</dt>
                   <dd className="text-right tabular-nums text-foreground">{v}</dd>
                 </div>
@@ -316,7 +327,7 @@ export function Planejamento({
         title={modo === "compras" ? "Planejamento de compras" : "Planejamento de produção"}
         description="Planejar a demanda não exige comprar ou fabricar para emitir a proposta. Ordens só são geradas após a aceitação (liberação operacional)."
       >
-        <div className="mb-3 flex flex-wrap gap-2">
+        <div className="nx-planning-actions">
           <ActionButton loading={planejar.isPending} onClick={() => planejar.mutate()}>
             Atualizar demanda a partir da composição
           </ActionButton>
@@ -331,11 +342,17 @@ export function Planejamento({
           </ActionButton>
           <Link
             to={modo === "compras" ? "/compras/ordens-compra" : "/compras/ordens-producao"}
-            className="self-center text-xs text-primary hover:underline"
+            className="self-center text-sm text-primary hover:underline"
           >
             Abrir ordens em Compras e Produção →
           </Link>
         </div>
+        {!aceita && (
+          <p className="nx-inline-notice mb-4">
+            Geração de OC/OP disponível após a aceitação da revisão. A demanda pode ser planejada
+            antes.
+          </p>
+        )}
         {planejar.isError && (
           <p className="mb-2 text-sm text-destructive">{erroMsg(planejar.error)}</p>
         )}
@@ -384,14 +401,14 @@ export function Planejamento({
                   : []),
                 {
                   key: "nec",
-                  label: "Necessária",
+                  label: "Necessidade",
                   align: "right",
                   render: (d) =>
                     qtd(Number(d.quantidade_necessaria), d.revisao_componentes?.unidade),
                 },
                 {
                   key: "aloc",
-                  label: "Em ordens",
+                  label: "Comprometida",
                   align: "right",
                   render: (d) => qtd(alocado(d), d.revisao_componentes?.unidade),
                 },
@@ -403,7 +420,7 @@ export function Planejamento({
                 },
                 {
                   key: "pend",
-                  label: "Pendente",
+                  label: "Saldo a realizar",
                   align: "right",
                   render: (d) =>
                     qtd(
@@ -494,13 +511,14 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   });
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
-      <article className="rounded-lg border border-border bg-card p-6 text-sm print:border-0">
-        <div className="flex items-start justify-between border-b border-border pb-4">
+    <div className="nx-document-workspace">
+      <article
+        className="nx-document-paper"
+        aria-label={interno ? "Resumo executivo interno" : "Resumo executivo comercial"}
+      >
+        <div className="nx-document-masthead">
           <div>
-            <p className="font-display text-xl font-extrabold tracking-[0.18em] text-foreground">
-              NEXUS
-            </p>
+            <p className="nx-document-brand">NEXUS</p>
             <p className="text-xs text-muted-foreground">
               {interno ? "Visão interna (contém custos)" : "Documento comercial"} ·{" "}
               {r.status === "rascunho" ? "RASCUNHO" : r.status.toUpperCase()}
@@ -533,6 +551,14 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
           <p className="text-xs text-muted-foreground">Nenhum sistema dimensionado.</p>
         ) : (
           <table className="mt-2 w-full text-xs">
+            <thead>
+              <tr>
+                <th scope="col">Nº</th>
+                <th scope="col">Identificação / local</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Extensão</th>
+              </tr>
+            </thead>
             <tbody>
               {(sis.data ?? []).map((s) => (
                 <tr key={s.id} className="border-b border-border/60">
@@ -549,7 +575,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
         {!t || r.desatualizada ? (
           <p className="text-xs text-warning">Valores indisponíveis: recalcule a revisão.</p>
         ) : (
-          <dl className="mt-2 grid grid-cols-2 gap-y-1 text-xs">
+          <dl className="nx-number-list nx-document-values mt-2">
             {(
               [
                 ["Item técnico", brl(t.item_tecnico)],
@@ -565,7 +591,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
                   : []),
               ] as [string, string][]
             ).map(([k, v]) => (
-              <div key={k} className="contents">
+              <div key={k} data-total={k === "Total"}>
                 <dt className="text-muted-foreground">{k}</dt>
                 <dd className="text-right font-medium tabular-nums text-foreground">{v}</dd>
               </div>
@@ -601,8 +627,8 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
           <p className="mt-6 text-xs">Responsável técnico: {r.textos["responsavel_tecnico"]}</p>
         )}
       </article>
-      <aside className="space-y-4 print:hidden">
-        <Section title="Ações">
+      <aside className="nx-document-tools print:hidden">
+        <Section title="Documento e emissão">
           <div className="flex flex-col gap-2">
             {verCusto && (
               <ActionButton variant="ghost" onClick={() => setInterno(!interno)}>
@@ -612,6 +638,12 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             <ActionButton variant="ghost" onClick={() => window.print()}>
               Imprimir
             </ActionButton>
+            {r.status !== "rascunho" && (
+              <p className="text-sm text-muted-foreground">
+                A impressão usa a visão atual. Os documentos emitidos listados abaixo são registros
+                imutáveis; esta tela não abre seu snapshot histórico.
+              </p>
+            )}
             {r.editavel && (
               <ActionButton loading={acao.isPending} onClick={() => acao.mutate("enviar")}>
                 Emitir e enviar ao cliente
@@ -644,25 +676,37 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             title="Textos do documento"
             description="Somente textos e condições previstos no modelo."
           >
-            <form onSubmit={salvarTextos} className="space-y-2 text-xs">
+            <form onSubmit={salvarTextos} className="space-y-4 text-sm">
+              <SaveFeedback status={save.status} msg={save.msg} />
               {(
                 ["objeto", "validade", "garantia", "condicoes", "responsavel_tecnico"] as const
               ).map((k) => (
                 <label key={k} className="block text-muted-foreground">
                   {k === "responsavel_tecnico"
                     ? "Responsável técnico"
-                    : k[0]!.toUpperCase() + k.slice(1)}
+                    : k === "condicoes"
+                      ? "Condições"
+                      : k[0]!.toUpperCase() + k.slice(1)}
                   {k === "objeto" || k === "condicoes" ? (
                     <textarea
                       rows={3}
                       {...form.register(k)}
+                      aria-invalid={!!form.formState.errors[k]}
+                      aria-describedby={form.formState.errors[k] ? `texto-erro-${k}` : undefined}
                       className="mt-1 w-full rounded border border-input bg-background p-2 text-foreground"
                     />
                   ) : (
                     <input
                       {...form.register(k)}
+                      aria-invalid={!!form.formState.errors[k]}
+                      aria-describedby={form.formState.errors[k] ? `texto-erro-${k}` : undefined}
                       className="mt-1 h-8 w-full rounded border border-input bg-background px-2 text-foreground"
                     />
+                  )}
+                  {form.formState.errors[k] && (
+                    <span id={`texto-erro-${k}`} className="block text-destructive">
+                      {form.formState.errors[k]?.message}
+                    </span>
                   )}
                 </label>
               ))}
@@ -678,11 +722,13 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             empty={<p className="text-xs text-muted-foreground">Nenhum documento emitido.</p>}
           >
             {(rows) => (
-              <ul className="text-xs">
+              <ul className="nx-timeline">
                 {rows.map((d) => (
                   <li key={d.id}>
-                    {d.tipo} v{d.versao} · {d.interno ? "interno" : "cliente"} ·{" "}
-                    {dataBR(d.emitido_em)} (imutável)
+                    <time dateTime={d.emitido_em}>{dataBR(d.emitido_em)}</time>
+                    <p>
+                      {d.tipo} v{d.versao} · {d.interno ? "interno" : "cliente"} · imutável
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -773,30 +819,90 @@ export function ParametrosForm({
     };
   }, [form, editavel, onSave]);
   return (
-    <form
-      onSubmit={form.handleSubmit((v) => onSave(v))}
-      className="grid gap-3 md:grid-cols-2 xl:grid-cols-3"
-    >
-      {(Object.keys(PARAMETROS_MODELO) as (keyof Parametros)[]).map((k) => {
-        const err = form.formState.errors[k];
-        return (
-          <label key={k} className="text-xs text-muted-foreground">
-            {ROTULOS_PARAMETROS[k]}
-            {k === "difal_ativo" ? (
-              <input type="checkbox" disabled={!editavel} {...form.register(k)} className="ml-2" />
-            ) : (
-              <input
-                type="number"
-                step="any"
-                disabled={!editavel}
-                {...form.register(k)}
-                className="mt-1 h-8 w-full rounded border border-input bg-background px-2 text-right tabular-nums text-foreground disabled:opacity-60"
-              />
-            )}
-            {err && <span className="block text-destructive">{err.message}</span>}
-          </label>
-        );
-      })}
+    <form onSubmit={form.handleSubmit((v) => onSave(v))} className="nx-parameters">
+      {(
+        [
+          {
+            titulo: "Condições comerciais",
+            campos: [
+              "markup",
+              "desconto",
+              "frete_materiais",
+              "montagem_percentual",
+              "preco_item_tecnico",
+            ],
+          },
+          {
+            titulo: "Provisões e alíquotas",
+            campos: [
+              "aliquota_precificacao",
+              "aliquota_interestadual",
+              "aliquota_interna_destino",
+              "difal_ativo",
+            ],
+          },
+          {
+            titulo: "Equipe e produtividade",
+            campos: [
+              "tecnicos_por_equipe",
+              "produtividade_telhado_m_dia",
+              "produtividade_overhead_m_dia",
+              "horas_por_dia",
+              "horas_engenharia",
+              "custo_hora_tecnico",
+              "custo_hora_engenheiro",
+            ],
+          },
+          {
+            titulo: "Deslocamento e permanência",
+            campos: [
+              "alimentacao_dia",
+              "hospedagem_dia",
+              "preco_combustivel",
+              "km_por_litro",
+              "distancia_ida_volta_km",
+              "dias_por_viagem",
+            ],
+          },
+        ] satisfies { titulo: string; campos: (keyof Parametros)[] }[]
+      ).map((grupo) => (
+        <fieldset key={grupo.titulo} className="nx-parameter-group">
+          <legend>{grupo.titulo}</legend>
+          <div className="nx-parameter-fields">
+            {grupo.campos.map((k) => {
+              const err = form.formState.errors[k];
+              return (
+                <label key={k} className="nx-parameter-field">
+                  {ROTULOS_PARAMETROS[k]}
+                  {k === "difal_ativo" ? (
+                    <input
+                      type="checkbox"
+                      disabled={!editavel}
+                      {...form.register(k)}
+                      className="ml-2"
+                    />
+                  ) : (
+                    <input
+                      type="number"
+                      step="any"
+                      disabled={!editavel}
+                      aria-invalid={!!err}
+                      aria-describedby={err ? `param-erro-${k}` : undefined}
+                      {...form.register(k)}
+                      className="w-full rounded border border-input bg-background px-3 text-right tabular-nums text-foreground"
+                    />
+                  )}
+                  {err && (
+                    <span id={`param-erro-${k}`} className="block text-destructive">
+                      {err.message}
+                    </span>
+                  )}
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+      ))}
     </form>
   );
 }
@@ -829,6 +935,9 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
       title="Parâmetros desta revisão"
       description="Cópia versionada dos padrões de Configurações › Orçamentos. Alterar aqui não afeta outras propostas. Salva automaticamente."
     >
+      <div className="mb-4">
+        <SaveFeedback status={save.status} msg={save.msg} />
+      </div>
       <ParametrosForm
         valores={mesclarParametros(rev.data.parametros)}
         editavel={rev.data.editavel}
@@ -894,15 +1003,17 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <Section title="Revisões">
-        <ActionButton
+        <PromptAction
           loading={criar.isPending}
-          onClick={() => {
-            const m = window.prompt("Motivo da nova revisão:");
+          title="Criar nova revisão"
+          description="A revisão será criada a partir da corrente. Informe um motivo com pelo menos 3 caracteres."
+          label="Motivo da nova revisão"
+          onAnswer={(m) => {
             if (m && m.trim().length >= 3) criar.mutate(m.trim());
           }}
         >
           Criar nova revisão a partir da corrente
-        </ActionButton>
+        </PromptAction>
         {criar.isError && <p className="mt-2 text-xs text-destructive">{erroMsg(criar.error)}</p>}
         <div className="mt-3">
           <QueryView query={revs} empty={<EmptyState title="Sem revisões" />}>
@@ -951,11 +1062,15 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
             empty={<p className="text-xs text-muted-foreground">Nenhum registro.</p>}
           >
             {(rows) => (
-              <ul className="space-y-1 text-xs">
+              <ul className="nx-timeline">
                 {rows.map((a) => (
                   <li key={a.id}>
-                    {dataBR(a.created_at)} · {a.entidade} · {a.acao}
-                    {a.motivo ? ` — ${a.motivo}` : ""}
+                    <time dateTime={a.created_at}>{dataBR(a.created_at)}</time>
+                    <p className="font-medium">
+                      {a.acao}{" "}
+                      <span className="font-normal text-muted-foreground">· {a.entidade}</span>
+                    </p>
+                    {a.motivo && <p className="text-muted-foreground">{a.motivo}</p>}
                   </li>
                 ))}
               </ul>
@@ -968,10 +1083,15 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
             empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
           >
             {(rows) => (
-              <ul className="space-y-1 text-xs">
+              <ul className="nx-timeline">
                 {rows.map((c) => (
                   <li key={c.id}>
-                    {new Date(c.created_at).toLocaleString("pt-BR")} · {c.motor_versao}
+                    <time dateTime={c.created_at}>
+                      {new Date(c.created_at).toLocaleString("pt-BR")}
+                    </time>
+                    <p>
+                      Motor <span className="font-mono">{c.motor_versao}</span>
+                    </p>
                   </li>
                 ))}
               </ul>

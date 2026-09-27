@@ -1,0 +1,48 @@
+{
+  "at": "2026-09-27T23:01:29.628Z",
+  "checks": [
+    {
+      "width": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "tableTop": 608.96875
+    },
+    {
+      "width": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "tableTop": 589.46875
+    },
+    {
+      "width": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "tableTop": 573.46875
+    },
+    {
+      "width": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "tableTop": 573.46875
+    },
+    {
+      "width": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "tableTop": 440.734375
+    },
+    {
+      "width": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "tableTop": 441.1875
+    },
+    {
+      "width": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "tableTop": 444.078125
+    }
+  ],
+  "errors": []
+}

@@ -13,6 +13,7 @@ import {
   StatusBadge,
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import { PromptAction, RecordIdentity } from "@/components/nexus/OperationalDetails";
 import { useOrg } from "@/features/org/session";
 import { emitirOrdemCompra, registrarMovimento } from "@/features/propostas/propostas.functions";
 import { brl, brlUnit, qtd } from "@/lib/format";
@@ -96,7 +97,7 @@ function Page() {
     "h-8 rounded border border-input bg-background px-2 text-sm text-foreground disabled:opacity-60";
   return (
     <div className="space-y-4">
-      <nav className="text-xs text-muted-foreground">
+      <nav className="nx-order-context" aria-label="Origem da ordem de compra">
         <Link to="/compras/ordens-compra" className="hover:text-foreground">
           Ordens de compra
         </Link>{" "}
@@ -128,9 +129,20 @@ function Page() {
         description="Custo de aquisição, não preço de venda. Após emitida, a OC não é alterada."
         actions={<StatusBadge value={o.status} />}
       />
-      {erro && <p className="text-sm text-destructive">{erro}</p>}
-      <Section title="Condições">
-        <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+      {erro && (
+        <p className="text-sm text-destructive" role="alert">
+          {erro}
+        </p>
+      )}
+      <Section
+        title="Condições de aquisição"
+        description={
+          rascunho
+            ? "Campos gravados ao sair da edição. Confira as condições antes de emitir."
+            : "Ordem emitida: condições preservadas, somente leitura."
+        }
+      >
+        <div className="nx-inline-form">
           <label>
             Entrega prevista{" "}
             <input
@@ -155,7 +167,7 @@ function Page() {
               />
             </label>
           )}
-          <label className="flex-1">
+          <label className="nx-field-wide">
             Condições{" "}
             <input
               disabled={!rascunho}
@@ -166,8 +178,8 @@ function Page() {
           </label>
         </div>
         {verCusto && (
-          <p className="mt-2 text-sm">
-            Total: <span className="font-semibold tabular-nums">{brl(total)}</span>
+          <p className="nx-order-total">
+            Total de aquisição <span>{brl(total)}</span>
           </p>
         )}
         {rascunho && (
@@ -180,7 +192,10 @@ function Page() {
           </ActionButton>
         )}
       </Section>
-      <Section title="Itens">
+      <Section
+        title="Itens da ordem"
+        description="Recebimentos mantêm o vínculo com a demanda de origem."
+      >
         <DataTable
           getRowId={(i) => i.id}
           rows={o.ordem_compra_itens}
@@ -188,7 +203,9 @@ function Page() {
             {
               key: "cod",
               label: "Código",
-              render: (i) => i.demandas?.revisao_componentes?.codigo ?? "—",
+              render: (i) => (
+                <RecordIdentity code primary={i.demandas?.revisao_componentes?.codigo ?? "—"} />
+              ),
             },
             {
               key: "desc",
@@ -210,6 +227,7 @@ function Page() {
                     render: (i: { id: string; preco_unitario: number }) =>
                       rascunho ? (
                         <input
+                          aria-label="Preço unitário de aquisição"
                           type="number"
                           step="0.0001"
                           min={0}
@@ -238,7 +256,7 @@ function Page() {
             },
             {
               key: "pend",
-              label: "Pendente",
+              label: "Saldo a receber",
               align: "right",
               render: (i) =>
                 qtd(
@@ -249,23 +267,25 @@ function Page() {
             },
             {
               key: "a",
-              label: "",
+              label: "Recebimento",
               render: (i) =>
                 o.status === "emitida" &&
                 Number(i.quantidade) -
                   Number(i.quantidade_recebida) -
                   Number(i.quantidade_cancelada) >
                   0 ? (
-                  <button
-                    className="text-xs text-primary hover:underline"
-                    onClick={() => {
-                      const v = window.prompt("Quantidade recebida:");
+                  <PromptAction
+                    title="Registrar recebimento"
+                    description={`${i.demandas?.revisao_componentes?.codigo ?? "Item"} · ${i.demandas?.revisao_componentes?.descricao ?? "Descrição não informada"}`}
+                    label="Quantidade recebida"
+                    inputMode="decimal"
+                    onAnswer={(v) => {
                       const n = Number((v ?? "").replace(",", "."));
                       if (n > 0) receber.mutate({ item_id: i.id, quantidade: n });
                     }}
                   >
                     Registrar recebimento
-                  </button>
+                  </PromptAction>
                 ) : null,
             },
           ]}

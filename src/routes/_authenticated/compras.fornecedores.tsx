@@ -16,6 +16,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useOrgId } from "@/features/org/session";
 import { useFornecedores } from "@/features/propostas/hooks";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 
 export const Route = createFileRoute("/_authenticated/compras/fornecedores")({
   head: () => ({
@@ -65,25 +66,34 @@ function Page() {
         description="Fornecedor é quem vende; fabricante é a marca do componente. São cadastros distintos."
       />
       <Section title="Novo fornecedor">
-        <form onSubmit={salvar} className="flex flex-wrap gap-2">
-          <input
-            aria-label="Nome"
-            placeholder="Nome"
-            className={`${input} w-72`}
-            {...form.register("nome")}
-          />
-          <input
-            aria-label="CNPJ"
-            placeholder="CNPJ"
-            className={input}
-            {...form.register("cnpj")}
-          />
-          <input
-            aria-label="Contato"
-            placeholder="Contato"
-            className={input}
-            {...form.register("contato")}
-          />
+        <form onSubmit={salvar} className="nx-inline-form">
+          <label className="nx-field-wide">
+            Nome do fornecedor
+            <input
+              aria-label="Nome"
+              placeholder="Nome"
+              className={`${input} w-72`}
+              {...form.register("nome")}
+            />
+          </label>
+          <label>
+            CNPJ
+            <input
+              aria-label="CNPJ"
+              placeholder="CNPJ"
+              className={input}
+              {...form.register("cnpj")}
+            />
+          </label>
+          <label>
+            Contato
+            <input
+              aria-label="Contato"
+              placeholder="Contato"
+              className={input}
+              {...form.register("contato")}
+            />
+          </label>
           <ActionButton type="submit" loading={form.formState.isSubmitting}>
             Cadastrar
           </ActionButton>
@@ -100,7 +110,11 @@ function Page() {
               getRowId={(f) => f.id}
               rows={rows}
               columns={[
-                { key: "nome", label: "Nome" },
+                {
+                  key: "nome",
+                  label: "Fornecedor",
+                  render: (f) => <RecordIdentity primary={f.nome} />,
+                },
                 { key: "cnpj", label: "CNPJ", render: (f) => f.cnpj ?? "—" },
                 { key: "contato", label: "Contato", render: (f) => f.contato ?? "—" },
               ]}

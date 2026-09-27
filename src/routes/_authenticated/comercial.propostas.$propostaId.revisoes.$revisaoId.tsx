@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useBlocker } from "@tanstack/react-route
 import { useCallback, useMemo, useState } from "react";
 
 import { ErrorState, LoadingState, StatusBadge } from "@/components/nexus/Page";
+import { StepRuler, SaveFeedback } from "@/components/nexus/Workspace";
 import { SaveCtx, useRevisao, type SaveStatus } from "@/features/propostas/hooks";
 import { brl } from "@/lib/format";
 
@@ -56,8 +57,11 @@ function Workspace() {
 
   return (
     <SaveCtx.Provider value={ctx}>
-      <div className="space-y-4">
-        <nav aria-label="breadcrumb" className="text-xs text-muted-foreground">
+      <div className="nx-proposal-workspace space-y-4">
+        <nav
+          aria-label="Caminho da proposta"
+          className="nx-breadcrumb text-xs text-muted-foreground"
+        >
           <Link to="/comercial" className="hover:text-foreground">
             Comercial
           </Link>{" "}
@@ -67,28 +71,26 @@ function Workspace() {
           </Link>{" "}
           / <span className="text-foreground">{p.numero}</span>
         </nav>
-        <header className="sticky top-16 z-20 -mx-4 border-b border-border bg-background/95 px-4 pb-3 backdrop-blur md:-mx-6 md:px-6 lg:-mx-8 lg:px-8">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-primary">
+        <header className="nx-proposal-header">
+          <div className="nx-proposal-context">
+            <div className="nx-proposal-identity">
+              <p className="nx-eyebrow">
                 Proposta {p.numero} · Rev. {String(r.numero).padStart(2, "0")}
               </p>
-              <h1 className="text-xl font-bold text-foreground">
-                {p.clientes?.razao_social ?? "—"}
-              </h1>
-              <p className="text-xs text-muted-foreground">
+              <h1>{p.clientes?.razao_social ?? "—"}</h1>
+              <p className="nx-proposal-subtitle">
                 {p.unidades?.nome ?? "Sem unidade"}
                 {p.titulo ? ` · ${p.titulo}` : ""}
               </p>
             </div>
             <StatusBadge value={statusLabel[r.status] ?? r.status} />
-            <div className="text-xs">
+            <div className="nx-context-total">
               <p className="text-muted-foreground">Total final</p>
               <p className="font-semibold tabular-nums text-foreground">
                 {r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}
               </p>
             </div>
-            <div className="text-xs">
+            <div className="nx-context-pending">
               <p className="text-muted-foreground">Pendências</p>
               <p className={pend ? "font-semibold text-warning" : "text-foreground"}>
                 {pend == null ? "—" : pend}
@@ -100,62 +102,62 @@ function Workspace() {
             {p.revisao_corrente_id !== r.id && (
               <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>
             )}
-            <SaveIndicator status={status} msg={msg} />
+            <SaveFeedback status={status} msg={msg} />
           </div>
-          <div className="mt-3 flex gap-1 overflow-x-auto">
+          <StepRuler>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
               params={params}
-              className={tab}
+              className="nx-step"
               activeProps={tabActive}
             >
-              1. Itens comerciais
+              <span className="nx-step-number">01</span> Itens comerciais
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
               params={params}
-              className={tab}
+              className="nx-step"
               activeProps={tabActive}
             >
-              2. Dimensionamento
+              <span className="nx-step-number">02</span> Dimensionamento
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento"
               params={params}
-              className={tab}
+              className="nx-step"
               activeProps={tabActive}
             >
-              3. Orçamento
+              <span className="nx-step-number">03</span> Orçamento
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/compras"
               params={params}
-              className={tab}
+              className="nx-step"
               activeProps={tabActive}
             >
-              4. Planejamento de compras
+              <span className="nx-step-number">04</span> Planejamento de compras
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/producao"
               params={params}
-              className={tab}
+              className="nx-step"
               activeProps={tabActive}
             >
-              5. Planejamento de produção
+              <span className="nx-step-number">05</span> Planejamento de produção
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo"
               params={params}
-              className={tab}
+              className="nx-step"
               activeProps={tabActive}
             >
-              6. Resumo executivo
+              <span className="nx-step-number">06</span> Resumo executivo
             </Link>
-            <span className="mx-2 border-l border-border" />
+            <span className="nx-step-divider" aria-hidden="true" />
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros"
               params={params}
-              className={tab}
+              className="nx-step nx-step-secondary"
               activeProps={tabActive}
             >
               Parâmetros
@@ -163,12 +165,12 @@ function Workspace() {
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/historico"
               params={params}
-              className={tab}
+              className="nx-step nx-step-secondary"
               activeProps={tabActive}
             >
               Histórico
             </Link>
-          </div>
+          </StepRuler>
         </header>
         <Outlet />
       </div>

@@ -1,0 +1,26 @@
+[
+  {
+    "width": 360,
+    "count": 1,
+    "visible": true,
+    "keyboardVisible": true,
+    "selected": 17,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "count": 1,
+    "visible": true,
+    "keyboardVisible": true,
+    "selected": 17,
+    "overflow": false
+  },
+  {
+    "width": 1366,
+    "count": 1,
+    "visible": true,
+    "keyboardVisible": true,
+    "selected": 17,
+    "overflow": false
+  }
+]

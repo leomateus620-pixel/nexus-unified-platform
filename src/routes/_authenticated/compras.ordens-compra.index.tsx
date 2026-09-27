@@ -11,6 +11,7 @@ import {
 import { useOrg } from "@/features/org/session";
 import { useOrdensCompra } from "@/features/suprimentos/queries";
 import { brl, dataBR, qtd } from "@/lib/format";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 
 export const Route = createFileRoute("/_authenticated/compras/ordens-compra/")({
   head: () => ({
@@ -54,9 +55,16 @@ function Page() {
                 navigate({ to: "/compras/ordens-compra/$ordemId", params: { ordemId: o.id } })
               }
               columns={[
-                { key: "numero", label: "Número" },
-                { key: "fornecedor", label: "Fornecedor" },
-                { key: "origem", label: "Origem" },
+                {
+                  key: "numero",
+                  label: "Ordem / origem",
+                  render: (o) => <RecordIdentity code primary={o.numero} secondary={o.origem} />,
+                },
+                {
+                  key: "fornecedor",
+                  label: "Fornecedor",
+                  render: (o) => <RecordIdentity primary={o.fornecedor} />,
+                },
                 { key: "entrega", label: "Entrega", render: (o) => dataBR(o.entrega_prevista) },
                 ...(verCusto
                   ? [
@@ -70,7 +78,7 @@ function Page() {
                   : []),
                 {
                   key: "pendente",
-                  label: "Qtd. pendente",
+                  label: "Saldo a receber",
                   align: "right",
                   render: (o) => qtd(o.pendente),
                 },

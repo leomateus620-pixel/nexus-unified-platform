@@ -14,6 +14,8 @@ export const Route = createFileRoute("/_authenticated")({
     return { user: data.user };
   },
   component: Gate,
+  pendingComponent: LoadingState,
+  errorComponent: ({ error, reset }) => <ErrorState error={error} onRetry={reset} />,
 });
 
 function Gate() {

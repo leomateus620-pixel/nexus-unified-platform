@@ -8,7 +8,6 @@ import { AlertCircle, ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
-import nexusLogo from "@/assets/nexus-logo.png";
 import authArtAsset from "@/assets/auth-art.png.asset.json";
 
 export const Route = createFileRoute("/auth")({

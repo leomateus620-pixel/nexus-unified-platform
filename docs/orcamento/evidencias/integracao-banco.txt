@@ -1,0 +1,27 @@
+cenario | esperado | status | obtido
+S02 campo cria cliente | negado: | PASSOU | negado: new row violates row-level security policy for table "clientes"
+S04 campo lê custos (linhas) | 0 | PASSOU | 0
+S04 campo lê revisões/totais (linhas) | 0 | PASSOU | 0
+S04 campo lê OC com preço (linhas) | 0 | PASSOU | 0
+S02 campo registra recebimento | negado:Acesso negado | PASSOU | negado: Acesso negado
+S03 admin B lê clientes de A | 0 | PASSOU | 0
+S03 admin B cria proposta em A | negado: | PASSOU | negado: new row violates row-level security policy for table "propostas"
+S03 proposta A com cliente de B | negado: | PASSOU | negado: Cliente de outra organização
+S05 enviada→rascunho | negado:Transição | PASSOU | negado: Transição de enviada para rascunho não permitida
+S05 alterar totais da enviada | negado: | PASSOU | negado: Revisão emitida é imutável. Crie nova revisão.
+S05 excluir sistema da enviada | negado: | PASSOU | negado: Revisão enviada ou aceita não pode ser alterada. Crie uma nova revisão.
+S05 alterar preço de OC emitida | negado: | PASSOU | negado: Item de ordem emitida/liberada é imutável
+S05 alterar saldo recebido direto | negado:movimento registrado | PASSOU | negado: Saldos só mudam por movimento registrado
+S05 incluir item em OC emitida | negado: | PASSOU | negado: Itens de ordem emitida/liberada não podem ser incluídos ou excluídos
+C06 receber 1,5 peça | negado:fração | PASSOU | negado: Peça indivisível não aceita fração
+T08 receber 4 | ok | PASSOU | ok
+T08 repetir chave k-1 | ok | PASSOU | ok
+T05 chave k-1 com dados diferentes | negado:dados diferentes | PASSOU | negado: Chave já usada com dados diferentes
+T08 receber 6 | ok | PASSOU | ok
+T08 excesso após saldo zero | negado:saldo | PASSOU | negado: Quantidade acima do saldo (0.000000)
+T08 total recebido | 10 | FALHOU | 10.000000
+T08 estornar 2 | ok | PASSOU | ok
+T08 saldo após estorno | 2 | FALHOU | 2.000000
+T08 movimentos preservados | 3 | PASSOU | 3
+T06 números distintos | OC-…-001,002 | PASSOU | OC-2026-001,OC-2026-002
+RESULTADO: FALHAS

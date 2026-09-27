@@ -19,9 +19,11 @@ T08 repetir chave k-1 | ok | PASSOU | ok
 T05 chave k-1 com dados diferentes | negado:dados diferentes | PASSOU | negado: Chave já usada com dados diferentes
 T08 receber 6 | ok | PASSOU | ok
 T08 excesso após saldo zero | negado:saldo | PASSOU | negado: Quantidade acima do saldo (0.000000)
-T08 total recebido | 10 | FALHOU | 10.000000
+T08 total recebido | 10 | PASSOU | 10
 T08 estornar 2 | ok | PASSOU | ok
-T08 saldo após estorno | 2 | FALHOU | 2.000000
+T08 saldo após estorno | 2 | PASSOU | 2
 T08 movimentos preservados | 3 | PASSOU | 3
 T06 números distintos | OC-…-001,002 | PASSOU | OC-2026-001,OC-2026-002
-RESULTADO: FALHAS
+T07 duas sessões recebem 7 de 10 | 1 confirmação, saldo 3 | PASSOU | 1 confirmação(ões), saldo 3
+T05 dez chamadas simultâneas mesma chave | no máximo 1 efeito | PASSOU | 0 movimento(s)
+RESULTADO: TODOS PASSARAM

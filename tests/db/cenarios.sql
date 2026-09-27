@@ -84,9 +84,9 @@ select pg_temp.tenta('T08 repetir chave k-1', $$select registrar_movimento('rece
 select pg_temp.tenta('T05 chave k-1 com dados diferentes', $$select registrar_movimento('recebimento','29000000-0000-0000-0000-000000000001',3,'k-1')$$, true, 'dados diferentes');
 select pg_temp.tenta('T08 receber 6', $$select registrar_movimento('recebimento','29000000-0000-0000-0000-000000000001',6,'k-2')$$, false);
 select pg_temp.tenta('T08 excesso após saldo zero', $$select registrar_movimento('recebimento','29000000-0000-0000-0000-000000000001',1,'k-3')$$, true, 'saldo');
-insert into resultado select 'T08 total recebido', '10', quantidade_recebida::text from ordem_compra_itens where id='29000000-0000-0000-0000-000000000001';
+insert into resultado select 'T08 total recebido', '10', trim_scale(quantidade_recebida)::text from ordem_compra_itens where id='29000000-0000-0000-0000-000000000001';
 select pg_temp.tenta('T08 estornar 2', $$select registrar_movimento('recebimento','29000000-0000-0000-0000-000000000001',2,'k-est',(select id from recebimentos where chave='k-1'))$$, false);
-insert into resultado select 'T08 saldo após estorno', '2', (quantidade - quantidade_recebida)::text from ordem_compra_itens where id='29000000-0000-0000-0000-000000000001';
+insert into resultado select 'T08 saldo após estorno', '2', trim_scale(quantidade - quantidade_recebida)::text from ordem_compra_itens where id='29000000-0000-0000-0000-000000000001';
 insert into resultado select 'T08 movimentos preservados', '3', count(*)::text from recebimentos;
 -- numeração atômica
 insert into resultado select 'T06 números distintos', 'OC-…-001,002', string_agg(n, ',') from (select proximo_numero('10000000-0000-0000-0000-000000000001','OC') n union all select proximo_numero('10000000-0000-0000-0000-000000000001','OC')) x;

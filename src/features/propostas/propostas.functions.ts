@@ -11,6 +11,7 @@ import {
   REGRAS_MODELO,
   PARAMETROS_MODELO,
 } from "@/features/calculo/domain";
+import { exigirAcao } from "@/features/auth/autorizacao";
 import { CATALOGO_MODELO, ORIGEM_PLANILHA } from "@/features/calculo/catalogo-modelo";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,18 +32,7 @@ async function orgDoUsuario(db: Db, userId: string): Promise<string> {
  * Autoriza o USUÁRIO AUTENTICADO na organização para a ação. Papéis de outros
  * membros nunca contam; erro de consulta = acesso negado.
  */
-export async function exigirPapel(db: Db, userId: string, org: string, papeis: string[]) {
-  if (!userId || !org) throw new Error("Acesso negado.");
-  const { data, error } = await db
-    .from("user_roles")
-    .select("role")
-    .eq("organization_id", org)
-    .eq("user_id", userId);
-  if (error || !Array.isArray(data)) throw new Error("Acesso negado.");
-  const tem = data.some((r: { role: string }) => r.role === "admin" || papeis.includes(r.role));
-  if (!tem) throw new Error("Permissão insuficiente para esta ação.");
-}
-function ok<T>(r: { data: T; error: { message: string } | null }): T {
+export function ok<T>(r: { data: T; error: { message: string } | null }): T {
   if (r.error) throw new Error(r.error.message);
   return r.data;
 }

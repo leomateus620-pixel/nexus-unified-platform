@@ -639,12 +639,9 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     return { demandas: agg.size };
   });
 
-async function prefixoNumero(db: Db, org: string, tabela: string, prefixo: string) {
-  const { count } = await db
-    .from(tabela)
-    .select("id", { count: "exact", head: true })
-    .eq("organization_id", org);
-  return `${prefixo}-${new Date().getFullYear()}-${String((count ?? 0) + 1).padStart(3, "0")}`;
+/** Numeração atômica no banco (substitui count + 1). */
+async function prefixoNumero(db: Db, org: string, _tabela: string, prefixo: "OC" | "OP") {
+  return ok(await db.rpc("proximo_numero", { _org: org, _prefixo: prefixo })) as string;
 }
 
 export const gerarOrdens = createServerFn({ method: "POST" })
@@ -819,6 +816,7 @@ export const liberarOrdemProducao = createServerFn({ method: "POST" })
     return { status: "liberada" };
   });
 
+/** Movimento atômico no banco (trava de saldo, idempotência por chave, estorno como evento). */
 export const registrarMovimento = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
@@ -826,64 +824,49 @@ export const registrarMovimento = createServerFn({ method: "POST" })
       .object({
         tipo: z.enum(["recebimento", "apontamento"]),
         item_id: z.string().uuid(),
-        quantidade: z.number().positive(),
+        quantidade: z.number().positive().finite(),
+        chave: z.string().min(8).max(120),
+        estorno_de: z.string().uuid().optional(),
       })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
+    const r = ok(
+      await db.rpc("registrar_movimento", {
+        _tipo: data.tipo,
+        _item: data.item_id,
+        _quantidade: data.quantidade,
+        _chave: data.chave,
+        _estorno_de: data.estorno_de ?? null,
+      }),
+    ) as { id: string; repetido: boolean };
+    return { ok: true, ...r };
+  });
+
+/** Aprovação técnica vinculada ao hash da composição atual. */
+export const aprovarTecnica = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z.object({ revisao_id: z.string().uuid(), observacao: z.string().max(500).optional() }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    if (data.tipo === "recebimento") {
-      const it = ok(
-        await db
-          .from("ordem_compra_itens")
-          .select("*,ordens_compra(status)")
-          .eq("id", data.item_id)
-          .eq("organization_id", org)
-          .single(),
-      ) as any;
-      if (it.ordens_compra.status !== "emitida")
-        throw new Error("Somente OCs emitidas recebem material.");
-      const pendente =
-        Number(it.quantidade) - Number(it.quantidade_recebida) - Number(it.quantidade_cancelada);
-      if (data.quantidade > pendente + 1e-9)
-        throw new Error(`Quantidade acima do pendente (${pendente}).`);
-      ok(
-        await db
-          .from("recebimentos")
-          .insert({ organization_id: org, item_id: it.id, quantidade: data.quantidade }),
-      );
-      ok(
-        await db
-          .from("ordem_compra_itens")
-          .update({ quantidade_recebida: Number(it.quantidade_recebida) + data.quantidade })
-          .eq("id", it.id),
-      );
-    } else {
-      const it = ok(
-        await db
-          .from("ordem_producao_itens")
-          .select("*,ordens_producao(status)")
-          .eq("id", data.item_id)
-          .eq("organization_id", org)
-          .single(),
-      ) as any;
-      if (it.ordens_producao.status !== "liberada")
-        throw new Error("Somente OPs liberadas recebem apontamentos.");
-      const pendente = Number(it.quantidade) - Number(it.quantidade_produzida);
-      if (data.quantidade > pendente + 1e-9)
-        throw new Error(`Quantidade acima do pendente (${pendente}).`);
-      ok(
-        await db
-          .from("apontamentos")
-          .insert({ organization_id: org, item_id: it.id, quantidade: data.quantidade }),
-      );
-      ok(
-        await db
-          .from("ordem_producao_itens")
-          .update({ quantidade_produzida: Number(it.quantidade_produzida) + data.quantidade })
-          .eq("id", it.id),
-      );
-    }
-    return { ok: true };
+    await exigirAcao(db, context.userId, org, "aprovar_tecnica");
+    const rev = await revisaoDaOrg(db, org, data.revisao_id);
+    if (rev.desatualizada) throw new Error("Recalcule a revisão antes da aprovação técnica.");
+    const hash = ok(await db.rpc("hash_tecnico", { _rev: rev.id })) as string;
+    ok(
+      await db.from("aprovacoes").insert({
+        organization_id: org,
+        revisao_id: rev.id,
+        tipo: "tecnica",
+        hash_conteudo: hash,
+        autor: context.userId,
+        observacao: data.observacao ?? null,
+      }),
+    );
+    await auditar(db, org, "revisao", rev.id, "aprovar_tecnica", { hash });
+    return { hash };
   });

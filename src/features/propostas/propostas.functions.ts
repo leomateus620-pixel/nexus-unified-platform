@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- linhas do banco tratadas dinamicamente no servidor; entradas validadas por Zod */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 

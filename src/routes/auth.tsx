@@ -121,10 +121,10 @@ function AuthPage() {
           <img
             src={nexusLogo}
             alt="NEXUS"
-            width={1152}
-            height={576}
+            width={951}
+            height={188}
             loading="eager"
-            className="h-10 w-auto self-center md:self-start"
+            className="h-9 w-auto self-center md:self-start"
           />
 
           <h1 className="mt-8 font-display text-2xl font-bold tracking-tight text-foreground">

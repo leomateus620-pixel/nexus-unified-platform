@@ -13,7 +13,11 @@ export const Route = createFileRoute("/_authenticated/documentacao")({
   }),
   component: () => (
     <div className="space-y-6">
-      <PageHeader eyebrow="Documentação Técnica" title="Documentação Técnica" description="Documentos técnicos versionados." />
+      <PageHeader
+        eyebrow="Documentação Técnica"
+        title="Documentação Técnica"
+        description="Documentos técnicos versionados."
+      />
       <NotConfigured what="Laudos e dossiês ainda não foram implementados. Resumos executivos emitidos ficam na aba Resumo executivo de cada proposta, de forma imutável." />
     </div>
   ),

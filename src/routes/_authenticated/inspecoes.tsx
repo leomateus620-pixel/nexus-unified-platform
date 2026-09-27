@@ -8,12 +8,19 @@ export const Route = createFileRoute("/_authenticated/inspecoes")({
       { title: "Inspeções — Sistema Nexus" },
       { name: "description", content: "Validades e revisões periódicas de sistemas instalados." },
       { property: "og:title", content: "Inspeções — Sistema Nexus" },
-      { property: "og:description", content: "Validades e revisões periódicas de sistemas instalados." },
+      {
+        property: "og:description",
+        content: "Validades e revisões periódicas de sistemas instalados.",
+      },
     ],
   }),
   component: () => (
     <div className="space-y-6">
-      <PageHeader eyebrow="Inspeções" title="Inspeções" description="Validades e revisões periódicas de sistemas instalados." />
+      <PageHeader
+        eyebrow="Inspeções"
+        title="Inspeções"
+        description="Validades e revisões periódicas de sistemas instalados."
+      />
       <NotConfigured what="O cadastro de inspeções periódicas ainda não foi implementado." />
     </div>
   ),

@@ -13,7 +13,11 @@ export const Route = createFileRoute("/_authenticated/execucao")({
   }),
   component: () => (
     <div className="space-y-6">
-      <PageHeader eyebrow="Execução / OS" title="Execução / OS" description="Ordens de serviço, equipes e horas em campo." />
+      <PageHeader
+        eyebrow="Execução / OS"
+        title="Execução / OS"
+        description="Ordens de serviço, equipes e horas em campo."
+      />
       <NotConfigured what="Ordens de serviço e integração com o RDO NEXUS ainda não estão configuradas." />
     </div>
   ),

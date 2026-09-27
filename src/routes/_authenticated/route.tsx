@@ -41,11 +41,21 @@ function Onboarding() {
     <div className="mx-auto mt-16 max-w-md rounded-lg border border-border bg-card p-6">
       <h1 className="text-lg font-semibold text-foreground">Configure sua organização</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Sua conta ainda não pertence a uma organização. Crie a organização proprietária dos dados (você será administrador) ou peça a um administrador para incluí-lo.
+        Sua conta ainda não pertence a uma organização. Crie a organização proprietária dos dados
+        (você será administrador) ou peça a um administrador para incluí-lo.
       </p>
-      <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome da empresa" className="mt-4 h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground" />
+      <input
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+        placeholder="Nome da empresa"
+        className="mt-4 h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground"
+      />
       {erro && <p className="mt-2 text-sm text-destructive">{erro}</p>}
-      <button onClick={criar} disabled={salvando} className="mt-4 h-10 w-full rounded-md bg-primary text-sm font-medium text-primary-foreground disabled:opacity-60">
+      <button
+        onClick={criar}
+        disabled={salvando}
+        className="mt-4 h-10 w-full rounded-md bg-primary text-sm font-medium text-primary-foreground disabled:opacity-60"
+      >
         {salvando ? "Criando…" : "Criar organização"}
       </button>
     </div>

@@ -9,7 +9,10 @@ export const Route = createFileRoute("/_authenticated/relatorios")({
   head: () => ({
     meta: [
       { title: "Relatórios — Sistema Nexus" },
-      { name: "description", content: "Agregações de propostas por status a partir dos registros reais." },
+      {
+        name: "description",
+        content: "Agregações de propostas por status a partir dos registros reais.",
+      },
       { property: "og:title", content: "Relatórios — Sistema Nexus" },
       { property: "og:description", content: "Desempenho comercial." },
     ],
@@ -23,25 +26,50 @@ function Page() {
   const q = usePropostas(useOrgId());
   return (
     <div className="space-y-6">
-      <PageHeader eyebrow="Relatórios" title="Propostas por status" description="Totais pela revisão corrente de cada proposta. Revisões sem cálculo atualizado ficam como “—”." />
+      <PageHeader
+        eyebrow="Relatórios"
+        title="Propostas por status"
+        description="Totais pela revisão corrente de cada proposta. Revisões sem cálculo atualizado ficam como “—”."
+      />
       <Section title="Resumo">
         <QueryView query={q} empty={<EmptyState title="Sem dados para relatório" />}>
           {(rows) => {
-            const decididas = rows.filter((r) => r.revisao?.status === "aceita" || r.revisao?.status === "recusada");
+            const decididas = rows.filter(
+              (r) => r.revisao?.status === "aceita" || r.revisao?.status === "recusada",
+            );
             const aceitas = rows.filter((r) => r.revisao?.status === "aceita").length;
             return (
               <>
                 <table className="w-full text-sm">
-                  <thead className="text-left text-xs uppercase text-muted-foreground"><tr><th className="py-2">Status</th><th className="text-right">Qtd.</th><th className="text-right">Valor</th></tr></thead>
+                  <thead className="text-left text-xs uppercase text-muted-foreground">
+                    <tr>
+                      <th className="py-2">Status</th>
+                      <th className="text-right">Qtd.</th>
+                      <th className="text-right">Valor</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {STATUS.map((s) => {
                       const xs = rows.filter((r) => r.revisao?.status === s);
-                      const v = xs.some((x) => x.final == null) ? null : xs.reduce((a, x) => a + (x.final ?? 0), 0);
-                      return <tr key={s} className="border-t border-border/60"><td className="py-2">{s}</td><td className="text-right tabular-nums">{xs.length}</td><td className="text-right tabular-nums">{brl(v)}</td></tr>;
+                      const v = xs.some((x) => x.final == null)
+                        ? null
+                        : xs.reduce((a, x) => a + (x.final ?? 0), 0);
+                      return (
+                        <tr key={s} className="border-t border-border/60">
+                          <td className="py-2">{s}</td>
+                          <td className="text-right tabular-nums">{xs.length}</td>
+                          <td className="text-right tabular-nums">{brl(v)}</td>
+                        </tr>
+                      );
                     })}
                   </tbody>
                 </table>
-                <p className="mt-3 text-sm text-muted-foreground">Taxa de aceite: {decididas.length ? `${Math.round((aceitas / decididas.length) * 100)}% (${aceitas}/${decididas.length})` : "—"}</p>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Taxa de aceite:{" "}
+                  {decididas.length
+                    ? `${Math.round((aceitas / decididas.length) * 100)}% (${aceitas}/${decididas.length})`
+                    : "—"}
+                </p>
               </>
             );
           }}

@@ -13,7 +13,11 @@ export const Route = createFileRoute("/_authenticated/levantamentos")({
   }),
   component: () => (
     <div className="space-y-6">
-      <PageHeader eyebrow="Levantamentos Técnicos" title="Levantamentos Técnicos" description="Coleta de medições em campo por cliente e unidade." />
+      <PageHeader
+        eyebrow="Levantamentos Técnicos"
+        title="Levantamentos Técnicos"
+        description="Coleta de medições em campo por cliente e unidade."
+      />
       <NotConfigured what="O cadastro de levantamentos ainda não foi implementado. Enquanto isso, o dimensionamento é feito manualmente na proposta e fica identificado como manual." />
     </div>
   ),

@@ -12,8 +12,17 @@ function Layout() {
     <div>
       {!inWorkspace && (
         <SubNav>
-          <Link to="/comercial" activeOptions={{ exact: true }} className={subTab} activeProps={subTabActive}>Visão geral</Link>
-          <Link to="/comercial/propostas" className={subTab} activeProps={subTabActive}>Propostas</Link>
+          <Link
+            to="/comercial"
+            activeOptions={{ exact: true }}
+            className={subTab}
+            activeProps={subTabActive}
+          >
+            Visão geral
+          </Link>
+          <Link to="/comercial/propostas" className={subTab} activeProps={subTabActive}>
+            Propostas
+          </Link>
         </SubNav>
       )}
       <Outlet />

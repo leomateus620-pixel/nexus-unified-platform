@@ -37,8 +37,7 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           </p>
           <ul className="space-y-1">
             {group.items.map((item) => {
-              const active =
-                item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+              const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
               const Icon = item.icon;
               return (
                 <li key={item.to}>
@@ -74,7 +73,7 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  if (pathname === '/mapas-3d' || pathname === '/auth') return <main>{children}</main>;
+  if (pathname === "/mapas-3d" || pathname === "/auth") return <main>{children}</main>;
 
   return (
     <div className="min-h-screen bg-background">
@@ -124,7 +123,10 @@ function UserArea() {
   if (user === undefined) return <div className="ml-auto" />;
   if (!user)
     return (
-      <Link to="/auth" className="ml-auto rounded-md border border-border px-3 py-1.5 text-xs text-foreground">
+      <Link
+        to="/auth"
+        className="ml-auto rounded-md border border-border px-3 py-1.5 text-xs text-foreground"
+      >
         Entrar
       </Link>
     );
@@ -139,10 +141,18 @@ function UserArea() {
     <div className="ml-auto flex items-center gap-3">
       <div className="hidden text-right text-xs leading-tight sm:block">
         <p className="font-medium text-foreground">{email}</p>
-        <p className="text-muted-foreground">{org.data ? `${org.data.orgNome} · ${org.data.roles.join(", ") || "sem papel"}` : "—"}</p>
+        <p className="text-muted-foreground">
+          {org.data ? `${org.data.orgNome} · ${org.data.roles.join(", ") || "sem papel"}` : "—"}
+        </p>
       </div>
-      <div className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-bold uppercase text-primary-foreground">{email.slice(0, 2)}</div>
-      <button onClick={sair} aria-label="Sair" className="rounded-md border border-border p-2 text-muted-foreground hover:text-foreground">
+      <div className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-bold uppercase text-primary-foreground">
+        {email.slice(0, 2)}
+      </div>
+      <button
+        onClick={sair}
+        aria-label="Sair"
+        className="rounded-md border border-border p-2 text-muted-foreground hover:text-foreground"
+      >
         <LogOut className="size-4" />
       </button>
     </div>

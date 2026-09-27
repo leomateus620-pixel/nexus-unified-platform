@@ -1,7 +1,14 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 
-import { DataTable, EmptyState, PageHeader, QueryView, Section, StatusBadge } from "@/components/nexus/Page";
+import {
+  DataTable,
+  EmptyState,
+  PageHeader,
+  QueryView,
+  Section,
+  StatusBadge,
+} from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
 import { useOrgId } from "@/features/org/session";
 import { qtd } from "@/lib/format";
@@ -27,13 +34,18 @@ function Page() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("proposta_revisoes")
-        .select("id,numero,status,proposta_id,propostas!proposta_revisoes_proposta_id_fkey(numero,clientes(razao_social)),sistemas_dimensionados(tipo,metragem,trechos)")
+        .select(
+          "id,numero,status,proposta_id,propostas!proposta_revisoes_proposta_id_fkey(numero,clientes(razao_social)),sistemas_dimensionados(tipo,metragem,trechos)",
+        )
         .eq("organization_id", orgId)
         .neq("status", "substituida")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data.map((r) => {
-        const p = r.propostas as unknown as { numero: string; clientes: { razao_social: string } | null };
+        const p = r.propostas as unknown as {
+          numero: string;
+          clientes: { razao_social: string } | null;
+        };
         const s = r.sistemas_dimensionados;
         return {
           id: r.id,
@@ -42,29 +54,60 @@ function Page() {
           cliente: p.clientes?.razao_social ?? "—",
           status: r.status,
           n: s.length,
-          telhado: s.filter((x) => x.tipo === "TELHADO").reduce((a, x) => a + Number(x.metragem), 0),
-          overhead: s.filter((x) => x.tipo === "OVERHEAD").reduce((a, x) => a + Number(x.metragem) * x.trechos, 0),
+          telhado: s
+            .filter((x) => x.tipo === "TELHADO")
+            .reduce((a, x) => a + Number(x.metragem), 0),
+          overhead: s
+            .filter((x) => x.tipo === "OVERHEAD")
+            .reduce((a, x) => a + Number(x.metragem) * x.trechos, 0),
         };
       });
     },
   });
   return (
     <div className="space-y-4">
-      <PageHeader eyebrow="Engenharia" title="Dimensionamentos" description="Os mesmos registros editados na proposta. Abrir leva ao editor de dimensionamento da revisão." />
+      <PageHeader
+        eyebrow="Engenharia"
+        title="Dimensionamentos"
+        description="Os mesmos registros editados na proposta. Abrir leva ao editor de dimensionamento da revisão."
+      />
       <Section title="Revisões com dimensionamento">
-        <QueryView query={q} empty={<EmptyState title="Nenhuma revisão" hint="Dimensionamentos são criados dentro das propostas." />}>
+        <QueryView
+          query={q}
+          empty={
+            <EmptyState
+              title="Nenhuma revisão"
+              hint="Dimensionamentos são criados dentro das propostas."
+            />
+          }
+        >
           {(rows) => (
             <DataTable
               getRowId={(r) => r.id}
               rows={rows}
-              onRowClick={(r) => navigate({ to: "/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento", params: { propostaId: r.proposta_id, revisaoId: r.id } })}
+              onRowClick={(r) =>
+                navigate({
+                  to: "/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento",
+                  params: { propostaId: r.proposta_id, revisaoId: r.id },
+                })
+              }
               columns={[
                 { key: "label", label: "Proposta" },
                 { key: "cliente", label: "Cliente" },
                 { key: "status", label: "Status", render: (r) => <StatusBadge value={r.status} /> },
                 { key: "n", label: "Sistemas", align: "right" },
-                { key: "telhado", label: "Telhado", align: "right", render: (r) => qtd(r.telhado, "m") },
-                { key: "overhead", label: "Overhead (instalado)", align: "right", render: (r) => qtd(r.overhead, "m") },
+                {
+                  key: "telhado",
+                  label: "Telhado",
+                  align: "right",
+                  render: (r) => qtd(r.telhado, "m"),
+                },
+                {
+                  key: "overhead",
+                  label: "Overhead (instalado)",
+                  align: "right",
+                  render: (r) => qtd(r.overhead, "m"),
+                },
               ]}
             />
           )}

@@ -61,15 +61,13 @@ function Clientes() {
   });
   const salvar = form.handleSubmit(async (v) => {
     setErro(null);
-    const { error } = await supabase
-      .from("clientes")
-      .insert({
-        ...v,
-        uf: v.uf.toUpperCase() || null,
-        cnpj: v.cnpj || null,
-        cidade: v.cidade || null,
-        organization_id: orgId,
-      });
+    const { error } = await supabase.from("clientes").insert({
+      ...v,
+      uf: v.uf.toUpperCase() || null,
+      cnpj: v.cnpj || null,
+      cidade: v.cidade || null,
+      organization_id: orgId,
+    });
     if (error) return setErro(error.message);
     form.reset();
     qc.invalidateQueries({ queryKey: ["clientes", orgId] });
@@ -83,15 +81,13 @@ function Clientes() {
     if (!nome?.trim()) return;
     const endereco = window.prompt("Endereço (opcional):") ?? "";
     const km = window.prompt("Distância ida e volta em km (opcional):") ?? "";
-    const { error } = await supabase
-      .from("unidades")
-      .insert({
-        organization_id: orgId,
-        cliente_id: cli.id,
-        nome: nome.trim(),
-        endereco: endereco || null,
-        distancia_ida_volta_km: km ? Number(km.replace(",", ".")) : null,
-      });
+    const { error } = await supabase.from("unidades").insert({
+      organization_id: orgId,
+      cliente_id: cli.id,
+      nome: nome.trim(),
+      endereco: endereco || null,
+      distancia_ida_volta_km: km ? Number(km.replace(",", ".")) : null,
+    });
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["clientes", orgId] });
   }
@@ -100,14 +96,12 @@ function Clientes() {
     const nome = window.prompt("Nome do contato:");
     if (!nome?.trim()) return;
     const email = window.prompt("E-mail (opcional):") ?? "";
-    const { error } = await supabase
-      .from("contatos")
-      .insert({
-        organization_id: orgId,
-        cliente_id: cli.id,
-        nome: nome.trim(),
-        email: email || null,
-      });
+    const { error } = await supabase.from("contatos").insert({
+      organization_id: orgId,
+      cliente_id: cli.id,
+      nome: nome.trim(),
+      email: email || null,
+    });
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["clientes", orgId] });
   }

@@ -58,16 +58,14 @@ function RegrasPage() {
     if (!desc || desc.trim().length < 3) return setErro("Descrição obrigatória");
     setErro(null);
     const versao = (q.data[0]?.versao ?? 0) + 1;
-    const { error } = await supabase
-      .from("regras_versionadas")
-      .insert({
-        organization_id: orgId,
-        versao,
-        descricao: desc.trim(),
-        regras: edit,
-        ativa: false,
-        origem: "edição Engenharia",
-      });
+    const { error } = await supabase.from("regras_versionadas").insert({
+      organization_id: orgId,
+      versao,
+      descricao: desc.trim(),
+      regras: edit,
+      ativa: false,
+      origem: "edição Engenharia",
+    });
     if (error) return setErro(error.message);
     if (ativa)
       await supabase.from("regras_versionadas").update({ ativa: false }).eq("id", ativa.id);

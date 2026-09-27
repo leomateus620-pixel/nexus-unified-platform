@@ -112,14 +112,12 @@ function Produtos() {
       .select("id")
       .single();
     if (error) return setErro(error.message);
-    const { error: e2 } = await supabase
-      .from("produto_custos")
-      .insert({
-        organization_id: orgId,
-        produto_id: data.id,
-        custo: v.custo,
-        origem: "cadastro manual",
-      });
+    const { error: e2 } = await supabase.from("produto_custos").insert({
+      organization_id: orgId,
+      produto_id: data.id,
+      custo: v.custo,
+      origem: "cadastro manual",
+    });
     if (e2) return setErro(e2.message);
     form.reset();
     qc.invalidateQueries({ queryKey: ["produtos", orgId] });

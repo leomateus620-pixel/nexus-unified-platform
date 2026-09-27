@@ -69,15 +69,13 @@ function Produto() {
     const vig =
       window.prompt("Vigência (AAAA-MM-DD):", new Date().toISOString().slice(0, 10)) ?? "";
     const origem = window.prompt("Origem (cotação, fornecedor, documento):") ?? "";
-    const { error } = await supabase
-      .from("produto_custos")
-      .insert({
-        organization_id: orgId,
-        produto_id: p.id,
-        custo: n,
-        ...(vig ? { vigencia: vig } : {}),
-        origem: origem || null,
-      });
+    const { error } = await supabase.from("produto_custos").insert({
+      organization_id: orgId,
+      produto_id: p.id,
+      custo: n,
+      ...(vig ? { vigencia: vig } : {}),
+      origem: origem || null,
+    });
     if (error) return setErro(error.message);
     qc.invalidateQueries({ queryKey: ["produto", produtoId] });
   };

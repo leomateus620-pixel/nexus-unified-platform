@@ -73,17 +73,15 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
   ) {
     save.set("salvando");
     const base = lista.reduce((m, s) => Math.max(m, s.ordem), 0);
-    const { error } = await supabase
-      .from("sistemas_dimensionados")
-      .insert(
-        rows.map((r, i) => ({
-          ...r,
-          organization_id: orgId,
-          revisao_id: revisaoId,
-          ordem: base + i + 1,
-          origem: "manual",
-        })),
-      );
+    const { error } = await supabase.from("sistemas_dimensionados").insert(
+      rows.map((r, i) => ({
+        ...r,
+        organization_id: orgId,
+        revisao_id: revisaoId,
+        ordem: base + i + 1,
+        origem: "manual",
+      })),
+    );
     if (error) return save.set("erro", error.message);
     await qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) });
     agendarRecalculo();

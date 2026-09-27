@@ -46,14 +46,12 @@ function Page() {
   });
   const salvar = form.handleSubmit(async (v) => {
     setErro(null);
-    const { error } = await supabase
-      .from("fornecedores")
-      .insert({
-        organization_id: orgId,
-        nome: v.nome,
-        cnpj: v.cnpj || null,
-        contato: v.contato || null,
-      });
+    const { error } = await supabase.from("fornecedores").insert({
+      organization_id: orgId,
+      nome: v.nome,
+      cnpj: v.cnpj || null,
+      contato: v.contato || null,
+    });
     if (error) return setErro(error.message);
     form.reset();
     qc.invalidateQueries({ queryKey: ["fornecedores", orgId] });

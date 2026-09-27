@@ -47,16 +47,14 @@ async function auditar(
   dados?: unknown,
   motivo?: string,
 ) {
-  await db
-    .from("auditoria")
-    .insert({
-      organization_id: org,
-      entidade,
-      entidade_id: id,
-      acao,
-      dados: dados ?? null,
-      motivo: motivo ?? null,
-    });
+  await db.from("auditoria").insert({
+    organization_id: org,
+    entidade,
+    entidade_id: id,
+    acao,
+    dados: dados ?? null,
+    motivo: motivo ?? null,
+  });
 }
 async function revisaoDaOrg(db: Db, org: string, revisaoId: string) {
   const rev = ok(
@@ -120,16 +118,14 @@ export const importarModeloPlanilha = createServerFn({ method: "POST" })
           .select("id,codigo"),
       ) as { id: string; codigo: string }[];
       ok(
-        await db
-          .from("produto_custos")
-          .insert(
-            prods.map((p) => ({
-              organization_id: org,
-              produto_id: p.id,
-              custo: novos.find((c) => c.codigo === p.codigo)!.custo,
-              origem: ORIGEM_PLANILHA,
-            })),
-          ),
+        await db.from("produto_custos").insert(
+          prods.map((p) => ({
+            organization_id: org,
+            produto_id: p.id,
+            custo: novos.find((c) => c.codigo === p.codigo)!.custo,
+            origem: ORIGEM_PLANILHA,
+          })),
+        ),
       );
       inseridos = prods.length;
     }
@@ -138,16 +134,14 @@ export const importarModeloPlanilha = createServerFn({ method: "POST" })
     ) as unknown[];
     if (!regras.length) {
       ok(
-        await db
-          .from("regras_versionadas")
-          .insert({
-            organization_id: org,
-            versao: 1,
-            descricao: "Regras do modelo (EXISTENTE) com correções F04/F05",
-            regras: REGRAS_MODELO,
-            ativa: true,
-            origem: ORIGEM_PLANILHA,
-          }),
+        await db.from("regras_versionadas").insert({
+          organization_id: org,
+          versao: 1,
+          descricao: "Regras do modelo (EXISTENTE) com correções F04/F05",
+          regras: REGRAS_MODELO,
+          ativa: true,
+          origem: ORIGEM_PLANILHA,
+        }),
       );
     }
     ok(
@@ -349,14 +343,12 @@ export const novaRevisao = createServerFn({ method: "POST" })
     ) as any[];
     if (sis.length)
       ok(
-        await db
-          .from("sistemas_dimensionados")
-          .insert(
-            sis.map(({ id: _i, created_at: _c, revisao_id: _r, ...s }) => ({
-              ...s,
-              revisao_id: nova.id,
-            })),
-          ),
+        await db.from("sistemas_dimensionados").insert(
+          sis.map(({ id: _i, created_at: _c, revisao_id: _r, ...s }) => ({
+            ...s,
+            revisao_id: nova.id,
+          })),
+        ),
       );
     if (atual.status === "rascunho" || atual.status === "em_revisao")
       ok(await db.from("proposta_revisoes").update({ status: "substituida" }).eq("id", atual.id));
@@ -458,16 +450,14 @@ export const recalcularRevisao = createServerFn({ method: "POST" })
         .eq("id", rev.id),
     );
     ok(
-      await db
-        .from("calculo_execucoes")
-        .insert({
-          organization_id: org,
-          revisao_id: rev.id,
-          motor_versao: MOTOR_VERSAO,
-          regras_id: rev.regras_id,
-          entradas: { ...entradas, parametros: params },
-          resultado: resumo,
-        }),
+      await db.from("calculo_execucoes").insert({
+        organization_id: org,
+        revisao_id: rev.id,
+        motor_versao: MOTOR_VERSAO,
+        regras_id: rev.regras_id,
+        entradas: { ...entradas, parametros: params },
+        resultado: resumo,
+      }),
     );
     return { pendencias: r.pendencias.length, final: r.totais.final };
   });
@@ -499,19 +489,17 @@ export const transicionarRevisao = createServerFn({ method: "POST" })
       if (!(rev.totais.totais?.final > 0)) throw new Error("A revisão não tem valor final.");
       const doc = await montarDocumentoCliente(db, rev);
       ok(
-        await db
-          .from("documentos")
-          .upsert(
-            {
-              organization_id: org,
-              tipo: "resumo_executivo",
-              revisao_id: rev.id,
-              versao: 1,
-              interno: false,
-              snapshot: doc,
-            },
-            { onConflict: "revisao_id,tipo,versao", ignoreDuplicates: true },
-          ),
+        await db.from("documentos").upsert(
+          {
+            organization_id: org,
+            tipo: "resumo_executivo",
+            revisao_id: rev.id,
+            versao: 1,
+            interno: false,
+            snapshot: doc,
+          },
+          { onConflict: "revisao_id,tipo,versao", ignoreDuplicates: true },
+        ),
       );
       ok(
         await db
@@ -538,18 +526,16 @@ export const transicionarRevisao = createServerFn({ method: "POST" })
       ) as any;
       const codigo = `PRJ-${String(prop.numero).replace("/", "-")}`;
       ok(
-        await db
-          .from("projetos")
-          .upsert(
-            {
-              organization_id: org,
-              codigo,
-              proposta_id: prop.id,
-              revisao_id: rev.id,
-              cliente_id: prop.cliente_id,
-            },
-            { onConflict: "revisao_id", ignoreDuplicates: true },
-          ),
+        await db.from("projetos").upsert(
+          {
+            organization_id: org,
+            codigo,
+            proposta_id: prop.id,
+            revisao_id: rev.id,
+            cliente_id: prop.cliente_id,
+          },
+          { onConflict: "revisao_id", ignoreDuplicates: true },
+        ),
       );
       const proj = ok(
         await db.from("projetos").select("id").eq("revisao_id", rev.id).single(),

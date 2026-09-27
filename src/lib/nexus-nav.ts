@@ -97,7 +97,12 @@ export const navGroups: NavGroup[] = [
     items: [
       { to: "/financeiro", label: "Financeiro", icon: Wallet, hint: "Custos e margens" },
       { to: "/relatorios", label: "Relatórios", icon: BarChart3, hint: "Desempenho" },
-      { to: "/configuracoes", label: "Configurações", icon: Settings, hint: "Usuários e parâmetros" },
+      {
+        to: "/configuracoes",
+        label: "Configurações",
+        icon: Settings,
+        hint: "Usuários e parâmetros",
+      },
     ],
   },
 ];

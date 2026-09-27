@@ -11,9 +11,9 @@ import {
   REGRAS_MODELO,
   PARAMETROS_MODELO,
 } from "@/features/calculo/domain";
+import { exigirAcao } from "@/features/auth/autorizacao";
 import { CATALOGO_MODELO, ORIGEM_PLANILHA } from "@/features/calculo/catalogo-modelo";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Db = any;
 
 async function orgDoUsuario(db: Db, userId: string): Promise<string> {
@@ -27,14 +27,11 @@ async function orgDoUsuario(db: Db, userId: string): Promise<string> {
   if (!data) throw new Error("Usuário sem organização.");
   return data.organization_id as string;
 }
-async function exigirPapel(db: Db, org: string, papeis: string[]) {
-  const { data } = await db.from("user_roles").select("role").eq("organization_id", org);
-  const tem = (data ?? []).some(
-    (r: { role: string }) => r.role === "admin" || papeis.includes(r.role),
-  );
-  if (!tem) throw new Error("Permissão insuficiente para esta ação.");
-}
-function ok<T>(r: { data: T; error: { message: string } | null }): T {
+/**
+ * Autoriza o USUÁRIO AUTENTICADO na organização para a ação. Papéis de outros
+ * membros nunca contam; erro de consulta = acesso negado.
+ */
+export function ok<T>(r: { data: T; error: { message: string } | null }): T {
   if (r.error) throw new Error(r.error.message);
   return r.data;
 }
@@ -77,7 +74,7 @@ export const importarModeloPlanilha = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, []);
+    await exigirAcao(db, context.userId, org, "importar_catalogo");
     const fabs = [...new Set(CATALOGO_MODELO.map((c) => c.fabricante))];
     ok(
       await db.from("fabricantes").upsert(
@@ -172,7 +169,7 @@ export const criarProposta = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["comercial", "engenharia"]);
+    await exigirAcao(db, context.userId, org, "criar_proposta");
     const numero = ok(await db.rpc("proximo_numero_proposta", { _org: org })) as string;
     const cfg = ok(
       await db
@@ -292,6 +289,7 @@ export const novaRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "editar_revisao");
     const prop = ok(
       await db
         .from("propostas")
@@ -364,6 +362,7 @@ export const recalcularRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "editar_revisao");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (!["rascunho", "em_revisao"].includes(rev.status))
       throw new Error("Revisão enviada/aceita não é recalculada. Crie nova revisão.");
@@ -477,7 +476,12 @@ export const transicionarRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["comercial"]);
+    await exigirAcao(
+      db,
+      context.userId,
+      org,
+      data.acao === "enviar" ? "editar_revisao" : "aceitar_comercial",
+    );
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (data.acao === "enviar") {
       if (rev.status === "enviada") return { status: rev.status };
@@ -597,6 +601,7 @@ export const gerarDemanda = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "planejar_suprimentos");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (rev.desatualizada) throw new Error("Recalcule a revisão antes de planejar a demanda.");
     const itens = ok(
@@ -641,12 +646,9 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     return { demandas: agg.size };
   });
 
-async function prefixoNumero(db: Db, org: string, tabela: string, prefixo: string) {
-  const { count } = await db
-    .from(tabela)
-    .select("id", { count: "exact", head: true })
-    .eq("organization_id", org);
-  return `${prefixo}-${new Date().getFullYear()}-${String((count ?? 0) + 1).padStart(3, "0")}`;
+/** Numeração atômica no banco (substitui count + 1). */
+async function prefixoNumero(db: Db, org: string, _tabela: string, prefixo: "OC" | "OP") {
+  return ok(await db.rpc("proximo_numero", { _org: org, _prefixo: prefixo })) as string;
 }
 
 export const gerarOrdens = createServerFn({ method: "POST" })
@@ -655,7 +657,7 @@ export const gerarOrdens = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["compras"]);
+    await exigirAcao(db, context.userId, org, "emitir_ordem");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (rev.status !== "aceita")
       throw new Error("Liberação operacional exige a revisão aceita pelo cliente.");
@@ -763,7 +765,7 @@ export const emitirOrdemCompra = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["compras"]);
+    await exigirAcao(db, context.userId, org, "emitir_ordem");
     const oc = ok(
       await db
         .from("ordens_compra")
@@ -795,7 +797,7 @@ export const liberarOrdemProducao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirPapel(db, org, ["compras", "engenharia"]);
+    await exigirAcao(db, context.userId, org, "planejar_suprimentos");
     const op = ok(
       await db
         .from("ordens_producao")
@@ -821,6 +823,7 @@ export const liberarOrdemProducao = createServerFn({ method: "POST" })
     return { status: "liberada" };
   });
 
+/** Movimento atômico no banco (trava de saldo, idempotência por chave, estorno como evento). */
 export const registrarMovimento = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
@@ -828,64 +831,51 @@ export const registrarMovimento = createServerFn({ method: "POST" })
       .object({
         tipo: z.enum(["recebimento", "apontamento"]),
         item_id: z.string().uuid(),
-        quantidade: z.number().positive(),
+        quantidade: z.number().positive().finite(),
+        chave: z.string().min(8).max(120),
+        estorno_de: z.string().uuid().optional(),
       })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
+    const r = ok(
+      await db.rpc("registrar_movimento", {
+        _tipo: data.tipo,
+        _item: data.item_id,
+        _quantidade: data.quantidade,
+        _chave: data.chave,
+        _estorno_de: data.estorno_de ?? null,
+      }),
+    ) as { id: string; repetido: boolean };
+    return { ok: true, ...r };
+  });
+
+/** Aprovação técnica vinculada ao hash da composição atual. */
+export const aprovarTecnica = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z
+      .object({ revisao_id: z.string().uuid(), observacao: z.string().max(500).optional() })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    if (data.tipo === "recebimento") {
-      const it = ok(
-        await db
-          .from("ordem_compra_itens")
-          .select("*,ordens_compra(status)")
-          .eq("id", data.item_id)
-          .eq("organization_id", org)
-          .single(),
-      ) as any;
-      if (it.ordens_compra.status !== "emitida")
-        throw new Error("Somente OCs emitidas recebem material.");
-      const pendente =
-        Number(it.quantidade) - Number(it.quantidade_recebida) - Number(it.quantidade_cancelada);
-      if (data.quantidade > pendente + 1e-9)
-        throw new Error(`Quantidade acima do pendente (${pendente}).`);
-      ok(
-        await db
-          .from("recebimentos")
-          .insert({ organization_id: org, item_id: it.id, quantidade: data.quantidade }),
-      );
-      ok(
-        await db
-          .from("ordem_compra_itens")
-          .update({ quantidade_recebida: Number(it.quantidade_recebida) + data.quantidade })
-          .eq("id", it.id),
-      );
-    } else {
-      const it = ok(
-        await db
-          .from("ordem_producao_itens")
-          .select("*,ordens_producao(status)")
-          .eq("id", data.item_id)
-          .eq("organization_id", org)
-          .single(),
-      ) as any;
-      if (it.ordens_producao.status !== "liberada")
-        throw new Error("Somente OPs liberadas recebem apontamentos.");
-      const pendente = Number(it.quantidade) - Number(it.quantidade_produzida);
-      if (data.quantidade > pendente + 1e-9)
-        throw new Error(`Quantidade acima do pendente (${pendente}).`);
-      ok(
-        await db
-          .from("apontamentos")
-          .insert({ organization_id: org, item_id: it.id, quantidade: data.quantidade }),
-      );
-      ok(
-        await db
-          .from("ordem_producao_itens")
-          .update({ quantidade_produzida: Number(it.quantidade_produzida) + data.quantidade })
-          .eq("id", it.id),
-      );
-    }
-    return { ok: true };
+    await exigirAcao(db, context.userId, org, "aprovar_tecnica");
+    const rev = await revisaoDaOrg(db, org, data.revisao_id);
+    if (rev.desatualizada) throw new Error("Recalcule a revisão antes da aprovação técnica.");
+    const hash = ok(await db.rpc("hash_tecnico", { _rev: rev.id })) as string;
+    ok(
+      await db.from("aprovacoes").insert({
+        organization_id: org,
+        revisao_id: rev.id,
+        tipo: "tecnica",
+        hash_conteudo: hash,
+        autor: context.userId,
+        observacao: data.observacao ?? null,
+      }),
+    );
+    await auditar(db, org, "revisao", rev.id, "aprovar_tecnica", { hash });
+    return { hash };
   });

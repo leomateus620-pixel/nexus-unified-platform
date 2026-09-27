@@ -129,8 +129,14 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event) => {
+    let usuarioAtual: string | null | undefined;
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      const uid = session?.user.id ?? null;
+      // Troca de identidade: descarta todo o cache para não expor dados/permissões do usuário anterior.
+      if (usuarioAtual !== undefined && uid !== usuarioAtual) queryClient.clear();
+      usuarioAtual = uid;
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      if (event === "SIGNED_OUT") queryClient.clear();
       router.invalidate();
       if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
     });

@@ -13,7 +13,11 @@ import {
   StatusBadge,
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
-import { liberarOrdemProducao, registrarMovimento } from "@/features/propostas/propostas.functions";
+import {
+  aprovarTecnica,
+  liberarOrdemProducao,
+  registrarMovimento,
+} from "@/features/propostas/propostas.functions";
 import { qtd } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/compras/ordens-producao/$ordemId")({
@@ -31,6 +35,7 @@ function Page() {
   const qc = useQueryClient();
   const liberar = useServerFn(liberarOrdemProducao);
   const mov = useServerFn(registrarMovimento);
+  const aprovar = useServerFn(aprovarTecnica);
   const [erro, setErro] = useState<string | null>(null);
   const q = useQuery({
     queryKey: ["ordens", "op-det", ordemId],
@@ -54,9 +59,18 @@ function Page() {
     onError: onErr,
   });
   const apontar = useMutation({
-    mutationFn: (v: { item_id: string; quantidade: number }) =>
-      mov({ data: { tipo: "apontamento", ...v } }),
+    mutationFn: (v: { item_id: string; quantidade: number; chave?: string }) => {
+      // chave fixada no objeto: retries reenviam a mesma chave (idempotência)
+      v.chave ??= crypto.randomUUID();
+      return mov({
+        data: { tipo: "apontamento", item_id: v.item_id, quantidade: v.quantidade, chave: v.chave },
+      });
+    },
     onSuccess: inval,
+    onError: onErr,
+  });
+  const apr = useMutation({
+    mutationFn: (revisao_id: string) => aprovar({ data: { revisao_id } }),
     onError: onErr,
   });
   if (q.isPending) return <LoadingState />;
@@ -143,9 +157,23 @@ function Page() {
           </label>
         </div>
         {rascunho && (
-          <ActionButton className="mt-3" loading={lib.isPending} onClick={() => lib.mutate()}>
-            Liberar para fabricação
-          </ActionButton>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <ActionButton
+              variant="ghost"
+              loading={apr.isPending}
+              onClick={() => apr.mutate(rev.id)}
+            >
+              Registrar aprovação técnica
+            </ActionButton>
+            <ActionButton loading={lib.isPending} onClick={() => lib.mutate()}>
+              Liberar para fabricação
+            </ActionButton>
+          </div>
+        )}
+        {apr.isSuccess && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            Aprovação técnica registrada para a composição atual.
+          </p>
         )}
       </Section>
       <Section title="Itens">

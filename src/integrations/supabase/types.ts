@@ -17,32 +17,48 @@ export type Database = {
       apontamentos: {
         Row: {
           apontado_em: string
+          chave: string | null
           created_at: string
           created_by: string | null
+          estorno_de: string | null
           id: string
           item_id: string
           organization_id: string
           quantidade: number
+          sinal: number
         }
         Insert: {
           apontado_em?: string
+          chave?: string | null
           created_at?: string
           created_by?: string | null
+          estorno_de?: string | null
           id?: string
           item_id: string
           organization_id: string
           quantidade: number
+          sinal?: number
         }
         Update: {
           apontado_em?: string
+          chave?: string | null
           created_at?: string
           created_by?: string | null
+          estorno_de?: string | null
           id?: string
           item_id?: string
           organization_id?: string
           quantidade?: number
+          sinal?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "apontamentos_estorno_de_fkey"
+            columns: ["estorno_de"]
+            isOneToOne: false
+            referencedRelation: "apontamentos"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "apontamentos_item_id_fkey"
             columns: ["item_id"]
@@ -55,6 +71,57 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      aprovacoes: {
+        Row: {
+          autor: string
+          created_at: string
+          hash_conteudo: string
+          id: string
+          invalidada_em: string | null
+          observacao: string | null
+          organization_id: string
+          revisao_id: string
+          tipo: string
+        }
+        Insert: {
+          autor: string
+          created_at?: string
+          hash_conteudo: string
+          id?: string
+          invalidada_em?: string | null
+          observacao?: string | null
+          organization_id: string
+          revisao_id: string
+          tipo: string
+        }
+        Update: {
+          autor?: string
+          created_at?: string
+          hash_conteudo?: string
+          id?: string
+          invalidada_em?: string | null
+          observacao?: string | null
+          organization_id?: string
+          revisao_id?: string
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aprovacoes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "aprovacoes_revisao_id_fkey"
+            columns: ["revisao_id"]
+            isOneToOne: false
+            referencedRelation: "proposta_revisoes"
             referencedColumns: ["id"]
           },
         ]
@@ -474,6 +541,35 @@ export type Database = {
           },
         ]
       }
+      numeracao: {
+        Row: {
+          ano: number
+          organization_id: string
+          prefixo: string
+          proximo: number
+        }
+        Insert: {
+          ano: number
+          organization_id: string
+          prefixo: string
+          proximo?: number
+        }
+        Update: {
+          ano?: number
+          organization_id?: string
+          prefixo?: string
+          proximo?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "numeracao_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ordem_compra_itens: {
         Row: {
           demanda_id: string
@@ -710,7 +806,7 @@ export type Database = {
           {
             foreignKeyName: "ordens_producao_revisao_id_fkey"
             columns: ["revisao_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "proposta_revisoes"
             referencedColumns: ["id"]
           },
@@ -1102,33 +1198,49 @@ export type Database = {
       }
       recebimentos: {
         Row: {
+          chave: string | null
           created_at: string
           created_by: string | null
+          estorno_de: string | null
           id: string
           item_id: string
           organization_id: string
           quantidade: number
           recebido_em: string
+          sinal: number
         }
         Insert: {
+          chave?: string | null
           created_at?: string
           created_by?: string | null
+          estorno_de?: string | null
           id?: string
           item_id: string
           organization_id: string
           quantidade: number
           recebido_em?: string
+          sinal?: number
         }
         Update: {
+          chave?: string | null
           created_at?: string
           created_by?: string | null
+          estorno_de?: string | null
           id?: string
           item_id?: string
           organization_id?: string
           quantidade?: number
           recebido_em?: string
+          sinal?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "recebimentos_estorno_de_fkey"
+            columns: ["estorno_de"]
+            isOneToOne: false
+            referencedRelation: "recebimentos"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "recebimentos_item_id_fkey"
             columns: ["item_id"]
@@ -1492,8 +1604,24 @@ export type Database = {
         Args: { _org: string; _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
       }
+      hash_tecnico: { Args: { _rev: string }; Returns: string }
       is_member: { Args: { _org: string }; Returns: boolean }
+      pode: { Args: { _acao: string; _org: string }; Returns: boolean }
+      proximo_numero: {
+        Args: { _org: string; _prefixo: string }
+        Returns: string
+      }
       proximo_numero_proposta: { Args: { _org: string }; Returns: string }
+      registrar_movimento: {
+        Args: {
+          _chave: string
+          _estorno_de?: string
+          _item: string
+          _quantidade: number
+          _tipo: string
+        }
+        Returns: Json
+      }
       revisao_editavel: { Args: { _rev: string }; Returns: boolean }
     }
     Enums: {

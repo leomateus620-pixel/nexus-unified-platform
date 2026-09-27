@@ -23,7 +23,7 @@ function Page() {
   const dem = useDemandasOrg(orgId);
   const oc = useOrdensCompra(orgId);
   const op = useOrdensProducao(orgId);
-  const v = <T,>(q: { isSuccess: boolean; data?: T }, f: (d: T) => string) => (q.isSuccess && q.data !== undefined ? f(q.data) : "—");
+  const v = <T,>(q: { isSuccess: boolean; data: T | undefined }, f: (d: T) => string) => (q.isSuccess && q.data !== undefined ? f(q.data as T) : "—");
   return (
     <div className="space-y-6">
       <PageHeader eyebrow="Compras e Produção" title="Suprimentos e fabricação" description="Demandas originadas da composição das revisões; ordens separadas por fornecedor e fabricação." />

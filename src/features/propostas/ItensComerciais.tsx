@@ -41,7 +41,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
     save.set("salvando");
-    const { error } = await supabase.from("revisao_componentes").update(patch).in("id", ids);
+    const { error } = await supabase.from("revisao_componentes").update(patch as never).in("id", ids);
     if (error) return save.set("erro", error.message);
     await qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) });
     if ("custo_adotado" in patch) recalc.mutate();

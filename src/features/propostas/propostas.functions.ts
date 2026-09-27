@@ -36,7 +36,7 @@ async function auditar(db: Db, org: string, entidade: string, id: string | null,
 async function revisaoDaOrg(db: Db, org: string, revisaoId: string) {
   const rev = ok(await db.from("proposta_revisoes").select("*").eq("id", revisaoId).eq("organization_id", org).maybeSingle());
   if (!rev) throw new Error("Revisão não encontrada.");
-  return rev as Record<string, any>;
+  return rev as any;
 }
 
 const idRev = z.object({ revisao_id: z.string().uuid() });

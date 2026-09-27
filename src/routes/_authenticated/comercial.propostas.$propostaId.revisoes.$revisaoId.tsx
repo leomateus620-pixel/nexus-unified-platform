@@ -60,7 +60,6 @@ function Workspace() {
               <p className="text-xs text-muted-foreground">{p.unidades?.nome ?? "Sem unidade"}{p.titulo ? ` · ${p.titulo}` : ""}</p>
             </div>
             <StatusBadge value={statusLabel[r.status] ?? r.status} />
-            {r.revisao_corrente_id_check}
             <div className="text-xs">
               <p className="text-muted-foreground">Total final</p>
               <p className="font-semibold tabular-nums text-foreground">{r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}</p>

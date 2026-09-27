@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ClientesRouteImport } from './routes/clientes'
 import { Route as ComercialRouteImport } from './routes/comercial'
 import { Route as ComprasRouteImport } from './routes/compras'
@@ -26,10 +28,20 @@ import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
+import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClientesRoute = ClientesRouteImport.update({
@@ -112,9 +124,16 @@ const Mapas3dUnidadesRoute = Mapas3dUnidadesRouteImport.update({
   path: '/mapas-3d/unidades',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute =
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport.update({
+    id: '/comercial/propostas/$propostaId/revisoes/$revisaoId',
+    path: '/comercial/propostas/$propostaId/revisoes/$revisaoId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/clientes': typeof ClientesRoute
   '/comercial': typeof ComercialRoute
   '/compras': typeof ComprasRoute
@@ -131,9 +150,11 @@ export interface FileRoutesByFullPath {
   '/relatorios': typeof RelatoriosRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/clientes': typeof ClientesRoute
   '/comercial': typeof ComercialRoute
   '/compras': typeof ComprasRoute
@@ -150,10 +171,13 @@ export interface FileRoutesByTo {
   '/relatorios': typeof RelatoriosRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/clientes': typeof ClientesRoute
   '/comercial': typeof ComercialRoute
   '/compras': typeof ComprasRoute
@@ -170,11 +194,13 @@ export interface FileRoutesById {
   '/relatorios': typeof RelatoriosRoute
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
+  '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/clientes'
     | '/comercial'
     | '/compras'
@@ -191,9 +217,11 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/clientes'
     | '/comercial'
     | '/compras'
@@ -210,9 +238,12 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/comercial/propostas/$propostaId/revisoes/$revisaoId'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/clientes'
     | '/comercial'
     | '/compras'
@@ -229,10 +260,13 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
+    | '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   ClientesRoute: typeof ClientesRoute
   ComercialRoute: typeof ComercialRoute
   ComprasRoute: typeof ComprasRoute
@@ -258,6 +292,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clientes': {
@@ -372,11 +420,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Mapas3dUnidadesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId': {
+      id: '/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId'
+      path: '/comercial/propostas/$propostaId/revisoes/$revisaoId'
+      fullPath: '/comercial/propostas/$propostaId/revisoes/$revisaoId'
+      preLoaderRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute: typeof AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute:
+    AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   ClientesRoute: ClientesRoute,
   ComercialRoute: ComercialRoute,
   ComprasRoute: ComprasRoute,

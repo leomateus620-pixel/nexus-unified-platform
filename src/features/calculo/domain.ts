@@ -243,6 +243,7 @@ export function composicaoSistema(s: SistemaEntrada, r: Regras): LinhaComposicao
     add("absorvedor", o.absorvedores_por_trecho * n, `${o.absorvedores_por_trecho} × ${n} trechos`);
     add("esticador", o.esticadores_por_trecho * n, `${o.esticadores_por_trecho} × ${n} trechos`);
     add("proll", o.proll_por_sistema, "por sistema");
+    add("link", o.links_por_sistema ?? 2, "por sistema (LISTA_COMPRAS!G20)");
     add("placa", o.placas_por_sistema, "por sistema (CORREÇÃO F04)");
     add("lacre", o.lacres_por_sistema, "por sistema (CORREÇÃO F04)");
     add("mosquetao", o.mosquetoes_por_sistema, "por sistema (CORREÇÃO F04)");

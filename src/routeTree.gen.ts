@@ -14,10 +14,14 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
+import { Route as AuthenticatedEngenhariaRouteImport } from './routes/_authenticated/engenharia'
 import { Route as AuthenticatedProdutosRouteImport } from './routes/_authenticated/produtos'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
 import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
+import { Route as AuthenticatedEngenhariaIndexRouteImport } from './routes/_authenticated/engenharia.index'
+import { Route as AuthenticatedEngenhariaDimensionamentosRouteImport } from './routes/_authenticated/engenharia.dimensionamentos'
+import { Route as AuthenticatedEngenhariaRegrasDimensionamentoRouteImport } from './routes/_authenticated/engenharia.regras-dimensionamento'
 import { Route as AuthenticatedProdutosIndexRouteImport } from './routes/_authenticated/produtos.index'
 import { Route as AuthenticatedProdutosProdutoIdRouteImport } from './routes/_authenticated/produtos.$produtoId'
 import { Route as AuthenticatedComercialPropostasIndexRouteImport } from './routes/_authenticated/comercial.propostas.index'
@@ -58,6 +62,11 @@ const AuthenticatedComercialRoute = AuthenticatedComercialRouteImport.update({
   path: '/comercial',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedEngenhariaRoute = AuthenticatedEngenhariaRouteImport.update({
+  id: '/engenharia',
+  path: '/engenharia',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedProdutosRoute = AuthenticatedProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -78,6 +87,24 @@ const AuthenticatedComercialIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedComercialRoute,
+  } as any)
+const AuthenticatedEngenhariaIndexRoute =
+  AuthenticatedEngenhariaIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedEngenhariaRoute,
+  } as any)
+const AuthenticatedEngenhariaDimensionamentosRoute =
+  AuthenticatedEngenhariaDimensionamentosRouteImport.update({
+    id: '/dimensionamentos',
+    path: '/dimensionamentos',
+    getParentRoute: () => AuthenticatedEngenhariaRoute,
+  } as any)
+const AuthenticatedEngenhariaRegrasDimensionamentoRoute =
+  AuthenticatedEngenhariaRegrasDimensionamentoRouteImport.update({
+    id: '/regras-dimensionamento',
+    path: '/regras-dimensionamento',
+    getParentRoute: () => AuthenticatedEngenhariaRoute,
   } as any)
 const AuthenticatedProdutosIndexRoute =
   AuthenticatedProdutosIndexRouteImport.update({
@@ -203,11 +230,15 @@ export interface FileRoutesByFullPath {
   '/mapas-3d': typeof Mapas3dRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comercial': typeof AuthenticatedComercialRouteWithChildren
+  '/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
   '/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
+  '/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
   '/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
   '/comercial/': typeof AuthenticatedComercialIndexRoute
+  '/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
   '/produtos/': typeof AuthenticatedProdutosIndexRoute
   '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
   '/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
@@ -230,8 +261,11 @@ export interface FileRoutesByTo {
   '/clientes': typeof AuthenticatedClientesRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
+  '/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
   '/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
   '/comercial': typeof AuthenticatedComercialIndexRoute
+  '/engenharia': typeof AuthenticatedEngenhariaIndexRoute
   '/produtos': typeof AuthenticatedProdutosIndexRoute
   '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
   '/comercial/propostas': typeof AuthenticatedComercialPropostasIndexRoute
@@ -253,11 +287,15 @@ export interface FileRoutesById {
   '/mapas-3d': typeof Mapas3dRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
+  '/_authenticated/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
   '/_authenticated/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
+  '/_authenticated/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
+  '/_authenticated/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
   '/_authenticated/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
   '/_authenticated/comercial/': typeof AuthenticatedComercialIndexRoute
+  '/_authenticated/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
   '/_authenticated/produtos/': typeof AuthenticatedProdutosIndexRoute
   '/_authenticated/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
   '/_authenticated/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
@@ -281,11 +319,15 @@ export interface FileRouteTypes {
     | '/mapas-3d'
     | '/clientes'
     | '/comercial'
+    | '/engenharia'
     | '/produtos'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/engenharia/dimensionamentos'
+    | '/engenharia/regras-dimensionamento'
     | '/produtos/$produtoId'
     | '/comercial/'
+    | '/engenharia/'
     | '/produtos/'
     | '/comercial/propostas/nova'
     | '/comercial/propostas/'
@@ -308,8 +350,11 @@ export interface FileRouteTypes {
     | '/clientes'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/engenharia/dimensionamentos'
+    | '/engenharia/regras-dimensionamento'
     | '/produtos/$produtoId'
     | '/comercial'
+    | '/engenharia'
     | '/produtos'
     | '/comercial/propostas/nova'
     | '/comercial/propostas'
@@ -330,11 +375,15 @@ export interface FileRouteTypes {
     | '/mapas-3d'
     | '/_authenticated/clientes'
     | '/_authenticated/comercial'
+    | '/_authenticated/engenharia'
     | '/_authenticated/produtos'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
+    | '/_authenticated/engenharia/dimensionamentos'
+    | '/_authenticated/engenharia/regras-dimensionamento'
     | '/_authenticated/produtos/$produtoId'
     | '/_authenticated/comercial/'
+    | '/_authenticated/engenharia/'
     | '/_authenticated/produtos/'
     | '/_authenticated/comercial/propostas/nova'
     | '/_authenticated/comercial/propostas/'
@@ -396,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedComercialRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/engenharia': {
+      id: '/_authenticated/engenharia'
+      path: '/engenharia'
+      fullPath: '/engenharia'
+      preLoaderRoute: typeof AuthenticatedEngenhariaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/produtos': {
       id: '/_authenticated/produtos'
       path: '/produtos'
@@ -423,6 +479,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/comercial/'
       preLoaderRoute: typeof AuthenticatedComercialIndexRouteImport
       parentRoute: typeof AuthenticatedComercialRoute
+    }
+    '/_authenticated/engenharia/': {
+      id: '/_authenticated/engenharia/'
+      path: '/'
+      fullPath: '/engenharia/'
+      preLoaderRoute: typeof AuthenticatedEngenhariaIndexRouteImport
+      parentRoute: typeof AuthenticatedEngenhariaRoute
+    }
+    '/_authenticated/engenharia/dimensionamentos': {
+      id: '/_authenticated/engenharia/dimensionamentos'
+      path: '/dimensionamentos'
+      fullPath: '/engenharia/dimensionamentos'
+      preLoaderRoute: typeof AuthenticatedEngenhariaDimensionamentosRouteImport
+      parentRoute: typeof AuthenticatedEngenhariaRoute
+    }
+    '/_authenticated/engenharia/regras-dimensionamento': {
+      id: '/_authenticated/engenharia/regras-dimensionamento'
+      path: '/regras-dimensionamento'
+      fullPath: '/engenharia/regras-dimensionamento'
+      preLoaderRoute: typeof AuthenticatedEngenhariaRegrasDimensionamentoRouteImport
+      parentRoute: typeof AuthenticatedEngenhariaRoute
     }
     '/_authenticated/produtos/': {
       id: '/_authenticated/produtos/'
@@ -597,6 +674,26 @@ const AuthenticatedComercialRouteWithChildren =
     AuthenticatedComercialRouteChildren,
   )
 
+interface AuthenticatedEngenhariaRouteChildren {
+  AuthenticatedEngenhariaDimensionamentosRoute: typeof AuthenticatedEngenhariaDimensionamentosRoute
+  AuthenticatedEngenhariaRegrasDimensionamentoRoute: typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  AuthenticatedEngenhariaIndexRoute: typeof AuthenticatedEngenhariaIndexRoute
+}
+
+const AuthenticatedEngenhariaRouteChildren: AuthenticatedEngenhariaRouteChildren =
+  {
+    AuthenticatedEngenhariaDimensionamentosRoute:
+      AuthenticatedEngenhariaDimensionamentosRoute,
+    AuthenticatedEngenhariaRegrasDimensionamentoRoute:
+      AuthenticatedEngenhariaRegrasDimensionamentoRoute,
+    AuthenticatedEngenhariaIndexRoute: AuthenticatedEngenhariaIndexRoute,
+  }
+
+const AuthenticatedEngenhariaRouteWithChildren =
+  AuthenticatedEngenhariaRoute._addFileChildren(
+    AuthenticatedEngenhariaRouteChildren,
+  )
+
 interface AuthenticatedProdutosRouteChildren {
   AuthenticatedProdutosProdutoIdRoute: typeof AuthenticatedProdutosProdutoIdRoute
   AuthenticatedProdutosIndexRoute: typeof AuthenticatedProdutosIndexRoute
@@ -615,12 +712,14 @@ const AuthenticatedProdutosRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
+  AuthenticatedEngenhariaRoute: typeof AuthenticatedEngenhariaRouteWithChildren
   AuthenticatedProdutosRoute: typeof AuthenticatedProdutosRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,
+  AuthenticatedEngenhariaRoute: AuthenticatedEngenhariaRouteWithChildren,
   AuthenticatedProdutosRoute: AuthenticatedProdutosRouteWithChildren,
 }
 

@@ -4,8 +4,10 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 DIR="$(mktemp -d)"; PORT="${PGTEST_PORT:-55432}"
-RUNAS=""; [ "$(id -u)" = "0" ] && { id pgtest >/dev/null 2>&1 || useradd -M pgtest; chown -R pgtest "$DIR"; RUNAS="su pgtest -c"; }
-run() { if [ -n "$RUNAS" ]; then $RUNAS "$*"; else bash -c "$*"; fi; }
+# Postgres recusa rodar como root: em root, usa um UID sem privilégios (65534).
+if [ "$(id -u)" = "0" ]; then chown -R 65534:65534 "$DIR"; chmod 755 "$DIR"
+  run() { setpriv --reuid=65534 --regid=65534 --clear-groups env HOME="$DIR" bash -c "$*"; }
+else run() { bash -c "$*"; }; fi
 run "initdb -D $DIR/data -U postgres -A trust >/dev/null"
 run "pg_ctl -D $DIR/data -o '-p $PORT -k $DIR' -l $DIR/log start -w >/dev/null"
 trap 'run "pg_ctl -D $DIR/data stop -m fast >/dev/null" || true; rm -rf "$DIR"' EXIT

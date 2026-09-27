@@ -8,8 +8,8 @@ import { AlertCircle, ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
-import nexusLogo from "@/assets/nexus-logo.png";
 import authArtAsset from "@/assets/auth-art.png.asset.json";
+import { NexusLogo } from "@/components/nexus/NexusLogo";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -118,14 +118,7 @@ function AuthPage() {
 
         {/* Lado do formulário */}
         <div className="flex flex-col justify-center bg-white/5 px-7 py-10 sm:px-10 md:px-12 md:py-14">
-          <img
-            src={nexusLogo}
-            alt="NEXUS"
-            width={951}
-            height={188}
-            loading="eager"
-            className="h-9 w-auto self-center md:self-start"
-          />
+          <NexusLogo className="text-4xl self-center md:self-start" />
 
           <h1 className="mt-8 font-display text-2xl font-bold tracking-tight text-foreground">
             {modo === "entrar" ? "Acesso ao sistema" : "Criar sua conta"}

@@ -25,5 +25,5 @@ T08 saldo após estorno | 2 | PASSOU | 2
 T08 movimentos preservados | 3 | PASSOU | 3
 T06 números distintos | OC-…-001,002 | PASSOU | OC-2026-001,OC-2026-002
 T07 duas sessões recebem 7 de 10 | 1 confirmação, saldo 3 | PASSOU | 1 confirmação(ões), saldo 3
-T05 dez chamadas simultâneas mesma chave | no máximo 1 efeito | PASSOU | 0 movimento(s)
+T05 dez chamadas simultâneas mesma chave | exatamente 1 efeito | PASSOU | 1 movimento(s)
 RESULTADO: TODOS PASSARAM

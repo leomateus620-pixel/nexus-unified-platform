@@ -290,6 +290,7 @@ export const novaRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "editar_revisao");
     const prop = ok(
       await db
         .from("propostas")
@@ -362,6 +363,7 @@ export const recalcularRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "editar_revisao");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (!["rascunho", "em_revisao"].includes(rev.status))
       throw new Error("Revisão enviada/aceita não é recalculada. Crie nova revisão.");
@@ -475,7 +477,12 @@ export const transicionarRevisao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
-    await exigirAcao(db, context.userId, org, "aceitar_comercial");
+    await exigirAcao(
+      db,
+      context.userId,
+      org,
+      data.acao === "enviar" ? "editar_revisao" : "aceitar_comercial",
+    );
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (data.acao === "enviar") {
       if (rev.status === "enviada") return { status: rev.status };
@@ -595,6 +602,7 @@ export const gerarDemanda = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "planejar_suprimentos");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
     if (rev.desatualizada) throw new Error("Recalcule a revisão antes de planejar a demanda.");
     const itens = ok(

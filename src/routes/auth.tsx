@@ -104,7 +104,7 @@ function AuthPage() {
           <img
             src={authArtAsset.url}
             alt="NEXUS — Tecnologia em Segurança para o Agroindustrial"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-left-top"
           />
           <div
             aria-hidden

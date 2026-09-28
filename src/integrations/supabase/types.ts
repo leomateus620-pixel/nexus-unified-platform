@@ -1799,6 +1799,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      atualizar_componentes_revisao: {
+        Args: { _ids: string[]; _patch: Json; _rev: string }
+        Returns: number
+      }
       can_see_costs: { Args: { _org: string }; Returns: boolean }
       capturar_revisao: {
         Args: { _operacao?: string; _rev: string }

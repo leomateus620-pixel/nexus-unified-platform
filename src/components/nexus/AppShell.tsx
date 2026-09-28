@@ -100,7 +100,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   if (pathname === "/mapas-3d" || pathname === "/auth") return <main>{children}</main>;
 
   return (
-    <div className={cn("min-h-screen bg-background", operational && "nexus-operational nx-shell")}>
+    <div
+      className={cn(
+        "min-h-screen bg-background",
+        operational && "nexus-operational nx-shell",
+        (/\/revisoes\//.test(pathname) || /\/compras\/ordens-(compra|producao)\//.test(pathname)) &&
+          "nx-catalog-shell",
+      )}
+    >
       {operational && (
         <a className="nx-skip" href="#nexus-content">
           Ir para o conteúdo

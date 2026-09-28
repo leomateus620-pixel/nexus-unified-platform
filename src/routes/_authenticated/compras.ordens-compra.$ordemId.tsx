@@ -5,15 +5,15 @@ import { useState } from "react";
 
 import {
   ActionButton,
-  DataTable,
   ErrorState,
   LoadingState,
   PageHeader,
   Section,
   StatusBadge,
 } from "@/components/nexus/Page";
+import { ObjectCollection, ObjectCard, Facts } from "@/features/propostas/ui/ObjectCards";
 import { supabase } from "@/integrations/supabase/client";
-import { PromptAction, RecordIdentity } from "@/components/nexus/OperationalDetails";
+import { PromptAction } from "@/components/nexus/OperationalDetails";
 import { useOrg } from "@/features/org/session";
 import { emitirOrdemCompra, registrarMovimento } from "@/features/propostas/propostas.functions";
 import { brl, brlUnit, qtd } from "@/lib/format";
@@ -196,100 +196,77 @@ function Page() {
         title="Itens da ordem"
         description="Recebimentos mantêm o vínculo com a demanda de origem."
       >
-        <DataTable
-          getRowId={(i) => i.id}
-          rows={o.ordem_compra_itens}
-          columns={[
-            {
-              key: "cod",
-              label: "Código",
-              render: (i) => (
-                <RecordIdentity code primary={i.demandas?.revisao_componentes?.codigo ?? "—"} />
-              ),
-            },
-            {
-              key: "desc",
-              label: "Descrição",
-              render: (i) => i.demandas?.revisao_componentes?.descricao ?? "—",
-            },
-            {
-              key: "q",
-              label: "Quantidade",
-              align: "right",
-              render: (i) => qtd(Number(i.quantidade), i.demandas?.revisao_componentes?.unidade),
-            },
-            ...(verCusto
-              ? [
-                  {
-                    key: "pu",
-                    label: "Preço unit.",
-                    align: "right" as const,
-                    render: (i: { id: string; preco_unitario: number }) =>
-                      rascunho ? (
-                        <input
-                          aria-label="Preço unitário de aquisição"
-                          type="number"
-                          step="0.0001"
-                          min={0}
-                          defaultValue={Number(i.preco_unitario)}
-                          onBlur={async (e) => {
-                            const { error } = await supabase
-                              .from("ordem_compra_itens")
-                              .update({ preco_unitario: Number(e.target.value) })
-                              .eq("id", i.id);
-                            if (error) setErro(error.message);
-                            else inval();
-                          }}
-                          className={`${input} w-28 text-right`}
-                        />
-                      ) : (
-                        brlUnit(Number(i.preco_unitario))
-                      ),
-                  },
-                ]
-              : []),
-            {
-              key: "rec",
-              label: "Recebida",
-              align: "right",
-              render: (i) => qtd(Number(i.quantidade_recebida)),
-            },
-            {
-              key: "pend",
-              label: "Saldo a receber",
-              align: "right",
-              render: (i) =>
-                qtd(
-                  Number(i.quantidade) -
-                    Number(i.quantidade_recebida) -
-                    Number(i.quantidade_cancelada),
-                ),
-            },
-            {
-              key: "a",
-              label: "Recebimento",
-              render: (i) =>
-                o.status === "emitida" &&
-                Number(i.quantidade) -
-                  Number(i.quantidade_recebida) -
-                  Number(i.quantidade_cancelada) >
-                  0 ? (
-                  <PromptAction
-                    title="Registrar recebimento"
-                    description={`${i.demandas?.revisao_componentes?.codigo ?? "Item"} · ${i.demandas?.revisao_componentes?.descricao ?? "Descrição não informada"}`}
-                    label="Quantidade recebida"
-                    inputMode="decimal"
-                    onAnswer={(v) => {
-                      const n = Number((v ?? "").replace(",", "."));
-                      if (n > 0) receber.mutate({ item_id: i.id, quantidade: n });
-                    }}
-                  >
-                    Registrar recebimento
-                  </PromptAction>
-                ) : null,
-            },
-          ]}
-        />
+        <ObjectCollection label="Itens da ordem de compra">
+          {o.ordem_compra_itens.map((i) => (
+            <ObjectCard
+              key={i.id}
+              title={i.demandas?.revisao_componentes?.descricao ?? "Componente"}
+              eyebrow={i.demandas?.revisao_componentes?.codigo}
+              className="nx-procurement-card"
+            >
+              <Facts
+                items={[
+                  [
+                    "Quantidade",
+                    qtd(Number(i.quantidade), i.demandas?.revisao_componentes?.unidade),
+                  ],
+                  ["Recebida", qtd(Number(i.quantidade_recebida))],
+                  [
+                    "Saldo a receber",
+                    qtd(
+                      Number(i.quantidade) -
+                        Number(i.quantidade_recebida) -
+                        Number(i.quantidade_cancelada),
+                    ),
+                  ],
+                ]}
+              />
+              {verCusto && (
+                <label className="nx-editor-field">
+                  Preço unitário de aquisição
+                  {rascunho ? (
+                    <input
+                      aria-label="Preço unitário de aquisição"
+                      type="number"
+                      step="0.0001"
+                      min={0}
+                      defaultValue={Number(i.preco_unitario)}
+                      onBlur={async (e) => {
+                        const { error } = await supabase
+                          .from("ordem_compra_itens")
+                          .update({ preco_unitario: Number(e.target.value) })
+                          .eq("id", i.id);
+                        if (error) setErro(error.message);
+                        else inval();
+                      }}
+                      className={`${input} w-28 text-right`}
+                    />
+                  ) : (
+                    brlUnit(Number(i.preco_unitario))
+                  )}
+                </label>
+              )}
+              {o.status === "emitida" &&
+              Number(i.quantidade) -
+                Number(i.quantidade_recebida) -
+                Number(i.quantidade_cancelada) >
+                0 ? (
+                <PromptAction
+                  title="Registrar recebimento"
+                  description={`${i.demandas?.revisao_componentes?.codigo ?? "Item"} · ${i.demandas?.revisao_componentes?.descricao ?? "Descrição não informada"}`}
+                  label="Quantidade recebida"
+                  inputMode="decimal"
+                  onAnswer={(v) => {
+                    const n = Number((v ?? "").replace(",", "."));
+                    if (n > 0) receber.mutate({ item_id: i.id, quantidade: n });
+                  }}
+                >
+                  Registrar recebimento
+                </PromptAction>
+              ) : null}
+            </ObjectCard>
+          ))}
+        </ObjectCollection>
       </Section>
     </div>
   );

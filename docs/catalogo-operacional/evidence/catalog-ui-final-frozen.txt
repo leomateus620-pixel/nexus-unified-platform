@@ -1,0 +1,582 @@
+> test:ui
+> node tests/ui/run.mjs
+
+catalog-after: 320px checked across 11 screens
+23:35:33 [vite] (client) hmr update /@fs/C:/Users/Leonardo/Documents/Nexus-Dev/src/features/propostas/ui/EditorWorkspace.tsx, /@fs/C:/Users/Leonardo/Documents/Nexus-Dev/src/styles.css
+catalog-after: 360px checked across 11 screens
+catalog-after: 390px checked across 11 screens
+catalog-after: 768px checked across 11 screens
+catalog-after: 1024px checked across 11 screens
+catalog-after: 1366px checked across 11 screens
+catalog-after: 1440px checked across 11 screens
+catalog-after: 1920px checked across 11 screens
+{
+  "label": "catalog-after",
+  "errors": [],
+  "overflowCount": 0,
+  "performance": [
+    {
+      "count": 17,
+      "action": "input",
+      "medianMs": 29.90000009536743,
+      "maxMs": 31.40000009536743
+    },
+    {
+      "count": 17,
+      "action": "selection",
+      "medianMs": 28.59999990463257,
+      "maxMs": 35.299999952316284
+    },
+    {
+      "count": 17,
+      "action": "panel",
+      "medianMs": 20.700000047683716,
+      "maxMs": 28.799999952316284
+    },
+    {
+      "count": 17,
+      "action": "scroll",
+      "medianMs": 31.5,
+      "maxMs": 32.09999990463257
+    },
+    {
+      "count": 100,
+      "action": "input",
+      "medianMs": 31.40000009536743,
+      "maxMs": 31.699999809265137
+    },
+    {
+      "count": 100,
+      "action": "selection",
+      "medianMs": 45.5,
+      "maxMs": 60.69999980926514
+    },
+    {
+      "count": 100,
+      "action": "panel",
+      "medianMs": 21.899999856948853,
+      "maxMs": 24.899999856948853
+    },
+    {
+      "count": 100,
+      "action": "scroll",
+      "medianMs": 31.5,
+      "maxMs": 31.59999990463257
+    },
+    {
+      "count": 500,
+      "action": "input",
+      "medianMs": 31.09999990463257,
+      "maxMs": 32.10000014305115
+    },
+    {
+      "count": 500,
+      "action": "selection",
+      "medianMs": 45.799999952316284,
+      "maxMs": 56.5
+    },
+    {
+      "count": 500,
+      "action": "panel",
+      "medianMs": 21.90000009536743,
+      "maxMs": 25.399999856948853
+    },
+    {
+      "count": 500,
+      "action": "scroll",
+      "medianMs": 31.700000047683716,
+      "maxMs": 32.200000047683716
+    }
+  ]
+}
+{
+  "date": "2026-09-28T02:37:33.860Z",
+  "errors": [],
+  "dialogs": [],
+  "checks": [
+    {
+      "name": "mobile select-all is visible",
+      "pass": true
+    },
+    {
+      "name": "mobile select-all selects all records",
+      "pass": true
+    },
+    {
+      "name": "mobile menu focus",
+      "pass": true,
+      "active": "Dashboard"
+    },
+    {
+      "name": "mobile menu Escape returns focus",
+      "pass": true
+    },
+    {
+      "name": "mobile inspector fits",
+      "pass": true,
+      "width": 390,
+      "height": 844,
+      "modal": true,
+      "activeInside": true
+    },
+    {
+      "name": "inspector keyboard focus retained",
+      "pass": true
+    },
+    {
+      "name": "inspector Escape returns focus",
+      "pass": true
+    },
+    {
+      "name": "inspector resize preserves DOM and draft",
+      "pass": true,
+      "value": "12999.2345",
+      "sameNode": true
+    },
+    {
+      "name": "wide inspector inline",
+      "pass": true
+    },
+    {
+      "name": "restricted profile has no cost input",
+      "pass": true
+    },
+    {
+      "name": "readonly controls disabled",
+      "pass": true
+    },
+    {
+      "name": "receipt cancellation does not mutate",
+      "pass": true
+    },
+    {
+      "name": "current step remains visible after resize",
+      "pass": true,
+      "item": {
+        "left": 303.703125,
+        "right": 377.53125
+      },
+      "rail": {
+        "left": 12,
+        "right": 378
+      }
+    }
+  ],
+  "contrast": [
+    {
+      "foreground": "--foreground",
+      "background": "--background",
+      "rgb": [
+        [
+          26,
+          36,
+          31
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 13.869474388007959,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--foreground",
+      "background": "--card",
+      "rgb": [
+        [
+          26,
+          36,
+          31
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 15.956734667152773,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--foreground",
+      "background": "--popover",
+      "rgb": [
+        [
+          26,
+          36,
+          31
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 15.956734667152773,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--background",
+      "rgb": [
+        [
+          71,
+          87,
+          78
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 6.658758095323761,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--card",
+      "rgb": [
+        [
+          71,
+          87,
+          78
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 7.660855283146572,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--popover",
+      "rgb": [
+        [
+          71,
+          87,
+          78
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 7.660855283146572,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--primary-foreground",
+      "background": "--primary",
+      "rgb": [
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          7,
+          99,
+          61
+        ]
+      ],
+      "ratio": 7.339694158763602,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--warning",
+      "background": "--nx-warning-surface",
+      "rgb": [
+        [
+          111,
+          69,
+          20
+        ],
+        [
+          250,
+          241,
+          221
+        ]
+      ],
+      "ratio": 7.366636054490928,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--destructive",
+      "background": "--nx-error-surface",
+      "rgb": [
+        [
+          165,
+          41,
+          43
+        ],
+        [
+          255,
+          237,
+          235
+        ]
+      ],
+      "ratio": 6.289219335651404,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--background",
+      "rgb": [
+        [
+          115,
+          130,
+          118
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 3.521291654410867,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--card",
+      "rgb": [
+        [
+          115,
+          130,
+          118
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 4.051221772591184,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--popover",
+      "rgb": [
+        [
+          115,
+          130,
+          118
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 4.051221772591184,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--ring",
+      "background": "--background",
+      "rgb": [
+        [
+          7,
+          99,
+          61
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 6.379607248865008,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--ring",
+      "background": "--card",
+      "rgb": [
+        [
+          7,
+          99,
+          61
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 7.339694158763602,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--nx-ink",
+      "background": "--nx-paper",
+      "rgb": [
+        [
+          20,
+          29,
+          23
+        ],
+        [
+          248,
+          249,
+          244
+        ]
+      ],
+      "ratio": 16.297316386602454,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--nx-paper-muted",
+      "background": "--nx-paper",
+      "rgb": [
+        [
+          70,
+          80,
+          73
+        ],
+        [
+          248,
+          249,
+          244
+        ]
+      ],
+      "ratio": 7.926189586275374,
+      "minimum": 4.5,
+      "pass": true
+    }
+  ],
+  "receiptPayload": [
+    {
+      "name": "registrarMovimento",
+      "payload": {
+        "data": {
+          "tipo": "recebimento",
+          "item_id": "order-item-0",
+          "quantidade": 3.5,
+          "chave": "40571a3f-6f5c-4af9-b5f0-2278544acbe5"
+        }
+      }
+    }
+  ],
+  "productionPayload": [
+    {
+      "name": "registrarMovimento",
+      "payload": {
+        "data": {
+          "tipo": "apontamento",
+          "item_id": "order-item-0",
+          "quantidade": 2.5,
+          "chave": "8320782d-37ad-40cb-acb5-d28998e29113"
+        }
+      }
+    }
+  ],
+  "reducedMotion": {
+    "matches": true,
+    "animated": 0,
+    "transitionDurations": [
+      "0s"
+    ]
+  }
+}
+[
+  {
+    "screen": "oc",
+    "checks": "cancel/empty perform no write; focus returns; decimal input preserves movement type/item/quantity and idempotency UUID",
+    "passed": true
+  },
+  {
+    "screen": "op",
+    "checks": "cancel/empty perform no write; focus returns; decimal input preserves movement type/item/quantity and idempotency UUID",
+    "passed": true
+  },
+  {
+    "screen": "historico",
+    "checks": "short reason remains no-op; valid reason trimmed into unchanged payload",
+    "passed": true
+  },
+  {
+    "screen": "orcamento",
+    "checks": "pending result is explicitly prior calculation, no confirmed current label",
+    "passed": true
+  },
+  {
+    "screen": "parametros",
+    "checks": "22 fields preserved and invalid productivity exposes associated visible error",
+    "passed": true
+  },
+  {
+    "screen": "resumo-executivo",
+    "checks": "360/1366 no page overflow; internal mode changes only with existing control; print hides internal controls; restricted user cannot show internal data",
+    "passed": true
+  }
+]
+[
+  {
+    "name": "all eight stages: cards as primary structure and one shared save action",
+    "passed": true
+  },
+  {
+    "name": "bulk operation touches only the selected AND filtered item",
+    "passed": true
+  },
+  {
+    "name": "pending cost justification blocks consolidation; cancel does not write and restores input",
+    "passed": true
+  },
+  {
+    "name": "save flushes blur before capture; typing during response preserves DOM, cursor draft and next-save status",
+    "passed": true
+  },
+  {
+    "name": "global save captures parameters before the autosave timer fires",
+    "passed": true
+  },
+  {
+    "name": "rejected draft write blocks consolidation and preserves the typed value",
+    "passed": true
+  },
+  {
+    "name": "double click queues once; lost response retry retains the same idempotency key",
+    "passed": true
+  },
+  {
+    "name": "paste has a card preview and writes only after explicit confirmation",
+    "passed": true
+  },
+  {
+    "name": "restricted presentation exposes no sensitive history counts, diffs or technical calculations",
+    "passed": true
+  },
+  {
+    "name": "chosen dark theme preserves opaque surfaces and text contrast >= 4.5:1",
+    "passed": true
+  },
+  {
+    "name": "mobile total fits beside or above save controls without overlap",
+    "passed": true
+  }
+]

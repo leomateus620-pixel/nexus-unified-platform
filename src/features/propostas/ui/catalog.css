@@ -1,0 +1,669 @@
+/* Scoped to the proposal/linked-order workspace; global and 3D themes are untouched. */
+.nexus-operational.nx-catalog-shell {
+  color-scheme: light;
+  --background: oklch(0.95 0.008 130);
+  --card: oklch(1 0 0);
+  --foreground: oklch(0.25 0.018 165);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.44 0.1 158);
+  --primary-foreground: oklch(1 0 0);
+  --ring: var(--primary);
+  --muted: oklch(0.92 0.014 150);
+  --muted-foreground: oklch(0.44 0.025 160);
+  --secondary: oklch(0.95 0.012 150);
+  --secondary-foreground: var(--foreground);
+  --accent: oklch(0.93 0.035 150);
+  --accent-foreground: var(--foreground);
+  --border: oklch(0.81 0.018 150);
+  --input: oklch(0.59 0.025 150);
+  --warning: oklch(0.43 0.085 65);
+  --destructive: oklch(0.48 0.16 25);
+  --nx-warning-surface: oklch(0.96 0.028 85);
+  --nx-error-surface: oklch(0.96 0.02 25);
+  --nx-info-surface: oklch(0.94 0.02 210);
+  --nx-success-surface: var(--accent);
+  --nx-shadow: 0 2px 5px oklch(0.2 0.01 160 / 0.06);
+  --nx-radius-panel: 14px;
+}
+.dark .nexus-operational.nx-catalog-shell {
+  color-scheme: dark;
+  --background: oklch(0.19 0.014 160);
+  --card: oklch(0.25 0.018 160);
+  --foreground: oklch(0.96 0.005 160);
+  --primary: oklch(0.78 0.12 155);
+  --primary-foreground: oklch(0.18 0.02 160);
+  --muted: oklch(0.29 0.02 160);
+  --muted-foreground: oklch(0.8 0.015 160);
+  --secondary: oklch(0.28 0.02 160);
+  --accent: oklch(0.33 0.04 155);
+  --border: oklch(0.44 0.025 160);
+  --input: oklch(0.64 0.025 160);
+  --warning: oklch(0.85 0.1 80);
+  --destructive: oklch(0.79 0.12 25);
+  --nx-warning-surface: oklch(0.29 0.035 80);
+  --nx-error-surface: oklch(0.29 0.035 25);
+}
+.nexus-operational.nx-catalog-shell :where(h1, h2, h3, h4) {
+  font-family: var(--font-text);
+}
+.nexus-operational.nx-catalog-shell .nx-sidebar {
+  --primary: oklch(0.8 0.13 155);
+  --muted-foreground: oklch(0.82 0.015 150);
+  --foreground: oklch(0.96 0.005 160);
+  width: 210px;
+}
+.nexus-operational.nx-catalog-shell .nx-brand {
+  flex-wrap: wrap;
+  padding: 16px;
+  gap: 6px;
+}
+.nexus-operational.nx-catalog-shell .nx-topbar {
+  height: 44px;
+}
+.nexus-operational.nx-catalog-shell .nx-main {
+  padding: 8px 18px 32px;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-workspace {
+  display: grid;
+  gap: 10px;
+}
+.nexus-operational.nx-catalog-shell .nx-breadcrumb {
+  font-size: 12px;
+  line-height: 16px;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-context {
+  padding: 0;
+  gap: 8px 16px;
+  align-items: center;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-identity {
+  flex: 1;
+  min-width: 180px;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-identity h1 {
+  font-size: 24px;
+  line-height: 1.15;
+  margin: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-eyebrow {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-subtitle {
+  font-size: 12px;
+  margin: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-context-total {
+  padding-left: 14px;
+}
+.nexus-operational.nx-catalog-shell .nx-context-total p:last-child {
+  font-size: 22px;
+}
+.nexus-operational.nx-catalog-shell .nx-step-ruler {
+  gap: 2px;
+  margin-top: 8px;
+}
+.nexus-operational.nx-catalog-shell .nx-step {
+  min-height: 36px;
+  padding: 6px 9px;
+  font-size: 14px;
+}
+.nexus-operational.nx-catalog-shell .nx-step-number {
+  font-size: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-step-divider {
+  display: none;
+}
+.nexus-operational.nx-catalog-shell .nx-section {
+  box-shadow: none;
+  border: 0;
+  background: var(--background);
+}
+.nexus-operational.nx-catalog-shell .nx-section-heading {
+  padding: 0 0 10px;
+  border: 0;
+  background: var(--background);
+}
+.nexus-operational.nx-catalog-shell .nx-section-heading h2 {
+  font-size: 22px;
+}
+.nexus-operational.nx-catalog-shell .nx-section-body {
+  padding: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-collection-section > .nx-section-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar {
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar label {
+  font-size: 13px;
+  gap: 3px;
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar .nx-editor-search {
+  flex-basis: 180px;
+}
+.nexus-operational.nx-catalog-shell .nx-editor-input {
+  background: var(--card);
+}
+.nx-object-collection {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  align-items: start;
+}
+.nx-object-card {
+  min-width: 0;
+  max-width: 380px;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--nx-shadow);
+}
+.nx-object-card article {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  min-width: 0;
+}
+.nx-object-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.nx-object-card[data-selected="true"] {
+  background: var(--accent);
+  outline: 2px solid var(--primary);
+  outline-offset: -1px;
+}
+.nx-object-selection {
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+.nx-object-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.nx-family-mark {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--secondary);
+  color: var(--primary);
+  flex: none;
+}
+.nx-object-check {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.nx-object-meta {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.nx-product-sourcing {
+  display: grid;
+  gap: 2px;
+  font-size: 14px;
+}
+.nx-product-price {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--secondary);
+}
+.nx-product-price dt {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nx-product-price dd {
+  font-size: 24px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.nx-product-price .nx-product-cost {
+  font-size: 15px;
+  font-weight: 400;
+}
+.nx-product-price dt:not(:first-child) {
+  margin-top: 8px;
+}
+.nx-card-primary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--card);
+}
+.nx-object-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.nx-object-facts dt {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nx-object-facts dd {
+  font-size: 16px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.nx-system-card .nx-object-facts {
+  background: var(--secondary);
+  border-radius: 10px;
+  padding: 12px;
+}
+.nx-object-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+}
+.nx-object-actions .nx-card-primary {
+  width: 100%;
+}
+.nx-object-problems {
+  color: var(--warning);
+  font-size: 13px;
+  background: var(--nx-warning-surface);
+  padding: 8px 10px;
+  border-radius: 8px;
+  list-style: none;
+}
+.nx-object-details {
+  font-size: 13px;
+}
+.nx-object-details summary {
+  min-height: 32px;
+  cursor: pointer;
+}
+.nx-collection-more {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+.nx-editor-workspace[data-side-editor="true"] {
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+.nx-editor-workspace[data-side-editor="false"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.nx-editor-inspector[data-inline="true"] {
+  position: sticky;
+  top: 12px;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 24px);
+  z-index: 1;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--nx-shadow);
+}
+.nx-editor-inspector[data-inline="false"] {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: min(100%, 440px);
+  height: 100dvh;
+  max-height: none;
+  border-radius: 0;
+  z-index: 61;
+}
+.nexus-operational.nx-catalog-shell .nx-composition-list {
+  display: grid;
+  gap: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-composition-list > li {
+  padding: 14px;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-composition-item {
+  flex-wrap: wrap;
+}
+.nexus-operational.nx-catalog-shell .nx-number-list {
+  background: var(--card);
+  padding: 16px;
+  border-radius: 14px;
+}
+.nexus-operational.nx-catalog-shell .nx-number-list > div {
+  border: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-parameters {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.nexus-operational.nx-catalog-shell .nx-parameter-group {
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--card);
+}
+.nexus-operational.nx-catalog-shell .nx-parameter-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.nexus-operational.nx-catalog-shell .nx-parameter-group summary {
+  cursor: pointer;
+  display: grid;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.nexus-operational.nx-catalog-shell .nx-parameter-group summary span {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+.nexus-operational.nx-catalog-shell .nx-parameter-group[open] {
+  grid-column: 1 / -1;
+}
+.nexus-operational.nx-catalog-shell .nx-parameter-group[open] .nx-parameter-fields {
+  margin-top: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+.nexus-operational.nx-catalog-shell .nx-document-tools {
+  display: grid;
+  gap: 20px;
+}
+.nexus-operational.nx-catalog-shell .nx-document-tools .nx-section {
+  background: var(--card);
+  padding: 16px;
+  border-radius: 14px;
+}
+.nexus-operational.nx-catalog-shell .nx-document-tools .nx-section-heading {
+  background: var(--card);
+}
+.nexus-operational.nx-catalog-shell .nx-history {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+.nx-save-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  align-items: center;
+  max-width: 340px;
+}
+.nx-save-bar p {
+  font-size: 12px;
+  max-width: 240px;
+}
+@media (min-width: 1024px) {
+  .nexus-operational.nx-catalog-shell .nx-shell-content {
+    padding-left: 210px;
+  }
+}
+@media (max-width: 767px) {
+  .nexus-operational.nx-catalog-shell .nx-main {
+    padding: 12px;
+  }
+  .nx-object-collection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-object-card {
+    max-width: none;
+  }
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    gap: 8px 12px;
+  }
+  .nexus-operational.nx-catalog-shell .nx-proposal-identity {
+    flex-basis: 100%;
+  }
+  .nexus-operational.nx-catalog-shell .nx-proposal-identity h1 {
+    font-size: 24px;
+  }
+  .nexus-operational.nx-catalog-shell .nx-context-total {
+    padding-left: 0;
+    border: 0;
+  }
+  .nexus-operational.nx-catalog-shell :where(input, select, textarea) {
+    font-size: 16px;
+  }
+  .nexus-operational.nx-catalog-shell :where(button, .nx-step) {
+    min-height: 44px;
+  }
+  .nx-editor-inspector[data-inline="false"] {
+    width: 100%;
+  }
+  .nx-save-bar {
+    max-width: none;
+    flex-basis: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nexus-operational.nx-catalog-shell * {
+    scroll-behavior: auto;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+.nx-confirm-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(480px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--foreground);
+}
+.nx-confirm-dialog::backdrop {
+  background: oklch(0.1 0.01 160 / 0.7);
+}
+.nx-confirm-dialog h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.nx-confirm-dialog p {
+  font-size: 14px;
+  margin-bottom: 18px;
+  white-space: pre-wrap;
+}
+.nx-confirm-dialog form,
+.nx-confirm-dialog label {
+  display: grid;
+  gap: 14px;
+}
+.nx-confirm-dialog input {
+  border: 1px solid var(--input);
+  padding: 10px;
+  width: 100%;
+}
+.nx-budget-amount {
+  font-size: 26px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.nx-budget-amount span {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+.nx-technical-log {
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.nx-technical-log summary {
+  cursor: pointer;
+  min-height: 32px;
+}
+.nexus-operational.nx-catalog-shell .nx-sidebar-nav a[aria-current="page"] {
+  background: oklch(0.29 0.035 155);
+  color: oklch(0.97 0.005 160);
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-context {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 170px;
+  gap: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-identity {
+  min-width: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-step-ruler {
+  margin-top: 4px;
+}
+.nexus-operational.nx-catalog-shell .nx-save-feedback {
+  font-size: 12px;
+  margin: 0;
+  min-height: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-save-feedback svg {
+  display: none;
+}
+.nexus-operational.nx-catalog-shell .nx-context-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar .nx-editor-search input {
+  flex: 1;
+  min-width: 0;
+}
+.nx-save-differences summary {
+  min-height: 40px;
+  cursor: pointer;
+  color: var(--primary);
+}
+.nx-save-differences section {
+  margin-block: 12px;
+}
+.nx-save-differences h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.nx-save-difference {
+  margin-block: 10px;
+  padding: 12px;
+  background: var(--secondary);
+  border-radius: 10px;
+}
+.nx-save-difference dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.nx-save-difference dt,
+.nx-save-difference p {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.nx-save-difference dd {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.nx-save-event-card:has(details[open]) {
+  max-width: none;
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .nexus-operational.nx-catalog-shell .nx-proposal-identity {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .nexus-operational.nx-catalog-shell .nx-context-state {
+    flex-wrap: wrap;
+  }
+  .nexus-operational.nx-catalog-shell .nx-editor-toolbar label:has(input[type="checkbox"]) {
+    display: flex;
+  }
+  .nexus-operational.nx-catalog-shell .nx-editor-toolbar label {
+    display: grid;
+  }
+  .nexus-operational.nx-catalog-shell .nx-save-bar {
+    flex-basis: auto;
+  }
+}
+@media (max-width: 374px) {
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-workspace {
+  grid-template-columns: minmax(0, 1fr);
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-workspace > * {
+  min-width: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-save-bar {
+  min-width: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-subtitle {
+  overflow-wrap: anywhere;
+}
+@media (min-width: 1200px) {
+  .nexus-operational.nx-catalog-shell .nx-history {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+@media print {
+  .nexus-operational.nx-catalog-shell .nx-document-tools {
+    display: none;
+  }
+  .nexus-operational.nx-catalog-shell .nx-document-workspace {
+    display: block;
+  }
+}

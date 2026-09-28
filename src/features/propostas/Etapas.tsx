@@ -1,14 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import {
   ActionButton,
-  DataTable,
   EmptyState,
   ErrorState,
   LoadingState,
@@ -16,8 +15,18 @@ import {
   Section,
   StatusBadge,
 } from "@/components/nexus/Page";
+import { SaveEventCard } from "./ui/SaveEventCard";
+import { listarSalvamentos } from "./propostas.functions";
 import { PromptAction, ValuesBand } from "@/components/nexus/OperationalDetails";
-import { SaveFeedback } from "@/components/nexus/Workspace";
+import {
+  ObjectCard,
+  ObjectCollection,
+  Facts,
+  ProcurementCard,
+  ProductionCard,
+  RevisionCard,
+  CollectionPage,
+} from "./ui/ObjectCards";
 import { supabase } from "@/integrations/supabase/client";
 import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
@@ -123,84 +132,77 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
       </div>
       {visao === "sistema" ? (
         <Section title="Materiais por sistema">
-          <DataTable
-            getRowId={(x) => x.sistema_id}
-            rows={r.resumo.por_sistema}
-            columns={[
-              {
-                key: "id",
-                label: "Sistema",
-                render: (x) => nomeSis.get(x.sistema_id)?.identificacao || "—",
-              },
-              { key: "tipo", label: "Tipo", render: (x) => nomeSis.get(x.sistema_id)?.tipo ?? "—" },
-              {
-                key: "ext",
-                label: "Extensão",
-                align: "right",
-                render: (x) => qtd(x.extensao_m, "m"),
-              },
-              { key: "cabo", label: "Cabo", align: "right", render: (x) => qtd(x.cabo_m, "m") },
-              {
-                key: "venda",
-                label: "Venda materiais",
-                align: "right",
-                render: (x) => brl(x.venda_materiais),
-              },
-              ...(verCusto
-                ? [
-                    {
-                      key: "custo",
-                      label: "Custo materiais",
-                      align: "right" as const,
-                      render: (x: { custo_materiais: number }) => brl(x.custo_materiais),
-                    },
-                  ]
-                : []),
-            ]}
-          />
+          <CollectionPage items={r.resumo.por_sistema}>
+            {(visible) => (
+              <ObjectCollection label="Orçamento por sistema">
+                {visible.map((x) => (
+                  <ObjectCard
+                    key={x.sistema_id}
+                    title={nomeSis.get(x.sistema_id)?.identificacao || "Sistema sem identificação"}
+                    eyebrow={nomeSis.get(x.sistema_id)?.tipo}
+                  >
+                    <p className="nx-budget-amount">
+                      {brl(x.venda_materiais)}
+                      <span>Venda de materiais</span>
+                    </p>
+                    <Facts
+                      items={[
+                        ["Extensão", qtd(x.extensao_m, "m")],
+                        ["Cabo", qtd(x.cabo_m, "m")],
+                        ...(verCusto
+                          ? [["Custo materiais", brl(x.custo_materiais)] as [string, string]]
+                          : []),
+                      ]}
+                    />
+                    <Link
+                      className="nx-card-primary"
+                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
+                      params={{ propostaId: r.proposta.id, revisaoId }}
+                    >
+                      Abrir dimensionamento →
+                    </Link>
+                  </ObjectCard>
+                ))}
+              </ObjectCollection>
+            )}
+          </CollectionPage>
         </Section>
       ) : (
         <Section title="Composição consolidada por componente">
-          <DataTable
-            getRowId={(x) => x.componente_id}
-            rows={r.resumo.por_componente}
-            columns={[
-              { key: "codigo", label: "Código" },
-              {
-                key: "desc",
-                label: "Descrição",
-                render: (x) => nomeComp.get(x.componente_id)?.descricao ?? "—",
-              },
-              {
-                key: "q",
-                label: "Quantidade",
-                align: "right",
-                render: (x) => qtd(x.quantidade, nomeComp.get(x.componente_id)?.unidade),
-              },
-              {
-                key: "pu",
-                label: "Preço unit.",
-                align: "right",
-                render: (x) => brl(x.preco_unit, 4),
-              },
-              {
-                key: "tv",
-                label: "Total venda",
-                align: "right",
-                render: (x) => brl(x.total_venda),
-              },
-              ...(verCusto
-                ? [
-                    {
-                      key: "tc",
-                      label: "Total custo",
-                      align: "right" as const,
-                      render: (x: { total_custo: number }) => brl(x.total_custo),
-                    },
-                  ]
-                : []),
-            ]}
-          />
+          <CollectionPage items={r.resumo.por_componente}>
+            {(visible) => (
+              <ObjectCollection label="Orçamento por componente">
+                {visible.map((x) => (
+                  <ObjectCard
+                    key={x.componente_id}
+                    title={nomeComp.get(x.componente_id)?.descricao ?? "Componente"}
+                    eyebrow={x.codigo}
+                  >
+                    <p className="nx-budget-amount">
+                      {brl(x.total_venda)}
+                      <span>Total de venda</span>
+                    </p>
+                    <Facts
+                      items={[
+                        ["Quantidade", qtd(x.quantidade, nomeComp.get(x.componente_id)?.unidade)],
+                        ["Preço unitário", brl(x.preco_unit, 4)],
+                        ...(verCusto
+                          ? [["Total custo", brl(x.total_custo)] as [string, string]]
+                          : []),
+                      ]}
+                    />
+                    <Link
+                      className="nx-card-primary"
+                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
+                      params={{ propostaId: r.proposta.id, revisaoId }}
+                    >
+                      Abrir itens comerciais →
+                    </Link>
+                  </ObjectCard>
+                ))}
+              </ObjectCollection>
+            )}
+          </CollectionPage>
         </Section>
       )}
       <div className="grid gap-4 lg:grid-cols-2">
@@ -367,64 +369,94 @@ export function Planejamento({
           }
         >
           {(rows) => (
-            <DataTable
-              getRowId={(d) => d.id}
-              rows={rows}
-              columns={[
-                {
-                  key: "cod",
-                  label: "Código",
-                  render: (d) => d.revisao_componentes?.codigo ?? "—",
-                },
-                {
-                  key: "desc",
-                  label: "Descrição",
-                  render: (d) => d.revisao_componentes?.descricao ?? "—",
-                },
-                { key: "mod", label: "Modalidade", render: (d) => d.modalidade },
-                ...(modo === "compras"
-                  ? [
-                      {
-                        key: "f",
-                        label: "Fornecedor",
-                        render: (d: D) =>
-                          (d.revisao_componentes?.fornecedores as { nome: string } | null)
-                            ?.nome ?? <span className="text-warning">Selecionar</span>,
-                      },
-                    ]
-                  : []),
-                {
-                  key: "nec",
-                  label: "Necessidade",
-                  align: "right",
-                  render: (d) =>
-                    qtd(Number(d.quantidade_necessaria), d.revisao_componentes?.unidade),
-                },
-                {
-                  key: "aloc",
-                  label: "Comprometida",
-                  align: "right",
-                  render: (d) => qtd(alocado(d), d.revisao_componentes?.unidade),
-                },
-                {
-                  key: "real",
-                  label: modo === "compras" ? "Recebida" : "Produzida",
-                  align: "right",
-                  render: (d) => qtd(realizado(d), d.revisao_componentes?.unidade),
-                },
-                {
-                  key: "pend",
-                  label: "Saldo a realizar",
-                  align: "right",
-                  render: (d) =>
-                    qtd(
-                      Math.max(0, Number(d.quantidade_planejada) - realizado(d)),
-                      d.revisao_componentes?.unidade,
-                    ),
-                },
-                { key: "st", label: "Status", render: (d) => <StatusBadge value={d.status} /> },
-              ]}
-            />
+            <CollectionPage items={rows}>
+              {(visible) => (
+                <ObjectCollection
+                  label={modo === "compras" ? "Demandas de compra" : "Demandas de produção"}
+                >
+                  {visible.map((d) => {
+                    const facts: [string, string][] = [
+                      [
+                        "Necessidade",
+                        qtd(Number(d.quantidade_necessaria), d.revisao_componentes?.unidade),
+                      ],
+                      ["Comprometida", qtd(alocado(d), d.revisao_componentes?.unidade)],
+                      [
+                        modo === "compras" ? "Recebida" : "Produzida",
+                        qtd(realizado(d), d.revisao_componentes?.unidade),
+                      ],
+                      [
+                        "Saldo a realizar",
+                        qtd(
+                          Math.max(0, Number(d.quantidade_planejada) - realizado(d)),
+                          d.revisao_componentes?.unidade,
+                        ),
+                      ],
+                    ];
+                    return modo === "compras" ? (
+                      <ProcurementCard
+                        key={d.id}
+                        title={d.revisao_componentes?.descricao ?? "Componente"}
+                        code={d.revisao_componentes?.codigo ?? "—"}
+                        supplier={
+                          (d.revisao_componentes?.fornecedores as { nome: string } | null)?.nome ??
+                          null
+                        }
+                        status={d.status}
+                        facts={facts}
+                      >
+                        <p className="nx-object-meta">Modalidade: {d.modalidade}</p>
+                        {d.ordem_compra_itens.length ? (
+                          d.ordem_compra_itens.map(
+                            (i) =>
+                              i.ordens_compra && (
+                                <Link
+                                  key={i.ordens_compra.id}
+                                  className="nx-card-primary"
+                                  to="/compras/ordens-compra/$ordemId"
+                                  params={{ ordemId: i.ordens_compra.id }}
+                                >
+                                  {i.ordens_compra.numero} · {i.ordens_compra.status} →
+                                </Link>
+                              ),
+                          )
+                        ) : (
+                          <p className="nx-object-problems">Planejamento sem ordem vinculada</p>
+                        )}
+                      </ProcurementCard>
+                    ) : (
+                      <ProductionCard
+                        key={d.id}
+                        title={d.revisao_componentes?.descricao ?? "Componente"}
+                        code={d.revisao_componentes?.codigo ?? "—"}
+                        status={d.status}
+                        facts={facts}
+                      >
+                        {d.ordem_producao_itens.length ? (
+                          d.ordem_producao_itens.map(
+                            (i) =>
+                              i.ordens_producao && (
+                                <Link
+                                  key={i.ordens_producao.id}
+                                  className="nx-card-primary"
+                                  to="/compras/ordens-producao/$ordemId"
+                                  params={{ ordemId: i.ordens_producao.id }}
+                                >
+                                  {i.ordens_producao.numero} · {i.ordens_producao.status} →
+                                </Link>
+                              ),
+                          )
+                        ) : (
+                          <p className="nx-object-problems">
+                            Planejamento: produção ainda não liberada
+                          </p>
+                        )}
+                      </ProductionCard>
+                    );
+                  })}
+                </ObjectCollection>
+              )}
+            </CollectionPage>
           )}
         </QueryView>
       </Section>
@@ -454,6 +486,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const org = useOrg();
   const qc = useQueryClient();
   const save = useSave();
+  const { run, register, settle } = save;
   const trans = useServerFn(transicionarRevisao);
   const [interno, setInterno] = useState(false);
   const acao = useMutation({
@@ -480,7 +513,44 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const form = useForm<z.infer<typeof textosSchema>>({
     resolver: zodResolver(textosSchema),
     values: { ...TEXTOS_PADRAO, ...(rev.data?.textos ?? {}) },
+    resetOptions: { keepDirtyValues: true },
   });
+
+  const textVersion = useRef<number | null>(null);
+  const textQueued = useRef("");
+  const flushTexts = useCallback(() => {
+    if (!rev.data?.editavel || !form.formState.isDirty) return;
+    const result = textosSchema.safeParse(form.getValues());
+    if (!result.success) {
+      void form.trigger();
+      throw new Error("Textos inválidos: revise os campos indicados.");
+    }
+    const fingerprint = JSON.stringify(result.data);
+    if (textQueued.current === fingerprint) return;
+    textQueued.current = fingerprint;
+    settle("textos");
+    const initialVersion = rev.data.version;
+    void run("textos", async () => {
+      const { data, error } = await supabase
+        .from("proposta_revisoes")
+        .update({ textos: result.data })
+        .eq("id", revisaoId)
+        .eq("version", textVersion.current ?? initialVersion)
+        .select("version");
+      if (error) throw new Error(error.message);
+      if (!data?.length)
+        throw new Error(
+          "Conflito nos textos: trabalho local preservado. Confira a versão do servidor.",
+        );
+      textVersion.current = data[0]!.version;
+      await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
+      return true;
+    }).then((ok) => {
+      if (!ok) textQueued.current = "";
+    });
+  }, [form, rev.data, run, settle, revisaoId, qc]);
+  useEffect(() => register("textos", flushTexts), [register, flushTexts]);
+  const salvarTextos = form.handleSubmit(() => flushTexts());
 
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
@@ -489,20 +559,6 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const p = r.proposta;
   const verCusto = org.data?.canSeeCosts ?? false;
   const ext = new Map((r.resumo?.por_sistema ?? []).map((s) => [s.sistema_id, s.extensao_m]));
-
-  const salvarTextos = form.handleSubmit(async (v) => {
-    save.set("salvando");
-    const { data, error } = await supabase
-      .from("proposta_revisoes")
-      .update({ textos: v })
-      .eq("id", revisaoId)
-      .eq("version", r.version)
-      .select("id");
-    if (error) return save.set("erro", error.message);
-    if (!data?.length) return save.set("conflito");
-    save.set("salvo");
-    qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
-  });
 
   return (
     <div className="nx-document-workspace">
@@ -670,8 +726,11 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             title="Textos do documento"
             description="Somente textos e condições previstos no modelo."
           >
-            <form onSubmit={salvarTextos} className="space-y-4 text-sm">
-              <SaveFeedback status={save.status} msg={save.msg} />
+            <form
+              onInput={() => save.local("textos")}
+              onSubmit={salvarTextos}
+              className="space-y-4 text-sm"
+            >
               {(
                 ["objeto", "validade", "garantia", "condicoes", "responsavel_tecnico"] as const
               ).map((k) => (
@@ -705,7 +764,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
                 </label>
               ))}
               <ActionButton type="submit" variant="ghost">
-                Salvar textos
+                Sincronizar textos
               </ActionButton>
             </form>
           </Section>
@@ -793,27 +852,56 @@ export function ParametrosForm({
 }: {
   valores: Parametros;
   editavel: boolean;
-  onSave: (p: Parametros) => Promise<void>;
+  onSave: (p: Parametros) => Promise<boolean | void>;
 }) {
   const form = useForm<Parametros>({
     resolver: zodResolver(paramSchema) as never,
     values: valores,
+    resetOptions: { keepDirtyValues: true },
     mode: "onChange",
   });
+  const { register, local, set, settle } = useSave();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handler = useRef(onSave);
+  handler.current = onSave;
+  const lastQueued = useRef(JSON.stringify(valores));
+  const flush = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+    if (!editavel) return;
+    const result = paramSchema.safeParse(form.getValues());
+    if (!result.success) {
+      void form.trigger();
+      throw new Error("Parâmetros inválidos: revise os campos indicados.");
+    }
+    const fingerprint = JSON.stringify(result.data);
+    if (lastQueued.current === fingerprint) return;
+    lastQueued.current = fingerprint;
+    settle("parametros");
+    void handler.current(result.data).then((ok) => {
+      if (ok === false) lastQueued.current = "";
+    });
+  }, [form, editavel, settle]);
+  useEffect(() => register("parametros", flush), [register, flush]);
   useEffect(() => {
-    const sub = form.watch(() => {
-      if (!editavel) return;
+    const sub = form.watch((_values, { type }) => {
+      if (!editavel || type !== "change") return;
+      local("parametros");
       if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => form.handleSubmit((v) => onSave(v))(), 800);
+      timer.current = setTimeout(() => {
+        try {
+          flush();
+        } catch (error) {
+          set("erro", String(error));
+        }
+      }, 800);
     });
     return () => {
       sub.unsubscribe();
       if (timer.current) clearTimeout(timer.current);
     };
-  }, [form, editavel, onSave]);
+  }, [form, editavel, flush, local, set]);
   return (
-    <form onSubmit={form.handleSubmit((v) => onSave(v))} className="nx-parameters">
+    <form onSubmit={form.handleSubmit(() => flush())} className="nx-parameters">
       {(
         [
           {
@@ -860,8 +948,21 @@ export function ParametrosForm({
           },
         ] satisfies { titulo: string; campos: (keyof Parametros)[] }[]
       ).map((grupo) => (
-        <fieldset key={grupo.titulo} className="nx-parameter-group">
-          <legend>{grupo.titulo}</legend>
+        <details key={grupo.titulo} className="nx-parameter-group">
+          <summary>
+            {grupo.titulo}
+            <span>
+              {grupo.campos.length} parâmetros ·{" "}
+              {grupo.campos
+                .slice(0, 2)
+                .map((k) => `${ROTULOS_PARAMETROS[k]}: ${String(form.watch(k))}`)
+                .join(" · ")}
+            </span>
+            {grupo.campos.some((k) => !!form.formState.errors[k]) && (
+              <strong className="nx-object-problems">Pendência: revise os campos indicados</strong>
+            )}
+            <span>Editar grupo ↓</span>
+          </summary>
           <div className="nx-parameter-fields">
             {grupo.campos.map((k) => {
               const err = form.formState.errors[k];
@@ -895,7 +996,7 @@ export function ParametrosForm({
               );
             })}
           </div>
-        </fieldset>
+        </details>
       ))}
     </form>
   );
@@ -910,28 +1011,44 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   if (versao.current == null) versao.current = rev.data.version;
-  const onSave = async (p: Parametros) => {
-    save.set("salvando");
-    const { data, error } = await supabase
-      .from("proposta_revisoes")
-      .update({ parametros: p })
-      .eq("id", revisaoId)
-      .eq("version", versao.current!)
-      .select("version");
-    if (error) return save.set("erro", error.message);
-    if (!data?.length) return save.set("conflito");
-    versao.current = data[0]!.version;
-    await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
-    recalc.mutate();
-  };
+  const onSave = async (p: Parametros) =>
+    Boolean(
+      await save.run("parametros", async () => {
+        // Defaults used for display/calculation are not manual changes. Preserve
+        // sparse legacy records and write only effective edits over their raw values.
+        const raw = (rev.data.parametros ?? {}) as Partial<Parametros>;
+        const effective = mesclarParametros(raw);
+        const parametros = {
+          ...raw,
+          ...Object.fromEntries(
+            Object.entries(p).filter(
+              ([key, value]) => !Object.is(value, effective[key as keyof Parametros]),
+            ),
+          ),
+        };
+        const { data, error } = await supabase
+          .from("proposta_revisoes")
+          .update({ parametros })
+          .eq("id", revisaoId)
+          .eq("version", versao.current!)
+          .select("version");
+        if (error) throw new Error(error.message);
+        if (!data?.length)
+          throw new Error(
+            "Conflito nos parâmetros: trabalho local preservado. Confira a versão do servidor.",
+          );
+        versao.current = data[0]!.version;
+        await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
+        recalc.mutate();
+        return true;
+      }),
+    );
+
   return (
     <Section
       title="Parâmetros desta revisão"
       description="Cópia versionada dos padrões de Configurações › Orçamentos. Alterar aqui não afeta outras propostas. Salva automaticamente."
     >
-      <div className="mb-4">
-        <SaveFeedback status={save.status} msg={save.msg} />
-      </div>
       <ParametrosForm
         valores={mesclarParametros(rev.data.parametros)}
         editavel={rev.data.editavel}
@@ -945,6 +1062,17 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
 export function Historico({ propostaId, revisaoId }: { propostaId: string; revisaoId: string }) {
   const navigate = useNavigate();
   const nova = useServerFn(novaRevisao);
+  const org = useOrg();
+  const listSaves = useServerFn(listarSalvamentos);
+  const saves = useInfiniteQuery({
+    queryKey: ["salvamentos", revisaoId],
+    enabled: !!org.data?.canSeeCosts,
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) =>
+      listSaves({ data: { revisao_id: revisaoId, limite: 50, offset: pageParam } }),
+    getNextPageParam: (lastPage, pages) => (lastPage.length === 50 ? pages.length * 50 : undefined),
+    select: (data) => data.pages.flat(),
+  });
   const qc = useQueryClient();
   const revs = useQuery({
     queryKey: ["revisoes", propostaId],
@@ -960,6 +1088,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
   });
   const aud = useQuery({
     queryKey: ["auditoria", revisaoId],
+    enabled: org.data?.roles.includes("admin") ?? false,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("auditoria")
@@ -973,6 +1102,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
   });
   const calc = useQuery({
     queryKey: ["calculos", revisaoId],
+    enabled: !!org.data?.canSeeCosts,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("calculo_execucoes")
@@ -995,7 +1125,42 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
     },
   });
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
+    <div className="nx-history">
+      {org.data?.canSeeCosts && (
+        <Section
+          title="Salvamentos confirmados"
+          description="Um evento por consolidação. Os rascunhos automáticos e os cálculos não contam como edições comerciais."
+        >
+          <QueryView
+            query={saves}
+            empty={
+              <EmptyState
+                title="Nenhum salvamento consolidado"
+                hint="Use Salvar proposta para consolidar as diferenças reais desta revisão. Registros anteriores à ativação não são reconstruídos."
+              />
+            }
+          >
+            {(rows) => (
+              <>
+                <ObjectCollection label="Salvamentos confirmados">
+                  {rows.map((event) => (
+                    <SaveEventCard key={event.id} event={event} />
+                  ))}
+                </ObjectCollection>
+                {saves.hasNextPage && (
+                  <ActionButton
+                    variant="ghost"
+                    loading={saves.isFetchingNextPage}
+                    onClick={() => saves.fetchNextPage()}
+                  >
+                    Carregar salvamentos anteriores
+                  </ActionButton>
+                )}
+              </>
+            )}
+          </QueryView>
+        </Section>
+      )}
       <Section title="Revisões">
         <PromptAction
           loading={criar.isPending}
@@ -1012,86 +1177,86 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
         <div className="mt-3">
           <QueryView query={revs} empty={<EmptyState title="Sem revisões" />}>
             {(rows) => (
-              <DataTable
-                getRowId={(r) => r.id}
-                selectedId={revisaoId}
-                rows={rows}
-                onRowClick={(r) =>
-                  navigate({
-                    to: "/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais",
-                    params: { propostaId, revisaoId: r.id },
-                  })
-                }
-                columns={[
-                  {
-                    key: "numero",
-                    label: "Rev.",
-                    render: (r) => String(r.numero).padStart(2, "0"),
-                  },
-                  {
-                    key: "status",
-                    label: "Status",
-                    render: (r) => <StatusBadge value={r.status} />,
-                  },
-                  {
-                    key: "total",
-                    label: "Total",
-                    align: "right",
-                    render: (r) =>
-                      brl(
-                        (r.totais as { totais?: { final?: number } } | null)?.totais?.final ?? null,
-                      ),
-                  },
-                  { key: "created_at", label: "Criada", render: (r) => dataBR(r.created_at) },
-                ]}
-              />
+              <ObjectCollection label="Revisões formais">
+                {rows.map((r) => (
+                  <RevisionCard
+                    key={r.id}
+                    title={`Revisão ${String(r.numero).padStart(2, "0")}`}
+                    current={r.id === revisaoId}
+                    status={r.status}
+                    date={dataBR(r.created_at)}
+                    total={brl(
+                      (r.totais as { totais?: { final?: number } } | null)?.totais?.final ?? null,
+                    )}
+                  >
+                    <Link
+                      className="nx-card-primary"
+                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
+                      params={{ propostaId, revisaoId: r.id }}
+                    >
+                      Abrir revisão →
+                    </Link>
+                  </RevisionCard>
+                ))}
+              </ObjectCollection>
             )}
           </QueryView>
         </div>
       </Section>
       <div className="space-y-4">
-        <Section title="Alterações registradas">
-          <QueryView
-            query={aud}
-            empty={<p className="text-xs text-muted-foreground">Nenhum registro.</p>}
-          >
-            {(rows) => (
-              <ul className="nx-timeline">
-                {rows.map((a) => (
-                  <li key={a.id}>
-                    <time dateTime={a.created_at}>{dataBR(a.created_at)}</time>
-                    <p className="font-medium">
-                      {a.acao}{" "}
-                      <span className="font-normal text-muted-foreground">· {a.entidade}</span>
-                    </p>
-                    {a.motivo && <p className="text-muted-foreground">{a.motivo}</p>}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </QueryView>
-        </Section>
-        <Section title="Execuções de cálculo">
-          <QueryView
-            query={calc}
-            empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
-          >
-            {(rows) => (
-              <ul className="nx-timeline">
-                {rows.map((c) => (
-                  <li key={c.id}>
-                    <time dateTime={c.created_at}>
-                      {new Date(c.created_at).toLocaleString("pt-BR")}
-                    </time>
-                    <p>
-                      Motor <span className="font-mono">{c.motor_versao}</span>
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </QueryView>
-        </Section>
+        {org.data?.roles.includes("admin") && (
+          <Section title="Registros legados">
+            <p className="nx-editor-note">
+              Estes logs não registram diferenças completas nem comprovam um salvamento consolidado.
+              Autoria não registrada não é inferida.
+            </p>
+            <QueryView
+              query={aud}
+              empty={<p className="text-xs text-muted-foreground">Nenhum registro.</p>}
+            >
+              {(rows) => (
+                <ul className="nx-timeline">
+                  {rows.map((a) => (
+                    <li key={a.id}>
+                      <time dateTime={a.created_at}>{dataBR(a.created_at)}</time>
+                      <p className="font-medium">
+                        {a.acao}{" "}
+                        <span className="font-normal text-muted-foreground">· {a.entidade}</span>
+                      </p>
+                      {a.motivo && <p className="text-muted-foreground">{a.motivo}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </QueryView>
+          </Section>
+        )}
+        {org.data?.canSeeCosts && (
+          <details className="nx-technical-log">
+            <summary>Execuções de cálculo · detalhe técnico</summary>
+            <Section title="Cálculos (não contam como edições)">
+              <QueryView
+                query={calc}
+                empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
+              >
+                {(rows) => (
+                  <ul className="nx-timeline">
+                    {rows.map((c) => (
+                      <li key={c.id}>
+                        <time dateTime={c.created_at}>
+                          {new Date(c.created_at).toLocaleString("pt-BR")}
+                        </time>
+                        <p>
+                          Motor <span className="font-mono">{c.motor_versao}</span>
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </QueryView>
+            </Section>
+          </details>
+        )}
       </div>
     </div>
   );

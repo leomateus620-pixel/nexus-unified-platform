@@ -28,6 +28,8 @@ N=$($P -At -c "select count(*) from recebimentos where chave='dup'")
 T5=$([ "$N" = 1 ] && echo PASSOU || echo FALHOU)
 OUT="$OUT
 T05 dez chamadas simultâneas mesma chave | exatamente 1 efeito | $T5 | $N movimento(s)"
+$P -f "$ROOT/tests/db/save-checkpoints.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/save-concurrency.mjs"
 echo "$OUT"
 if echo "$OUT" | grep -q "FALHOU"; then echo "RESULTADO: FALHAS"; exit 1; fi
 echo "RESULTADO: TODOS PASSARAM"

@@ -32,7 +32,9 @@ export function useNavigate() {
 export function useRouterState({ select }) {
   return select({ location: { pathname } });
 }
-export function useBlocker() {}
+export function useBlocker() {
+  return { status: "idle", reset: () => {}, proceed: () => {} };
+}
 export const createFileRoute = (path) => (options) => ({
   options,
   fullPath: path,

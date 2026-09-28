@@ -1,0 +1,413 @@
+{
+  "date": "2026-09-28T02:37:33.860Z",
+  "errors": [],
+  "dialogs": [],
+  "checks": [
+    {
+      "name": "mobile select-all is visible",
+      "pass": true
+    },
+    {
+      "name": "mobile select-all selects all records",
+      "pass": true
+    },
+    {
+      "name": "mobile menu focus",
+      "pass": true,
+      "active": "Dashboard"
+    },
+    {
+      "name": "mobile menu Escape returns focus",
+      "pass": true
+    },
+    {
+      "name": "mobile inspector fits",
+      "pass": true,
+      "width": 390,
+      "height": 844,
+      "modal": true,
+      "activeInside": true
+    },
+    {
+      "name": "inspector keyboard focus retained",
+      "pass": true
+    },
+    {
+      "name": "inspector Escape returns focus",
+      "pass": true
+    },
+    {
+      "name": "inspector resize preserves DOM and draft",
+      "pass": true,
+      "value": "12999.2345",
+      "sameNode": true
+    },
+    {
+      "name": "wide inspector inline",
+      "pass": true
+    },
+    {
+      "name": "restricted profile has no cost input",
+      "pass": true
+    },
+    {
+      "name": "readonly controls disabled",
+      "pass": true
+    },
+    {
+      "name": "receipt cancellation does not mutate",
+      "pass": true
+    },
+    {
+      "name": "current step remains visible after resize",
+      "pass": true,
+      "item": {
+        "left": 303.703125,
+        "right": 377.53125
+      },
+      "rail": {
+        "left": 12,
+        "right": 378
+      }
+    }
+  ],
+  "contrast": [
+    {
+      "foreground": "--foreground",
+      "background": "--background",
+      "rgb": [
+        [
+          26,
+          36,
+          31
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 13.869474388007959,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--foreground",
+      "background": "--card",
+      "rgb": [
+        [
+          26,
+          36,
+          31
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 15.956734667152773,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--foreground",
+      "background": "--popover",
+      "rgb": [
+        [
+          26,
+          36,
+          31
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 15.956734667152773,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--background",
+      "rgb": [
+        [
+          71,
+          87,
+          78
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 6.658758095323761,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--card",
+      "rgb": [
+        [
+          71,
+          87,
+          78
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 7.660855283146572,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--popover",
+      "rgb": [
+        [
+          71,
+          87,
+          78
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 7.660855283146572,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--primary-foreground",
+      "background": "--primary",
+      "rgb": [
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          7,
+          99,
+          61
+        ]
+      ],
+      "ratio": 7.339694158763602,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--warning",
+      "background": "--nx-warning-surface",
+      "rgb": [
+        [
+          111,
+          69,
+          20
+        ],
+        [
+          250,
+          241,
+          221
+        ]
+      ],
+      "ratio": 7.366636054490928,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--destructive",
+      "background": "--nx-error-surface",
+      "rgb": [
+        [
+          165,
+          41,
+          43
+        ],
+        [
+          255,
+          237,
+          235
+        ]
+      ],
+      "ratio": 6.289219335651404,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--background",
+      "rgb": [
+        [
+          115,
+          130,
+          118
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 3.521291654410867,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--card",
+      "rgb": [
+        [
+          115,
+          130,
+          118
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 4.051221772591184,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--popover",
+      "rgb": [
+        [
+          115,
+          130,
+          118
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 4.051221772591184,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--ring",
+      "background": "--background",
+      "rgb": [
+        [
+          7,
+          99,
+          61
+        ],
+        [
+          237,
+          240,
+          234
+        ]
+      ],
+      "ratio": 6.379607248865008,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--ring",
+      "background": "--card",
+      "rgb": [
+        [
+          7,
+          99,
+          61
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "ratio": 7.339694158763602,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--nx-ink",
+      "background": "--nx-paper",
+      "rgb": [
+        [
+          20,
+          29,
+          23
+        ],
+        [
+          248,
+          249,
+          244
+        ]
+      ],
+      "ratio": 16.297316386602454,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--nx-paper-muted",
+      "background": "--nx-paper",
+      "rgb": [
+        [
+          70,
+          80,
+          73
+        ],
+        [
+          248,
+          249,
+          244
+        ]
+      ],
+      "ratio": 7.926189586275374,
+      "minimum": 4.5,
+      "pass": true
+    }
+  ],
+  "receiptPayload": [
+    {
+      "name": "registrarMovimento",
+      "payload": {
+        "data": {
+          "tipo": "recebimento",
+          "item_id": "order-item-0",
+          "quantidade": 3.5,
+          "chave": "40571a3f-6f5c-4af9-b5f0-2278544acbe5"
+        }
+      }
+    }
+  ],
+  "productionPayload": [
+    {
+      "name": "registrarMovimento",
+      "payload": {
+        "data": {
+          "tipo": "apontamento",
+          "item_id": "order-item-0",
+          "quantidade": 2.5,
+          "chave": "8320782d-37ad-40cb-acb5-d28998e29113"
+        }
+      }
+    }
+  ],
+  "reducedMotion": {
+    "matches": true,
+    "animated": 0,
+    "transitionDurations": [
+      "0s"
+    ]
+  }
+}

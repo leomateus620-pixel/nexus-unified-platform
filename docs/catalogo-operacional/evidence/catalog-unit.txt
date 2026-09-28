@@ -1,0 +1,15 @@
+> test:orcamento
+> vitest run tests/calculo.test.ts tests/planilha.test.ts tests/autorizacao.test.ts tests/proposta-save-queue.test.ts
+
+
+ RUN  v3.2.7 C:/Users/Leonardo/Documents/Nexus-Dev
+
+ ✓ tests/proposta-save-queue.test.ts (3 tests) 6ms
+ ✓ tests/planilha.test.ts (6 tests) 8ms
+ ✓ tests/calculo.test.ts (13 tests) 15ms
+ ✓ tests/autorizacao.test.ts (5 tests) 7ms
+
+ Test Files  4 passed (4)
+      Tests  27 passed (27)
+   Start at  23:32:16
+   Duration  1.46s (transform 268ms, setup 0ms, collect 496ms, tests 36ms, environment 1ms, prepare 874ms)

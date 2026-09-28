@@ -1,0 +1,27 @@
+> test:industrial
+> tsx --test tests/industrial/contracts.test.ts tests/industrial/tangent-repair.test.mjs
+
+✔ quantized foliage keeps crown coordinates beyond one unit after node transforms (2.4676ms)
+✔ stable silo IDs map to independently extracted CAD axes at real scale (1.4853ms)
+✔ user-confirmed plant identity stays separate from CAD measurements and operational numbering (0.4084ms)
+✔ original references retain the supplied bytes (62.9853ms)
+✔ walk cannot enter cylinders, buildings, supporting frame or cross fences (15.7792ms)
+✔ walking reference is outside colliders and moves consistently with substeps (0.9342ms)
+✔ anchored vegetation trunks do not enter major footprints (1.5751ms)
+✔ registration is proper rigid motion with a separate CAD ground datum (0.5704ms)
+✔ all six silo distances preserve source geometry instead of the estimated layout (0.339ms)
+✔ buried and overhead colliders do not become ground walls; rotated footprints are respected (0.3416ms)
+✔ source occurrence partitions cannot duplicate the same CAD component (0.399ms)
+✔ underground depth, old circular identity and all legacy IDs are retained (0.2493ms)
+✔ repairs the real narrow CAD triangle while preserving valid tangents and geometry (92.3155ms)
+✔ derives the handedness of mirrored UV coordinates (3.7182ms)
+✔ uses the incident triangle with the largest valid UV area (0.9221ms)
+✔ rejects a missing UV derivative instead of inventing a tangent (1.1603ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1437.7274

@@ -1,24 +1,16 @@
-import { AlertCircle, Check, Info, LoaderCircle, LockKeyhole, X } from "lucide-react";
+import { LockKeyhole, X } from "lucide-react";
 import {
   useEffect,
   useId,
   useRef,
   useState,
-  useSyncExternalStore,
   type InputHTMLAttributes,
   type ReactNode,
   type RefObject,
 } from "react";
 
-import { useSave } from "../hooks";
 import "./editors.css";
-
-const inspectorQuery = "(min-width: 1600px)";
-const subscribeWide = (notify: () => void) => {
-  const query = window.matchMedia(inspectorQuery);
-  query.addEventListener("change", notify);
-  return () => query.removeEventListener("change", notify);
-};
+import { useSave } from "../hooks";
 
 /** Native dialog keeps one mounted editor when switching between inline and modal display. */
 export function EditorInspector({
@@ -36,12 +28,31 @@ export function EditorInspector({
   returnFocus: RefObject<HTMLButtonElement | null>;
   children: ReactNode;
 }) {
-  const wide = useSyncExternalStore(
-    subscribeWide,
-    () => window.matchMedia(inspectorQuery).matches,
-    () => false,
-  );
+  const [wide, setWide] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const workspace = dialog.current?.closest<HTMLElement>(".nx-editor-workspace");
+    if (!workspace) return;
+    let frame = 0;
+    let previous: boolean | null = null;
+    const observer = new ResizeObserver(([entry]) => {
+      const side = (entry?.contentRect.width ?? 0) >= 920;
+      if (side === previous) return;
+      previous = side;
+      cancelAnimationFrame(frame);
+      // Mutating the observed layout inside ResizeObserver can produce a loop
+      // notification. Apply only a breakpoint change, on the next frame.
+      frame = requestAnimationFrame(() => {
+        workspace.dataset["sideEditor"] = String(side && open);
+        setWide(side);
+      });
+    });
+    observer.observe(workspace);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [open]);
   const heading = useRef<HTMLHeadingElement>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -66,10 +77,12 @@ export function EditorInspector({
       element.close();
     }
     if (!element.open) {
+      const scrollY = window.scrollY;
       if (wide) element.show();
       else element.showModal();
       if (resizing && active) active.focus({ preventScroll: true });
       else heading.current?.focus({ preventScroll: true });
+      window.scrollTo({ top: scrollY, behavior: "instant" });
     }
     delete element.dataset["modeChanging"];
     previousMode.current = wide;
@@ -84,10 +97,30 @@ export function EditorInspector({
     <dialog
       ref={dialog}
       className="nx-editor-inspector"
+      data-inline={wide}
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       aria-modal={!wide && open ? true : undefined}
       onKeyDown={(event) => {
+        if (!wide && event.key === "Tab") {
+          const focusable = [
+            ...event.currentTarget.querySelectorAll<HTMLElement>(
+              'button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),summary,a[href],[tabindex="0"]',
+            ),
+          ].filter((e) => e.getClientRects().length > 0);
+          const first = focusable[0],
+            last = focusable[focusable.length - 1];
+          if (
+            event.shiftKey &&
+            (document.activeElement === first || document.activeElement === heading.current)
+          ) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }
         if (wide && event.key === "Escape") {
           event.preventDefault();
           close();
@@ -119,39 +152,13 @@ export function EditorInspector({
   );
 }
 
-/** Visual context for the shared live save status, avoiding duplicate screen-reader announcements. */
+/** Global synchronization is announced once by the proposal header. */
 export function EditorSaveState({ editavel }: { editavel: boolean }) {
-  const save = useSave();
-  const state = save.status;
-  const labels = {
-    idle: "Campos salvos ao sair; seleções aplicadas ao alterar.",
-    salvando: "Salvando / recalculando…",
-    salvo: "Última gravação confirmada no servidor",
-    erro: "Falha ao salvar",
-    conflito: "Conflito de edição",
-  };
-  const Icon =
-    state === "erro" || state === "conflito"
-      ? AlertCircle
-      : state === "salvando"
-        ? LoaderCircle
-        : state === "salvo"
-          ? Check
-          : Info;
-  if (!editavel)
-    return (
-      <p className="nx-editor-save">
-        <LockKeyhole size={15} aria-hidden="true" />
-        Revisão somente leitura
-      </p>
-    );
+  if (editavel) return null;
   return (
-    <p className="nx-editor-save" data-state={state}>
-      <Icon size={15} aria-hidden="true" />
-      <span>
-        {labels[state]}
-        {save.msg ? ` · ${save.msg}` : ""}
-      </span>
+    <p className="nx-editor-save">
+      <LockKeyhole size={15} aria-hidden="true" />
+      Revisão somente leitura
     </p>
   );
 }
@@ -159,20 +166,43 @@ export function EditorSaveState({ editavel }: { editavel: boolean }) {
 /** Draft feedback is local to a field; every original blur callback remains unchanged. */
 export function EditorInput({ onBlur, onInput, ...props }: InputHTMLAttributes<HTMLInputElement>) {
   const [dirty, setDirty] = useState(false);
+  const fieldKey = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dirtyRef = useRef(false);
+  const [invalid, setInvalid] = useState(false);
+  useEffect(() => {
+    if (inputRef.current && !dirtyRef.current)
+      inputRef.current.value = String(props.defaultValue ?? "");
+  }, [props.defaultValue]);
+  const save = useSave();
   return (
     <span className="nx-editor-draft" data-dirty={dirty}>
       <input
         {...props}
+        ref={inputRef}
+        aria-invalid={invalid || props["aria-invalid"]}
+        aria-describedby={invalid ? `${fieldKey}-error` : props["aria-describedby"]}
         onInput={(event) => {
+          dirtyRef.current = true;
+          save.local(fieldKey);
           setDirty(event.currentTarget.value !== String(props.defaultValue ?? ""));
           onInput?.(event);
         }}
         onBlur={(event) => {
           if (event.currentTarget.closest("dialog")?.dataset["modeChanging"] === "true") return;
+          const changed = dirtyRef.current;
+          dirtyRef.current = false;
           setDirty(false);
-          onBlur?.(event);
+          setInvalid(!event.currentTarget.checkValidity());
+          save.settle(fieldKey);
+          if (changed) onBlur?.(event);
         }}
       />
+      {invalid && (
+        <span id={`${fieldKey}-error`} className="nx-editor-error">
+          {inputRef.current?.validationMessage || "Entrada inválida"}
+        </span>
+      )}
       <span className="nx-editor-draft-state" aria-live="polite">
         {dirty ? "Edição local" : ""}
       </span>

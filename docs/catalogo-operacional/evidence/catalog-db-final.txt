@@ -1,0 +1,324 @@
+como
+------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ como
+------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ como
+------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ como
+------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ como
+------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+ tenta
+-------
+
+(1 row)
+
+                cenario                |          esperado           | status |                                    obtido
+---------------------------------------+-----------------------------+--------+------------------------------------------------------------------------------
+ S02 campo cria cliente                | negado:                     | PASSOU | negado: new row violates row-level security policy for table "clientes"
+ S04 campo lê custos (linhas)          | 0                           | PASSOU | 0
+ S04 campo lê revisões/totais (linhas) | 0                           | PASSOU | 0
+ S04 campo lê OC com preço (linhas)    | 0                           | PASSOU | 0
+ S02 campo registra recebimento        | negado:Acesso negado        | PASSOU | negado: Acesso negado
+ S03 admin B lê clientes de A          | 0                           | PASSOU | 0
+ S03 admin B cria proposta em A        | negado:                     | PASSOU | negado: new row violates row-level security policy for table "propostas"
+ S03 proposta A com cliente de B       | negado:                     | PASSOU | negado: Cliente de outra organização
+ S05 enviada→rascunho                  | negado:Transição            | PASSOU | negado: Transição de enviada para rascunho não permitida
+ S05 alterar totais da enviada         | negado:                     | PASSOU | negado: Revisão emitida é imutável. Crie nova revisão.
+ S05 excluir sistema da enviada        | negado:                     | PASSOU | negado: Revisão emitida é imutável. Crie nova revisão.
+ S05 alterar preço de OC emitida       | negado:                     | PASSOU | negado: Item de ordem emitida/liberada é imutável
+ S05 alterar saldo recebido direto     | negado:movimento registrado | PASSOU | negado: Saldos só mudam por movimento registrado
+ S05 incluir item em OC emitida        | negado:                     | PASSOU | negado: Itens de ordem emitida/liberada não podem ser incluídos ou excluídos
+ C06 receber 1,5 peça                  | negado:fração               | PASSOU | negado: Peça indivisível não aceita fração
+ T08 receber 4                         | ok                          | PASSOU | ok
+ T08 repetir chave k-1                 | ok                          | PASSOU | ok
+ T05 chave k-1 com dados diferentes    | negado:dados diferentes     | PASSOU | negado: Chave já usada com dados diferentes
+ T08 receber 6                         | ok                          | PASSOU | ok
+ T08 excesso após saldo zero           | negado:saldo                | PASSOU | negado: Quantidade acima do saldo (0.000000)
+ T08 total recebido                    | 10                          | PASSOU | 10
+ T08 estornar 2                        | ok                          | PASSOU | ok
+ T08 saldo após estorno                | 2                           | PASSOU | 2
+ T08 movimentos preservados            | 3                           | PASSOU | 3
+ T06 números distintos                 | OC-…-001,002                | PASSOU | OC-2026-001,OC-2026-002
+(25 rows)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:22: NOTICE:  PASS: derived composition removal does not inflate manual differences
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:25: NOTICE:  PASS: manual override remains a commercial difference
+              set_config
+--------------------------------------
+ 30000000-0000-0000-0000-000000000001
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:32: NOTICE:  PASS: no changes: no event
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:34: NOTICE:  PASS: input changes mark the previous calculation stale
+ assert
+--------
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:37: NOTICE:  PASS: autosaves do not create commercial events
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:39: NOTICE:  PASS: five fields in three objects = one save
+ assert
+--------
+
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:40: NOTICE:  PASS: repeated field becomes initial/final diff
+ assert
+--------
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:41: NOTICE:  PASS: lost response/retry returns identical operation
+
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:42: NOTICE:  PASS: retry does not duplicate
+ assert
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:43: NOTICE:  PASS: repeated save with no changes stays empty
+--------
+
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:46: NOTICE:  PASS: reverting exactly to initial makes no event
+                                                                        concluir_revisao
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ {"id": null, "final": 123.4567, "campos": 0, "evento": false, "versao": 6, "objetos": 0, "calculo_id": "167f9d31-85ba-463b-9646-8693396440c8", "pendencias": 0}
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:49: NOTICE:  PASS: recalculation is technical, not commercial
+ assert
+--------
+
+(1 row)
+
+              set_config
+--------------------------------------
+ 30000000-0000-0000-0000-000000000002
+(1 row)
+
+              set_config
+--------------------------------------
+ 30000000-0000-0000-0000-000000000001
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:54: NOTICE:  PASS: conflict does not increment history
+                                                                                               save
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ {"id": "36000000-0000-0000-0000-000000000006", "final": 123.4567, "campos": 1, "evento": true, "versao": 7, "objetos": 1, "calculo_id": "fdc64c7d-f952-47df-ae80-b18944f8735c", "pendencias": 0}
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:58: NOTICE:  PASS: impact compares confirmed checkpoint, not intervening calculation
+ assert
+--------
+
+(1 row)
+
+ assert
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:59: NOTICE:  PASS: actual author B preserved when A consolidates
+--------
+
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:62: NOTICE:  PASS: calculation failure has no event
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:67: NOTICE:  PASS: audit failure rolls back calculation atomically
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:68: NOTICE:  PASS: failed consolidation preserves synchronized draft
+ assert
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:69: NOTICE:  PASS: audit failure does not increment history
+--------
+
+(1 row)
+
+              set_config
+--------------------------------------
+ 30000000-0000-0000-0000-000000000003
+(1 row)
+
+ assert
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:72: NOTICE:  PASS: restricted user cannot see diffs OR counts
+--------
+
+(1 row)
+
+              set_config
+--------------------------------------
+ 00000000-0000-0000-0000-0000000000b0
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:75: NOTICE:  PASS: other organization cannot see history
+ assert
+--------
+
+(1 row)
+
+              set_config
+--------------------------------------
+ 30000000-0000-0000-0000-000000000002
+(1 row)
+
+ assert
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:77: NOTICE:  PASS: second authorized user sees same persistent history
+--------
+
+(1 row)
+
+                                                                                               save
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ {"id": "36000000-0000-0000-0000-000000000009", "final": 123.4567, "campos": 1, "evento": true, "versao": 8, "objetos": 1, "calculo_id": "401837db-a6f0-4157-ac33-453f9be73697", "pendencias": 0}
+(1 row)
+
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:79: NOTICE:  PASS: save does not issue or create a formal revision
+ assert
+--------
+
+(1 row)
+
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:82: NOTICE:  PASS: issued revision remains unchanged
+PASS: ten PostgreSQL sessions, one operation/event/calculation, identical persistent response

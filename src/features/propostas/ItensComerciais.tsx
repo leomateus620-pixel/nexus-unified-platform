@@ -90,27 +90,30 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
     return save.run(`componentes-${ids.join(",")}`, async () => {
-      for (const id of ids) {
-        const previous = comps.data?.find((c) => c.id === id);
-        if (!previous) throw new Error("Componente não encontrado na revisão");
-        let request = supabase
-          .from("revisao_componentes")
-          .update(patch as never)
-          .eq("id", id);
-        for (const field of ["modalidade", "fornecedor_id", "custo_adotado"] as const) {
-          if (field in patch)
-            request =
-              previous[field] == null
-                ? request.is(field, null)
-                : request.eq(field, previous[field]!);
-        }
-        const { data, error } = await request.select("id");
-        if (error) throw new Error(error.message);
-        if (!data?.length)
-          throw new Error(
-            "Conflito no componente: outro usuário alterou o campo. Trabalho local preservado.",
-          );
-      }
+      const esperados = Object.fromEntries(
+        ids.map((id) => {
+          const previous = comps.data?.find((c) => c.id === id);
+          if (!previous) throw new Error("Componente não encontrado na revisão");
+          return [
+            id,
+            Object.fromEntries(
+              Object.keys(patch).map((field) => [
+                field,
+                previous[field as keyof typeof previous] ?? null,
+              ]),
+            ),
+          ];
+        }),
+      );
+      const { data, error } = await supabase.rpc("atualizar_componentes_revisao", {
+        _rev: revisaoId,
+        _ids: ids,
+        _patch: patch,
+        _esperados: esperados,
+      });
+      if (error) throw new Error(error.message);
+      if (data !== ids.length)
+        throw new Error("Nem todos os componentes foram atualizados. Trabalho local preservado.");
       await Promise.all([
         qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
         qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),

@@ -1,0 +1,111 @@
+
+> test:ui:contracts
+> node tests/ui/contracts.mjs
+
+warning: in the working copy of 'docs/catalogo-operacional/README.md', LF will be replaced by CRLF the next time Git touches it
+fatal: path 'src/features/propostas/ProposalSaveProvider.tsx' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+fatal: path 'src/features/propostas/save-queue.ts' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+fatal: path 'src/features/propostas/save-types.ts' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+fatal: path 'src/features/propostas/ui/ObjectCards.tsx' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+fatal: path 'src/features/propostas/ui/ProductComponentCard.tsx' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+fatal: path 'src/features/propostas/ui/SaveEventCard.tsx' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+fatal: path 'src/features/propostas/ui/useEditorDialog.tsx' exists on disk, but not in '5286881c4133c3d123812226b20081d67bc61c07'
+{
+  "protectedFiles": 46,
+  "protectedChanged": [],
+  "contracts": [
+    {
+      "file": "src/components/nexus/AppShell.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/components/nexus/Workspace.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/features/propostas/Dimensionamento.tsx",
+      "routesEqual": true,
+      "requestsEqual": false,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/features/propostas/Etapas.tsx",
+      "routesEqual": true,
+      "requestsEqual": false,
+      "hooksEqual": false
+    },
+    {
+      "file": "src/features/propostas/ItensComerciais.tsx",
+      "routesEqual": true,
+      "requestsEqual": false,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/features/propostas/ProposalSaveProvider.tsx"
+    },
+    {
+      "file": "src/features/propostas/hooks.ts",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": false
+    },
+    {
+      "file": "src/features/propostas/propostas.functions.ts",
+      "routesEqual": true,
+      "requestsEqual": false,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/features/propostas/save-queue.ts"
+    },
+    {
+      "file": "src/features/propostas/save-types.ts"
+    },
+    {
+      "file": "src/features/propostas/ui/CommercialItemRow.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/features/propostas/ui/EditorWorkspace.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/features/propostas/ui/ObjectCards.tsx"
+    },
+    {
+      "file": "src/features/propostas/ui/ProductComponentCard.tsx"
+    },
+    {
+      "file": "src/features/propostas/ui/SaveEventCard.tsx"
+    },
+    {
+      "file": "src/features/propostas/ui/useEditorDialog.tsx"
+    },
+    {
+      "file": "src/routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": false
+    },
+    {
+      "file": "src/routes/_authenticated/compras.ordens-compra.$ordemId.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true
+    },
+    {
+      "file": "src/routes/_authenticated/compras.ordens-producao.$ordemId.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true
+    }
+  ]
+}

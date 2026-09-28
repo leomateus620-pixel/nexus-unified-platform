@@ -1,0 +1,20 @@
+
+> test:trevisan
+> node --experimental-strip-types --test tests/trevisan.test.mjs
+
+✔ transcription preserves the measured Moega chain and adopted envelope (2.2033ms)
+✔ three naves, field-draft levels and nine frames retain the source dimensions (0.2747ms)
+✔ all requested sectors are focusable, sourced and grouped, and six camera presets exist (0.3084ms)
+✔ unknown heights stay null and unknown buildings are only horizontal line symbols (52.6265ms)
+✔ vehicle passage is unobstructed across the full Moega at truck-entry level (15.4886ms)
+✔ source envelope has five blue gable pillars, roofs meet the hall, and all children have layer metadata (9.1007ms)
+✔ geographic anchors match the interpreted plan within source image precision (0.346ms)
+✔ the bundled source is the exact user PDF, not an altered reconstruction (2.602ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 955.7281

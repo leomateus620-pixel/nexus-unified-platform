@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -15,6 +15,8 @@ import {
   Section,
   StatusBadge,
 } from "@/components/nexus/Page";
+import { SaveEventCard } from "./ui/SaveEventCard";
+import { listarSalvamentos } from "./propostas.functions";
 import { PromptAction, ValuesBand } from "@/components/nexus/OperationalDetails";
 import {
   ObjectCard,
@@ -484,6 +486,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const org = useOrg();
   const qc = useQueryClient();
   const save = useSave();
+  const { run, register, settle } = save;
   const trans = useServerFn(transicionarRevisao);
   const [interno, setInterno] = useState(false);
   const acao = useMutation({
@@ -510,7 +513,44 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const form = useForm<z.infer<typeof textosSchema>>({
     resolver: zodResolver(textosSchema),
     values: { ...TEXTOS_PADRAO, ...(rev.data?.textos ?? {}) },
+    resetOptions: { keepDirtyValues: true },
   });
+
+  const textVersion = useRef<number | null>(null);
+  const textQueued = useRef("");
+  const flushTexts = useCallback(() => {
+    if (!rev.data?.editavel || !form.formState.isDirty) return;
+    const result = textosSchema.safeParse(form.getValues());
+    if (!result.success) {
+      void form.trigger();
+      throw new Error("Textos inválidos: revise os campos indicados.");
+    }
+    const fingerprint = JSON.stringify(result.data);
+    if (textQueued.current === fingerprint) return;
+    textQueued.current = fingerprint;
+    settle("textos");
+    const initialVersion = rev.data.version;
+    void run("textos", async () => {
+      const { data, error } = await supabase
+        .from("proposta_revisoes")
+        .update({ textos: result.data })
+        .eq("id", revisaoId)
+        .eq("version", textVersion.current ?? initialVersion)
+        .select("version");
+      if (error) throw new Error(error.message);
+      if (!data?.length)
+        throw new Error(
+          "Conflito nos textos: trabalho local preservado. Confira a versão do servidor.",
+        );
+      textVersion.current = data[0]!.version;
+      await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
+      return true;
+    }).then((ok) => {
+      if (!ok) textQueued.current = "";
+    });
+  }, [form, rev.data, run, settle, revisaoId, qc]);
+  useEffect(() => register("textos", flushTexts), [register, flushTexts]);
+  const salvarTextos = form.handleSubmit(() => flushTexts());
 
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
@@ -519,20 +559,6 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const p = r.proposta;
   const verCusto = org.data?.canSeeCosts ?? false;
   const ext = new Map((r.resumo?.por_sistema ?? []).map((s) => [s.sistema_id, s.extensao_m]));
-
-  const salvarTextos = form.handleSubmit(async (v) => {
-    save.set("salvando");
-    const { data, error } = await supabase
-      .from("proposta_revisoes")
-      .update({ textos: v })
-      .eq("id", revisaoId)
-      .eq("version", r.version)
-      .select("id");
-    if (error) return save.set("erro", error.message);
-    if (!data?.length) return save.set("conflito");
-    save.set("salvo");
-    qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
-  });
 
   return (
     <div className="nx-document-workspace">
@@ -700,7 +726,11 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             title="Textos do documento"
             description="Somente textos e condições previstos no modelo."
           >
-            <form onSubmit={salvarTextos} className="space-y-4 text-sm">
+            <form
+              onInput={() => save.local("textos")}
+              onSubmit={salvarTextos}
+              className="space-y-4 text-sm"
+            >
               {(
                 ["objeto", "validade", "garantia", "condicoes", "responsavel_tecnico"] as const
               ).map((k) => (
@@ -734,7 +764,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
                 </label>
               ))}
               <ActionButton type="submit" variant="ghost">
-                Salvar textos
+                Sincronizar textos
               </ActionButton>
             </form>
           </Section>
@@ -822,27 +852,56 @@ export function ParametrosForm({
 }: {
   valores: Parametros;
   editavel: boolean;
-  onSave: (p: Parametros) => Promise<void>;
+  onSave: (p: Parametros) => Promise<boolean | void>;
 }) {
   const form = useForm<Parametros>({
     resolver: zodResolver(paramSchema) as never,
     values: valores,
+    resetOptions: { keepDirtyValues: true },
     mode: "onChange",
   });
+  const { register, local, set, settle } = useSave();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handler = useRef(onSave);
+  handler.current = onSave;
+  const lastQueued = useRef(JSON.stringify(valores));
+  const flush = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+    if (!editavel) return;
+    const result = paramSchema.safeParse(form.getValues());
+    if (!result.success) {
+      void form.trigger();
+      throw new Error("Parâmetros inválidos: revise os campos indicados.");
+    }
+    const fingerprint = JSON.stringify(result.data);
+    if (lastQueued.current === fingerprint) return;
+    lastQueued.current = fingerprint;
+    settle("parametros");
+    void handler.current(result.data).then((ok) => {
+      if (ok === false) lastQueued.current = "";
+    });
+  }, [form, editavel, settle]);
+  useEffect(() => register("parametros", flush), [register, flush]);
   useEffect(() => {
-    const sub = form.watch(() => {
-      if (!editavel) return;
+    const sub = form.watch((_values, { type }) => {
+      if (!editavel || type !== "change") return;
+      local("parametros");
       if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => form.handleSubmit((v) => onSave(v))(), 800);
+      timer.current = setTimeout(() => {
+        try {
+          flush();
+        } catch (error) {
+          set("erro", String(error));
+        }
+      }, 800);
     });
     return () => {
       sub.unsubscribe();
       if (timer.current) clearTimeout(timer.current);
     };
-  }, [form, editavel, onSave]);
+  }, [form, editavel, flush, local, set]);
   return (
-    <form onSubmit={form.handleSubmit((v) => onSave(v))} className="nx-parameters">
+    <form onSubmit={form.handleSubmit(() => flush())} className="nx-parameters">
       {(
         [
           {
@@ -952,20 +1011,27 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   if (versao.current == null) versao.current = rev.data.version;
-  const onSave = async (p: Parametros) => {
-    save.set("salvando");
-    const { data, error } = await supabase
-      .from("proposta_revisoes")
-      .update({ parametros: p })
-      .eq("id", revisaoId)
-      .eq("version", versao.current!)
-      .select("version");
-    if (error) return save.set("erro", error.message);
-    if (!data?.length) return save.set("conflito");
-    versao.current = data[0]!.version;
-    await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
-    recalc.mutate();
-  };
+  const onSave = async (p: Parametros) =>
+    Boolean(
+      await save.run("parametros", async () => {
+        const { data, error } = await supabase
+          .from("proposta_revisoes")
+          .update({ parametros: p })
+          .eq("id", revisaoId)
+          .eq("version", versao.current!)
+          .select("version");
+        if (error) throw new Error(error.message);
+        if (!data?.length)
+          throw new Error(
+            "Conflito nos parâmetros: trabalho local preservado. Confira a versão do servidor.",
+          );
+        versao.current = data[0]!.version;
+        await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
+        recalc.mutate();
+        return true;
+      }),
+    );
+
   return (
     <Section
       title="Parâmetros desta revisão"
@@ -984,6 +1050,17 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
 export function Historico({ propostaId, revisaoId }: { propostaId: string; revisaoId: string }) {
   const navigate = useNavigate();
   const nova = useServerFn(novaRevisao);
+  const org = useOrg();
+  const listSaves = useServerFn(listarSalvamentos);
+  const saves = useInfiniteQuery({
+    queryKey: ["salvamentos", revisaoId],
+    enabled: !!org.data?.canSeeCosts,
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) =>
+      listSaves({ data: { revisao_id: revisaoId, limite: 50, offset: pageParam } }),
+    getNextPageParam: (lastPage, pages) => (lastPage.length === 50 ? pages.length * 50 : undefined),
+    select: (data) => data.pages.flat(),
+  });
   const qc = useQueryClient();
   const revs = useQuery({
     queryKey: ["revisoes", propostaId],
@@ -999,6 +1076,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
   });
   const aud = useQuery({
     queryKey: ["auditoria", revisaoId],
+    enabled: org.data?.roles.includes("admin") ?? false,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("auditoria")
@@ -1012,6 +1090,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
   });
   const calc = useQuery({
     queryKey: ["calculos", revisaoId],
+    enabled: !!org.data?.canSeeCosts,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("calculo_execucoes")
@@ -1035,6 +1114,41 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
   });
   return (
     <div className="nx-history">
+      {org.data?.canSeeCosts && (
+        <Section
+          title="Salvamentos confirmados"
+          description="Um evento por consolidação. Os rascunhos automáticos e os cálculos não contam como edições comerciais."
+        >
+          <QueryView
+            query={saves}
+            empty={
+              <EmptyState
+                title="Nenhum salvamento consolidado"
+                hint="Use Salvar proposta para consolidar as diferenças reais desta revisão. Registros anteriores à ativação não são reconstruídos."
+              />
+            }
+          >
+            {(rows) => (
+              <>
+                <ObjectCollection label="Salvamentos confirmados">
+                  {rows.map((event) => (
+                    <SaveEventCard key={event.id} event={event} />
+                  ))}
+                </ObjectCollection>
+                {saves.hasNextPage && (
+                  <ActionButton
+                    variant="ghost"
+                    loading={saves.isFetchingNextPage}
+                    onClick={() => saves.fetchNextPage()}
+                  >
+                    Carregar salvamentos anteriores
+                  </ActionButton>
+                )}
+              </>
+            )}
+          </QueryView>
+        </Section>
+      )}
       <Section title="Revisões">
         <PromptAction
           loading={criar.isPending}
@@ -1078,55 +1192,59 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
         </div>
       </Section>
       <div className="space-y-4">
-        <Section title="Registros legados">
-          <p className="nx-editor-note">
-            Estes logs não registram diferenças completas nem comprovam um salvamento consolidado.
-            Autoria não registrada não é inferida.
-          </p>
-          <QueryView
-            query={aud}
-            empty={<p className="text-xs text-muted-foreground">Nenhum registro.</p>}
-          >
-            {(rows) => (
-              <ul className="nx-timeline">
-                {rows.map((a) => (
-                  <li key={a.id}>
-                    <time dateTime={a.created_at}>{dataBR(a.created_at)}</time>
-                    <p className="font-medium">
-                      {a.acao}{" "}
-                      <span className="font-normal text-muted-foreground">· {a.entidade}</span>
-                    </p>
-                    {a.motivo && <p className="text-muted-foreground">{a.motivo}</p>}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </QueryView>
-        </Section>
-        <details className="nx-technical-log">
-          <summary>Execuções de cálculo · detalhe técnico</summary>
-          <Section title="Cálculos (não contam como edições)">
+        {org.data?.roles.includes("admin") && (
+          <Section title="Registros legados">
+            <p className="nx-editor-note">
+              Estes logs não registram diferenças completas nem comprovam um salvamento consolidado.
+              Autoria não registrada não é inferida.
+            </p>
             <QueryView
-              query={calc}
-              empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
+              query={aud}
+              empty={<p className="text-xs text-muted-foreground">Nenhum registro.</p>}
             >
               {(rows) => (
                 <ul className="nx-timeline">
-                  {rows.map((c) => (
-                    <li key={c.id}>
-                      <time dateTime={c.created_at}>
-                        {new Date(c.created_at).toLocaleString("pt-BR")}
-                      </time>
-                      <p>
-                        Motor <span className="font-mono">{c.motor_versao}</span>
+                  {rows.map((a) => (
+                    <li key={a.id}>
+                      <time dateTime={a.created_at}>{dataBR(a.created_at)}</time>
+                      <p className="font-medium">
+                        {a.acao}{" "}
+                        <span className="font-normal text-muted-foreground">· {a.entidade}</span>
                       </p>
+                      {a.motivo && <p className="text-muted-foreground">{a.motivo}</p>}
                     </li>
                   ))}
                 </ul>
               )}
             </QueryView>
           </Section>
-        </details>
+        )}
+        {org.data?.canSeeCosts && (
+          <details className="nx-technical-log">
+            <summary>Execuções de cálculo · detalhe técnico</summary>
+            <Section title="Cálculos (não contam como edições)">
+              <QueryView
+                query={calc}
+                empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
+              >
+                {(rows) => (
+                  <ul className="nx-timeline">
+                    {rows.map((c) => (
+                      <li key={c.id}>
+                        <time dateTime={c.created_at}>
+                          {new Date(c.created_at).toLocaleString("pt-BR")}
+                        </time>
+                        <p>
+                          Motor <span className="font-mono">{c.motor_versao}</span>
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </QueryView>
+            </Section>
+          </details>
+        )}
       </div>
     </div>
   );

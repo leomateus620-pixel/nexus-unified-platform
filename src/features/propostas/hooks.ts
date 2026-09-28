@@ -6,15 +6,28 @@ import { supabase } from "@/integrations/supabase/client";
 import { recalcularRevisao } from "./propostas.functions";
 import type { Parametros, Regras, Totais } from "@/features/calculo/domain";
 
-export type SaveStatus = "idle" | "salvando" | "salvo" | "erro" | "conflito";
+export type SaveStatus =
+  "idle" | "local" | "salvando" | "salvo" | "consolidando" | "confirmado" | "erro" | "conflito";
 export const SaveCtx = createContext<{
   status: SaveStatus;
   set: (s: SaveStatus, msg?: string) => void;
   msg: string | null;
+  run: <T>(key: string, work: () => Promise<T>) => Promise<T | undefined>;
+  register: (key: string, flush: () => void) => () => void;
+  local: (key?: string) => void;
+  settle: (key?: string) => void;
+  save: () => Promise<void>;
+  busy: boolean;
 }>({
   status: "idle",
   set: () => {},
   msg: null,
+  run: (_key, work) => work(),
+  register: () => () => {},
+  local: () => {},
+  settle: () => {},
+  save: async () => {},
+  busy: false,
 });
 export const useSave = () => useContext(SaveCtx);
 
@@ -137,10 +150,9 @@ export function useRecalcular(id: string) {
   const fn = useServerFn(recalcularRevisao);
   const save = useSave();
   return useMutation({
-    mutationFn: () => fn({ data: { revisao_id: id } }),
+    mutationFn: () => save.run("calculo", async () => fn({ data: { revisao_id: id } })),
     onMutate: () => save.set("salvando"),
     onSuccess: () => {
-      save.set("salvo");
       qc.invalidateQueries({ queryKey: revKeys.all(id) });
     },
     onError: (e) => save.set("erro", e instanceof Error ? e.message : String(e)),

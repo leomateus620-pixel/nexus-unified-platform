@@ -89,26 +89,48 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const editavel = rev.data.editavel;
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
-    save.set("salvando");
-    const { error } = await supabase
-      .from("revisao_componentes")
-      .update(patch as never)
-      .in("id", ids);
-    if (error) return save.set("erro", error.message);
-    await qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) });
-    if ("custo_adotado" in patch) recalc.mutate();
-    else save.set("salvo");
+    return save.run(`componentes-${ids.join(",")}`, async () => {
+      for (const id of ids) {
+        const previous = comps.data?.find((c) => c.id === id);
+        if (!previous) throw new Error("Componente não encontrado na revisão");
+        let request = supabase
+          .from("revisao_componentes")
+          .update(patch as never)
+          .eq("id", id);
+        for (const field of ["modalidade", "fornecedor_id", "custo_adotado"] as const) {
+          if (field in patch)
+            request =
+              previous[field] == null
+                ? request.is(field, null)
+                : request.eq(field, previous[field]!);
+        }
+        const { data, error } = await request.select("id");
+        if (error) throw new Error(error.message);
+        if (!data?.length)
+          throw new Error(
+            "Conflito no componente: outro usuário alterou o campo. Trabalho local preservado.",
+          );
+      }
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
+        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
+      ]);
+      if ("custo_adotado" in patch) recalc.mutate();
+      else save.set("salvo");
+    });
   }
 
   async function alterarCusto(c: Comp, valor: number) {
     if (!Number.isFinite(valor) || valor < 0) return save.set("erro", "Custo inválido");
     if (valor === Number(c.custo_adotado)) return;
+    save.local("justificativa-custo");
     const answer = await ask({
       title: `Alterar custo · ${c.codigo}`,
       description: "A alteração é exclusiva desta revisão. O catálogo não será alterado.",
       reason: true,
     });
-    if (!answer) return;
+    save.settle("justificativa-custo");
+    if (!answer) return false;
     const just = answer.reason;
     if (!just || just.trim().length < 3) return save.set("erro", "Justificativa obrigatória");
     await atualizar([c.id], {
@@ -137,23 +159,33 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
       title: `Aplicar ${updates.length} custos`,
       description: updates
         .map((u) => `${u.c.codigo}: ${brlUnit(Number(u.c.custo_adotado))} → ${brlUnit(u.v)}`)
-        .join("; "),
+        .join("\n"),
       reason: true,
     });
     if (!answer) return;
     const just = answer.reason;
     if (!just || just.trim().length < 3) return setErroColar("Justificativa obrigatória");
-    save.set("salvando");
-    for (const u of updates) {
-      const { error } = await supabase
-        .from("revisao_componentes")
-        .update({ custo_adotado: u.v, justificativa: just.trim(), custo_origem_id: null })
-        .eq("id", u.c.id);
-      if (error) return save.set("erro", error.message);
-    }
-    setColar("");
-    await qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) });
-    recalc.mutate();
+    return save.run("colagem-custos", async () => {
+      for (const u of updates) {
+        const { data, error } = await supabase
+          .from("revisao_componentes")
+          .update({ custo_adotado: u.v, justificativa: just.trim(), custo_origem_id: null })
+          .eq("id", u.c.id)
+          .eq("custo_adotado", u.c.custo_adotado)
+          .select("id");
+        if (error) throw new Error(error.message);
+        if (!data?.length)
+          throw new Error(
+            "Conflito na colagem de custos. Rascunho preservado; revise os componentes antes de tentar novamente.",
+          );
+      }
+      setColar("");
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
+        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
+      ]);
+      recalc.mutate();
+    });
   }
 
   const detalhe = (comps.data ?? []).find((c) => c.id === aberto) ?? null;
@@ -388,7 +420,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     disabled={!editavel}
                     defaultValue={Number(detalhe.custo_adotado)}
                     key={detalhe.id}
-                    onBlur={(e) => alterarCusto(detalhe, Number(e.target.value))}
+                    onBlur={(e) => {
+                      const field = e.currentTarget;
+                      void alterarCusto(detalhe, Number(field.value)).then((result) => {
+                        if (result === false) field.value = String(detalhe.custo_adotado);
+                      });
+                    }}
                     className={`${input} text-right tabular-nums`}
                   />
                   <span>A alteração exige justificativa e preserva o catálogo global.</span>

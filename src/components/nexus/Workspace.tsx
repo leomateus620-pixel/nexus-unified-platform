@@ -36,13 +36,16 @@ export function StepRuler({ children }: { children: ReactNode }) {
 /** Never infers persistence from local editing or presentation state. */
 export function SaveFeedback({ status, msg }: { status: SaveStatus; msg: string | null }) {
   const labels: Record<SaveStatus, string> = {
-    idle: "",
-    salvando: "Salvando…",
-    salvo: "Salvo",
+    idle: "Rascunho no servidor",
+    local: "Alterações locais em andamento",
+    consolidando: "Consolidando proposta…",
+    confirmado: "",
+    salvando: "Sincronizando rascunho…",
+    salvo: "Rascunho sincronizado",
     erro: "Erro ao salvar",
-    conflito: "Conflito: outro usuário alterou. Recarregue.",
+    conflito: "Conflito · trabalho local preservado",
   };
-  if (!labels[status]) return null;
+  if (!labels[status] && !msg) return null;
   const Icon = status === "salvo" ? Check : status === "salvando" ? CircleDot : AlertCircle;
   return (
     <div
@@ -55,7 +58,7 @@ export function SaveFeedback({ status, msg }: { status: SaveStatus; msg: string 
       <Icon aria-hidden="true" size={16} />
       <span>
         {labels[status]}
-        {msg && status !== "salvo" ? ` — ${msg}` : ""}
+        {msg ? `${labels[status] ? " — " : ""}${msg}` : ""}
       </span>
     </div>
   );

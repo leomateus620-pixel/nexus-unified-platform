@@ -10,6 +10,7 @@ import {
 } from "react";
 
 import "./editors.css";
+import { useSave } from "../hooks";
 
 /** Native dialog keeps one mounted editor when switching between inline and modal display. */
 export function EditorInspector({
@@ -89,6 +90,25 @@ export function EditorInspector({
       aria-describedby={descriptionId}
       aria-modal={!wide && open ? true : undefined}
       onKeyDown={(event) => {
+        if (!wide && event.key === "Tab") {
+          const focusable = [
+            ...event.currentTarget.querySelectorAll<HTMLElement>(
+              'button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),summary,a[href],[tabindex="0"]',
+            ),
+          ].filter((e) => e.getClientRects().length > 0);
+          const first = focusable[0],
+            last = focusable[focusable.length - 1];
+          if (
+            event.shiftKey &&
+            (document.activeElement === first || document.activeElement === heading.current)
+          ) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }
         if (wide && event.key === "Escape") {
           event.preventDefault();
           close();
@@ -134,20 +154,43 @@ export function EditorSaveState({ editavel }: { editavel: boolean }) {
 /** Draft feedback is local to a field; every original blur callback remains unchanged. */
 export function EditorInput({ onBlur, onInput, ...props }: InputHTMLAttributes<HTMLInputElement>) {
   const [dirty, setDirty] = useState(false);
+  const fieldKey = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dirtyRef = useRef(false);
+  const [invalid, setInvalid] = useState(false);
+  useEffect(() => {
+    if (inputRef.current && !dirtyRef.current)
+      inputRef.current.value = String(props.defaultValue ?? "");
+  }, [props.defaultValue]);
+  const save = useSave();
   return (
     <span className="nx-editor-draft" data-dirty={dirty}>
       <input
         {...props}
+        ref={inputRef}
+        aria-invalid={invalid || props["aria-invalid"]}
+        aria-describedby={invalid ? `${fieldKey}-error` : props["aria-describedby"]}
         onInput={(event) => {
+          dirtyRef.current = true;
+          save.local(fieldKey);
           setDirty(event.currentTarget.value !== String(props.defaultValue ?? ""));
           onInput?.(event);
         }}
         onBlur={(event) => {
           if (event.currentTarget.closest("dialog")?.dataset["modeChanging"] === "true") return;
+          const changed = dirtyRef.current;
+          dirtyRef.current = false;
           setDirty(false);
-          onBlur?.(event);
+          setInvalid(!event.currentTarget.checkValidity());
+          save.settle(fieldKey);
+          if (changed) onBlur?.(event);
         }}
       />
+      {invalid && (
+        <span id={`${fieldKey}-error`} className="nx-editor-error">
+          {inputRef.current?.validationMessage || "Entrada inválida"}
+        </span>
+      )}
       <span className="nx-editor-draft-state" aria-live="polite">
         {dirty ? "Edição local" : ""}
       </span>

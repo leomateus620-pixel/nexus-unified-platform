@@ -14,6 +14,8 @@ import {
 import { exigirAcao } from "@/features/auth/autorizacao";
 import { CATALOGO_MODELO, ORIGEM_PLANILHA } from "@/features/calculo/catalogo-modelo";
 
+import type { ProposalSaveEvent } from "./save-types";
+
 type Db = any;
 
 async function orgDoUsuario(db: Db, userId: string): Promise<string> {
@@ -356,6 +358,76 @@ export const novaRevisao = createServerFn({ method: "POST" })
   });
 
 // ---------- Cálculo canônico ----------
+/** Shared engine, captured inputs and atomic persistence for both recalculation and consolidation. */
+async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string) {
+  const captura = ok(
+    await db.rpc("capturar_revisao", { _rev: revisaoId, _operacao: operacao ?? null }),
+  ) as any;
+  if (captura.confirmacao) return captura.confirmacao;
+  const rev = captura.revisao;
+  const sistemas = captura.sistemas.map((s: any) => ({
+    id: s.id,
+    identificacao: s.identificacao,
+    tipo: s.tipo,
+    metragem: Number(s.metragem),
+    trechos: s.trechos,
+  }));
+  const componentes = captura.componentes.map((c: any) => ({
+    id: c.id,
+    codigo: c.codigo,
+    custo: Number(c.custo_adotado),
+    indivisivel: c.indivisivel,
+    multiplo: Number(c.multiplo_compra),
+  }));
+  const overrides = captura.overrides.map((o: any) => ({
+    sistema_id: o.sistema_id,
+    componente_id: o.revisao_componente_id,
+    quantidade: Number(o.override_quantidade),
+  }));
+  const parametros = mesclarParametros(rev.parametros);
+  const regras = mesclarRegras(rev.regras_snapshot);
+  let calculo = null;
+  if (!operacao || captura.alterado) {
+    const r = calcularRevisao(sistemas, componentes, regras, parametros, overrides);
+    // Domain pendências remain explicit. Invalid manual numeric inputs cannot be consolidated.
+    if (
+      operacao &&
+      sistemas.some(
+        (s: any) =>
+          !s.identificacao.trim() ||
+          !Number.isFinite(s.metragem) ||
+          s.metragem <= 0 ||
+          !Number.isInteger(s.trechos) ||
+          s.trechos < 1,
+      )
+    )
+      throw new Error(
+        "Sistema inválido: preencha identificação, metragem positiva e trechos inteiros. Rascunho preservado.",
+      );
+    calculo = {
+      motor_versao: MOTOR_VERSAO,
+      entradas: { sistemas, componentes, parametros, overrides },
+      itens: r.itens,
+      resumo: {
+        totais: r.totais,
+        pendencias: r.pendencias,
+        por_sistema: r.por_sistema,
+        por_componente: r.por_componente,
+      },
+    };
+  }
+  return ok(
+    await db.rpc("concluir_revisao", {
+      _rev: revisaoId,
+      _versao: captura.versao,
+      _versao_salva: captura.versao_salva,
+      _snapshot: captura.snapshot,
+      _calculo: calculo,
+      _operacao: operacao ?? null,
+    }),
+  );
+}
+
 export const recalcularRevisao = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => idRev.parse(d))
@@ -363,102 +435,19 @@ export const recalcularRevisao = createServerFn({ method: "POST" })
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
     await exigirAcao(db, context.userId, org, "editar_revisao");
-    const rev = await revisaoDaOrg(db, org, data.revisao_id);
-    if (!["rascunho", "em_revisao"].includes(rev.status))
-      throw new Error("Revisão enviada/aceita não é recalculada. Crie nova revisão.");
-    const sis = ok(
-      await db
-        .from("sistemas_dimensionados")
-        .select("id,identificacao,tipo,metragem,trechos")
-        .eq("revisao_id", rev.id)
-        .order("ordem"),
-    ) as any[];
-    const comps = ok(
-      await db
-        .from("revisao_componentes")
-        .select("id,codigo,custo_adotado,indivisivel,multiplo_compra")
-        .eq("revisao_id", rev.id),
-    ) as any[];
-    const existentes = ok(
-      await db
-        .from("sistema_componentes")
-        .select("sistema_id,revisao_componente_id,override_quantidade,override_justificativa")
-        .eq("revisao_id", rev.id),
-    ) as any[];
-    const overrides = existentes
-      .filter((e) => e.override_quantidade != null)
-      .map((e) => ({
-        sistema_id: e.sistema_id,
-        componente_id: e.revisao_componente_id,
-        quantidade: Number(e.override_quantidade),
-        just: e.override_justificativa,
-      }));
-    const regras = mesclarRegras(rev.regras_snapshot);
-    const params = mesclarParametros(rev.parametros);
-    const entradas = {
-      sistemas: sis.map((s) => ({
-        id: s.id,
-        identificacao: s.identificacao,
-        tipo: s.tipo,
-        metragem: Number(s.metragem),
-        trechos: Number(s.trechos),
-      })),
-      componentes: comps.map((c) => ({
-        id: c.id,
-        codigo: c.codigo,
-        custo: Number(c.custo_adotado),
-        indivisivel: c.indivisivel,
-        multiplo: Number(c.multiplo_compra),
-      })),
-    };
-    const r = calcularRevisao(entradas.sistemas, entradas.componentes, regras, params, overrides);
-    ok(await db.from("sistema_componentes").delete().eq("revisao_id", rev.id));
-    if (r.itens.length) {
-      ok(
-        await db.from("sistema_componentes").insert(
-          r.itens.map((i) => {
-            const o = overrides.find(
-              (x) => x.sistema_id === i.sistema_id && x.componente_id === i.componente_id,
-            );
-            return {
-              organization_id: org,
-              revisao_id: rev.id,
-              sistema_id: i.sistema_id,
-              revisao_componente_id: i.componente_id,
-              regra_chave: i.chave,
-              quantidade_tecnica: i.quantidade_tecnica,
-              quantidade: i.quantidade,
-              override_quantidade: o?.quantidade ?? null,
-              override_justificativa: o?.just ?? null,
-              memoria: i.memoria,
-            };
-          }),
-        ),
-      );
-    }
-    const resumo = {
-      totais: r.totais,
-      pendencias: r.pendencias,
-      por_sistema: r.por_sistema,
-      por_componente: r.por_componente,
-    };
-    ok(
-      await db
-        .from("proposta_revisoes")
-        .update({ totais: resumo, calculado_em: new Date().toISOString(), desatualizada: false })
-        .eq("id", rev.id),
-    );
-    ok(
-      await db.from("calculo_execucoes").insert({
-        organization_id: org,
-        revisao_id: rev.id,
-        motor_versao: MOTOR_VERSAO,
-        regras_id: rev.regras_id,
-        entradas: { ...entradas, parametros: params },
-        resultado: resumo,
-      }),
-    );
-    return { pendencias: r.pendencias.length, final: r.totais.final };
+    return calcularCheckpoint(db, data.revisao_id);
+  });
+
+export const consolidarProposta = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z.object({ revisao_id: z.string().uuid(), operacao_id: z.string().uuid() }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const db: Db = context.supabase;
+    const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "editar_revisao");
+    return calcularCheckpoint(db, data.revisao_id, data.operacao_id);
   });
 
 // ---------- Transições ----------
@@ -878,4 +867,32 @@ export const aprovarTecnica = createServerFn({ method: "POST" })
     );
     await auditar(db, org, "revisao", rev.id, "aprovar_tecnica", { hash });
     return { hash };
+  });
+
+/** Cost protected including counts and before/after; no generic audit insert is exposed. */
+export const listarSalvamentos = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z
+      .object({
+        revisao_id: z.string().uuid(),
+        limite: z.number().int().min(1).max(2000).default(50),
+        offset: z.number().int().min(0).default(0),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const db: Db = context.supabase;
+    const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "ver_custos");
+    return ok(
+      await db
+        .from("proposta_salvamentos")
+        .select("*")
+        .eq("organization_id", org)
+        .eq("revisao_id", data.revisao_id)
+        .order("created_at", { ascending: false })
+        .order("id", { ascending: false })
+        .range(data.offset, data.offset + data.limite - 1),
+    ) as ProposalSaveEvent[];
   });

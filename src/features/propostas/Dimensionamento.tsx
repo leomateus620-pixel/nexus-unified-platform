@@ -14,7 +14,7 @@ import { useOrgId } from "@/features/org/session";
 import { qtd } from "@/lib/format";
 import { revKeys, useItens, useRecalcular, useRevisao, useSave, useSistemas } from "./hooks";
 
-import { CollectionPage, ObjectCollection, SystemCard } from "./ui/ObjectCards";
+import { CollectionPage, ObjectCollection, SystemCard, ObjectCard, Facts } from "./ui/ObjectCards";
 import { useEditorDialog } from "./ui/useEditorDialog";
 import { EditorInput, EditorInspector, EditorSaveState } from "./ui/EditorWorkspace";
 
@@ -26,10 +26,14 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
   const itens = useItens(revisaoId);
   const recalc = useRecalcular(revisaoId);
   const save = useSave();
+  const register = save.register;
   const orgId = useOrgId();
   const qc = useQueryClient();
   const [aberto, setAberto] = useState<string | null>(null);
   const [colar, setColar] = useState("");
+  const [preview, setPreview] = useState<
+    Pick<Sis, "identificacao" | "tipo" | "metragem" | "trechos">[] | null
+  >(null);
   const [erroColar, setErroColar] = useState<string | null>(null);
   const { ask, dialog } = useEditorDialog();
   const [mode, setMode] = useState<"edit" | "composition">("edit");
@@ -41,6 +45,14 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
       if (timer.current) clearTimeout(timer.current);
     },
     [],
+  );
+
+  useEffect(
+    () =>
+      register("sistemas", () => {
+        if (timer.current) clearTimeout(timer.current);
+      }),
+    [register],
   );
 
   if (rev.isPending || sis.isPending) return <LoadingState />;
@@ -59,15 +71,28 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
     s: Sis,
     patch: Partial<Pick<Sis, "identificacao" | "tipo" | "metragem" | "trechos">>,
   ) {
-    if (patch.metragem != null && (!Number.isFinite(patch.metragem) || patch.metragem < 0))
-      return save.set("erro", "Metragem inválida");
-    if (patch.trechos != null && (!Number.isInteger(patch.trechos) || patch.trechos < 1))
-      return save.set("erro", "Trechos deve ser inteiro ≥ 1");
-    save.set("salvando");
-    const { error } = await supabase.from("sistemas_dimensionados").update(patch).eq("id", s.id);
-    if (error) return save.set("erro", error.message);
-    await qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) });
-    agendarRecalculo();
+    return save.run(`sistema-${s.id}`, async () => {
+      if (patch.metragem != null && (!Number.isFinite(patch.metragem) || patch.metragem < 0))
+        throw new Error("Metragem inválida");
+      if (patch.trechos != null && (!Number.isInteger(patch.trechos) || patch.trechos < 1))
+        throw new Error("Trechos deve ser inteiro ≥ 1");
+      save.set("salvando");
+      let request = supabase.from("sistemas_dimensionados").update(patch).eq("id", s.id);
+      for (const field of Object.keys(patch) as (keyof typeof patch)[])
+        request = request.eq(field, s[field]);
+      const { data, error } = await request.select("id");
+      if (!error && !data?.length)
+        throw new Error(
+          "Conflito neste sistema: outro usuário alterou o campo. Trabalho local preservado.",
+        );
+      if (error) throw new Error(error.message);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) }),
+        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
+      ]);
+      agendarRecalculo();
+      return true;
+    });
   }
 
   async function inserir(
@@ -78,20 +103,25 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
       trechos: number;
     }[],
   ) {
-    save.set("salvando");
-    const base = lista.reduce((m, s) => Math.max(m, s.ordem), 0);
-    const { error } = await supabase.from("sistemas_dimensionados").insert(
-      rows.map((r, i) => ({
-        ...r,
-        organization_id: orgId,
-        revisao_id: revisaoId,
-        ordem: base + i + 1,
-        origem: "manual",
-      })),
-    );
-    if (error) return save.set("erro", error.message);
-    await qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) });
-    agendarRecalculo();
+    return save.run("inserir-sistemas", async () => {
+      const base = lista.reduce((m, s) => Math.max(m, s.ordem), 0);
+      const { error } = await supabase.from("sistemas_dimensionados").insert(
+        rows.map((r, i) => ({
+          ...r,
+          organization_id: orgId,
+          revisao_id: revisaoId,
+          ordem: base + i + 1,
+          origem: "manual",
+        })),
+      );
+      if (error) throw new Error(error.message);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) }),
+        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
+      ]);
+      agendarRecalculo();
+      return true;
+    });
   }
 
   async function remover(s: Sis) {
@@ -102,11 +132,16 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
       }))
     )
       return;
-    save.set("salvando");
-    const { error } = await supabase.from("sistemas_dimensionados").delete().eq("id", s.id);
-    if (error) return save.set("erro", error.message);
-    await qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) });
-    agendarRecalculo();
+    return save.run(`sistema-${s.id}`, async () => {
+      const { error } = await supabase.from("sistemas_dimensionados").delete().eq("id", s.id);
+      if (error) throw new Error(error.message);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: revKeys.sis(revisaoId) }),
+        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
+      ]);
+      agendarRecalculo();
+      return true;
+    });
   }
 
   function aplicarColagem() {
@@ -130,8 +165,7 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
         return { identificacao: id ?? "", tipo: tp as "TELHADO" | "OVERHEAD", metragem, trechos };
       });
     if (erros.length) return setErroColar(erros.join("; "));
-    setColar("");
-    inserir(rows);
+    setPreview(rows);
   }
 
   const input = "nx-editor-input";
@@ -307,7 +341,10 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
               Identificação ⇥ tipo ⇥ metragem ⇥ trechos
               <textarea
                 value={colar}
-                onChange={(e) => setColar(e.target.value)}
+                onChange={(e) => {
+                  setColar(e.target.value);
+                  setPreview(null);
+                }}
                 rows={4}
                 className={input}
                 aria-invalid={!!erroColar}
@@ -320,8 +357,42 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
                 {erroColar}
               </p>
             )}
+            {preview && (
+              <div className="nx-paste-preview">
+                <h3>Prévia · {preview.length} sistemas</h3>
+                <ObjectCollection label="Prévia dos sistemas colados">
+                  {preview.map((row, index) => (
+                    <ObjectCard key={index} title={row.identificacao} eyebrow={row.tipo}>
+                      <Facts
+                        items={[
+                          ["Metragem", qtd(Number(row.metragem), "m")],
+                          ["Trechos", row.trechos],
+                        ]}
+                      />
+                    </ObjectCard>
+                  ))}
+                </ObjectCollection>
+                <div className="nx-object-actions">
+                  <ActionButton
+                    onClick={() => {
+                      void inserir(preview).then((ok) => {
+                        if (ok) {
+                          setPreview(null);
+                          setColar("");
+                        }
+                      });
+                    }}
+                  >
+                    Confirmar inserção
+                  </ActionButton>
+                  <ActionButton variant="ghost" onClick={() => setPreview(null)}>
+                    Cancelar colagem
+                  </ActionButton>
+                </div>
+              </div>
+            )}
             <ActionButton variant="ghost" onClick={aplicarColagem} disabled={!colar.trim()}>
-              Validar e inserir
+              Preparar prévia
             </ActionButton>
           </details>
         )}
@@ -452,27 +523,29 @@ function Composicao({
       reason: true,
     });
     if (!answer) return;
-    const v = answer.value;
-    if (v.trim() === "") {
+    return save.run(`override-${id}`, async () => {
+      const v = answer.value;
+      if (v.trim() === "") {
+        save.set("salvando");
+        const { error } = await supabase
+          .from("sistema_componentes")
+          .update({ override_quantidade: null, override_justificativa: null })
+          .eq("id", id);
+        if (error) throw new Error(error.message);
+        return onChange();
+      }
+      const n = Number(v.replace(",", "."));
+      if (!Number.isFinite(n) || n < 0) throw new Error("Quantidade inválida");
+      const just = answer.reason;
+      if (!just || just.trim().length < 3) throw new Error("Justificativa obrigatória");
       save.set("salvando");
       const { error } = await supabase
         .from("sistema_componentes")
-        .update({ override_quantidade: null, override_justificativa: null })
+        .update({ override_quantidade: n, override_justificativa: just.trim() })
         .eq("id", id);
-      if (error) return save.set("erro", error.message);
-      return onChange();
-    }
-    const n = Number(v.replace(",", "."));
-    if (!Number.isFinite(n) || n < 0) return save.set("erro", "Quantidade inválida");
-    const just = answer.reason;
-    if (!just || just.trim().length < 3) return save.set("erro", "Justificativa obrigatória");
-    save.set("salvando");
-    const { error } = await supabase
-      .from("sistema_componentes")
-      .update({ override_quantidade: n, override_justificativa: just.trim() })
-      .eq("id", id);
-    if (error) return save.set("erro", error.message);
-    onChange();
+      if (error) throw new Error(error.message);
+      onChange();
+    });
   }
 
   return (

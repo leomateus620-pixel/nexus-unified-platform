@@ -69,6 +69,9 @@ select pg_temp.como('00000000-0000-0000-0000-00000000000d');
 select pg_temp.tenta('S03 proposta A com cliente de B', $$insert into propostas(organization_id,numero,cliente_id) values ('10000000-0000-0000-0000-000000000001','y','20000000-0000-0000-0000-000000000002')$$, true);
 -- S05: revisão/OC emitidas
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+-- The fixture's calculation is complete after its child inputs have been inserted.
+-- Real application calculations clear this flag through concluir_revisao.
+update proposta_revisoes set desatualizada=false where id='24000000-0000-0000-0000-000000000001';
 update proposta_revisoes set status='enviada' where id='24000000-0000-0000-0000-000000000001';
 select pg_temp.tenta('S05 enviada→rascunho', $$update proposta_revisoes set status='rascunho' where id='24000000-0000-0000-0000-000000000001'$$, true, 'Transição');
 select pg_temp.tenta('S05 alterar totais da enviada', $$update proposta_revisoes set totais='{"final":2}' where id='24000000-0000-0000-0000-000000000001'$$, true);

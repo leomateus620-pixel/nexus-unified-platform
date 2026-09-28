@@ -1,9 +1,11 @@
+import * as Dialog from "@radix-ui/react-dialog";
 import { createFileRoute, Link, Outlet, useBlocker } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
 
 import { ErrorState, LoadingState, StatusBadge } from "@/components/nexus/Page";
 import { StepRuler, SaveFeedback } from "@/components/nexus/Workspace";
-import { SaveCtx, useRevisao, type SaveStatus } from "@/features/propostas/hooks";
+import { useSave, useRevisao } from "@/features/propostas/hooks";
+import { ProposalSaveProvider } from "@/features/propostas/ProposalSaveProvider";
+import { ActionButton } from "@/components/nexus/Page";
 import { brl } from "@/lib/format";
 
 export const Route = createFileRoute(
@@ -34,20 +36,6 @@ const tabActive = { className: "bg-accent text-foreground font-medium" };
 function Workspace() {
   const { propostaId, revisaoId } = Route.useParams();
   const rev = useRevisao(revisaoId);
-  const [status, setStatus] = useState<SaveStatus>("idle");
-  const [msg, setMsg] = useState<string | null>(null);
-  const set = useCallback((s: SaveStatus, m?: string) => {
-    setStatus(s);
-    setMsg(m ?? null);
-  }, []);
-  const ctx = useMemo(() => ({ status, set, msg }), [status, set, msg]);
-
-  useBlocker({
-    shouldBlockFn: () =>
-      status === "salvando" && !window.confirm("Há alterações sendo salvas. Sair mesmo assim?"),
-    enableBeforeUnload: () => status === "salvando",
-  });
-
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   const r = rev.data;
@@ -56,7 +44,7 @@ function Workspace() {
   const pend = r.resumo?.pendencias.length ?? null;
 
   return (
-    <SaveCtx.Provider value={ctx}>
+    <ProposalSaveProvider key={revisaoId} revisaoId={revisaoId}>
       <div className="nx-proposal-workspace">
         <header className="nx-proposal-header">
           <div className="nx-proposal-context">
@@ -72,17 +60,14 @@ function Workspace() {
                 {p.titulo ? ` · ${p.titulo}` : ""}
               </p>
             </div>
-            <StatusBadge value={statusLabel[r.status] ?? r.status} />
             <div className="nx-context-total">
-              <p className="text-muted-foreground">Total final</p>
+              <div className="nx-context-state">
+                <StatusBadge value={statusLabel[r.status] ?? r.status} />
+                <span>{pend == null ? "—" : pend} pendências</span>
+              </div>
               <p className="font-semibold tabular-nums text-foreground">
                 {r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}
-              </p>
-            </div>
-            <div className="nx-context-pending">
-              <p className="text-muted-foreground">Pendências</p>
-              <p className={pend ? "font-semibold text-warning" : "text-foreground"}>
-                {pend == null ? "—" : pend}
+                <span className="sr-only"> Total final</span>
               </p>
             </div>
             {r.desatualizada && r.editavel && (
@@ -91,7 +76,7 @@ function Workspace() {
             {p.revisao_corrente_id !== r.id && (
               <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>
             )}
-            <SaveFeedback status={status} msg={msg} />
+            <ProposalSaveBar editavel={r.editavel} />
           </div>
           <StepRuler>
             <Link
@@ -166,24 +151,50 @@ function Workspace() {
         </header>
         <Outlet />
       </div>
-    </SaveCtx.Provider>
+    </ProposalSaveProvider>
   );
 }
 
-function SaveIndicator({ status, msg }: { status: SaveStatus; msg: string | null }) {
-  const map: Record<SaveStatus, [string, string]> = {
-    idle: ["", ""],
-    salvando: ["Salvando…", "text-muted-foreground"],
-    salvo: ["Salvo", "text-primary"],
-    erro: ["Erro ao salvar", "text-destructive"],
-    conflito: ["Conflito: outro usuário alterou. Recarregue.", "text-destructive"],
-  };
-  const [label, cls] = map[status];
-  if (!label) return null;
+function ProposalSaveBar({ editavel }: { editavel: boolean }) {
+  const save = useSave();
+  const blocker = useBlocker({
+    withResolver: true,
+    shouldBlockFn: () =>
+      ["local", "erro", "conflito", "salvando", "consolidando"].includes(save.status),
+    enableBeforeUnload: () =>
+      ["local", "erro", "conflito", "salvando", "consolidando"].includes(save.status),
+  });
   return (
-    <span role="status" className={`ml-auto text-xs ${cls}`} title={msg ?? ""}>
-      {label}
-      {msg && status !== "salvo" ? ` — ${msg}` : ""}
-    </span>
+    <div className="nx-save-bar">
+      {editavel && (
+        <ActionButton loading={save.busy} onClick={() => save.save()}>
+          Salvar proposta
+        </ActionButton>
+      )}
+      <SaveFeedback status={save.status} msg={save.msg} />
+      <Dialog.Root
+        open={blocker.status === "blocked"}
+        onOpenChange={(open) => {
+          if (!open) blocker.reset?.();
+        }}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay className="nx-prompt-overlay" />
+          <Dialog.Content className="nexus-operational nx-prompt-dialog">
+            <Dialog.Title>Há trabalho em andamento</Dialog.Title>
+            <Dialog.Description>
+              Campos locais ou gravações pendentes podem não estar sincronizados. Permaneça para
+              revisar e salvar antes de sair.
+            </Dialog.Description>
+            <div className="nx-object-actions">
+              <ActionButton onClick={() => blocker.reset?.()}>Permanecer</ActionButton>
+              <ActionButton variant="ghost" onClick={() => blocker.proceed?.()}>
+                Sair sem concluir
+              </ActionButton>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </div>
   );
 }

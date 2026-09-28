@@ -115,6 +115,23 @@ describe("orçamento", () => {
     expect(b.itens.map((i) => i.quantidade)).toEqual(a.itens.map((i) => i.quantidade));
     expect(b.totais.materiais).toBeGreaterThan(a.totais.materiais);
   });
+  it("produto excluído não compõe valores e deixa pendência técnica explícita", () => {
+    const sistema = [
+      { id: "a", identificacao: "Linha", tipo: "TELHADO" as const, metragem: 10, trechos: 1 },
+    ];
+    const completo = calcularRevisao(sistema, comps, REGRAS_MODELO, PARAMETROS_MODELO);
+    const semCabo = calcularRevisao(
+      sistema,
+      comps.filter((c) => c.codigo !== "COMP-05"),
+      REGRAS_MODELO,
+      PARAMETROS_MODELO,
+    );
+    expect(semCabo.itens.some((i) => i.componente_id === "COMP-05")).toBe(false);
+    expect(semCabo.totais.materiais).toBeLessThan(completo.totais.materiais);
+    expect(semCabo.pendencias).toContain(
+      'Componente COMP-05 exigido pela regra "cabo" não está na revisão.',
+    );
+  });
   it("mudança de metragem recalcula quantidades", () => {
     const s2 = sistemas.map((s, i) => (i === 0 ? { ...s, metragem: 200 } : s));
     const a = calcularRevisao(sistemas, comps, REGRAS_MODELO, PARAMETROS_MODELO);

@@ -3,12 +3,21 @@
 Base auditada: commit 70d62ba. Fonte das fórmulas: XLSX enviado (SHA-256 b42b1ae5…dab549).
 Status: **homologação parcial**. A liberação geral continua bloqueada até os itens pendentes abaixo.
 
+## Auditoria da migration de salvamento — produção
+
+- Veredito inicial: **NÃO APLICADA**. A versão nominal `20260928010000`, suas quatro tabelas e as RPCs `capturar_revisao` / `concluir_revisao` estavam ausentes no banco usado pelo domínio publicado.
+- Efeito observado: o frontend publicado chamava o contrato novo e recebia erro de função ausente antes de consolidar os itens selecionados.
+- Correção: o conteúdo original foi aplicado (SHA-256 da fonte `7fd3090276c7261e729e3bf491e6cf3512af24a49b12cd7a5110050b00544557`) sob a versão registrada automaticamente `20260928034547`; a versão nominal `20260928010000` permanece ausente no histórico. Não foi criada marcação falsa. Seguiram-se migrations incrementais para seleção persistente, negação explícita de acesso direto às tabelas internas, wrappers públicos sem `SECURITY DEFINER`, edição em lote atômica e verificação de concorrência.
+- As 2 revisões existentes receberam apenas checkpoint inicial; nenhum evento histórico foi fabricado.
+- Estado após a correção: **APLICADA, MAS COM DIVERGÊNCIA DE IDENTIFICADOR**. Objetos e contratos estão instalados; o histórico não usa o número original do arquivo.
+- O clique autenticado que altera proposta real permanece pendente para não modificar dados comerciais sem autorização específica.
+
 ## Evidências executadas (mesmo commit)
 | Suíte | Comando | Resultado |
 |---|---|---|
-| Cálculo + planilha + autorização | `bun run test:orcamento` | 24/24 |
+| Cálculo + planilha + autorização + fila de salvamento | `vitest` | 28/28 |
 | Antes da correção (planilha) | `docs/orcamento/evidencias/antes-planilha.txt` | 6 falhas reproduzidas |
-| Banco isolado (migrations reais, RLS, triggers, RPC) | `bun run test:db` | 27/27 — `evidencias/integracao-banco.txt` |
+| Banco isolado (migrations reais, RLS, triggers, RPC) | `bash tests/db/run.sh` | 25 cenários + T05/T07 + contrato de salvamento e concorrência: todos passaram |
 | Regressão Trevisan / Industrial | `bun run test:trevisan`, `test:industrial` | 8/8, 16/16 |
 | Typecheck, lint, build | `tsc`, `eslint`, `bun run build` | OK |
 
@@ -32,6 +41,8 @@ migration incremental e repetidos.
 | Entradas inválidas / trechos TELHADO | Corrigido | C05 |
 | Cache de sessão residual | Corrigido (limpeza na troca de usuário) | revisão de código; sem teste de navegador |
 | package-lock divergente | Corrigido (Bun único, CI com banco) | workflow |
+| Item marcado não entrava no orçamento | Corrigido | inclusão persistente, alteração em lote atômica, recálculo enfileirado e demanda filtrada |
+| Custo do catálogo sobrescrevia revisão | Preservado | preço usa `custo_adotado`; atualizar catálogo exige ação distinta |
 
 ## Pendente (liberação bloqueada)
 - Navegador autenticado F08/F09 com perfis distintos: não executado nesta sessão.

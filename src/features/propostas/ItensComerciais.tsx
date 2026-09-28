@@ -9,6 +9,7 @@ import {
   Section,
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { precoUnitario, mesclarParametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brlUnit } from "@/lib/format";
@@ -40,7 +41,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const qc = useQueryClient();
   const [busca, setBusca] = useState("");
   const [filtroMod, setFiltroMod] = useState("");
-  const [sel, setSel] = useState<Set<string>>(new Set());
+  const [batchSel, setBatchSel] = useState<Set<string>>(new Set());
   const [aberto, setAberto] = useState<string | null>(null);
   const [colar, setColar] = useState("");
   const [erroColar, setErroColar] = useState<string | null>(null);
@@ -49,8 +50,8 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     inspectorTrigger.current = trigger;
     setAberto(id);
   }, []);
-  const toggleItem = useCallback((id: string, checked: boolean) => {
-    setSel((previous) => {
+  const toggleBatch = useCallback((id: string, checked: boolean) => {
+    setBatchSel((previous) => {
       const next = new Set(previous);
       if (checked) next.add(id);
       else next.delete(id);
@@ -89,35 +90,40 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const editavel = rev.data.editavel;
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
-    return save.run(`componentes-${ids.join(",")}`, async () => {
-      for (const id of ids) {
-        const previous = comps.data?.find((c) => c.id === id);
-        if (!previous) throw new Error("Componente não encontrado na revisão");
-        let request = supabase
-          .from("revisao_componentes")
-          .update(patch as never)
-          .eq("id", id);
-        for (const field of ["modalidade", "fornecedor_id", "custo_adotado"] as const) {
-          if (field in patch)
-            request =
-              previous[field] == null
-                ? request.is(field, null)
-                : request.eq(field, previous[field]!);
-        }
-        const { data, error } = await request.select("id");
-        if (error) throw new Error(error.message);
-        if (!data?.length)
-          throw new Error(
-            "Conflito no componente: outro usuário alterou o campo. Trabalho local preservado.",
-          );
-      }
-      await Promise.all([
-        qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
-        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
-      ]);
-      if ("custo_adotado" in patch) recalc.mutate();
-      else save.set("salvo");
+    const atualizados = await save.run(`componentes-${ids.join(",")}`, async () => {
+      const esperados = Object.fromEntries(
+        ids.map((id) => {
+          const previous = comps.data?.find((c) => c.id === id);
+          if (!previous) throw new Error("Componente não encontrado na revisão");
+          return [
+            id,
+            Object.fromEntries(
+              Object.keys(patch).map((field) => [
+                field,
+                previous[field as keyof typeof previous] ?? null,
+              ]),
+            ),
+          ];
+        }),
+      );
+      const { data, error } = await supabase.rpc("atualizar_componentes_revisao", {
+        _rev: revisaoId,
+        _ids: ids,
+        _patch: patch as Json,
+        _esperados: esperados as Json,
+      });
+      if (error) throw new Error(error.message);
+      if (data !== ids.length)
+        throw new Error("Nem todos os componentes foram atualizados. Trabalho local preservado.");
+      return data;
     });
+    if (atualizados === undefined) return;
+    await qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) });
+    await recalc.mutateAsync();
+  }
+
+  async function definirInclusao(ids: string[], incluido: boolean) {
+    await atualizar(ids, { incluido_orcamento: incluido });
   }
 
   async function alterarCusto(c: Comp, valor: number) {
@@ -229,26 +235,31 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               <option value="terceirizar">Terceirizar</option>
             </select>
           </label>
-          {lista.length > 0 && (
+          {lista.length > 0 && editavel && (
             <label className="nx-editor-select-all">
               <input
                 type="checkbox"
-                aria-label="Selecionar todos os itens filtrados"
-                checked={lista.length > 0 && lista.every((c) => sel.has(c.id))}
+                aria-label="Incluir todos os itens filtrados no orçamento"
+                checked={lista.every((c) => c.incluido_orcamento)}
                 onChange={(e) =>
-                  setSel(e.target.checked ? new Set(lista.map((c) => c.id)) : new Set())
+                  void definirInclusao(
+                    lista.map((c) => c.id),
+                    e.target.checked,
+                  )
                 }
               />
-              Selecionar todos
+              Incluir todos no orçamento
             </label>
           )}
           <span className="nx-editor-count">
             {lista.length} de {comps.data.length} itens
           </span>
         </div>
-        {lista.some((c) => sel.has(c.id)) && editavel && (
+        {lista.some((c) => batchSel.has(c.id)) && editavel && (
           <div className="nx-editor-batch" aria-label="Ações para itens selecionados">
-            <strong>{lista.filter((c) => sel.has(c.id)).length} selecionado(s) nos filtros</strong>
+            <strong>
+              {lista.filter((c) => batchSel.has(c.id)).length} selecionado(s) para lote
+            </strong>
             <label>
               Modalidade em lote
               <select
@@ -256,7 +267,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 onChange={(e) =>
                   e.target.value &&
                   atualizar(
-                    lista.filter((c) => sel.has(c.id)).map((c) => c.id),
+                    lista.filter((c) => batchSel.has(c.id)).map((c) => c.id),
                     { modalidade: e.target.value },
                   )
                 }
@@ -275,7 +286,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 onChange={(e) =>
                   e.target.value &&
                   atualizar(
-                    lista.filter((c) => sel.has(c.id)).map((c) => c.id),
+                    lista.filter((c) => batchSel.has(c.id)).map((c) => c.id),
                     { fornecedor_id: e.target.value },
                   )
                 }
@@ -289,7 +300,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 ))}
               </select>
             </label>
-            <button className="nx-editor-link" onClick={() => setSel(new Set())}>
+            <button className="nx-editor-link" onClick={() => setBatchSel(new Set())}>
               Limpar seleção
             </button>
           </div>
@@ -320,13 +331,14 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     key={item.id}
                     item={item}
                     selected={aberto === item.id}
-                    checked={sel.has(item.id)}
+                    batchChecked={batchSel.has(item.id)}
                     editable={editavel}
                     supplier={supplier}
                     cost={cost}
                     price={price}
                     onInspect={inspectItem}
-                    onToggle={toggleItem}
+                    onToggleIncluded={(id, included) => void definirInclusao([id], included)}
+                    onToggleBatch={toggleBatch}
                   />
                 ))}
               </ObjectCollection>

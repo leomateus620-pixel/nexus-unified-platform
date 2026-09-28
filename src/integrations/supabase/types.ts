@@ -1026,6 +1026,124 @@ export type Database = {
           },
         ]
       }
+      proposta_checkpoints: {
+        Row: {
+          atualizado_em: string
+          organization_id: string
+          revisao_id: string
+          snapshot: Json
+          total_salvo: number | null
+          versao: number
+          versao_salva: number
+        }
+        Insert: {
+          atualizado_em?: string
+          organization_id: string
+          revisao_id: string
+          snapshot: Json
+          total_salvo?: number | null
+          versao?: number
+          versao_salva?: number
+        }
+        Update: {
+          atualizado_em?: string
+          organization_id?: string
+          revisao_id?: string
+          snapshot?: Json
+          total_salvo?: number | null
+          versao?: number
+          versao_salva?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposta_checkpoints_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposta_checkpoints_revisao_id_fkey"
+            columns: ["revisao_id"]
+            isOneToOne: true
+            referencedRelation: "proposta_revisoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proposta_operacoes: {
+        Row: {
+          autor: string
+          created_at: string
+          id: string
+          resposta: Json
+          revisao_id: string
+        }
+        Insert: {
+          autor: string
+          created_at?: string
+          id: string
+          resposta: Json
+          revisao_id: string
+        }
+        Update: {
+          autor?: string
+          created_at?: string
+          id?: string
+          resposta?: Json
+          revisao_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposta_operacoes_revisao_id_fkey"
+            columns: ["revisao_id"]
+            isOneToOne: false
+            referencedRelation: "proposta_revisoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proposta_rascunho_autores: {
+        Row: {
+          autor: string | null
+          autor_nome: string | null
+          campo: string
+          created_at: string
+          id: number
+          objeto: string
+          revisao_id: string
+          versao: number
+        }
+        Insert: {
+          autor?: string | null
+          autor_nome?: string | null
+          campo: string
+          created_at?: string
+          id?: never
+          objeto: string
+          revisao_id: string
+          versao: number
+        }
+        Update: {
+          autor?: string | null
+          autor_nome?: string | null
+          campo?: string
+          created_at?: string
+          id?: never
+          objeto?: string
+          revisao_id?: string
+          versao?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposta_rascunho_autores_revisao_id_fkey"
+            columns: ["revisao_id"]
+            isOneToOne: false
+            referencedRelation: "proposta_revisoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       proposta_revisoes: {
         Row: {
           aceita_em: string | null
@@ -1107,6 +1225,86 @@ export type Database = {
             columns: ["regras_id"]
             isOneToOne: false
             referencedRelation: "regras_versionadas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proposta_salvamentos: {
+        Row: {
+          autor: string
+          autor_nome: string
+          calculo_id: string | null
+          campos: number
+          created_at: string
+          diferencas: Json
+          id: string
+          impacto: Json | null
+          objetos: number
+          organization_id: string
+          proposta_id: string
+          revisao_id: string
+          versao_destino: number
+          versao_origem: number
+        }
+        Insert: {
+          autor: string
+          autor_nome: string
+          calculo_id?: string | null
+          campos: number
+          created_at?: string
+          diferencas: Json
+          id: string
+          impacto?: Json | null
+          objetos: number
+          organization_id: string
+          proposta_id: string
+          revisao_id: string
+          versao_destino: number
+          versao_origem: number
+        }
+        Update: {
+          autor?: string
+          autor_nome?: string
+          calculo_id?: string | null
+          campos?: number
+          created_at?: string
+          diferencas?: Json
+          id?: string
+          impacto?: Json | null
+          objetos?: number
+          organization_id?: string
+          proposta_id?: string
+          revisao_id?: string
+          versao_destino?: number
+          versao_origem?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposta_salvamentos_calculo_id_fkey"
+            columns: ["calculo_id"]
+            isOneToOne: false
+            referencedRelation: "calculo_execucoes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposta_salvamentos_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposta_salvamentos_proposta_id_fkey"
+            columns: ["proposta_id"]
+            isOneToOne: false
+            referencedRelation: "propostas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposta_salvamentos_revisao_id_fkey"
+            columns: ["revisao_id"]
+            isOneToOne: false
+            referencedRelation: "proposta_revisoes"
             referencedColumns: ["id"]
           },
         ]
@@ -1310,6 +1508,7 @@ export type Database = {
           fabricante: string | null
           fornecedor_id: string | null
           id: string
+          incluido_orcamento: boolean
           indivisivel: boolean
           justificativa: string | null
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
@@ -1328,6 +1527,7 @@ export type Database = {
           fabricante?: string | null
           fornecedor_id?: string | null
           id?: string
+          incluido_orcamento?: boolean
           indivisivel?: boolean
           justificativa?: string | null
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
@@ -1346,6 +1546,7 @@ export type Database = {
           fabricante?: string | null
           fornecedor_id?: string | null
           id?: string
+          incluido_orcamento?: boolean
           indivisivel?: boolean
           justificativa?: string | null
           modalidade?: Database["public"]["Enums"]["modalidade_suprimento"]
@@ -1598,14 +1799,56 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      atualizar_componentes_revisao: {
+        Args: { _esperados: Json; _ids: string[]; _patch: Json; _rev: string }
+        Returns: number
+      }
       can_see_costs: { Args: { _org: string }; Returns: boolean }
+      capturar_revisao: {
+        Args: { _operacao?: string; _rev: string }
+        Returns: Json
+      }
+      concluir_revisao: {
+        Args: {
+          _calculo: Json
+          _operacao?: string
+          _rev: string
+          _snapshot: Json
+          _versao: number
+          _versao_salva: number
+        }
+        Returns: Json
+      }
       criar_organizacao: { Args: { _nome: string }; Returns: string }
+      diferencas_comerciais: {
+        Args: { _a: Json; _b: Json; _rev: string }
+        Returns: {
+          antes: Json
+          campo: string
+          depois: Json
+          justificativa: string
+          nome: string
+          objeto: string
+        }[]
+      }
+      diferencas_rascunho: {
+        Args: { _a: Json; _b: Json }
+        Returns: {
+          antes: Json
+          campo: string
+          depois: Json
+          justificativa: string
+          nome: string
+          objeto: string
+        }[]
+      }
       has_org_role: {
         Args: { _org: string; _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
       }
       hash_tecnico: { Args: { _rev: string }; Returns: string }
       is_member: { Args: { _org: string }; Returns: boolean }
+      objeto_rascunho: { Args: { _r: Json; _t: string }; Returns: Json }
       pode: { Args: { _acao: string; _org: string }; Returns: boolean }
       proximo_numero: {
         Args: { _org: string; _prefixo: string }
@@ -1623,6 +1866,7 @@ export type Database = {
         Returns: Json
       }
       revisao_editavel: { Args: { _rev: string }; Returns: boolean }
+      snapshot_rascunho: { Args: { _rev: string }; Returns: Json }
     }
     Enums: {
       app_role:

@@ -90,7 +90,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const editavel = rev.data.editavel;
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
-    return save.run(`componentes-${ids.join(",")}`, async () => {
+    const atualizados = await save.run(`componentes-${ids.join(",")}`, async () => {
       const esperados = Object.fromEntries(
         ids.map((id) => {
           const previous = comps.data?.find((c) => c.id === id);
@@ -115,12 +115,11 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
       if (error) throw new Error(error.message);
       if (data !== ids.length)
         throw new Error("Nem todos os componentes foram atualizados. Trabalho local preservado.");
-      await Promise.all([
-        qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
-        qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
-      ]);
-      recalc.mutate();
+      return data;
     });
+    if (atualizados === undefined) return;
+    await qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) });
+    await recalc.mutateAsync();
   }
 
   async function definirInclusao(ids: string[], incluido: boolean) {

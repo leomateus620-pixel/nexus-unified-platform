@@ -40,7 +40,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const qc = useQueryClient();
   const [busca, setBusca] = useState("");
   const [filtroMod, setFiltroMod] = useState("");
-  const [sel, setSel] = useState<Set<string>>(new Set());
+  const [batchSel, setBatchSel] = useState<Set<string>>(new Set());
   const [aberto, setAberto] = useState<string | null>(null);
   const [colar, setColar] = useState("");
   const [erroColar, setErroColar] = useState<string | null>(null);
@@ -49,8 +49,8 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     inspectorTrigger.current = trigger;
     setAberto(id);
   }, []);
-  const toggleItem = useCallback((id: string, checked: boolean) => {
-    setSel((previous) => {
+  const toggleBatch = useCallback((id: string, checked: boolean) => {
+    setBatchSel((previous) => {
       const next = new Set(previous);
       if (checked) next.add(id);
       else next.delete(id);
@@ -115,9 +115,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
         qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
       ]);
-      if ("custo_adotado" in patch) recalc.mutate();
-      else save.set("salvo");
+      recalc.mutate();
     });
+  }
+
+  async function definirInclusao(ids: string[], incluido: boolean) {
+    await atualizar(ids, { incluido_orcamento: incluido });
   }
 
   async function alterarCusto(c: Comp, valor: number) {
@@ -229,26 +232,29 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               <option value="terceirizar">Terceirizar</option>
             </select>
           </label>
-          {lista.length > 0 && (
+          {lista.length > 0 && editavel && (
             <label className="nx-editor-select-all">
               <input
                 type="checkbox"
-                aria-label="Selecionar todos os itens filtrados"
-                checked={lista.length > 0 && lista.every((c) => sel.has(c.id))}
+                aria-label="Incluir todos os itens filtrados no orçamento"
+                checked={lista.every((c) => c.incluido_orcamento)}
                 onChange={(e) =>
-                  setSel(e.target.checked ? new Set(lista.map((c) => c.id)) : new Set())
+                  void definirInclusao(
+                    lista.map((c) => c.id),
+                    e.target.checked,
+                  )
                 }
               />
-              Selecionar todos
+              Incluir todos no orçamento
             </label>
           )}
           <span className="nx-editor-count">
             {lista.length} de {comps.data.length} itens
           </span>
         </div>
-        {lista.some((c) => sel.has(c.id)) && editavel && (
+        {lista.some((c) => batchSel.has(c.id)) && editavel && (
           <div className="nx-editor-batch" aria-label="Ações para itens selecionados">
-            <strong>{lista.filter((c) => sel.has(c.id)).length} selecionado(s) nos filtros</strong>
+            <strong>{lista.filter((c) => batchSel.has(c.id)).length} selecionado(s) para lote</strong>
             <label>
               Modalidade em lote
               <select
@@ -256,7 +262,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 onChange={(e) =>
                   e.target.value &&
                   atualizar(
-                    lista.filter((c) => sel.has(c.id)).map((c) => c.id),
+                    lista.filter((c) => batchSel.has(c.id)).map((c) => c.id),
                     { modalidade: e.target.value },
                   )
                 }
@@ -275,7 +281,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 onChange={(e) =>
                   e.target.value &&
                   atualizar(
-                    lista.filter((c) => sel.has(c.id)).map((c) => c.id),
+                    lista.filter((c) => batchSel.has(c.id)).map((c) => c.id),
                     { fornecedor_id: e.target.value },
                   )
                 }
@@ -289,7 +295,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 ))}
               </select>
             </label>
-            <button className="nx-editor-link" onClick={() => setSel(new Set())}>
+            <button className="nx-editor-link" onClick={() => setBatchSel(new Set())}>
               Limpar seleção
             </button>
           </div>
@@ -320,13 +326,14 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     key={item.id}
                     item={item}
                     selected={aberto === item.id}
-                    checked={sel.has(item.id)}
+                    batchChecked={batchSel.has(item.id)}
                     editable={editavel}
                     supplier={supplier}
                     cost={cost}
                     price={price}
                     onInspect={inspectItem}
-                    onToggle={toggleItem}
+                    onToggleIncluded={(id, included) => void definirInclusao([id], included)}
+                    onToggleBatch={toggleBatch}
                   />
                 ))}
               </ObjectCollection>

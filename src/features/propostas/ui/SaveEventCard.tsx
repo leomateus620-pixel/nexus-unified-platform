@@ -4,6 +4,7 @@ import { ObjectCard } from "./ObjectCards";
 import { brl } from "@/lib/format";
 
 const labels: Record<string, string> = {
+  incluido_orcamento: "Incluído no orçamento",
   identificacao: "Identificação",
   tipo: "Tipo",
   metragem: "Metragem",

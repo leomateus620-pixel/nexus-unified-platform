@@ -9,31 +9,34 @@ type ItemIdentity = {
   ncm: string | null;
   unidade: string;
   modalidade: string;
+  incluido_orcamento: boolean;
 };
 
 type CommercialRowProps = {
   item: ItemIdentity;
   selected: boolean;
-  checked: boolean;
+  batchChecked: boolean;
   editable: boolean;
   supplier: string;
   cost: string | null;
   price: string;
   onInspect: (id: string, trigger: HTMLButtonElement) => void;
-  onToggle: (id: string, checked: boolean) => void;
+  onToggleIncluded: (id: string, included: boolean) => void;
+  onToggleBatch: (id: string, checked: boolean) => void;
 };
 
 /** A component is an object, with independent selection and editing controls. */
 export const ProductComponentCard = memo(function ProductComponentCard({
   item,
   selected,
-  checked,
+  batchChecked,
   editable,
   supplier,
   cost,
   price,
   onInspect,
-  onToggle,
+  onToggleIncluded,
+  onToggleBatch,
 }: CommercialRowProps) {
   return (
     <ObjectCard
@@ -47,11 +50,22 @@ export const ProductComponentCard = memo(function ProductComponentCard({
           <label className="nx-object-check">
             <input
               type="checkbox"
-              aria-label={`Selecionar ${item.codigo}`}
-              checked={checked}
-              onChange={(e) => onToggle(item.id, e.target.checked)}
+              aria-label={`Incluir ${item.codigo} no orçamento`}
+              checked={item.incluido_orcamento}
+              disabled={!editable}
+              onChange={(e) => onToggleIncluded(item.id, e.target.checked)}
             />
-            <span>Selecionar</span>
+            <span>No orçamento</span>
+          </label>
+          <label className="nx-object-check">
+            <input
+              type="checkbox"
+              aria-label={`Selecionar ${item.codigo} para edição em lote`}
+              checked={batchChecked}
+              disabled={!editable}
+              onChange={(e) => onToggleBatch(item.id, e.target.checked)}
+            />
+            <span>Lote</span>
           </label>
         </>
       }

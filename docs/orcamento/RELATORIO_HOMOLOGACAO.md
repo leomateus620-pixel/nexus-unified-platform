@@ -3,6 +3,14 @@
 Base auditada: commit 70d62ba. Fonte das fórmulas: XLSX enviado (SHA-256 b42b1ae5…dab549).
 Status: **homologação parcial**. A liberação geral continua bloqueada até os itens pendentes abaixo.
 
+## Auditoria da migration de salvamento — produção
+
+- Veredito inicial: **NÃO APLICADA**. A versão `20260928010000`, suas quatro tabelas e as RPCs `capturar_revisao` / `concluir_revisao` estavam ausentes no banco usado pelo domínio publicado.
+- Efeito observado: o frontend publicado chamava o contrato novo e recebia erro de função ausente antes de consolidar os itens selecionados.
+- Correção: o arquivo original foi aplicado sem alteração (SHA-256 `7fd3090276c7261e729e3bf491e6cf3512af24a49b12cd7a5110050b00544557`), seguido de migrations incrementais para seleção persistente, negação explícita de acesso direto às tabelas internas e wrappers públicos sem `SECURITY DEFINER`.
+- As 2 revisões existentes receberam apenas checkpoint inicial; nenhum evento histórico foi fabricado.
+- O clique autenticado que altera proposta real permanece pendente para não modificar dados comerciais sem autorização específica.
+
 ## Evidências executadas (mesmo commit)
 | Suíte | Comando | Resultado |
 |---|---|---|

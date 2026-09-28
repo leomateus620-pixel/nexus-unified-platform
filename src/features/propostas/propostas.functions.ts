@@ -34,7 +34,17 @@ async function orgDoUsuario(db: Db, userId: string): Promise<string> {
  * membros nunca contam; erro de consulta = acesso negado.
  */
 export function ok<T>(r: { data: T; error: { message: string } | null }): T {
-  if (r.error) throw new Error(r.error.message);
+  if (r.error) {
+    if (
+      /Could not find the function public:(capturar_revisao|concluir_revisao)|schema cache/i.test(
+        r.error.message,
+      )
+    )
+      throw new Error(
+        "O salvamento não está disponível nesta versão do banco. O rascunho foi preservado; atualize a página e tente novamente.",
+      );
+    throw new Error(r.error.message);
+  }
   return r.data;
 }
 async function auditar(
@@ -372,13 +382,15 @@ async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string) 
     metragem: Number(s.metragem),
     trechos: s.trechos,
   }));
-  const componentes = captura.componentes.map((c: any) => ({
-    id: c.id,
-    codigo: c.codigo,
-    custo: Number(c.custo_adotado),
-    indivisivel: c.indivisivel,
-    multiplo: Number(c.multiplo_compra),
-  }));
+  const componentes = captura.componentes
+    .filter((c: any) => c.incluido_orcamento !== false)
+    .map((c: any) => ({
+      id: c.id,
+      codigo: c.codigo,
+      custo: Number(c.custo_adotado),
+      indivisivel: c.indivisivel,
+      multiplo: Number(c.multiplo_compra),
+    }));
   const overrides = captura.overrides.map((o: any) => ({
     sistema_id: o.sistema_id,
     componente_id: o.revisao_componente_id,

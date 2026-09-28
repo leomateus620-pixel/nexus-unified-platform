@@ -33,13 +33,25 @@ export function EditorInspector({
   useEffect(() => {
     const workspace = dialog.current?.closest<HTMLElement>(".nx-editor-workspace");
     if (!workspace) return;
+    let frame = 0;
+    let previous: boolean | null = null;
     const observer = new ResizeObserver(([entry]) => {
       const side = (entry?.contentRect.width ?? 0) >= 920;
-      workspace.dataset["sideEditor"] = String(side && open);
-      setWide(side);
+      if (side === previous) return;
+      previous = side;
+      cancelAnimationFrame(frame);
+      // Mutating the observed layout inside ResizeObserver can produce a loop
+      // notification. Apply only a breakpoint change, on the next frame.
+      frame = requestAnimationFrame(() => {
+        workspace.dataset["sideEditor"] = String(side && open);
+        setWide(side);
+      });
     });
     observer.observe(workspace);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
   }, [open]);
   const heading = useRef<HTMLHeadingElement>(null);
   const titleId = useId();

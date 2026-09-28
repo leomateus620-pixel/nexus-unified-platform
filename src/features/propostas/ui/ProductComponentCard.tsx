@@ -37,7 +37,7 @@ export const ProductComponentCard = memo(function ProductComponentCard({
 }: CommercialRowProps) {
   return (
     <ObjectCard
-      title={item.descricao}
+      title={item.descricao.length > 100 ? `${item.descricao.slice(0, 100)}…` : item.descricao}
       selected={selected}
       className="nx-product-card"
       eyebrow={
@@ -56,6 +56,12 @@ export const ProductComponentCard = memo(function ProductComponentCard({
         </>
       }
     >
+      {item.descricao.length > 100 && (
+        <details className="nx-object-details">
+          <summary>Descrição completa</summary>
+          <p>{item.descricao}</p>
+        </details>
+      )}
       <p className="nx-object-meta">
         {item.unidade} · {item.fabricante ?? "Fabricante não informado"}
       </p>

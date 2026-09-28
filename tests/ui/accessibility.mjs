@@ -40,7 +40,7 @@ report.checks.push({
   name: "mobile select-all selects all records",
   pass: await page
     .locator('input[type="checkbox"][aria-label^="Selecionar COMP-"]')
-    .evaluateAll((els) => els.length === 17 && els.every((e) => e.checked)),
+    .evaluateAll((els) => els.length === 21 && els.every((e) => e.checked)),
 });
 await allItems.uncheck();
 report.contrast = await page.evaluate(() => {
@@ -116,7 +116,10 @@ report.checks.push({
     activeInside: e.contains(document.activeElement),
   }))),
 });
-await page.screenshot({ path: "docs/ui/evidence/after/inspector-mobile.png", fullPage: true });
+await page.screenshot({
+  path: "docs/ui/evidence/catalog-after/inspector-mobile.png",
+  fullPage: true,
+});
 await page.keyboard.press("Tab");
 await page.keyboard.press("Shift+Tab");
 report.checks.push({
@@ -152,11 +155,14 @@ await page
   .getByRole("button", { name: /Ver composição de/ })
   .first()
   .click();
-await page.screenshot({ path: "docs/ui/evidence/after/composition-mobile.png", fullPage: true });
+await page.screenshot({
+  path: "docs/ui/evidence/catalog-after/composition-mobile.png",
+  fullPage: true,
+});
 await page.setViewportSize({ width: 1920, height: 1080 });
 await page.waitForTimeout(100);
 await page.screenshot({
-  path: "docs/ui/evidence/after/composition-desktop-1920.png",
+  path: "docs/ui/evidence/catalog-after/composition-desktop-1920.png",
   fullPage: true,
 });
 report.checks.push({
@@ -227,7 +233,10 @@ report.checks.push({
     };
   })),
 });
-await writeFile("docs/ui/evidence/after/accessibility.json", JSON.stringify(report, null, 2));
+await writeFile(
+  "docs/ui/evidence/catalog-after/accessibility.json",
+  JSON.stringify(report, null, 2),
+);
 console.log(JSON.stringify(report, null, 2));
 await browser.close();
 if (

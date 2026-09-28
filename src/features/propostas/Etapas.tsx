@@ -1014,9 +1014,21 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
   const onSave = async (p: Parametros) =>
     Boolean(
       await save.run("parametros", async () => {
+        // Defaults used for display/calculation are not manual changes. Preserve
+        // sparse legacy records and write only effective edits over their raw values.
+        const raw = (rev.data.parametros ?? {}) as Partial<Parametros>;
+        const effective = mesclarParametros(raw);
+        const parametros = {
+          ...raw,
+          ...Object.fromEntries(
+            Object.entries(p).filter(
+              ([key, value]) => !Object.is(value, effective[key as keyof Parametros]),
+            ),
+          ),
+        };
         const { data, error } = await supabase
           .from("proposta_revisoes")
-          .update({ parametros: p })
+          .update({ parametros })
           .eq("id", revisaoId)
           .eq("version", versao.current!)
           .select("version");

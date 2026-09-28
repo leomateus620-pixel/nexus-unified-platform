@@ -4,7 +4,7 @@ import { chromium } from "@playwright/test";
 
 // Run only against the isolated fixture entry point; never against deployed application data.
 const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
-const output = "docs/ui/evidence/stages";
+const output = "docs/ui/evidence/catalog-stages";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -112,6 +112,7 @@ try {
 
   await go("parametros");
   assert.equal(await page.locator(".nx-parameter-field input").count(), 22);
+  await page.locator("summary").filter({ hasText: "Equipe e produtividade" }).click();
   await page.getByLabel("Produtividade telhado (m/equipe-dia)").fill("0");
   await page.getByLabel("Produtividade telhado (m/equipe-dia)").blur();
   assert.equal(

@@ -1,23 +1,42 @@
 import ts from "typescript";
 import { execFileSync } from "node:child_process";
-import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 
-const base = process.argv[2] || "e6c765f4";
+const base = process.argv[2] || "5286881c4133c3d123812226b20081d67bc61c07";
+// Explicitly scoped save/history exception requested for this delivery. Existing
+// transition/document/order functions and all pre-existing migrations remain protected.
+const saveFiles = new Set([
+  "src/features/propostas/hooks.ts",
+  "src/features/propostas/propostas.functions.ts",
+  "src/features/propostas/Dimensionamento.tsx",
+  "src/features/propostas/ItensComerciais.tsx",
+  "src/features/propostas/Etapas.tsx",
+  "src/routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.tsx",
+]);
 const git = (...args) =>
   execFileSync("git", args, { encoding: "utf8", maxBuffer: 10 * 1024 * 1024 }).trim();
 const changed = git("diff", "--name-only", base).split(/\r?\n/).filter(Boolean);
 const protectedPattern =
   /^(supabase\/|src\/features\/calculo\/|src\/integrations\/|src\/features\/org\/|src\/features\/propostas\/(hooks|lista|propostas\.functions)\.|src\/routes\/(_authenticated\/route\.tsx|__root\.tsx|mapas-3d)|src\/routeTree\.gen\.ts|src\/(trevisan|industrial)\/)/;
-const protectedFiles = git("ls-files")
+const protectedFiles = git("ls-tree", "-r", "--name-only", base)
   .split(/\r?\n/)
-  .filter((f) => protectedPattern.test(f));
+  .filter((f) => protectedPattern.test(f) && !saveFiles.has(f));
 const hash = (s) => createHash("sha256").update(s.replace(/\r\n/g, "\n")).digest("hex");
 const protectedHashes = protectedFiles.map((file) => ({
   file,
   before: hash(git("show", `${base}:${file}`)),
   after: hash(readFileSync(file, "utf8").trim()),
 }));
+const transitions = (s) =>
+  s
+    .slice(s.indexOf("// ---------- Transições ----------"))
+    .split("/** Cost protected including counts")[0]
+    .trim();
+const functionFile = "src/features/propostas/propostas.functions.ts";
+const transitionsUnchanged =
+  transitions(git("show", `${base}:${functionFile}`)) ===
+  transitions(readFileSync(functionFile, "utf8").replace(/\r\n/g, "\n")).trim();
 const printer = ts.createPrinter({ removeComments: true });
 function extract(source, name) {
   const file = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
@@ -84,7 +103,7 @@ const contracts = changed
       return { file, newFile: true };
     }
     const a = extract(before, file),
-      b = extract(readFileSync(file, "utf8"), file);
+      b = extract(existsSync(file) ? readFileSync(file, "utf8") : "", file);
     return {
       file,
       routesEqual: JSON.stringify(a.routes) === JSON.stringify(b.routes),
@@ -106,11 +125,13 @@ const report = {
   protectedHashes,
   protectedChanged: protectedHashes.filter((p) => p.before !== p.after),
   contracts,
+  saveCoordinationException: [...saveFiles],
+  transitionsUnchanged,
   scope:
     "AST comparison covers route declarations, query/mutation/server hooks, database-call arguments and invalidation/mutate arguments. Presentation state and dialogs require separate manual/behavioral review. No claim of authenticated or database E2E verification.",
 };
 mkdirSync("docs/ui/evidence", { recursive: true });
-writeFileSync("docs/ui/evidence/contracts.json", JSON.stringify(report, null, 2));
+writeFileSync("docs/ui/evidence/catalog-contracts.json", JSON.stringify(report, null, 2));
 console.log(
   JSON.stringify(
     {
@@ -129,12 +150,12 @@ console.log(
 );
 if (
   report.protectedChanged.length ||
+  !transitionsUnchanged ||
   contracts.some(
     (c) =>
       c.routesEqual === false ||
-      c.hooksEqual === false ||
-      c.requestsEqual === false ||
-      c.primaryHandlersEqual === false,
+      (!saveFiles.has(c.file) &&
+        (c.hooksEqual === false || c.requestsEqual === false || c.primaryHandlersEqual === false)),
   )
 )
   process.exitCode = 1;

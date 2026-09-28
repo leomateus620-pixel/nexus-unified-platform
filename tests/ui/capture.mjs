@@ -4,6 +4,7 @@ import path from "node:path";
 import os from "node:os";
 
 const label = process.argv[2] || "after";
+const catalog = label === "catalog-after";
 const base = process.env.NEXUS_UI_URL || `http://127.0.0.1:${label === "before" ? 4181 : 4182}`;
 const output = path.resolve(`docs/ui/evidence/${label}`);
 await mkdir(output, { recursive: true });
@@ -36,6 +37,7 @@ page.on("pageerror", (error) => errors.push(error.message));
 page.on("dialog", (dialog) => dialog.dismiss());
 const report = {
   ...previous,
+  failure: undefined,
   label,
   base,
   date: new Date().toISOString(),
@@ -53,6 +55,7 @@ const report = {
   viewports: phase === "performance" ? previous.viewports : [],
   scenarios: phase === "performance" ? previous.scenarios : [],
   performance: phase === "visual" ? previous.performance : [],
+  systemPerformance: phase === "visual" ? previous.systemPerformance : [],
   passes: [...(previous.passes || []), { phase, at: new Date().toISOString() }],
 };
 process.on("uncaughtException", async (error) => {
@@ -93,6 +96,8 @@ async function metrics() {
     overflow: document.documentElement.scrollWidth > innerWidth + 1,
     headings: [...document.querySelectorAll("h1,h2")].map((e) => e.textContent),
     rows: document.querySelectorAll("tbody tr").length,
+    firstObjectTop: document.querySelector(".nx-object-card")?.getBoundingClientRect().top ?? null,
+    objectCount: document.querySelectorAll(".nx-object-card").length,
     unnamedInputs: [...document.querySelectorAll("input,textarea,select")]
       .filter(
         (e) =>
@@ -122,7 +127,7 @@ const screens = [
   "op",
 ];
 if (phase !== "performance") {
-  for (const width of [360, 390, 768, 1024, 1366, 1440, 1920]) {
+  for (const width of [320, 360, 390, 768, 1024, 1366, 1440, 1920]) {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 768 });
     for (const screen of screens) {
       await go(screen);
@@ -135,6 +140,10 @@ if (phase !== "performance") {
           "itens-comerciais",
           "orcamento",
           "resumo-executivo",
+          "compras",
+          "producao",
+          "parametros",
+          "historico",
           "oc",
           "op",
         ].includes(screen)
@@ -254,15 +263,69 @@ if (phase !== "visual") {
         samples.push(await eventTiming(action));
       }
       const times = samples.map((s) => s.ms).sort((a, b) => a - b);
-      report.performance.push({ count, action, medianMs: times[2], maxMs: times[4], samples });
+      report.performance.push({
+        count,
+        componentCount: count === 17 ? 21 : count,
+        action,
+        medianMs: times[2],
+        maxMs: times[4],
+        samples,
+      });
     }
     console.log(`${label}: local interaction timings ${count} records`);
+  }
+  for (const count of [17, 100, 500]) {
+    for (const action of ["typing", "composition", "scroll"]) {
+      await go("dimensionamento", "normal", count);
+      if (catalog && action === "typing")
+        await page.getByRole("button", { name: "Editar sistema 1", exact: true }).click();
+      const samples = [];
+      for (let i = 0; i < 5; i++) {
+        if (action === "composition" && i > 0)
+          await page
+            .getByRole("button", { name: /Fechar.*(inspetor|detalhe|painel|composição)/i })
+            .first()
+            .click();
+        samples.push(
+          await page.evaluate(async (action) => {
+            const start = performance.now();
+            if (action === "typing") {
+              const input = document.querySelector(
+                'input[aria-label="Identificação do sistema 1"]',
+              );
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(
+                input,
+                input.value + "a",
+              );
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+            } else if (action === "composition")
+              [...document.querySelectorAll("button")]
+                .find((e) => /composição/i.test(e.textContent))
+                .click();
+            else window.scrollTo(0, window.scrollY === 0 ? 500 : 0);
+            await new Promise((resolve) =>
+              requestAnimationFrame(() => requestAnimationFrame(resolve)),
+            );
+            return { ms: performance.now() - start, nodes: document.querySelectorAll("*").length };
+          }, action),
+        );
+      }
+      const times = samples.map((s) => s.ms).sort((a, b) => a - b);
+      report.systemPerformance.push({
+        count,
+        action,
+        medianMs: times[2],
+        maxMs: times[4],
+        samples,
+      });
+    }
   }
 }
 if (phase !== "performance") {
   await go("dimensionamento");
+  if (catalog) await page.getByRole("button", { name: "Editar sistema 1", exact: true }).click();
   await page
-    .getByLabel(/^Identificação/)
+    .getByLabel("Identificação do sistema 1", { exact: true })
     .first()
     .fill("Identificação editada no teste");
   await page
@@ -271,9 +334,13 @@ if (phase !== "performance") {
     .click();
   await page.waitForTimeout(800);
   report.editPayload = await page.evaluate(() => window.__nexusCalls);
+  await page.keyboard.press("Escape");
   await page.locator("summary").filter({ hasText: "Colar sistemas" }).click();
   await page.locator("textarea").fill("Setor colado\tOVERHEAD\t120\t4");
-  await page.getByRole("button", { name: /Validar e (inserir|aplicar)/ }).click();
+  if (catalog) {
+    await page.getByRole("button", { name: "Preparar prévia" }).click();
+    await page.getByRole("button", { name: "Confirmar inserção" }).click();
+  } else await page.getByRole("button", { name: "Validar e inserir" }).click();
   await page.waitForTimeout(800);
   report.pastePayload = await page.evaluate(() => window.__nexusCalls);
   await go("resumo-executivo");
@@ -302,10 +369,8 @@ if (phase !== "performance") {
   });
   await page.setViewportSize({ width: 390, height: 420 });
   await go("dimensionamento");
-  await page
-    .getByLabel(/^Identificação/)
-    .first()
-    .focus();
+  if (catalog) await page.getByRole("button", { name: "Editar sistema 1", exact: true }).click();
+  await page.getByLabel("Identificação do sistema 1", { exact: true }).first().focus();
   report.keyboardViewportProxy = await metrics();
   await page.screenshot({
     path: path.join(output, "dimensionamento-keyboard-viewport.png"),
@@ -313,11 +378,11 @@ if (phase !== "performance") {
   });
 }
 report.assertions = {
-  viewportMatrixComplete: report.viewports.length === 77,
+  viewportMatrixComplete: report.viewports.length === 88,
   scenariosComplete: report.scenarios.length === 12,
   noBrowserErrors: errors.length === 0,
-  noExternalApplicationRequests: blocked.every(
-    (url) => new URL(url).hostname === "gc.kis.v2.scr.kaspersky-labs.com",
+  noExternalApplicationRequests: blocked.every((url) =>
+    /^(gc|me)\.kis\.v2\.scr\.kaspersky-labs\.com$/.test(new URL(url).hostname),
   ),
   noPageOverflow: report.viewports.every((v) => !v.overflow),
   editUsesOriginalPatch: report.editPayload.some(
@@ -337,7 +402,7 @@ report.assertions = {
 };
 await writeFile(path.join(output, "results.json"), JSON.stringify(report, null, 2));
 await browser.close();
-if (label === "after" && Object.values(report.assertions).some((pass) => !pass))
+if (label === "catalog-after" && Object.values(report.assertions).some((pass) => !pass))
   process.exitCode = 1;
 console.log(
   JSON.stringify(

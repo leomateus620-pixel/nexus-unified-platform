@@ -11,7 +11,7 @@ const descriptions = [
   "Conjunto de fixação e interface para cobertura metálica",
   "Absorvedor de energia com indicador de impacto",
 ];
-const components = Array.from({ length: count }, (_, i) => ({
+const components = Array.from({ length: count === 17 ? 21 : count }, (_, i) => ({
   id: `component-${i}`,
   codigo: `COMP-${String(i + 1).padStart(3, "0")}`,
   descricao:
@@ -111,7 +111,7 @@ const revision = {
   proposta_id: proposal.id,
   numero: 5,
   status: scenario === "readonly" ? "enviada" : "rascunho",
-  parametros: PARAMETROS_MODELO,
+  parametros: scenario === "sparse-parameters" ? { desconto: 0 } : PARAMETROS_MODELO,
   regras_snapshot: REGRAS_MODELO,
   totais: scenario === "unavailable" ? null : summary,
   propostas: proposal,
@@ -247,7 +247,7 @@ export const supabase = {
                 scenario === "error"
                   ? { message: "Falha simulada no ambiente isolado de teste" }
                   : null;
-              const data = tables[table] || [];
+              const data = mutation && scenario === "write-conflict" ? [] : tables[table] || [];
               return Promise.resolve({ data: single ? data[0] : data, error }).then(resolve);
             };
           return (...args) => {

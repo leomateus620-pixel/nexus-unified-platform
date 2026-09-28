@@ -13,6 +13,8 @@ type Answer = { value: string; reason: string } | null;
 
 /** Native dialog can be nested above the contextual sheet; cancellation never writes. */
 export function useEditorDialog() {
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
   const [question, setQuestion] = useState<Question | null>(null);
   const resolve = useRef<(answer: Answer) => void>(() => {});
   const origin = useRef<HTMLElement | null>(null);
@@ -30,6 +32,8 @@ export function useEditorDialog() {
   function ask(options: Question): Promise<Answer> {
     origin.current = document.activeElement as HTMLElement;
     setQuestion(options);
+    setInputValue(options.initial ?? "");
+    setError("");
     return new Promise((done) => {
       resolve.current = done;
     });
@@ -50,6 +54,14 @@ export function useEditorDialog() {
         onSubmit={(e) => {
           e.preventDefault();
           const data = new FormData(e.currentTarget);
+          if (
+            question.reason &&
+            (!question.label || inputValue.trim()) &&
+            String(data.get("reason") ?? "").trim().length < 3
+          ) {
+            setError("Informe uma justificativa com pelo menos 3 caracteres.");
+            return;
+          }
           finish({
             value: String(data.get("value") ?? ""),
             reason: String(data.get("reason") ?? "").trim(),
@@ -62,7 +74,8 @@ export function useEditorDialog() {
             <input
               autoFocus
               name="value"
-              defaultValue={question.initial ?? ""}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               required={question.required}
             />
           </label>
@@ -70,8 +83,18 @@ export function useEditorDialog() {
         {question.reason && (
           <label>
             Justificativa
-            <input name="reason" required minLength={3} maxLength={500} />
+            <input
+              name="reason"
+              required={!question.label || !!inputValue.trim()}
+              minLength={inputValue.trim() || !question.label ? 3 : undefined}
+              maxLength={500}
+            />
           </label>
+        )}
+        {error && (
+          <p role="alert" className="nx-editor-error">
+            {error}
+          </p>
         )}
         <div className="nx-object-actions">
           <ActionButton variant="ghost" onClick={() => finish(null)}>

@@ -541,3 +541,129 @@
   background: oklch(0.29 0.035 155);
   color: oklch(0.97 0.005 160);
 }
+.nexus-operational.nx-catalog-shell .nx-proposal-context {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 170px;
+  gap: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-identity {
+  min-width: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-step-ruler {
+  margin-top: 4px;
+}
+.nexus-operational.nx-catalog-shell .nx-save-feedback {
+  font-size: 12px;
+  margin: 0;
+  min-height: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-save-feedback svg {
+  display: none;
+}
+.nexus-operational.nx-catalog-shell .nx-context-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nexus-operational.nx-catalog-shell .nx-editor-toolbar .nx-editor-search input {
+  flex: 1;
+  min-width: 0;
+}
+.nx-save-differences summary {
+  min-height: 40px;
+  cursor: pointer;
+  color: var(--primary);
+}
+.nx-save-differences section {
+  margin-block: 12px;
+}
+.nx-save-differences h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.nx-save-difference {
+  margin-block: 10px;
+  padding: 12px;
+  background: var(--secondary);
+  border-radius: 10px;
+}
+.nx-save-difference dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.nx-save-difference dt,
+.nx-save-difference p {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.nx-save-difference dd {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.nx-save-event-card:has(details[open]) {
+  max-width: none;
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .nexus-operational.nx-catalog-shell .nx-proposal-identity {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .nexus-operational.nx-catalog-shell .nx-context-state {
+    flex-wrap: wrap;
+  }
+  .nexus-operational.nx-catalog-shell .nx-editor-toolbar label:has(input[type="checkbox"]) {
+    display: flex;
+  }
+  .nexus-operational.nx-catalog-shell .nx-editor-toolbar label {
+    display: grid;
+  }
+  .nexus-operational.nx-catalog-shell .nx-save-bar {
+    flex-basis: auto;
+  }
+}
+@media (max-width: 374px) {
+  .nexus-operational.nx-catalog-shell .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-workspace {
+  grid-template-columns: minmax(0, 1fr);
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-workspace > * {
+  min-width: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-save-bar {
+  min-width: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-proposal-subtitle {
+  overflow-wrap: anywhere;
+}
+@media (min-width: 1200px) {
+  .nexus-operational.nx-catalog-shell .nx-history {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+@media print {
+  .nexus-operational.nx-catalog-shell .nx-document-tools {
+    display: none;
+  }
+  .nexus-operational.nx-catalog-shell .nx-document-workspace {
+    display: block;
+  }
+}

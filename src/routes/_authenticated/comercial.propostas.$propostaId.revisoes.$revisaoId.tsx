@@ -171,7 +171,11 @@ function ProposalSaveBar({ editavel }: { editavel: boolean }) {
           Salvar proposta
         </ActionButton>
       )}
-      <SaveFeedback status={save.status} msg={save.msg} />
+      {editavel ? (
+        <SaveFeedback status={save.status} msg={save.msg} />
+      ) : (
+        <p className="nx-save-feedback">Revisão somente leitura</p>
+      )}
       <Dialog.Root
         open={blocker.status === "blocked"}
         onOpenChange={(open) => {

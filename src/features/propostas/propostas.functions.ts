@@ -608,8 +608,9 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     const itens = ok(
       await db
         .from("sistema_componentes")
-        .select("revisao_componente_id,quantidade,revisao_componentes(modalidade)")
-        .eq("revisao_id", rev.id),
+        .select("revisao_componente_id,quantidade,revisao_componentes!inner(modalidade)")
+        .eq("revisao_id", rev.id)
+        .eq("revisao_componentes.incluido_orcamento", true),
     ) as any[];
     const agg = new Map<string, { q: number; mod: string }>();
     for (const i of itens) {

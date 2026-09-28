@@ -9,6 +9,7 @@ import {
   Section,
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { precoUnitario, mesclarParametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brlUnit } from "@/lib/format";
@@ -108,8 +109,8 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
       const { data, error } = await supabase.rpc("atualizar_componentes_revisao", {
         _rev: revisaoId,
         _ids: ids,
-        _patch: patch,
-        _esperados: esperados,
+        _patch: patch as Json,
+        _esperados: esperados as Json,
       });
       if (error) throw new Error(error.message);
       if (data !== ids.length)

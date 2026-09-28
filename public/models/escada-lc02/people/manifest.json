@@ -1,0 +1,24 @@
+{
+  "generator": "scripts/escada-lc02/build-people.py",
+  "mpfbVersion": "2.0.17",
+  "mpfbCommit": "80919fa4682335c41847f761a4d79dcad4124732",
+  "license": "CC0-1.0",
+  "models": [
+    {
+      "variant": "a",
+      "nearTriangles": 18684,
+      "farTriangles": 7640,
+      "bones": 53,
+      "bytes": 2889540,
+      "sha256": "435ac288d82e791ccc51c363a193eeebd3c1710bbcdb1180e8d05b4d4c4710a0"
+    },
+    {
+      "variant": "b",
+      "nearTriangles": 18684,
+      "farTriangles": 7640,
+      "bones": 53,
+      "bytes": 2828088,
+      "sha256": "8fc3c116d80f5a5666c7b1ef5238511f9059061ed8f5f2749e7a32a38e1c1dfb"
+    }
+  ]
+}

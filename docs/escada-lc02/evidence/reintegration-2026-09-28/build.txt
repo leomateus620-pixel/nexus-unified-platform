@@ -1,0 +1,423 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+vite v8.1.5 building client environment for production...
+[2K
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:169:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:296:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:443:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:453:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:466:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:599:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:656:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:764:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:796:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:829:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:857:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:886:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+transforming...✓ 2713 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/EditorWorkspace-CjzXU0PD.css                                                       10.25 kB │ gzip:   2.43 kB
+.output/public/assets/TrevisanViewer-PJTJattx.css                                                        12.02 kB │ gzip:   3.33 kB
+.output/public/assets/ObjectCards-BWVPQZC0.css                                                           13.78 kB │ gzip:   2.83 kB
+.output/public/assets/EscadaViewer-SeAZmEnY.css                                                          16.21 kB │ gzip:   4.04 kB
+.output/public/assets/IndustrialMap-BSoWcYsp.css                                                         18.28 kB │ gzip:   4.37 kB
+.output/public/assets/index-BdJAJRkM.css                                                                 39.49 kB │ gzip:   5.42 kB
+.output/public/assets/styles-BZ8pY7dP.css                                                               108.40 kB │ gzip:  18.07 kB
+.output/public/assets/invariant-DEEwAagU.js                                                               0.06 kB │ gzip:   0.08 kB
+.output/public/assets/check-36OnHiEM.js                                                                   0.12 kB │ gzip:   0.14 kB
+.output/public/assets/produtos-DeFO04GY.js                                                                0.14 kB │ gzip:   0.13 kB
+.output/public/assets/projetos-DeFO04GY.js                                                                0.14 kB │ gzip:   0.13 kB
+.output/public/assets/useRouter-BGpAXxmD.js                                                               0.15 kB │ gzip:   0.14 kB
+.output/public/assets/plus-qKI-KwZh.js                                                                    0.15 kB │ gzip:   0.15 kB
+.output/public/assets/matchContext-B0YTMpvO.js                                                            0.16 kB │ gzip:   0.14 kB
+.output/public/assets/arrow-up-right-gWBRGWxE.js                                                          0.16 kB │ gzip:   0.15 kB
+.output/public/assets/route-CPMby02v.js                                                                   0.18 kB │ gzip:   0.16 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-Lf_l5Xa7.js           0.25 kB │ gzip:   0.19 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.parametros-DVBv8Efz.js          0.25 kB │ gzip:   0.19 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-DVn3d8Bp.js    0.25 kB │ gzip:   0.20 kB
+.output/public/assets/route-sUIiNMTj.js                                                                   0.25 kB │ gzip:   0.19 kB
+.output/public/assets/eye-Cbs9C6DS.js                                                                     0.25 kB │ gzip:   0.20 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.historico-C_SLFqMi.js           0.25 kB │ gzip:   0.20 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.producao-f_HWDPSV.js            0.26 kB │ gzip:   0.21 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.compras-w53-aorM.js             0.26 kB │ gzip:   0.21 kB
+.output/public/assets/info-B2cP8XOB.js                                                                    0.27 kB │ gzip:   0.21 kB
+.output/public/assets/house-DMC1VfUl.js                                                                   0.28 kB │ gzip:   0.21 kB
+.output/public/assets/box-CtdF9Q2T.js                                                                     0.31 kB │ gzip:   0.22 kB
+.output/public/assets/ClientOnly-jySlJXUI.js                                                              0.31 kB │ gzip:   0.21 kB
+.output/public/assets/SubNav-VZiggyo1.js                                                                  0.37 kB │ gzip:   0.26 kB
+.output/public/assets/inspecoes-DmuBnmvL.js                                                               0.40 kB │ gzip:   0.30 kB
+.output/public/assets/execucao-uTsTAxsg.js                                                                0.41 kB │ gzip:   0.30 kB
+.output/public/assets/layers-C_9oEa0w.js                                                                  0.42 kB │ gzip:   0.24 kB
+.output/public/assets/qss-Bqk2G4CH.js                                                                     0.44 kB │ gzip:   0.29 kB
+.output/public/assets/documentacao-DTE0syJM.js                                                            0.48 kB │ gzip:   0.34 kB
+.output/public/assets/redirect-Dhm19zUi.js                                                                0.50 kB │ gzip:   0.31 kB
+.output/public/assets/levantamentos-hn55DuOb.js                                                           0.51 kB │ gzip:   0.36 kB
+.output/public/assets/configuracoes-Kg09DDDv.js                                                           0.63 kB │ gzip:   0.37 kB
+.output/public/assets/engenharia-Dg9ROVii.js                                                              0.63 kB │ gzip:   0.32 kB
+.output/public/assets/format-JPM5IPtx.js                                                                  0.63 kB │ gzip:   0.30 kB
+.output/public/assets/queries-CAx64skF.js                                                                 0.64 kB │ gzip:   0.41 kB
+.output/public/assets/rotate-ccw-CoWqUUYZ.js                                                              0.65 kB │ gzip:   0.37 kB
+.output/public/assets/lista-c-651syM.js                                                                   0.70 kB │ gzip:   0.42 kB
+.output/public/assets/mouse-pointer-2-CZB7JivA.js                                                         0.76 kB │ gzip:   0.41 kB
+.output/public/assets/comercial-CCT-sNgR.js                                                               0.78 kB │ gzip:   0.41 kB
+.output/public/assets/compras-CzWqtLfQ.js                                                                 0.78 kB │ gzip:   0.35 kB
+.output/public/assets/engenharia.index-C8pIjZ0w.js                                                        1.07 kB │ gzip:   0.53 kB
+.output/public/assets/compras.index-qsruneM_.js                                                           1.17 kB │ gzip:   0.63 kB
+.output/public/assets/createLucideIcon-CLdWFMku.js                                                        1.19 kB │ gzip:   0.69 kB
+.output/public/assets/escada-lc02-DJ6dMKWg.js                                                             1.25 kB │ gzip:   0.71 kB
+.output/public/assets/compras.ordens-producao.index-C3f3zPUk.js                                           1.26 kB │ gzip:   0.72 kB
+.output/public/assets/projetos.index-Craw6_8P.js                                                          1.29 kB │ gzip:   0.69 kB
+.output/public/assets/mapas-3d-Cytw1Mji.js                                                                1.30 kB │ gzip:   0.74 kB
+.output/public/assets/compras.ordens-compra.index-wYlMcpFZ.js                                             1.42 kB │ gzip:   0.75 kB
+.output/public/assets/mapas-3d_.trevisan-Bkf_eh97.js                                                      1.46 kB │ gzip:   0.80 kB
+.output/public/assets/route-DJPYIyYT.js                                                                   1.58 kB │ gzip:   0.84 kB
+.output/public/assets/financeiro-DENF8Ong.js                                                              1.59 kB │ gzip:   0.85 kB
+.output/public/assets/with-selector-dQnI5o1Q.js                                                           1.62 kB │ gzip:   0.71 kB
+.output/public/assets/compras.demandas-CWhwmKD7.js                                                        1.67 kB │ gzip:   0.82 kB
+.output/public/assets/relatorios-CZhtB7XM.js                                                              1.77 kB │ gzip:   0.81 kB
+.output/public/assets/configuracoes.orcamentos-CgVQIecP.js                                                1.77 kB │ gzip:   1.03 kB
+.output/public/assets/engenharia.dimensionamentos-ChVADBPF.js                                             2.00 kB │ gzip:   1.02 kB
+.output/public/assets/OperationalDetails-DeIiQ-VP.js                                                      2.25 kB │ gzip:   0.90 kB
+.output/public/assets/comercial.index-C2RD00H7.js                                                         2.25 kB │ gzip:   1.04 kB
+.output/public/assets/useMutation-p43vl8Tm.js                                                             2.25 kB │ gzip:   0.93 kB
+.output/public/assets/hooks-7rMXZCcI.js                                                                   2.26 kB │ gzip:   0.95 kB
+.output/public/assets/compras.fornecedores-C4mMBcGP.js                                                    2.35 kB │ gzip:   1.11 kB
+.output/public/assets/configuracoes.index-BD2vQKri.js                                                     2.35 kB │ gzip:   1.19 kB
+.output/public/assets/domain-BzOJjHT3.js                                                                  2.36 kB │ gzip:   1.00 kB
+.output/public/assets/_authenticated-Rf0LcQaI.js                                                          2.79 kB │ gzip:   1.18 kB
+.output/public/assets/queries-Cx_TGsZ_.js                                                                 2.80 kB │ gzip:   0.77 kB
+.output/public/assets/comercial.propostas.index-CI2jm34p.js                                               3.11 kB │ gzip:   1.36 kB
+.output/public/assets/react-dom-8HkkFvw6.js                                                               3.54 kB │ gzip:   1.34 kB
+.output/public/assets/comercial.propostas.nova-CKNHaDkr.js                                                3.70 kB │ gzip:   1.52 kB
+.output/public/assets/engenharia.regras-dimensionamento-BqF-bAD_.js                                       3.73 kB │ gzip:   1.88 kB
+.output/public/assets/projetos._projetoId-CPX4okCT.js                                                     3.90 kB │ gzip:   1.50 kB
+.output/public/assets/mapas-3d_.unidades-BouN4KrX.js                                                      4.35 kB │ gzip:   1.76 kB
+.output/public/assets/link-CA0cGAIi.js                                                                    4.45 kB │ gzip:   2.19 kB
+.output/public/assets/produtos._produtoId-DodWD7cr.js                                                     4.77 kB │ gzip:   2.00 kB
+.output/public/assets/compras.ordens-producao._ordemId-DiTQ09iV.js                                        5.31 kB │ gzip:   2.21 kB
+.output/public/assets/EditorWorkspace-C1vzgff8.js                                                         5.41 kB │ gzip:   2.19 kB
+.output/public/assets/clientes-4skzH765.js                                                                5.47 kB │ gzip:   1.96 kB
+.output/public/assets/compras.ordens-compra._ordemId-BduVTa9f.js                                          5.62 kB │ gzip:   2.30 kB
+.output/public/assets/lc02-walkway-aYWWSxkD.js                                                            5.65 kB │ gzip:   2.50 kB
+.output/public/assets/produtos.index-CuErmhLC.js                                                          6.06 kB │ gzip:   2.37 kB
+.output/public/assets/ObjectCards-C_7HoKqT.js                                                             6.07 kB │ gzip:   2.21 kB
+.output/public/assets/propostas.functions-c_1cUZLV.js                                                     6.41 kB │ gzip:   2.84 kB
+.output/public/assets/jsx-runtime-B-hcVAMW.js                                                             8.55 kB │ gzip:   3.26 kB
+.output/public/assets/data-BZUl9xrP.js                                                                    9.06 kB │ gzip:   3.58 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId-B3l7BajD.js                    11.22 kB │ gzip:   4.05 kB
+.output/public/assets/auth-M6IsyDE4.js                                                                   12.58 kB │ gzip:   4.86 kB
+.output/public/assets/TrevisanViewer-DiWNgo3_.js                                                         12.88 kB │ gzip:   4.48 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-Dp9Zg9E-.js    13.11 kB │ gzip:   4.36 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-Bf04wgtt.js   13.34 kB │ gzip:   4.51 kB
+.output/public/assets/useStore-Vf-hSB8a.js                                                               17.33 kB │ gzip:   6.26 kB
+.output/public/assets/TrevisanScene-CCnoaR4p.js                                                          17.82 kB │ gzip:   6.96 kB
+.output/public/assets/EscadaViewer-aWj-j6DB.js                                                           22.46 kB │ gzip:   7.35 kB
+.output/public/assets/OrbitControls-BAq4NboC.js                                                          23.09 kB │ gzip:   7.58 kB
+.output/public/assets/IndustrialMap-Ce4NjcqC.js                                                          27.05 kB │ gzip:   8.91 kB
+.output/public/assets/zod-CIW_pPax.js                                                                    30.29 kB │ gzip:  10.90 kB
+.output/public/assets/Etapas-BfWeyi4t.js                                                                 39.66 kB │ gzip:  11.62 kB
+.output/public/assets/EscadaScene-G7NO2qZV.js                                                            44.12 kB │ gzip:  13.68 kB
+.output/public/assets/GLTFLoader-BJVGCGIT.js                                                             48.98 kB │ gzip:  14.32 kB
+.output/public/assets/IndustrialScene-D9pWKPDz.js                                                        66.94 kB │ gzip:  21.65 kB
+.output/public/assets/spatial-ggJm29VR.js                                                               105.59 kB │ gzip:  24.50 kB
+.output/public/assets/three.core-DOQ_Anfr.js                                                            377.36 kB │ gzip: 100.68 kB
+.output/public/assets/react-three-fiber.esm-Ddi5NaOe.js                                                 519.79 kB │ gzip: 138.05 kB
+.output/public/assets/index-wK6H_Rms.js                                                                 709.01 kB │ gzip: 203.21 kB
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - vite-tsconfig-paths (51%)
+  - tanstack-start-core:import-protection (36%)
+  - tanstack-start-core:import-protection-transform-cache (7%)
+  - tanstack-router:code-splitter:compile-reference-file (3%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 13.09s
+vite v8.1.5 building ssr environment for production...
+[2K
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:169:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:296:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:443:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:453:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:466:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:599:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:656:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:764:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:796:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:829:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:857:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts?tss-serverfn-split:886:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:169:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:296:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:443:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:453:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:466:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:599:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:656:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:764:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:796:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:829:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:857:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] C:/Users/Leonardo/.codex/worktrees/escada-pessoas/Nexus-Dev/src/features/propostas/propostas.functions.ts:886:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+transforming...✓ 223 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/EditorWorkspace-CjzXU0PD.css                                                       10.25 kB │ gzip:  2.43 kB
+node_modules/.nitro/vite/services/ssr/assets/stages-BUJrVlaN.css                                                                10.87 kB │ gzip:  2.26 kB
+node_modules/.nitro/vite/services/ssr/assets/ObjectCards-BWVPQZC0.css                                                           13.78 kB │ gzip:  2.83 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaViewer-SeAZmEnY.css                                                          16.21 kB │ gzip:  4.04 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialMap-BSoWcYsp.css                                                         18.28 kB │ gzip:  4.37 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes-NQB_GVuY.css                              28.61 kB │ gzip:  3.87 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-BZ8pY7dP.css                                                               108.40 kB │ gzip: 18.07 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js                                                   0.22 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos-BSlCURtE.js                                                                0.27 kB │ gzip:  0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos-CbNy0BB_.js                                                                0.27 kB │ gzip:  0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/route-DUSJ6FTA.js                                                                   0.33 kB │ gzip:  0.23 kB
+node_modules/.nitro/vite/services/ssr/assets/escada-lc02-CX7pXOCt.js                                                             0.45 kB │ gzip:  0.29 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d-Do0LjlXb.js                                                                0.48 kB │ gzip:  0.31 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-Cez7D7P-.js           0.49 kB │ gzip:  0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-htfY84ya.js    0.50 kB │ gzip:  0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.historico-CNRYarEx.js           0.51 kB │ gzip:  0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.parametros-DzITRLAf.js          0.51 kB │ gzip:  0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/SubNav-D--uE1vB.js                                                                  0.51 kB │ gzip:  0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.compras-CrMGs5We.js             0.52 kB │ gzip:  0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.producao-V-web3P4.js            0.52 kB │ gzip:  0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.trevisan-ByETU91o.js                                                      0.54 kB │ gzip:  0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos._projetoId-DjMagnfr.js                                                     0.55 kB │ gzip:  0.33 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-compra._ordemId-B0jiXk8u.js                                          0.57 kB │ gzip:  0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos._produtoId-4ty4xgj_.js                                                     0.58 kB │ gzip:  0.36 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-producao._ordemId-CYQ2h-_K.js                                        0.59 kB │ gzip:  0.35 kB
+node_modules/.nitro/vite/services/ssr/assets/inspecoes-Dak5myIZ.js                                                               0.62 kB │ gzip:  0.40 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao-BGh2YPq2.js                                                                0.63 kB │ gzip:  0.40 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId-nmwPhW20.js                     0.64 kB │ gzip:  0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/NexusLogo-Du4q4iB_.js                                                               0.67 kB │ gzip:  0.44 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.historico-BaF9NPWT.js           0.68 kB │ gzip:  0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-DEaLivS5.js           0.68 kB │ gzip:  0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.parametros-ChhZOBO6.js          0.69 kB │ gzip:  0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/documentacao-DcZzyqGr.js                                                            0.70 kB │ gzip:  0.44 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.compras-BNDEveCA.js             0.70 kB │ gzip:  0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-CX5Pbr4D.js     0.71 kB │ gzip:  0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.producao-CKhPw2WV.js            0.71 kB │ gzip:  0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-ELNllaSC.js    0.71 kB │ gzip:  0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-BmYMXDG0.js    0.71 kB │ gzip:  0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos-IsubH92z.js                                                           0.73 kB │ gzip:  0.46 kB
+node_modules/.nitro/vite/services/ssr/assets/createMiddleware-B_4t7rW1.js                                                        0.83 kB │ gzip:  0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/queries-BkwyKA_k.js                                                                 0.93 kB │ gzip:  0.54 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes-CJOn9VXa.js                                                           0.95 kB │ gzip:  0.47 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia-CC830MS5.js                                                              0.96 kB │ gzip:  0.42 kB
+node_modules/.nitro/vite/services/ssr/assets/lista-Cyu6qb0H.js                                                                   1.05 kB │ gzip:  0.57 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial-B6daajPO.js                                                               1.08 kB │ gzip:  0.52 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas.index-CV3w4_PP.js                                               1.08 kB │ gzip:  0.52 kB
+node_modules/.nitro/vite/services/ssr/assets/format-DYYL_DXD.js                                                                  1.13 kB │ gzip:  0.47 kB
+node_modules/.nitro/vite/services/ssr/assets/compras-WEkihlKI.js                                                                 1.22 kB │ gzip:  0.45 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.index-c7unjL0e.js                                                        1.53 kB │ gzip:  0.68 kB
+node_modules/.nitro/vite/services/ssr/assets/session-Ce0KUjpc.js                                                                 1.65 kB │ gzip:  0.79 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.index-D-uxzHzT.js                                                           1.86 kB │ gzip:  0.83 kB
+node_modules/.nitro/vite/services/ssr/assets/start-CXtzut06.js                                                                   2.05 kB │ gzip:  0.89 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-producao.index-DGAnz9XN.js                                           2.22 kB │ gzip:  0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos.index-DsOSWabl.js                                                          2.27 kB │ gzip:  0.96 kB
+node_modules/.nitro/vite/services/ssr/assets/createCsrfMiddleware-jzif2P7h.js                                                    2.45 kB │ gzip:  0.86 kB
+node_modules/.nitro/vite/services/ssr/assets/route-BLR-Qcw3.js                                                                   2.52 kB │ gzip:  1.09 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-compra.index-CWdNLRru.js                                             2.52 kB │ gzip:  1.05 kB
+node_modules/.nitro/vite/services/ssr/assets/nexus-nav-CaCK0nWa.js                                                               2.63 kB │ gzip:  0.97 kB
+node_modules/.nitro/vite/services/ssr/assets/financeiro-jcX-ptP2.js                                                              2.65 kB │ gzip:  1.10 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-middleware-UH_Jp6hR.js                                                         2.67 kB │ gzip:  1.09 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes.orcamentos-B3ia5I4N.js                                                2.79 kB │ gzip:  1.32 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.demandas-DJyzlvKo.js                                                        2.83 kB │ gzip:  1.08 kB
+node_modules/.nitro/vite/services/ssr/assets/relatorios-BfdgWH1Q.js                                                              2.94 kB │ gzip:  1.10 kB
+node_modules/.nitro/vite/services/ssr/assets/__23tanstack-start-server-fn-resolver-CzKzrr6b.js                                   3.15 kB │ gzip:  1.08 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.dimensionamentos-DF-SBrWL.js                                             3.21 kB │ gzip:  1.36 kB
+node_modules/.nitro/vite/services/ssr/assets/hooks-D0OWkXrL.js                                                                   3.46 kB │ gzip:  1.26 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.index-BEHckj4O.js                                                         3.51 kB │ gzip:  1.34 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes.index-Dt9_lLzv.js                                                     3.58 kB │ gzip:  1.55 kB
+node_modules/.nitro/vite/services/ssr/assets/queries-CLV2cEZB.js                                                                 3.69 kB │ gzip:  0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/OperationalDetails-bey07yZc.js                                                      3.91 kB │ gzip:  1.30 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.fornecedores-CKcqMzjs.js                                                    4.08 kB │ gzip:  1.51 kB
+node_modules/.nitro/vite/services/ssr/index.js                                                                                   4.61 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/_authenticated--9nBZhNm.js                                                          4.66 kB │ gzip:  1.57 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas.index-DrAJPKYT.js                                               5.03 kB │ gzip:  1.75 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.regras-dimensionamento-Df134wm6.js                                       5.79 kB │ gzip:  2.34 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos._projetoId-l3IcscfF.js                                                     5.80 kB │ gzip:  1.90 kB
+node_modules/.nitro/vite/services/ssr/assets/propostas.functions-C1McfPVs.js                                                     5.96 kB │ gzip:  2.15 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas.nova-DmNYu5D_.js                                                5.98 kB │ gzip:  1.98 kB
+node_modules/.nitro/vite/services/ssr/assets/client-C6NmhY5_.js                                                                  6.17 kB │ gzip:  2.17 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.unidades-9ZqyBj7X.js                                                      6.36 kB │ gzip:  2.03 kB
+node_modules/.nitro/vite/services/ssr/assets/ObjectCards-h6C7fZ98.js                                                             7.13 kB │ gzip:  2.13 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos._produtoId-BhaYU8i6.js                                                     7.67 kB │ gzip:  2.51 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-producao._ordemId-DBjxwBv-.js                                        8.25 kB │ gzip:  2.77 kB
+node_modules/.nitro/vite/services/ssr/assets/lc02-walkway-C7CNFSzG.js                                                            8.55 kB │ gzip:  3.11 kB
+node_modules/.nitro/vite/services/ssr/assets/clientes-BgOA7HWK.js                                                                8.71 kB │ gzip:  2.53 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-compra._ordemId-nt88wcan.js                                          8.86 kB │ gzip:  2.89 kB
+node_modules/.nitro/vite/services/ssr/assets/EditorWorkspace-knLBMpRa.js                                                         9.09 kB │ gzip:  2.97 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos.index-yLRXYQl2.js                                                          9.77 kB │ gzip:  2.97 kB
+node_modules/.nitro/vite/services/ssr/assets/Page-BLIi8-pO.js                                                                   10.08 kB │ gzip:  3.02 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerFn-BFFE07zL.js                                                         12.14 kB │ gzip:  3.54 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-BoUNpOBR.js                                                                 12.82 kB │ gzip:  4.21 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-D0EGP5qt.js                                                                   13.43 kB │ gzip:  3.90 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId-CGdxU-uT.js                    15.76 kB │ gzip:  4.61 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CWGiC7Um.js                                             19.20 kB │ gzip:  2.40 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-DCjwAYje.js    21.42 kB │ gzip:  5.60 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-C76dkgSz.js   22.28 kB │ gzip:  5.95 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaViewer-DMH6JsV9.js                                                           33.16 kB │ gzip:  8.11 kB
+node_modules/.nitro/vite/services/ssr/assets/propostas.functions-rNJ3zPJM.js                                                    34.31 kB │ gzip:  8.84 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialScene-DD4l4BWr.js                                                        36.06 kB │ gzip: 10.94 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialMap-umVr5wil.js                                                          38.93 kB │ gzip:  9.34 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaScene-BABHHdTO.js                                                            40.52 kB │ gzip: 12.35 kB
+node_modules/.nitro/vite/services/ssr/assets/router-CEq5rvM3.js                                                                 46.34 kB │ gzip:  8.87 kB
+node_modules/.nitro/vite/services/ssr/assets/server-Cf2K03H8.js                                                                 50.91 kB │ gzip: 13.14 kB
+node_modules/.nitro/vite/services/ssr/assets/Etapas-a1x7JqnS.js                                                                 57.01 kB │ gzip: 13.83 kB
+node_modules/.nitro/vite/services/ssr/assets/spatial-D0MGp2sa.js                                                               147.07 kB │ gzip: 27.63 kB
+
+✓ built in 2.90s
+[nitro] o Building [Nitro] (preset: cloudflare-module, compatibility: 2026-09-23)
+[nitro] √ Generated public .output/public
+vite v8.1.5 building nitro environment for production...
+
+ WARN  inlineDynamicImports option is ignored because the codeSplitting option is specified.
+
+[2K
+transforming...✓ 2698 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs                                                     0.23 kB │ gzip:   0.16 kB
+.output/server/_libs/babel__runtime.mjs                                                                    0.39 kB │ gzip:   0.26 kB
+.output/server/_ssr/produtos-BSlCURtE.mjs                                                                  0.42 kB │ gzip:   0.27 kB
+.output/server/_ssr/projetos-CbNy0BB_.mjs                                                                  0.42 kB │ gzip:   0.27 kB
+.output/server/_ssr/route-DUSJ6FTA.mjs                                                                     0.46 kB │ gzip:   0.29 kB
+.output/server/_libs/clsx.mjs                                                                              0.55 kB │ gzip:   0.31 kB
+.output/server/_chunks/ssr-renderer.mjs                                                                    0.60 kB │ gzip:   0.36 kB
+.output/server/_ssr/projetos._projetoId-DjMagnfr.mjs                                                       0.60 kB │ gzip:   0.38 kB
+.output/server/_ssr/produtos._produtoId-4ty4xgj_.mjs                                                       0.61 kB │ gzip:   0.39 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-Cez7D7P-.mjs             0.62 kB │ gzip:   0.35 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-htfY84ya.mjs      0.63 kB │ gzip:   0.36 kB
+.output/server/_ssr/compras.ordens-compra._ordemId-B0jiXk8u.mjs                                            0.63 kB │ gzip:   0.39 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.historico-CNRYarEx.mjs             0.64 kB │ gzip:   0.35 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.parametros-DzITRLAf.mjs            0.64 kB │ gzip:   0.35 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.compras-CrMGs5We.mjs               0.64 kB │ gzip:   0.37 kB
+.output/server/_ssr/compras.ordens-producao._ordemId-CYQ2h-_K.mjs                                          0.64 kB │ gzip:   0.41 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.producao-V-web3P4.mjs              0.65 kB │ gzip:   0.37 kB
+.output/server/_ssr/SubNav-D--uE1vB.mjs                                                                    0.66 kB │ gzip:   0.41 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId-nmwPhW20.mjs                       0.70 kB │ gzip:   0.42 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.historico-BaF9NPWT.mjs             0.74 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-DEaLivS5.mjs             0.74 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.parametros-ChhZOBO6.mjs            0.74 kB │ gzip:   0.43 kB
+.output/server/_ssr/mapas-3d_.trevisan-ByETU91o.mjs                                                        0.75 kB │ gzip:   0.45 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.compras-BNDEveCA.mjs               0.76 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-CX5Pbr4D.mjs       0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.producao-CKhPw2WV.mjs              0.77 kB │ gzip:   0.44 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-ELNllaSC.mjs      0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-BmYMXDG0.mjs      0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/inspecoes-Dak5myIZ.mjs                                                                 0.79 kB │ gzip:   0.46 kB
+.output/server/_ssr/execucao-BGh2YPq2.mjs                                                                  0.80 kB │ gzip:   0.46 kB
+.output/server/_ssr/escada-lc02-CX7pXOCt.mjs                                                               0.81 kB │ gzip:   0.42 kB
+.output/server/_ssr/createMiddleware-B_4t7rW1.mjs                                                          0.83 kB │ gzip:   0.33 kB
+.output/server/_ssr/NexusLogo-Du4q4iB_.mjs                                                                 0.83 kB │ gzip:   0.52 kB
+.output/server/_ssr/mapas-3d-Do0LjlXb.mjs                                                                  0.85 kB │ gzip:   0.44 kB
+.output/server/_ssr/documentacao-DcZzyqGr.mjs                                                              0.87 kB │ gzip:   0.49 kB
+.output/server/_ssr/levantamentos-IsubH92z.mjs                                                             0.90 kB │ gzip:   0.51 kB
+.output/server/_ssr/queries-BkwyKA_k.mjs                                                                   0.99 kB │ gzip:   0.58 kB
+.output/server/_ssr/lista-Cyu6qb0H.mjs                                                                     1.10 kB │ gzip:   0.60 kB
+.output/server/_ssr/comercial.propostas.index-CV3w4_PP.mjs                                                 1.11 kB │ gzip:   0.58 kB
+.output/server/_libs/hookable.mjs                                                                          1.16 kB │ gzip:   0.51 kB
+.output/server/_ssr/format-DYYL_DXD.mjs                                                                    1.18 kB │ gzip:   0.51 kB
+.output/server/_ssr/configuracoes-CJOn9VXa.mjs                                                             1.22 kB │ gzip:   0.54 kB
+.output/server/_ssr/engenharia-CC830MS5.mjs                                                                1.23 kB │ gzip:   0.50 kB
+.output/server/_libs/radix-ui__react-compose-refs.mjs                                                      1.23 kB │ gzip:   0.59 kB
+.output/server/_ssr/comercial-B6daajPO.mjs                                                                 1.33 kB │ gzip:   0.59 kB
+.output/server/_ssr/compras-WEkihlKI.mjs                                                                   1.54 kB │ gzip:   0.52 kB
+.output/server/_runtime.mjs                                                                                1.61 kB │ gzip:   0.74 kB
+.output/server/_libs/radix-ui__primitive.mjs                                                               1.83 kB │ gzip:   0.72 kB
+.output/server/_ssr/engenharia.index-c7unjL0e.mjs                                                          1.86 kB │ gzip:   0.75 kB
+.output/server/_ssr/session-Ce0KUjpc.mjs                                                                   1.88 kB │ gzip:   0.90 kB
+.output/server/_ssr/start-CXtzut06.mjs                                                                     1.95 kB │ gzip:   0.86 kB
+.output/server/_ssr/compras.index-D-uxzHzT.mjs                                                             2.13 kB │ gzip:   0.88 kB
+.output/server/_ssr/createCsrfMiddleware-jzif2P7h.mjs                                                      2.45 kB │ gzip:   0.86 kB
+.output/server/_ssr/compras.ordens-producao.index-DGAnz9XN.mjs                                             2.53 kB │ gzip:   1.06 kB
+.output/server/_ssr/projetos.index-DsOSWabl.mjs                                                            2.61 kB │ gzip:   1.03 kB
+.output/server/_ssr/auth-middleware-UH_Jp6hR.mjs                                                           2.77 kB │ gzip:   1.14 kB
+.output/server/_ssr/nexus-nav-CaCK0nWa.mjs                                                                 2.77 kB │ gzip:   1.05 kB
+.output/server/_ssr/compras.ordens-compra.index-CWdNLRru.mjs                                               2.86 kB │ gzip:   1.11 kB
+.output/server/_ssr/financeiro-jcX-ptP2.mjs                                                                2.97 kB │ gzip:   1.15 kB
+.output/server/_ssr/route-BLR-Qcw3.mjs                                                                     3.10 kB │ gzip:   1.21 kB
+.output/server/_ssr/compras.demandas-DJyzlvKo.mjs                                                          3.12 kB │ gzip:   1.15 kB
+.output/server/__23tanstack-start-server-fn-resolver-CzKzrr6b.mjs                                          3.28 kB │ gzip:   1.12 kB
+.output/server/_ssr/configuracoes.orcamentos-B3ia5I4N.mjs                                                  3.28 kB │ gzip:   1.42 kB
+.output/server/_ssr/relatorios-BfdgWH1Q.mjs                                                                3.48 kB │ gzip:   1.17 kB
+.output/server/_ssr/engenharia.dimensionamentos-DF-SBrWL.mjs                                               3.51 kB │ gzip:   1.43 kB
+.output/server/_ssr/hooks-D0OWkXrL.mjs                                                                     3.69 kB │ gzip:   1.37 kB
+.output/server/_ssr/queries-CLV2cEZB.mjs                                                                   3.74 kB │ gzip:   1.02 kB
+.output/server/_ssr/comercial.index-BEHckj4O.mjs                                                           4.07 kB │ gzip:   1.42 kB
+.output/server/_ssr/configuracoes.index-Dt9_lLzv.mjs                                                       4.18 kB │ gzip:   1.68 kB
+.output/server/_ssr/ssr.mjs                                                                                4.55 kB │ gzip:   1.92 kB
+.output/server/_ssr/compras.fornecedores-CKcqMzjs.mjs                                                      4.76 kB │ gzip:   1.61 kB
+.output/server/_ssr/OperationalDetails-bey07yZc.mjs                                                        5.03 kB │ gzip:   1.45 kB
+.output/server/_authenticated--9nBZhNm.mjs                                                                 5.40 kB │ gzip:   1.66 kB
+.output/server/_ssr/comercial.propostas.index-DrAJPKYT.mjs                                                 5.69 kB │ gzip:   1.83 kB
+.output/server/_libs/radix-ui__react-context+react.mjs                                                     5.73 kB │ gzip:   1.68 kB
+.output/server/_libs/lovable.dev__cloud-auth-js.mjs                                                        6.12 kB │ gzip:   2.22 kB
+.output/server/_ssr/propostas.functions-C1McfPVs.mjs                                                       6.15 kB │ gzip:   2.23 kB
+.output/server/_ssr/client-C6NmhY5_.mjs                                                                    6.19 kB │ gzip:   2.21 kB
+.output/server/_ssr/projetos._projetoId-l3IcscfF.mjs                                                       6.55 kB │ gzip:   1.97 kB
+.output/server/_ssr/engenharia.regras-dimensionamento-Df134wm6.mjs                                         6.63 kB │ gzip:   2.46 kB
+.output/server/_ssr/comercial.propostas.nova-DmNYu5D_.mjs                                                  6.88 kB │ gzip:   2.11 kB
+.output/server/_ssr/mapas-3d_.unidades-9ZqyBj7X.mjs                                                        7.51 kB │ gzip:   2.13 kB
+.output/server/_libs/tanstack__react-query.mjs                                                             7.61 kB │ gzip:   1.98 kB
+.output/server/_ssr/lc02-walkway-C7CNFSzG.mjs                                                              8.54 kB │ gzip:   3.13 kB
+.output/server/_ssr/produtos._produtoId-BhaYU8i6.mjs                                                       8.79 kB │ gzip:   2.62 kB
+.output/server/_ssr/ObjectCards-h6C7fZ98.mjs                                                               8.84 kB │ gzip:   2.29 kB
+.output/server/_ssr/compras.ordens-producao._ordemId-DBjxwBv-.mjs                                          9.26 kB │ gzip:   2.90 kB
+.output/server/_ssr/compras.ordens-compra._ordemId-nt88wcan.mjs                                            9.87 kB │ gzip:   3.01 kB
+.output/server/_libs/h3-v2+rou3+srvx.mjs                                                                   9.89 kB │ gzip:   3.06 kB
+.output/server/_ssr/clientes-BgOA7HWK.mjs                                                                  9.92 kB │ gzip:   2.65 kB
+.output/server/_ssr/EditorWorkspace-knLBMpRa.mjs                                                          10.30 kB │ gzip:   3.11 kB
+.output/server/_ssr/produtos.index-yLRXYQl2.mjs                                                           10.93 kB │ gzip:   3.10 kB
+.output/server/_ssr/createServerFn-BFFE07zL.mjs                                                           11.66 kB │ gzip:   3.55 kB
+.output/server/_ssr/Page-BLIi8-pO.mjs                                                                     11.71 kB │ gzip:   3.17 kB
+.output/server/_libs/tanstack__history.mjs                                                                12.09 kB │ gzip:   3.48 kB
+.output/server/_libs/supabase__functions-js.mjs                                                           12.52 kB │ gzip:   3.47 kB
+.output/server/_ssr/domain-BoUNpOBR.mjs                                                                   12.85 kB │ gzip:   4.24 kB
+.output/server/_ssr/auth-D0EGP5qt.mjs                                                                     15.04 kB │ gzip:   4.03 kB
+.output/server/_libs/h3+rou3+srvx.mjs                                                                     16.61 kB │ gzip:   4.80 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId-CGdxU-uT.mjs                      17.72 kB │ gzip:   4.73 kB
+.output/server/_tanstack-start-manifest_v-CWGiC7Um.mjs                                                    19.25 kB │ gzip:   2.44 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-DCjwAYje.mjs      23.87 kB │ gzip:   5.72 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-C76dkgSz.mjs     25.10 kB │ gzip:   6.07 kB
+.output/server/_ssr/propostas.functions-rNJ3zPJM.mjs                                                      34.25 kB │ gzip:   8.83 kB
+.output/server/_libs/lucide-react.mjs                                                                     36.45 kB │ gzip:   7.09 kB
+.output/server/_ssr/IndustrialScene-DD4l4BWr.mjs                                                          37.78 kB │ gzip:  11.01 kB
+.output/server/_libs/supabase__supabase-js.mjs                                                            37.86 kB │ gzip:  11.17 kB
+.output/server/_ssr/EscadaViewer-DMH6JsV9.mjs                                                             39.28 kB │ gzip:   8.39 kB
+.output/server/_ssr/EscadaScene-BABHHdTO.mjs                                                              41.38 kB │ gzip:  12.57 kB
+.output/server/index.mjs                                                                                  43.55 kB │ gzip:  10.55 kB
+.output/server/_ssr/router-CEq5rvM3.mjs                                                                   46.00 kB │ gzip:   8.87 kB
+.output/server/_ssr/IndustrialMap-umVr5wil.mjs                                                            46.18 kB │ gzip:   9.66 kB
+.output/server/_ssr/server-Cf2K03H8.mjs                                                                   49.80 kB │ gzip:  13.05 kB
+.output/server/_libs/supabase__phoenix.mjs                                                                50.54 kB │ gzip:  12.76 kB
+.output/server/_ssr/Etapas-a1x7JqnS.mjs                                                                   63.50 kB │ gzip:  14.09 kB
+.output/server/_libs/tanstack__query-core.mjs                                                             68.18 kB │ gzip:  14.30 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs                                                      80.22 kB │ gzip:  20.17 kB
+.output/server/_libs/supabase__realtime-js+unenv.mjs                                                      81.93 kB │ gzip:  20.94 kB
+.output/server/_libs/tailwind-merge.mjs                                                                   88.13 kB │ gzip:  15.66 kB
+.output/server/_libs/@radix-ui/react-dialog+[...].mjs                                                     88.49 kB │ gzip:  20.79 kB
+.output/server/_libs/@hookform/resolvers+[...].mjs                                                        95.44 kB │ gzip:  22.65 kB
+.output/server/_libs/zod.mjs                                                                             100.33 kB │ gzip:  17.36 kB
+.output/server/_libs/supabase__postgrest-js.mjs                                                          110.15 kB │ gzip:  23.14 kB
+.output/server/_libs/@supabase/storage-js+[...].mjs                                                      126.29 kB │ gzip:  23.51 kB
+.output/server/_ssr/spatial-D0MGp2sa.mjs                                                                 147.09 kB │ gzip:  27.73 kB
+.output/server/_libs/three.mjs                                                                           175.34 kB │ gzip:  38.88 kB
+.output/server/_libs/supabase__auth-js.mjs                                                               319.51 kB │ gzip:  64.76 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs                                                    642.05 kB │ gzip: 135.31 kB
+.output/server/_libs/@react-three/drei+[...].mjs                                                       2,686.48 kB │ gzip: 539.06 kB
+
+✓ built in 9.84s
+[nitro] i Using auto generated worker name: tanstack-start-ts
+i Generated .output/server/wrangler.json
+i Generated .wrangler/deploy/config.json
+i Generated .output/public/_headers
+i Generated .output/nitro.json
+[nitro] √ You can preview this build using npx vite preview
+[nitro] √ You can deploy this build using npx nitro deploy --prebuilt

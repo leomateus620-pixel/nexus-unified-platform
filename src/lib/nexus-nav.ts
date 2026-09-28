@@ -65,6 +65,12 @@ export const navGroups: NavGroup[] = [
       },
       { to: "/engenharia", label: "Engenharia", icon: Ruler, hint: "Normas e dimensionamentos" },
       { to: "/mapas-3d", label: "Mapas 3D das Unidades", icon: Boxes, hint: "Unidades em 3D" },
+      {
+        to: "/escada-lc02",
+        label: "Escada LC-02",
+        icon: Boxes,
+        hint: "Acesso externo e circulação",
+      },
     ],
   },
   {

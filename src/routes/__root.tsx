@@ -143,7 +143,8 @@ function RootComponent() {
     return () => data.subscription.unsubscribe();
   }, [router, queryClient]);
   const dedicatedModel = useRouterState({
-    select: (state) => state.location.pathname.replace(/\/$/, "") === "/mapas-3d/trevisan",
+    select: (state) =>
+      ["/mapas-3d/trevisan", "/escada-lc02"].includes(state.location.pathname.replace(/\/$/, "")),
   });
 
   return (

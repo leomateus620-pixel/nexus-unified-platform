@@ -1,0 +1,7 @@
+{
+  "checks": [
+    "503 worker failure keeps base scene usable; retry loads models and resumes queue",
+    "manual input clears on window blur"
+  ],
+  "errors": []
+}

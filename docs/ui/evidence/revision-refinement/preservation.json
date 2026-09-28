@@ -1,0 +1,340 @@
+{
+  "baseline": "6777b0e33eac60f5a9bb85aa900252e8aa98f77b",
+  "currentHead": "6777b0e33eac60f5a9bb85aa900252e8aa98f77b",
+  "generatedAt": "2026-09-28T04:56:19.509Z",
+  "protectedHashes": [
+    {
+      "file": "src/features/calculo/catalogo-modelo.ts",
+      "before": "0f9cd27a89a8871844b91595dccef46129285122f00c8b96b2dfd2396370d811",
+      "after": "0f9cd27a89a8871844b91595dccef46129285122f00c8b96b2dfd2396370d811"
+    },
+    {
+      "file": "src/features/calculo/domain.ts",
+      "before": "4baffb3b079fd71e3f157c95348399af5be2b680eafa93808245fb6c81f30b53",
+      "after": "4baffb3b079fd71e3f157c95348399af5be2b680eafa93808245fb6c81f30b53"
+    },
+    {
+      "file": "src/features/org/session.ts",
+      "before": "7f6a642309d814328393910ae7f76e0393ea80ab1aff3bb294a49d6f7bf3d001",
+      "after": "7f6a642309d814328393910ae7f76e0393ea80ab1aff3bb294a49d6f7bf3d001"
+    },
+    {
+      "file": "src/features/propostas/lista.ts",
+      "before": "a3870aef1e64e877f347d2ba2c59fbdc8d689cc09e34fcd9d03ea9fd831ff257",
+      "after": "a3870aef1e64e877f347d2ba2c59fbdc8d689cc09e34fcd9d03ea9fd831ff257"
+    },
+    {
+      "file": "src/industrial/app/IndustrialMap.tsx",
+      "before": "f49b030ae1ebc9907b64c5c23c0ae8f7c2e9dce8f279049d6669d87835b3657d",
+      "after": "f49b030ae1ebc9907b64c5c23c0ae8f7c2e9dce8f279049d6669d87835b3657d"
+    },
+    {
+      "file": "src/industrial/app/industrial.css",
+      "before": "c235a1f9947b1c68e3c62d721feb609127b2ece22a62964a33890175a6d87d4e",
+      "after": "c235a1f9947b1c68e3c62d721feb609127b2ece22a62964a33890175a6d87d4e"
+    },
+    {
+      "file": "src/industrial/data/index.ts",
+      "before": "e7749e269d580d5072584a2ab076b1b09efbbf41536adcdc8348b05b9cf5d520",
+      "after": "e7749e269d580d5072584a2ab076b1b09efbbf41536adcdc8348b05b9cf5d520"
+    },
+    {
+      "file": "src/industrial/data/references.json",
+      "before": "edaa74807f7d389ded189a74ed7cfe55098b5617c8f86950fa0e305a3439c4af",
+      "after": "edaa74807f7d389ded189a74ed7cfe55098b5617c8f86950fa0e305a3439c4af"
+    },
+    {
+      "file": "src/industrial/data/site.json",
+      "before": "395349dc5bbc12f4eafed7b10e7e7d37e5e79fb6310baea41e45825f378f915c",
+      "after": "395349dc5bbc12f4eafed7b10e7e7d37e5e79fb6310baea41e45825f378f915c"
+    },
+    {
+      "file": "src/industrial/lighting/Lighting.tsx",
+      "before": "9f6b663c54fc6997f04d41a6475d2438b4d1b72b0cecc5bfe12040baeba19f79",
+      "after": "9f6b663c54fc6997f04d41a6475d2438b4d1b72b0cecc5bfe12040baeba19f79"
+    },
+    {
+      "file": "src/industrial/navigation/Navigation.tsx",
+      "before": "54d3a3d98c972df822fdcdbaf0ae07fa35e2bcfae7088331b6617637ee4532fd",
+      "after": "54d3a3d98c972df822fdcdbaf0ae07fa35e2bcfae7088331b6617637ee4532fd"
+    },
+    {
+      "file": "src/industrial/navigation/collision.ts",
+      "before": "c8d1858d701f1758421cac1681121fee6389b8e264b50c3252052f0c2a8ecf3a",
+      "after": "c8d1858d701f1758421cac1681121fee6389b8e264b50c3252052f0c2a8ecf3a"
+    },
+    {
+      "file": "src/industrial/performance/metrics.ts",
+      "before": "5c131a2bbdc349cb5ef56dfbf57b1b490af92ba1075e6f936f7625b436e73a0c",
+      "after": "5c131a2bbdc349cb5ef56dfbf57b1b490af92ba1075e6f936f7625b436e73a0c"
+    },
+    {
+      "file": "src/industrial/scene/IndustrialScene.tsx",
+      "before": "f6f5cdbed7a773ae88189579f1e1fbc1544e5d3f6e5697c8a4b66dc589bd02f7",
+      "after": "f6f5cdbed7a773ae88189579f1e1fbc1544e5d3f6e5697c8a4b66dc589bd02f7"
+    },
+    {
+      "file": "src/industrial/scene/assets.ts",
+      "before": "a47354b6f4ac6e9ee21ff302850f7c4f2caab9c738aff8f336c4463de5fd2575",
+      "after": "a47354b6f4ac6e9ee21ff302850f7c4f2caab9c738aff8f336c4463de5fd2575"
+    },
+    {
+      "file": "src/industrial/scene/spatial.ts",
+      "before": "4c1f7a4433a9981d599a7026b89baa1c40b68eb842c018809f0fcc067ffe5198",
+      "after": "4c1f7a4433a9981d599a7026b89baa1c40b68eb842c018809f0fcc067ffe5198"
+    },
+    {
+      "file": "src/industrial/types/index.ts",
+      "before": "10777162b95ea1339736a5cbefa36292bf83a67dc7e08447fda38aa99d1ff5a6",
+      "after": "10777162b95ea1339736a5cbefa36292bf83a67dc7e08447fda38aa99d1ff5a6"
+    },
+    {
+      "file": "src/industrial/ui/Minimap.tsx",
+      "before": "ac7937a55396264e1639c6dec1db62bf68257d32ad805dd6a5b77479f2cb45af",
+      "after": "ac7937a55396264e1639c6dec1db62bf68257d32ad805dd6a5b77479f2cb45af"
+    },
+    {
+      "file": "src/industrial/vegetation/Vegetation.tsx",
+      "before": "14761314774013da135906682595990b93ab6e9f8961dbc593275d068ae7015a",
+      "after": "14761314774013da135906682595990b93ab6e9f8961dbc593275d068ae7015a"
+    },
+    {
+      "file": "src/industrial/vegetation/prototypeGeometry.ts",
+      "before": "ecdd9adc555a4cd83e00f2c25dc9ef5a36f830b02b4a74882011c94b62fd5499",
+      "after": "ecdd9adc555a4cd83e00f2c25dc9ef5a36f830b02b4a74882011c94b62fd5499"
+    },
+    {
+      "file": "src/integrations/lovable/index.ts",
+      "before": "bdbaacfdf5fc9544c85ecbe36258e81158dce12e2d1047ee7adfec8724a2ddc2",
+      "after": "bdbaacfdf5fc9544c85ecbe36258e81158dce12e2d1047ee7adfec8724a2ddc2"
+    },
+    {
+      "file": "src/integrations/supabase/auth-attacher.ts",
+      "before": "9c38f264e72bb5fd4cf66b11fc7154e07d08048fe454b146f6b761cbef29392b",
+      "after": "9c38f264e72bb5fd4cf66b11fc7154e07d08048fe454b146f6b761cbef29392b"
+    },
+    {
+      "file": "src/integrations/supabase/auth-middleware.ts",
+      "before": "d38f4ae0cd9bf3db2f9e0ea386820440123380be80487e2d4ec683f8d27ba90b",
+      "after": "d38f4ae0cd9bf3db2f9e0ea386820440123380be80487e2d4ec683f8d27ba90b"
+    },
+    {
+      "file": "src/integrations/supabase/client.server.ts",
+      "before": "be82579bbb35d9fa51e5068f0aba36efaa92ef6e8da68682af3c215e3ddc668b",
+      "after": "be82579bbb35d9fa51e5068f0aba36efaa92ef6e8da68682af3c215e3ddc668b"
+    },
+    {
+      "file": "src/integrations/supabase/client.ts",
+      "before": "6d06e765f34887a68436dfc17c808d0f9350a2e9c13cdc77d1b1aa21b297c2ec",
+      "after": "6d06e765f34887a68436dfc17c808d0f9350a2e9c13cdc77d1b1aa21b297c2ec"
+    },
+    {
+      "file": "src/integrations/supabase/cron-auth.ts",
+      "before": "4dc962077f4233fb541e8cf9a8267891cdbf2b626996828b9226f52e4b0b2b90",
+      "after": "4dc962077f4233fb541e8cf9a8267891cdbf2b626996828b9226f52e4b0b2b90"
+    },
+    {
+      "file": "src/integrations/supabase/previewAuthStorage.ts",
+      "before": "ff2db1be890c14a599a1523ea385632b04a08241b2ff9e52c04dd6e21447d932",
+      "after": "ff2db1be890c14a599a1523ea385632b04a08241b2ff9e52c04dd6e21447d932"
+    },
+    {
+      "file": "src/integrations/supabase/types.ts",
+      "before": "e1ff9efde57bfb38b2667a1107508660b878e825e6a02f3eb14d496723c6c4ef",
+      "after": "e1ff9efde57bfb38b2667a1107508660b878e825e6a02f3eb14d496723c6c4ef"
+    },
+    {
+      "file": "src/routeTree.gen.ts",
+      "before": "b843ce7dcdaa3a53a3ea32ee1c549f6c22657ad5cb286b603011b929e4088704",
+      "after": "b843ce7dcdaa3a53a3ea32ee1c549f6c22657ad5cb286b603011b929e4088704"
+    },
+    {
+      "file": "src/routes/__root.tsx",
+      "before": "785f799fe4dbee5c3bc1d7e001c2ef44e4b35ceaf9c91d414223d66ea0c2fa08",
+      "after": "785f799fe4dbee5c3bc1d7e001c2ef44e4b35ceaf9c91d414223d66ea0c2fa08"
+    },
+    {
+      "file": "src/routes/_authenticated/route.tsx",
+      "before": "e4784d76c93c086bd78803b6598e58740f06153cda70ae817ac7e28d99de2e7d",
+      "after": "e4784d76c93c086bd78803b6598e58740f06153cda70ae817ac7e28d99de2e7d"
+    },
+    {
+      "file": "src/routes/mapas-3d.tsx",
+      "before": "40bb69d0164694f91a0209423cf12068075350f7e2c3524bd8574f6cf85c674d",
+      "after": "40bb69d0164694f91a0209423cf12068075350f7e2c3524bd8574f6cf85c674d"
+    },
+    {
+      "file": "src/routes/mapas-3d_.trevisan.tsx",
+      "before": "6a2b1ee508043a06f5088eb68e8042e7c2168d6e1eceef32ffafe74386fcbc3b",
+      "after": "6a2b1ee508043a06f5088eb68e8042e7c2168d6e1eceef32ffafe74386fcbc3b"
+    },
+    {
+      "file": "src/routes/mapas-3d_.unidades.tsx",
+      "before": "f6777d732c301550245d50a15615b6a02f3a062505dcda3a6cbad871c0aaf092",
+      "after": "f6777d732c301550245d50a15615b6a02f3a062505dcda3a6cbad871c0aaf092"
+    },
+    {
+      "file": "src/trevisan/TrevisanScene.tsx",
+      "before": "8e25ccdcb25c680a4ba06d0f7c37aaf98b47c621678d526adad8eeaf0e70e331",
+      "after": "8e25ccdcb25c680a4ba06d0f7c37aaf98b47c621678d526adad8eeaf0e70e331"
+    },
+    {
+      "file": "src/trevisan/TrevisanViewer.tsx",
+      "before": "5d7341054c8e4c9193b380b29f0208149265520763b069e2bcc1ab1a057c44ee",
+      "after": "5d7341054c8e4c9193b380b29f0208149265520763b069e2bcc1ab1a057c44ee"
+    },
+    {
+      "file": "src/trevisan/data.ts",
+      "before": "feb4b45d50be7b96212f88203c2b7d7c77e3f359b190bf70c5b3acaab5874842",
+      "after": "feb4b45d50be7b96212f88203c2b7d7c77e3f359b190bf70c5b3acaab5874842"
+    },
+    {
+      "file": "src/trevisan/model.ts",
+      "before": "8da30f2fb841b7dc7e893c0ac06b9981e852fa0655ed94fd4105139aa760721d",
+      "after": "8da30f2fb841b7dc7e893c0ac06b9981e852fa0655ed94fd4105139aa760721d"
+    },
+    {
+      "file": "src/trevisan/trevisan.css",
+      "before": "699f16426a00cf0be6b47c4dcf17c551e3d48b13852c0362d2d810f560b915e9",
+      "after": "699f16426a00cf0be6b47c4dcf17c551e3d48b13852c0362d2d810f560b915e9"
+    },
+    {
+      "file": "supabase/config.toml",
+      "before": "2e7df2b8d4c10f5916e54b5d58af2a504ff640a4eeb163ea732b0794a977257e",
+      "after": "2e7df2b8d4c10f5916e54b5d58af2a504ff640a4eeb163ea732b0794a977257e"
+    },
+    {
+      "file": "supabase/migrations/20260927192805_86439f42-e956-4a5a-b03e-b13076527dc5.sql",
+      "before": "13faa06b96f3c8f0e831d8b37bbcd6705abbf2d45957dccd773ef600d13c695a",
+      "after": "13faa06b96f3c8f0e831d8b37bbcd6705abbf2d45957dccd773ef600d13c695a"
+    },
+    {
+      "file": "supabase/migrations/20260927192823_20a4739a-e284-49c4-bc4e-1f93f7e5fef4.sql",
+      "before": "760e26ff8f814b3cf5982d8a4ecfec5c282859603aa3e5589961488cbc5ef7f7",
+      "after": "760e26ff8f814b3cf5982d8a4ecfec5c282859603aa3e5589961488cbc5ef7f7"
+    },
+    {
+      "file": "supabase/migrations/20260927193124_665e6ca6-37a5-4adc-b802-5e465d4d651a.sql",
+      "before": "6592fb24df5d1ab3c64d81c4d763b36a80509825f49997d8b80d48f70bd266de",
+      "after": "6592fb24df5d1ab3c64d81c4d763b36a80509825f49997d8b80d48f70bd266de"
+    },
+    {
+      "file": "supabase/migrations/20260927212855_c5ec0858-1acc-4d63-8afc-6ae8797e3073.sql",
+      "before": "75aec606728321b6fb5cab36b2ad6267d728c527fd660c7e50bc9c247fb0d4f2",
+      "after": "75aec606728321b6fb5cab36b2ad6267d728c527fd660c7e50bc9c247fb0d4f2"
+    },
+    {
+      "file": "supabase/migrations/20260927212914_d0117df7-66f1-4a34-9e75-51abd2850661.sql",
+      "before": "8e3a2619dba79bd4b1105a8b68439669da0b550cee3c2854ea34fea1b6e1b648",
+      "after": "8e3a2619dba79bd4b1105a8b68439669da0b550cee3c2854ea34fea1b6e1b648"
+    },
+    {
+      "file": "supabase/migrations/20260927213227_c47c219d-3f42-4881-832f-4ed78b4f776c.sql",
+      "before": "c7a9247562388f7c4f59a66f5cb39de5b067c4e1cf5bbf5d242c2a8907decc85",
+      "after": "c7a9247562388f7c4f59a66f5cb39de5b067c4e1cf5bbf5d242c2a8907decc85"
+    },
+    {
+      "file": "supabase/migrations/20260928010000_proposta_checkpoints.sql",
+      "before": "4f9bb92e77554ee211a6859c80982232f3f3c90b570e0aa9fc40bbbb7263fbf1",
+      "after": "4f9bb92e77554ee211a6859c80982232f3f3c90b570e0aa9fc40bbbb7263fbf1"
+    },
+    {
+      "file": "supabase/migrations/20260928034624_82f59063-c063-4b24-8d7d-8c5da6b72e8a.sql",
+      "before": "9fde803c898e49365b301350c46ceab51e9c95db7e22971af4f8c496c90d2db1",
+      "after": "9fde803c898e49365b301350c46ceab51e9c95db7e22971af4f8c496c90d2db1"
+    },
+    {
+      "file": "supabase/migrations/20260928034654_4d48323c-488a-4ebb-8a93-175b74cd09ea.sql",
+      "before": "81626668ed55c35454fac710d5d48536594b5d02bd1c40aeb9d953636fad23d0",
+      "after": "81626668ed55c35454fac710d5d48536594b5d02bd1c40aeb9d953636fad23d0"
+    },
+    {
+      "file": "supabase/migrations/20260928034747_e3f4b468-d68a-4c10-ae3c-a64d7fb70d63.sql",
+      "before": "b5d346f33fdf0c6da8cfe3d1deffe541564c43bd1e7f204671407912673ada81",
+      "after": "b5d346f33fdf0c6da8cfe3d1deffe541564c43bd1e7f204671407912673ada81"
+    },
+    {
+      "file": "supabase/migrations/20260928034807_7a2ba155-5022-4a01-b6e3-bd8aad49eaa8.sql",
+      "before": "1aa9e343fb9b4d1bfed95f6fb5d08e636bb07870ea080e70639e1745115d92d4",
+      "after": "1aa9e343fb9b4d1bfed95f6fb5d08e636bb07870ea080e70639e1745115d92d4"
+    },
+    {
+      "file": "supabase/migrations/20260928034824_934a4c94-2c49-428a-a278-d2647d2f6169.sql",
+      "before": "9cca7142aa175f5e491c7363884cc37b31617dfd2f00b6dfe9ef5246b30001c7",
+      "after": "9cca7142aa175f5e491c7363884cc37b31617dfd2f00b6dfe9ef5246b30001c7"
+    },
+    {
+      "file": "supabase/migrations/20260928034852_ddc858f9-8930-4e1c-923b-257c3f8ff386.sql",
+      "before": "64b117dec5f2351921f6d81c442dda3f77bfec9e7f0b4a459feba51d5632a157",
+      "after": "64b117dec5f2351921f6d81c442dda3f77bfec9e7f0b4a459feba51d5632a157"
+    },
+    {
+      "file": "supabase/migrations/20260928034943_c32daa06-f656-425c-89fd-2a6a7e42b8af.sql",
+      "before": "db7f6ca31e797a1820b195de5cea14b4e0570f84ed29c80e8b761c4a6b100ecc",
+      "after": "db7f6ca31e797a1820b195de5cea14b4e0570f84ed29c80e8b761c4a6b100ecc"
+    },
+    {
+      "file": "supabase/migrations/20260928035006_5d85a7e1-4c0b-4ccb-9224-6959f5fd97d9.sql",
+      "before": "7eaab57033347e30b19e912eb07633735cc8c6eb94b2415c1db7706f86156245",
+      "after": "7eaab57033347e30b19e912eb07633735cc8c6eb94b2415c1db7706f86156245"
+    },
+    {
+      "file": "supabase/migrations/20260928035016_4db8ec1b-e59d-4488-8792-26fd85c0fc79.sql",
+      "before": "9d4f2c61d94fa4e5bbf17b7a7a7ce4725dcc5cff6df098ce77d9006b49a5f763",
+      "after": "9d4f2c61d94fa4e5bbf17b7a7a7ce4725dcc5cff6df098ce77d9006b49a5f763"
+    }
+  ],
+  "protectedChanged": [],
+  "contracts": [
+    {
+      "file": "src/features/propostas/Dimensionamento.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true,
+      "primaryHandlersEqual": true,
+      "primaryHandlersCount": 5
+    },
+    {
+      "file": "src/features/propostas/Etapas.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true,
+      "primaryHandlersEqual": true,
+      "primaryHandlersCount": 0
+    },
+    {
+      "file": "src/features/propostas/ui/ObjectCards.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true,
+      "primaryHandlersEqual": true,
+      "primaryHandlersCount": 0
+    },
+    {
+      "file": "src/features/propostas/ui/ProductComponentCard.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true,
+      "primaryHandlersEqual": true,
+      "primaryHandlersCount": 0
+    },
+    {
+      "file": "src/routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.tsx",
+      "routesEqual": true,
+      "requestsEqual": true,
+      "hooksEqual": true,
+      "primaryHandlersEqual": true,
+      "primaryHandlersCount": 0
+    }
+  ],
+  "saveCoordinationException": [
+    "src/features/propostas/hooks.ts",
+    "src/features/propostas/propostas.functions.ts",
+    "src/features/propostas/Dimensionamento.tsx",
+    "src/features/propostas/ItensComerciais.tsx",
+    "src/features/propostas/Etapas.tsx",
+    "src/routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.tsx"
+  ],
+  "transitionsUnchanged": true,
+  "scope": "AST comparison covers route declarations, query/mutation/server hooks, database-call arguments and invalidation/mutate arguments. Presentation state and dialogs require separate manual/behavioral review. No claim of authenticated or database E2E verification."
+}

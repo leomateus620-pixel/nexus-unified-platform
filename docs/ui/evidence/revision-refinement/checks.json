@@ -1,0 +1,305 @@
+{
+  "environment": "Isolated fixtures; no authentication, database or physical-device claim",
+  "browser": "153.0.8010.12",
+  "widths": [
+    {
+      "screen": "itens-comerciais",
+      "width": 390,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 366
+      },
+      "overflow": false
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 390,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 366
+      },
+      "overflow": false
+    },
+    {
+      "screen": "orcamento",
+      "width": 390,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 366
+      },
+      "overflow": false
+    },
+    {
+      "screen": "compras",
+      "width": 390,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 364
+      },
+      "overflow": false
+    },
+    {
+      "screen": "producao",
+      "width": 390,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 364
+      },
+      "overflow": false
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 390,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "parametros",
+      "width": 390,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "historico",
+      "width": 390,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 366
+      },
+      "overflow": false
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1024,
+      "layout": {
+        "columns": 2,
+        "cardWidth": 380
+      },
+      "overflow": false
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1024,
+      "layout": {
+        "columns": 2,
+        "cardWidth": 380
+      },
+      "overflow": false
+    },
+    {
+      "screen": "orcamento",
+      "width": 1024,
+      "layout": {
+        "columns": 2,
+        "cardWidth": 380
+      },
+      "overflow": false
+    },
+    {
+      "screen": "compras",
+      "width": 1024,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 776
+      },
+      "overflow": false
+    },
+    {
+      "screen": "producao",
+      "width": 1024,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 776
+      },
+      "overflow": false
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1024,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "parametros",
+      "width": 1024,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "historico",
+      "width": 1024,
+      "layout": {
+        "columns": 2,
+        "cardWidth": 380
+      },
+      "overflow": false
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1440,
+      "layout": {
+        "columns": 3,
+        "cardWidth": 386
+      },
+      "overflow": false
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1440,
+      "layout": {
+        "columns": 3,
+        "cardWidth": 386
+      },
+      "overflow": false
+    },
+    {
+      "screen": "orcamento",
+      "width": 1440,
+      "layout": {
+        "columns": 3,
+        "cardWidth": 386
+      },
+      "overflow": false
+    },
+    {
+      "screen": "compras",
+      "width": 1440,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 1192
+      },
+      "overflow": false
+    },
+    {
+      "screen": "producao",
+      "width": 1440,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 1192
+      },
+      "overflow": false
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1440,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "parametros",
+      "width": 1440,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "historico",
+      "width": 1440,
+      "layout": {
+        "columns": 2,
+        "cardWidth": 416
+      },
+      "overflow": false
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1920,
+      "layout": {
+        "columns": 4,
+        "cardWidth": 405
+      },
+      "overflow": false
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1920,
+      "layout": {
+        "columns": 4,
+        "cardWidth": 405
+      },
+      "overflow": false
+    },
+    {
+      "screen": "orcamento",
+      "width": 1920,
+      "layout": {
+        "columns": 3,
+        "cardWidth": 546
+      },
+      "overflow": false
+    },
+    {
+      "screen": "compras",
+      "width": 1920,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 1672
+      },
+      "overflow": false
+    },
+    {
+      "screen": "producao",
+      "width": 1920,
+      "layout": {
+        "columns": 1,
+        "cardWidth": 1672
+      },
+      "overflow": false
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1920,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "parametros",
+      "width": 1920,
+      "layout": null,
+      "overflow": false
+    },
+    {
+      "screen": "historico",
+      "width": 1920,
+      "layout": {
+        "columns": 3,
+        "cardWidth": 431.328125
+      },
+      "overflow": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "all eight tabs at 390/1024/1440/1920; readable card widths and comparable demand rows",
+      "passed": true
+    },
+    {
+      "name": "100 loaded items, adaptive grid with inspector open, modal/inline Escape and focus return",
+      "passed": true
+    },
+    {
+      "name": "repeated identity 22 preserved; stored zero remains zero; absent identification/calculation explicitly labeled",
+      "passed": true
+    },
+    {
+      "name": "both purchase warnings retained; production empty state explains existing action and creates no records",
+      "passed": true
+    },
+    {
+      "name": "compact empty history explains autosave and points to the single existing save action",
+      "passed": true
+    },
+    {
+      "name": "22 inputs, 0.4/0.18 contracts unchanged; display helper adds no write; autosave sends 0.41",
+      "passed": true
+    },
+    {
+      "name": "readonly controls, restricted costs/margin and stale-document amount suppression preserved",
+      "passed": true
+    },
+    {
+      "name": "actual A4 PDFs in commercial/internal modes; print hides tools and workspace header",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

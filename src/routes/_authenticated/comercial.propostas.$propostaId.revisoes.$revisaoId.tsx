@@ -7,6 +7,7 @@ import { useSave, useRevisao } from "@/features/propostas/hooks";
 import { ProposalSaveProvider } from "@/features/propostas/ProposalSaveProvider";
 import { ActionButton } from "@/components/nexus/Page";
 import { brl } from "@/lib/format";
+import "@/features/propostas/ui/revision.css";
 
 export const Route = createFileRoute(
   "/_authenticated/comercial/propostas/$propostaId/revisoes/$revisaoId",
@@ -29,8 +30,6 @@ const statusLabel: Record<string, string> = {
   substituida: "Substituída",
 };
 
-const tab =
-  "whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground";
 const tabActive = { className: "bg-accent text-foreground font-medium" };
 
 function Workspace() {
@@ -45,7 +44,7 @@ function Workspace() {
 
   return (
     <ProposalSaveProvider key={revisaoId} revisaoId={revisaoId}>
-      <div className="nx-proposal-workspace">
+      <div className="nx-proposal-workspace nx-revision-flow">
         <header className="nx-proposal-header">
           <div className="nx-proposal-context">
             <div className="nx-proposal-identity">
@@ -60,22 +59,26 @@ function Workspace() {
                 {p.titulo ? ` · ${p.titulo}` : ""}
               </p>
             </div>
-            <div className="nx-context-total">
+            <div className="nx-context-total" data-attention={r.desatualizada || (pend ?? 0) > 0}>
               <div className="nx-context-state">
                 <StatusBadge value={statusLabel[r.status] ?? r.status} />
-                <span>{pend == null ? "—" : pend} pendências</span>
+                <span>
+                  {pend == null
+                    ? "Pendências não calculadas"
+                    : `${pend} ${pend === 1 ? "pendência" : "pendências"}`}
+                </span>
               </div>
               <p className="font-semibold tabular-nums text-foreground">
                 {r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}
                 <span className="sr-only"> Total final</span>
               </p>
+              {r.desatualizada && (
+                <span className="text-xs text-warning">Cálculo desatualizado</span>
+              )}
+              {p.revisao_corrente_id !== r.id && (
+                <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>
+              )}
             </div>
-            {r.desatualizada && r.editavel && (
-              <span className="text-xs text-warning">Cálculo desatualizado</span>
-            )}
-            {p.revisao_corrente_id !== r.id && (
-              <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>
-            )}
             <ProposalSaveBar editavel={r.editavel} />
           </div>
           <StepRuler>

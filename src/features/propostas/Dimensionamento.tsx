@@ -201,6 +201,16 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
           <span className="nx-editor-count">{lista.length} sistema(s)</span>
           <EditorSaveState editavel={editavel} />
         </div>
+        <div className="nx-system-guide" aria-label="Tipos de sistema">
+          <p>
+            <strong>Telhado</strong>
+            <span>Metragem total informada, sem multiplicar trechos.</span>
+          </p>
+          <p>
+            <strong>Suspenso (OVERHEAD)</strong>
+            <span>Metros por trecho × quantidade de trechos.</span>
+          </p>
+        </div>
         {rev.data.desatualizada && (
           <p className="nx-editor-note" data-warning role="status">
             Cálculo pendente · a composição será atualizada após o recálculo.
@@ -330,10 +340,6 @@ export function Dimensionamento({ revisaoId }: { revisaoId: string }) {
             )}
           </CollectionPage>
         )}
-        <p className="nx-editor-note">
-          <strong>TELHADO</strong> usa a metragem total, sem multiplicar trechos.{" "}
-          <strong>OVERHEAD</strong> usa metros por trecho × trechos.
-        </p>
         {editavel && (
           <details className="nx-editor-paste">
             <summary>Colar sistemas de planilha</summary>

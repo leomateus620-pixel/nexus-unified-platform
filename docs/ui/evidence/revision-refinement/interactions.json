@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-28T05:05:35.719Z",
+  "environment": "isolated UI boundaries; persistent semantics tested separately in real PostgreSQL",
+  "checks": [
+    {
+      "name": "all eight stages: cards as primary structure and one shared save action",
+      "passed": true
+    },
+    {
+      "name": "bulk operation touches only the selected AND filtered item",
+      "passed": true
+    },
+    {
+      "name": "pending cost justification blocks consolidation; cancel does not write and restores input",
+      "passed": true
+    },
+    {
+      "name": "save flushes blur before capture; typing during response preserves DOM, cursor draft and next-save status",
+      "passed": true
+    },
+    {
+      "name": "global save captures parameters before the autosave timer fires",
+      "passed": true
+    },
+    {
+      "name": "rejected draft write blocks consolidation and preserves the typed value",
+      "passed": true
+    },
+    {
+      "name": "double click queues once; lost response retry retains the same idempotency key",
+      "passed": true
+    },
+    {
+      "name": "paste has a card preview and writes only after explicit confirmation",
+      "passed": true
+    },
+    {
+      "name": "restricted presentation exposes no sensitive history counts, diffs or technical calculations",
+      "passed": true
+    },
+    {
+      "name": "chosen dark theme preserves opaque surfaces and text contrast >= 4.5:1",
+      "passed": true
+    },
+    {
+      "name": "mobile total fits beside or above save controls without overlap",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

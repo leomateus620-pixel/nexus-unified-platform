@@ -26,29 +26,32 @@ export const consolidarProposta = async (payload) => {
   }
   return response;
 };
-export const listarSalvamentos = async () => [
-  {
-    id: "save-fixture",
-    revisao_id: "rev-fixture",
-    autor: "user-fixture",
-    autor_nome: "revisao-ui@example.invalid",
-    created_at: "2026-09-27T18:30:00Z",
-    versao_origem: 1,
-    versao_destino: 4,
-    objetos: 1,
-    campos: 1,
-    calculo_id: "calc-fixture",
-    impacto: { total_anterior: 100, total_calculado: 120 },
-    diferencas: [
-      {
-        objeto: "sistema:system-0",
-        campo: "metragem",
-        nome: "Pavilhão de recebimento",
-        antes: 100,
-        depois: 120,
-        justificativa: null,
-        autores: [{ autor: "user-fixture", autor_nome: "revisao-ui@example.invalid" }],
-      },
-    ],
-  },
-];
+export const listarSalvamentos = async () =>
+  new URLSearchParams(location.search).get("scenario") === "empty"
+    ? []
+    : [
+        {
+          id: "save-fixture",
+          revisao_id: "rev-fixture",
+          autor: "user-fixture",
+          autor_nome: "revisao-ui@example.invalid",
+          created_at: "2026-09-27T18:30:00Z",
+          versao_origem: 1,
+          versao_destino: 4,
+          objetos: 1,
+          campos: 1,
+          calculo_id: "calc-fixture",
+          impacto: { total_anterior: 100, total_calculado: 120 },
+          diferencas: [
+            {
+              objeto: "sistema:system-0",
+              campo: "metragem",
+              nome: "Pavilhão de recebimento",
+              antes: 100,
+              depois: 120,
+              justificativa: null,
+              autores: [{ autor: "user-fixture", autor_nome: "revisao-ui@example.invalid" }],
+            },
+          ],
+        },
+      ];

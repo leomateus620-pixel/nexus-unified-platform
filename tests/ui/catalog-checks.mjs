@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { writeFile, mkdir } from "node:fs/promises";
 import { chromium } from "@playwright/test";
+import { evidenceRoot } from "./evidence.mjs";
+const output = `${evidenceRoot}/catalog-after`;
+await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
   ...(process.env.NEXUS_UI_CHROMIUM ? { executablePath: process.env.NEXUS_UI_CHROMIUM } : {}),
@@ -50,13 +53,22 @@ try {
   }
   pass("all eight stages: cards as primary structure and one shared save action");
   await go("itens-comerciais");
-  await page.getByLabel("Selecionar todos os itens filtrados").check();
+  for (const checkbox of await page.getByRole("checkbox", { name: /^Selecionar COMP-/ }).all()) {
+    await checkbox.check();
+  }
   await page.getByPlaceholder("Código, descrição ou fabricante").fill("COMP-002");
   await page.getByLabel("Modalidade em lote").selectOption("fabricar");
-  await page.waitForFunction(() => window.__nexusCalls.some((c) => c.mutation === "update"));
-  const writes = (await calls()).filter((c) => c.mutation === "update");
+  await page.waitForFunction(() =>
+    window.__nexusCalls.some((c) => c.name === "atualizar_componentes_revisao"),
+  );
+  const writes = (await calls()).filter((c) => c.name === "atualizar_componentes_revisao");
   assert.equal(writes.length, 1);
-  assert.ok(writes[0].filters.some((f) => f[1] === "id" && f[2] === "component-1"));
+  assert.deepEqual(writes[0].payload, {
+    _rev: "rev-fixture",
+    _ids: ["component-1"],
+    _patch: { modalidade: "fabricar" },
+    _esperados: { "component-1": { modalidade: "comprar" } },
+  });
   pass("bulk operation touches only the selected AND filtered item");
   await go("itens-comerciais");
   await page.getByRole("button", { name: "Editar item COMP-001", exact: true }).click();
@@ -193,7 +205,7 @@ try {
     });
   });
   assert.ok(darkContrast.every((ratio) => ratio >= 4.5));
-  await page.screenshot({ path: "docs/ui/evidence/catalog-after/itens-dark-1366.png" });
+  await page.screenshot({ path: `${output}/itens-dark-1366.png` });
   pass("chosen dark theme preserves opaque surfaces and text contrast >= 4.5:1");
   for (const width of [320, 360, 390]) {
     await page.setViewportSize({ width, height: 844 });
@@ -209,9 +221,9 @@ try {
   pass("mobile total fits beside or above save controls without overlap");
   assert.deepEqual(errors, []);
 } finally {
-  await mkdir("docs/ui/evidence/catalog-after", { recursive: true });
+  await mkdir(output, { recursive: true });
   await writeFile(
-    "docs/ui/evidence/catalog-after/interactions.json",
+    `${output}/interactions.json`,
     JSON.stringify(
       {
         date: new Date().toISOString(),

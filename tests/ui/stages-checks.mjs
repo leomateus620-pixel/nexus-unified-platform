@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { chromium } from "@playwright/test";
+import { evidenceRoot } from "./evidence.mjs";
 
 // Run only against the isolated fixture entry point; never against deployed application data.
 const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
-const output = "docs/ui/evidence/catalog-stages";
+const output = `${evidenceRoot}/catalog-stages`;
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,

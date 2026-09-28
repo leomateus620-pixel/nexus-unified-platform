@@ -1,0 +1,290 @@
+[
+  {
+    "version": "before",
+    "screen": "itens-comerciais",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 530,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "dimensionamento",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 367.78125,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "orcamento",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 326.9375,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "compras",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 375.5625,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "itens-comerciais",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 530,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "dimensionamento",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 359.78125,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "orcamento",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 326.9375,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "compras",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 375.5625,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "itens-comerciais",
+    "viewport": 1366,
+    "cardWidth": 269.5,
+    "cardHeight": 552.9375,
+    "columns": 4,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "dimensionamento",
+    "viewport": 1366,
+    "cardWidth": 269.5,
+    "cardHeight": 400.71875,
+    "columns": 4,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "orcamento",
+    "viewport": 1366,
+    "cardWidth": 269.5,
+    "cardHeight": 349.875,
+    "columns": 4,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "compras",
+    "viewport": 1366,
+    "cardWidth": 269.5,
+    "cardHeight": 398.5,
+    "columns": 4,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "itens-comerciais",
+    "viewport": 1920,
+    "cardWidth": 267.328125,
+    "cardHeight": 552.9375,
+    "columns": 6,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "dimensionamento",
+    "viewport": 1920,
+    "cardWidth": 267.328125,
+    "cardHeight": 400.71875,
+    "columns": 6,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "orcamento",
+    "viewport": 1920,
+    "cardWidth": 267.328125,
+    "cardHeight": 349.875,
+    "columns": 6,
+    "overflow": false
+  },
+  {
+    "version": "before",
+    "screen": "compras",
+    "viewport": 1920,
+    "cardWidth": 267.328125,
+    "cardHeight": 398.5,
+    "columns": 6,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "itens-comerciais",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 505.484375,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "dimensionamento",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 428.875,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "orcamento",
+    "viewport": 390,
+    "cardWidth": 366,
+    "cardHeight": 365.484375,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "compras",
+    "viewport": 390,
+    "cardWidth": 364,
+    "cardHeight": 428.078125,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "itens-comerciais",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 509.484375,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "dimensionamento",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 424.875,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "orcamento",
+    "viewport": 1024,
+    "cardWidth": 380,
+    "cardHeight": 369.484375,
+    "columns": 2,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "compras",
+    "viewport": 1024,
+    "cardWidth": 776,
+    "cardHeight": 340.1875,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "itens-comerciais",
+    "viewport": 1366,
+    "cardWidth": 361.328125,
+    "cardHeight": 509.484375,
+    "columns": 3,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "dimensionamento",
+    "viewport": 1366,
+    "cardWidth": 361.328125,
+    "cardHeight": 450.0625,
+    "columns": 3,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "orcamento",
+    "viewport": 1366,
+    "cardWidth": 361.328125,
+    "cardHeight": 394.671875,
+    "columns": 3,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "compras",
+    "viewport": 1366,
+    "cardWidth": 1118,
+    "cardHeight": 188.296875,
+    "columns": 1,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "itens-comerciais",
+    "viewport": 1920,
+    "cardWidth": 405,
+    "cardHeight": 509.484375,
+    "columns": 4,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "dimensionamento",
+    "viewport": 1920,
+    "cardWidth": 405,
+    "cardHeight": 424.875,
+    "columns": 4,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "orcamento",
+    "viewport": 1920,
+    "cardWidth": 546,
+    "cardHeight": 369.484375,
+    "columns": 3,
+    "overflow": false
+  },
+  {
+    "version": "after",
+    "screen": "compras",
+    "viewport": 1920,
+    "cardWidth": 1672,
+    "cardHeight": 172.296875,
+    "columns": 1,
+    "overflow": false
+  }
+]

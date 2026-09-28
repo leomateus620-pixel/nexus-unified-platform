@@ -1508,6 +1508,7 @@ export type Database = {
           fabricante: string | null
           fornecedor_id: string | null
           id: string
+          incluido_orcamento: boolean
           indivisivel: boolean
           justificativa: string | null
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
@@ -1526,6 +1527,7 @@ export type Database = {
           fabricante?: string | null
           fornecedor_id?: string | null
           id?: string
+          incluido_orcamento?: boolean
           indivisivel?: boolean
           justificativa?: string | null
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
@@ -1544,6 +1546,7 @@ export type Database = {
           fabricante?: string | null
           fornecedor_id?: string | null
           id?: string
+          incluido_orcamento?: boolean
           indivisivel?: boolean
           justificativa?: string | null
           modalidade?: Database["public"]["Enums"]["modalidade_suprimento"]

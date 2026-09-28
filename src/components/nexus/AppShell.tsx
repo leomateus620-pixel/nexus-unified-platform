@@ -1,35 +1,21 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { LogOut, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useOrg, useSessionUser } from "@/features/org/session";
-import { Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
 import { navGroups } from "@/lib/nexus-nav";
 import { cn } from "@/lib/utils";
 import { NexusLogo } from "./NexusLogo";
 
-function Brand({ operational = false }: { operational?: boolean }) {
-  if (operational)
-    return (
-      <Link to="/" className="nx-brand">
-        <NexusLogo className="text-3xl" />
-        <span>
-          Tecnologia em Segurança
-          <br />
-          para o Agroindustrial
-        </span>
-      </Link>
-    );
+function Brand() {
   return (
-    <Link to="/" className="flex items-center gap-2 px-4 py-5">
-      <span className="font-display text-2xl font-extrabold tracking-[0.18em] text-sidebar-foreground">
-        NEXUS
-      </span>
-      <span className="mt-1 text-[9px] leading-tight text-primary">
+    <Link to="/" className="nx-brand">
+      <NexusLogo className="text-3xl" />
+      <span>
         Tecnologia em Segurança
         <br />
         para o Agroindustrial
@@ -44,11 +30,11 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <nav
       aria-label="Navegação principal"
-      className="nx-sidebar-nav flex-1 space-y-6 overflow-y-auto px-3 pb-8"
+      className="nx-sidebar-nav flex-1 overflow-y-auto"
     >
       {navGroups.map((group) => (
         <div key={group.label}>
-          <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+          <p className="nx-nav-group-label">
             {group.label}
           </p>
           <ul className="space-y-1">
@@ -61,10 +47,10 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
                     to={item.to}
                     onClick={onNavigate}
                     className={cn(
-                      "group flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                      "nx-nav-link group flex items-center gap-3",
                       active
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                        : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
+                        ? "nx-nav-link-active"
+                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-primary",
                     )}
                   >
                     <Icon
@@ -74,7 +60,6 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
                       )}
                     />
                     <span className="truncate">{item.label}</span>
-                    {active && <span className="ml-auto h-4 w-0.5 rounded-full bg-primary" />}
                   </Link>
                 </li>
               );
@@ -102,7 +87,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div
       className={cn(
-        "min-h-screen bg-background",
+        "nx-app-shell min-h-screen bg-background",
         operational && "nexus-operational nx-shell",
         (/\/revisoes\//.test(pathname) || /\/compras\/ordens-(compra|producao)\//.test(pathname)) &&
           "nx-catalog-shell",
@@ -114,23 +99,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         </a>
       )}
       <aside className="nx-sidebar fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
-        <Brand operational={operational} />
+        <Brand />
         <SidebarNav />
       </aside>
-
-      {open && !operational && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <button
-            aria-label="Fechar menu"
-            className="absolute inset-0 bg-background/80"
-            onClick={() => setOpen(false)}
-          />
-          <aside className="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-sidebar-border bg-sidebar">
-            <Brand />
-            <SidebarNav onNavigate={() => setOpen(false)} />
-          </aside>
-        </div>
-      )}
 
       <div className="nx-shell-content lg:pl-64">
         <header
@@ -139,37 +110,24 @@ export function AppShell({ children }: { children: ReactNode }) {
             operational ? "bg-background" : "bg-background/90 backdrop-blur",
           )}
         >
-          {operational ? (
-            <Dialog.Root open={open} onOpenChange={setOpen}>
-              <Dialog.Trigger asChild>
-                <button className="nx-menu-trigger lg:hidden" aria-label="Abrir menu">
-                  <Menu aria-hidden="true" size={20} />
-                </button>
-              </Dialog.Trigger>
-              <Dialog.Portal>
-                <Dialog.Overlay className="nx-menu-overlay" />
-                <Dialog.Content
-                  className="nexus-operational nx-mobile-menu"
-                  aria-describedby={undefined}
-                >
-                  <Dialog.Title className="sr-only">Navegação NEXUS</Dialog.Title>
-                  <Brand operational />
-                  <Dialog.Close className="nx-menu-close" aria-label="Fechar menu">
-                    <X aria-hidden="true" size={20} />
-                  </Dialog.Close>
-                  <SidebarNav onNavigate={() => setOpen(false)} />
-                </Dialog.Content>
-              </Dialog.Portal>
-            </Dialog.Root>
-          ) : (
-            <button
-              className="rounded-md border border-border p-2 text-muted-foreground lg:hidden"
-              onClick={() => setOpen(true)}
-              aria-label="Abrir menu"
-            >
-              <Menu className="size-4" />
-            </button>
-          )}
+          <Dialog.Root open={open} onOpenChange={setOpen}>
+            <Dialog.Trigger asChild>
+              <button className="nx-menu-trigger lg:hidden" aria-label="Abrir menu">
+                <Menu aria-hidden="true" size={20} />
+              </button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Overlay className="nx-menu-overlay" />
+              <Dialog.Content className="nx-mobile-menu" aria-describedby={undefined}>
+                <Dialog.Title className="sr-only">Navegação NEXUS</Dialog.Title>
+                <Brand />
+                <Dialog.Close className="nx-menu-close" aria-label="Fechar menu">
+                  <X aria-hidden="true" size={20} />
+                </Dialog.Close>
+                <SidebarNav onNavigate={() => setOpen(false)} />
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
           {operational && (
             <div className="nx-area-label">
               <span>Workspace</span>

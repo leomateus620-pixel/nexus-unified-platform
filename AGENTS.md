@@ -17,3 +17,4 @@
 - Multi-step writes (proposal creation, revisions, sending/accepting, demand, purchase/production orders) go through `src/features/propostas/propostas.functions.ts` with idempotent upserts on unique keys. Why: repeated actions must not duplicate documents.
 - Sent/accepted revisions and issued documents are protected by database triggers, not just the UI. Why: issued commercial documents must never change silently.
 - No sample/mock data in app code; missing integrations show "Integração não configurada". Why: every number shown must come from real records.
+- The authenticated application rail has one route-independent visual identity; route-specific themes may style only the workspace content. Why: navigation must not shift when users move between modules.

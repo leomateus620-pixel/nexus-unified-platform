@@ -107,6 +107,12 @@
   --sidebar-accent-foreground: oklch(0.96 0.01 160);
   --sidebar-border: oklch(0.28 0.032 170);
   --sidebar-ring: oklch(0.85 0.23 145);
+  --navigation-background: oklch(0.145 0.023 166);
+  --navigation-foreground: oklch(0.95 0.01 160);
+  --navigation-muted: oklch(0.72 0.025 160);
+  --navigation-border: oklch(0.29 0.034 163);
+  --navigation-active: oklch(0.85 0.23 145);
+  --navigation-active-surface: oklch(0.22 0.038 160);
   --font-heading: "Saira", system-ui, sans-serif;
   --font-text: "Barlow", system-ui, sans-serif;
   --gradient-brand: linear-gradient(135deg, oklch(0.23 0.05 170), oklch(0.16 0.03 170));
@@ -190,8 +196,8 @@
 .nx-app-shell .nx-sidebar,
 .nx-mobile-menu {
   font-family: var(--font-text);
-  background-color: var(--sidebar);
-  color: var(--sidebar-foreground);
+  background-color: var(--navigation-background);
+  color: var(--navigation-foreground);
 }
 
 .nx-app-shell .nx-sidebar {
@@ -207,18 +213,18 @@
   min-height: 5rem;
   padding: 1.25rem 1rem;
   margin: 0;
-  border-bottom: 1px solid var(--sidebar-border);
+  border-bottom: 1px solid var(--navigation-border);
 }
 
 .nx-app-shell .nx-brand > span:first-child,
 .nx-mobile-menu .nx-brand > span:first-child {
-  color: var(--sidebar-foreground);
+  color: var(--navigation-foreground);
   letter-spacing: 0;
 }
 
 .nx-app-shell .nx-brand > span:last-child,
 .nx-mobile-menu .nx-brand > span:last-child {
-  color: color-mix(in oklab, var(--primary) 72%, var(--sidebar-foreground));
+  color: color-mix(in oklab, var(--navigation-active) 72%, var(--navigation-foreground));
   font-size: 0.625rem;
   font-weight: 600;
   line-height: 1.3;
@@ -228,7 +234,7 @@
 .nx-mobile-menu .nx-sidebar-nav {
   padding: 1.25rem 0.75rem 2rem;
   scrollbar-width: thin;
-  scrollbar-color: var(--sidebar-border) transparent;
+  scrollbar-color: var(--navigation-border) transparent;
 }
 
 .nx-app-shell .nx-sidebar-nav > div + div,
@@ -239,7 +245,7 @@
 .nx-app-shell .nx-nav-group-label,
 .nx-mobile-menu .nx-nav-group-label {
   padding: 0 0.75rem 0.625rem;
-  color: color-mix(in oklab, var(--primary) 48%, var(--muted-foreground));
+  color: color-mix(in oklab, var(--navigation-active) 48%, var(--navigation-muted));
   font-size: 0.625rem;
   font-weight: 700;
   line-height: 1;
@@ -262,14 +268,14 @@
 
 .nx-app-shell .nx-nav-link-active,
 .nx-mobile-menu .nx-nav-link-active {
-  border-left-color: var(--primary);
-  background-color: color-mix(in oklab, var(--primary) 10%, var(--sidebar));
-  color: var(--sidebar-foreground);
+  border-left-color: var(--navigation-active);
+  background-color: var(--navigation-active-surface);
+  color: var(--navigation-foreground);
 }
 
 .nx-app-shell .nx-nav-link-active svg,
 .nx-mobile-menu .nx-nav-link-active svg {
-  color: var(--primary);
+  color: var(--navigation-active);
 }
 
 .nx-menu-trigger,
@@ -292,7 +298,7 @@
   display: flex;
   width: min(18rem, 100%);
   flex-direction: column;
-  border-right: 1px solid var(--sidebar-border);
+  border-right: 1px solid var(--navigation-border);
   padding-bottom: env(safe-area-inset-bottom);
 }
 

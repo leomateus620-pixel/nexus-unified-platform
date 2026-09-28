@@ -213,12 +213,15 @@ try {
       p95: a[Math.floor(a.length * 0.95)],
       max: Math.max(...a),
       scope:
-        "Local headless Chrome with SwiftShader software renderer, short orbit sample; not native GPU or physical mobile proof",
+        "Local headless Chrome, short orbit sample; renderer selection follows LC02_SOFTWARE; not physical mobile proof",
     };
   });
   await page.getByRole("link", { name: "Voltar à engenharia" }).click();
-  await page.getByRole("heading", { name: "Análises e dimensionamentos" }).waitFor();
+  await page.waitForURL(`${base}/auth`);
+  for (let i = 0; i < 100 && (await page.locator("canvas").count()); i++)
+    await page.waitForTimeout(100);
   assert.equal(await page.locator("canvas").count(), 0);
+  await page.goto(`${base}/mapas-3d/unidades`);
   await page.getByRole("link", { name: "Escada LC-02", exact: true }).click();
   await page.waitForSelector("canvas[data-ready=true]");
   report.routeAndUnmount = true;

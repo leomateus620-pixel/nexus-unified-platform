@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "route": "/mapas-3d",
+      "ready": true,
+      "canvases": 1
+    },
+    {
+      "route": "/mapas-3d/trevisan",
+      "ready": true,
+      "canvases": 1
+    },
+    {
+      "route": "/mapas-3d/unidades",
+      "ready": true,
+      "canvases": 0
+    }
+  ],
+  "errors": []
+}

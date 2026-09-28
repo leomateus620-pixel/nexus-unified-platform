@@ -66,11 +66,11 @@ Os objetos Three.js são construídos sem atributos de instrumentação DOM. Iss
 
 ## Reprodução das verificações
 
-Na raiz do repositório, com Node 24 e Chrome instalado:
+Na raiz do repositório, com Node 24, Bun e Chrome instalados:
 
 ```powershell
-npm ci
-npm run dev -- --host 127.0.0.1 --port 5183
+bun install --frozen-lockfile
+bun run dev --host 127.0.0.1 --port 5183
 ```
 
 Em outro terminal, na raiz:

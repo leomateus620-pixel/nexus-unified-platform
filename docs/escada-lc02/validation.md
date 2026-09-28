@@ -1,5 +1,7 @@
 # Validação — Escada LC-02 e circulação de pessoas
 
+> Integração atualizada em 28.09.2026 sobre a `main` `507daeb`: consulte [integration-main.md](integration-main.md). As evidências de 26.09 abaixo são históricas; a nova rodada fica em `evidence/reintegration-2026-09-28/`.
+
 Execução local em 26.09.2026: Windows, Node 24.15.0, Blender 4.5.10 LTS, Three.js r186 e Chrome headless. Branch `codex/escada-lc02-pessoas`, criada da `main` `f0d8264`. O visualizador LC-02 antes local foi incorporado seletivamente, preservando as rotas e os arquivos de Trevisan e 3Tentos.
 
 ## Escopo verificado

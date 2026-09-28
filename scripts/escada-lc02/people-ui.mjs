@@ -329,20 +329,24 @@ try {
   );
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.getByRole("link", { name: "Voltar à engenharia" }).click();
-  await page.waitForURL(`${base}/engenharia`);
+  // The scene is public; the business route now requires a session.
+  await page.waitForURL(`${base}/auth`);
   await page.waitForFunction(() => !window.__testCanvas.isConnected);
   // The root switches between the dedicated layout and AppShell before the outlet
   // finishes its route transition. Poll the committed DOM from Node (not a paused RAF).
   for (let i = 0; i < 100 && (await page.locator("canvas").count()); i++)
     await page.waitForTimeout(100);
   assert.equal(await page.locator("canvas").count(), 0);
+  await page.goto(`${base}/mapas-3d/unidades`);
   await page.getByRole("link", { name: "Escada LC-02" }).click();
   await page.waitForSelector("canvas[data-ready=true]", { timeout: 60000 });
   await start(1);
   await page.waitForFunction(
     () => JSON.parse(document.querySelector("canvas").dataset.people)[0].s > 0.1,
   );
-  report.checks.push("route unmount, navigation entry and asset reload");
+  report.checks.push(
+    "route unmount, anonymous engineering gate, public menu entry and asset reload",
+  );
   assert.deepEqual(errors, []);
 } catch (error) {
   report.failure = String(error.stack ?? error);

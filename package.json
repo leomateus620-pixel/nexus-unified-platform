@@ -22,6 +22,9 @@
     "test:industrial:performance": "node scripts/benchmark-industrial.mjs",
     "test:industrial:views": "node scripts/capture-industrial-views.mjs",
     "test:orcamento": "vitest run tests/calculo.test.ts tests/planilha.test.ts tests/autorizacao.test.ts",
+    "dev:ui-lab": "vite --config tests/ui/vite.config.mjs",
+    "test:ui": "node tests/ui/run.mjs",
+    "test:ui:contracts": "node tests/ui/contracts.mjs",
     "test:db": "bash tests/db/run.sh"
   },
   "overrides": {

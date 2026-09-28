@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useOrg } from "@/features/org/session";
 import { useFornecedores } from "@/features/propostas/hooks";
 import { brlUnit, dataBR } from "@/lib/format";
+import "@/components/nexus/stages.css";
 
 export const Route = createFileRoute("/_authenticated/produtos/$produtoId")({
   head: () => ({
@@ -82,7 +83,7 @@ function Produto() {
   const input = "h-8 rounded border border-input bg-background px-2 text-sm text-foreground";
   return (
     <div className="space-y-4">
-      <nav className="text-xs text-muted-foreground">
+      <nav className="nx-order-context" aria-label="Componente atual">
         <Link to="/produtos" className="hover:text-foreground">
           Produtos e Soluções
         </Link>{" "}
@@ -93,9 +94,16 @@ function Produto() {
         title={p.descricao}
         description={`Origem do cadastro: ${p.origem ?? "—"}. Propostas existentes não mudam ao alterar este cadastro.`}
       />
-      {erro && <p className="text-sm text-destructive">{erro}</p>}
-      <Section title="Cadastro">
-        <div className="grid gap-3 text-xs text-muted-foreground md:grid-cols-3">
+      {erro && (
+        <p className="text-sm text-destructive" role="alert">
+          {erro}
+        </p>
+      )}
+      <Section
+        title="Identidade e suprimento"
+        description="Os padrões deste catálogo são usados em novas propostas. Revisões existentes preservam seus próprios valores."
+      >
+        <div className="nx-product-details">
           <p>
             Unidade: <span className="text-foreground">{p.unidade}</span>
           </p>
@@ -168,7 +176,10 @@ function Produto() {
         </div>
       </Section>
       {org.data?.canSeeCosts && (
-        <Section title="Histórico de custos">
+        <Section
+          title="Histórico de custos"
+          description="Valores do catálogo global, com vigência e origem do registro. A proposta mantém o custo adotado na revisão."
+        >
           <ActionButton variant="ghost" onClick={novoCusto}>
             Registrar novo custo
           </ActionButton>

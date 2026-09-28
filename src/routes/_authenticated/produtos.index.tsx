@@ -15,6 +15,7 @@ import {
   Section,
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 import { useOrg } from "@/features/org/session";
 import { importarModeloPlanilha } from "@/features/propostas/propostas.functions";
 import { brlUnit } from "@/lib/format";
@@ -153,45 +154,78 @@ function Produtos() {
           {importar.error instanceof Error ? importar.error.message : "Falha na importação"}
         </p>
       )}
-      <Section title="Novo componente">
-        <form onSubmit={salvar} className="flex flex-wrap gap-2">
-          <input
-            aria-label="Código"
-            placeholder="Código"
-            className={`${input} w-28`}
-            {...form.register("codigo")}
-          />
-          <input
-            aria-label="Descrição"
-            placeholder="Descrição"
-            className={`${input} w-80`}
-            {...form.register("descricao")}
-          />
-          <input
-            aria-label="Unidade"
-            placeholder="Un."
-            className={`${input} w-16`}
-            {...form.register("unidade")}
-          />
-          <input
-            aria-label="NCM"
-            placeholder="NCM"
-            className={`${input} w-28`}
-            {...form.register("ncm")}
-          />
-          <select aria-label="Modalidade" className={input} {...form.register("modalidade")}>
-            <option value="comprar">Comprar</option>
-            <option value="fabricar">Fabricar</option>
-            <option value="terceirizar">Terceirizar</option>
-          </select>
-          <input
-            aria-label="Custo"
-            type="number"
-            step="0.0001"
-            placeholder="Custo"
-            className={`${input} w-28`}
-            {...form.register("custo")}
-          />
+      <Section
+        title="Novo componente"
+        description="Cadastro global. Os valores adotados em cada revisão continuam versionados na proposta."
+      >
+        <form onSubmit={salvar} className="nx-inline-form">
+          <label className="nx-field-short">
+            Código
+            <input
+              aria-label="Código"
+              placeholder="Código"
+              className={`${input} w-28`}
+              {...form.register("codigo")}
+            />
+            {form.formState.errors.codigo && (
+              <span className="text-destructive">{form.formState.errors.codigo.message}</span>
+            )}
+          </label>
+          <label className="nx-field-wide">
+            Descrição completa
+            <input
+              aria-label="Descrição"
+              placeholder="Descrição"
+              className={`${input} w-80`}
+              {...form.register("descricao")}
+            />
+            {form.formState.errors.descricao && (
+              <span className="text-destructive">{form.formState.errors.descricao.message}</span>
+            )}
+          </label>
+          <label className="nx-field-short">
+            Unidade
+            <input
+              aria-label="Unidade"
+              placeholder="Un."
+              className={`${input} w-16`}
+              {...form.register("unidade")}
+            />
+            {form.formState.errors.unidade && (
+              <span className="text-destructive">{form.formState.errors.unidade.message}</span>
+            )}
+          </label>
+          <label className="nx-field-short">
+            NCM
+            <input
+              aria-label="NCM"
+              placeholder="NCM"
+              className={`${input} w-28`}
+              {...form.register("ncm")}
+            />
+          </label>
+          <label>
+            Suprimento
+            <select aria-label="Modalidade" className={input} {...form.register("modalidade")}>
+              <option value="comprar">Comprar</option>
+              <option value="fabricar">Fabricar</option>
+              <option value="terceirizar">Terceirizar</option>
+            </select>
+          </label>
+          <label>
+            Custo unitário (R$)
+            <input
+              aria-label="Custo"
+              type="number"
+              step="0.0001"
+              placeholder="Custo"
+              className={`${input} w-28`}
+              {...form.register("custo")}
+            />
+            {form.formState.errors.custo && (
+              <span className="text-destructive">{form.formState.errors.custo.message}</span>
+            )}
+          </label>
           <ActionButton type="submit" loading={form.formState.isSubmitting}>
             Cadastrar
           </ActionButton>
@@ -201,7 +235,10 @@ function Produtos() {
         )}
         {erro && <p className="mt-2 text-sm text-destructive">{erro}</p>}
       </Section>
-      <Section title="Componentes">
+      <Section
+        title="Componentes do catálogo"
+        description="Abra um componente para consultar sua identidade e o histórico de custos autorizado."
+      >
         <QueryView
           query={q}
           empty={
@@ -219,8 +256,16 @@ function Produtos() {
                 navigate({ to: "/produtos/$produtoId", params: { produtoId: p.id } })
               }
               columns={[
-                { key: "codigo", label: "Código" },
-                { key: "descricao", label: "Descrição" },
+                {
+                  key: "codigo",
+                  label: "Código",
+                  render: (p) => <RecordIdentity code primary={p.codigo} />,
+                },
+                {
+                  key: "descricao",
+                  label: "Descrição",
+                  render: (p) => <RecordIdentity primary={p.descricao} />,
+                },
                 { key: "unidade", label: "Un." },
                 {
                   key: "fab",

@@ -11,6 +11,7 @@ import {
 import { useOrgId } from "@/features/org/session";
 import { useProjetos } from "@/features/projetos/queries";
 import { brl, dataBR } from "@/lib/format";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 
 export const Route = createFileRoute("/_authenticated/projetos/")({
   head: () => ({
@@ -52,9 +53,16 @@ function Page() {
                 navigate({ to: "/projetos/$projetoId", params: { projetoId: p.id } })
               }
               columns={[
-                { key: "codigo", label: "Código" },
-                { key: "cliente", label: "Cliente" },
-                { key: "origem", label: "Revisão aprovada" },
+                {
+                  key: "codigo",
+                  label: "Projeto / revisão aprovada",
+                  render: (p) => <RecordIdentity code primary={p.codigo} secondary={p.origem} />,
+                },
+                {
+                  key: "cliente",
+                  label: "Cliente",
+                  render: (p) => <RecordIdentity primary={p.cliente} />,
+                },
                 {
                   key: "valor",
                   label: "Valor aprovado",

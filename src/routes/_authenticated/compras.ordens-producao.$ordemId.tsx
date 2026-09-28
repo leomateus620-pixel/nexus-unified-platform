@@ -13,6 +13,7 @@ import {
   StatusBadge,
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import { PromptAction, RecordIdentity } from "@/components/nexus/OperationalDetails";
 import {
   aprovarTecnica,
   liberarOrdemProducao,
@@ -101,7 +102,7 @@ function Page() {
     "h-8 rounded border border-input bg-background px-2 text-sm text-foreground disabled:opacity-60";
   return (
     <div className="space-y-4">
-      <nav className="text-xs text-muted-foreground">
+      <nav className="nx-order-context" aria-label="Origem da ordem de produção">
         <Link to="/compras/ordens-producao" className="hover:text-foreground">
           Ordens de produção
         </Link>{" "}
@@ -133,9 +134,20 @@ function Page() {
         description="Matéria-prima e roteiro não são inferidos do nome do componente (F15)."
         actions={<StatusBadge value={o.status} />}
       />
-      {erro && <p className="text-sm text-destructive">{erro}</p>}
-      <Section title="Planejamento">
-        <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+      {erro && (
+        <p className="text-sm text-destructive" role="alert">
+          {erro}
+        </p>
+      )}
+      <Section
+        title="Responsabilidade e prazo"
+        description={
+          rascunho
+            ? "Complete a ficha dos itens e registre a aprovação técnica antes da liberação."
+            : "Planejamento preservado após a liberação. Acompanhe os apontamentos nos itens."
+        }
+      >
+        <div className="nx-inline-form">
           <label>
             Responsável{" "}
             <input
@@ -171,12 +183,15 @@ function Page() {
           </div>
         )}
         {apr.isSuccess && (
-          <p className="mt-2 text-xs text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground" role="status">
             Aprovação técnica registrada para a composição atual.
           </p>
         )}
       </Section>
-      <Section title="Itens">
+      <Section
+        title="Itens e ficha técnica"
+        description="A ficha técnica permanece vinculada ao componente e à demanda de origem."
+      >
         <DataTable
           getRowId={(i) => i.id}
           rows={o.ordem_producao_itens}
@@ -184,7 +199,9 @@ function Page() {
             {
               key: "cod",
               label: "Código",
-              render: (i) => i.demandas?.revisao_componentes?.codigo ?? "—",
+              render: (i) => (
+                <RecordIdentity code primary={i.demandas?.revisao_componentes?.codigo ?? "—"} />
+              ),
             },
             {
               key: "desc",
@@ -203,6 +220,7 @@ function Page() {
               render: (i) =>
                 rascunho ? (
                   <input
+                    aria-label={`Ficha técnica de ${i.demandas?.revisao_componentes?.codigo ?? "item"}`}
                     defaultValue={i.ficha_tecnica ?? ""}
                     onBlur={(e) =>
                       upd("ordem_producao_itens", i.id, { ficha_tecnica: e.target.value || null })
@@ -221,19 +239,21 @@ function Page() {
             },
             {
               key: "a",
-              label: "",
+              label: "Apontamento",
               render: (i) =>
                 o.status === "liberada" && Number(i.quantidade) > Number(i.quantidade_produzida) ? (
-                  <button
-                    className="text-xs text-primary hover:underline"
-                    onClick={() => {
-                      const v = window.prompt("Quantidade produzida:");
+                  <PromptAction
+                    title="Registrar produção"
+                    description={`${i.demandas?.revisao_componentes?.codigo ?? "Item"} · ${i.demandas?.revisao_componentes?.descricao ?? "Descrição não informada"}`}
+                    label="Quantidade produzida"
+                    inputMode="decimal"
+                    onAnswer={(v) => {
                       const n = Number((v ?? "").replace(",", "."));
                       if (n > 0) apontar.mutate({ item_id: i.id, quantidade: n });
                     }}
                   >
-                    Apontar
-                  </button>
+                    Apontar produção
+                  </PromptAction>
                 ) : null,
             },
           ]}

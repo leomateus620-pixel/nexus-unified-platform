@@ -15,6 +15,7 @@ import {
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
 import { useOrgId } from "@/features/org/session";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 
 export const Route = createFileRoute("/_authenticated/clientes")({
   head: () => ({
@@ -114,8 +115,9 @@ function Clientes() {
         description="Dados usados pelas propostas sem redigitação."
       />
       <Section title="Novo cliente">
-        <form onSubmit={salvar} className="flex flex-wrap items-start gap-2">
-          <div>
+        <form onSubmit={salvar} className="nx-inline-form">
+          <label className="nx-field-wide">
+            Razão social
             <input
               aria-label="Razão social"
               placeholder="Razão social"
@@ -127,33 +129,42 @@ function Clientes() {
                 {form.formState.errors.razao_social.message}
               </p>
             )}
-          </div>
-          <input
-            aria-label="CNPJ"
-            placeholder="CNPJ"
-            className={input}
-            {...form.register("cnpj")}
-          />
-          <input
-            aria-label="Cidade"
-            placeholder="Cidade"
-            className={input}
-            {...form.register("cidade")}
-          />
-          <input
-            aria-label="UF"
-            placeholder="UF"
-            maxLength={2}
-            className={`${input} w-16`}
-            {...form.register("uf")}
-          />
+          </label>
+          <label>
+            CNPJ
+            <input
+              aria-label="CNPJ"
+              placeholder="CNPJ"
+              className={input}
+              {...form.register("cnpj")}
+            />
+          </label>
+          <label>
+            Cidade
+            <input
+              aria-label="Cidade"
+              placeholder="Cidade"
+              className={input}
+              {...form.register("cidade")}
+            />
+          </label>
+          <label className="nx-field-short">
+            UF
+            <input
+              aria-label="UF"
+              placeholder="UF"
+              maxLength={2}
+              className={`${input} w-16`}
+              {...form.register("uf")}
+            />
+          </label>
           <ActionButton type="submit" loading={form.formState.isSubmitting}>
             Cadastrar
           </ActionButton>
         </form>
         {erro && <p className="mt-2 text-sm text-destructive">{erro}</p>}
       </Section>
-      <div className="grid gap-4 xl:grid-cols-[1fr_380px]">
+      <div className="grid min-w-0 gap-4 2xl:grid-cols-[minmax(0,1fr)_360px]">
         <Section title="Clientes">
           <QueryView
             query={q}
@@ -171,7 +182,11 @@ function Clientes() {
                 selectedId={sel}
                 onRowClick={(c) => setSel(c.id)}
                 columns={[
-                  { key: "razao_social", label: "Razão social" },
+                  {
+                    key: "razao_social",
+                    label: "Razão social",
+                    render: (c) => <RecordIdentity primary={c.razao_social} />,
+                  },
                   { key: "cnpj", label: "CNPJ", render: (c) => c.cnpj ?? "—" },
                   {
                     key: "cidade",
@@ -185,18 +200,21 @@ function Clientes() {
             )}
           </QueryView>
         </Section>
-        <aside className="rounded-lg border border-border bg-card p-4 text-sm xl:sticky xl:top-20 xl:self-start">
+        <aside
+          className="nx-client-context"
+          aria-label="Unidades e contatos do cliente selecionado"
+        >
           {!cli ? (
             <p className="text-muted-foreground">
               Selecione um cliente para ver unidades e contatos.
             </p>
           ) : (
             <div className="space-y-3">
-              <p className="font-medium text-foreground">{cli.razao_social}</p>
+              <p className="font-display text-lg font-medium text-foreground">{cli.razao_social}</p>
               <div>
                 <div className="flex justify-between">
                   <p className="text-xs uppercase text-muted-foreground">Unidades</p>
-                  <button className="text-xs text-primary" onClick={addUnidade}>
+                  <button className="min-h-11 px-2 text-sm text-primary" onClick={addUnidade}>
                     + Unidade
                   </button>
                 </div>
@@ -219,7 +237,7 @@ function Clientes() {
               <div>
                 <div className="flex justify-between">
                   <p className="text-xs uppercase text-muted-foreground">Contatos</p>
-                  <button className="text-xs text-primary" onClick={addContato}>
+                  <button className="min-h-11 px-2 text-sm text-primary" onClick={addContato}>
                     + Contato
                   </button>
                 </div>

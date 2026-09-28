@@ -1,0 +1,661 @@
+/* Operational palette only. Never change the CAD/global root palette here. */
+.nexus-operational {
+  color-scheme: dark;
+  --background: oklch(0.1864 0.0135 169.78);
+  --foreground: oklch(0.9719 0.0098 125.68);
+  --card: oklch(0.2372 0.0226 160.51);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.2889 0.0321 158.23);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.85 0.23 145);
+  --primary-foreground: oklch(0.19 0.05 160);
+  --secondary: var(--popover);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.27 0.022 160);
+  --muted-foreground: oklch(0.8301 0.0242 149.32);
+  --accent: oklch(0.33 0.039 157);
+  --accent-foreground: var(--foreground);
+  --border: oklch(0.4389 0.0391 157.99);
+  --input: oklch(0.6283 0.038 158.1);
+  --ring: var(--primary);
+  --destructive: oklch(0.7621 0.1414 23.52);
+  --destructive-foreground: var(--background);
+  --warning: oklch(0.83 0.135 81);
+  --warning-foreground: var(--background);
+  --info: oklch(0.81 0.085 224);
+  --info-foreground: var(--background);
+  --sidebar: oklch(0.163 0.015 162);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--card);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(0.34 0.025 160);
+  --sidebar-ring: var(--ring);
+  --nx-error-surface: oklch(0.27 0.043 24);
+  --nx-warning-surface: oklch(0.28 0.029 80);
+  --nx-info-surface: oklch(0.27 0.035 223);
+  --nx-success-surface: oklch(0.29 0.045 150);
+  --nx-space-1: 0.25rem;
+  --nx-space-2: 0.5rem;
+  --nx-space-3: 0.75rem;
+  --nx-space-4: 1rem;
+  --nx-space-6: 1.5rem;
+  --nx-space-8: 2rem;
+  --nx-radius-control: 0.5rem;
+  --nx-radius-panel: 0.75rem;
+  --nx-motion-control: 140ms;
+  --nx-motion-panel: 200ms;
+  --nx-ease: cubic-bezier(0.2, 0, 0, 1);
+  --nx-shadow: 0 3px 10px oklch(0.1 0.01 160 / 0.2);
+  --nx-paper: oklch(0.98 0.006 110);
+  --nx-ink: oklch(0.22 0.018 155);
+  --nx-paper-muted: oklch(0.42 0.018 155);
+  --nx-paper-border: oklch(0.79 0.013 155);
+  font-family: var(--font-text);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  background: var(--background);
+  color: var(--foreground);
+  accent-color: var(--primary);
+}
+
+.nexus-operational :where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  scroll-margin-block: 5rem;
+}
+.nexus-operational :where(input, select, textarea) {
+  background-color: var(--background);
+  color: var(--foreground);
+  border-color: var(--input);
+  border-radius: var(--nx-radius-control);
+  font-family: var(--font-text);
+  font-size: 0.9375rem;
+  min-width: 0;
+  max-width: 100%;
+}
+.nexus-operational :where(input:not([type="checkbox"]):not([type="radio"]), select) {
+  min-height: 2.5rem;
+}
+.nexus-operational :where(input, textarea)::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+}
+.nexus-operational :where(input, select, textarea):disabled {
+  opacity: 1;
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.nexus-operational :where(input, textarea)[readonly] {
+  background: var(--muted);
+  border-style: dashed;
+}
+.nexus-operational :where(input[type="checkbox"], input[type="radio"]) {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.nexus-operational :where(button, a) {
+  -webkit-tap-highlight-color: transparent;
+}
+.nexus-operational button:not(:disabled),
+.nexus-operational summary {
+  cursor: pointer;
+}
+.nexus-operational :where(h1, h2, h3) {
+  font-weight: 600;
+}
+.nexus-operational :where(th, td, dd) {
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational :where(.text-warning) {
+  color: var(--warning);
+}
+
+/* Shell: a quiet, compact frame around the active work. */
+.nexus-operational .nx-sidebar {
+  width: 15rem;
+}
+.nexus-operational .nx-brand {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1.35rem 1rem;
+  border-bottom: 1px solid var(--sidebar-border);
+  margin-bottom: 1rem;
+}
+.nexus-operational .nx-brand > span:last-child {
+  font-size: 0.625rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-sidebar-nav {
+  padding-inline: 0.625rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+.nexus-operational .nx-sidebar-nav > div + div {
+  margin-top: 1.125rem;
+}
+.nexus-operational .nx-sidebar-nav p {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+  padding-bottom: 0.25rem;
+}
+.nexus-operational .nx-sidebar-nav ul {
+  margin: 0;
+}
+.nexus-operational .nx-sidebar-nav li + li {
+  margin-top: 0.125rem;
+}
+.nexus-operational .nx-sidebar-nav a {
+  min-height: 2.375rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  padding-block: 0.45rem;
+  border-radius: var(--nx-radius-control);
+}
+.nexus-operational .nx-sidebar-nav a[aria-current="page"] {
+  color: var(--foreground);
+  background: var(--sidebar-accent);
+}
+.nexus-operational .nx-topbar {
+  height: 3.25rem;
+  background: var(--background);
+  position: relative;
+}
+.nexus-operational .nx-topbar button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+.nexus-operational .nx-area-label {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.8125rem;
+  min-width: 0;
+}
+.nexus-operational .nx-area-label span {
+  color: var(--muted-foreground);
+  border-right: 1px solid var(--border);
+  padding-right: 0.75rem;
+}
+.nexus-operational .nx-area-label strong {
+  font-weight: 500;
+}
+.nexus-operational .nx-main {
+  padding: 1.25rem 1.5rem 2rem;
+  min-width: 0;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.nexus-operational .nx-skip {
+  position: fixed;
+  z-index: 100;
+  left: 1rem;
+  top: 0.5rem;
+  transform: translateY(-200%);
+  padding: 0.75rem 1rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: var(--nx-radius-control);
+}
+.nexus-operational .nx-skip:focus {
+  transform: translateY(0);
+}
+.nexus-operational .nx-menu-trigger,
+.nexus-operational .nx-menu-close {
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--input);
+  border-radius: var(--nx-radius-control);
+  padding: 0.625rem;
+  background: var(--card);
+}
+.nx-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: oklch(0.08 0.01 160 / 0.75);
+}
+.nexus-operational.nx-mobile-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  inset: 0 auto 0 0;
+  width: min(21rem, 100%);
+  z-index: 61;
+  border-right: 1px solid var(--border);
+  background: var(--sidebar);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.nx-mobile-menu .nx-brand {
+  padding-top: 4rem;
+}
+.nx-mobile-menu .nx-menu-close {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+.nx-mobile-menu .nx-sidebar-nav a {
+  min-height: 2.75rem;
+}
+
+/* Reusable presentation primitives. */
+.nexus-operational .nx-page-header {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.125rem;
+  align-items: center;
+}
+.nexus-operational .nx-page-header h1 {
+  font-size: clamp(1.625rem, 1.2rem + 0.7vw, 2.125rem);
+  line-height: 1.2;
+  font-weight: 600;
+}
+.nexus-operational .nx-page-header p:first-child {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+.nexus-operational .nx-page-header h1 + p {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+}
+.nexus-operational .nx-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  border-radius: var(--nx-radius-control);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition:
+    background-color var(--nx-motion-control),
+    color var(--nx-motion-control),
+    border-color var(--nx-motion-control);
+}
+.nexus-operational .nx-button:disabled {
+  opacity: 1;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border: 1px dashed var(--border);
+}
+.nexus-operational .nx-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.nexus-operational .nx-button.border-border {
+  border-color: var(--input);
+  background: var(--card);
+}
+.nexus-operational .nx-button.border-border:hover {
+  background: var(--accent);
+}
+.nexus-operational .nx-section {
+  min-width: 0;
+  border-radius: var(--nx-radius-panel);
+  background: var(--card);
+  box-shadow: var(--nx-shadow);
+}
+.nexus-operational .nx-section-heading {
+  padding: 0.875rem 1rem;
+  background: var(--card);
+  border-radius: var(--nx-radius-panel) var(--nx-radius-panel) 0 0;
+}
+.nexus-operational .nx-section-heading h2 {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+}
+.nexus-operational .nx-section-heading p {
+  font-size: 0.8125rem;
+  margin-top: 0.25rem;
+  max-width: 80ch;
+}
+.nexus-operational .nx-section-body {
+  min-width: 0;
+}
+.nexus-operational .nx-section .nx-section {
+  box-shadow: none;
+}
+.nexus-operational .nx-stat {
+  border-radius: var(--nx-radius-panel);
+  min-width: 0;
+}
+.nexus-operational .nx-stat > p:nth-child(2) {
+  font-family: var(--font-heading);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-status {
+  background: var(--muted);
+  border-color: var(--border);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.nexus-operational .nx-status[data-tone="ok"] {
+  background: var(--nx-success-surface);
+  color: var(--primary);
+}
+.nexus-operational .nx-status[data-tone="warn"] {
+  background: var(--nx-warning-surface);
+  color: var(--warning);
+}
+.nexus-operational .nx-status[data-tone="danger"] {
+  background: var(--nx-error-surface);
+  color: var(--destructive);
+}
+.nexus-operational .nx-feedback {
+  border-radius: var(--nx-radius-control);
+}
+.nexus-operational .nx-feedback-error {
+  background: var(--nx-error-surface);
+  border-color: var(--destructive);
+}
+.nexus-operational .nx-feedback-error > svg {
+  margin-bottom: 0.5rem;
+}
+.nexus-operational .nx-feedback-warning {
+  background: var(--nx-warning-surface);
+}
+.nexus-operational .nx-empty {
+  background: var(--card);
+  padding: 2rem 1rem;
+}
+.nexus-operational .nx-empty > p:first-of-type {
+  font-size: 1rem;
+}
+.nexus-operational .nx-empty > p + p {
+  font-size: 0.875rem;
+  max-width: 64ch;
+  margin-inline: auto;
+}
+.nexus-operational .nx-loading {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--nx-radius-panel);
+  min-height: 8rem;
+}
+
+/* Tables remain tables; the scroll container is keyboard accessible. */
+.nx-table-hint {
+  display: none;
+}
+.nx-row-identity {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.nx-row-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--primary);
+  font-size: 0.8125rem;
+  padding: 0.375rem;
+}
+.nexus-operational .nx-table-frame {
+  min-width: 0;
+}
+.nexus-operational .nx-table-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.5rem;
+}
+.nexus-operational .nx-table-scroll {
+  max-height: none;
+  border: 1px solid var(--border);
+  border-radius: var(--nx-radius-control);
+  background: var(--card);
+  scrollbar-width: thin;
+  scrollbar-color: var(--input) var(--card);
+}
+.nexus-operational .nx-table th {
+  padding: 0.75rem;
+  background: var(--popover);
+  color: var(--muted-foreground);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.8125rem;
+}
+.nexus-operational .nx-table td {
+  padding: 0.875rem 0.75rem;
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+}
+.nexus-operational .nx-table tbody tr:hover {
+  background: var(--muted);
+}
+.nexus-operational .nx-table tr[data-selected="true"] {
+  background: var(--accent);
+  box-shadow: inset 3px 0 var(--primary);
+}
+.nexus-operational .nx-table tr:last-child td {
+  border-bottom: 0;
+}
+.nexus-operational .nx-row-link {
+  min-height: 2rem;
+  border: 1px solid var(--input);
+  border-radius: var(--nx-radius-control);
+  white-space: nowrap;
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Context and the precise, freely navigable eight-page ruler. */
+.nexus-operational .nx-breadcrumb {
+  font-size: 0.8125rem;
+}
+.nexus-operational .nx-proposal-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--background);
+}
+.nexus-operational .nx-proposal-context {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+  row-gap: 0.75rem;
+  padding-bottom: 1rem;
+}
+.nexus-operational .nx-proposal-identity {
+  min-width: 0;
+  flex: 1 1 22rem;
+}
+.nexus-operational .nx-eyebrow {
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.nexus-operational .nx-proposal-identity h1 {
+  font-size: clamp(1.625rem, 1.3rem + 0.5vw, 2rem);
+  line-height: 1.2;
+  margin-top: 0.25rem;
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-proposal-subtitle {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-context-total,
+.nexus-operational .nx-context-pending {
+  font-size: 0.8125rem;
+  border-left: 1px solid var(--border);
+  padding-left: 1rem;
+}
+.nexus-operational .nx-context-total p:last-child {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+}
+.nexus-operational .nx-save-feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-basis: 100%;
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-save-feedback svg {
+  flex-shrink: 0;
+}
+.nexus-operational .nx-save-feedback[data-status="erro"],
+.nexus-operational .nx-save-feedback[data-status="conflito"] {
+  padding: 0.625rem 0.75rem;
+  background: var(--nx-error-surface);
+  border-left: 2px solid var(--destructive);
+  color: var(--destructive);
+}
+.nexus-operational .nx-save-feedback[data-status="salvo"] {
+  color: var(--primary);
+}
+.nexus-operational .nx-step-ruler {
+  position: relative;
+  display: flex;
+  gap: 0.25rem;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--input) var(--background);
+  padding-top: 0.125rem;
+}
+.nexus-operational .nx-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  flex-shrink: 0;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 3px solid transparent;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  transition:
+    color var(--nx-motion-control),
+    background-color var(--nx-motion-control);
+}
+.nexus-operational .nx-step:hover {
+  color: var(--foreground);
+  background: var(--card);
+}
+.nexus-operational .nx-step[aria-current="page"] {
+  background: var(--card);
+  color: var(--foreground);
+  border-bottom-color: var(--primary);
+  font-weight: 500;
+}
+.nexus-operational .nx-step-number {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational .nx-step[aria-current="page"] .nx-step-number {
+  color: var(--primary);
+}
+.nexus-operational .nx-step-secondary {
+  font-size: 0.8125rem;
+}
+.nexus-operational .nx-step-divider {
+  border-left: 1px solid var(--border);
+  margin: 0.75rem 0.375rem;
+}
+
+@media (min-width: 1024px) {
+  .nexus-operational .nx-shell-content {
+    padding-left: 15rem;
+  }
+}
+@media (max-width: 767px) {
+  .nexus-operational .nx-main {
+    padding: 1rem 0.75rem calc(1.5rem + env(safe-area-inset-bottom));
+  }
+  .nexus-operational .nx-topbar {
+    padding-inline: 0.75rem;
+    min-height: 3.5rem;
+  }
+  .nexus-operational .nx-area-label span {
+    display: none;
+  }
+  .nexus-operational .nx-area-label strong {
+    font-size: 0.8125rem;
+  }
+  .nexus-operational :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    font-size: 1rem;
+  }
+  .nexus-operational
+    :where(input:not([type="checkbox"]):not([type="radio"]), select, .nx-button, .nx-row-link) {
+    min-height: 2.75rem;
+  }
+  .nexus-operational .nx-proposal-context {
+    gap: 0.75rem;
+  }
+  .nexus-operational .nx-proposal-identity {
+    flex-basis: 100%;
+  }
+  .nexus-operational .nx-proposal-identity h1 {
+    font-size: 1.625rem;
+  }
+  .nexus-operational .nx-context-total {
+    margin-left: auto;
+  }
+  .nexus-operational .nx-context-total p:last-child {
+    font-size: 1rem;
+  }
+  .nexus-operational .nx-context-pending {
+    padding-left: 0.75rem;
+  }
+  .nexus-operational .nx-section-body {
+    padding: 0.75rem;
+  }
+  .nexus-operational .nx-section-heading {
+    padding: 0.75rem;
+  }
+  .nexus-operational .nx-step {
+    min-height: 2.875rem;
+    padding-inline: 0.625rem;
+  }
+  .nexus-operational .nx-breadcrumb {
+    font-size: 0.75rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nexus-operational {
+    --nx-motion-control: 0ms;
+    --nx-motion-panel: 0ms;
+  }
+  .nexus-operational *,
+  .nx-menu-overlay {
+    animation-duration: 0s;
+    transition-duration: 0s;
+    scroll-behavior: auto;
+  }
+  .nexus-operational .nx-button:active:not(:disabled) {
+    transform: none;
+  }
+}
+@media print {
+  .nexus-operational .nx-sidebar,
+  .nexus-operational .nx-topbar,
+  .nexus-operational .nx-breadcrumb,
+  .nexus-operational .nx-proposal-header,
+  .nexus-operational .nx-skip {
+    display: none;
+  }
+  .nexus-operational .nx-shell-content {
+    padding-left: 0;
+  }
+  .nexus-operational .nx-main {
+    max-width: none;
+    padding: 0;
+  }
+}

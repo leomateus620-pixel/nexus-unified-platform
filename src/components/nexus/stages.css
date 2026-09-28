@@ -1,0 +1,540 @@
+.nexus-operational .nx-values-band {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+}
+.nexus-operational .nx-values-main {
+  display: flex;
+  align-items: stretch;
+}
+.nexus-operational .nx-values-parts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  flex: 1;
+  gap: 20px;
+  padding: 22px;
+}
+.nexus-operational .nx-values-parts dt,
+.nexus-operational .nx-values-total dt {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.nexus-operational .nx-values-parts dd {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational .nx-values-band .nx-value-hint {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  font-family: var(--font-text);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-values-parts dd,
+.nexus-operational .nx-values-total dd {
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-values-total {
+  min-width: 240px;
+  padding: 20px 24px;
+  border-left: 1px solid var(--border);
+  background: var(--accent);
+}
+.nexus-operational .nx-values-total dd {
+  font: 600 clamp(26px, 2.4vw, 34px)/1.3 var(--font-heading);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational .nx-values-internal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 10px 22px;
+  border-top: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.nexus-operational .nx-values-internal strong {
+  color: var(--foreground);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational .nx-record-identity {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  max-width: 480px;
+}
+.nexus-operational .nx-record-primary {
+  font-weight: 500;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-record-code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+}
+.nexus-operational .nx-record-secondary {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.nexus-operational .nx-filter-bar label {
+  display: grid;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-filter-bar label:first-child {
+  flex: 1;
+  min-width: 220px;
+}
+.nexus-operational .nx-filter-bar input {
+  width: 100%;
+}
+.nexus-operational .nx-filter-count {
+  padding-bottom: 10px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  padding: 4px;
+  border-radius: 10px;
+}
+.nexus-operational .nx-number-list {
+  display: grid;
+  gap: 0;
+  font-size: 14px;
+}
+.nexus-operational .nx-number-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.nexus-operational .nx-number-list > div:last-child {
+  border-bottom: 0;
+  font-weight: 500;
+}
+.nexus-operational .nx-number-list dt {
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-number-list dd {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational .nx-planning-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.nexus-operational .nx-inline-notice {
+  border-left: 3px solid var(--warning);
+  background: var(--card);
+  padding: 12px 16px;
+  color: var(--warning);
+  font-size: 14px;
+}
+.nexus-operational .nx-parameters {
+  display: grid;
+  gap: 24px;
+}
+.nexus-operational .nx-parameter-group {
+  min-width: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.nexus-operational .nx-parameter-group legend {
+  padding-right: 12px;
+  font: 500 18px var(--font-heading);
+}
+.nexus-operational .nx-parameter-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 24px;
+}
+.nexus-operational .nx-parameter-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 7px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.nexus-operational .nx-parameter-field input:not([type="checkbox"]) {
+  min-height: 40px;
+}
+.nexus-operational .nx-parameter-field:has(input[type="checkbox"]) {
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  align-self: end;
+  min-height: 40px;
+}
+.nexus-operational .nx-parameter-field input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+}
+.nexus-operational .nx-timeline {
+  display: grid;
+  padding-left: 8px;
+}
+.nexus-operational .nx-timeline li {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 0 0 20px 20px;
+  border-left: 1px solid var(--border);
+  font-size: 14px;
+}
+.nexus-operational .nx-timeline li::before {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--muted-foreground);
+  border-radius: 50%;
+  left: -4px;
+  top: 7px;
+}
+.nexus-operational .nx-timeline time {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.nexus-operational .nx-timeline p {
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-document-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: start;
+}
+.nexus-operational .nx-document-paper {
+  --foreground: var(--nx-ink);
+  --muted-foreground: var(--nx-paper-muted);
+  --border: var(--nx-paper-border);
+  --warning: oklch(0.43 0.1 65);
+  background: var(--nx-paper);
+  color: var(--foreground);
+  padding: clamp(20px, 3vw, 44px);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 15px;
+  box-shadow: 0 2px 5px oklch(0 0 0 / 0.15);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-document-paper h3 {
+  font: 600 18px var(--font-heading);
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.nexus-operational .nx-document-paper .text-xs {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.nexus-operational .nx-document-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px;
+  border-bottom: 2px solid var(--foreground);
+  padding-bottom: 18px;
+}
+.nexus-operational .nx-document-masthead .nx-document-brand {
+  font: 600 26px var(--font-heading);
+  letter-spacing: 0.12em;
+}
+.nexus-operational .nx-document-paper table {
+  font-size: 13px;
+}
+.nexus-operational .nx-document-paper th {
+  text-align: left;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  padding: 10px 8px 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.nexus-operational .nx-document-paper td {
+  padding: 10px 8px 10px 0;
+  overflow-wrap: anywhere;
+}
+.nexus-operational .nx-document-paper th:last-child {
+  text-align: right;
+}
+.nexus-operational .nx-document-values > div[data-total="true"] {
+  font-size: 24px;
+  padding: 16px 0 4px;
+}
+.nexus-operational .nx-document-values > div[data-total="true"] dt {
+  color: var(--foreground);
+}
+.nexus-operational .nx-document-tools {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.nexus-operational .nx-inline-form {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.nexus-operational .nx-inline-form > label,
+.nexus-operational .nx-inline-form > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.nexus-operational .nx-inline-form input,
+.nexus-operational .nx-inline-form select {
+  max-width: 100%;
+  min-height: 40px;
+}
+.nexus-operational .nx-inline-form .nx-field-wide {
+  flex: 1 1 280px;
+}
+.nexus-operational .nx-inline-form .nx-field-wide input {
+  width: 100%;
+}
+.nexus-operational .nx-inline-form .nx-field-short {
+  width: 110px;
+}
+.nexus-operational .nx-order-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 7px;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-order-total {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-order-total span {
+  font: 600 28px var(--font-heading);
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+.nexus-operational .nx-order-list {
+  display: grid;
+}
+.nexus-operational .nx-order-list > li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.nexus-operational .nx-order-list > li:last-child {
+  border: 0;
+}
+.nexus-operational .nx-client-context {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 20px;
+  font-size: 14px;
+  min-width: 0;
+}
+.nexus-operational .nx-client-context ul {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+.nexus-operational .nx-product-details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nexus-operational .nx-product-details label:not(:has(input[type="checkbox"])) {
+  display: grid;
+  gap: 8px;
+}
+.nexus-operational .nx-product-details select,
+.nexus-operational .nx-product-details input:not([type="checkbox"]) {
+  margin-left: 0;
+  min-height: 40px;
+  width: 100%;
+}
+.nexus-operational .nx-product-details input[type="checkbox"] {
+  min-height: 20px;
+  width: 20px;
+  vertical-align: middle;
+  accent-color: var(--primary);
+}
+.nx-prompt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: oklch(0.08 0.01 156 / 0.78);
+}
+.nx-prompt-dialog {
+  position: fixed;
+  z-index: 71;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(460px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 8px 30px oklch(0 0 0 / 0.25);
+}
+.nx-prompt-title {
+  font: 600 22px var(--font-heading);
+}
+.nx-prompt-description {
+  margin: 8px 0 20px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nx-prompt-dialog label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.nx-prompt-dialog input {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--input);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 16px;
+}
+.nx-prompt-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+@media (max-width: 1200px) {
+  .nexus-operational .nx-document-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nexus-operational .nx-document-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nexus-operational .nx-values-main {
+    flex-wrap: wrap;
+  }
+  .nexus-operational .nx-values-total {
+    flex: 1;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+}
+@media (max-width: 768px) {
+  .nexus-operational .nx-product-details {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nexus-operational .nx-parameter-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nexus-operational .nx-values-parts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nexus-operational .nx-values-total dd {
+    font-size: 28px;
+  }
+}
+@media (max-width: 540px) {
+  .nexus-operational .nx-document-tools,
+  .nexus-operational .nx-parameter-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nexus-operational .nx-inline-form > label,
+  .nexus-operational .nx-inline-form > div {
+    width: 100%;
+  }
+  .nexus-operational .nx-inline-form input,
+  .nexus-operational .nx-inline-form select {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  .nexus-operational .nx-inline-form .nx-field-short {
+    width: calc(50% - 8px);
+  }
+  .nexus-operational .nx-document-paper {
+    padding: 20px 16px;
+  }
+  .nexus-operational .nx-document-masthead > div:last-child {
+    text-align: left;
+  }
+  .nexus-operational .nx-document-paper table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  .nexus-operational .nx-document-paper th:first-child {
+    width: 28px;
+  }
+}
+@media print {
+  .nexus-operational .nx-document-workspace {
+    display: block;
+  }
+  .nexus-operational .nx-document-paper {
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .nexus-operational .nx-document-tools {
+    display: none;
+  }
+  .nexus-operational .nx-document-paper h3 {
+    break-after: avoid;
+  }
+  .nexus-operational .nx-document-paper tr {
+    break-inside: avoid;
+  }
+}

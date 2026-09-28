@@ -1,0 +1,419 @@
+{
+  "date": "2026-09-27T23:05:28.827Z",
+  "errors": [],
+  "dialogs": [
+    {
+      "type": "prompt",
+      "message": "Justificativa para alterar o custo de COMP-001 nesta proposta (o catálogo não é alterado):"
+    }
+  ],
+  "checks": [
+    {
+      "name": "mobile select-all is visible",
+      "pass": true
+    },
+    {
+      "name": "mobile select-all selects all records",
+      "pass": true
+    },
+    {
+      "name": "mobile menu focus",
+      "pass": true,
+      "active": "Dashboard"
+    },
+    {
+      "name": "mobile menu Escape returns focus",
+      "pass": true
+    },
+    {
+      "name": "mobile inspector fits",
+      "pass": true,
+      "width": 390,
+      "height": 844,
+      "modal": true,
+      "activeInside": true
+    },
+    {
+      "name": "inspector keyboard focus retained",
+      "pass": true
+    },
+    {
+      "name": "inspector Escape returns focus",
+      "pass": true
+    },
+    {
+      "name": "inspector resize preserves DOM and draft",
+      "pass": true,
+      "value": "12999.2345",
+      "sameNode": true
+    },
+    {
+      "name": "wide inspector inline",
+      "pass": true
+    },
+    {
+      "name": "restricted profile has no cost input",
+      "pass": true
+    },
+    {
+      "name": "readonly controls disabled",
+      "pass": true
+    },
+    {
+      "name": "receipt cancellation does not mutate",
+      "pass": true
+    },
+    {
+      "name": "current step remains visible after resize",
+      "pass": true,
+      "item": {
+        "left": 305.953125,
+        "right": 377.796875
+      },
+      "rail": {
+        "left": 12,
+        "right": 378
+      }
+    }
+  ],
+  "contrast": [
+    {
+      "foreground": "--foreground",
+      "background": "--background",
+      "rgb": [
+        [
+          244,
+          247,
+          240
+        ],
+        [
+          13,
+          21,
+          18
+        ]
+      ],
+      "ratio": 17.129064825022844,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--foreground",
+      "background": "--card",
+      "rgb": [
+        [
+          244,
+          247,
+          240
+        ],
+        [
+          21,
+          34,
+          27
+        ]
+      ],
+      "ratio": 15.204720555949281,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--foreground",
+      "background": "--popover",
+      "rgb": [
+        [
+          244,
+          247,
+          240
+        ],
+        [
+          29,
+          48,
+          37
+        ]
+      ],
+      "ratio": 12.924482545194243,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--background",
+      "rgb": [
+        [
+          189,
+          204,
+          191
+        ],
+        [
+          13,
+          21,
+          18
+        ]
+      ],
+      "ratio": 11.078523283103367,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--card",
+      "rgb": [
+        [
+          189,
+          204,
+          191
+        ],
+        [
+          21,
+          34,
+          27
+        ]
+      ],
+      "ratio": 9.833919855688317,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--muted-foreground",
+      "background": "--popover",
+      "rgb": [
+        [
+          189,
+          204,
+          191
+        ],
+        [
+          29,
+          48,
+          37
+        ]
+      ],
+      "ratio": 8.359135905062844,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--primary-foreground",
+      "background": "--primary",
+      "rgb": [
+        [
+          0,
+          26,
+          12
+        ],
+        [
+          80,
+          243,
+          99
+        ]
+      ],
+      "ratio": 12.43770411905562,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--warning",
+      "background": "--nx-warning-surface",
+      "rgb": [
+        [
+          244,
+          189,
+          86
+        ],
+        [
+          48,
+          39,
+          24
+        ]
+      ],
+      "ratio": 8.57901323727797,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--destructive",
+      "background": "--nx-error-surface",
+      "rgb": [
+        [
+          255,
+          139,
+          134
+        ],
+        [
+          57,
+          30,
+          28
+        ]
+      ],
+      "ratio": 6.748738976615549,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--background",
+      "rgb": [
+        [
+          118,
+          144,
+          128
+        ],
+        [
+          13,
+          21,
+          18
+        ]
+      ],
+      "ratio": 5.358081999967106,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--card",
+      "rgb": [
+        [
+          118,
+          144,
+          128
+        ],
+        [
+          21,
+          34,
+          27
+        ]
+      ],
+      "ratio": 4.7561346960605615,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--input",
+      "background": "--popover",
+      "rgb": [
+        [
+          118,
+          144,
+          128
+        ],
+        [
+          29,
+          48,
+          37
+        ]
+      ],
+      "ratio": 4.042861533405515,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--ring",
+      "background": "--background",
+      "rgb": [
+        [
+          80,
+          243,
+          99
+        ],
+        [
+          13,
+          21,
+          18
+        ]
+      ],
+      "ratio": 12.65671854107286,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--ring",
+      "background": "--card",
+      "rgb": [
+        [
+          80,
+          243,
+          99
+        ],
+        [
+          21,
+          34,
+          27
+        ]
+      ],
+      "ratio": 11.23481465790169,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "foreground": "--nx-ink",
+      "background": "--nx-paper",
+      "rgb": [
+        [
+          20,
+          29,
+          23
+        ],
+        [
+          248,
+          249,
+          244
+        ]
+      ],
+      "ratio": 16.297316386602454,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "foreground": "--nx-paper-muted",
+      "background": "--nx-paper",
+      "rgb": [
+        [
+          70,
+          80,
+          73
+        ],
+        [
+          248,
+          249,
+          244
+        ]
+      ],
+      "ratio": 7.926189586275374,
+      "minimum": 4.5,
+      "pass": true
+    }
+  ],
+  "receiptPayload": [
+    {
+      "name": "registrarMovimento",
+      "payload": {
+        "data": {
+          "tipo": "recebimento",
+          "item_id": "order-item-0",
+          "quantidade": 3.5,
+          "chave": "09a20753-5392-4f78-8eef-a7c9af6233cc"
+        }
+      }
+    }
+  ],
+  "productionPayload": [
+    {
+      "name": "registrarMovimento",
+      "payload": {
+        "data": {
+          "tipo": "apontamento",
+          "item_id": "order-item-0",
+          "quantidade": 2.5,
+          "chave": "22fac270-f1c9-4ae9-873f-d68c5e1d282b"
+        }
+      }
+    }
+  ],
+  "reducedMotion": {
+    "matches": true,
+    "animated": 0,
+    "transitionDurations": [
+      "0s",
+      "0s, 0s, 0s"
+    ]
+  }
+}

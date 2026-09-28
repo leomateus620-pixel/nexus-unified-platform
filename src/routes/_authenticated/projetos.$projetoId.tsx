@@ -12,6 +12,7 @@ import {
 } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
 import { brl, qtd } from "@/lib/format";
+import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 
 export const Route = createFileRoute("/_authenticated/projetos/$projetoId")({
   head: () => ({
@@ -66,7 +67,7 @@ function Page() {
     : null;
   return (
     <div className="space-y-4">
-      <nav className="text-xs text-muted-foreground">
+      <nav className="nx-order-context" aria-label="Projeto atual">
         <Link to="/projetos" className="hover:text-foreground">
           Projetos
         </Link>{" "}
@@ -91,15 +92,19 @@ function Page() {
           {p.ordens_compra.length === 0 ? (
             <EmptyState title="Nenhuma OC" />
           ) : (
-            <ul className="text-sm">
+            <ul className="nx-order-list">
               {p.ordens_compra.map((o) => (
-                <li key={o.id} className="flex justify-between py-1">
+                <li key={o.id}>
                   <Link
                     to="/compras/ordens-compra/$ordemId"
                     params={{ ordemId: o.id }}
                     className="text-primary"
                   >
-                    {o.numero} · {(o.fornecedores as { nome: string } | null)?.nome}
+                    <RecordIdentity
+                      code
+                      primary={o.numero}
+                      secondary={(o.fornecedores as { nome: string } | null)?.nome}
+                    />
                   </Link>
                   <StatusBadge value={o.status} />
                 </li>
@@ -111,15 +116,15 @@ function Page() {
           {p.ordens_producao.length === 0 ? (
             <EmptyState title="Nenhuma OP" />
           ) : (
-            <ul className="text-sm">
+            <ul className="nx-order-list">
               {p.ordens_producao.map((o) => (
-                <li key={o.id} className="flex justify-between py-1">
+                <li key={o.id}>
                   <Link
                     to="/compras/ordens-producao/$ordemId"
                     params={{ ordemId: o.id }}
                     className="text-primary"
                   >
-                    {o.numero}
+                    <RecordIdentity code primary={o.numero} />
                   </Link>
                   <StatusBadge value={o.status} />
                 </li>
@@ -128,7 +133,10 @@ function Page() {
           )}
         </Section>
       </div>
-      <Section title="Materiais">
+      <Section
+        title="Materiais do projeto"
+        description="Necessidade planejada e quantidade atendida por recebimento ou produção."
+      >
         {p.demandas.length === 0 ? (
           <EmptyState title="Sem demanda planejada" />
         ) : (

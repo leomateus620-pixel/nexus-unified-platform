@@ -1,0 +1,482 @@
+{
+  "date": "2026-09-27T22:49:04.112Z",
+  "browser": "149.0.7827.55",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpus": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logicalCpus": 4
+  },
+  "methodology": "Synthetic presentation-only fixtures; actual source components/hooks/handlers. Browser events to second requestAnimationFrame (conservative local paint proxy, not server time). No CPU throttle. Five observations including the first interaction per count/action, 1366×768. Physical keyboard/zoom/mobile device unavailable. No production backend reachable.",
+  "performance": [
+    {
+      "count": 17,
+      "action": "input",
+      "medianMs": 25.59999990463257,
+      "maxMs": 31.299999952316284,
+      "samples": [
+        {
+          "ms": 20.299999952316284,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 17.90000009536743,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 25.59999990463257,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.299999952316284,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 29.700000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "selection",
+      "medianMs": 31.700000047683716,
+      "maxMs": 32.200000047683716,
+      "samples": [
+        {
+          "ms": 19.299999952316284,
+          "nodes": 557,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 30.799999952316284,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 31.700000047683716,
+          "nodes": 557,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 31.799999952316284,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 32.200000047683716,
+          "nodes": 557,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "panel",
+      "medianMs": 29.09999990463257,
+      "maxMs": 33.09999990463257,
+      "samples": [
+        {
+          "ms": 33.09999990463257,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 29.09999990463257,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 27.699999809265137,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 29.799999952316284,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 24,
+          "nodes": 595,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "scroll",
+      "medianMs": 31.200000047683716,
+      "maxMs": 31.700000047683716,
+      "samples": [
+        {
+          "ms": 3.4000000953674316,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.700000047683716,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.40000009536743,
+          "nodes": 544,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "input",
+      "medianMs": 73.90000009536743,
+      "maxMs": 78.5,
+      "samples": [
+        {
+          "ms": 69.5,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 78.5,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 73.90000009536743,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 74.10000014305115,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 64.30000019073486,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "selection",
+      "medianMs": 67.20000004768372,
+      "maxMs": 71.29999995231628,
+      "samples": [
+        {
+          "ms": 63.60000014305115,
+          "nodes": 1885,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 71.29999995231628,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 70.09999990463257,
+          "nodes": 1885,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 63.69999980926514,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 67.20000004768372,
+          "nodes": 1885,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "panel",
+      "medianMs": 68.79999995231628,
+      "maxMs": 79.19999980926514,
+      "samples": [
+        {
+          "ms": 79.19999980926514,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 71.20000004768372,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 68.79999995231628,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 39.60000014305115,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 36.60000014305115,
+          "nodes": 1923,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "scroll",
+      "medianMs": 31.40000009536743,
+      "maxMs": 31.59999990463257,
+      "samples": [
+        {
+          "ms": 14.100000143051147,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.40000009536743,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.199999809265137,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.59999990463257,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.59999990463257,
+          "nodes": 1872,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "input",
+      "medianMs": 98.90000009536743,
+      "maxMs": 263.2000000476837,
+      "samples": [
+        {
+          "ms": 263.2000000476837,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 121.29999995231628,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 98.90000009536743,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 70.5,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 69.70000004768372,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "selection",
+      "medianMs": 86.40000009536743,
+      "maxMs": 275.7000000476837,
+      "samples": [
+        {
+          "ms": 275.7000000476837,
+          "nodes": 8285,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 159.5,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 86.40000009536743,
+          "nodes": 8285,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 82.10000014305115,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        },
+        {
+          "ms": 82.60000014305115,
+          "nodes": 8285,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.021601167511452576
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "panel",
+      "medianMs": 127.70000004768372,
+      "maxMs": 323.2000000476837,
+      "samples": [
+        {
+          "ms": 323.2000000476837,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 127.70000004768372,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 124,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 169.69999980926514,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 123.90000009536743,
+          "nodes": 8323,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "scroll",
+      "medianMs": 31.200000047683716,
+      "maxMs": 31.40000009536743,
+      "samples": [
+        {
+          "ms": 4.299999952316284,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.40000009536743,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 29,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.200000047683716,
+          "nodes": 8272,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    }
+  ],
+  "overflow": [
+    {
+      "screen": "dimensionamento",
+      "width": 768,
+      "pageWidth": 809
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1024,
+      "pageWidth": 1049
+    }
+  ],
+  "note": "Initial design measurement before memoization and tablet layout correction. Retained for comparison; final results.json is the final validation."
+}

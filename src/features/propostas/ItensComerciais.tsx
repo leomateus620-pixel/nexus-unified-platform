@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import {
   ActionButton,
@@ -21,6 +21,9 @@ import {
   useSave,
 } from "./hooks";
 
+import { EditorInput, EditorInspector, EditorSaveState } from "./ui/EditorWorkspace";
+import { CommercialItemRow } from "./ui/CommercialItemRow";
+
 type Comp = NonNullable<ReturnType<typeof useComponentes>["data"]>[number];
 
 export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
@@ -37,6 +40,25 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const [aberto, setAberto] = useState<string | null>(null);
   const [colar, setColar] = useState("");
   const [erroColar, setErroColar] = useState<string | null>(null);
+  const inspectorTrigger = useRef<HTMLButtonElement | null>(null);
+  const inspectItem = useCallback((id: string, trigger: HTMLButtonElement) => {
+    inspectorTrigger.current = trigger;
+    setAberto(id);
+  }, []);
+  const toggleItem = useCallback((id: string, checked: boolean) => {
+    setSel((previous) => {
+      const next = new Set(previous);
+      if (checked) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  }, []);
+  const params = useMemo(() => mesclarParametros(rev.data?.parametros), [rev.data?.parametros]);
+  const verCusto = org.data?.canSeeCosts ?? false;
+  const fornecedoresPorId = useMemo(
+    () => new Map((forn.data ?? []).map((f) => [f.id, f.nome])),
+    [forn.data],
+  );
 
   const lista = useMemo(() => {
     const q = busca.toLowerCase();
@@ -46,13 +68,21 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         (!filtroMod || c.modalidade === filtroMod),
     );
   }, [comps.data, busca, filtroMod]);
+  const linhasVisuais = useMemo(
+    () =>
+      lista.map((c) => ({
+        item: c,
+        supplier: fornecedoresPorId.get(c.fornecedor_id ?? "") ?? "Sem fornecedor definido",
+        cost: verCusto ? brlUnit(Number(c.custo_adotado)) : null,
+        price: brlUnit(precoUnitario(Number(c.custo_adotado), params).preco),
+      })),
+    [lista, fornecedoresPorId, verCusto, params],
+  );
 
   if (rev.isPending || comps.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   if (comps.isError) return <ErrorState error={comps.error} onRetry={() => comps.refetch()} />;
   const editavel = rev.data.editavel;
-  const params = mesclarParametros(rev.data.parametros);
-  const verCusto = org.data?.canSeeCosts ?? false;
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
     save.set("salvando");
@@ -111,8 +141,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   }
 
   const detalhe = (comps.data ?? []).find((c) => c.id === aberto) ?? null;
-  const input =
-    "h-8 rounded border border-input bg-background px-2 text-sm text-foreground disabled:opacity-60";
+  const input = "nx-editor-input";
 
   if (!comps.data?.length)
     return (
@@ -123,35 +152,57 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     );
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1fr_360px]">
+    <div className="nx-editor-workspace" data-inspector={!!detalhe}>
       <Section
         title="Itens comerciais"
-        description="Cópia versionada do catálogo para esta revisão. Custos editados aqui não alteram o catálogo."
+        description="Catálogo adotado nesta revisão. Selecione um item para editar seus valores e consultar a memória de preço."
       >
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <input
-            aria-label="Buscar"
-            placeholder="Buscar código, descrição, fabricante"
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            className={`${input} w-64`}
-          />
-          <select
-            aria-label="Modalidade"
-            value={filtroMod}
-            onChange={(e) => setFiltroMod(e.target.value)}
-            className={input}
-          >
-            <option value="">Todas as modalidades</option>
-            <option value="comprar">Comprar</option>
-            <option value="fabricar">Fabricar</option>
-            <option value="terceirizar">Terceirizar</option>
-          </select>
-          {sel.size > 0 && editavel && (
-            <>
-              <span className="text-xs text-muted-foreground">{sel.size} selecionado(s):</span>
+        <div className="nx-editor-toolbar">
+          <label className="nx-editor-search">
+            Buscar item
+            <input
+              placeholder="Código, descrição ou fabricante"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              className={input}
+            />
+          </label>
+          <label>
+            Modalidade
+            <select
+              value={filtroMod}
+              onChange={(e) => setFiltroMod(e.target.value)}
+              className={input}
+            >
+              <option value="">Todas as modalidades</option>
+              <option value="comprar">Comprar</option>
+              <option value="fabricar">Fabricar</option>
+              <option value="terceirizar">Terceirizar</option>
+            </select>
+          </label>
+          {lista.length > 0 && (
+            <label className="nx-editor-select-all">
+              <input
+                type="checkbox"
+                aria-label="Selecionar todos os itens filtrados"
+                checked={sel.size === lista.length && lista.length > 0}
+                onChange={(e) =>
+                  setSel(e.target.checked ? new Set(lista.map((c) => c.id)) : new Set())
+                }
+              />
+              Selecionar todos
+            </label>
+          )}
+          <span className="nx-editor-count">
+            {lista.length} de {comps.data.length} itens
+          </span>
+        </div>
+        {sel.size > 0 && editavel && (
+          <div className="nx-editor-batch" aria-label="Ações para itens selecionados">
+            <strong>{sel.size} selecionado(s)</strong>
+            <label>
+              Modalidade em lote
               <select
-                aria-label="Modalidade em lote"
                 defaultValue=""
                 onChange={(e) =>
                   e.target.value && atualizar([...sel], { modalidade: e.target.value })
@@ -163,8 +214,10 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 <option value="fabricar">Fabricar</option>
                 <option value="terceirizar">Terceirizar</option>
               </select>
+            </label>
+            <label>
+              Fornecedor em lote
               <select
-                aria-label="Fornecedor em lote"
                 defaultValue=""
                 onChange={(e) =>
                   e.target.value && atualizar([...sel], { fornecedor_id: e.target.value })
@@ -178,164 +231,198 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                   </option>
                 ))}
               </select>
-            </>
-          )}
-        </div>
-        <div className="max-h-[65vh] overflow-auto">
-          <table className="w-full min-w-[900px] text-sm">
-            <thead className="sticky top-0 z-10 bg-card text-left text-xs uppercase text-muted-foreground">
-              <tr className="border-b border-border">
-                <th className="px-2 py-2">
-                  <input
-                    type="checkbox"
-                    aria-label="Selecionar todos"
-                    checked={sel.size === lista.length && lista.length > 0}
-                    onChange={(e) =>
-                      setSel(e.target.checked ? new Set(lista.map((c) => c.id)) : new Set())
-                    }
-                  />
-                </th>
-                <th className="px-2">Código</th>
-                <th className="px-2">Descrição</th>
-                <th className="px-2">Un.</th>
-                <th className="px-2">Modalidade</th>
-                <th className="px-2">Fornecedor</th>
-                {verCusto && <th className="px-2 text-right">Custo adotado</th>}
-                <th className="px-2 text-right">Preço unit. (calc.)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lista.map((c) => (
-                <tr
-                  key={c.id}
-                  className={`border-b border-border/60 ${aberto === c.id ? "bg-accent/50" : ""}`}
-                >
-                  <td className="px-2">
-                    <input
-                      type="checkbox"
-                      aria-label={`Selecionar ${c.codigo}`}
-                      checked={sel.has(c.id)}
-                      onChange={(e) => {
-                        const n = new Set(sel);
-                        if (e.target.checked) n.add(c.id);
-                        else n.delete(c.id);
-                        setSel(n);
-                      }}
-                    />
-                  </td>
-                  <td className="px-2 font-mono text-xs">
-                    <button
-                      className="text-primary underline-offset-2 hover:underline"
-                      onClick={() => setAberto(c.id)}
-                    >
-                      {c.codigo}
-                    </button>
-                  </td>
-                  <td className="px-2 py-2">
-                    {c.descricao}
-                    <span className="block text-xs text-muted-foreground">
-                      {c.fabricante ?? "—"} · NCM {c.ncm ?? "—"}
-                    </span>
-                  </td>
-                  <td className="px-2">{c.unidade}</td>
-                  <td className="px-2">
-                    <select
-                      aria-label="Modalidade"
-                      disabled={!editavel}
-                      value={c.modalidade}
-                      onChange={(e) => atualizar([c.id], { modalidade: e.target.value })}
-                      className={input}
-                    >
-                      <option value="comprar">Comprar</option>
-                      <option value="fabricar">Fabricar</option>
-                      <option value="terceirizar">Terceirizar</option>
-                    </select>
-                  </td>
-                  <td className="px-2">
-                    <select
-                      aria-label="Fornecedor"
-                      disabled={!editavel}
-                      value={c.fornecedor_id ?? ""}
-                      onChange={(e) => atualizar([c.id], { fornecedor_id: e.target.value || null })}
-                      className={`${input} max-w-44`}
-                    >
-                      <option value="">—</option>
-                      {(forn.data ?? []).map((f) => (
-                        <option key={f.id} value={f.id}>
-                          {f.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
+            </label>
+            <button className="nx-editor-link" onClick={() => setSel(new Set())}>
+              Limpar seleção
+            </button>
+          </div>
+        )}
+        <EditorSaveState editavel={editavel} />
+        {lista.length === 0 ? (
+          <EmptyState
+            title="Nenhum item corresponde aos filtros"
+            hint="Revise o código, a descrição ou a modalidade selecionada."
+            action={
+              <ActionButton
+                variant="ghost"
+                onClick={() => {
+                  setBusca("");
+                  setFiltroMod("");
+                }}
+              >
+                Limpar filtros
+              </ActionButton>
+            }
+          />
+        ) : (
+          <div
+            className="nx-editor-table-wrap"
+            tabIndex={0}
+            role="region"
+            aria-label="Itens comerciais, tabela com rolagem horizontal"
+          >
+            <table
+              className="nx-editor-table nx-commercial-table"
+              role="table"
+              aria-label="Itens comerciais desta revisão"
+            >
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader">
+                    Seleção
+                  </th>
+                  <th scope="col" role="columnheader">
+                    Item / descrição
+                  </th>
+                  <th scope="col" role="columnheader">
+                    Un.
+                  </th>
+                  <th scope="col" role="columnheader">
+                    Modalidade / fornecedor
+                  </th>
                   {verCusto && (
-                    <td className="px-2 text-right">
-                      <input
-                        aria-label={`Custo ${c.codigo}`}
-                        type="number"
-                        step="0.0001"
-                        min={0}
-                        disabled={!editavel}
-                        defaultValue={Number(c.custo_adotado)}
-                        key={`${c.id}-${c.custo_adotado}`}
-                        onBlur={(e) => alterarCusto(c, Number(e.target.value))}
-                        className={`${input} w-28 text-right tabular-nums`}
-                      />
-                    </td>
+                    <th scope="col" role="columnheader" data-numeric>
+                      Custo nesta revisão
+                    </th>
                   )}
-                  <td className="px-2 text-right tabular-nums text-muted-foreground">
-                    {brlUnit(precoUnitario(Number(c.custo_adotado), params).preco)}
-                  </td>
+                  <th scope="col" role="columnheader" data-numeric>
+                    Preço unit. (calc.)
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody role="rowgroup">
+                {linhasVisuais.map(({ item, supplier, cost, price }) => (
+                  <CommercialItemRow
+                    key={item.id}
+                    item={item}
+                    selected={aberto === item.id}
+                    checked={sel.has(item.id)}
+                    editable={editavel}
+                    supplier={supplier}
+                    cost={cost}
+                    price={price}
+                    onInspect={inspectItem}
+                    onToggle={toggleItem}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         {editavel && verCusto && (
-          <details className="mt-4">
-            <summary className="cursor-pointer text-xs text-muted-foreground">
-              Colar custos de planilha (código ⇥ custo)
-            </summary>
-            <textarea
-              value={colar}
-              onChange={(e) => setColar(e.target.value)}
-              rows={4}
-              className="mt-2 w-full rounded border border-input bg-background p-2 font-mono text-xs text-foreground"
-              placeholder={"COMP-05\t12,94"}
-            />
-            {erroColar && <p className="text-xs text-destructive">{erroColar}</p>}
+          <details className="nx-editor-paste">
+            <summary>Colar custos de planilha</summary>
+            <label className="nx-editor-field">
+              Código ⇥ custo · uma linha por item
+              <textarea
+                value={colar}
+                onChange={(e) => setColar(e.target.value)}
+                rows={4}
+                className={input}
+                aria-invalid={!!erroColar}
+                aria-describedby={erroColar ? "nx-cost-paste-error" : undefined}
+                placeholder={"COMP-05\t12,94"}
+              />
+            </label>
+            {erroColar && (
+              <p id="nx-cost-paste-error" className="nx-editor-error" role="alert">
+                {erroColar}
+              </p>
+            )}
             <ActionButton variant="ghost" onClick={aplicarColagem} disabled={!colar.trim()}>
               Validar e aplicar
             </ActionButton>
           </details>
         )}
       </Section>
-
-      <aside className="rounded-lg border border-border bg-card p-4 text-sm xl:sticky xl:top-40 xl:self-start">
-        {!detalhe ? (
-          <p className="text-muted-foreground">Selecione um código para ver o cálculo do preço.</p>
-        ) : (
-          <div className="space-y-2">
-            <p className="font-mono text-xs text-primary">{detalhe.codigo}</p>
-            <p className="font-medium text-foreground">{detalhe.descricao}</p>
-            <p className="text-xs text-muted-foreground">
-              {detalhe.fabricante ?? "—"} · {detalhe.unidade} · NCM {detalhe.ncm ?? "—"}
-            </p>
+      <EditorInspector
+        open={!!detalhe}
+        title="Item comercial"
+        description="Valores e condições nesta revisão"
+        onClose={() => setAberto(null)}
+        returnFocus={inspectorTrigger}
+      >
+        {detalhe && (
+          <>
+            <div className="nx-inspector-identity">
+              <span className="nx-editor-code">{detalhe.codigo}</span>
+              <h3>{detalhe.descricao}</h3>
+              <span className="nx-editor-meta">
+                {detalhe.fabricante ?? "Fabricante não informado"} · {detalhe.unidade} · NCM{" "}
+                {detalhe.ncm ?? "—"}
+              </span>
+            </div>
+            <div className="nx-inspector-fields">
+              <h4>Condições do item</h4>
+              <label className="nx-editor-field">
+                Modalidade
+                <select
+                  disabled={!editavel}
+                  value={detalhe.modalidade}
+                  onChange={(e) => atualizar([detalhe.id], { modalidade: e.target.value })}
+                  className={input}
+                >
+                  <option value="comprar">Comprar</option>
+                  <option value="fabricar">Fabricar</option>
+                  <option value="terceirizar">Terceirizar</option>
+                </select>
+              </label>
+              <label className="nx-editor-field">
+                Fornecedor
+                <select
+                  disabled={!editavel}
+                  value={detalhe.fornecedor_id ?? ""}
+                  onChange={(e) =>
+                    atualizar([detalhe.id], { fornecedor_id: e.target.value || null })
+                  }
+                  className={input}
+                >
+                  <option value="">Sem fornecedor definido</option>
+                  {(forn.data ?? []).map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.nome}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {verCusto && (
+                <label className="nx-editor-field">
+                  Custo nesta revisão · R$
+                  <EditorInput
+                    aria-label={`Custo ${detalhe.codigo}`}
+                    type="number"
+                    step="0.0001"
+                    min={0}
+                    disabled={!editavel}
+                    defaultValue={Number(detalhe.custo_adotado)}
+                    key={`${detalhe.id}-${detalhe.custo_adotado}`}
+                    onBlur={(e) => alterarCusto(detalhe, Number(e.target.value))}
+                    className={`${input} text-right tabular-nums`}
+                  />
+                  <span>A alteração exige justificativa e preserva o catálogo global.</span>
+                </label>
+              )}
+            </div>
+            <EditorSaveState editavel={editavel} />
             {verCusto ? (
-              <VerCalculo custo={Number(detalhe.custo_adotado)} params={params} />
+              <>
+                <details open className="nx-composition-memory">
+                  <summary>Memória do preço unitário</summary>
+                  <VerCalculo custo={Number(detalhe.custo_adotado)} params={params} />
+                </details>
+                <p className="nx-editor-note">
+                  Origem do custo:{" "}
+                  {detalhe.custo_origem_id
+                    ? "catálogo (vigência mais recente)"
+                    : `ajuste manual — ${detalhe.justificativa ?? "sem justificativa"}`}
+                </p>
+              </>
             ) : (
-              <p className="text-xs text-muted-foreground">
-                Custos e margens não disponíveis para o seu perfil.
-              </p>
+              <p className="nx-editor-note">Custos e margens não disponíveis para o seu perfil.</p>
             )}
-            <p className="text-xs text-muted-foreground">
-              Origem do custo:{" "}
-              {detalhe.custo_origem_id
-                ? "catálogo (vigência mais recente)"
-                : `ajuste manual — ${detalhe.justificativa ?? "sem justificativa"}`}
-            </p>
-          </div>
+          </>
         )}
-      </aside>
+      </EditorInspector>
     </div>
   );
 }
@@ -358,9 +445,9 @@ function VerCalculo({
     ["Preço de venda unitário", brlUnit(p.preco)],
   ];
   return (
-    <dl className="divide-y divide-border/60 rounded border border-border">
+    <dl className="nx-inspector-dl nx-inspector-price">
       {linhas.map(([k, v]) => (
-        <div key={k} className="flex justify-between px-2 py-1 text-xs">
+        <div key={k}>
           <dt className="text-muted-foreground">{k}</dt>
           <dd className="tabular-nums text-foreground">{v}</dd>
         </div>

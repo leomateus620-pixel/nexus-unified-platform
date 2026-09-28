@@ -8,7 +8,6 @@ import { z } from "zod";
 
 import {
   ActionButton,
-  DataTable,
   EmptyState,
   ErrorState,
   LoadingState,
@@ -17,7 +16,15 @@ import {
   StatusBadge,
 } from "@/components/nexus/Page";
 import { PromptAction, ValuesBand } from "@/components/nexus/OperationalDetails";
-import { SaveFeedback } from "@/components/nexus/Workspace";
+import {
+  ObjectCard,
+  ObjectCollection,
+  Facts,
+  ProcurementCard,
+  ProductionCard,
+  RevisionCard,
+  CollectionPage,
+} from "./ui/ObjectCards";
 import { supabase } from "@/integrations/supabase/client";
 import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
@@ -123,84 +130,77 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
       </div>
       {visao === "sistema" ? (
         <Section title="Materiais por sistema">
-          <DataTable
-            getRowId={(x) => x.sistema_id}
-            rows={r.resumo.por_sistema}
-            columns={[
-              {
-                key: "id",
-                label: "Sistema",
-                render: (x) => nomeSis.get(x.sistema_id)?.identificacao || "—",
-              },
-              { key: "tipo", label: "Tipo", render: (x) => nomeSis.get(x.sistema_id)?.tipo ?? "—" },
-              {
-                key: "ext",
-                label: "Extensão",
-                align: "right",
-                render: (x) => qtd(x.extensao_m, "m"),
-              },
-              { key: "cabo", label: "Cabo", align: "right", render: (x) => qtd(x.cabo_m, "m") },
-              {
-                key: "venda",
-                label: "Venda materiais",
-                align: "right",
-                render: (x) => brl(x.venda_materiais),
-              },
-              ...(verCusto
-                ? [
-                    {
-                      key: "custo",
-                      label: "Custo materiais",
-                      align: "right" as const,
-                      render: (x: { custo_materiais: number }) => brl(x.custo_materiais),
-                    },
-                  ]
-                : []),
-            ]}
-          />
+          <CollectionPage items={r.resumo.por_sistema}>
+            {(visible) => (
+              <ObjectCollection label="Orçamento por sistema">
+                {visible.map((x) => (
+                  <ObjectCard
+                    key={x.sistema_id}
+                    title={nomeSis.get(x.sistema_id)?.identificacao || "Sistema sem identificação"}
+                    eyebrow={nomeSis.get(x.sistema_id)?.tipo}
+                  >
+                    <p className="nx-budget-amount">
+                      {brl(x.venda_materiais)}
+                      <span>Venda de materiais</span>
+                    </p>
+                    <Facts
+                      items={[
+                        ["Extensão", qtd(x.extensao_m, "m")],
+                        ["Cabo", qtd(x.cabo_m, "m")],
+                        ...(verCusto
+                          ? [["Custo materiais", brl(x.custo_materiais)] as [string, string]]
+                          : []),
+                      ]}
+                    />
+                    <Link
+                      className="nx-card-primary"
+                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
+                      params={{ propostaId: r.proposta.id, revisaoId }}
+                    >
+                      Abrir dimensionamento →
+                    </Link>
+                  </ObjectCard>
+                ))}
+              </ObjectCollection>
+            )}
+          </CollectionPage>
         </Section>
       ) : (
         <Section title="Composição consolidada por componente">
-          <DataTable
-            getRowId={(x) => x.componente_id}
-            rows={r.resumo.por_componente}
-            columns={[
-              { key: "codigo", label: "Código" },
-              {
-                key: "desc",
-                label: "Descrição",
-                render: (x) => nomeComp.get(x.componente_id)?.descricao ?? "—",
-              },
-              {
-                key: "q",
-                label: "Quantidade",
-                align: "right",
-                render: (x) => qtd(x.quantidade, nomeComp.get(x.componente_id)?.unidade),
-              },
-              {
-                key: "pu",
-                label: "Preço unit.",
-                align: "right",
-                render: (x) => brl(x.preco_unit, 4),
-              },
-              {
-                key: "tv",
-                label: "Total venda",
-                align: "right",
-                render: (x) => brl(x.total_venda),
-              },
-              ...(verCusto
-                ? [
-                    {
-                      key: "tc",
-                      label: "Total custo",
-                      align: "right" as const,
-                      render: (x: { total_custo: number }) => brl(x.total_custo),
-                    },
-                  ]
-                : []),
-            ]}
-          />
+          <CollectionPage items={r.resumo.por_componente}>
+            {(visible) => (
+              <ObjectCollection label="Orçamento por componente">
+                {visible.map((x) => (
+                  <ObjectCard
+                    key={x.componente_id}
+                    title={nomeComp.get(x.componente_id)?.descricao ?? "Componente"}
+                    eyebrow={x.codigo}
+                  >
+                    <p className="nx-budget-amount">
+                      {brl(x.total_venda)}
+                      <span>Total de venda</span>
+                    </p>
+                    <Facts
+                      items={[
+                        ["Quantidade", qtd(x.quantidade, nomeComp.get(x.componente_id)?.unidade)],
+                        ["Preço unitário", brl(x.preco_unit, 4)],
+                        ...(verCusto
+                          ? [["Total custo", brl(x.total_custo)] as [string, string]]
+                          : []),
+                      ]}
+                    />
+                    <Link
+                      className="nx-card-primary"
+                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
+                      params={{ propostaId: r.proposta.id, revisaoId }}
+                    >
+                      Abrir itens comerciais →
+                    </Link>
+                  </ObjectCard>
+                ))}
+              </ObjectCollection>
+            )}
+          </CollectionPage>
         </Section>
       )}
       <div className="grid gap-4 lg:grid-cols-2">
@@ -367,64 +367,94 @@ export function Planejamento({
           }
         >
           {(rows) => (
-            <DataTable
-              getRowId={(d) => d.id}
-              rows={rows}
-              columns={[
-                {
-                  key: "cod",
-                  label: "Código",
-                  render: (d) => d.revisao_componentes?.codigo ?? "—",
-                },
-                {
-                  key: "desc",
-                  label: "Descrição",
-                  render: (d) => d.revisao_componentes?.descricao ?? "—",
-                },
-                { key: "mod", label: "Modalidade", render: (d) => d.modalidade },
-                ...(modo === "compras"
-                  ? [
-                      {
-                        key: "f",
-                        label: "Fornecedor",
-                        render: (d: D) =>
-                          (d.revisao_componentes?.fornecedores as { nome: string } | null)
-                            ?.nome ?? <span className="text-warning">Selecionar</span>,
-                      },
-                    ]
-                  : []),
-                {
-                  key: "nec",
-                  label: "Necessidade",
-                  align: "right",
-                  render: (d) =>
-                    qtd(Number(d.quantidade_necessaria), d.revisao_componentes?.unidade),
-                },
-                {
-                  key: "aloc",
-                  label: "Comprometida",
-                  align: "right",
-                  render: (d) => qtd(alocado(d), d.revisao_componentes?.unidade),
-                },
-                {
-                  key: "real",
-                  label: modo === "compras" ? "Recebida" : "Produzida",
-                  align: "right",
-                  render: (d) => qtd(realizado(d), d.revisao_componentes?.unidade),
-                },
-                {
-                  key: "pend",
-                  label: "Saldo a realizar",
-                  align: "right",
-                  render: (d) =>
-                    qtd(
-                      Math.max(0, Number(d.quantidade_planejada) - realizado(d)),
-                      d.revisao_componentes?.unidade,
-                    ),
-                },
-                { key: "st", label: "Status", render: (d) => <StatusBadge value={d.status} /> },
-              ]}
-            />
+            <CollectionPage items={rows}>
+              {(visible) => (
+                <ObjectCollection
+                  label={modo === "compras" ? "Demandas de compra" : "Demandas de produção"}
+                >
+                  {visible.map((d) => {
+                    const facts: [string, string][] = [
+                      [
+                        "Necessidade",
+                        qtd(Number(d.quantidade_necessaria), d.revisao_componentes?.unidade),
+                      ],
+                      ["Comprometida", qtd(alocado(d), d.revisao_componentes?.unidade)],
+                      [
+                        modo === "compras" ? "Recebida" : "Produzida",
+                        qtd(realizado(d), d.revisao_componentes?.unidade),
+                      ],
+                      [
+                        "Saldo a realizar",
+                        qtd(
+                          Math.max(0, Number(d.quantidade_planejada) - realizado(d)),
+                          d.revisao_componentes?.unidade,
+                        ),
+                      ],
+                    ];
+                    return modo === "compras" ? (
+                      <ProcurementCard
+                        key={d.id}
+                        title={d.revisao_componentes?.descricao ?? "Componente"}
+                        code={d.revisao_componentes?.codigo ?? "—"}
+                        supplier={
+                          (d.revisao_componentes?.fornecedores as { nome: string } | null)?.nome ??
+                          null
+                        }
+                        status={d.status}
+                        facts={facts}
+                      >
+                        <p className="nx-object-meta">Modalidade: {d.modalidade}</p>
+                        {d.ordem_compra_itens.length ? (
+                          d.ordem_compra_itens.map(
+                            (i) =>
+                              i.ordens_compra && (
+                                <Link
+                                  key={i.ordens_compra.id}
+                                  className="nx-card-primary"
+                                  to="/compras/ordens-compra/$ordemId"
+                                  params={{ ordemId: i.ordens_compra.id }}
+                                >
+                                  {i.ordens_compra.numero} · {i.ordens_compra.status} →
+                                </Link>
+                              ),
+                          )
+                        ) : (
+                          <p className="nx-object-problems">Planejamento sem ordem vinculada</p>
+                        )}
+                      </ProcurementCard>
+                    ) : (
+                      <ProductionCard
+                        key={d.id}
+                        title={d.revisao_componentes?.descricao ?? "Componente"}
+                        code={d.revisao_componentes?.codigo ?? "—"}
+                        status={d.status}
+                        facts={facts}
+                      >
+                        {d.ordem_producao_itens.length ? (
+                          d.ordem_producao_itens.map(
+                            (i) =>
+                              i.ordens_producao && (
+                                <Link
+                                  key={i.ordens_producao.id}
+                                  className="nx-card-primary"
+                                  to="/compras/ordens-producao/$ordemId"
+                                  params={{ ordemId: i.ordens_producao.id }}
+                                >
+                                  {i.ordens_producao.numero} · {i.ordens_producao.status} →
+                                </Link>
+                              ),
+                          )
+                        ) : (
+                          <p className="nx-object-problems">
+                            Planejamento: produção ainda não liberada
+                          </p>
+                        )}
+                      </ProductionCard>
+                    );
+                  })}
+                </ObjectCollection>
+              )}
+            </CollectionPage>
           )}
         </QueryView>
       </Section>
@@ -671,7 +701,6 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             description="Somente textos e condições previstos no modelo."
           >
             <form onSubmit={salvarTextos} className="space-y-4 text-sm">
-              <SaveFeedback status={save.status} msg={save.msg} />
               {(
                 ["objeto", "validade", "garantia", "condicoes", "responsavel_tecnico"] as const
               ).map((k) => (
@@ -860,8 +889,21 @@ export function ParametrosForm({
           },
         ] satisfies { titulo: string; campos: (keyof Parametros)[] }[]
       ).map((grupo) => (
-        <fieldset key={grupo.titulo} className="nx-parameter-group">
-          <legend>{grupo.titulo}</legend>
+        <details key={grupo.titulo} className="nx-parameter-group">
+          <summary>
+            {grupo.titulo}
+            <span>
+              {grupo.campos.length} parâmetros ·{" "}
+              {grupo.campos
+                .slice(0, 2)
+                .map((k) => `${ROTULOS_PARAMETROS[k]}: ${String(form.watch(k))}`)
+                .join(" · ")}
+            </span>
+            {grupo.campos.some((k) => !!form.formState.errors[k]) && (
+              <strong className="nx-object-problems">Pendência: revise os campos indicados</strong>
+            )}
+            <span>Editar grupo ↓</span>
+          </summary>
           <div className="nx-parameter-fields">
             {grupo.campos.map((k) => {
               const err = form.formState.errors[k];
@@ -895,7 +937,7 @@ export function ParametrosForm({
               );
             })}
           </div>
-        </fieldset>
+        </details>
       ))}
     </form>
   );
@@ -929,9 +971,6 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
       title="Parâmetros desta revisão"
       description="Cópia versionada dos padrões de Configurações › Orçamentos. Alterar aqui não afeta outras propostas. Salva automaticamente."
     >
-      <div className="mb-4">
-        <SaveFeedback status={save.status} msg={save.msg} />
-      </div>
       <ParametrosForm
         valores={mesclarParametros(rev.data.parametros)}
         editavel={rev.data.editavel}
@@ -995,7 +1034,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
     },
   });
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
+    <div className="nx-history">
       <Section title="Revisões">
         <PromptAction
           loading={criar.isPending}
@@ -1012,45 +1051,38 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
         <div className="mt-3">
           <QueryView query={revs} empty={<EmptyState title="Sem revisões" />}>
             {(rows) => (
-              <DataTable
-                getRowId={(r) => r.id}
-                selectedId={revisaoId}
-                rows={rows}
-                onRowClick={(r) =>
-                  navigate({
-                    to: "/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais",
-                    params: { propostaId, revisaoId: r.id },
-                  })
-                }
-                columns={[
-                  {
-                    key: "numero",
-                    label: "Rev.",
-                    render: (r) => String(r.numero).padStart(2, "0"),
-                  },
-                  {
-                    key: "status",
-                    label: "Status",
-                    render: (r) => <StatusBadge value={r.status} />,
-                  },
-                  {
-                    key: "total",
-                    label: "Total",
-                    align: "right",
-                    render: (r) =>
-                      brl(
-                        (r.totais as { totais?: { final?: number } } | null)?.totais?.final ?? null,
-                      ),
-                  },
-                  { key: "created_at", label: "Criada", render: (r) => dataBR(r.created_at) },
-                ]}
-              />
+              <ObjectCollection label="Revisões formais">
+                {rows.map((r) => (
+                  <RevisionCard
+                    key={r.id}
+                    title={`Revisão ${String(r.numero).padStart(2, "0")}`}
+                    current={r.id === revisaoId}
+                    status={r.status}
+                    date={dataBR(r.created_at)}
+                    total={brl(
+                      (r.totais as { totais?: { final?: number } } | null)?.totais?.final ?? null,
+                    )}
+                  >
+                    <Link
+                      className="nx-card-primary"
+                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
+                      params={{ propostaId, revisaoId: r.id }}
+                    >
+                      Abrir revisão →
+                    </Link>
+                  </RevisionCard>
+                ))}
+              </ObjectCollection>
             )}
           </QueryView>
         </div>
       </Section>
       <div className="space-y-4">
-        <Section title="Alterações registradas">
+        <Section title="Registros legados">
+          <p className="nx-editor-note">
+            Estes logs não registram diferenças completas nem comprovam um salvamento consolidado.
+            Autoria não registrada não é inferida.
+          </p>
           <QueryView
             query={aud}
             empty={<p className="text-xs text-muted-foreground">Nenhum registro.</p>}
@@ -1071,27 +1103,30 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
             )}
           </QueryView>
         </Section>
-        <Section title="Execuções de cálculo">
-          <QueryView
-            query={calc}
-            empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
-          >
-            {(rows) => (
-              <ul className="nx-timeline">
-                {rows.map((c) => (
-                  <li key={c.id}>
-                    <time dateTime={c.created_at}>
-                      {new Date(c.created_at).toLocaleString("pt-BR")}
-                    </time>
-                    <p>
-                      Motor <span className="font-mono">{c.motor_versao}</span>
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </QueryView>
-        </Section>
+        <details className="nx-technical-log">
+          <summary>Execuções de cálculo · detalhe técnico</summary>
+          <Section title="Cálculos (não contam como edições)">
+            <QueryView
+              query={calc}
+              empty={<p className="text-xs text-muted-foreground">Nenhum cálculo.</p>}
+            >
+              {(rows) => (
+                <ul className="nx-timeline">
+                  {rows.map((c) => (
+                    <li key={c.id}>
+                      <time dateTime={c.created_at}>
+                        {new Date(c.created_at).toLocaleString("pt-BR")}
+                      </time>
+                      <p>
+                        Motor <span className="font-mono">{c.motor_versao}</span>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </QueryView>
+          </Section>
+        </details>
       </div>
     </div>
   );

@@ -1,24 +1,15 @@
-import { AlertCircle, Check, Info, LoaderCircle, LockKeyhole, X } from "lucide-react";
+import { LockKeyhole, X } from "lucide-react";
 import {
   useEffect,
   useId,
   useRef,
   useState,
-  useSyncExternalStore,
   type InputHTMLAttributes,
   type ReactNode,
   type RefObject,
 } from "react";
 
-import { useSave } from "../hooks";
 import "./editors.css";
-
-const inspectorQuery = "(min-width: 1600px)";
-const subscribeWide = (notify: () => void) => {
-  const query = window.matchMedia(inspectorQuery);
-  query.addEventListener("change", notify);
-  return () => query.removeEventListener("change", notify);
-};
 
 /** Native dialog keeps one mounted editor when switching between inline and modal display. */
 export function EditorInspector({
@@ -36,12 +27,19 @@ export function EditorInspector({
   returnFocus: RefObject<HTMLButtonElement | null>;
   children: ReactNode;
 }) {
-  const wide = useSyncExternalStore(
-    subscribeWide,
-    () => window.matchMedia(inspectorQuery).matches,
-    () => false,
-  );
+  const [wide, setWide] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const workspace = dialog.current?.closest<HTMLElement>(".nx-editor-workspace");
+    if (!workspace) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const side = (entry?.contentRect.width ?? 0) >= 920;
+      workspace.dataset["sideEditor"] = String(side && open);
+      setWide(side);
+    });
+    observer.observe(workspace);
+    return () => observer.disconnect();
+  }, [open]);
   const heading = useRef<HTMLHeadingElement>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -66,10 +64,12 @@ export function EditorInspector({
       element.close();
     }
     if (!element.open) {
+      const scrollY = window.scrollY;
       if (wide) element.show();
       else element.showModal();
       if (resizing && active) active.focus({ preventScroll: true });
       else heading.current?.focus({ preventScroll: true });
+      window.scrollTo({ top: scrollY, behavior: "instant" });
     }
     delete element.dataset["modeChanging"];
     previousMode.current = wide;
@@ -84,6 +84,7 @@ export function EditorInspector({
     <dialog
       ref={dialog}
       className="nx-editor-inspector"
+      data-inline={wide}
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       aria-modal={!wide && open ? true : undefined}
@@ -119,39 +120,13 @@ export function EditorInspector({
   );
 }
 
-/** Visual context for the shared live save status, avoiding duplicate screen-reader announcements. */
+/** Global synchronization is announced once by the proposal header. */
 export function EditorSaveState({ editavel }: { editavel: boolean }) {
-  const save = useSave();
-  const state = save.status;
-  const labels = {
-    idle: "Campos salvos ao sair; seleções aplicadas ao alterar.",
-    salvando: "Salvando / recalculando…",
-    salvo: "Última gravação confirmada no servidor",
-    erro: "Falha ao salvar",
-    conflito: "Conflito de edição",
-  };
-  const Icon =
-    state === "erro" || state === "conflito"
-      ? AlertCircle
-      : state === "salvando"
-        ? LoaderCircle
-        : state === "salvo"
-          ? Check
-          : Info;
-  if (!editavel)
-    return (
-      <p className="nx-editor-save">
-        <LockKeyhole size={15} aria-hidden="true" />
-        Revisão somente leitura
-      </p>
-    );
+  if (editavel) return null;
   return (
-    <p className="nx-editor-save" data-state={state}>
-      <Icon size={15} aria-hidden="true" />
-      <span>
-        {labels[state]}
-        {save.msg ? ` · ${save.msg}` : ""}
-      </span>
+    <p className="nx-editor-save">
+      <LockKeyhole size={15} aria-hidden="true" />
+      Revisão somente leitura
     </p>
   );
 }

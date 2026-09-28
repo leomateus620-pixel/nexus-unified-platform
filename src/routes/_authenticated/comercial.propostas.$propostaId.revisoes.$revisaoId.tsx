@@ -57,26 +57,15 @@ function Workspace() {
 
   return (
     <SaveCtx.Provider value={ctx}>
-      <div className="nx-proposal-workspace space-y-4">
-        <nav
-          aria-label="Caminho da proposta"
-          className="nx-breadcrumb text-xs text-muted-foreground"
-        >
-          <Link to="/comercial" className="hover:text-foreground">
-            Comercial
-          </Link>{" "}
-          /{" "}
-          <Link to="/comercial/propostas" className="hover:text-foreground">
-            Propostas
-          </Link>{" "}
-          / <span className="text-foreground">{p.numero}</span>
-        </nav>
+      <div className="nx-proposal-workspace">
         <header className="nx-proposal-header">
           <div className="nx-proposal-context">
             <div className="nx-proposal-identity">
-              <p className="nx-eyebrow">
-                Proposta {p.numero} · Rev. {String(r.numero).padStart(2, "0")}
-              </p>
+              <nav aria-label="Caminho da proposta" className="nx-breadcrumb">
+                <Link to="/comercial">Comercial</Link> /{" "}
+                <Link to="/comercial/propostas">Propostas</Link> / {p.numero} · Rev.{" "}
+                {String(r.numero).padStart(2, "0")}
+              </nav>
               <h1>{p.clientes?.razao_social ?? "—"}</h1>
               <p className="nx-proposal-subtitle">
                 {p.unidades?.nome ?? "Sem unidade"}
@@ -135,7 +124,8 @@ function Workspace() {
               className="nx-step"
               activeProps={tabActive}
             >
-              <span className="nx-step-number">04</span> Planejamento de compras
+              <span className="nx-step-number">04</span>{" "}
+              <span aria-label="Planejamento de compras">Compras</span>
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/producao"
@@ -143,7 +133,8 @@ function Workspace() {
               className="nx-step"
               activeProps={tabActive}
             >
-              <span className="nx-step-number">05</span> Planejamento de produção
+              <span className="nx-step-number">05</span>{" "}
+              <span aria-label="Planejamento de produção">Produção</span>
             </Link>
             <Link
               to="/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo"
@@ -151,7 +142,8 @@ function Workspace() {
               className="nx-step"
               activeProps={tabActive}
             >
-              <span className="nx-step-number">06</span> Resumo executivo
+              <span className="nx-step-number">06</span>{" "}
+              <span aria-label="Resumo executivo">Resumo</span>
             </Link>
             <span className="nx-step-divider" aria-hidden="true" />
             <Link

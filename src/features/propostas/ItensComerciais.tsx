@@ -22,11 +22,15 @@ import {
 } from "./hooks";
 
 import { EditorInput, EditorInspector, EditorSaveState } from "./ui/EditorWorkspace";
-import { CommercialItemRow } from "./ui/CommercialItemRow";
+import { CollectionPage, ObjectCollection } from "./ui/ObjectCards";
+import { ProductComponentCard } from "./ui/ProductComponentCard";
+
+import { useEditorDialog } from "./ui/useEditorDialog";
 
 type Comp = NonNullable<ReturnType<typeof useComponentes>["data"]>[number];
 
 export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
+  const { ask, dialog } = useEditorDialog();
   const rev = useRevisao(revisaoId);
   const comps = useComponentes(revisaoId);
   const org = useOrg();
@@ -99,9 +103,13 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   async function alterarCusto(c: Comp, valor: number) {
     if (!Number.isFinite(valor) || valor < 0) return save.set("erro", "Custo inválido");
     if (valor === Number(c.custo_adotado)) return;
-    const just = window.prompt(
-      `Justificativa para alterar o custo de ${c.codigo} nesta proposta (o catálogo não é alterado):`,
-    );
+    const answer = await ask({
+      title: `Alterar custo · ${c.codigo}`,
+      description: "A alteração é exclusiva desta revisão. O catálogo não será alterado.",
+      reason: true,
+    });
+    if (!answer) return;
+    const just = answer.reason;
     if (!just || just.trim().length < 3) return save.set("erro", "Justificativa obrigatória");
     await atualizar([c.id], {
       custo_adotado: valor,
@@ -125,7 +133,15 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
       else updates.push({ c, v });
     });
     if (erros.length) return setErroColar(erros.join("; "));
-    const just = window.prompt(`Justificativa para ${updates.length} custos colados:`);
+    const answer = await ask({
+      title: `Aplicar ${updates.length} custos`,
+      description: updates
+        .map((u) => `${u.c.codigo}: ${brlUnit(Number(u.c.custo_adotado))} → ${brlUnit(u.v)}`)
+        .join("; "),
+      reason: true,
+    });
+    if (!answer) return;
+    const just = answer.reason;
     if (!just || just.trim().length < 3) return setErroColar("Justificativa obrigatória");
     save.set("salvando");
     for (const u of updates) {
@@ -154,6 +170,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   return (
     <div className="nx-editor-workspace" data-inspector={!!detalhe}>
       <Section
+        className="nx-collection-section"
         title="Itens comerciais"
         description="Catálogo adotado nesta revisão. Selecione um item para editar seus valores e consultar a memória de preço."
       >
@@ -185,7 +202,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               <input
                 type="checkbox"
                 aria-label="Selecionar todos os itens filtrados"
-                checked={sel.size === lista.length && lista.length > 0}
+                checked={lista.length > 0 && lista.every((c) => sel.has(c.id))}
                 onChange={(e) =>
                   setSel(e.target.checked ? new Set(lista.map((c) => c.id)) : new Set())
                 }
@@ -197,15 +214,19 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
             {lista.length} de {comps.data.length} itens
           </span>
         </div>
-        {sel.size > 0 && editavel && (
+        {lista.some((c) => sel.has(c.id)) && editavel && (
           <div className="nx-editor-batch" aria-label="Ações para itens selecionados">
-            <strong>{sel.size} selecionado(s)</strong>
+            <strong>{lista.filter((c) => sel.has(c.id)).length} selecionado(s) nos filtros</strong>
             <label>
               Modalidade em lote
               <select
                 defaultValue=""
                 onChange={(e) =>
-                  e.target.value && atualizar([...sel], { modalidade: e.target.value })
+                  e.target.value &&
+                  atualizar(
+                    lista.filter((c) => sel.has(c.id)).map((c) => c.id),
+                    { modalidade: e.target.value },
+                  )
                 }
                 className={input}
               >
@@ -220,7 +241,11 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               <select
                 defaultValue=""
                 onChange={(e) =>
-                  e.target.value && atualizar([...sel], { fornecedor_id: e.target.value })
+                  e.target.value &&
+                  atualizar(
+                    lista.filter((c) => sel.has(c.id)).map((c) => c.id),
+                    { fornecedor_id: e.target.value },
+                  )
                 }
                 className={input}
               >
@@ -255,44 +280,11 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
             }
           />
         ) : (
-          <div
-            className="nx-editor-table-wrap"
-            tabIndex={0}
-            role="region"
-            aria-label="Itens comerciais, tabela com rolagem horizontal"
-          >
-            <table
-              className="nx-editor-table nx-commercial-table"
-              role="table"
-              aria-label="Itens comerciais desta revisão"
-            >
-              <thead role="rowgroup">
-                <tr role="row">
-                  <th scope="col" role="columnheader">
-                    Seleção
-                  </th>
-                  <th scope="col" role="columnheader">
-                    Item / descrição
-                  </th>
-                  <th scope="col" role="columnheader">
-                    Un.
-                  </th>
-                  <th scope="col" role="columnheader">
-                    Modalidade / fornecedor
-                  </th>
-                  {verCusto && (
-                    <th scope="col" role="columnheader" data-numeric>
-                      Custo nesta revisão
-                    </th>
-                  )}
-                  <th scope="col" role="columnheader" data-numeric>
-                    Preço unit. (calc.)
-                  </th>
-                </tr>
-              </thead>
-              <tbody role="rowgroup">
-                {linhasVisuais.map(({ item, supplier, cost, price }) => (
-                  <CommercialItemRow
+          <CollectionPage items={linhasVisuais}>
+            {(visible) => (
+              <ObjectCollection label="Itens comerciais desta revisão">
+                {visible.map(({ item, supplier, cost, price }) => (
+                  <ProductComponentCard
                     key={item.id}
                     item={item}
                     selected={aberto === item.id}
@@ -305,9 +297,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     onToggle={toggleItem}
                   />
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </ObjectCollection>
+            )}
+          </CollectionPage>
         )}
         {editavel && verCusto && (
           <details className="nx-editor-paste">
@@ -395,7 +387,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     min={0}
                     disabled={!editavel}
                     defaultValue={Number(detalhe.custo_adotado)}
-                    key={`${detalhe.id}-${detalhe.custo_adotado}`}
+                    key={detalhe.id}
                     onBlur={(e) => alterarCusto(detalhe, Number(e.target.value))}
                     className={`${input} text-right tabular-nums`}
                   />
@@ -406,7 +398,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
             <EditorSaveState editavel={editavel} />
             {verCusto ? (
               <>
-                <details open className="nx-composition-memory">
+                <details className="nx-composition-memory">
                   <summary>Memória do preço unitário</summary>
                   <VerCalculo custo={Number(detalhe.custo_adotado)} params={params} />
                 </details>
@@ -423,6 +415,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
           </>
         )}
       </EditorInspector>
+      {dialog}
     </div>
   );
 }

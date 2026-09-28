@@ -5,15 +5,15 @@ import { useState } from "react";
 
 import {
   ActionButton,
-  DataTable,
   ErrorState,
   LoadingState,
   PageHeader,
   Section,
   StatusBadge,
 } from "@/components/nexus/Page";
+import { ObjectCollection, ObjectCard, Facts } from "@/features/propostas/ui/ObjectCards";
 import { supabase } from "@/integrations/supabase/client";
-import { PromptAction, RecordIdentity } from "@/components/nexus/OperationalDetails";
+import { PromptAction } from "@/components/nexus/OperationalDetails";
 import {
   aprovarTecnica,
   liberarOrdemProducao,
@@ -192,33 +192,26 @@ function Page() {
         title="Itens e ficha técnica"
         description="A ficha técnica permanece vinculada ao componente e à demanda de origem."
       >
-        <DataTable
-          getRowId={(i) => i.id}
-          rows={o.ordem_producao_itens}
-          columns={[
-            {
-              key: "cod",
-              label: "Código",
-              render: (i) => (
-                <RecordIdentity code primary={i.demandas?.revisao_componentes?.codigo ?? "—"} />
-              ),
-            },
-            {
-              key: "desc",
-              label: "Descrição",
-              render: (i) => i.demandas?.revisao_componentes?.descricao ?? "—",
-            },
-            {
-              key: "q",
-              label: "Quantidade",
-              align: "right",
-              render: (i) => qtd(Number(i.quantidade), i.demandas?.revisao_componentes?.unidade),
-            },
-            {
-              key: "ficha",
-              label: "Ficha técnica / matéria-prima",
-              render: (i) =>
-                rascunho ? (
+        <ObjectCollection label="Itens da ordem de produção">
+          {o.ordem_producao_itens.map((i) => (
+            <ObjectCard
+              key={i.id}
+              title={i.demandas?.revisao_componentes?.descricao ?? "Componente"}
+              eyebrow={i.demandas?.revisao_componentes?.codigo}
+              className="nx-production-card"
+            >
+              <Facts
+                items={[
+                  [
+                    "Quantidade",
+                    qtd(Number(i.quantidade), i.demandas?.revisao_componentes?.unidade),
+                  ],
+                  ["Produzida", qtd(Number(i.quantidade_produzida))],
+                ]}
+              />
+              <label className="nx-editor-field">
+                Ficha técnica / matéria-prima
+                {rascunho ? (
                   <input
                     aria-label={`Ficha técnica de ${i.demandas?.revisao_componentes?.codigo ?? "item"}`}
                     defaultValue={i.ficha_tecnica ?? ""}
@@ -228,36 +221,26 @@ function Page() {
                     className={`${input} w-64 ${!i.ficha_tecnica ? "border-warning" : ""}`}
                   />
                 ) : (
-                  (i.ficha_tecnica ?? "—")
-                ),
-            },
-            {
-              key: "prod",
-              label: "Produzida",
-              align: "right",
-              render: (i) => qtd(Number(i.quantidade_produzida)),
-            },
-            {
-              key: "a",
-              label: "Apontamento",
-              render: (i) =>
-                o.status === "liberada" && Number(i.quantidade) > Number(i.quantidade_produzida) ? (
-                  <PromptAction
-                    title="Registrar produção"
-                    description={`${i.demandas?.revisao_componentes?.codigo ?? "Item"} · ${i.demandas?.revisao_componentes?.descricao ?? "Descrição não informada"}`}
-                    label="Quantidade produzida"
-                    inputMode="decimal"
-                    onAnswer={(v) => {
-                      const n = Number((v ?? "").replace(",", "."));
-                      if (n > 0) apontar.mutate({ item_id: i.id, quantidade: n });
-                    }}
-                  >
-                    Apontar produção
-                  </PromptAction>
-                ) : null,
-            },
-          ]}
-        />
+                  <span>{i.ficha_tecnica ?? "Pendente: ficha técnica não informada"}</span>
+                )}
+              </label>
+              {o.status === "liberada" && Number(i.quantidade) > Number(i.quantidade_produzida) ? (
+                <PromptAction
+                  title="Registrar produção"
+                  description={`${i.demandas?.revisao_componentes?.codigo ?? "Item"} · ${i.demandas?.revisao_componentes?.descricao ?? "Descrição não informada"}`}
+                  label="Quantidade produzida"
+                  inputMode="decimal"
+                  onAnswer={(v) => {
+                    const n = Number((v ?? "").replace(",", "."));
+                    if (n > 0) apontar.mutate({ item_id: i.id, quantidade: n });
+                  }}
+                >
+                  Apontar produção
+                </PromptAction>
+              ) : null}
+            </ObjectCard>
+          ))}
+        </ObjectCollection>
       </Section>
     </div>
   );

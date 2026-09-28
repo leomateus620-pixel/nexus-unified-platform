@@ -258,7 +258,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         </div>
         {lista.some((c) => batchSel.has(c.id)) && editavel && (
           <div className="nx-editor-batch" aria-label="Ações para itens selecionados">
-            <strong>{lista.filter((c) => batchSel.has(c.id)).length} selecionado(s) para lote</strong>
+            <strong>
+              {lista.filter((c) => batchSel.has(c.id)).length} selecionado(s) para lote
+            </strong>
             <label>
               Modalidade em lote
               <select

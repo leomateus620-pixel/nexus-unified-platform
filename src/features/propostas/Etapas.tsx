@@ -306,7 +306,7 @@ export function Planejamento({
   });
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
-  const aceita = rev.data.status === "aceita";
+  const encerrada = rev.data.status === "recusada" || rev.data.status === "substituida";
   const filtro = (d: { modalidade: string }) =>
     modo === "producao" ? d.modalidade === "fabricar" : d.modalidade !== "fabricar";
   type D = NonNullable<typeof dem.data>[number];
@@ -325,7 +325,7 @@ export function Planejamento({
     <div className="space-y-4">
       <Section
         title={modo === "compras" ? "Planejamento de compras" : "Planejamento de produção"}
-        description="Planejar a demanda não exige comprar ou fabricar para emitir a proposta. Ordens só são geradas após a aceitação (liberação operacional)."
+        description="Planeje a demanda e gere as ordens em rascunho. Emitir a OC e liberar a OP continuam exigindo dados obrigatórios e aprovação técnica."
       >
         <div className="nx-planning-actions">
           <ActionButton loading={planejar.isPending} onClick={() => planejar.mutate()}>
@@ -333,10 +333,10 @@ export function Planejamento({
           </ActionButton>
           <ActionButton
             variant="ghost"
-            disabled={!aceita}
+            disabled={encerrada}
             loading={ordens.isPending}
             onClick={() => ordens.mutate()}
-            title={aceita ? "" : "Disponível após a aceitação da revisão"}
+            title={encerrada ? "Revisão recusada ou substituída" : ""}
           >
             Gerar ordens (OC por fornecedor / OP)
           </ActionButton>
@@ -347,12 +347,6 @@ export function Planejamento({
             Abrir ordens em Compras e Produção →
           </Link>
         </div>
-        {!aceita && (
-          <p className="nx-inline-notice mb-4">
-            Geração de OC/OP disponível após a aceitação da revisão. A demanda pode ser planejada
-            antes.
-          </p>
-        )}
         {planejar.isError && (
           <p className="mb-2 text-sm text-destructive">{erroMsg(planejar.error)}</p>
         )}

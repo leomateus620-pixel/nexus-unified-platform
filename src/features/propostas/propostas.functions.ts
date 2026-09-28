@@ -659,12 +659,12 @@ export const gerarOrdens = createServerFn({ method: "POST" })
     const org = await orgDoUsuario(db, context.userId);
     await exigirAcao(db, context.userId, org, "emitir_ordem");
     const rev = await revisaoDaOrg(db, org, data.revisao_id);
-    if (rev.status !== "aceita")
-      throw new Error("Liberação operacional exige a revisão aceita pelo cliente.");
-    const proj = ok(
+    if (rev.status === "recusada" || rev.status === "substituida")
+      throw new Error("Revisão recusada ou substituída não gera ordens.");
+    const projRow = ok(
       await db.from("projetos").select("id").eq("revisao_id", rev.id).maybeSingle(),
     ) as any;
-    if (!proj) throw new Error("Projeto da revisão aceita não encontrado.");
+    const proj = { id: (projRow?.id ?? null) as string | null };
     const dem = ok(
       await db
         .from("demandas")

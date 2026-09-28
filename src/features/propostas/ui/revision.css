@@ -1,0 +1,985 @@
+/* Presentation of the eight revision stages only. The application rail and linked
+   order pages retain their own styles. Reuse the catalog/editor primitives. */
+.nexus-operational.nx-catalog-shell .nx-revision-flow {
+  --border: oklch(0.86 0.012 155);
+  --nx-shadow: 0 2px 8px oklch(0.2 0.01 160 / 0.04);
+  gap: 20px;
+  container: revision / inline-size;
+  font-size: 15px;
+  line-height: 1.5;
+
+  :where(button, a, input, select, textarea, summary):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  .nx-proposal-header {
+    background: var(--background);
+    padding-top: 0;
+  }
+  .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr) auto 190px;
+    gap: 20px;
+    padding-block: 6px 12px;
+  }
+  .nx-proposal-identity h1 {
+    font-size: clamp(24px, 2.2vw, 30px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 6px 0 4px;
+    overflow-wrap: anywhere;
+  }
+  .nx-breadcrumb,
+  .nx-proposal-subtitle {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .nx-context-total {
+    padding-left: 20px;
+  }
+  .nx-context-total > p {
+    font-size: 26px;
+    letter-spacing: -0.02em;
+  }
+  .nx-context-total[data-attention="true"] {
+    border-left-color: var(--warning);
+  }
+  .nx-context-total[data-attention="true"] .nx-context-state > span:last-child {
+    color: var(--warning);
+  }
+  .nx-context-state {
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .nx-save-bar {
+    width: 100%;
+    max-width: none;
+    align-items: stretch;
+  }
+  .nx-save-feedback {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .nx-step-ruler {
+    margin: 0;
+    gap: 4px;
+    padding-bottom: 0;
+  }
+  .nx-step {
+    min-height: 46px;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+  .nx-step[aria-current="page"] {
+    background: var(--card);
+    border-radius: 8px 8px 0 0;
+  }
+  .nx-step-number {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .nx-section-heading {
+    padding-bottom: 16px;
+  }
+  .nx-section-heading h2 {
+    font-size: 22px;
+    letter-spacing: -0.015em;
+  }
+  .nx-section-heading > p {
+    max-width: 78ch;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 5px;
+  }
+  .nx-collection-section > .nx-section-heading {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    overflow: visible;
+  }
+  .nx-collection-section > .nx-section-heading > p {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .nx-editor-toolbar {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    gap: 12px 16px;
+    align-items: end;
+  }
+  .nx-editor-toolbar label {
+    display: grid;
+    gap: 6px;
+    font-size: 14px;
+  }
+  .nx-editor-toolbar .nx-editor-search {
+    flex: 1 1 300px;
+  }
+  .nx-editor-toolbar .nx-editor-select-all {
+    display: flex;
+    align-items: center;
+  }
+  .nx-editor-count {
+    font-size: 14px;
+    color: var(--foreground);
+    white-space: nowrap;
+  }
+  .nx-editor-input {
+    min-height: 44px;
+  }
+  .nx-editor-toolbar .nx-editor-input {
+    border-color: var(--input);
+  }
+  .nx-dimension-toolbar {
+    padding: 0;
+    background: none;
+    border: 0;
+    align-items: center;
+  }
+
+  .nx-object-collection {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, max(320px, calc((100% - 54px) / 4))), 1fr)
+    );
+    gap: 18px;
+    align-items: stretch;
+  }
+  .nx-object-card {
+    max-width: none;
+    border-radius: 12px;
+  }
+  .nx-object-card article {
+    height: 100%;
+    padding: 20px;
+    gap: 12px;
+  }
+  .nx-object-card h3 {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+  .nx-object-eyebrow {
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .nx-object-title-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted-foreground);
+    margin-bottom: 4px;
+  }
+  .nx-object-meta,
+  .nx-object-details {
+    font-size: 14px;
+  }
+  .nx-card-primary {
+    margin-top: auto;
+    min-height: 44px;
+    border-color: var(--border);
+    background: var(--secondary);
+  }
+  .nx-card-primary:hover {
+    border-color: var(--primary);
+    background: var(--accent);
+  }
+  .nx-family-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+  .nx-family-mark svg {
+    width: 21px;
+    height: 21px;
+  }
+  .nx-product-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    flex: 1 1 180px;
+    justify-content: flex-end;
+  }
+  .nx-object-check {
+    margin: 0;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .nx-object-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+  }
+  .nx-product-sourcing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 8px;
+  }
+  .nx-product-sourcing > span {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .nx-product-sourcing > span::after {
+    content: " ·";
+    color: var(--muted-foreground);
+  }
+  .nx-product-sourcing > p {
+    font-size: 13px;
+  }
+  .nx-product-sourcing .nx-object-problems {
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .nx-product-price {
+    padding: 14px 0 0;
+    border-top: 1px solid var(--border);
+    background: none;
+    border-radius: 0;
+  }
+  .nx-product-price-main dd {
+    font-size: 27px;
+    line-height: 1.25;
+    margin: 4px 0 12px;
+    letter-spacing: -0.025em;
+  }
+  .nx-product-price dt {
+    font-size: 13px;
+  }
+  .nx-product-cost-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 12px;
+  }
+  .nx-product-price .nx-product-cost {
+    font-size: 14px;
+  }
+  .nx-product-card .nx-object-details summary {
+    min-height: 36px;
+    color: var(--muted-foreground);
+  }
+
+  .nx-system-guide {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    padding: 12px 0 18px;
+    font-size: 13px;
+  }
+  .nx-system-guide p {
+    display: grid;
+    gap: 3px;
+  }
+  .nx-system-guide span {
+    color: var(--muted-foreground);
+  }
+  .nx-system-guide strong {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nx-system-number {
+    color: var(--foreground);
+    font-weight: 500;
+  }
+  .nx-system-type {
+    font-size: 12px;
+    border-radius: 5px;
+    background: var(--secondary);
+    padding: 4px 7px;
+  }
+  .nx-system-overhead .nx-system-type {
+    background: var(--nx-info-surface);
+  }
+  .nx-system-card .nx-object-eyebrow svg {
+    width: 20px;
+  }
+  .nx-object-facts dt {
+    font-size: 13px;
+  }
+  .nx-object-facts dd {
+    font-size: 17px;
+  }
+  .nx-system-card .nx-object-facts {
+    padding: 16px;
+    gap: 16px;
+  }
+  .nx-system-card .nx-object-facts > div:nth-child(-n + 2) dd {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .nx-system-card .nx-object-facts > div:nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .nx-system-provenance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    font-size: 12px;
+  }
+  .nx-system-provenance[data-preview="true"] > span:last-child {
+    color: var(--warning);
+  }
+  .nx-system-card .nx-object-actions {
+    margin-top: auto;
+  }
+  .nx-system-card .nx-card-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+  }
+
+  .nx-budget-pending {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warning);
+    border-radius: 10px;
+    padding: 16px 20px;
+    background: var(--card);
+  }
+  .nx-budget-pending .nx-section-heading {
+    padding-bottom: 8px;
+    background: none;
+  }
+  .nx-budget-pending .nx-section-heading h2 {
+    font-size: 17px;
+  }
+  .nx-budget-pending .nx-editor-link {
+    margin-top: 6px;
+  }
+  .nx-budget[data-attention="true"] .nx-values-total {
+    background: var(--nx-warning-surface);
+  }
+  .nx-values-parts dt,
+  .nx-values-total dt {
+    font-size: 14px;
+  }
+  .nx-values-parts dd {
+    font-size: 21px;
+    font-weight: 600;
+  }
+  .nx-values-total {
+    min-width: 260px;
+  }
+  .nx-values-total dd {
+    font-family: var(--font-text);
+    font-size: 32px;
+  }
+  .nx-values-band .nx-value-hint {
+    font-size: 13px;
+  }
+  .nx-budget-analysis {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .nx-budget-analysis > .nx-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .nx-budget-analysis .nx-section-heading {
+    background: none;
+  }
+  .nx-budget-analysis .nx-section-heading h2 {
+    font-size: 20px;
+  }
+  .nx-number-list {
+    font-size: 15px;
+  }
+  .nx-budget-analysis .nx-number-list {
+    padding: 0;
+  }
+  .nx-budget-analysis .nx-number-list > div {
+    border-bottom: 1px solid var(--border);
+    padding: 11px 0;
+  }
+  .nx-number-list > div[data-emphasis="true"] {
+    padding: 14px 10px;
+    background: var(--secondary);
+    border-radius: 6px;
+    margin-top: 6px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .nx-number-list > div[data-emphasis="true"] dt {
+    color: var(--foreground);
+  }
+  .nx-budget-amount {
+    font-size: 28px;
+  }
+  .nx-budget .nx-object-collection {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, max(320px, calc((100% - 36px) / 3))), 1fr)
+    );
+  }
+
+  .nx-planning-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .nx-planning-row {
+    min-width: 0;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nx-planning-row:last-child {
+    border-bottom: 0;
+  }
+  .nx-planning-row article {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 2.4fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .nx-planning-row[data-purchasing="true"] article {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 2.5fr) minmax(0, 1.1fr);
+  }
+  .nx-planning-identity h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+  }
+  .nx-planning-row .nx-object-facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .nx-planning-row .nx-object-facts dd {
+    font-size: 18px;
+    margin-top: 7px;
+  }
+  .nx-planning-row .nx-object-facts > div:last-child {
+    border-left: 2px solid var(--primary);
+    padding-left: 10px;
+  }
+  .nx-planning-row .nx-object-facts > div:last-child dd {
+    font-weight: 600;
+  }
+  .nx-planning-status {
+    display: grid;
+    justify-items: start;
+    gap: 5px;
+    min-width: 0;
+  }
+  .nx-planning-row[data-status="planejada"] .nx-status {
+    color: var(--muted-foreground);
+    background: var(--secondary);
+  }
+  .nx-planning-status .nx-object-actions {
+    margin-top: 5px;
+    display: grid;
+    gap: 6px;
+    width: 100%;
+  }
+  .nx-planning-status .nx-card-primary {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  .nx-planning-warning {
+    font-size: 13px;
+    color: var(--warning);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .nx-planning .nx-empty {
+    padding: 32px;
+    text-align: left;
+    align-items: start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .nx-planning .nx-empty > p + p {
+    max-width: 70ch;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .nx-document-workspace {
+    grid-template-columns: minmax(0, 1fr) 310px;
+    gap: 24px;
+  }
+  .nx-document-paper {
+    background: #fff;
+    border-radius: 10px;
+    padding: clamp(20px, 3vw, 44px);
+    box-shadow: var(--nx-shadow);
+  }
+  .nx-document-masthead {
+    border-bottom-color: #096442;
+    gap: 20px;
+  }
+  .nx-document-masthead .nx-document-brand {
+    font: 600 30px/1.2 var(--font-heading);
+    color: #096442;
+    letter-spacing: 0.14em;
+  }
+  .nx-document-number {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 6px;
+  }
+  .nx-document-client {
+    gap: 8px;
+    padding-block: 4px 8px;
+  }
+  .nx-document-paper h3 {
+    font-size: 19px;
+    margin-top: 28px;
+  }
+  .nx-document-paper .text-xs,
+  .nx-document-paper table {
+    font-size: 14px;
+  }
+  .nx-document-paper th {
+    font-size: 12px;
+    font-weight: 600;
+    background: #f4f6f4;
+    padding: 12px 8px;
+  }
+  .nx-document-paper td {
+    padding: 12px 8px;
+  }
+  .nx-document-paper th:first-child {
+    width: 42px;
+  }
+  .nx-document-values {
+    background: none;
+    padding: 0;
+  }
+  .nx-document-values > div {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  .nx-document-values > div[data-total="true"] {
+    font-size: 27px;
+    padding: 18px;
+    background: #edf4ef;
+    border: 1px solid #ccded2;
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+  .nx-document-payments {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .nx-document-payments p {
+    padding-left: 14px;
+    border-left: 2px solid #ccded2;
+  }
+  .nx-document-payments strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .nx-document-conditions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    margin: 14px 0;
+    font-size: 16px;
+  }
+  .nx-document-conditions dt {
+    font-size: 13px;
+    color: var(--muted-foreground);
+  }
+  .nx-document-conditions dd {
+    font-weight: 500;
+  }
+  .nx-document-attention {
+    color: var(--warning);
+    font-size: 13px;
+    border-left: 2px solid var(--warning);
+    padding-left: 12px;
+    margin-top: 16px;
+  }
+  .nx-document-tools .nx-section {
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 12px;
+  }
+  .nx-document-tools .nx-section-heading h2 {
+    font-size: 19px;
+  }
+  .nx-document-tools input {
+    min-height: 44px;
+  }
+  .nx-document-tools label {
+    color: var(--foreground);
+    font-size: 14px;
+  }
+  .nx-document-status {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .nx-document-status > p {
+    color: var(--muted-foreground);
+  }
+  .nx-document-status > .nx-planning-warning {
+    color: var(--warning);
+  }
+  .nx-field-help {
+    display: block;
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 400;
+    color: var(--muted-foreground);
+    margin-top: 4px;
+  }
+
+  .nx-parameters {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .nx-parameter-group {
+    padding: 0;
+    border-radius: 12px;
+  }
+  .nx-parameter-group summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 20px;
+    padding: 18px 22px;
+    align-items: center;
+  }
+  .nx-parameter-group summary > strong {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .nx-parameter-group summary > span:not(.nx-parameter-toggle) {
+    grid-column: 1;
+  }
+  .nx-parameter-group summary .nx-parameter-toggle {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    color: var(--primary);
+    font-weight: 500;
+  }
+  .nx-parameter-group[open] .nx-parameter-toggle > span {
+    display: inline-block;
+    transform: rotate(180deg);
+  }
+  .nx-parameter-group[open] .nx-parameter-fields {
+    margin: 0;
+    padding: 20px 22px;
+    border-top: 1px solid var(--border);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 24px;
+  }
+  .nx-parameter-field {
+    display: grid;
+    grid-template-rows: auto 44px 1fr;
+    align-content: start;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--foreground);
+  }
+  .nx-parameter-field input:not([type="checkbox"]) {
+    background: var(--background);
+    font-size: 16px;
+  }
+  .nx-parameter-field:has(input[type="checkbox"]) {
+    display: flex;
+    align-self: start;
+    flex-direction: row;
+    justify-content: start;
+    padding-top: 24px;
+  }
+
+  .nx-history {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 24px;
+  }
+  .nx-history-revisions {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .nx-history:not(:has(.nx-history-saves)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-history:not(:has(.nx-history-saves)) .nx-history-revisions {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 480px;
+  }
+  .nx-history-records:empty {
+    display: none;
+  }
+  .nx-history-records,
+  .nx-history-saves {
+    grid-column: 1;
+  }
+  .nx-history .nx-empty {
+    padding: 22px;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 6px 14px;
+    text-align: left;
+    align-items: start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .nx-history .nx-empty svg {
+    grid-row: 1 / span 2;
+    margin: 4px 0 0;
+  }
+  .nx-history .nx-empty > p {
+    margin: 0;
+    max-width: 74ch;
+  }
+  .nx-history .nx-empty > p + p {
+    grid-column: 2;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .nx-history-revisions .nx-object-collection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-revision-card .nx-object-facts > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .nx-revision-card .nx-object-facts > div:first-child dd {
+    font-size: 25px;
+    font-weight: 600;
+  }
+  .nx-revision-card .nx-status {
+    align-self: start;
+  }
+}
+
+.dark .nexus-operational.nx-catalog-shell .nx-revision-flow {
+  --border: oklch(0.44 0.025 160);
+  .nx-system-overhead .nx-system-type {
+    background: oklch(0.32 0.035 220);
+  }
+}
+
+@container revision (max-width: 1100px) {
+  .nexus-operational.nx-catalog-shell .nx-revision-flow {
+    .nx-proposal-context {
+      grid-template-columns: minmax(0, 1fr) 190px;
+    }
+    .nx-proposal-identity {
+      grid-column: 1 / -1;
+    }
+    .nx-context-total {
+      border: 0;
+      padding: 0;
+    }
+    .nx-document-workspace {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nx-document-tools {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .nx-values-main {
+      flex-wrap: wrap;
+    }
+    .nx-values-total {
+      flex: 1;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+    }
+    .nx-planning-row article,
+    .nx-planning-row[data-purchasing="true"] article {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    }
+    .nx-planning-row .nx-object-facts {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .nx-planning-status {
+      grid-column: 1 / -1;
+    }
+    .nx-planning-status .nx-object-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nx-planning-status .nx-card-primary {
+      width: auto;
+    }
+  }
+}
+@container revision (max-width: 800px) {
+  .nexus-operational.nx-catalog-shell .nx-revision-flow {
+    .nx-budget-analysis,
+    .nx-history {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nx-history-revisions,
+    .nx-history-records,
+    .nx-history-saves {
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .nx-values-parts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .nx-planning-row article,
+    .nx-planning-row[data-purchasing="true"] article {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+    .nx-planning-row .nx-object-facts {
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .nx-planning-row .nx-planning-status {
+      grid-column: auto;
+    }
+  }
+}
+@container revision (max-width: 540px) {
+  .nexus-operational.nx-catalog-shell .nx-revision-flow {
+    .nx-proposal-context {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+    .nx-step {
+      padding-inline: 12px;
+    }
+    .nx-document-tools,
+    .nx-document-payments {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nx-document-paper {
+      padding: 22px 16px;
+    }
+    .nx-document-paper table {
+      table-layout: fixed;
+    }
+    .nx-document-paper th:first-child {
+      width: 30px;
+    }
+    .nx-document-paper th,
+    .nx-document-paper td {
+      padding: 10px 4px;
+    }
+    .nx-document-masthead .nx-document-reference {
+      text-align: left;
+    }
+    .nx-values-parts {
+      gap: 16px;
+      padding: 18px;
+    }
+    .nx-values-parts dd {
+      font-size: 20px;
+    }
+    .nx-values-total {
+      min-width: 0;
+      padding: 18px;
+    }
+    .nx-planning-row .nx-object-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .nx-parameter-group summary {
+      padding: 18px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nx-parameter-group summary .nx-parameter-toggle {
+      grid-column: 1;
+      grid-row: auto;
+    }
+    .nx-parameter-group[open] .nx-parameter-fields {
+      padding: 18px;
+    }
+    .nx-document-values > div[data-total="true"] {
+      font-size: 24px;
+      padding: 14px 10px;
+      gap: 12px;
+    }
+    .nx-object-card article {
+      padding: 18px;
+    }
+  }
+}
+@media print {
+  /* The app's dark body and catalog padding must not bleed onto document pages. */
+  html:has(.nx-revision-flow .nx-document-paper),
+  body:has(.nx-revision-flow .nx-document-paper),
+  .nexus-operational.nx-catalog-shell:has(.nx-revision-flow .nx-document-paper) {
+    background: #fff;
+    min-height: 0;
+    color-scheme: light;
+  }
+  .nexus-operational.nx-catalog-shell:has(.nx-revision-flow .nx-document-paper)
+    :is(.nx-main, .nx-shell-content) {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: #fff;
+  }
+  .nexus-operational.nx-catalog-shell .nx-revision-flow {
+    container-type: normal;
+    display: block;
+    .nx-document-workspace {
+      display: block;
+    }
+    .nx-document-tools {
+      display: none;
+    }
+    .nx-document-paper {
+      border: 0;
+      padding: 0;
+      box-shadow: none;
+      font-size: 11pt;
+      border-radius: 0;
+    }
+    .nx-document-paper table {
+      table-layout: auto;
+    }
+    .nx-document-paper thead {
+      display: table-header-group;
+    }
+    .nx-document-paper
+      :is(
+        tr,
+        .nx-document-masthead,
+        .nx-document-payments p,
+        .nx-document-conditions > div,
+        .nx-document-values > div
+      ) {
+      break-inside: avoid;
+    }
+    .nx-document-paper h3 {
+      break-after: avoid;
+      margin-top: 20px;
+    }
+    .nx-document-values {
+      break-inside: avoid;
+    }
+    .nx-document-payments {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

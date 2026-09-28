@@ -1,5 +1,8 @@
 import { chromium, expect } from "@playwright/test";
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
+import { evidenceRoot } from "./evidence.mjs";
+const output = `${evidenceRoot}/catalog-after`;
+await mkdir(output, { recursive: true });
 
 const browser = await chromium.launch({
   headless: true,
@@ -33,16 +36,20 @@ async function go(screen = "itens-comerciais", scenario = "normal") {
   await page.getByRole("heading", { level: 1 }).waitFor();
 }
 await go();
-const allItems = page.getByRole("checkbox", { name: /Selecionar todos/ });
-report.checks.push({ name: "mobile select-all is visible", pass: await allItems.isVisible() });
-await allItems.check();
+const batchItem = page.getByRole("checkbox", { name: "Selecionar COMP-001 para edição em lote" });
 report.checks.push({
-  name: "mobile select-all selects all records",
+  name: "mobile batch selection is visible",
+  pass: await batchItem.isVisible(),
+});
+await batchItem.check();
+report.checks.push({
+  name: "mobile batch selection selects only its item without changing budget inclusion",
   pass: await page
     .locator('input[type="checkbox"][aria-label^="Selecionar COMP-"]')
-    .evaluateAll((els) => els.length === 21 && els.every((e) => e.checked)),
+    .evaluateAll((els) => els.length === 21 && els.filter((e) => e.checked).length === 1),
 });
-await allItems.uncheck();
+await batchItem.uncheck();
+expect(await page.evaluate(() => window.__nexusCalls)).toHaveLength(0);
 report.contrast = await page.evaluate(() => {
   const scope = document.querySelector(".nexus-operational");
   const style = getComputedStyle(scope);
@@ -117,7 +124,7 @@ report.checks.push({
   }))),
 });
 await page.screenshot({
-  path: "docs/ui/evidence/catalog-after/inspector-mobile.png",
+  path: `${output}/inspector-mobile.png`,
   fullPage: true,
 });
 await page.keyboard.press("Tab");
@@ -156,13 +163,13 @@ await page
   .first()
   .click();
 await page.screenshot({
-  path: "docs/ui/evidence/catalog-after/composition-mobile.png",
+  path: `${output}/composition-mobile.png`,
   fullPage: true,
 });
 await page.setViewportSize({ width: 1920, height: 1080 });
 await page.waitForTimeout(100);
 await page.screenshot({
-  path: "docs/ui/evidence/catalog-after/composition-desktop-1920.png",
+  path: `${output}/composition-desktop-1920.png`,
   fullPage: true,
 });
 report.checks.push({
@@ -233,10 +240,7 @@ report.checks.push({
     };
   })),
 });
-await writeFile(
-  "docs/ui/evidence/catalog-after/accessibility.json",
-  JSON.stringify(report, null, 2),
-);
+await writeFile(`${output}/accessibility.json`, JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
 await browser.close();
 if (

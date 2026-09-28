@@ -68,7 +68,10 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
   const nomeSis = new Map((sis.data ?? []).map((s) => [s.id, s]));
   const nomeComp = new Map((comps.data ?? []).map((c) => [c.id, c]));
   return (
-    <div className="space-y-4">
+    <div
+      className="nx-budget space-y-4"
+      data-attention={r.desatualizada || r.resumo.pendencias.length > 0}
+    >
       {r.desatualizada && (
         <p className="nx-inline-notice" role="status">
           Há alterações não refletidas nos valores abaixo.{" "}
@@ -80,19 +83,26 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
         </p>
       )}
       {r.resumo.pendencias.length > 0 && (
-        <Section title="Pendências">
+        <Section title="Pendências" className="nx-budget-pending">
           <ul className="list-disc space-y-1 pl-5 text-sm text-warning">
             {r.resumo.pendencias.map((p) => (
               <li key={p}>{p}</li>
             ))}
           </ul>
+          <Link
+            className="nx-editor-link"
+            to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
+            params={{ propostaId: r.proposta.id, revisaoId }}
+          >
+            Localizar sistemas no dimensionamento →
+          </Link>
         </Section>
       )}
       <ValuesBand
         items={[
           { label: "Materiais", value: brl(t.materiais) },
           {
-            label: "Montagem",
+            label: "Montagem · venda",
             value: brl(t.montagem),
             hint: pct(mesclarParametros(r.parametros).montagem_percentual) + " dos materiais",
           },
@@ -139,7 +149,20 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
                   <ObjectCard
                     key={x.sistema_id}
                     title={nomeSis.get(x.sistema_id)?.identificacao || "Sistema sem identificação"}
-                    eyebrow={nomeSis.get(x.sistema_id)?.tipo}
+                    className="nx-budget-system"
+                    titleLabel="Identificação / local"
+                    eyebrow={
+                      <>
+                        <span>Sistema nº {nomeSis.get(x.sistema_id)?.ordem ?? "—"}</span>
+                        <span className="nx-system-type">
+                          {nomeSis.get(x.sistema_id)?.tipo === "OVERHEAD"
+                            ? "Suspenso (OVERHEAD)"
+                            : nomeSis.get(x.sistema_id)?.tipo === "TELHADO"
+                              ? "Telhado"
+                              : "Tipo não informado"}
+                        </span>
+                      </>
+                    }
                   >
                     <p className="nx-budget-amount">
                       {brl(x.venda_materiais)}
@@ -205,7 +228,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
           </CollectionPage>
         </Section>
       )}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="nx-budget-analysis">
         <Section title="Operação prevista (recursos)">
           <dl className="nx-number-list">
             {(
@@ -222,12 +245,12 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
                       ["Hospedagem", brl(t.hospedagem)],
                       ["Combustível", brl(t.combustivel)],
                       ["Engenharia (custo)", brl(t.engenharia)],
-                      ["Total operação", brl(t.operacao)],
+                      ["Total operação · custo", brl(t.operacao)],
                     ] as [string, string][])
                   : []),
               ] as [string, string][]
             ).map(([k, v]) => (
-              <div key={k}>
+              <div key={k} data-emphasis={k === "Total operação · custo"}>
                 <dt className="text-muted-foreground">{k}</dt>
                 <dd className="text-right tabular-nums text-foreground">{v}</dd>
               </div>
@@ -253,7 +276,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
                   ["Margem", pct(t.margem)],
                 ] as [string, string][]
               ).map(([k, v]) => (
-                <div key={k}>
+                <div key={k} data-emphasis={["Preço final", "Resultado", "Margem"].includes(k)}>
                   <dt className="text-muted-foreground">{k}</dt>
                   <dd className="text-right tabular-nums text-foreground">{v}</dd>
                 </div>
@@ -324,7 +347,7 @@ export function Planejamento({
       ? d.ordem_compra_itens.reduce((s, i) => s + Number(i.quantidade_recebida), 0)
       : d.ordem_producao_itens.reduce((s, i) => s + Number(i.quantidade_produzida), 0);
   return (
-    <div className="space-y-4">
+    <div className="nx-planning space-y-4">
       <Section
         title={modo === "compras" ? "Planejamento de compras" : "Planejamento de produção"}
         description="Planeje a demanda e gere as ordens em rascunho. Emitir a OC e liberar a OP continuam exigindo dados obrigatórios e aprovação técnica."
@@ -363,8 +386,16 @@ export function Planejamento({
           query={{ ...dem, data: dem.data?.filter(filtro) }}
           empty={
             <EmptyState
-              title="Sem demanda planejada"
-              hint="Atualize a demanda após calcular a revisão."
+              title={
+                modo === "compras"
+                  ? "Nenhuma demanda de compra planejada"
+                  : "Nenhuma demanda de produção planejada"
+              }
+              hint={
+                modo === "compras"
+                  ? "Os itens de compra e terceirização aparecerão aqui com necessidade, recebimentos e ordens vinculadas. Após calcular a revisão, use Atualizar demanda a partir da composição acima."
+                  : "Os itens com modalidade Fabricar aparecerão aqui com necessidade, quantidade produzida e acesso à OP. Após calcular a revisão, use Atualizar demanda a partir da composição acima."
+              }
             />
           }
         >
@@ -372,6 +403,7 @@ export function Planejamento({
             <CollectionPage items={rows}>
               {(visible) => (
                 <ObjectCollection
+                  className="nx-planning-list"
                   label={modo === "compras" ? "Demandas de compra" : "Demandas de produção"}
                 >
                   {visible.map((d) => {
@@ -421,7 +453,7 @@ export function Planejamento({
                               ),
                           )
                         ) : (
-                          <p className="nx-object-problems">Planejamento sem ordem vinculada</p>
+                          <p className="nx-planning-warning">Planejamento sem ordem vinculada</p>
                         )}
                       </ProcurementCard>
                     ) : (
@@ -447,7 +479,7 @@ export function Planejamento({
                               ),
                           )
                         ) : (
-                          <p className="nx-object-problems">
+                          <p className="nx-planning-warning">
                             Planejamento: produção ainda não liberada
                           </p>
                         )}
@@ -574,14 +606,22 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
               {r.status === "rascunho" ? "RASCUNHO" : r.status.toUpperCase()}
             </p>
           </div>
-          <div className="text-right text-xs text-muted-foreground">
-            <p>
+          <div className="nx-document-reference text-right text-xs text-muted-foreground">
+            <p className="nx-document-number">
               Proposta {p.numero} · Rev. {String(r.numero).padStart(2, "0")}
             </p>
             <p>{r.enviada_em ? `Emitida em ${dataBR(r.enviada_em)}` : "Não emitida"}</p>
           </div>
         </div>
-        <div className="mt-4 grid gap-1 text-xs">
+        {(r.desatualizada || (r.resumo?.pendencias.length ?? 0) > 0) && (
+          <p className="nx-document-attention">
+            {r.desatualizada ? "Cálculo desatualizado." : "Há pendências nesta revisão."}{" "}
+            {r.resumo?.pendencias.length
+              ? `${r.resumo.pendencias.length} pendência(s) para conferência no Orçamento.`
+              : ""}
+          </p>
+        )}
+        <div className="nx-document-client mt-4 grid gap-1 text-xs">
           <p>
             <span className="text-muted-foreground">Cliente:</span>{" "}
             {p.clientes?.razao_social ?? "—"} {p.clientes?.cnpj ? `· CNPJ ${p.clientes.cnpj}` : ""}
@@ -613,9 +653,17 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
               {(sis.data ?? []).map((s) => (
                 <tr key={s.id} className="border-b border-border/60">
                   <td className="py-1">{s.ordem}</td>
-                  <td>{s.identificacao || "—"}</td>
-                  <td>{s.tipo}</td>
-                  <td className="text-right tabular-nums">{qtd(ext.get(s.id) ?? null, "m")}</td>
+                  <td>{s.identificacao.trim() ? s.identificacao : "Sem identificação"}</td>
+                  <td>
+                    {s.tipo === "OVERHEAD"
+                      ? "Suspenso (OVERHEAD)"
+                      : s.tipo === "TELHADO"
+                        ? "Telhado"
+                        : s.tipo}
+                  </td>
+                  <td className="text-right tabular-nums">
+                    {ext.has(s.id) ? qtd(ext.get(s.id)!, "m") : "Extensão não calculada"}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -651,25 +699,33 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
         {t && !r.desatualizada && t.final > 0 && (
           <>
             <h3 className="mt-6 font-semibold text-foreground">Formas de pagamento</h3>
-            <p className="text-xs">
-              Opção 1: 12 parcelas sem juros —{" "}
-              {t.parcelas_12x.length
-                ? `${brl(t.parcelas_12x[0])} a ${brl(t.parcelas_12x[11])}`
-                : "—"}
-              .
-            </p>
-            <p className="text-xs">
-              Opção 2: item técnico + materiais em 50% / 30% / 20% (
-              {t.parcelas_50_30_20.map((x) => brl(x)).join(" / ")}); montagem por medições
-              quinzenais.
-            </p>
+            <div className="nx-document-payments">
+              <p>
+                <strong>Opção 1 · 12 parcelas sem juros</strong>{" "}
+                {t.parcelas_12x.length
+                  ? `${brl(t.parcelas_12x[0])} a ${brl(t.parcelas_12x[11])}`
+                  : "—"}
+                .
+              </p>
+              <p>
+                <strong>Opção 2 · 50% / 30% / 20%</strong> Item técnico + materiais (
+                {t.parcelas_50_30_20.map((x) => brl(x)).join(" / ")}); montagem por medições
+                quinzenais.
+              </p>
+            </div>
           </>
         )}
         <h3 className="mt-6 font-semibold text-foreground">Condições</h3>
-        <p className="text-xs">
-          Validade: {r.textos["validade"] ?? TEXTOS_PADRAO.validade} · Garantia:{" "}
-          {r.textos["garantia"] ?? TEXTOS_PADRAO.garantia}
-        </p>
+        <dl className="nx-document-conditions">
+          <div>
+            <dt>Validade</dt>
+            <dd>{r.textos["validade"] ?? TEXTOS_PADRAO.validade}</dd>
+          </div>
+          <div>
+            <dt>Garantia</dt>
+            <dd>{r.textos["garantia"] ?? TEXTOS_PADRAO.garantia}</dd>
+          </div>
+        </dl>
         {r.textos["condicoes"] && (
           <p className="mt-1 whitespace-pre-wrap text-xs">{r.textos["condicoes"]}</p>
         )}
@@ -679,6 +735,22 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
       </article>
       <aside className="nx-document-tools print:hidden">
         <Section title="Documento e emissão">
+          <div className="nx-document-status">
+            <StatusBadge value={r.status} />
+            <p>
+              {r.enviada_em ? `Emitida em ${dataBR(r.enviada_em)}` : "Não emitida"} ·{" "}
+              {interno ? "Visão interna" : "Visão comercial"}
+            </p>
+            {(!r.resumo || r.desatualizada || r.resumo.pendencias.length > 0) && (
+              <p className="nx-planning-warning">
+                {!r.resumo
+                  ? "Revisão ainda não calculada."
+                  : r.desatualizada
+                    ? "Cálculo desatualizado. Confira o Orçamento antes da emissão."
+                    : `${r.resumo.pendencias.length} pendência(s). Confira o Orçamento antes da emissão.`}
+              </p>
+            )}
+          </div>
           <div className="flex flex-col gap-2">
             {verCusto && (
               <ActionButton variant="ghost" onClick={() => setInterno(!interno)}>
@@ -724,7 +796,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
         {r.editavel && (
           <Section
             title="Textos do documento"
-            description="Somente textos e condições previstos no modelo."
+            description="Edite os textos usados na prévia e no documento comercial."
           >
             <form
               onInput={() => save.local("textos")}
@@ -735,17 +807,31 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
                 ["objeto", "validade", "garantia", "condicoes", "responsavel_tecnico"] as const
               ).map((k) => (
                 <label key={k} className="block text-muted-foreground">
-                  {k === "responsavel_tecnico"
-                    ? "Responsável técnico"
-                    : k === "condicoes"
-                      ? "Condições"
-                      : k[0]!.toUpperCase() + k.slice(1)}
+                  <span>
+                    {k === "responsavel_tecnico"
+                      ? "Responsável técnico"
+                      : k === "condicoes"
+                        ? "Condições"
+                        : k[0]!.toUpperCase() + k.slice(1)}
+                  </span>
+                  {k === "objeto" && (
+                    <span id="nx-document-object-help" className="nx-field-help">
+                      Descrição do escopo da proposta, exibida antes dos sistemas.
+                    </span>
+                  )}
                   {k === "objeto" || k === "condicoes" ? (
                     <textarea
                       rows={3}
                       {...form.register(k)}
                       aria-invalid={!!form.formState.errors[k]}
-                      aria-describedby={form.formState.errors[k] ? `texto-erro-${k}` : undefined}
+                      aria-label={k === "objeto" ? "Objeto" : "Condições"}
+                      aria-describedby={
+                        form.formState.errors[k]
+                          ? `texto-erro-${k}`
+                          : k === "objeto"
+                            ? "nx-document-object-help"
+                            : undefined
+                      }
                       className="mt-1 w-full rounded border border-input bg-background p-2 text-foreground"
                     />
                   ) : (
@@ -766,6 +852,10 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
               <ActionButton type="submit" variant="ghost">
                 Sincronizar textos
               </ActionButton>
+              <p className="nx-field-help">
+                Sincroniza os campos com o rascunho no servidor. Use Salvar proposta, no cabeçalho,
+                para consolidar as diferenças comerciais.
+              </p>
             </form>
           </Section>
         )}
@@ -845,14 +935,65 @@ export const ROTULOS_PARAMETROS: Record<keyof Parametros, string> = {
   dias_por_viagem: "Dias de campo por viagem",
 };
 
+// Display-only descriptions. Inputs, validation and payloads retain their numeric contract.
+const FRACOES_PARAMETROS = new Set<keyof Parametros>([
+  "markup",
+  "desconto",
+  "frete_materiais",
+  "montagem_percentual",
+  "aliquota_precificacao",
+  "aliquota_interestadual",
+  "aliquota_interna_destino",
+]);
+const MOEDAS_PARAMETROS = new Set<keyof Parametros>([
+  "preco_item_tecnico",
+  "custo_hora_tecnico",
+  "custo_hora_engenheiro",
+  "alimentacao_dia",
+  "hospedagem_dia",
+  "preco_combustivel",
+]);
+function parametroLeitura(k: keyof Parametros, value: unknown) {
+  if (typeof value === "boolean") return value ? "Ativo" : "Inativo";
+  if (value === "" || value == null || !Number.isFinite(Number(value))) return "Não informado";
+  if (FRACOES_PARAMETROS.has(k))
+    return `${(Number(value) * 100).toLocaleString("pt-BR", { maximumFractionDigits: 8 })}%`;
+  if (MOEDAS_PARAMETROS.has(k))
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 8,
+    }).format(Number(value));
+  return Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 8 });
+}
+function parametroAjuda(k: keyof Parametros, value: unknown) {
+  if (FRACOES_PARAMETROS.has(k)) return `Fração equivalente a ${parametroLeitura(k, value)}.`;
+  if (MOEDAS_PARAMETROS.has(k))
+    return `Leitura: ${parametroLeitura(k, value)}${k === "preco_combustivel" ? " por litro" : k.startsWith("custo_hora") ? " por hora" : k.endsWith("_dia") ? " por técnico/dia" : ""}.`;
+  const unidades: Partial<Record<keyof Parametros, string>> = {
+    tecnicos_por_equipe: "Quantidade de técnicos em cada equipe.",
+    produtividade_telhado_m_dia: "Metros de telhado executados por equipe a cada dia.",
+    produtividade_overhead_m_dia: "Metros de sistema suspenso por equipe a cada dia.",
+    horas_por_dia: "Horas de trabalho por dia.",
+    horas_engenharia: "Horas previstas para engenharia.",
+    km_por_litro: "Quilômetros percorridos por litro de combustível.",
+    distancia_ida_volta_km: "Distância total da viagem, incluindo retorno, em km.",
+    dias_por_viagem: "Dias de trabalho em campo por deslocamento.",
+  };
+  return unidades[k];
+}
+
 export function ParametrosForm({
   valores,
   editavel,
   onSave,
+  revisionPresentation = false,
 }: {
   valores: Parametros;
   editavel: boolean;
   onSave: (p: Parametros) => Promise<boolean | void>;
+  revisionPresentation?: boolean;
 }) {
   const form = useForm<Parametros>({
     resolver: zodResolver(paramSchema) as never,
@@ -950,18 +1091,27 @@ export function ParametrosForm({
       ).map((grupo) => (
         <details key={grupo.titulo} className="nx-parameter-group">
           <summary>
-            {grupo.titulo}
+            {revisionPresentation ? <strong>{grupo.titulo}</strong> : grupo.titulo}
             <span>
               {grupo.campos.length} parâmetros ·{" "}
               {grupo.campos
                 .slice(0, 2)
-                .map((k) => `${ROTULOS_PARAMETROS[k]}: ${String(form.watch(k))}`)
+                .map(
+                  (k) =>
+                    `${ROTULOS_PARAMETROS[k]}: ${revisionPresentation ? parametroLeitura(k, form.watch(k)) : String(form.watch(k))}`,
+                )
                 .join(" · ")}
             </span>
             {grupo.campos.some((k) => !!form.formState.errors[k]) && (
               <strong className="nx-object-problems">Pendência: revise os campos indicados</strong>
             )}
-            <span>Editar grupo ↓</span>
+            {revisionPresentation ? (
+              <span className="nx-parameter-toggle">
+                {editavel ? "Editar grupo" : "Consultar grupo"} <span aria-hidden="true">⌄</span>
+              </span>
+            ) : (
+              <span>Editar grupo ↓</span>
+            )}
           </summary>
           <div className="nx-parameter-fields">
             {grupo.campos.map((k) => {
@@ -982,10 +1132,22 @@ export function ParametrosForm({
                       step="any"
                       disabled={!editavel}
                       aria-invalid={!!err}
-                      aria-describedby={err ? `param-erro-${k}` : undefined}
+                      aria-label={ROTULOS_PARAMETROS[k]}
+                      aria-describedby={
+                        err
+                          ? `param-erro-${k}`
+                          : revisionPresentation
+                            ? `param-ajuda-${k}`
+                            : undefined
+                      }
                       {...form.register(k)}
                       className="w-full rounded border border-input bg-background px-3 text-right tabular-nums text-foreground"
                     />
+                  )}
+                  {revisionPresentation && k !== "difal_ativo" && (
+                    <span id={`param-ajuda-${k}`} className="nx-field-help">
+                      {parametroAjuda(k, form.watch(k))}
+                    </span>
                   )}
                   {err && (
                     <span id={`param-erro-${k}`} className="block text-destructive">
@@ -1053,6 +1215,7 @@ export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
         valores={mesclarParametros(rev.data.parametros)}
         editavel={rev.data.editavel}
         onSave={onSave}
+        revisionPresentation
       />
     </Section>
   );
@@ -1129,6 +1292,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
       {org.data?.canSeeCosts && (
         <Section
           title="Salvamentos confirmados"
+          className="nx-history-saves"
           description="Um evento por consolidação. Os rascunhos automáticos e os cálculos não contam como edições comerciais."
         >
           <QueryView
@@ -1136,7 +1300,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
             empty={
               <EmptyState
                 title="Nenhum salvamento consolidado"
-                hint="Use Salvar proposta para consolidar as diferenças reais desta revisão. Registros anteriores à ativação não são reconstruídos."
+                hint="O salvamento automático sincroniza o rascunho. Para consolidar diferenças reais, use Salvar proposta no cabeçalho, quando a revisão estiver editável. Registros anteriores à ativação não são reconstruídos."
               />
             }
           >
@@ -1161,7 +1325,11 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
           </QueryView>
         </Section>
       )}
-      <Section title="Revisões">
+      <Section
+        title="Revisões"
+        className="nx-history-revisions"
+        description="Versões formais da proposta. Criar uma revisão é uma ação distinta de salvar o rascunho atual."
+      >
         <PromptAction
           loading={criar.isPending}
           title="Criar nova revisão"
@@ -1203,7 +1371,7 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
           </QueryView>
         </div>
       </Section>
-      <div className="space-y-4">
+      <div className="nx-history-records space-y-4">
         {org.data?.roles.includes("admin") && (
           <Section title="Registros legados">
             <p className="nx-editor-note">

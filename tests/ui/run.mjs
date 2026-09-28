@@ -9,10 +9,11 @@ const server = await createServer({ configFile: "tests/ui/vite.config.mjs" });
 try {
   await server.listen();
   for (const [file, ...args] of [
-    ["capture.mjs", "catalog-after"],
+    ["capture.mjs", process.env.NEXUS_UI_CAPTURE_LABEL || "catalog-after"],
     ["accessibility.mjs"],
     ["stages-checks.mjs"],
     ["catalog-checks.mjs"],
+    ["revision-checks.mjs"],
   ]) {
     await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [`tests/ui/${file}`, ...args], {

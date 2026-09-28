@@ -3,9 +3,17 @@ import { useId, useState, type ReactNode } from "react";
 import { ActionButton, StatusBadge } from "@/components/nexus/Page";
 import "./catalog.css";
 
-export function ObjectCollection({ children, label }: { children: ReactNode; label: string }) {
+export function ObjectCollection({
+  children,
+  label,
+  className = "",
+}: {
+  children: ReactNode;
+  label: string;
+  className?: string;
+}) {
   return (
-    <ul className="nx-object-collection" aria-label={label}>
+    <ul className={`nx-object-collection ${className}`} aria-label={label}>
       {children}
     </ul>
   );
@@ -17,19 +25,24 @@ export function ObjectCard({
   selected,
   children,
   className = "",
+  titleLabel,
 }: {
   title: string;
   eyebrow?: ReactNode;
   selected?: boolean;
   children: ReactNode;
   className?: string;
+  titleLabel?: string;
 }) {
   const id = useId();
   return (
     <li className={`nx-object-card ${className}`} data-selected={selected}>
       <article aria-labelledby={id}>
         {eyebrow && <div className="nx-object-eyebrow">{eyebrow}</div>}
-        <h3 id={id}>{title}</h3>
+        <h3 id={id}>
+          {titleLabel && <span className="nx-object-title-label">{titleLabel}</span>}
+          {title}
+        </h3>
         {selected && <span className="nx-object-selection">Em edição</span>}
         {children}
       </article>
@@ -89,21 +102,24 @@ export function SystemCard({
   const Icon = type === "TELHADO" ? House : Route;
   return (
     <ObjectCard
-      className="nx-system-card"
-      title={name || "Identifique este sistema"}
+      className={`nx-system-card ${type === "TELHADO" ? "nx-system-roof" : "nx-system-overhead"}`}
+      title={name || "Identificação pendente"}
+      titleLabel="Identificação / local"
       selected={selected}
       eyebrow={
         <>
           <Icon size={26} aria-hidden="true" />
-          <span>
-            Sistema {number} · {type === "TELHADO" ? "Telhado" : "Suspenso (OVERHEAD)"}
+          <span className="nx-system-number">Sistema nº {number}</span>
+          <span className="nx-system-type">
+            {type === "TELHADO" ? "Telhado" : "Suspenso (OVERHEAD)"}
           </span>
         </>
       }
     >
       <Facts items={facts} />
-      <p className="nx-object-meta">
-        Origem {origin} · {preview ? "Prévia local · cálculo pendente" : "Cálculo consolidado"}
+      <p className="nx-object-meta nx-system-provenance" data-preview={preview}>
+        <span>Origem: {origin}</span>
+        <span>{preview ? "Prévia local · cálculo pendente" : "Cálculo consolidado"}</span>
       </p>
       {problems.length > 0 && (
         <ul className="nx-object-problems">
@@ -133,23 +149,23 @@ export function ProcurementCard({
   children?: ReactNode;
 }) {
   return (
-    <ObjectCard
+    <PlanningItem
       title={title}
-      className="nx-procurement-card"
-      eyebrow={
+      code={code}
+      status={status}
+      facts={facts}
+      supplier={
         <>
-          <Truck size={24} aria-hidden="true" />
-          {code}
+          <span className="nx-object-title-label">Fornecedor</span>
+          <p className={supplier ? "nx-object-meta" : "nx-planning-warning"}>
+            {supplier || "Pendente: definir fornecedor no item comercial"}
+          </p>
         </>
       }
+      icon={<Truck size={20} aria-hidden="true" />}
     >
-      <StatusBadge value={status} />
-      <p className={supplier ? "nx-object-meta" : "nx-object-problems"}>
-        {supplier || "Pendente: definir fornecedor no item comercial"}
-      </p>
-      <Facts items={facts} />
-      <div className="nx-object-actions">{children}</div>
-    </ObjectCard>
+      {children}
+    </PlanningItem>
   );
 }
 
@@ -167,23 +183,59 @@ export function ProductionCard({
   children?: ReactNode;
 }) {
   return (
-    <ObjectCard
+    <PlanningItem
       title={title}
-      className="nx-production-card"
-      eyebrow={
-        <>
-          <Factory size={24} aria-hidden="true" />
-          {code}
-        </>
-      }
+      code={code}
+      status={status}
+      facts={facts}
+      icon={<Factory size={20} aria-hidden="true" />}
     >
-      <StatusBadge value={status} />
-      <Facts items={facts} />
+      {children}
       <p className="nx-object-meta">
-        Liberação, prazo, responsável e referência técnica: consulte a OP vinculada.
+        Prazo, responsável e referência técnica: consulte a OP vinculada.
       </p>
-      <div className="nx-object-actions">{children}</div>
-    </ObjectCard>
+    </PlanningItem>
+  );
+}
+
+/** One semantic list entry at every width; quantities are formatted by Planejamento. */
+function PlanningItem({
+  title,
+  code,
+  status,
+  facts,
+  supplier,
+  icon,
+  children,
+}: {
+  title: string;
+  code: string;
+  status: string;
+  facts: [string, ReactNode][];
+  supplier?: ReactNode;
+  icon: ReactNode;
+  children?: ReactNode;
+}) {
+  const id = useId();
+  return (
+    <li className="nx-planning-row" data-purchasing={!!supplier} data-status={status}>
+      <article aria-labelledby={id}>
+        <div className="nx-planning-identity">
+          <p className="nx-object-eyebrow">
+            {icon}
+            <span>{code}</span>
+          </p>
+          <h3 id={id}>{title}</h3>
+        </div>
+        {supplier && <div className="nx-planning-supplier">{supplier}</div>}
+        <Facts items={facts} />
+        <div className="nx-planning-status">
+          <span className="nx-object-title-label">Situação</span>
+          <StatusBadge value={status} />
+          <div className="nx-object-actions">{children}</div>
+        </div>
+      </article>
+    </li>
   );
 }
 

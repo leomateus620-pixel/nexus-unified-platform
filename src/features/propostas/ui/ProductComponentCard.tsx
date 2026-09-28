@@ -40,44 +40,40 @@ export const ProductComponentCard = memo(function ProductComponentCard({
 }: CommercialRowProps) {
   return (
     <ObjectCard
-      title={item.descricao.length > 100 ? `${item.descricao.slice(0, 100)}…` : item.descricao}
+      title={item.descricao}
       selected={selected}
       className="nx-product-card"
       eyebrow={
         <>
           <FamilyMark description={item.descricao} />
           <span className="nx-editor-code">{item.codigo}</span>
-          <label className="nx-object-check">
-            <input
-              type="checkbox"
-              aria-label={`Incluir ${item.codigo} no orçamento`}
-              checked={item.incluido_orcamento}
-              disabled={!editable}
-              onChange={(e) => onToggleIncluded(item.id, e.target.checked)}
-            />
-            <span>No orçamento</span>
-          </label>
-          <label className="nx-object-check">
-            <input
-              type="checkbox"
-              aria-label={`Selecionar ${item.codigo} para edição em lote`}
-              checked={batchChecked}
-              disabled={!editable}
-              onChange={(e) => onToggleBatch(item.id, e.target.checked)}
-            />
-            <span>Lote</span>
-          </label>
+          <div className="nx-product-controls">
+            <label className="nx-object-check">
+              <input
+                type="checkbox"
+                aria-label={`Incluir ${item.codigo} no orçamento`}
+                checked={item.incluido_orcamento}
+                disabled={!editable}
+                onChange={(e) => onToggleIncluded(item.id, e.target.checked)}
+              />
+              <span>No orçamento</span>
+            </label>
+            <label className="nx-object-check">
+              <input
+                type="checkbox"
+                aria-label={`Selecionar ${item.codigo} para edição em lote`}
+                checked={batchChecked}
+                disabled={!editable}
+                onChange={(e) => onToggleBatch(item.id, e.target.checked)}
+              />
+              <span>Lote</span>
+            </label>
+          </div>
         </>
       }
     >
-      {item.descricao.length > 100 && (
-        <details className="nx-object-details">
-          <summary>Descrição completa</summary>
-          <p>{item.descricao}</p>
-        </details>
-      )}
       <p className="nx-object-meta">
-        {item.unidade} · {item.fabricante ?? "Fabricante não informado"}
+        Unidade: {item.unidade} · {item.fabricante ?? "Fabricante não informado"}
       </p>
       <div className="nx-product-sourcing">
         <span className="capitalize">{item.modalidade}</span>
@@ -90,13 +86,15 @@ export const ProductComponentCard = memo(function ProductComponentCard({
         </p>
       </div>
       <dl className="nx-product-price">
-        <dt>Preço unitário calculado</dt>
-        <dd>{price}</dd>
+        <div className="nx-product-price-main">
+          <dt>Preço unitário calculado</dt>
+          <dd>{price}</dd>
+        </div>
         {cost !== null && (
-          <>
-            <dt>Custo adotado nesta revisão</dt>
+          <div className="nx-product-cost-row">
+            <dt>Custo adotado na revisão</dt>
             <dd className="nx-product-cost">{cost}</dd>
-          </>
+          </div>
         )}
       </dl>
       <details className="nx-object-details">

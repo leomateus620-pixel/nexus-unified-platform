@@ -1,0 +1,49 @@
+{
+  "events": [
+    {
+      "file": "src/features/propostas/Dimensionamento.tsx",
+      "eventHandlerCount": 21,
+      "unchanged": true
+    },
+    {
+      "file": "src/features/propostas/Etapas.tsx",
+      "eventHandlerCount": 21,
+      "unchanged": true
+    },
+    {
+      "file": "src/features/propostas/ui/ObjectCards.tsx",
+      "eventHandlerCount": 1,
+      "unchanged": true
+    },
+    {
+      "file": "src/features/propostas/ui/ProductComponentCard.tsx",
+      "eventHandlerCount": 3,
+      "unchanged": true
+    },
+    {
+      "file": "src/routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.tsx",
+      "eventHandlerCount": 5,
+      "unchanged": true
+    }
+  ],
+  "additionalProtectedFiles": [
+    {
+      "file": "src/features/propostas/propostas.functions.ts",
+      "before": "e4632f53f5edbab6ea95f8a816bb6077c01fbc0d9e0555ea939a225f7a891776",
+      "after": "e4632f53f5edbab6ea95f8a816bb6077c01fbc0d9e0555ea939a225f7a891776",
+      "unchanged": true
+    },
+    {
+      "file": "src/features/propostas/hooks.ts",
+      "before": "2bf739d1f05791f5fdb894d1976e80aec10bfded272eff8cad1caf422bd02f5c",
+      "after": "2bf739d1f05791f5fdb894d1976e80aec10bfded272eff8cad1caf422bd02f5c",
+      "unchanged": true
+    },
+    {
+      "file": "src/features/calculo/domain.ts",
+      "before": "5d2e394654a08b999c9694509c5545795f65385f34458cb1842198cb9c90e072",
+      "after": "5d2e394654a08b999c9694509c5545795f65385f34458cb1842198cb9c90e072",
+      "unchanged": true
+    }
+  ]
+}

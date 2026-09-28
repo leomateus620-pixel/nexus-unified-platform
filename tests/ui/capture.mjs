@@ -2,11 +2,12 @@ import { chromium } from "@playwright/test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
+import { evidenceRoot } from "./evidence.mjs";
 
 const label = process.argv[2] || "after";
-const catalog = label === "catalog-after";
+const catalog = label.startsWith("catalog-") || label.startsWith("revision-");
 const base = process.env.NEXUS_UI_URL || `http://127.0.0.1:${label === "before" ? 4181 : 4182}`;
-const output = path.resolve(`docs/ui/evidence/${label}`);
+const output = path.resolve(`${evidenceRoot}/${label}`);
 await mkdir(output, { recursive: true });
 const phase = process.env.NEXUS_UI_PHASE || "all";
 const previous =
@@ -220,7 +221,7 @@ async function eventTiming(action) {
       Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(input, next);
       input.dispatchEvent(new Event("input", { bubbles: true }));
     } else if (action === "selection") {
-      document.querySelector('input[aria-label^="Selecionar todos"]').click();
+      document.querySelector('input[aria-label^="Selecionar COMP-"]').click();
     } else if (action === "panel") {
       [...document.querySelectorAll("button")]
         .find((e) => (e.getAttribute("aria-label") || e.textContent).includes("COMP-001"))
@@ -402,7 +403,7 @@ report.assertions = {
 };
 await writeFile(path.join(output, "results.json"), JSON.stringify(report, null, 2));
 await browser.close();
-if (label === "catalog-after" && Object.values(report.assertions).some((pass) => !pass))
+if (label.endsWith("-after") && Object.values(report.assertions).some((pass) => !pass))
   process.exitCode = 1;
 console.log(
   JSON.stringify(

@@ -1,0 +1,16 @@
+[
+  {
+    "mode": "commercial",
+    "pages": 2,
+    "controlsAbsent": true,
+    "internalCostsExpected": false,
+    "visualInspection": "All pages rendered by Poppler and inspected; white background, no clipping."
+  },
+  {
+    "mode": "internal",
+    "pages": 2,
+    "controlsAbsent": true,
+    "internalCostsExpected": true,
+    "visualInspection": "All pages rendered by Poppler and inspected; white background, no clipping."
+  }
+]

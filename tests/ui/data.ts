@@ -22,6 +22,7 @@ const components = Array.from({ length: count === 17 ? 21 : count }, (_, i) => (
   fabricante: "Fornecedor de teste",
   ncm: "7326.90.90",
   modalidade: i % 3 === 0 ? "fabricar" : "comprar",
+  incluido_orcamento: true,
   fornecedor_id: "supplier-fixture",
   fornecedores: { nome: "Suprimentos industriais — teste" },
   custo_adotado: i === 0 ? 12345.6789 : 12.94 + i * 10,
@@ -229,8 +230,27 @@ export const tables = {
     { id: "calc-fixture", created_at: revision.created_at, motor_versao: revision.motor_versao },
   ],
 };
+// Edge cases used only by the isolated revision presentation checks.
+if (scenario === "revision-edge") {
+  systems[0].identificacao = "22";
+  systems[1].identificacao = "22";
+  systems[2].identificacao = "";
+  summary.por_sistema[0].extensao_m = 0;
+  summary.por_sistema[0].venda_materiais = 0;
+  summary.por_sistema.splice(2, 1);
+  tables.demandas.forEach((d) => {
+    d.revisao_componentes.fornecedores = { nome: "" };
+    d.ordem_compra_itens = [];
+    d.ordem_producao_itens = [];
+  });
+}
 export const supabase = {
   auth: { signOut: async () => ({ error: null }) },
+  rpc: async (name, payload) => {
+    window.__nexusCalls.push({ name, payload });
+    if (name !== "atualizar_componentes_revisao") throw new Error(`Unexpected test RPC: ${name}`);
+    return { data: scenario === "write-conflict" ? 0 : payload._ids.length, error: null };
+  },
   from(table) {
     let single = false,
       mutation = null,

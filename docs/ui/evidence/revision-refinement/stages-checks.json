@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-28T05:05:10.052Z",
+  "browser": "153.0.8010.12",
+  "environment": "isolated presentation fixtures, not authenticated or backend validation",
+  "results": [
+    {
+      "screen": "oc",
+      "checks": "cancel/empty perform no write; focus returns; decimal input preserves movement type/item/quantity and idempotency UUID",
+      "passed": true
+    },
+    {
+      "screen": "op",
+      "checks": "cancel/empty perform no write; focus returns; decimal input preserves movement type/item/quantity and idempotency UUID",
+      "passed": true
+    },
+    {
+      "screen": "historico",
+      "checks": "short reason remains no-op; valid reason trimmed into unchanged payload",
+      "passed": true
+    },
+    {
+      "screen": "orcamento",
+      "checks": "pending result is explicitly prior calculation, no confirmed current label",
+      "passed": true
+    },
+    {
+      "screen": "parametros",
+      "checks": "22 fields preserved and invalid productivity exposes associated visible error",
+      "passed": true
+    },
+    {
+      "screen": "resumo-executivo",
+      "checks": "360/1366 no page overflow; internal mode changes only with existing control; print hides internal controls; restricted user cannot show internal data",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

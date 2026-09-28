@@ -1,4 +1,3 @@
-
 > test:industrial
 > tsx --test tests/industrial/contracts.test.ts tests/industrial/tangent-repair.test.mjs
 

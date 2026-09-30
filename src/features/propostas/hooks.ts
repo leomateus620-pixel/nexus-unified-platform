@@ -1,13 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { createContext, useContext } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { recalcularRevisao } from "./propostas.functions";
-import type { Parametros, Regras, Totais } from "@/features/calculo/domain";
+import {
+  PARAMETROS_MODELO,
+  type Parametros,
+  type Regras,
+  type Totais,
+} from "@/features/calculo/domain";
+import { applyRevisionPatch } from "./revision-patch";
+import type { Json } from "@/integrations/supabase/types";
+import type { SaveStatus, CalculationStatus } from "./save-queue";
+export type { SaveStatus, CalculationStatus } from "./save-queue";
 
-export type SaveStatus =
-  "idle" | "local" | "salvando" | "salvo" | "consolidando" | "confirmado" | "erro" | "conflito";
 export const SaveCtx = createContext<{
   status: SaveStatus;
   set: (s: SaveStatus, msg?: string) => void;
@@ -16,7 +21,16 @@ export const SaveCtx = createContext<{
   register: (key: string, flush: () => void) => () => void;
   local: (key?: string) => void;
   settle: (key?: string) => void;
-  save: () => Promise<void>;
+  save: () => Promise<boolean>;
+  ensureConsistent: () => Promise<boolean>;
+  retry: () => Promise<boolean>;
+  flush: () => Promise<boolean>;
+  requestCalculation: () => Promise<boolean>;
+  calculation: CalculationStatus;
+  draft: <T>(key: string) => T | undefined;
+  remember: (key: string, value: unknown) => void;
+  revisionVersion: { current: number | null };
+  revisionBaselines: Map<string, Record<string, unknown>>;
   busy: boolean;
 }>({
   status: "idle",
@@ -26,7 +40,16 @@ export const SaveCtx = createContext<{
   register: () => () => {},
   local: () => {},
   settle: () => {},
-  save: async () => {},
+  save: async () => true,
+  ensureConsistent: async () => true,
+  retry: async () => false,
+  flush: async () => true,
+  requestCalculation: async () => true,
+  calculation: "current",
+  draft: () => undefined,
+  remember: () => {},
+  revisionVersion: { current: null },
+  revisionBaselines: new Map(),
   busy: false,
 });
 export const useSave = () => useContext(SaveCtx);
@@ -146,17 +169,95 @@ export function useItens(id: string) {
 
 /** Recalcula no servidor (cálculo canônico) e invalida todos os dependentes da revisão. */
 export function useRecalcular(id: string) {
-  const qc = useQueryClient();
-  const fn = useServerFn(recalcularRevisao);
   const save = useSave();
   return useMutation({
-    mutationFn: () => save.run("calculo", async () => fn({ data: { revisao_id: id } })),
-    onMutate: () => save.set("salvando"),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: revKeys.all(id) });
-    },
+    mutationKey: ["calculo", id],
+    mutationFn: () => save.requestCalculation(),
     onError: (e) => save.set("erro", e instanceof Error ? e.message : String(e)),
   });
+}
+
+/** Revision fields share the FIFO/version guard and recognize a write whose response was lost. */
+export function usePatchRevisao(id: string) {
+  const qc = useQueryClient();
+  const save = useSave();
+  const revision = useRevisao(id);
+  const baselines = save.revisionBaselines;
+  // Capture before editing and keep it with the revision while an invalid/failed draft is local.
+  if (revision.data) {
+    for (const field of ["textos", "parametros"] as const)
+      if (!save.draft(field)) baselines.set(field, revision.data[field] as Record<string, unknown>);
+  }
+  return async (
+    key: "textos" | "parametros",
+    values: Record<string, unknown>,
+    options?: { fields?: string[] },
+  ) => {
+    const original = revision.data;
+    if (!original?.editavel) return false;
+    const baseline = baselines.get(key) ?? (original[key] as Record<string, unknown>);
+    baselines.set(key, baseline);
+    const desired = options?.fields
+      ? Object.fromEntries(
+          Object.entries(values).filter(([field]) => options.fields!.includes(field)),
+        )
+      : values;
+    // Compare only when this captured edit reaches the FIFO. An earlier write can
+    // advance the baseline while a newer edit restores the original value.
+    const version = save.revisionVersion.current ?? original.version;
+    const normalize = (field: string, value: unknown) =>
+      key === "parametros" && value === undefined
+        ? PARAMETROS_MODELO[field as keyof Parametros]
+        : value;
+    const result = await save.run(key, async () => {
+      const executionBaseline = baselines.get(key) ?? baseline;
+      const snapshot = await applyRevisionPatch(
+        {
+          read: async () => {
+            const { data, error } = await supabase
+              .from("proposta_revisoes")
+              .select("version,textos,parametros")
+              .eq("id", id)
+              .single();
+            if (error) throw new Error(error.message);
+            return { version: data.version, values: (data[key] ?? {}) as Record<string, unknown> };
+          },
+          write: async (expectedVersion, next) => {
+            const { data, error } = await supabase
+              .from("proposta_revisoes")
+              .update(key === "textos" ? { textos: next as Json } : { parametros: next as Json })
+              .eq("id", id)
+              .eq("version", expectedVersion)
+              .select("version");
+            if (error) throw new Error(error.message);
+            return data?.[0]?.version ?? null;
+          },
+        },
+        {
+          version: save.revisionVersion.current ?? version,
+          values: executionBaseline,
+        },
+        desired,
+        normalize,
+      );
+      // The form may still contain untouched values from before another editor's change.
+      // Acknowledging those remote values here would misclassify the old displayed value
+      // as a new local edit on the next full-form flush. Advance only our confirmed fields.
+      baselines.set(key, {
+        ...executionBaseline,
+        ...Object.fromEntries(
+          Object.entries(desired).filter(
+            ([field, value]) =>
+              !Object.is(normalize(field, value), normalize(field, executionBaseline[field])),
+          ),
+        ),
+      });
+      save.revisionVersion.current = snapshot.version;
+      await qc.invalidateQueries({ queryKey: revKeys.head(id) });
+      return true;
+    });
+    return result === true;
+  };
 }
 
 export function useFornecedores(orgId: string) {

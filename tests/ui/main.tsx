@@ -16,8 +16,9 @@ import { Route as WorkspaceRoute } from "@/routes/_authenticated/comercial.propo
 import { Route as ListRoute } from "@/routes/_authenticated/comercial.propostas.index";
 import { Route as OcRoute } from "@/routes/_authenticated/compras.ordens-compra.$ordemId";
 import { Route as OpRoute } from "@/routes/_authenticated/compras.ordens-producao.$ordemId";
+import { Route as DefaultsRoute } from "@/routes/_authenticated/configuracoes.orcamentos";
 import { useSave } from "@/features/propostas/hooks";
-import { OutletContext } from "./router";
+import { OutletContext, useFixturePage } from "./router";
 import { query, scenario } from "./data";
 import "@/styles.css";
 
@@ -27,7 +28,6 @@ const client = new QueryClient({
     mutations: { retry: false },
   },
 });
-const page = query.get("page") || "dimensionamento";
 function StateProbe() {
   const { set } = useSave();
   useEffect(() => {
@@ -50,28 +50,35 @@ const Workspace = WorkspaceRoute.options.component,
   List = ListRoute.options.component,
   Oc = OcRoute.options.component,
   Op = OpRoute.options.component;
-createRoot(document.getElementById("root")).render(
-  <QueryClientProvider client={client}>
-    <AppShell>
-      {page === "list" ? (
-        <List />
-      ) : page === "oc" ? (
-        <Oc />
-      ) : page === "op" ? (
-        <Op />
-      ) : (
-        <OutletContext.Provider
-          value={
-            <>
-              <StateProbe />
-              {pages[page] || pages.dimensionamento}
-            </>
-          }
-        >
-          <Workspace />
-        </OutletContext.Provider>
-      )}
-    </AppShell>
-  </QueryClientProvider>,
-);
+const Defaults = DefaultsRoute.options.component;
+function Harness() {
+  const page = useFixturePage();
+  return (
+    <QueryClientProvider client={client}>
+      <AppShell>
+        {page === "list" ? (
+          <List />
+        ) : page === "oc" ? (
+          <Oc />
+        ) : page === "op" ? (
+          <Op />
+        ) : page === "parametros-globais" ? (
+          <Defaults />
+        ) : (
+          <OutletContext.Provider
+            value={
+              <>
+                <StateProbe />
+                {pages[page] || pages.dimensionamento}
+              </>
+            }
+          >
+            <Workspace />
+          </OutletContext.Provider>
+        )}
+      </AppShell>
+    </QueryClientProvider>
+  );
+}
+createRoot(document.getElementById("root")).render(<Harness />);
 window.__nexusReady = true;

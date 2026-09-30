@@ -1,0 +1,25 @@
+psql:workspace/tests/db/save-checkpoints.sql:22: NOTICE:  PASS: derived composition removal does not inflate manual differences
+psql:workspace/tests/db/save-checkpoints.sql:25: NOTICE:  PASS: manual override remains a commercial difference
+psql:workspace/tests/db/save-checkpoints.sql:32: NOTICE:  PASS: no changes: no event
+psql:workspace/tests/db/save-checkpoints.sql:34: NOTICE:  PASS: input changes mark the previous calculation stale
+psql:workspace/tests/db/save-checkpoints.sql:37: NOTICE:  PASS: autosaves do not create commercial events
+psql:workspace/tests/db/save-checkpoints.sql:39: NOTICE:  PASS: five fields in three objects = one save
+psql:workspace/tests/db/save-checkpoints.sql:40: NOTICE:  PASS: repeated field becomes initial/final diff
+psql:workspace/tests/db/save-checkpoints.sql:41: NOTICE:  PASS: lost response/retry returns identical operation
+psql:workspace/tests/db/save-checkpoints.sql:42: NOTICE:  PASS: retry does not duplicate
+psql:workspace/tests/db/save-checkpoints.sql:43: NOTICE:  PASS: repeated save with no changes stays empty
+psql:workspace/tests/db/save-checkpoints.sql:46: NOTICE:  PASS: reverting exactly to initial makes no event
+psql:workspace/tests/db/save-checkpoints.sql:49: NOTICE:  PASS: recalculation is technical, not commercial
+psql:workspace/tests/db/save-checkpoints.sql:54: NOTICE:  PASS: conflict does not increment history
+psql:workspace/tests/db/save-checkpoints.sql:58: NOTICE:  PASS: impact compares confirmed checkpoint, not intervening calculation
+psql:workspace/tests/db/save-checkpoints.sql:59: NOTICE:  PASS: actual author B preserved when A consolidates
+psql:workspace/tests/db/save-checkpoints.sql:62: NOTICE:  PASS: calculation failure has no event
+psql:workspace/tests/db/save-checkpoints.sql:67: NOTICE:  PASS: audit failure rolls back calculation atomically
+psql:workspace/tests/db/save-checkpoints.sql:68: NOTICE:  PASS: failed consolidation preserves synchronized draft
+psql:workspace/tests/db/save-checkpoints.sql:69: NOTICE:  PASS: audit failure does not increment history
+psql:workspace/tests/db/save-checkpoints.sql:72: NOTICE:  PASS: restricted user cannot see diffs OR counts
+psql:workspace/tests/db/save-checkpoints.sql:75: NOTICE:  PASS: other organization cannot see history
+psql:workspace/tests/db/save-checkpoints.sql:77: NOTICE:  PASS: second authorized user sees same persistent history
+psql:workspace/tests/db/save-checkpoints.sql:79: NOTICE:  PASS: save does not issue or create a formal revision
+psql:workspace/tests/db/save-checkpoints.sql:82: NOTICE:  PASS: issued revision remains unchanged
+PASS: ten PostgreSQL sessions, one operation/event/calculation, identical persistent response

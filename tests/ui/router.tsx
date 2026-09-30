@@ -11,8 +11,18 @@ const params = {
   ordemId: "order-fixture",
   projetoId: "project-fixture",
 };
-const page = new URLSearchParams(location.search).get("page") || "dimensionamento";
-const pathname =
+let page = new URLSearchParams(location.search).get("page") || "dimensionamento";
+const pageListeners = new Set<() => void>();
+export function useFixturePage() {
+  return useSyncExternalStore(
+    (listener) => {
+      pageListeners.add(listener);
+      return () => pageListeners.delete(listener);
+    },
+    () => page,
+  );
+}
+const pathForPage = (page: string) =>
   page === "list"
     ? "/comercial/propostas"
     : page === "oc"
@@ -30,7 +40,8 @@ export function useNavigate() {
   };
 }
 export function useRouterState({ select }) {
-  return select({ location: { pathname } });
+  const current = useFixturePage();
+  return select({ location: { pathname: pathForPage(current) } });
 }
 export function useBlocker() {
   return { status: "idle", reset: () => {}, proceed: () => {} };
@@ -61,8 +72,7 @@ export function Link({
   ...props
 }) {
   const href = to.replace(/\$([\w]+)/g, (_, key) => p[key] || key);
-  const active =
-    pathname === href || (href !== "/" && pathname.startsWith(href) && !href.includes("revisoes"));
+  const active = pathForPage(useFixturePage()) === href;
   const state = active ? activeProps : inactiveProps;
   return (
     <a
@@ -75,6 +85,13 @@ export function Link({
         event.preventDefault();
         props.onClick?.(event);
         window.__nexusNavigations.push({ to, params: p });
+        if (href.includes("/revisoes/rev-fixture/")) {
+          page = href.split("/").at(-1);
+          const url = new URL(location.href);
+          url.searchParams.set("page", page);
+          history.pushState({}, "", url);
+          pageListeners.forEach((listener) => listener());
+        }
       }}
     >
       {children}

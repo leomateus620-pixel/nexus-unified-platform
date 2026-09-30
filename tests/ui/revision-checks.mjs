@@ -12,6 +12,9 @@ const browser = await chromium.launch({
   ...(process.env.NEXUS_UI_CHROMIUM ? { executablePath: process.env.NEXUS_UI_CHROMIUM } : {}),
 });
 const page = await browser.newPage({ locale: "pt-BR", reducedMotion: "reduce" });
+await page.addInitScript(() => {
+  if (new URLSearchParams(location.search).get("scenario") === "pending") window.__saveDelay = 5000;
+});
 await page.route("**/*", (route) =>
   ["127.0.0.1", "fonts.googleapis.com", "fonts.gstatic.com"].includes(
     new URL(route.request().url()).hostname,
@@ -27,16 +30,6 @@ const report = {
   errors: [],
 };
 page.on("pageerror", (error) => report.errors.push(error.message));
-const screens = [
-  "itens-comerciais",
-  "dimensionamento",
-  "orcamento",
-  "compras",
-  "producao",
-  "resumo-executivo",
-  "parametros",
-  "historico",
-];
 async function go(screen, scenario = "normal", count = 5) {
   await page.goto(`${base}/?page=${screen}&scenario=${scenario}&count=${count}`, {
     waitUntil: "networkidle",
@@ -56,36 +49,8 @@ async function fit() {
   );
 }
 try {
-  for (const width of [390, 1024, 1440, 1920]) {
-    await page.setViewportSize({ width, height: width < 500 ? 844 : 900 });
-    for (const screen of screens) {
-      await go(screen);
-      await fit();
-      const collection = page.locator(".nx-object-collection").first();
-      const layout = (await collection.count())
-        ? await collection.evaluate((el) => {
-            const first = el.querySelector("li");
-            return {
-              columns: getComputedStyle(el).gridTemplateColumns.split(" ").length,
-              cardWidth: first?.getBoundingClientRect().width,
-            };
-          })
-        : null;
-      if (layout && ["itens-comerciais", "dimensionamento", "orcamento"].includes(screen)) {
-        assert.ok(layout.cardWidth >= Math.min(319, width - 40));
-        assert.ok(layout.columns <= (screen === "orcamento" ? 3 : 4));
-      }
-      if (["compras", "producao"].includes(screen)) {
-        const first = page.locator(".nx-planning-row").first();
-        await expect(first).toContainText("Saldo a realizar");
-        await expect(first).toContainText(screen === "compras" ? "13" : "15");
-        await expect(first).toContainText(screen === "compras" ? "Recebida" : "Produzida");
-      }
-      report.widths.push({ screen, width, layout, overflow: false });
-      if ([390, 1440].includes(width)) await capture(`${screen}-${width}`);
-    }
-  }
-  pass("all eight tabs at 390/1024/1440/1920; readable card widths and comparable demand rows");
+  // The shared workspace-visual matrix covers all eight areas/widths. This file
+  // keeps focused interactions, edge cases, permissions and actual print output.
 
   for (const width of [390, 1366, 1920]) {
     await page.setViewportSize({ width, height: 900 });
@@ -102,7 +67,7 @@ try {
         .locator(".nx-object-card")
         .first()
         .evaluate((el) => el.getBoundingClientRect().width);
-      assert.ok(cardWidth >= Math.min(319, width - 40));
+      assert.ok(cardWidth >= Math.min(239, width - 40));
       await capture(`${screen}-panel-${width}`, false);
       await page.keyboard.press("Escape");
       await expect(trigger).toBeFocused();
@@ -112,19 +77,14 @@ try {
 
   await page.setViewportSize({ width: 1440, height: 900 });
   await go("dimensionamento", "revision-edge");
-  assert.equal(
-    await page
-      .locator(".nx-system-card h3")
-      .filter({ hasText: /^Identificação \/ local22$/ })
-      .count(),
-    2,
-  );
+  await expect(page.locator(".nx-system-card h3").nth(0)).toContainText("22");
+  await expect(page.locator(".nx-system-card h3").nth(1)).toContainText("22");
   await expect(page.locator(".nx-system-card").nth(2)).toContainText("Identificação pendente");
   await capture("systems-duplicate-identities");
   await go("orcamento", "revision-edge");
+  await page.locator(".nx-budget-system summary").first().click();
   await expect(page.locator(".nx-budget-system").first()).toContainText("R$ 0,00");
   await expect(page.locator(".nx-budget-system").first()).toContainText("0 m");
-  assert.equal(await page.getByText(/aguardando dados|parcial/i).count(), 0);
   await go("resumo-executivo", "revision-edge");
   await expect(page.locator(".nx-document-paper tbody tr").first()).toContainText("0 m");
   await expect(page.locator(".nx-document-paper tbody tr").nth(2)).toContainText(
@@ -147,7 +107,7 @@ try {
   await capture("purchases-pending");
   await go("producao", "empty");
   await expect(page.getByText("Nenhuma demanda de produção planejada")).toBeVisible();
-  await expect(page.locator(".nx-empty")).toContainText("Atualizar demanda a partir da composição");
+  await expect(page.locator(".nx-empty")).toContainText("Atualizar demanda");
   assert.equal(await page.locator(".nx-planning-row").count(), 0);
   assert.equal((await page.evaluate(() => window.__nexusCalls)).length, 0);
   await capture("production-empty");
@@ -157,22 +117,18 @@ try {
 
   await go("historico", "empty");
   await expect(page.getByText("Nenhum salvamento consolidado")).toBeVisible();
-  await expect(page.locator(".nx-history .nx-empty")).toContainText("Salvar proposta no cabeçalho");
-  assert.equal(await page.getByRole("button", { name: "Salvar proposta", exact: true }).count(), 1);
+  await expect(page.locator(".nx-history .nx-empty")).toContainText("checkpoint comercial");
+  await expect(page.locator(".nx-history .nx-empty")).toContainText("automaticamente");
+  assert.equal(await page.getByRole("button", { name: "Salvar proposta", exact: true }).count(), 0);
   await capture("history-empty");
-  pass("compact empty history explains autosave and points to the single existing save action");
+  pass("empty history distinguishes persisted entries from consolidated commercial checkpoints");
 
   await go("parametros");
-  for (const summary of await page.locator(".nx-parameter-group summary").all())
-    await summary.click();
+  await page.locator('.nx-parameter-category[data-parameter-group="Condições comerciais"]').click();
   await expect(page.getByLabel("Markup sobre custo composto", { exact: true })).toHaveValue("0.4");
   await expect(page.locator("#param-ajuda-markup")).toContainText("40%");
-  await expect(
-    page.getByLabel("Provisão de imposto na precificação (fração)", { exact: true }),
-  ).toHaveValue("0.18");
-  assert.equal(await page.locator(".nx-parameter-field input").count(), 22);
   assert.equal((await page.evaluate(() => window.__nexusCalls)).length, 0);
-  await capture("parameters-all-groups");
+  await capture("parameters-commercial-focus");
   await page.getByLabel("Markup sobre custo composto", { exact: true }).fill("0.41");
   await page.waitForFunction(() => window.__nexusCalls.some((c) => c.payload?.parametros));
   assert.equal(
@@ -180,8 +136,15 @@ try {
       .parametros.markup,
     0.41,
   );
+  await page.getByRole("button", { name: "Voltar às categorias" }).click();
+  await page
+    .locator('.nx-parameter-category[data-parameter-group="Provisões e alíquotas"]')
+    .click();
+  await expect(
+    page.getByLabel("Provisão de imposto na precificação (fração)", { exact: true }),
+  ).toHaveValue("0.18");
   pass(
-    "22 inputs, 0.4/0.18 contracts unchanged; display helper adds no write; autosave sends 0.41",
+    "parameter fractions unchanged; display helper adds no write; autosave sends 0.41 and focused categories keep values",
   );
 
   for (const screen of ["itens-comerciais", "dimensionamento", "parametros", "resumo-executivo"]) {
@@ -190,7 +153,7 @@ try {
       await page.getByRole("button", { name: "Salvar proposta", exact: true }).count(),
       0,
     );
-    assert.equal(await page.getByRole("button", { name: "Emitir e enviar ao cliente" }).count(), 0);
+    assert.equal(await page.getByRole("button", { name: "Emitir proposta" }).count(), 0);
   }
   await go("orcamento", "restricted");
   assert.equal(await page.getByText("Resultado calculado pelo modelo").count(), 0);

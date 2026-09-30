@@ -26,6 +26,8 @@ export function ObjectCard({
   children,
   className = "",
   titleLabel,
+  onOpen,
+  openLabel,
 }: {
   title: string;
   eyebrow?: ReactNode;
@@ -33,6 +35,8 @@ export function ObjectCard({
   children: ReactNode;
   className?: string;
   titleLabel?: string;
+  onOpen?: ((trigger: HTMLButtonElement) => void) | undefined;
+  openLabel?: string | undefined;
 }) {
   const id = useId();
   return (
@@ -41,9 +45,23 @@ export function ObjectCard({
         {eyebrow && <div className="nx-object-eyebrow">{eyebrow}</div>}
         <h3 id={id}>
           {titleLabel && <span className="nx-object-title-label">{titleLabel}</span>}
-          {title}
+          {onOpen ? (
+            <button
+              type="button"
+              className="nx-object-open"
+              aria-label={openLabel}
+              aria-expanded={selected ?? false}
+              title={title}
+              onClick={(event) => onOpen(event.currentTarget)}
+            >
+              <span>{title}</span>
+              <span aria-hidden="true">↗</span>
+            </button>
+          ) : (
+            title
+          )}
         </h3>
-        {selected && <span className="nx-object-selection">Em edição</span>}
+        {selected && <span className="nx-object-selection">Em foco</span>}
         {children}
       </article>
     </li>
@@ -87,6 +105,10 @@ export function SystemCard({
   facts,
   problems,
   preview,
+  reference,
+  calculationState,
+  onOpen,
+  openLabel,
   children,
 }: {
   name: string;
@@ -97,6 +119,10 @@ export function SystemCard({
   facts: [string, ReactNode][];
   problems: string[];
   preview: boolean;
+  reference?: string;
+  calculationState?: "invalid" | "stale" | "pending" | "updated";
+  onOpen?: (trigger: HTMLButtonElement) => void;
+  openLabel?: string;
   children: ReactNode;
 }) {
   const Icon = type === "TELHADO" ? House : Route;
@@ -104,22 +130,45 @@ export function SystemCard({
     <ObjectCard
       className={`nx-system-card ${type === "TELHADO" ? "nx-system-roof" : "nx-system-overhead"}`}
       title={name || "Identificação pendente"}
-      titleLabel="Identificação / local"
       selected={selected}
+      onOpen={onOpen}
+      openLabel={openLabel}
       eyebrow={
         <>
           <Icon size={26} aria-hidden="true" />
-          <span className="nx-system-number">Sistema nº {number}</span>
-          <span className="nx-system-type">
-            {type === "TELHADO" ? "Telhado" : "Suspenso (OVERHEAD)"}
+          <span className="nx-system-number">
+            #{number}
+            {reference ? ` · ${reference}` : ""}
+          </span>
+          <span
+            className="nx-system-type"
+            title={type === "TELHADO" ? "Telhado (TELHADO)" : "Suspenso (OVERHEAD)"}
+          >
+            {type === "TELHADO" ? "Telhado" : "Overhead"}
           </span>
         </>
       }
     >
       <Facts items={facts} />
-      <p className="nx-object-meta nx-system-provenance" data-preview={preview}>
-        <span>Origem: {origin}</span>
-        <span>{preview ? "Prévia local · cálculo pendente" : "Cálculo consolidado"}</span>
+      <p
+        className="nx-object-meta nx-system-provenance"
+        data-preview={preview}
+        data-calculation={calculationState}
+      >
+        <span>
+          {calculationState === "invalid"
+            ? "Entrada inválida"
+            : calculationState === "stale"
+              ? "Resultado desatualizado"
+              : calculationState === "pending"
+                ? "Cálculo pendente"
+                : calculationState === "updated"
+                  ? "Medidas calculadas"
+                  : preview
+                    ? "Prévia local · cálculo pendente"
+                    : "Medidas calculadas"}
+        </span>
+        <span title={`Origem: ${origin}`}>{origin === "manual" ? "Manual" : origin}</span>
       </p>
       {problems.length > 0 && (
         <ul className="nx-object-problems">

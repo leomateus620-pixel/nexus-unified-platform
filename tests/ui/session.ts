@@ -5,6 +5,7 @@ export const useOrg = () => ({
     orgId: "org-fixture",
     orgNome: "Ambiente isolado de apresentação",
     roles: [scenario === "restricted" ? "comercial" : "admin"],
+    isAdmin: scenario !== "restricted",
     canSeeCosts: scenario !== "restricted",
   },
   isPending: false,

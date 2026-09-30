@@ -2,8 +2,9 @@ import ts from "typescript";
 import { execFileSync } from "node:child_process";
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { evidenceRoot } from "./evidence.mjs";
 
-const base = process.argv[2] || "5286881c4133c3d123812226b20081d67bc61c07";
+const base = process.argv[2] || "e4dea2acae5b6649674e4d5640f2b8f02aac03e2";
 // Explicitly scoped save/history exception requested for this delivery. Existing
 // transition/document/order functions and all pre-existing migrations remain protected.
 const saveFiles = new Set([
@@ -12,6 +13,8 @@ const saveFiles = new Set([
   "src/features/propostas/Dimensionamento.tsx",
   "src/features/propostas/ItensComerciais.tsx",
   "src/features/propostas/Etapas.tsx",
+  "src/features/propostas/ProposalSaveProvider.tsx",
+  "src/features/propostas/ui/EditorWorkspace.tsx",
   "src/routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.tsx",
 ]);
 const git = (...args) =>
@@ -59,7 +62,11 @@ function extract(source, name) {
     )
       output.primaryHandlers.push(text(node));
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "Route")
-      output.routes.push(text(node.initializer));
+      output.routes.push(
+        ts.isCallExpression(node.initializer) && ts.isCallExpression(node.initializer.expression)
+          ? text(node.initializer.expression.arguments[0])
+          : text(node.initializer),
+      );
     if (ts.isCallExpression(node)) {
       const expression = node.expression;
       const method = ts.isPropertyAccessExpression(expression) ? expression.name.text : "";
@@ -128,10 +135,10 @@ const report = {
   saveCoordinationException: [...saveFiles],
   transitionsUnchanged,
   scope:
-    "AST comparison covers route declarations, query/mutation/server hooks, database-call arguments and invalidation/mutate arguments. Presentation state and dialogs require separate manual/behavioral review. No claim of authenticated or database E2E verification.",
+    "AST comparison protects route paths, query/mutation/server hooks, database-call arguments and invalidation/mutate arguments. Save coordination changes are explicitly scoped; business transitions, engine, integrations and migrations remain hash protected. Presentation state and dialogs require separate behavioral review. No claim of authenticated or database E2E verification.",
 };
-mkdirSync("docs/ui/evidence", { recursive: true });
-writeFileSync("docs/ui/evidence/catalog-contracts.json", JSON.stringify(report, null, 2));
+mkdirSync(evidenceRoot, { recursive: true });
+writeFileSync(`${evidenceRoot}/catalog-contracts.json`, JSON.stringify(report, null, 2));
 console.log(
   JSON.stringify(
     {

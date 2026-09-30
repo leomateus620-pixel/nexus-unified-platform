@@ -369,12 +369,22 @@ export const novaRevisao = createServerFn({ method: "POST" })
 
 // ---------- Cálculo canônico ----------
 /** Shared engine, captured inputs and atomic persistence for both recalculation and consolidation. */
-async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string) {
+async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string, refreshed = false) {
   const captura = ok(
     await db.rpc("capturar_revisao", { _rev: revisaoId, _operacao: operacao ?? null }),
   ) as any;
   if (captura.confirmacao) return captura.confirmacao;
   const rev = captura.revisao;
+  // An unchanged snapshot may still have a stale/absent calculation (legacy draft).
+  // Refresh it through the same engine, then confirm the no-op without creating an audit event.
+  if (operacao && !captura.alterado && (rev.desatualizada || !rev.totais)) {
+    if (refreshed)
+      throw new Error(
+        "Conflito: o cálculo mudou durante a confirmação. Confira a revisão e tente novamente.",
+      );
+    await calcularCheckpoint(db, revisaoId);
+    return calcularCheckpoint(db, revisaoId, operacao, true);
+  }
   const sistemas = captura.sistemas.map((s: any) => ({
     id: s.id,
     identificacao: s.identificacao,

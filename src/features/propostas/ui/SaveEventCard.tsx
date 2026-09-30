@@ -1,7 +1,7 @@
-import { Save } from "lucide-react";
+import { History } from "lucide-react";
 import type { ProposalSaveEvent } from "../save-types";
 import { ObjectCard } from "./ObjectCards";
-import { brl } from "@/lib/format";
+import { brl, brlUnit, qtd } from "@/lib/format";
 
 const labels: Record<string, string> = {
   incluido_orcamento: "Incluído no orçamento",
@@ -41,7 +41,42 @@ const labels: Record<string, string> = {
   distancia_ida_volta_km: "Distância ida e volta",
   dias_por_viagem: "Dias por viagem",
 };
-function value(v: unknown) {
+const currencies = new Set([
+  "custo_adotado",
+  "preco_item_tecnico",
+  "custo_hora_tecnico",
+  "custo_hora_engenheiro",
+  "alimentacao_dia",
+  "hospedagem_dia",
+  "preco_combustivel",
+]);
+const fractions = new Set([
+  "markup",
+  "desconto",
+  "frete_materiais",
+  "montagem_percentual",
+  "aliquota_precificacao",
+  "aliquota_interestadual",
+  "aliquota_interna_destino",
+]);
+const units: Record<string, string> = {
+  metragem: "m",
+  trechos: "trechos",
+  horas_por_dia: "h/dia",
+  horas_engenharia: "h",
+  produtividade_telhado_m_dia: "m/equipe-dia",
+  produtividade_overhead_m_dia: "m/equipe-dia",
+  distancia_ida_volta_km: "km",
+  km_por_litro: "km/L",
+  dias_por_viagem: "dias/viagem",
+};
+function value(v: unknown, field: string) {
+  if (typeof v === "number") {
+    if (currencies.has(field)) return brlUnit(v);
+    if (fractions.has(field))
+      return `${(v * 100).toLocaleString("pt-BR", { maximumFractionDigits: 8 })}%`;
+    return qtd(v, units[field], 8);
+  }
   return v == null
     ? "Não informado / removido"
     : typeof v === "boolean"
@@ -55,22 +90,32 @@ export function SaveEventCard({ event }: { event: ProposalSaveEvent }) {
   event.diferencas.forEach((d) => groups.set(d.objeto, [...(groups.get(d.objeto) ?? []), d]));
   return (
     <ObjectCard
-      title="Proposta salva"
+      title="Alterações confirmadas"
       className="nx-save-event-card"
       eyebrow={
         <>
-          <Save size={22} aria-hidden="true" />
+          <History size={18} aria-hidden="true" />
           <time dateTime={event.created_at}>
             {new Date(event.created_at).toLocaleString("pt-BR")}
           </time>
+          <span>Checkpoint {event.versao_destino}</span>
         </>
       }
     >
-      <p>Consolidado por {event.autor_nome}</p>
+      <p className="nx-object-meta">
+        Consolidado por {event.autor_nome || "Autoria não registrada"}
+      </p>
       <strong>
         {event.objetos} {event.objetos === 1 ? "objeto alterado" : "objetos alterados"} ·{" "}
         {event.campos} {event.campos === 1 ? "campo" : "campos"}
       </strong>
+      <p className="nx-object-meta">
+        {[...groups.values()]
+          .slice(0, 3)
+          .map((changes) => changes[0]?.nome)
+          .join(" · ")}
+        {groups.size > 3 ? ` · +${groups.size - 3} objetos` : ""}
+      </p>
       <details className="nx-save-differences">
         <summary>Ver alterações</summary>
         {[...groups].map(([key, changes]) => (
@@ -82,11 +127,11 @@ export function SaveEventCard({ event }: { event: ProposalSaveEvent }) {
                 <dl>
                   <div>
                     <dt>Antes</dt>
-                    <dd>{d.antes_rotulo ?? value(d.antes)}</dd>
+                    <dd>{d.antes_rotulo ?? value(d.antes, d.campo)}</dd>
                   </div>
                   <div>
                     <dt>Depois</dt>
-                    <dd>{d.depois_rotulo ?? value(d.depois)}</dd>
+                    <dd>{d.depois_rotulo ?? value(d.depois, d.campo)}</dd>
                   </div>
                 </dl>
                 <p>

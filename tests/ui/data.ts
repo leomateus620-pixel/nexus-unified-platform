@@ -92,7 +92,10 @@ const summary = {
 const proposal = {
   id: "proposal-fixture",
   numero: "054/26",
-  titulo: "Proteção de acesso e manutenção industrial",
+  titulo:
+    scenario === "long-title"
+      ? "Proteção de acesso e manutenção industrial — escopo de instalação nas passarelas de recebimento, galerias de transporte e coberturas da unidade industrial, com condicionantes técnicas preservadas nesta revisão"
+      : "Proteção de acesso e manutenção industrial",
   revisao_corrente_id: "rev-fixture",
   projeto_id: "project-fixture",
   clientes: {
@@ -107,7 +110,8 @@ const proposal = {
   },
   contatos: { nome: "Contato de teste", email: "contato@example.invalid" },
 };
-const revision = {
+export const revision = {
+  version: 1,
   id: "rev-fixture",
   proposta_id: proposal.id,
   numero: 5,
@@ -127,6 +131,7 @@ const revision = {
   created_at: "2026-09-27T12:00:00Z",
   motor_versao: "nexus-calc-1.1.0",
 };
+window.__nexusRevision = revision;
 const orderItems = components.slice(0, 4).map((c, i) => ({
   id: `order-item-${i}`,
   quantidade: 20,
@@ -158,6 +163,7 @@ const order = {
   ordem_producao_itens: orderItems,
 };
 export const tables = {
+  config_orcamento: [],
   proposta_revisoes: [revision],
   propostas: Array.from({ length: count }, (_, i) => ({
     ...proposal,
@@ -249,7 +255,16 @@ export const supabase = {
   rpc: async (name, payload) => {
     window.__nexusCalls.push({ name, payload });
     if (name !== "atualizar_componentes_revisao") throw new Error(`Unexpected test RPC: ${name}`);
-    return { data: scenario === "write-conflict" ? 0 : payload._ids.length, error: null };
+    if (scenario === "write-conflict") return { data: 0, error: null };
+    payload._ids.forEach((id) =>
+      Object.assign(
+        components.find((c) => c.id === id),
+        payload._patch,
+      ),
+    );
+    revision.version++;
+    revision.desatualizada = true;
+    return { data: payload._ids.length, error: null };
   },
   from(table) {
     let single = false,
@@ -261,14 +276,58 @@ export const supabase = {
       {
         get(_, name) {
           if (name === "then")
-            return (resolve) => {
+            return async (resolve) => {
               if (mutation) window.__nexusCalls.push({ table, mutation, payload, filters });
               const error =
                 scenario === "error"
                   ? { message: "Falha simulada no ambiente isolado de teste" }
                   : null;
-              const data = mutation && scenario === "write-conflict" ? [] : tables[table] || [];
-              return Promise.resolve({ data: single ? data[0] : data, error }).then(resolve);
+              await new Promise((done) =>
+                setTimeout(done, mutation ? (window.__writeDelay ?? 0) : 0),
+              );
+              const matches = (row) =>
+                filters.every(
+                  ([op, key, value]) =>
+                    !(key in row) || (op === "in" ? value.includes(row[key]) : row[key] === value),
+                );
+              let data = (tables[table] || []).filter(matches);
+              if (mutation && (scenario === "write-conflict" || window.__conflictWrite)) data = [];
+              else if (mutation && !error) {
+                if (
+                  window.__failNextWrite ||
+                  (window.__failWriteField && Object.hasOwn(payload ?? {}, window.__failWriteField))
+                ) {
+                  window.__failNextWrite = false;
+                  return resolve({
+                    data: null,
+                    error: { message: "Network failure (isolated fixture)" },
+                  });
+                }
+                if (revision.status === "enviada")
+                  return resolve({ data: null, error: { message: "Revisão imutável" } });
+                if (mutation === "update") data.forEach((row) => Object.assign(row, payload));
+                if (["insert", "upsert"].includes(mutation)) {
+                  const inserted = Array.isArray(payload) ? payload : [payload];
+                  data = inserted.map((row) => {
+                    const previous = tables[table].find((item) => item.id === row.id);
+                    if (previous) return Object.assign(previous, row);
+                    tables[table].push(row);
+                    return row;
+                  });
+                }
+                if (mutation === "delete")
+                  tables[table] = tables[table].filter((row) => !matches(row));
+                revision.version++;
+                revision.desatualizada = true;
+                if (window.__loseWriteResponse) {
+                  window.__loseWriteResponse = false;
+                  return resolve({
+                    data: null,
+                    error: { message: "Network response lost (isolated fixture)" },
+                  });
+                }
+              }
+              return resolve({ data: structuredClone(single ? (data[0] ?? null) : data), error });
             };
           return (...args) => {
             if (name === "single" || name === "maybeSingle") single = true;

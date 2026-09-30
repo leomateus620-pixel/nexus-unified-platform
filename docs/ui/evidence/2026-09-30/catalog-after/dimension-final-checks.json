@@ -1,0 +1,53 @@
+{
+  "at": "2026-09-30T10:02:23.729Z",
+  "checks": [
+    {
+      "width": 320,
+      "overflow": false,
+      "singleEditor": true,
+      "keyboardReturn": true
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "singleEditor": true,
+      "keyboardReturn": true
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "singleEditor": true,
+      "keyboardReturn": true
+    },
+    {
+      "width": 1366,
+      "overflow": false,
+      "singleEditor": true,
+      "keyboardReturn": true
+    },
+    {
+      "width": 1920,
+      "overflow": false,
+      "singleEditor": true,
+      "keyboardReturn": true
+    },
+    {
+      "name": "same-name systems have exact identities; zero, invalid and valid have distinct states",
+      "pass": true
+    },
+    {
+      "name": "stale calculation is not presented as valid",
+      "pass": true
+    },
+    {
+      "name": "issued revision has disabled editor and no creation action",
+      "pass": true
+    },
+    {
+      "name": "empty state keeps real creation action and performs no writes",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "environment": "isolated UI boundaries, no production reads or writes"
+}

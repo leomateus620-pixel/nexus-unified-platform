@@ -1,0 +1,287 @@
+{
+  "phase": "after",
+  "boundary": "Real components with isolated test fixtures; no production writes or authenticated/device claim",
+  "errors": [],
+  "views": [
+    {
+      "screen": "itens-comerciais",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "firstCardTop": 521.9375,
+      "firstCardHeight": 270.46875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "firstCardTop": 487.9375,
+      "firstCardHeight": 275.171875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "orcamento",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "compras",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "producao",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "parametros",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "historico",
+      "width": 320,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "firstCardTop": 489.9375,
+      "firstCardHeight": 231.390625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "firstCardTop": 495.9375,
+      "firstCardHeight": 270.46875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "firstCardTop": 487.9375,
+      "firstCardHeight": 274.390625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "orcamento",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "compras",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "producao",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "parametros",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "historico",
+      "width": 390,
+      "overflow": false,
+      "headerHeight": 263.640625,
+      "firstCardTop": 468.9375,
+      "firstCardHeight": 211.09375,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "firstCardTop": 352.609375,
+      "firstCardHeight": 270.46875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "firstCardTop": 374.609375,
+      "firstCardHeight": 275.171875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "orcamento",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "compras",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "producao",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "parametros",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "historico",
+      "width": 1366,
+      "overflow": false,
+      "headerHeight": 166.3125,
+      "firstCardTop": 313.609375,
+      "firstCardHeight": 211.09375,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "firstCardTop": 354.046875,
+      "firstCardHeight": 270.46875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "firstCardTop": 376.046875,
+      "firstCardHeight": 275.171875,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "orcamento",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "compras",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "producao",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "parametros",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    },
+    {
+      "screen": "historico",
+      "width": 1920,
+      "overflow": false,
+      "headerHeight": 167.75,
+      "firstCardTop": 315.046875,
+      "firstCardHeight": 211.09375,
+      "totalFits": true,
+      "total": "R$ 1.751.354,77"
+    }
+  ]
+}

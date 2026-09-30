@@ -667,3 +667,170 @@
     display: block;
   }
 }
+
+/* Compact objects reveal their complete data in the single shared inspector. */
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-editor-workspace .nx-object-collection {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+  gap: 12px;
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-object-collection
+  .nx-product-card
+  article,
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-object-collection
+  .nx-system-card
+  article {
+  padding: 14px;
+  gap: 8px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-object-collection .nx-product-card h3,
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-object-collection .nx-system-card h3 {
+  font-size: 16px;
+  line-height: 1.4;
+}
+.nx-object-open {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+  color: inherit;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.nx-object-open > span:first-child {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.nx-object-open > span:last-child {
+  flex: none;
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 400;
+}
+.nx-object-open:hover {
+  color: var(--primary);
+}
+.nx-object-open:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-product-card .nx-product-controls {
+  flex: 0 1 auto;
+  margin-left: auto;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-product-card .nx-object-eyebrow {
+  flex-wrap: nowrap;
+  gap: 7px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-product-card .nx-product-sourcing {
+  justify-content: space-between;
+  gap: 4px 8px;
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-product-card
+  .nx-product-sourcing
+  > span::after {
+  content: none;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-product-card .nx-product-price {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: auto;
+  padding: 8px 0 0;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-product-card .nx-product-price dd {
+  margin: 3px 0 0;
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-product-card
+  .nx-product-price
+  .nx-product-quantity
+  dd {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-align: right;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-product-card .nx-product-batch-check {
+  margin-top: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-system-card .nx-object-facts {
+  gap: 10px;
+  padding: 10px;
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-object-collection
+  .nx-system-card
+  .nx-object-facts
+  > div:nth-child(-n + 2)
+  dd {
+  font-size: 19px;
+  font-weight: 600;
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-system-card
+  .nx-system-provenance
+  > span:last-child {
+  margin-left: auto;
+  color: var(--muted-foreground);
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-system-card
+  .nx-system-provenance[data-calculation="invalid"]
+  > span:first-child,
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-system-card
+  .nx-system-provenance[data-calculation="stale"]
+  > span:first-child,
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-system-card
+  .nx-system-provenance[data-calculation="pending"]
+  > span:first-child {
+  color: var(--warning);
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-system-card
+  .nx-system-provenance[data-calculation="updated"]
+  > span:first-child {
+  color: var(--primary);
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-system-card .nx-object-problems {
+  padding: 7px 9px;
+  font-size: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-system-card .nx-object-actions {
+  border-top: 1px solid var(--border);
+  padding-top: 0;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-system-card .nx-editor-link {
+  min-height: 44px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nx-object-open {
+    transition: color 140ms ease;
+  }
+}

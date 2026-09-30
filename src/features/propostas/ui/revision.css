@@ -983,3 +983,276 @@
     }
   }
 }
+
+/* One compact identity and navigation for every revision area. */
+.nexus-operational.nx-catalog-shell .nx-revision-flow {
+  gap: 14px;
+
+  .nx-proposal-context {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 270px);
+    align-items: center;
+    gap: 18px;
+    padding: 0 0 8px;
+  }
+  .nx-proposal-header {
+    gap: 6px;
+  }
+  .nx-proposal-identity {
+    min-width: 0;
+    grid-column: auto;
+  }
+  .nx-details-short {
+    display: none;
+  }
+  .nx-proposal-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--muted-foreground);
+    font-size: 12px;
+  }
+  .nx-proposal-meta a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .nx-proposal-identity h1 {
+    font-size: clamp(19px, 1.6vw, 23px);
+    line-height: 1.25;
+    margin: 5px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nx-proposal-detail-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .nx-proposal-subtitle {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .nx-proposal-details {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    min-height: 44px;
+    font-size: 12px;
+    color: var(--primary);
+  }
+  .nx-context-total {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+    align-self: start;
+  }
+  .nx-context-total[data-attention="true"] {
+    border-left: 3px solid var(--warning);
+  }
+  .nx-total-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted-foreground);
+    gap: 12px;
+  }
+  .nx-total-label > span {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+  .nx-context-total .nx-total-value {
+    margin: 0;
+    font-size: clamp(22px, 2vw, 28px);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    color: var(--primary);
+  }
+  .nx-total-calculation {
+    font-size: 11px;
+    color: var(--muted-foreground);
+    overflow-wrap: anywhere;
+  }
+  .nx-context-total[data-attention="true"] .nx-total-calculation {
+    color: var(--warning);
+  }
+  .nx-save-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    width: auto;
+  }
+  .nx-save-feedback {
+    margin: 0;
+    min-height: 0;
+    font-size: 12px;
+  }
+  .nx-save-feedback[data-status="confirmado"] {
+    color: var(--primary);
+  }
+  .nx-save-feedback[data-status="erro"],
+  .nx-save-feedback[data-status="conflito"] {
+    max-width: 70ch;
+  }
+  .nx-save-bar .nx-button {
+    min-height: 44px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .nx-step-ruler {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 0 6px;
+    margin: 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    border-bottom: 1px solid var(--border);
+  }
+  .nx-step {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 50px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--muted-foreground);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition:
+      background 140ms ease,
+      border-color 140ms ease,
+      color 140ms ease;
+  }
+  .nx-step:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--accent);
+  }
+  .nx-step[aria-current="page"] {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: 10px;
+    box-shadow: none;
+  }
+  .nx-step-secondary {
+    background: transparent;
+    border-style: dashed;
+  }
+  .nx-step-secondary[aria-current="page"] {
+    border-style: solid;
+  }
+  .nx-stage-content {
+    min-width: 0;
+    animation: nx-area-enter 140ms ease-out;
+  }
+  .nx-section-heading {
+    padding-bottom: 10px;
+  }
+  .nx-section-heading h2 {
+    font-size: 18px;
+  }
+  @container revision (max-width: 1050px) {
+    .nx-step-ruler {
+      justify-content: flex-start;
+    }
+    .nx-step {
+      padding-inline: 11px;
+    }
+  }
+  @container revision (max-width: 620px) {
+    .nx-proposal-context {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+    .nx-proposal-detail-line {
+      align-items: center;
+      flex-direction: row;
+      gap: 8px;
+    }
+    .nx-proposal-subtitle {
+      max-width: 100%;
+      min-width: 0;
+      flex: 1;
+      margin-top: 0;
+    }
+    .nx-details-full {
+      display: none;
+    }
+    .nx-details-short {
+      display: inline;
+    }
+    .nx-proposal-details {
+      min-height: 44px;
+    }
+    .nx-context-total {
+      padding: 10px 12px;
+      width: 100%;
+    }
+    .nx-step-ruler {
+      display: flex;
+      overflow-x: auto;
+      justify-content: flex-start;
+      gap: 5px;
+    }
+    .nx-step {
+      min-height: 54px;
+      min-width: 78px;
+      padding: 6px 9px;
+      font-size: 12px;
+      flex-direction: column;
+      gap: 3px;
+      text-align: center;
+    }
+  }
+}
+.nx-proposal-details-dialog dl {
+  display: grid;
+  gap: 14px;
+  margin-block: 18px;
+  overflow-wrap: anywhere;
+}
+.nx-proposal-details-dialog dt {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nx-proposal-details-dialog dd {
+  margin: 3px 0 0;
+}
+@keyframes nx-area-enter {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nexus-operational.nx-catalog-shell .nx-revision-flow .nx-stage-content {
+    animation: none;
+  }
+  .nexus-operational.nx-catalog-shell .nx-revision-flow .nx-step {
+    transition: none;
+  }
+}

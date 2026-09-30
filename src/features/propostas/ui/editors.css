@@ -590,3 +590,85 @@
   height: 1.125rem;
   accent-color: var(--primary);
 }
+
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar {
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-editor-search {
+  flex: 1 1 280px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-modality-filter {
+  flex: 0 1 210px;
+}
+.nx-control-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.nx-editor-icon[data-active="true"] {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--accent);
+}
+.nx-filter-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding-inline: 8px;
+  font-size: 12px;
+  color: var(--primary);
+  cursor: pointer;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-editor-select-all {
+  margin-left: auto;
+  font-size: 12px;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-editor-count {
+  margin-left: 8px;
+  font-size: 12px;
+}
+.nx-system-categories {
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nx-system-categories > summary {
+  display: list-item;
+  min-height: 44px;
+  padding-block: 10px;
+  cursor: pointer;
+  color: var(--primary);
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-system-categories .nx-system-guide {
+  padding: 8px 0;
+}
+.nexus-operational.nx-catalog-shell .nx-revision-flow .nx-system-categories .nx-system-guide p {
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 3px 8px;
+}
+.nx-system-categories .nx-system-guide p > span {
+  grid-column: 2;
+}
+.nx-system-categories > .nx-editor-note {
+  padding-block: 4px 8px;
+}
+@media (max-width: 767px) {
+  .nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-editor-search,
+  .nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-modality-filter {
+    flex-basis: 100%;
+    order: 2;
+  }
+  .nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-editor-select-all {
+    flex-basis: auto;
+    margin-left: 0;
+  }
+  .nexus-operational.nx-catalog-shell .nx-revision-flow .nx-item-toolbar .nx-editor-count {
+    margin-left: auto;
+  }
+}

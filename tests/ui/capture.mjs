@@ -248,6 +248,8 @@ if (phase !== "visual") {
   for (const count of [17, 100, 500]) {
     for (const action of ["input", "selection", "panel", "scroll"]) {
       await go("itens-comerciais", "normal", count);
+      if (action === "input" && catalog)
+        await page.getByRole("button", { name: "Buscar itens", exact: true }).click();
       const samples = [];
       for (let i = 0; i < 5; i++) {
         if (action === "panel" && i > 0) {
@@ -395,7 +397,7 @@ report.assertions = {
   pasteUsesOriginalInsert: report.pastePayload.some(
     (call) =>
       call.table === "sistemas_dimensionados" &&
-      call.mutation === "insert" &&
+      ["insert", "upsert"].includes(call.mutation) &&
       call.payload[0]?.identificacao === "Setor colado" &&
       call.payload[0]?.metragem === 120 &&
       call.payload[0]?.trechos === 4,

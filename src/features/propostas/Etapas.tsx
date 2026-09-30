@@ -17,9 +17,19 @@ import {
 } from "@/components/nexus/Page";
 import { SaveEventCard } from "./ui/SaveEventCard";
 import { listarSalvamentos } from "./propostas.functions";
-import { PromptAction, ValuesBand } from "@/components/nexus/OperationalDetails";
+import { PromptAction } from "@/components/nexus/OperationalDetails";
 import {
-  ObjectCard,
+  ArrowLeft,
+  BadgePercent,
+  Calculator,
+  Car,
+  ChevronDown,
+  FileText,
+  Maximize2,
+  Minimize2,
+  Users,
+} from "lucide-react";
+import {
   ObjectCollection,
   Facts,
   ProcurementCard,
@@ -32,7 +42,15 @@ import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brl, dataBR, pct, qtd } from "@/lib/format";
 import { gerarDemanda, gerarOrdens, novaRevisao, transicionarRevisao } from "./propostas.functions";
-import { revKeys, useComponentes, useRecalcular, useRevisao, useSave, useSistemas } from "./hooks";
+import {
+  revKeys,
+  useComponentes,
+  usePatchRevisao,
+  useRevisao,
+  useSave,
+  useSistemas,
+} from "./hooks";
+import "./ui/stages.css";
 
 function erroMsg(e: unknown) {
   return e instanceof Error ? e.message : String(e);
@@ -44,7 +62,7 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
   const comps = useComponentes(revisaoId);
   const sis = useSistemas(revisaoId);
   const org = useOrg();
-  const recalc = useRecalcular(revisaoId);
+  const save = useSave();
   const [visao, setVisao] = useState<"sistema" | "componente">("sistema");
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
@@ -54,30 +72,34 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
     return (
       <EmptyState
         title="Revisão ainda não calculada"
-        hint="Dimensione ao menos um sistema. O cálculo é feito no servidor e registrado com a versão do motor."
+        hint="Dimensione um sistema para iniciar. Alterações válidas são salvas e calculadas automaticamente com o motor da revisão."
         action={
-          r.editavel ? (
-            <ActionButton loading={recalc.isPending} onClick={() => recalc.mutate()}>
-              Calcular
-            </ActionButton>
-          ) : null
+          <Link
+            className="nx-editor-link"
+            to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
+            params={{ propostaId: r.proposta.id, revisaoId }}
+          >
+            Abrir dimensionamento →
+          </Link>
         }
       />
     );
   const t = r.resumo.totais;
+  const calculationPending = r.desatualizada || save.calculation !== "current";
   const nomeSis = new Map((sis.data ?? []).map((s) => [s.id, s]));
   const nomeComp = new Map((comps.data ?? []).map((c) => [c.id, c]));
   return (
     <div
       className="nx-budget space-y-4"
-      data-attention={r.desatualizada || r.resumo.pendencias.length > 0}
+      data-attention={calculationPending || r.resumo.pendencias.length > 0}
     >
-      {r.desatualizada && (
+      {calculationPending && (
         <p className="nx-inline-notice" role="status">
-          Há alterações não refletidas nos valores abaixo.{" "}
-          {r.editavel && (
-            <button className="underline" onClick={() => recalc.mutate()}>
-              Recalcular
+          Há alterações não refletidas nos valores abaixo. A atualização aguarda a confirmação das
+          entradas.{" "}
+          {r.editavel && save.calculation === "error" && (
+            <button className="underline" onClick={() => void save.retry()}>
+              Tentar atualizar novamente
             </button>
           )}
         </p>
@@ -98,22 +120,54 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
           </Link>
         </Section>
       )}
-      <ValuesBand
-        items={[
-          { label: "Materiais", value: brl(t.materiais) },
-          {
-            label: "Montagem · venda",
-            value: brl(t.montagem),
-            hint: pct(mesclarParametros(r.parametros).montagem_percentual) + " dos materiais",
-          },
-          { label: "Item técnico", value: brl(t.item_tecnico) },
-          { label: "Desconto", value: brl(t.desconto) },
-        ]}
-        total={brl(t.final)}
-        pending={r.desatualizada}
-      >
+      <div className="nx-budget-composition" aria-label="Composição do total da proposta">
+        <dl className="nx-budget-equation">
+          {[
+            { label: "Materiais", value: t.materiais, sign: null },
+            {
+              label: "Montagem · venda",
+              value: t.montagem,
+              sign: "+",
+              hint: `${pct(mesclarParametros(r.parametros).montagem_percentual)} dos materiais`,
+            },
+            { label: "Item técnico", value: t.item_tecnico, sign: "+" },
+            { label: "Desconto", value: t.desconto, sign: "−" },
+            {
+              label: "Total final",
+              value: t.final,
+              sign: "=",
+              total: true,
+              hint: calculationPending
+                ? save.calculation === "calculating"
+                  ? "Recalculando"
+                  : "Atualização pendente"
+                : r.resumo.pendencias.length
+                  ? "Calculado com pendências"
+                  : "Resultado confirmado",
+            },
+          ].map((part) => (
+            <div
+              key={part.label}
+              className="nx-budget-value"
+              data-total={part.total}
+              data-pending={calculationPending}
+            >
+              {part.sign && (
+                <span
+                  className="nx-budget-sign"
+                  aria-label={part.sign === "−" ? "menos" : part.sign === "=" ? "igual a" : "mais"}
+                >
+                  {part.sign}
+                </span>
+              )}
+              <dt>{part.label}</dt>
+              <dd>{brl(part.value)}</dd>
+              {part.hint && <p>{part.hint}</p>}
+            </div>
+          ))}
+        </dl>
         {verCusto && (
-          <>
+          <div className="nx-budget-internal">
             <span>Análise interna</span>
             <span>
               Margem estimada <strong>{pct(t.margem)}</strong>
@@ -121,9 +175,9 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
             <span>
               Resultado <strong>{brl(t.resultado)}</strong>
             </span>
-          </>
+          </div>
         )}
-      </ValuesBand>
+      </div>
       <div className="nx-segmented" role="group" aria-label="Agrupar orçamento">
         <ActionButton
           variant={visao === "sistema" ? "primary" : "ghost"}
@@ -146,45 +200,49 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
             {(visible) => (
               <ObjectCollection label="Orçamento por sistema">
                 {visible.map((x) => (
-                  <ObjectCard
-                    key={x.sistema_id}
-                    title={nomeSis.get(x.sistema_id)?.identificacao || "Sistema sem identificação"}
-                    className="nx-budget-system"
-                    titleLabel="Identificação / local"
-                    eyebrow={
-                      <>
-                        <span>Sistema nº {nomeSis.get(x.sistema_id)?.ordem ?? "—"}</span>
-                        <span className="nx-system-type">
-                          {nomeSis.get(x.sistema_id)?.tipo === "OVERHEAD"
-                            ? "Suspenso (OVERHEAD)"
-                            : nomeSis.get(x.sistema_id)?.tipo === "TELHADO"
-                              ? "Telhado"
-                              : "Tipo não informado"}
+                  <li key={x.sistema_id} className="nx-budget-group nx-budget-system">
+                    <details>
+                      <summary>
+                        <span className="nx-budget-group-identity">
+                          <span>
+                            Sistema nº {nomeSis.get(x.sistema_id)?.ordem ?? "—"} ·{" "}
+                            {nomeSis.get(x.sistema_id)?.tipo === "OVERHEAD"
+                              ? "Suspenso (OVERHEAD)"
+                              : nomeSis.get(x.sistema_id)?.tipo === "TELHADO"
+                                ? "Telhado"
+                                : "Tipo não informado"}
+                          </span>
+                          <strong>
+                            {nomeSis.get(x.sistema_id)?.identificacao ||
+                              "Sistema sem identificação"}
+                          </strong>
                         </span>
-                      </>
-                    }
-                  >
-                    <p className="nx-budget-amount">
-                      {brl(x.venda_materiais)}
-                      <span>Venda de materiais</span>
-                    </p>
-                    <Facts
-                      items={[
-                        ["Extensão", qtd(x.extensao_m, "m")],
-                        ["Cabo", qtd(x.cabo_m, "m")],
-                        ...(verCusto
-                          ? [["Custo materiais", brl(x.custo_materiais)] as [string, string]]
-                          : []),
-                      ]}
-                    />
-                    <Link
-                      className="nx-card-primary"
-                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
-                      params={{ propostaId: r.proposta.id, revisaoId }}
-                    >
-                      Abrir dimensionamento →
-                    </Link>
-                  </ObjectCard>
+                        <span className="nx-budget-group-subtotal">
+                          <strong>{brl(x.venda_materiais)}</strong>
+                          <span>Venda de materiais</span>
+                        </span>
+                        <ChevronDown size={18} aria-hidden="true" />
+                      </summary>
+                      <div className="nx-budget-group-detail">
+                        <Facts
+                          items={[
+                            ["Extensão", qtd(x.extensao_m, "m")],
+                            ["Cabo", qtd(x.cabo_m, "m")],
+                            ...(verCusto
+                              ? [["Custo materiais", brl(x.custo_materiais)] as [string, string]]
+                              : []),
+                          ]}
+                        />
+                        <Link
+                          className="nx-card-primary"
+                          to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
+                          params={{ propostaId: r.proposta.id, revisaoId }}
+                        >
+                          Abrir dimensionamento →
+                        </Link>
+                      </div>
+                    </details>
+                  </li>
                 ))}
               </ObjectCollection>
             )}
@@ -196,32 +254,44 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
             {(visible) => (
               <ObjectCollection label="Orçamento por componente">
                 {visible.map((x) => (
-                  <ObjectCard
-                    key={x.componente_id}
-                    title={nomeComp.get(x.componente_id)?.descricao ?? "Componente"}
-                    eyebrow={x.codigo}
-                  >
-                    <p className="nx-budget-amount">
-                      {brl(x.total_venda)}
-                      <span>Total de venda</span>
-                    </p>
-                    <Facts
-                      items={[
-                        ["Quantidade", qtd(x.quantidade, nomeComp.get(x.componente_id)?.unidade)],
-                        ["Preço unitário", brl(x.preco_unit, 4)],
-                        ...(verCusto
-                          ? [["Total custo", brl(x.total_custo)] as [string, string]]
-                          : []),
-                      ]}
-                    />
-                    <Link
-                      className="nx-card-primary"
-                      to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
-                      params={{ propostaId: r.proposta.id, revisaoId }}
-                    >
-                      Abrir itens comerciais →
-                    </Link>
-                  </ObjectCard>
+                  <li key={x.componente_id} className="nx-budget-group">
+                    <details>
+                      <summary>
+                        <span className="nx-budget-group-identity">
+                          <span>{x.codigo}</span>
+                          <strong>
+                            {nomeComp.get(x.componente_id)?.descricao ?? "Componente"}
+                          </strong>
+                        </span>
+                        <span className="nx-budget-group-subtotal">
+                          <strong>{brl(x.total_venda)}</strong>
+                          <span>Venda de materiais</span>
+                        </span>
+                        <ChevronDown size={18} aria-hidden="true" />
+                      </summary>
+                      <div className="nx-budget-group-detail">
+                        <Facts
+                          items={[
+                            [
+                              "Quantidade",
+                              qtd(x.quantidade, nomeComp.get(x.componente_id)?.unidade),
+                            ],
+                            ["Preço unitário", brl(x.preco_unit, 4)],
+                            ...(verCusto
+                              ? [["Total custo", brl(x.total_custo)] as [string, string]]
+                              : []),
+                          ]}
+                        />
+                        <Link
+                          className="nx-card-primary"
+                          to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
+                          params={{ propostaId: r.proposta.id, revisaoId }}
+                        >
+                          Abrir itens comerciais →
+                        </Link>
+                      </div>
+                    </details>
+                  </li>
                 ))}
               </ObjectCollection>
             )}
@@ -316,14 +386,27 @@ export function Planejamento({
   const rev = useRevisao(revisaoId);
   const dem = useDemandas(revisaoId);
   const qc = useQueryClient();
+  const save = useSave();
   const gerarD = useServerFn(gerarDemanda);
   const gerarO = useServerFn(gerarOrdens);
   const planejar = useMutation({
-    mutationFn: () => gerarD({ data: { revisao_id: revisaoId } }),
+    mutationFn: async () => {
+      if (!(await save.ensureConsistent()))
+        throw new Error(
+          "Há entradas pendentes. Confirme o salvamento e o cálculo antes de atualizar a demanda.",
+        );
+      return gerarD({ data: { revisao_id: revisaoId } });
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) }),
   });
   const ordens = useMutation({
-    mutationFn: () => gerarO({ data: { revisao_id: revisaoId } }),
+    mutationFn: async () => {
+      if (!(await save.ensureConsistent()))
+        throw new Error(
+          "Há entradas pendentes. Confirme o salvamento e o cálculo antes de gerar ordens.",
+        );
+      return gerarO({ data: { revisao_id: revisaoId } });
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) });
       qc.invalidateQueries({ queryKey: ["ordens"] });
@@ -349,12 +432,12 @@ export function Planejamento({
   return (
     <div className="nx-planning space-y-4">
       <Section
-        title={modo === "compras" ? "Planejamento de compras" : "Planejamento de produção"}
-        description="Planeje a demanda e gere as ordens em rascunho. Emitir a OC e liberar a OP continuam exigindo dados obrigatórios e aprovação técnica."
+        title={modo === "compras" ? "Demandas de compra" : "Demandas de produção"}
+        description="Ordens permanecem explícitas. Emissão e liberação exigem dados completos e aprovação técnica."
       >
         <div className="nx-planning-actions">
           <ActionButton loading={planejar.isPending} onClick={() => planejar.mutate()}>
-            Atualizar demanda a partir da composição
+            Atualizar demanda
           </ActionButton>
           <ActionButton
             variant="ghost"
@@ -363,13 +446,13 @@ export function Planejamento({
             onClick={() => ordens.mutate()}
             title={encerrada ? "Revisão recusada ou substituída" : ""}
           >
-            Gerar ordens (OC por fornecedor / OP)
+            Gerar ordens em rascunho
           </ActionButton>
           <Link
             to={modo === "compras" ? "/compras/ordens-compra" : "/compras/ordens-producao"}
             className="self-center text-sm text-primary hover:underline"
           >
-            Abrir ordens em Compras e Produção →
+            {modo === "compras" ? "Abrir ordens de compra →" : "Abrir ordens de produção →"}
           </Link>
         </div>
         {planejar.isError && (
@@ -393,8 +476,8 @@ export function Planejamento({
               }
               hint={
                 modo === "compras"
-                  ? "Os itens de compra e terceirização aparecerão aqui com necessidade, recebimentos e ordens vinculadas. Após calcular a revisão, use Atualizar demanda a partir da composição acima."
-                  : "Os itens com modalidade Fabricar aparecerão aqui com necessidade, quantidade produzida e acesso à OP. Após calcular a revisão, use Atualizar demanda a partir da composição acima."
+                  ? "Após conferir a composição calculada, use Atualizar demanda. Itens de compra e terceirização aparecerão com fornecedor, quantidade e OC."
+                  : "Após conferir a composição calculada, use Atualizar demanda. Itens com modalidade Fabricar aparecerão com quantidade, andamento e OP."
               }
             />
           }
@@ -518,9 +601,14 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   const org = useOrg();
   const qc = useQueryClient();
   const save = useSave();
-  const { run, register, settle } = save;
+  const { register, settle, local, remember, draft, ensureConsistent } = save;
+  const patchRevision = usePatchRevisao(revisaoId);
   const trans = useServerFn(transicionarRevisao);
   const [interno, setInterno] = useState(false);
+  const [documentFocus, setDocumentFocus] = useState(false);
+  const [editingTexts, setEditingTexts] = useState(false);
+  const [documentBusy, setDocumentBusy] = useState(false);
+  const [documentError, setDocumentError] = useState<string | null>(null);
   const acao = useMutation({
     mutationFn: (a: "enviar" | "aceitar" | "recusar") =>
       trans({ data: { revisao_id: revisaoId, acao: a } }),
@@ -528,6 +616,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
       qc.invalidateQueries({ queryKey: revKeys.all(revisaoId) });
       qc.invalidateQueries({ queryKey: ["propostas"] });
       qc.invalidateQueries({ queryKey: ["projetos"] });
+      qc.invalidateQueries({ queryKey: ["docs", revisaoId] });
     },
   });
   const docs = useQuery({
@@ -544,14 +633,16 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
   });
   const form = useForm<z.infer<typeof textosSchema>>({
     resolver: zodResolver(textosSchema),
-    values: { ...TEXTOS_PADRAO, ...(rev.data?.textos ?? {}) },
+    values: draft<z.infer<typeof textosSchema>>("textos") ?? {
+      ...TEXTOS_PADRAO,
+      ...(rev.data?.textos ?? {}),
+    },
     resetOptions: { keepDirtyValues: true },
   });
 
-  const textVersion = useRef<number | null>(null);
   const textQueued = useRef("");
   const flushTexts = useCallback(() => {
-    if (!rev.data?.editavel || !form.formState.isDirty) return;
+    if (!rev.data?.editavel || (!form.formState.isDirty && !draft("textos"))) return;
     const result = textosSchema.safeParse(form.getValues());
     if (!result.success) {
       void form.trigger();
@@ -561,39 +652,126 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
     if (textQueued.current === fingerprint) return;
     textQueued.current = fingerprint;
     settle("textos");
-    const initialVersion = rev.data.version;
-    void run("textos", async () => {
-      const { data, error } = await supabase
-        .from("proposta_revisoes")
-        .update({ textos: result.data })
-        .eq("id", revisaoId)
-        .eq("version", textVersion.current ?? initialVersion)
-        .select("version");
-      if (error) throw new Error(error.message);
-      if (!data?.length)
-        throw new Error(
-          "Conflito nos textos: trabalho local preservado. Confira a versão do servidor.",
-        );
-      textVersion.current = data[0]!.version;
-      await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
-      return true;
-    }).then((ok) => {
+    void patchRevision("textos", result.data).then((ok) => {
       if (!ok) textQueued.current = "";
+      else if (JSON.stringify(form.getValues()) === fingerprint) form.reset(result.data);
     });
-  }, [form, rev.data, run, settle, revisaoId, qc]);
-  useEffect(() => register("textos", flushTexts), [register, flushTexts]);
-  const salvarTextos = form.handleSubmit(() => flushTexts());
+  }, [form, rev.data, patchRevision, settle, draft]);
+  const flushTextsRef = useRef(flushTexts);
+  flushTextsRef.current = flushTexts;
+  useEffect(() => register("textos", () => flushTextsRef.current()), [register]);
+  useEffect(() => {
+    const subscription = form.watch((_values, { type }) => {
+      if (type !== "change" || !rev.data?.editavel) return;
+      remember("textos", form.getValues());
+      local("textos");
+    });
+    return () => subscription.unsubscribe();
+  }, [form, rev.data?.editavel, remember, local]);
+  useEffect(() => {
+    if (!documentFocus) return;
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setDocumentFocus(false);
+        document
+          .querySelector<HTMLButtonElement>(".nx-document-toolbar button")
+          ?.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, [documentFocus]);
+  useEffect(() => {
+    if (!editingTexts) return;
+    const frame = requestAnimationFrame(() =>
+      document.querySelector<HTMLTextAreaElement>(".nx-document-texts textarea")?.focus(),
+    );
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setEditingTexts(false);
+        document
+          .querySelector<HTMLButtonElement>(".nx-document-edit-trigger")
+          ?.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener("keydown", escape);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener("keydown", escape);
+    };
+  }, [editingTexts]);
 
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   const r = rev.data;
   const t = r.resumo?.totais;
+  const calculationPending = r.desatualizada || save.calculation !== "current";
   const p = r.proposta;
   const verCusto = org.data?.canSeeCosts ?? false;
   const ext = new Map((r.resumo?.por_sistema ?? []).map((s) => [s.sistema_id, s.extensao_m]));
+  const documentAction = async (action: "print" | "emit") => {
+    setDocumentBusy(true);
+    setDocumentError(null);
+    try {
+      if (r.editavel && !(await ensureConsistent())) {
+        setDocumentError(
+          "Há alterações pendentes ou inválidas. Confira o estado de salvamento antes de continuar.",
+        );
+        return;
+      }
+      if (action === "emit") acao.mutate("enviar");
+      else {
+        // Wait for the confirmed query data to reach the actual document before printing.
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        );
+        window.print();
+      }
+    } finally {
+      setDocumentBusy(false);
+    }
+  };
 
   return (
-    <div className="nx-document-workspace">
+    <div
+      className="nx-document-workspace"
+      data-focused={documentFocus}
+      data-editor-focused={editingTexts}
+    >
+      <div className="nx-document-toolbar print:hidden">
+        <span>
+          <FileText size={18} aria-hidden="true" /> Prévia {interno ? "interna" : "comercial"}
+        </span>
+        <ActionButton
+          variant="ghost"
+          aria-pressed={documentFocus}
+          onClick={() => {
+            setEditingTexts(false);
+            setDocumentFocus(!documentFocus);
+          }}
+        >
+          {documentFocus ? (
+            <Minimize2 size={16} aria-hidden="true" />
+          ) : (
+            <Maximize2 size={16} aria-hidden="true" />
+          )}
+          {documentFocus ? "Voltar ao workspace" : "Focar documento"}
+        </ActionButton>
+        {r.editavel && (
+          <ActionButton
+            variant="ghost"
+            className="nx-document-edit-trigger"
+            aria-pressed={editingTexts}
+            onClick={() => {
+              setDocumentFocus(false);
+              setEditingTexts(!editingTexts);
+            }}
+          >
+            <FileText size={16} aria-hidden="true" />
+            {editingTexts ? "Voltar à prévia" : "Editar textos"}
+          </ActionButton>
+        )}
+      </div>
       <article
         className="nx-document-paper"
         aria-label={interno ? "Resumo executivo interno" : "Resumo executivo comercial"}
@@ -613,9 +791,11 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             <p>{r.enviada_em ? `Emitida em ${dataBR(r.enviada_em)}` : "Não emitida"}</p>
           </div>
         </div>
-        {(r.desatualizada || (r.resumo?.pendencias.length ?? 0) > 0) && (
+        {(calculationPending || (r.resumo?.pendencias.length ?? 0) > 0) && (
           <p className="nx-document-attention">
-            {r.desatualizada ? "Cálculo desatualizado." : "Há pendências nesta revisão."}{" "}
+            {calculationPending
+              ? "Cálculo desatualizado ou aguardando confirmação."
+              : "Há pendências nesta revisão."}{" "}
             {r.resumo?.pendencias.length
               ? `${r.resumo.pendencias.length} pendência(s) para conferência no Orçamento.`
               : ""}
@@ -670,8 +850,10 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
           </table>
         )}
         <h3 className="mt-6 font-semibold text-foreground">Investimento</h3>
-        {!t || r.desatualizada ? (
-          <p className="text-xs text-warning">Valores indisponíveis: recalcule a revisão.</p>
+        {!t || calculationPending ? (
+          <p className="text-xs text-warning">
+            Valores aguardando a confirmação das entradas e do cálculo.
+          </p>
         ) : (
           <dl className="nx-number-list nx-document-values mt-2">
             {(
@@ -696,7 +878,7 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
             ))}
           </dl>
         )}
-        {t && !r.desatualizada && t.final > 0 && (
+        {t && !calculationPending && t.final > 0 && (
           <>
             <h3 className="mt-6 font-semibold text-foreground">Formas de pagamento</h3>
             <div className="nx-document-payments">
@@ -741,11 +923,11 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
               {r.enviada_em ? `Emitida em ${dataBR(r.enviada_em)}` : "Não emitida"} ·{" "}
               {interno ? "Visão interna" : "Visão comercial"}
             </p>
-            {(!r.resumo || r.desatualizada || r.resumo.pendencias.length > 0) && (
+            {(!r.resumo || calculationPending || r.resumo.pendencias.length > 0) && (
               <p className="nx-planning-warning">
                 {!r.resumo
                   ? "Revisão ainda não calculada."
-                  : r.desatualizada
+                  : calculationPending
                     ? "Cálculo desatualizado. Confira o Orçamento antes da emissão."
                     : `${r.resumo.pendencias.length} pendência(s). Confira o Orçamento antes da emissão.`}
               </p>
@@ -757,7 +939,11 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
                 {interno ? "Ver documento do cliente" : "Ver visão interna"}
               </ActionButton>
             )}
-            <ActionButton variant="ghost" onClick={() => window.print()}>
+            <ActionButton
+              variant="ghost"
+              loading={documentBusy}
+              onClick={() => void documentAction("print")}
+            >
               Imprimir
             </ActionButton>
             {r.status !== "rascunho" && (
@@ -767,9 +953,17 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
               </p>
             )}
             {r.editavel && (
-              <ActionButton loading={acao.isPending} onClick={() => acao.mutate("enviar")}>
-                Emitir e enviar ao cliente
+              <ActionButton
+                loading={acao.isPending || documentBusy}
+                onClick={() => void documentAction("emit")}
+              >
+                Emitir proposta
               </ActionButton>
+            )}
+            {r.editavel && (
+              <p className="nx-field-help">
+                Registra o documento e o status comercial. O envio por e-mail não está integrado.
+              </p>
             )}
             {r.status === "enviada" && (
               <>
@@ -782,6 +976,11 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
               </>
             )}
             {acao.isError && <p className="text-xs text-destructive">{erroMsg(acao.error)}</p>}
+            {documentError && (
+              <p className="text-sm text-destructive" role="alert">
+                {documentError}
+              </p>
+            )}
             {r.status === "aceita" && p.projeto_id && (
               <Link
                 to="/projetos/$projetoId"
@@ -796,13 +995,10 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
         {r.editavel && (
           <Section
             title="Textos do documento"
-            description="Edite os textos usados na prévia e no documento comercial."
+            className="nx-document-texts"
+            description="Textos desta revisão. As alterações válidas são salvas automaticamente."
           >
-            <form
-              onInput={() => save.local("textos")}
-              onSubmit={salvarTextos}
-              className="space-y-4 text-sm"
-            >
+            <form onSubmit={form.handleSubmit(() => flushTexts())} className="space-y-4 text-sm">
               {(
                 ["objeto", "validade", "garantia", "condicoes", "responsavel_tecnico"] as const
               ).map((k) => (
@@ -849,12 +1045,8 @@ export function Resumo({ revisaoId }: { revisaoId: string }) {
                   )}
                 </label>
               ))}
-              <ActionButton type="submit" variant="ghost">
-                Sincronizar textos
-              </ActionButton>
               <p className="nx-field-help">
-                Sincroniza os campos com o rascunho no servidor. Use Salvar proposta, no cabeçalho,
-                para consolidar as diferenças comerciais.
+                A prévia exibe os textos confirmados. Salvamento e emissão são ações distintas.
               </p>
             </form>
           </Section>
@@ -984,6 +1176,58 @@ function parametroAjuda(k: keyof Parametros, value: unknown) {
   return unidades[k];
 }
 
+const PARAMETER_GROUPS = [
+  {
+    titulo: "Condições comerciais",
+    icon: Calculator,
+    descricao: "Preço, composição de venda e desconto.",
+    campos: ["markup", "desconto", "frete_materiais", "montagem_percentual", "preco_item_tecnico"],
+  },
+  {
+    titulo: "Provisões e alíquotas",
+    icon: BadgePercent,
+    descricao: "Provisões de precificação e DIFAL.",
+    campos: [
+      "aliquota_precificacao",
+      "aliquota_interestadual",
+      "aliquota_interna_destino",
+      "difal_ativo",
+    ],
+  },
+  {
+    titulo: "Equipe e produtividade",
+    icon: Users,
+    descricao: "Equipe, execução e horas de engenharia.",
+    campos: [
+      "tecnicos_por_equipe",
+      "produtividade_telhado_m_dia",
+      "produtividade_overhead_m_dia",
+      "horas_por_dia",
+      "horas_engenharia",
+      "custo_hora_tecnico",
+      "custo_hora_engenheiro",
+    ],
+  },
+  {
+    titulo: "Deslocamento e permanência",
+    icon: Car,
+    descricao: "Viagens, combustível e permanência em campo.",
+    campos: [
+      "alimentacao_dia",
+      "hospedagem_dia",
+      "preco_combustivel",
+      "km_por_litro",
+      "distancia_ida_volta_km",
+      "dias_por_viagem",
+    ],
+  },
+] satisfies {
+  titulo: string;
+  icon: typeof Calculator;
+  descricao: string;
+  campos: (keyof Parametros)[];
+}[];
+
 export function ParametrosForm({
   valores,
   editavel,
@@ -992,22 +1236,32 @@ export function ParametrosForm({
 }: {
   valores: Parametros;
   editavel: boolean;
-  onSave: (p: Parametros) => Promise<boolean | void>;
+  onSave: (p: Parametros, fields?: (keyof Parametros)[]) => Promise<boolean | void>;
   revisionPresentation?: boolean;
 }) {
+  const { register, local, set, settle, remember, draft } = useSave();
   const form = useForm<Parametros>({
     resolver: zodResolver(paramSchema) as never,
-    values: valores,
+    values: draft<Parametros>("parametros") ?? valores,
     resetOptions: { keepDirtyValues: true },
     mode: "onChange",
   });
-  const { register, local, set, settle } = useSave();
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const categoryTrigger = useRef<string | null>(null);
+  const formElement = useRef<HTMLFormElement | null>(null);
+  const categoryScroll = useRef(0);
   const handler = useRef(onSave);
   handler.current = onSave;
   const lastQueued = useRef(JSON.stringify(valores));
+  // Keep the actual edit boundary through invalid drafts, route changes and a
+  // newer edit that restores a value while its previous write is still pending.
+  const editedFields = useRef(new Set(draft<(keyof Parametros)[]>("parametros-fields") ?? []));
+  // Global budget defaults reuse this form outside the proposal coordinator.
+  // Their existing pause stays local to that page; revisions use only the provider.
+  const defaultsTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const flush = useCallback(() => {
-    if (timer.current) clearTimeout(timer.current);
+    if (defaultsTimer.current) clearTimeout(defaultsTimer.current);
+    defaultsTimer.current = null;
     if (!editavel) return;
     const result = paramSchema.safeParse(form.getValues());
     if (!result.success) {
@@ -1015,106 +1269,127 @@ export function ParametrosForm({
       throw new Error("Parâmetros inválidos: revise os campos indicados.");
     }
     const fingerprint = JSON.stringify(result.data);
-    if (lastQueued.current === fingerprint) return;
+    if (lastQueued.current === fingerprint) {
+      if (draft("parametros")) settle("parametros");
+      return;
+    }
     lastQueued.current = fingerprint;
     settle("parametros");
-    void handler.current(result.data).then((ok) => {
+    void handler.current(result.data, [...editedFields.current]).then((ok) => {
       if (ok === false) lastQueued.current = "";
+      else if (JSON.stringify(form.getValues()) === fingerprint) form.reset(result.data);
     });
-  }, [form, editavel, settle]);
-  useEffect(() => register("parametros", flush), [register, flush]);
+  }, [form, editavel, settle, draft]);
+  const flushRef = useRef(flush);
+  flushRef.current = flush;
+  useEffect(() => register("parametros", () => flushRef.current()), [register]);
   useEffect(() => {
-    const sub = form.watch((_values, { type }) => {
+    const sub = form.watch((_values, { type, name }) => {
       if (!editavel || type !== "change") return;
+      if (name) editedFields.current.add(name as keyof Parametros);
+      remember("parametros-fields", [...editedFields.current]);
+      remember("parametros", form.getValues());
       local("parametros");
-      if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => {
-        try {
-          flush();
-        } catch (error) {
-          set("erro", String(error));
-        }
-      }, 800);
+      if (!revisionPresentation) {
+        if (defaultsTimer.current) clearTimeout(defaultsTimer.current);
+        defaultsTimer.current = setTimeout(() => {
+          try {
+            flushRef.current();
+          } catch (cause) {
+            set("erro", erroMsg(cause));
+          }
+        }, 800);
+      }
     });
     return () => {
       sub.unsubscribe();
-      if (timer.current) clearTimeout(timer.current);
+      if (defaultsTimer.current) clearTimeout(defaultsTimer.current);
     };
-  }, [form, editavel, flush, local, set]);
+  }, [form, editavel, local, remember, revisionPresentation, set]);
+  const closeCategory = useCallback(() => {
+    try {
+      flush();
+    } catch (error) {
+      set("erro", erroMsg(error));
+    }
+    setActiveGroup(null);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: categoryScroll.current });
+      formElement.current
+        ?.querySelector<HTMLButtonElement>(`[data-parameter-group="${categoryTrigger.current}"]`)
+        ?.focus({ preventScroll: true });
+    });
+  }, [flush, set]);
+  useEffect(() => {
+    if (!activeGroup) return;
+    if (!editavel)
+      formElement.current
+        ?.querySelector<HTMLButtonElement>(".nx-parameter-focus header button")
+        ?.focus({ preventScroll: true });
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeCategory();
+      }
+    };
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, [activeGroup, closeCategory, editavel]);
+  const values = form.watch();
   return (
-    <form onSubmit={form.handleSubmit(() => flush())} className="nx-parameters">
-      {(
-        [
-          {
-            titulo: "Condições comerciais",
-            campos: [
-              "markup",
-              "desconto",
-              "frete_materiais",
-              "montagem_percentual",
-              "preco_item_tecnico",
-            ],
-          },
-          {
-            titulo: "Provisões e alíquotas",
-            campos: [
-              "aliquota_precificacao",
-              "aliquota_interestadual",
-              "aliquota_interna_destino",
-              "difal_ativo",
-            ],
-          },
-          {
-            titulo: "Equipe e produtividade",
-            campos: [
-              "tecnicos_por_equipe",
-              "produtividade_telhado_m_dia",
-              "produtividade_overhead_m_dia",
-              "horas_por_dia",
-              "horas_engenharia",
-              "custo_hora_tecnico",
-              "custo_hora_engenheiro",
-            ],
-          },
-          {
-            titulo: "Deslocamento e permanência",
-            campos: [
-              "alimentacao_dia",
-              "hospedagem_dia",
-              "preco_combustivel",
-              "km_por_litro",
-              "distancia_ida_volta_km",
-              "dias_por_viagem",
-            ],
-          },
-        ] satisfies { titulo: string; campos: (keyof Parametros)[] }[]
-      ).map((grupo) => (
-        <details key={grupo.titulo} className="nx-parameter-group">
-          <summary>
-            {revisionPresentation ? <strong>{grupo.titulo}</strong> : grupo.titulo}
-            <span>
-              {grupo.campos.length} parâmetros ·{" "}
-              {grupo.campos
-                .slice(0, 2)
-                .map(
-                  (k) =>
-                    `${ROTULOS_PARAMETROS[k]}: ${revisionPresentation ? parametroLeitura(k, form.watch(k)) : String(form.watch(k))}`,
-                )
-                .join(" · ")}
-            </span>
-            {grupo.campos.some((k) => !!form.formState.errors[k]) && (
-              <strong className="nx-object-problems">Pendência: revise os campos indicados</strong>
-            )}
-            {revisionPresentation ? (
-              <span className="nx-parameter-toggle">
-                {editavel ? "Editar grupo" : "Consultar grupo"} <span aria-hidden="true">⌄</span>
-              </span>
-            ) : (
-              <span>Editar grupo ↓</span>
-            )}
-          </summary>
+    <form ref={formElement} onSubmit={form.handleSubmit(() => flush())} className="nx-parameters">
+      {!activeGroup && (
+        <div className="nx-parameter-categories">
+          {PARAMETER_GROUPS.map((grupo) => {
+            const Icon = grupo.icon;
+            return (
+              <button
+                key={grupo.titulo}
+                type="button"
+                className="nx-parameter-category"
+                data-parameter-group={grupo.titulo}
+                onClick={() => {
+                  categoryTrigger.current = grupo.titulo;
+                  categoryScroll.current = window.scrollY;
+                  setActiveGroup(grupo.titulo);
+                }}
+              >
+                <Icon size={25} strokeWidth={1.6} aria-hidden="true" />
+                <strong>{grupo.titulo}</strong>
+                <span>{grupo.descricao}</span>
+                <dl>
+                  {grupo.campos.slice(0, 2).map((key) => (
+                    <div key={key}>
+                      <dt>{ROTULOS_PARAMETROS[key]}</dt>
+                      <dd>{parametroLeitura(key, values[key])}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {grupo.campos.some((key) => !!form.formState.errors[key]) && (
+                  <span className="nx-object-problems">Revise os campos indicados</span>
+                )}
+                <span className="nx-parameter-category-action">
+                  {editavel ? "Editar parâmetros" : "Consultar parâmetros"} →
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {PARAMETER_GROUPS.filter((grupo) => grupo.titulo === activeGroup).map((grupo) => (
+        <section key={grupo.titulo} className="nx-parameter-focus" aria-label={grupo.titulo}>
+          <header>
+            <div>
+              <h3>{grupo.titulo}</h3>
+              <p>{grupo.descricao}</p>
+            </div>
+            <ActionButton variant="ghost" onClick={closeCategory}>
+              <ArrowLeft size={16} aria-hidden="true" /> Voltar às categorias
+            </ActionButton>
+          </header>
+          {!editavel && <p className="nx-editor-note">Esta revisão está protegida para edição.</p>}
           <div className="nx-parameter-fields">
-            {grupo.campos.map((k) => {
+            {grupo.campos.map((k, index) => {
               const err = form.formState.errors[k];
               return (
                 <label key={k} className="nx-parameter-field">
@@ -1129,6 +1404,7 @@ export function ParametrosForm({
                   ) : (
                     <input
                       type="number"
+                      autoFocus={index === 0 && editavel}
                       step="any"
                       disabled={!editavel}
                       aria-invalid={!!err}
@@ -1140,7 +1416,7 @@ export function ParametrosForm({
                             ? `param-ajuda-${k}`
                             : undefined
                       }
-                      {...form.register(k)}
+                      {...form.register(k, { valueAsNumber: true })}
                       className="w-full rounded border border-input bg-background px-3 text-right tabular-nums text-foreground"
                     />
                   )}
@@ -1158,7 +1434,7 @@ export function ParametrosForm({
               );
             })}
           </div>
-        </details>
+        </section>
       ))}
     </form>
   );
@@ -1166,50 +1442,18 @@ export function ParametrosForm({
 
 export function ParametrosRevisao({ revisaoId }: { revisaoId: string }) {
   const rev = useRevisao(revisaoId);
-  const save = useSave();
-  const qc = useQueryClient();
-  const recalc = useRecalcular(revisaoId);
-  const versao = useRef<number | null>(null);
+  const patchRevision = usePatchRevisao(revisaoId);
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
-  if (versao.current == null) versao.current = rev.data.version;
-  const onSave = async (p: Parametros) =>
-    Boolean(
-      await save.run("parametros", async () => {
-        // Defaults used for display/calculation are not manual changes. Preserve
-        // sparse legacy records and write only effective edits over their raw values.
-        const raw = (rev.data.parametros ?? {}) as Partial<Parametros>;
-        const effective = mesclarParametros(raw);
-        const parametros = {
-          ...raw,
-          ...Object.fromEntries(
-            Object.entries(p).filter(
-              ([key, value]) => !Object.is(value, effective[key as keyof Parametros]),
-            ),
-          ),
-        };
-        const { data, error } = await supabase
-          .from("proposta_revisoes")
-          .update({ parametros })
-          .eq("id", revisaoId)
-          .eq("version", versao.current!)
-          .select("version");
-        if (error) throw new Error(error.message);
-        if (!data?.length)
-          throw new Error(
-            "Conflito nos parâmetros: trabalho local preservado. Confira a versão do servidor.",
-          );
-        versao.current = data[0]!.version;
-        await qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) });
-        recalc.mutate();
-        return true;
-      }),
-    );
+  // Display defaults are compared canonically inside the FIFO, while untouched
+  // raw fields remain sparse and concurrent values remain owned by their editor.
+  const onSave = (p: Parametros, fields?: (keyof Parametros)[]) =>
+    patchRevision("parametros", p as unknown as Record<string, unknown>, { fields: fields ?? [] });
 
   return (
     <Section
       title="Parâmetros desta revisão"
-      description="Cópia versionada dos padrões de Configurações › Orçamentos. Alterar aqui não afeta outras propostas. Salva automaticamente."
+      description="Parâmetros da revisão atual. Alterações válidas são salvas e recalculadas automaticamente; os padrões globais permanecem separados."
     >
       <ParametrosForm
         valores={mesclarParametros(rev.data.parametros)}
@@ -1293,14 +1537,14 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
         <Section
           title="Salvamentos confirmados"
           className="nx-history-saves"
-          description="Um evento por consolidação. Os rascunhos automáticos e os cálculos não contam como edições comerciais."
+          description="Alterações confirmadas são consolidadas automaticamente após uma pausa na edição. Cada registro preserva campos, autoria e referência do cálculo; execuções de cálculo têm sua própria trilha."
         >
           <QueryView
             query={saves}
             empty={
               <EmptyState
                 title="Nenhum salvamento consolidado"
-                hint="O salvamento automático sincroniza o rascunho. Para consolidar diferenças reais, use Salvar proposta no cabeçalho, quando a revisão estiver editável. Registros anteriores à ativação não são reconstruídos."
+                hint="A proposta pode ter entradas persistidas sem um checkpoint comercial. Novas alterações confirmadas serão consolidadas automaticamente. Registros anteriores à ativação não são reconstruídos."
               />
             }
           >
@@ -1357,6 +1601,22 @@ export function Historico({ propostaId, revisaoId }: { propostaId: string; revis
                       (r.totais as { totais?: { final?: number } } | null)?.totais?.final ?? null,
                     )}
                   >
+                    {r.enviada_em && (
+                      <p className="nx-object-meta">
+                        Emissão / registro de envio:{" "}
+                        <time dateTime={r.enviada_em}>
+                          {new Date(r.enviada_em).toLocaleString("pt-BR")}
+                        </time>
+                      </p>
+                    )}
+                    {r.aceita_em && (
+                      <p className="nx-object-meta">
+                        Aceite:{" "}
+                        <time dateTime={r.aceita_em}>
+                          {new Date(r.aceita_em).toLocaleString("pt-BR")}
+                        </time>
+                      </p>
+                    )}
                     <Link
                       className="nx-card-primary"
                       to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"

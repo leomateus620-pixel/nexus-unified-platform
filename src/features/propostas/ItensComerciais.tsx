@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Filter, Search, X } from "lucide-react";
 
 import {
   ActionButton,
@@ -12,15 +13,8 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { precoUnitario, mesclarParametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
-import { brlUnit } from "@/lib/format";
-import {
-  revKeys,
-  useComponentes,
-  useFornecedores,
-  useRecalcular,
-  useRevisao,
-  useSave,
-} from "./hooks";
+import { brlUnit, qtd } from "@/lib/format";
+import { revKeys, useComponentes, useFornecedores, useRevisao, useSave } from "./hooks";
 
 import { EditorInput, EditorInspector, EditorSaveState } from "./ui/EditorWorkspace";
 import { CollectionPage, ObjectCollection } from "./ui/ObjectCards";
@@ -36,11 +30,33 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const comps = useComponentes(revisaoId);
   const org = useOrg();
   const forn = useFornecedores(org.data?.orgId ?? "");
-  const recalc = useRecalcular(revisaoId);
   const save = useSave();
   const qc = useQueryClient();
+  const acknowledged = useRef(new Map<string, Record<string, unknown>>());
+  useEffect(() => {
+    for (const [id, patch] of acknowledged.current) {
+      const current = comps.data?.find((row) => row.id === id);
+      if (
+        current &&
+        Object.entries(patch).some(([field, value]) => current[field as keyof Comp] !== value)
+      )
+        acknowledged.current.delete(id);
+    }
+  }, [comps.data]);
   const [busca, setBusca] = useState("");
   const [filtroMod, setFiltroMod] = useState("");
+  const [buscaAberta, setBuscaAberta] = useState(false);
+  const [modalidadeAberta, setModalidadeAberta] = useState(false);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const modalityInput = useRef<HTMLSelectElement>(null);
+  const searchTrigger = useRef<HTMLButtonElement>(null);
+  const modalityTrigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (buscaAberta) searchInput.current?.focus();
+  }, [buscaAberta]);
+  useEffect(() => {
+    if (modalidadeAberta) modalityInput.current?.focus();
+  }, [modalidadeAberta]);
   const [batchSel, setBatchSel] = useState<Set<string>>(new Set());
   const [aberto, setAberto] = useState<string | null>(null);
   const [colar, setColar] = useState("");
@@ -60,10 +76,6 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   }, []);
   const params = useMemo(() => mesclarParametros(rev.data?.parametros), [rev.data?.parametros]);
   const verCusto = org.data?.canSeeCosts ?? false;
-  const fornecedoresPorId = useMemo(
-    () => new Map((forn.data ?? []).map((f) => [f.id, f.nome])),
-    [forn.data],
-  );
 
   const lista = useMemo(() => {
     const q = busca.toLowerCase();
@@ -77,11 +89,18 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     () =>
       lista.map((c) => ({
         item: c,
-        supplier: fornecedoresPorId.get(c.fornecedor_id ?? "") ?? "Sem fornecedor definido",
-        cost: verCusto ? brlUnit(Number(c.custo_adotado)) : null,
         price: brlUnit(precoUnitario(Number(c.custo_adotado), params).preco),
+        quantity: rev.data?.desatualizada
+          ? "Pendente"
+          : rev.data?.resumo
+            ? qtd(
+                rev.data.resumo.por_componente.find((row) => row.componente_id === c.id)
+                  ?.quantidade ?? 0,
+                c.unidade,
+              )
+            : "Não calculada",
       })),
-    [lista, fornecedoresPorId, verCusto, params],
+    [lista, rev.data, params],
   );
 
   if (rev.isPending || comps.isPending) return <LoadingState />;
@@ -90,7 +109,24 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const editavel = rev.data.editavel;
 
   async function atualizar(ids: string[], patch: Record<string, unknown>) {
-    const atualizados = await save.run(`componentes-${ids.join(",")}`, async () => {
+    const fields = Object.keys(patch).sort().join(",");
+    const operationKey = `componentes-${[...ids].sort().join(",")}:${fields}`;
+    const atualizados = await save.run(operationKey, async () => {
+      ids = ids.filter((id) => {
+        const previous = comps.data?.find((c) => c.id === id);
+        return (
+          previous &&
+          Object.entries(patch).some(([field, value]) => {
+            const acknowledgedValue = acknowledged.current.get(id);
+            return (
+              (acknowledgedValue && field in acknowledgedValue
+                ? acknowledgedValue[field]
+                : previous[field as keyof Comp]) !== value
+            );
+          })
+        );
+      });
+      if (!ids.length) return 0;
       const esperados = Object.fromEntries(
         ids.map((id) => {
           const previous = comps.data?.find((c) => c.id === id);
@@ -100,7 +136,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
             Object.fromEntries(
               Object.keys(patch).map((field) => [
                 field,
-                previous[field as keyof typeof previous] ?? null,
+                acknowledged.current.get(id) && field in acknowledged.current.get(id)!
+                  ? acknowledged.current.get(id)![field]
+                  : (previous[field as keyof typeof previous] ?? null),
               ]),
             ),
           ];
@@ -112,14 +150,35 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         _patch: patch as Json,
         _esperados: esperados as Json,
       });
-      if (error) throw new Error(error.message);
+      if (error) {
+        // A response may have been lost after the server accepted this exact patch.
+        const replay = await supabase.from("revisao_componentes").select("*").in("id", ids);
+        const alreadyApplied =
+          !replay.error &&
+          replay.data?.length === ids.length &&
+          replay.data.every((row) =>
+            Object.entries(patch).every(
+              ([field, value]) => (row as Record<string, unknown>)[field] === value,
+            ),
+          );
+        if (!alreadyApplied) throw new Error(error.message);
+        ids.forEach((id) =>
+          acknowledged.current.set(id, { ...acknowledged.current.get(id), ...patch }),
+        );
+        return ids.length;
+      }
       if (data !== ids.length)
-        throw new Error("Nem todos os componentes foram atualizados. Trabalho local preservado.");
+        throw new Error(
+          "Conflito nos componentes: outro usuário alterou os campos. Trabalho local preservado.",
+        );
+      ids.forEach((id) =>
+        acknowledged.current.set(id, { ...acknowledged.current.get(id), ...patch }),
+      );
       return data;
     });
     if (atualizados === undefined) return;
     await qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) });
-    await recalc.mutateAsync();
+    return true;
   }
 
   async function definirInclusao(ids: string[], incluido: boolean) {
@@ -128,7 +187,6 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
 
   async function alterarCusto(c: Comp, valor: number) {
     if (!Number.isFinite(valor) || valor < 0) return save.set("erro", "Custo inválido");
-    if (valor === Number(c.custo_adotado)) return;
     save.local("justificativa-custo");
     const answer = await ask({
       title: `Alterar custo · ${c.codigo}`,
@@ -139,7 +197,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     if (!answer) return false;
     const just = answer.reason;
     if (!just || just.trim().length < 3) return save.set("erro", "Justificativa obrigatória");
-    await atualizar([c.id], {
+    return atualizar([c.id], {
       custo_adotado: valor,
       justificativa: just.trim(),
       custo_origem_id: null,
@@ -171,26 +229,52 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     if (!answer) return;
     const just = answer.reason;
     if (!just || just.trim().length < 3) return setErroColar("Justificativa obrigatória");
-    return save.run("colagem-custos", async () => {
+    const operationKey = `colagem-custos-${updates
+      .map(({ c }) => c.id)
+      .sort()
+      .join(",")}:custo_adotado,custo_origem_id,justificativa`;
+    return save.run(operationKey, async () => {
       for (const u of updates) {
+        const patch = { custo_adotado: u.v, justificativa: just.trim(), custo_origem_id: null };
+        const previous = acknowledged.current.get(u.c.id) ?? u.c;
+        if (
+          Object.entries(patch).every(
+            ([field, value]) => (previous as Record<string, unknown>)[field] === value,
+          )
+        )
+          continue;
         const { data, error } = await supabase
           .from("revisao_componentes")
-          .update({ custo_adotado: u.v, justificativa: just.trim(), custo_origem_id: null })
+          .update(patch)
           .eq("id", u.c.id)
-          .eq("custo_adotado", u.c.custo_adotado)
+          .eq("custo_adotado", Number(previous.custo_adotado ?? u.c.custo_adotado))
           .select("id");
         if (error) throw new Error(error.message);
-        if (!data?.length)
-          throw new Error(
-            "Conflito na colagem de custos. Rascunho preservado; revise os componentes antes de tentar novamente.",
-          );
+        if (!data?.length) {
+          const replay = await supabase
+            .from("revisao_componentes")
+            .select("*")
+            .eq("id", u.c.id)
+            .single();
+          if (
+            replay.error ||
+            !replay.data ||
+            Object.entries(patch).some(
+              ([field, value]) => (replay.data as Record<string, unknown>)[field] !== value,
+            )
+          )
+            throw new Error(
+              "Conflito na colagem de custos. Rascunho preservado; revise os componentes antes de tentar novamente.",
+            );
+        }
+        acknowledged.current.set(u.c.id, { ...acknowledged.current.get(u.c.id), ...patch });
       }
       setColar("");
       await Promise.all([
         qc.invalidateQueries({ queryKey: revKeys.comps(revisaoId) }),
         qc.invalidateQueries({ queryKey: revKeys.head(revisaoId) }),
       ]);
-      recalc.mutate();
+      return true;
     });
   }
 
@@ -212,29 +296,90 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         title="Itens comerciais"
         description="Catálogo adotado nesta revisão. Selecione um item para editar seus valores e consultar a memória de preço."
       >
-        <div className="nx-editor-toolbar">
-          <label className="nx-editor-search">
-            Buscar item
-            <input
-              placeholder="Código, descrição ou fabricante"
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-              className={input}
-            />
-          </label>
-          <label>
-            Modalidade
-            <select
-              value={filtroMod}
-              onChange={(e) => setFiltroMod(e.target.value)}
-              className={input}
+        <div className="nx-editor-toolbar nx-item-toolbar">
+          <button
+            type="button"
+            className="nx-editor-icon"
+            aria-label="Buscar itens"
+            ref={searchTrigger}
+            title={busca ? `Busca: ${busca}` : "Buscar por código, descrição ou fabricante"}
+            aria-expanded={buscaAberta}
+            aria-controls="nx-item-search"
+            data-active={!!busca}
+            onClick={() => setBuscaAberta((value) => !value)}
+          >
+            <Search size={18} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="nx-editor-icon"
+            aria-label="Filtrar modalidade"
+            ref={modalityTrigger}
+            title={filtroMod ? `Modalidade: ${filtroMod}` : "Filtrar modalidade"}
+            aria-expanded={modalidadeAberta}
+            aria-controls="nx-item-modality"
+            data-active={!!filtroMod}
+            onClick={() => setModalidadeAberta((value) => !value)}
+          >
+            <Filter size={18} aria-hidden="true" />
+          </button>
+          {buscaAberta && (
+            <label className="nx-editor-search" id="nx-item-search">
+              <span className="nx-control-label">Buscar item</span>
+              <input
+                ref={searchInput}
+                type="search"
+                placeholder="Código, descrição ou fabricante"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+                className={input}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setBuscaAberta(false);
+                    searchTrigger.current?.focus();
+                  }
+                }}
+              />
+            </label>
+          )}
+          {modalidadeAberta && (
+            <label id="nx-item-modality" className="nx-modality-filter">
+              <span className="nx-control-label">Modalidade</span>
+              <select
+                ref={modalityInput}
+                aria-label="Modalidade"
+                value={filtroMod}
+                onChange={(e) => setFiltroMod(e.target.value)}
+                className={input}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setModalidadeAberta(false);
+                    modalityTrigger.current?.focus();
+                  }
+                }}
+              >
+                <option value="">Todas as modalidades</option>
+                <option value="comprar">Comprar</option>
+                <option value="fabricar">Fabricar</option>
+                <option value="terceirizar">Terceirizar</option>
+              </select>
+            </label>
+          )}
+          {(busca || filtroMod) && (
+            <button
+              type="button"
+              className="nx-filter-clear"
+              onClick={() => {
+                setBusca("");
+                setFiltroMod("");
+              }}
+              aria-label="Limpar filtros"
+              title="Limpar filtros"
             >
-              <option value="">Todas as modalidades</option>
-              <option value="comprar">Comprar</option>
-              <option value="fabricar">Fabricar</option>
-              <option value="terceirizar">Terceirizar</option>
-            </select>
-          </label>
+              <X size={15} aria-hidden="true" />
+              Filtros ativos
+            </button>
+          )}
           {lista.length > 0 && editavel && (
             <label className="nx-editor-select-all">
               <input
@@ -326,16 +471,16 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
           <CollectionPage items={linhasVisuais}>
             {(visible) => (
               <ObjectCollection label="Itens comerciais desta revisão">
-                {visible.map(({ item, supplier, cost, price }) => (
+                {visible.map(({ item, price, quantity }) => (
                   <ProductComponentCard
                     key={item.id}
                     item={item}
                     selected={aberto === item.id}
                     batchChecked={batchSel.has(item.id)}
                     editable={editavel}
-                    supplier={supplier}
-                    cost={cost}
                     price={price}
+                    quantity={quantity}
+                    pricePending={rev.data.desatualizada}
                     onInspect={inspectItem}
                     onToggleIncluded={(id, included) => void definirInclusao([id], included)}
                     onToggleBatch={toggleBatch}
@@ -425,19 +570,16 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 <label className="nx-editor-field">
                   Custo nesta revisão · R$
                   <EditorInput
+                    draftKey={`item-${detalhe.id}-custo`}
                     aria-label={`Custo ${detalhe.codigo}`}
                     type="number"
                     step="0.0001"
                     min={0}
+                    required
                     disabled={!editavel}
                     defaultValue={Number(detalhe.custo_adotado)}
                     key={detalhe.id}
-                    onBlur={(e) => {
-                      const field = e.currentTarget;
-                      void alterarCusto(detalhe, Number(field.value)).then((result) => {
-                        if (result === false) field.value = String(detalhe.custo_adotado);
-                      });
-                    }}
+                    onCommit={(value) => alterarCusto(detalhe, Number(value))}
                     className={`${input} text-right tabular-nums`}
                   />
                   <span>A alteração exige justificativa e preserva o catálogo global.</span>

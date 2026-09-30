@@ -1,11 +1,20 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { createFileRoute, Link, Outlet, useBlocker } from "@tanstack/react-router";
-
-import { ErrorState, LoadingState, StatusBadge } from "@/components/nexus/Page";
+import {
+  Boxes,
+  Ruler,
+  Calculator,
+  ShoppingCart,
+  Factory,
+  FileText,
+  SlidersHorizontal,
+  History,
+  Info,
+} from "lucide-react";
+import { ActionButton, ErrorState, LoadingState, StatusBadge } from "@/components/nexus/Page";
 import { StepRuler, SaveFeedback } from "@/components/nexus/Workspace";
-import { useSave, useRevisao } from "@/features/propostas/hooks";
+import { useSave, useRevisao, type RevisaoData } from "@/features/propostas/hooks";
 import { ProposalSaveProvider } from "@/features/propostas/ProposalSaveProvider";
-import { ActionButton } from "@/components/nexus/Page";
 import { brl } from "@/lib/format";
 import "@/features/propostas/ui/revision.css";
 
@@ -29,8 +38,16 @@ const statusLabel: Record<string, string> = {
   recusada: "Recusada",
   substituida: "Substituída",
 };
-
-const tabActive = { className: "bg-accent text-foreground font-medium" };
+const stages = [
+  { path: "itens-comerciais", label: "Itens", Icon: Boxes },
+  { path: "dimensionamento", label: "Dimensionamento", Icon: Ruler },
+  { path: "orcamento", label: "Orçamento", Icon: Calculator },
+  { path: "compras", label: "Compras", Icon: ShoppingCart },
+  { path: "producao", label: "Produção", Icon: Factory },
+  { path: "resumo-executivo", label: "Resumo", Icon: FileText },
+  { path: "parametros", label: "Parâmetros", Icon: SlidersHorizontal },
+  { path: "historico", label: "Histórico", Icon: History },
+] as const;
 
 function Workspace() {
   const { propostaId, revisaoId } = Route.useParams();
@@ -38,146 +55,152 @@ function Workspace() {
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   const r = rev.data;
-  const p = r.proposta;
-  const params = { propostaId, revisaoId };
-  const pend = r.resumo?.pendencias.length ?? null;
-
   return (
-    <ProposalSaveProvider key={revisaoId} revisaoId={revisaoId}>
+    <ProposalSaveProvider
+      key={revisaoId}
+      revisaoId={revisaoId}
+      editavel={r.editavel}
+      needsCalculation={r.desatualizada || !r.resumo}
+    >
       <div className="nx-proposal-workspace nx-revision-flow">
         <header className="nx-proposal-header">
-          <div className="nx-proposal-context">
-            <div className="nx-proposal-identity">
-              <nav aria-label="Caminho da proposta" className="nx-breadcrumb">
-                <Link to="/comercial">Comercial</Link> /{" "}
-                <Link to="/comercial/propostas">Propostas</Link> / {p.numero} · Rev.{" "}
-                {String(r.numero).padStart(2, "0")}
-              </nav>
-              <h1>{p.clientes?.razao_social ?? "—"}</h1>
-              <p className="nx-proposal-subtitle">
-                {p.unidades?.nome ?? "Sem unidade"}
-                {p.titulo ? ` · ${p.titulo}` : ""}
-              </p>
-            </div>
-            <div className="nx-context-total" data-attention={r.desatualizada || (pend ?? 0) > 0}>
-              <div className="nx-context-state">
-                <StatusBadge value={statusLabel[r.status] ?? r.status} />
-                <span>
-                  {pend == null
-                    ? "Pendências não calculadas"
-                    : `${pend} ${pend === 1 ? "pendência" : "pendências"}`}
-                </span>
-              </div>
-              <p className="font-semibold tabular-nums text-foreground">
-                {r.resumo && !r.desatualizada ? brl(r.resumo.totais.final) : "—"}
-                <span className="sr-only"> Total final</span>
-              </p>
-              {r.desatualizada && (
-                <span className="text-xs text-warning">Cálculo desatualizado</span>
-              )}
-              {p.revisao_corrente_id !== r.id && (
-                <span className="text-xs text-warning">Revisão anterior (somente leitura)</span>
-              )}
-            </div>
-            <ProposalSaveBar editavel={r.editavel} />
-          </div>
+          <ProposalContext revision={r} />
           <StepRuler>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/itens-comerciais"
-              params={params}
-              className="nx-step"
-              activeProps={tabActive}
-            >
-              <span className="nx-step-number">01</span> Itens comerciais
-            </Link>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/dimensionamento"
-              params={params}
-              className="nx-step"
-              activeProps={tabActive}
-            >
-              <span className="nx-step-number">02</span> Dimensionamento
-            </Link>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/orcamento"
-              params={params}
-              className="nx-step"
-              activeProps={tabActive}
-            >
-              <span className="nx-step-number">03</span> Orçamento
-            </Link>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/compras"
-              params={params}
-              className="nx-step"
-              activeProps={tabActive}
-            >
-              <span className="nx-step-number">04</span>{" "}
-              <span aria-label="Planejamento de compras">Compras</span>
-            </Link>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/producao"
-              params={params}
-              className="nx-step"
-              activeProps={tabActive}
-            >
-              <span className="nx-step-number">05</span>{" "}
-              <span aria-label="Planejamento de produção">Produção</span>
-            </Link>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/resumo-executivo"
-              params={params}
-              className="nx-step"
-              activeProps={tabActive}
-            >
-              <span className="nx-step-number">06</span>{" "}
-              <span aria-label="Resumo executivo">Resumo</span>
-            </Link>
-            <span className="nx-step-divider" aria-hidden="true" />
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/parametros"
-              params={params}
-              className="nx-step nx-step-secondary"
-              activeProps={tabActive}
-            >
-              Parâmetros
-            </Link>
-            <Link
-              to="/comercial/propostas/$propostaId/revisoes/$revisaoId/historico"
-              params={params}
-              className="nx-step nx-step-secondary"
-              activeProps={tabActive}
-            >
-              Histórico
-            </Link>
+            {stages.map(({ path, label, Icon }, index) => (
+              <Link
+                key={path}
+                to={`/comercial/propostas/$propostaId/revisoes/$revisaoId/${path}`}
+                params={{ propostaId, revisaoId }}
+                className={`nx-step${index > 5 ? " nx-step-secondary" : ""}`}
+                activeProps={{ className: "nx-step-active" }}
+              >
+                <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
+                <span>{label}</span>
+                {index > 5 && <span className="sr-only"> · Área auxiliar</span>}
+              </Link>
+            ))}
           </StepRuler>
         </header>
-        <Outlet />
+        <div className="nx-stage-content">
+          <Outlet />
+        </div>
       </div>
     </ProposalSaveProvider>
   );
 }
 
-function ProposalSaveBar({ editavel }: { editavel: boolean }) {
+function ProposalContext({ revision: r }: { revision: RevisaoData }) {
   const save = useSave();
+  const p = r.proposta;
+  const pending =
+    r.desatualizada ||
+    save.calculation !== "current" ||
+    ["local", "salvando", "consolidando", "erro", "conflito"].includes(save.status);
+  const count = r.resumo?.pendencias.length;
+  return (
+    <div className="nx-proposal-context">
+      <div className="nx-proposal-identity">
+        <div className="nx-proposal-meta">
+          <Link to="/comercial/propostas" aria-label="Voltar à lista de propostas">
+            Propostas
+          </Link>
+          <span>
+            {p.numero} · Rev. {String(r.numero).padStart(2, "0")}
+          </span>
+          <StatusBadge value={statusLabel[r.status] ?? r.status} />
+          {!r.editavel && <span>Somente leitura</span>}
+        </div>
+        <h1 title={p.titulo ?? undefined}>{p.titulo || `Proposta ${p.numero}`}</h1>
+        <div className="nx-proposal-detail-line">
+          <p className="nx-proposal-subtitle" title={p.clientes?.razao_social}>
+            {p.clientes?.razao_social ?? "Cliente não informado"}
+            {p.unidades?.nome ? ` · ${p.unidades.nome}` : ""}
+          </p>
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <button
+                type="button"
+                className="nx-proposal-details"
+                aria-label="Detalhes da proposta"
+              >
+                <Info size={15} aria-hidden="true" />
+                <span className="nx-details-full">Detalhes da proposta</span>
+                <span className="nx-details-short" aria-hidden="true">
+                  Detalhes
+                </span>
+              </button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Overlay className="nx-prompt-overlay" />
+              <Dialog.Content className="nexus-operational nx-prompt-dialog nx-proposal-details-dialog">
+                <Dialog.Title>Detalhes da proposta</Dialog.Title>
+                <Dialog.Description>
+                  {p.numero} · Revisão {String(r.numero).padStart(2, "0")} ·{" "}
+                  {statusLabel[r.status] ?? r.status}
+                </Dialog.Description>
+                <dl>
+                  <div>
+                    <dt>Título / escopo</dt>
+                    <dd>{p.titulo || "Não informado"}</dd>
+                  </div>
+                  <div>
+                    <dt>Cliente</dt>
+                    <dd>{p.clientes?.razao_social ?? "Não informado"}</dd>
+                  </div>
+                  <div>
+                    <dt>Unidade</dt>
+                    <dd>{p.unidades?.nome ?? "Não informada"}</dd>
+                  </div>
+                </dl>
+                <Dialog.Close asChild>
+                  <ActionButton variant="ghost">Fechar detalhes</ActionButton>
+                </Dialog.Close>
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
+        </div>
+        <ProposalSaveBar editavel={r.editavel} revisaoId={r.id} />
+      </div>
+      <div className="nx-context-total" data-attention={pending || (count ?? 0) > 0}>
+        <span className="nx-total-label">
+          Total da proposta <span>BRL</span>
+        </span>
+        <p className="nx-total-value">{r.resumo ? brl(r.resumo.totais.final) : "—"}</p>
+        <span className="nx-total-calculation" role="status">
+          {save.calculation === "calculating"
+            ? "Recalculando…"
+            : pending
+              ? "Atualização pendente"
+              : r.resumo
+                ? "Cálculo atualizado"
+                : "Aguardando dimensionamento"}
+          {count != null && count > 0
+            ? ` · ${count} ${count === 1 ? "pendência" : "pendências"}`
+            : ""}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function ProposalSaveBar({ editavel, revisaoId }: { editavel: boolean; revisaoId: string }) {
+  const save = useSave();
+  const pending = ["local", "erro", "conflito", "salvando", "consolidando"].includes(save.status);
   const blocker = useBlocker({
     withResolver: true,
-    shouldBlockFn: () =>
-      ["local", "erro", "conflito", "salvando", "consolidando"].includes(save.status),
-    enableBeforeUnload: () =>
-      ["local", "erro", "conflito", "salvando", "consolidando"].includes(save.status),
+    shouldBlockFn: async ({ next }) => {
+      if (!editavel || !pending || next.pathname.includes(`/revisoes/${revisaoId}/`)) return false;
+      return !(await save.ensureConsistent());
+    },
+    enableBeforeUnload: () => editavel && pending,
   });
   return (
     <div className="nx-save-bar">
-      {editavel && (
-        <ActionButton loading={save.busy} onClick={() => save.save()}>
-          Salvar proposta
+      {editavel && <SaveFeedback status={save.status} msg={save.msg} />}
+      {editavel && ["erro", "conflito"].includes(save.status) && (
+        <ActionButton variant="ghost" loading={save.busy} onClick={() => save.retry()}>
+          Tentar novamente
         </ActionButton>
-      )}
-      {editavel ? (
-        <SaveFeedback status={save.status} msg={save.msg} />
-      ) : (
-        <p className="nx-save-feedback">Revisão somente leitura</p>
       )}
       <Dialog.Root
         open={blocker.status === "blocked"}
@@ -188,13 +211,13 @@ function ProposalSaveBar({ editavel }: { editavel: boolean }) {
         <Dialog.Portal>
           <Dialog.Overlay className="nx-prompt-overlay" />
           <Dialog.Content className="nexus-operational nx-prompt-dialog">
-            <Dialog.Title>Há trabalho em andamento</Dialog.Title>
+            <Dialog.Title>Há alterações pendentes</Dialog.Title>
             <Dialog.Description>
-              Campos locais ou gravações pendentes podem não estar sincronizados. Permaneça para
-              revisar e salvar antes de sair.
+              O salvamento ainda não foi confirmado. Seu trabalho local está preservado nesta
+              revisão. Conclua os campos ou resolva a falha antes de sair.
             </Dialog.Description>
             <div className="nx-object-actions">
-              <ActionButton onClick={() => blocker.reset?.()}>Permanecer</ActionButton>
+              <ActionButton onClick={() => blocker.reset?.()}>Continuar editando</ActionButton>
               <ActionButton variant="ghost" onClick={() => blocker.proceed?.()}>
                 Sair sem concluir
               </ActionButton>

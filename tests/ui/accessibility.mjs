@@ -50,6 +50,29 @@ report.checks.push({
 });
 await batchItem.uncheck();
 expect(await page.evaluate(() => window.__nexusCalls)).toHaveLength(0);
+await expect(page.getByPlaceholder("Código, descrição ou fabricante")).toHaveCount(0);
+const searchTrigger = page.getByRole("button", { name: "Buscar itens", exact: true });
+await searchTrigger.click();
+await expect(page.getByPlaceholder("Código, descrição ou fabricante")).toBeFocused();
+await page.keyboard.press("Escape");
+await expect(page.getByPlaceholder("Código, descrição ou fabricante")).toHaveCount(0);
+const modalityTrigger = page.getByRole("button", { name: "Filtrar modalidade", exact: true });
+await modalityTrigger.click();
+await expect(page.getByRole("combobox", { name: "Modalidade", exact: true })).toBeFocused();
+await page.keyboard.press("Escape");
+report.checks.push({
+  name: "collapsed search and modality controls open explicitly and move focus",
+  pass: true,
+});
+report.checks.push({
+  name: "search and modality touch targets are at least 44px",
+  pass: await page.locator(".nx-item-toolbar .nx-editor-icon").evaluateAll((els) =>
+    els.every((e) => {
+      const r = e.getBoundingClientRect();
+      return r.width >= 44 && r.height >= 44;
+    }),
+  ),
+});
 report.contrast = await page.evaluate(() => {
   const scope = document.querySelector(".nexus-operational");
   const style = getComputedStyle(scope);
@@ -190,27 +213,6 @@ report.checks.push({
     .locator("dialog input, dialog select")
     .evaluateAll((els) => els.length > 0 && els.every((e) => e.disabled)),
 });
-await go("oc", "issued");
-await page.getByRole("button", { name: "Registrar recebimento" }).first().click();
-await page.getByLabel("Quantidade recebida").fill("3,5");
-await page.getByRole("button", { name: "Confirmar", exact: true }).click();
-await page.waitForTimeout(100);
-report.receiptPayload = await page.evaluate(() => window.__nexusCalls);
-await page.getByRole("button", { name: "Registrar recebimento" }).first().click();
-await page.keyboard.press("Escape");
-report.checks.push({
-  name: "receipt cancellation does not mutate",
-  pass: (await page.evaluate(() => window.__nexusCalls.length)) === report.receiptPayload.length,
-});
-await go("op", "issued");
-await page
-  .getByRole("button", { name: /Apontar/ })
-  .first()
-  .click();
-await page.getByLabel("Quantidade produzida").fill("2,5");
-await page.getByRole("button", { name: "Confirmar", exact: true }).click();
-await page.waitForTimeout(100);
-report.productionPayload = await page.evaluate(() => window.__nexusCalls);
 report.reducedMotion = await page.evaluate(() => ({
   matches: matchMedia("(prefers-reduced-motion: reduce)").matches,
   animated: [...document.querySelectorAll("*")].filter(

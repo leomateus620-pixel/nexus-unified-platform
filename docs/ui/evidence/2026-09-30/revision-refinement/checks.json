@@ -1,0 +1,36 @@
+{
+  "environment": "Isolated fixtures; no authentication, database or physical-device claim",
+  "browser": "153.0.8010.12",
+  "widths": [],
+  "checks": [
+    {
+      "name": "100 loaded items, adaptive grid with inspector open, modal/inline Escape and focus return",
+      "passed": true
+    },
+    {
+      "name": "repeated identity 22 preserved; stored zero remains zero; absent identification/calculation explicitly labeled",
+      "passed": true
+    },
+    {
+      "name": "both purchase warnings retained; production empty state explains existing action and creates no records",
+      "passed": true
+    },
+    {
+      "name": "empty history distinguishes persisted entries from consolidated commercial checkpoints",
+      "passed": true
+    },
+    {
+      "name": "parameter fractions unchanged; display helper adds no write; autosave sends 0.41 and focused categories keep values",
+      "passed": true
+    },
+    {
+      "name": "readonly controls, restricted costs/margin and stale-document amount suppression preserved",
+      "passed": true
+    },
+    {
+      "name": "actual A4 PDFs in commercial/internal modes; print hides tools and workspace header",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

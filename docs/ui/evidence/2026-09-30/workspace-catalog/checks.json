@@ -1,0 +1,34 @@
+{
+  "environment": "Real components, isolated fixture transport",
+  "checks": [
+    {
+      "name": "collapsed search/modality focus, code search, active filter clear and reads stay no-op",
+      "passed": true
+    },
+    {
+      "name": "bulk edit intersects selected and filtered items, inclusion/batch remain independent",
+      "passed": true
+    },
+    {
+      "name": "budget inclusion auto persists without expansion, selection or order/commercial side effects",
+      "passed": true
+    },
+    {
+      "name": "required justification blocks checkpoint; cancel preserves source cost and writes nothing",
+      "passed": true
+    },
+    {
+      "name": "paste preview remains read-only until explicit confirmation and retains category/measure contract",
+      "passed": true
+    },
+    {
+      "name": "restricted user sees no checkpoint differences or technical history",
+      "passed": true
+    },
+    {
+      "name": "long scope remains fully accessible in details; Escape focus and monetary fit at 320/360/390/1366",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

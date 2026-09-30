@@ -17,9 +17,9 @@ type CommercialRowProps = {
   selected: boolean;
   batchChecked: boolean;
   editable: boolean;
-  supplier: string;
-  cost: string | null;
   price: string;
+  quantity: string;
+  pricePending?: boolean;
   onInspect: (id: string, trigger: HTMLButtonElement) => void;
   onToggleIncluded: (id: string, included: boolean) => void;
   onToggleBatch: (id: string, checked: boolean) => void;
@@ -31,9 +31,9 @@ export const ProductComponentCard = memo(function ProductComponentCard({
   selected,
   batchChecked,
   editable,
-  supplier,
-  cost,
   price,
+  quantity,
+  pricePending,
   onInspect,
   onToggleIncluded,
   onToggleBatch,
@@ -43,6 +43,8 @@ export const ProductComponentCard = memo(function ProductComponentCard({
       title={item.descricao}
       selected={selected}
       className="nx-product-card"
+      onOpen={(trigger) => onInspect(item.id, trigger)}
+      openLabel={`${editable ? "Editar" : "Consultar"} item ${item.codigo}`}
       eyebrow={
         <>
           <FamilyMark description={item.descricao} />
@@ -58,59 +60,34 @@ export const ProductComponentCard = memo(function ProductComponentCard({
               />
               <span>No orçamento</span>
             </label>
-            <label className="nx-object-check">
-              <input
-                type="checkbox"
-                aria-label={`Selecionar ${item.codigo} para edição em lote`}
-                checked={batchChecked}
-                disabled={!editable}
-                onChange={(e) => onToggleBatch(item.id, e.target.checked)}
-              />
-              <span>Lote</span>
-            </label>
           </div>
         </>
       }
     >
-      <p className="nx-object-meta">
-        Unidade: {item.unidade} · {item.fabricante ?? "Fabricante não informado"}
-      </p>
       <div className="nx-product-sourcing">
         <span className="capitalize">{item.modalidade}</span>
-        <p
-          className={
-            supplier === "Sem fornecedor definido" ? "nx-object-problems" : "nx-object-meta"
-          }
-        >
-          {supplier}
-        </p>
+        <span>Unidade · {item.unidade}</span>
       </div>
       <dl className="nx-product-price">
         <div className="nx-product-price-main">
-          <dt>Preço unitário calculado</dt>
+          <dt>{pricePending ? "Prévia unitária" : "Preço unitário"}</dt>
           <dd>{price}</dd>
         </div>
-        {cost !== null && (
-          <div className="nx-product-cost-row">
-            <dt>Custo adotado na revisão</dt>
-            <dd className="nx-product-cost">{cost}</dd>
-          </div>
-        )}
+        <div className="nx-product-quantity">
+          <dt>Quantidade</dt>
+          <dd>{quantity}</dd>
+        </div>
       </dl>
-      <details className="nx-object-details">
-        <summary>Identificação fiscal</summary>
-        <p>NCM {item.ncm ?? "não informado"}</p>
-      </details>
-      <button
-        type="button"
-        className="nx-card-primary"
-        aria-label={`${editable ? "Editar" : "Consultar"} item ${item.codigo}`}
-        aria-expanded={selected}
-        onClick={(e) => onInspect(item.id, e.currentTarget)}
-      >
-        {editable ? "Editar item" : "Consultar item"}
-        <span aria-hidden="true">↗</span>
-      </button>
+      <label className="nx-object-check nx-product-batch-check">
+        <input
+          type="checkbox"
+          aria-label={`Selecionar ${item.codigo} para edição em lote`}
+          checked={batchChecked}
+          disabled={!editable}
+          onChange={(e) => onToggleBatch(item.id, e.target.checked)}
+        />
+        <span>Selecionar para ação em lote</span>
+      </label>
     </ObjectCard>
   );
 });

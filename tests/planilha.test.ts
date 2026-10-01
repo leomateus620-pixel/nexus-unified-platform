@@ -47,9 +47,9 @@ describe("C01 — fidelidade à planilha (17 sistemas originais)", () => {
 
   it("sete registros OVERHEAD: 158 / 219 / 187", () => {
     const t = somar(sis.filter((s) => s.tipo === "OVERHEAD"));
-    expect(t.get(N("COMP-06")).toBe(OVERHEAD_PLANILHA.intermediaria);
-    expect(t.get(N("COMP-10")).toBe(OVERHEAD_PLANILHA.trelica);
-    expect(t.get(N("COMP-11")).toBe(OVERHEAD_PLANILHA.alongador);
+    expect(t.get(N("COMP-06"))).toBe(OVERHEAD_PLANILHA.intermediaria);
+    expect(t.get(N("COMP-10"))).toBe(OVERHEAD_PLANILHA.trelica);
+    expect(t.get(N("COMP-11"))).toBe(OVERHEAD_PLANILHA.alongador);
   });
 
   it("todas as famílias batem com LISTA_COMPRAS", () => {

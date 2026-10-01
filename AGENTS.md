@@ -18,3 +18,4 @@
 - Sent/accepted revisions and issued documents are protected by database triggers, not just the UI. Why: issued commercial documents must never change silently.
 - No sample/mock data in app code; missing integrations show "Integração não configurada". Why: every number shown must come from real records.
 - The authenticated application rail has one route-independent visual identity; route-specific themes may style only the workspace content. Why: navigation must not shift when users move between modules.
+- Item codes ([FAMILY]-NXS-[TYPE][SEQ]) are generated only by database functions (`cadastrar_produto_codificado`, `recodificar_produto`) with per-organization family+type series; a trigger blocks manual code writes. Why: no duplicates, no reused numbers, retry-safe.

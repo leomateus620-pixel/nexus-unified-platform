@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { AdicionarDoCatalogo } from "./AdicionarDoCatalogo";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Filter, Search, X } from "lucide-react";
 
@@ -296,6 +297,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         title="Itens comerciais"
         description="Catálogo adotado nesta revisão. Selecione um item para editar seus valores e consultar a memória de preço."
       >
+        {editavel && (
+          <AdicionarDoCatalogo
+            revisaoId={revisaoId}
+            presentes={new Set((comps.data ?? []).map((c) => c.produto_id))}
+          />
+        )}
         <div className="nx-editor-toolbar nx-item-toolbar">
           <button
             type="button"
@@ -502,7 +509,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 className={input}
                 aria-invalid={!!erroColar}
                 aria-describedby={erroColar ? "nx-cost-paste-error" : undefined}
-                placeholder={"COMP-05\t12,94"}
+                placeholder={"COM-NXS-P010\t12,94"}
               />
             </label>
             {erroColar && (

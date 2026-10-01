@@ -136,6 +136,5 @@ export const adicionarComponenteRevisao = createServerFn({ method: "POST" })
         .select("id")
         .single(),
     ) as { id: string };
-    await db.from("proposta_revisoes").update({ desatualizada: true }).eq("id", data.revisao_id);
     return { id: row.id, repetido: false };
   });

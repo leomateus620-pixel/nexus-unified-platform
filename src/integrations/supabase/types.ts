@@ -1994,6 +1994,10 @@ export type Database = {
         Returns: string
       }
       proximo_numero_proposta: { Args: { _org: string }; Returns: string }
+      recodificar_produto: {
+        Args: { _familia: string; _produto: string; _tipo: string }
+        Returns: Json
+      }
       registrar_movimento: {
         Args: {
           _chave: string

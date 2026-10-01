@@ -12,6 +12,7 @@ import {
   SISTEMAS_PLANILHA,
   TOTAIS_PLANILHA,
 } from "./fixtures/planilha-referencia";
+import { codigoAtual as N } from "../src/features/catalogo/codigos";
 
 const sis: SistemaEntrada[] = SISTEMAS_PLANILHA.map(
   ([identificacao, tipo, metragem, trechos], i) => ({
@@ -46,19 +47,19 @@ describe("C01 — fidelidade à planilha (17 sistemas originais)", () => {
 
   it("sete registros OVERHEAD: 158 / 219 / 187", () => {
     const t = somar(sis.filter((s) => s.tipo === "OVERHEAD"));
-    expect(t.get("COMP-06")).toBe(OVERHEAD_PLANILHA.intermediaria);
-    expect(t.get("COMP-10")).toBe(OVERHEAD_PLANILHA.trelica);
-    expect(t.get("COMP-11")).toBe(OVERHEAD_PLANILHA.alongador);
+    expect(t.get(N("COMP-06")).toBe(OVERHEAD_PLANILHA.intermediaria);
+    expect(t.get(N("COMP-10")).toBe(OVERHEAD_PLANILHA.trelica);
+    expect(t.get(N("COMP-11")).toBe(OVERHEAD_PLANILHA.alongador);
   });
 
   it("todas as famílias batem com LISTA_COMPRAS", () => {
     const t = somar(sis);
     for (const [cod, ref] of Object.entries(TOTAIS_PLANILHA))
-      expect({ cod, qtd: t.get(cod) ?? 0 }).toEqual({ cod, qtd: ref.qtd });
+      expect({ cod, qtd: t.get(N(cod)) ?? 0 }).toEqual({ cod, qtd: ref.qtd });
   });
 
   it("COMP-08: 81 conjuntos e R$ 10.145,25 de custo bruto histórico", () => {
-    const q = somar(sis).get("COMP-08")!;
+    const q = somar(sis).get(N("COMP-08"))!;
     expect(q).toBe(81);
     expect(Math.round(q * CUSTO_COMP08_HIST * 100)).toBe(1014525);
   });

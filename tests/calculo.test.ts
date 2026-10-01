@@ -11,6 +11,8 @@ import {
   REGRAS_MODELO,
   type SistemaEntrada,
 } from "../src/features/calculo/domain";
+import { codigoAtual } from "../src/features/catalogo/codigos";
+const C05 = codigoAtual("COMP-05");
 import { CATALOGO_MODELO } from "../src/features/calculo/catalogo-modelo";
 
 const comps = CATALOGO_MODELO.map((c) => ({
@@ -110,7 +112,7 @@ describe("orçamento", () => {
   });
   it("mudança de custo altera preço, não quantidades", () => {
     const a = calcularRevisao(sistemas, comps, REGRAS_MODELO, PARAMETROS_MODELO);
-    const c2 = comps.map((c) => (c.codigo === "COMP-05" ? { ...c, custo: 20 } : c));
+    const c2 = comps.map((c) => (c.codigo === C05 ? { ...c, custo: 20 } : c));
     const b = calcularRevisao(sistemas, c2, REGRAS_MODELO, PARAMETROS_MODELO);
     expect(b.itens.map((i) => i.quantidade)).toEqual(a.itens.map((i) => i.quantidade));
     expect(b.totais.materiais).toBeGreaterThan(a.totais.materiais);
@@ -122,14 +124,14 @@ describe("orçamento", () => {
     const completo = calcularRevisao(sistema, comps, REGRAS_MODELO, PARAMETROS_MODELO);
     const semCabo = calcularRevisao(
       sistema,
-      comps.filter((c) => c.codigo !== "COMP-05"),
+      comps.filter((c) => c.codigo !== C05),
       REGRAS_MODELO,
       PARAMETROS_MODELO,
     );
-    expect(semCabo.itens.some((i) => i.componente_id === "COMP-05")).toBe(false);
+    expect(semCabo.itens.some((i) => i.componente_id === C05)).toBe(false);
     expect(semCabo.totais.materiais).toBeLessThan(completo.totais.materiais);
     expect(semCabo.pendencias).toContain(
-      'Componente COMP-05 exigido pela regra "cabo" não está na revisão.',
+      `Componente ${C05} exigido pela regra "cabo" não está na revisão.`,
     );
   });
   it("mudança de metragem recalcula quantidades", () => {

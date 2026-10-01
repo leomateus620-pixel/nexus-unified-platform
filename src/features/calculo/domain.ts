@@ -1,3 +1,4 @@
+import { codigoAtual } from "../catalogo/codigos";
 // Motor de cálculo NEXUS — funções puras, determinísticas e versionadas.
 // Usado tanto na prévia (navegador) quanto no cálculo canônico (servidor).
 // Categorias: EXISTENTE (planilha), CORREÇÃO (auditoria), EVOLUÇÃO (nova capacidade).
@@ -139,24 +140,24 @@ export const REGRAS_MODELO: Regras = {
   },
   consumiveis_por_m_cabo: { clipe: 0.06, anilha: 0.02, prensa: 0.02 },
   componentes: {
-    pilar_telhado: "COMP-01",
-    flange: "COMP-02",
-    fixador: "COMP-08",
-    absorvedor: "COMP-03",
-    esticador: "COMP-04",
-    cabo: "COMP-05",
-    intermediaria: "COMP-06",
-    interface_montante: "COMP-07",
-    link: "COMP-09",
-    ancoragem_trelica: "COMP-10",
-    pilar_alongador: "COMP-11",
-    mosquetao: "COMP-12",
-    proll: "COMP-13",
-    placa: "COMP-14",
-    lacre: "COMP-15",
-    clipe: "COMP-16",
-    anilha: "COMP-17",
-    prensa: "COMP-18",
+    pilar_telhado: codigoAtual("COMP-01"),
+    flange: codigoAtual("COMP-02"),
+    fixador: codigoAtual("COMP-08"),
+    absorvedor: codigoAtual("COMP-03"),
+    esticador: codigoAtual("COMP-04"),
+    cabo: codigoAtual("COMP-05"),
+    intermediaria: codigoAtual("COMP-06"),
+    interface_montante: codigoAtual("COMP-07"),
+    link: codigoAtual("COMP-09"),
+    ancoragem_trelica: codigoAtual("COMP-10"),
+    pilar_alongador: codigoAtual("COMP-11"),
+    mosquetao: codigoAtual("COMP-12"),
+    proll: codigoAtual("COMP-13"),
+    placa: codigoAtual("COMP-14"),
+    lacre: codigoAtual("COMP-15"),
+    clipe: codigoAtual("COMP-16"),
+    anilha: codigoAtual("COMP-17"),
+    prensa: codigoAtual("COMP-18"),
   },
 };
 

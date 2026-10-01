@@ -2,9 +2,12 @@
 // Custos transcritos do arquivo, sem atualização de mercado. Importação opcional e rastreada.
 export const ORIGEM_PLANILHA = "Planilha MODELO Orçamento 2026 rev.05 (SHA-256 b42b1ae5…)";
 
+import { codigoAtual } from "../catalogo/codigos";
+
 type Modalidade = "comprar" | "fabricar" | "terceirizar";
 export const CATALOGO_MODELO: {
   codigo: string;
+  codigo_legado: string;
   descricao: string;
   unidade: string;
   fabricante: string;
@@ -91,7 +94,9 @@ export const CATALOGO_MODELO: {
   ],
   ["COMP-21", "Interface de Fixação nas Treliças (LVHR)", "PÇ", "NEXUS", "7308.90.90", 145.81],
 ].map(([codigo, descricao, unidade, fabricante, ncm, custo]) => ({
-  codigo: codigo as string,
+  // Código atual NXS (o COMP original fica como codigo_legado para rastreabilidade).
+  codigo: codigoAtual(codigo as string),
+  codigo_legado: codigo as string,
   descricao: descricao as string,
   unidade: unidade as string,
   fabricante: fabricante as string,

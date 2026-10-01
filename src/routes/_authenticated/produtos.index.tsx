@@ -309,7 +309,7 @@ function Produtos() {
       <Section title="Famílias e séries" description="Último número reservado por família e tipo. Lacunas históricas não são reutilizadas.">
         <details>
           <summary className="cursor-pointer text-sm text-primary">Mostrar séries</summary>
-          <QueryView query={series}>
+          <QueryView query={series} empty={null}>
             {(rows) => (
               <div className="mt-2 overflow-x-auto">
                 <table className="w-full text-sm">

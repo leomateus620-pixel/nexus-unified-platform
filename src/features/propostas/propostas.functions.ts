@@ -12,6 +12,7 @@ import {
   PARAMETROS_MODELO,
 } from "@/features/calculo/domain";
 import { exigirAcao } from "@/features/auth/autorizacao";
+import { CODIGO_NXS } from "@/features/catalogo/codigos";
 import { CATALOGO_MODELO, ORIGEM_PLANILHA } from "@/features/calculo/catalogo-modelo";
 
 import type { ProposalSaveEvent } from "./save-types";
@@ -173,8 +174,8 @@ export const importarModeloPlanilha = createServerFn({ method: "POST" })
           { onConflict: "organization_id", ignoreDuplicates: true },
         ),
     );
-    await auditar(db, org, "catalogo", null, "importar_modelo", { inseridos });
-    return { inseridos };
+    await auditar(db, org, "catalogo", null, "importar_modelo", { inseridos, pendentes });
+    return { inseridos, pendentes };
   });
 
 // ---------- Propostas ----------

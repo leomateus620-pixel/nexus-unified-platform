@@ -471,6 +471,33 @@ export type Database = {
           },
         ]
       }
+      familias_codigo: {
+        Row: {
+          grupo: string
+          nome: string
+          observacao: string | null
+          ordem: number
+          sigla: string
+          situacao: string
+        }
+        Insert: {
+          grupo: string
+          nome: string
+          observacao?: string | null
+          ordem?: number
+          sigla: string
+          situacao?: string
+        }
+        Update: {
+          grupo?: string
+          nome?: string
+          observacao?: string | null
+          ordem?: number
+          sigla?: string
+          situacao?: string
+        }
+        Relationships: []
+      }
       fornecedores: {
         Row: {
           cnpj: string | null
@@ -891,10 +918,13 @@ export type Database = {
       produtos: {
         Row: {
           ativo: boolean
+          chave_cadastro: string | null
           codigo: string
+          codigo_legado: string | null
           created_at: string
           descricao: string
           fabricante_id: string | null
+          familia: string | null
           fornecedor_padrao_id: string | null
           id: string
           indivisivel: boolean
@@ -903,14 +933,19 @@ export type Database = {
           ncm: string | null
           organization_id: string
           origem: string | null
+          sequencia: number | null
+          tipo_item: string | null
           unidade: string
         }
         Insert: {
           ativo?: boolean
+          chave_cadastro?: string | null
           codigo: string
+          codigo_legado?: string | null
           created_at?: string
           descricao: string
           fabricante_id?: string | null
+          familia?: string | null
           fornecedor_padrao_id?: string | null
           id?: string
           indivisivel?: boolean
@@ -919,14 +954,19 @@ export type Database = {
           ncm?: string | null
           organization_id: string
           origem?: string | null
+          sequencia?: number | null
+          tipo_item?: string | null
           unidade: string
         }
         Update: {
           ativo?: boolean
+          chave_cadastro?: string | null
           codigo?: string
+          codigo_legado?: string | null
           created_at?: string
           descricao?: string
           fabricante_id?: string | null
+          familia?: string | null
           fornecedor_padrao_id?: string | null
           id?: string
           indivisivel?: boolean
@@ -935,6 +975,8 @@ export type Database = {
           ncm?: string | null
           organization_id?: string
           origem?: string | null
+          sequencia?: number | null
+          tipo_item?: string | null
           unidade?: string
         }
         Relationships: [
@@ -944,6 +986,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "fabricantes"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "produtos_familia_fkey"
+            columns: ["familia"]
+            isOneToOne: false
+            referencedRelation: "familias_codigo"
+            referencedColumns: ["sigla"]
           },
           {
             foreignKeyName: "produtos_fornecedor_padrao_id_fkey"
@@ -1595,6 +1644,77 @@ export type Database = {
           },
         ]
       }
+      series_codigo: {
+        Row: {
+          familia: string
+          organization_id: string
+          tipo: string
+          ultimo: number
+          updated_at: string
+        }
+        Insert: {
+          familia: string
+          organization_id: string
+          tipo: string
+          ultimo?: number
+          updated_at?: string
+        }
+        Update: {
+          familia?: string
+          organization_id?: string
+          tipo?: string
+          ultimo?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "series_codigo_familia_fkey"
+            columns: ["familia"]
+            isOneToOne: false
+            referencedRelation: "familias_codigo"
+            referencedColumns: ["sigla"]
+          },
+          {
+            foreignKeyName: "series_codigo_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      series_planilha: {
+        Row: {
+          familia: string
+          origem: string
+          pendencia: string | null
+          tipo: string
+          ultimo: number
+        }
+        Insert: {
+          familia: string
+          origem?: string
+          pendencia?: string | null
+          tipo: string
+          ultimo: number
+        }
+        Update: {
+          familia?: string
+          origem?: string
+          pendencia?: string | null
+          tipo?: string
+          ultimo?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "series_planilha_familia_fkey"
+            columns: ["familia"]
+            isOneToOne: false
+            referencedRelation: "familias_codigo"
+            referencedColumns: ["sigla"]
+          },
+        ]
+      }
       sistema_componentes: {
         Row: {
           id: string
@@ -1803,6 +1923,17 @@ export type Database = {
         Args: { _esperados: Json; _ids: string[]; _patch: Json; _rev: string }
         Returns: number
       }
+      cadastrar_produto_codificado: {
+        Args: {
+          _chave: string
+          _custo: number
+          _dados: Json
+          _familia: string
+          _org: string
+          _tipo: string
+        }
+        Returns: Json
+      }
       can_see_costs: { Args: { _org: string }; Returns: boolean }
       capturar_revisao: {
         Args: { _operacao?: string; _rev: string }
@@ -1842,6 +1973,10 @@ export type Database = {
           objeto: string
         }[]
       }
+      formatar_codigo: {
+        Args: { _familia: string; _seq: number; _tipo: string }
+        Returns: string
+      }
       has_org_role: {
         Args: { _org: string; _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
@@ -1850,6 +1985,10 @@ export type Database = {
       is_member: { Args: { _org: string }; Returns: boolean }
       objeto_rascunho: { Args: { _r: Json; _t: string }; Returns: Json }
       pode: { Args: { _acao: string; _org: string }; Returns: boolean }
+      previa_codigo: {
+        Args: { _familia: string; _org: string; _tipo: string }
+        Returns: string
+      }
       proximo_numero: {
         Args: { _org: string; _prefixo: string }
         Returns: string
@@ -1864,6 +2003,10 @@ export type Database = {
           _tipo: string
         }
         Returns: Json
+      }
+      reservar_sequencia: {
+        Args: { _familia: string; _org: string; _tipo: string }
+        Returns: number
       }
       revisao_editavel: { Args: { _rev: string }; Returns: boolean }
       snapshot_rascunho: { Args: { _rev: string }; Returns: Json }

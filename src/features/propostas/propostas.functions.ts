@@ -98,56 +98,68 @@ export const importarModeloPlanilha = createServerFn({ method: "POST" })
       await db.from("fabricantes").select("id,nome").eq("organization_id", org),
     ) as { id: string; nome: string }[];
     const fabId = new Map(fabRows.map((f) => [f.nome, f.id]));
-    const existentes = new Set(
-      (
-        ok(await db.from("produtos").select("codigo").eq("organization_id", org)) as {
-          codigo: string;
-        }[]
-      ).map((p) => p.codigo),
-    );
-    const novos = CATALOGO_MODELO.filter((c) => !existentes.has(c.codigo));
+    const atuais = ok(
+      await db.from("produtos").select("codigo,codigo_legado").eq("organization_id", org),
+    ) as { codigo: string; codigo_legado: string | null }[];
+    const mapa = new Map<string, string>();
+    for (const p of atuais) {
+      mapa.set(p.codigo, p.codigo);
+      if (p.codigo_legado) mapa.set(p.codigo_legado, p.codigo);
+    }
     let inseridos = 0;
-    if (novos.length) {
-      const prods = ok(
-        await db
-          .from("produtos")
-          .insert(
-            novos.map((c) => ({
-              organization_id: org,
-              codigo: c.codigo,
-              descricao: c.descricao,
-              unidade: c.unidade,
-              ncm: c.ncm,
-              fabricante_id: fabId.get(c.fabricante) ?? null,
-              modalidade: c.modalidade,
-              indivisivel: c.indivisivel,
-              origem: ORIGEM_PLANILHA,
-            })),
-          )
-          .select("id,codigo"),
-      ) as { id: string; codigo: string }[];
-      ok(
-        await db.from("produto_custos").insert(
-          prods.map((p) => ({
-            organization_id: org,
-            produto_id: p.id,
-            custo: novos.find((c) => c.codigo === p.codigo)!.custo,
-            origem: ORIGEM_PLANILHA,
-          })),
-        ),
+    const pendentes: string[] = [];
+    for (const c of CATALOGO_MODELO) {
+      if (mapa.has(c.codigo_legado)) continue;
+      const serie = CODIGO_NXS[c.codigo_legado];
+      if (!serie) {
+        pendentes.push(c.codigo_legado);
+        continue;
+      }
+      // Chave determinística: repetir a importação não duplica produtos.
+      const h = await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(`${org}:${c.codigo_legado}`),
       );
-      inseridos = prods.length;
+      const x = [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, "0")).join("");
+      const chave = `${x.slice(0, 8)}-${x.slice(8, 12)}-4${x.slice(13, 16)}-8${x.slice(17, 20)}-${x.slice(20, 32)}`;
+      const r = ok(
+        await db.rpc("cadastrar_produto_codificado", {
+          _org: org,
+          _familia: serie.familia,
+          _tipo: serie.tipo,
+          _chave: chave,
+          _custo: c.custo,
+          _dados: {
+            descricao: c.descricao,
+            unidade: c.unidade,
+            ncm: c.ncm,
+            modalidade: c.modalidade,
+            indivisivel: c.indivisivel,
+            fabricante_id: fabId.get(c.fabricante) ?? "",
+            origem: ORIGEM_PLANILHA,
+            codigo_legado: c.codigo_legado,
+          },
+        }),
+      ) as { codigo: string; repetido: boolean };
+      mapa.set(c.codigo_legado, r.codigo);
+      if (!r.repetido) inseridos++;
     }
     const regras = ok(
       await db.from("regras_versionadas").select("id").eq("organization_id", org).limit(1),
     ) as unknown[];
     if (!regras.length) {
+      const componentes = Object.fromEntries(
+        Object.entries(REGRAS_MODELO.componentes).map(([k, v]) => {
+          const legado = Object.keys(CODIGO_NXS).find((l) => CODIGO_NXS[l]!.codigo === v) ?? v;
+          return [k, mapa.get(legado) ?? v];
+        }),
+      );
       ok(
         await db.from("regras_versionadas").insert({
           organization_id: org,
           versao: 1,
           descricao: "Regras do modelo (EXISTENTE) com correções F04/F05",
-          regras: REGRAS_MODELO,
+          regras: { ...REGRAS_MODELO, componentes },
           ativa: true,
           origem: ORIGEM_PLANILHA,
         }),

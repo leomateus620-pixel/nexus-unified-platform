@@ -493,10 +493,10 @@ export function ProductEditor({
 
       {f.tipo && (
         <>
-          <div className="grid gap-3 sm:grid-cols-6">
+          <div className="grid grid-cols-12 items-end gap-4 sm:gap-6">
             {!produtoId && (
-              <label className="grid gap-1 text-xs sm:col-span-3">
-                Família — grupo técnico do produto
+              <label className="col-span-12 grid gap-1.5 sm:col-span-8">
+                <span className={rotulo}>Família — grupo técnico do produto</span>
                 <FamiliaPicker
                   id={`fam-${chave}`}
                   familias={familias}
@@ -504,29 +504,34 @@ export function ProductEditor({
                   onChange={(v) => setF((x) => ({ ...x, familia: v }))}
                 />
                 {familiaAtual?.situacao === "a_confirmar" && (
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="text-xs text-warning">
                     Família com significado a confirmar: {familiaAtual.observacao}
                   </span>
                 )}
               </label>
             )}
             {!produtoId && (
-              <div className="flex items-end gap-2 sm:col-span-3">
-                <div className="flex h-9 w-full items-center gap-2 rounded border border-dashed border-primary/40 bg-primary/5 px-3">
-                  <span className="text-xs text-muted-foreground">Código</span>
-                  <span className="font-mono text-sm text-primary" aria-live="polite">
-                    {previa.data ?? "—"}
+              <div className="col-span-12 sm:col-span-4">
+                <div className="rounded border border-border bg-background p-3">
+                  <span className="block text-[9px] font-bold uppercase text-muted-foreground">
+                    Código gerado
                   </span>
-                  {previa.data && (
-                    <span className="text-xs text-muted-foreground">
-                      prévia · confirmado ao salvar
+                  <div className="mt-1 flex items-baseline justify-between gap-2">
+                    <span
+                      className="font-mono text-sm font-bold tracking-wider text-primary"
+                      aria-live="polite"
+                    >
+                      {previa.data ?? "—"}
                     </span>
-                  )}
+                    <span className="text-[9px] uppercase text-muted-foreground">
+                      {previa.data ? "prévia · confirmado ao salvar" : "prévia"}
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
-            <label className="grid gap-1 text-xs sm:col-span-4">
-              Nome do produto
+            <label className="col-span-12 grid gap-1.5 sm:col-span-7">
+              <span className={rotulo}>Nome do produto</span>
               <input
                 aria-label="Nome do produto"
                 className={input}
@@ -544,17 +549,17 @@ export function ProductEditor({
                 </button>
               )}
             </label>
-            <label className="grid gap-1 text-xs">
-              Unidade
+            <label className="col-span-5 grid gap-1.5 sm:col-span-2">
+              <span className={rotulo}>Unidade</span>
               <input
                 aria-label="Unidade"
-                className={input}
+                className={`${input} text-center`}
                 value={f.unidade}
                 onChange={set("unidade")}
               />
             </label>
-            <label className="grid gap-1 text-xs">
-              Fornecimento
+            <label className="col-span-7 grid gap-1.5 sm:col-span-3">
+              <span className={rotulo}>Fornecimento</span>
               <select
                 aria-label="Fornecimento"
                 className={input}

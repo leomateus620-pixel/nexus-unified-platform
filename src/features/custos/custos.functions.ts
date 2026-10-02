@@ -3,7 +3,13 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { calcularAquisicao, CUSTO_VERSAO, POLITICA_PLANILHA, resumoCustos } from "./domain";
+import {
+  calcularAquisicao,
+  CUSTO_VERSAO,
+  linhaResumo,
+  POLITICA_PLANILHA,
+  resumoCustos,
+} from "./domain";
 
 const valor = z.number().min(0).nullable();
 
@@ -113,13 +119,3 @@ export const definirConversao = createServerFn({ method: "POST" })
     if (r.error) throw new Error(r.error.message);
     return { ok: true };
   });
-
-export function linhaResumo(a: any) {
-  return {
-    custo_total: a.custo_total == null ? null : Number(a.custo_total),
-    quantidade_uso:
-      a.valores_calculados?.quantidade_uso == null ? null : Number(a.valores_calculados.quantidade_uso),
-    data: a.documentos_fiscais?.emitido_em ?? String(a.created_at).slice(0, 10),
-    situacao: a.situacao as "valida" | "pendente",
-  };
-}

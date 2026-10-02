@@ -84,5 +84,21 @@ export function parcelasDuplicadas(noCusto: ParcelaChave[], naVenda: ParcelaChav
   return naVenda.filter((p) => noCusto.includes(p));
 }
 
+export function linhaResumo(a: {
+  custo_total: number | string | null;
+  valores_calculados: { quantidade_uso?: number | null } | null;
+  documentos_fiscais?: { emitido_em: string | null } | null;
+  created_at: string;
+  situacao: string;
+}): AquisicaoResumo {
+  return {
+    custo_total: a.custo_total == null ? null : Number(a.custo_total),
+    quantidade_uso:
+      a.valores_calculados?.quantidade_uso == null ? null : Number(a.valores_calculados.quantidade_uso),
+    data: a.documentos_fiscais?.emitido_em ?? String(a.created_at).slice(0, 10),
+    situacao: a.situacao as "valida" | "pendente",
+  };
+}
+
 const norm = (u: string) => u.trim().toUpperCase().replace("Ç", "C");
 const arred = (v: number) => Math.round(v * 100) / 100;

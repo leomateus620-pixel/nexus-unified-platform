@@ -529,7 +529,7 @@ function ComposicaoEditor({
 }: {
   linhas: Linha[];
   setLinhas: (f: (l: Linha[]) => Linha[]) => void;
-  excluir?: string;
+  excluir?: string | undefined;
   tipoPai: TipoItem;
   onNovo: () => void;
 }) {
@@ -721,9 +721,9 @@ export function ArvoreEstrutura({
   no: { produto_id: string; codigo?: string; descricao?: string; unidade?: string; tipo?: string | null; quantidade?: number; base_custo?: string; filhos?: unknown[] };
   multiplicador?: number;
   nivel?: number;
-  editavel?: boolean;
-  onQuantidade?: (caminho: number[], q: number) => void;
-  onRemover?: (caminho: number[]) => void;
+  editavel?: boolean | undefined;
+  onQuantidade?: ((caminho: number[], q: number) => void) | undefined;
+  onRemover?: ((caminho: number[]) => void) | undefined;
   caminho?: number[];
 }) {
   const filhos = (no.filhos ?? []) as (typeof no)[];

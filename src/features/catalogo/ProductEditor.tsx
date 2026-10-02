@@ -471,7 +471,7 @@ export function ProductEditor({
                         ativo ? "font-medium text-primary" : "text-muted-foreground"
                       }`}
                     >
-                      {t.explica}
+                      {t.curto}
                     </span>
                   )}
                 </button>

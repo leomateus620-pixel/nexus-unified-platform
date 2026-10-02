@@ -410,41 +410,64 @@ export function ProductEditor({
       )}
 
       {!produtoId ? (
-        <fieldset className="grid gap-2">
-          <legend className="mb-1 text-sm font-semibold text-foreground">
-            O que você quer cadastrar?
-          </legend>
-          <div className="grid gap-2 sm:grid-cols-3">
-            {TIPOS_GUIADOS.map((t) => (
-              <button
-                key={t.valor}
-                type="button"
-                aria-pressed={f.tipo === t.valor}
-                onClick={() =>
-                  setF((x) => ({
-                    ...x,
-                    tipo: t.valor,
-                    base_custo:
-                      t.valor === "P"
-                        ? "completo"
-                        : x.base_custo === "completo" && x.tipo === "P"
-                          ? "composto"
-                          : x.base_custo,
-                  }))
-                }
-                className={`rounded border p-3 text-left ${f.tipo === t.valor ? "border-primary bg-primary/10" : "border-input"}`}
-              >
-                <span className="block text-sm font-semibold text-foreground">
-                  {t.nome}{" "}
-                  {t.apoio && (
-                    <span className="text-xs font-normal text-muted-foreground">({t.apoio})</span>
+        <fieldset className="grid gap-3">
+          <legend className={`mb-1 ${rotulo}`}>O que você quer cadastrar?</legend>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {TIPOS_GUIADOS.map((t) => {
+              const ativo = f.tipo === t.valor;
+              return (
+                <button
+                  key={t.valor}
+                  type="button"
+                  aria-pressed={ativo}
+                  onClick={() =>
+                    setF((x) => ({
+                      ...x,
+                      tipo: t.valor,
+                      base_custo:
+                        t.valor === "P"
+                          ? "completo"
+                          : x.base_custo === "completo" && x.tipo === "P"
+                            ? "composto"
+                            : x.base_custo,
+                    }))
+                  }
+                  className={`flex flex-col items-center justify-center rounded border-2 py-4 text-center transition-colors ${
+                    ativo
+                      ? "border-primary bg-primary/10 ring-1 ring-primary/20"
+                      : "border-input hover:bg-muted/40"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span
+                      className={`text-sm font-bold ${ativo ? "text-primary" : "text-foreground"}`}
+                    >
+                      {t.nome}
+                    </span>
+                    {t.apoio && (
+                      <span
+                        className={`rounded px-1 text-[10px] font-bold ${
+                          ativo
+                            ? "bg-primary/20 text-primary"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {t.apoio}
+                      </span>
+                    )}
+                  </span>
+                  {!compacto && (
+                    <span
+                      className={`mt-1 text-[10px] uppercase ${
+                        ativo ? "font-medium text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      {t.explica}
+                    </span>
                   )}
-                </span>
-                {!compacto && (
-                  <span className="mt-1 block text-xs text-muted-foreground">{t.explica}</span>
-                )}
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         </fieldset>
       ) : (

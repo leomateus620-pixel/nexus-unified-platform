@@ -626,12 +626,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               <>
                 <details className="nx-composition-memory">
                   <summary>Memória do preço unitário</summary>
-                  <VerCalculo custo={Number(detalhe.custo_adotado)} params={params} />
+                  <VerCalculo custo={Number(detalhe.custo_adotado)} params={params} inclui={detalhe.custo_inclui ?? []} />
                 </details>
                 <p className="nx-editor-note">
                   Origem do custo:{" "}
                   {detalhe.custo_origem_id
-                    ? "catálogo (vigência mais recente)"
+                    ? `catálogo — ${String((detalhe.custo_fonte as { origem?: string } | null)?.origem ?? "vigência adotada")}${detalhe.custo_inclui?.length ? ` · já inclui ${detalhe.custo_inclui.join(", ").toUpperCase()}` : ""}`
                     : `ajuste manual — ${detalhe.justificativa ?? "sem justificativa"}`}
                 </p>
               </>
@@ -649,14 +649,21 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
 function VerCalculo({
   custo,
   params,
+  inclui,
 }: {
   custo: number;
   params: ReturnType<typeof mesclarParametros>;
+  inclui: string[];
 }) {
-  const p = precoUnitario(custo, params);
+  const p = precoUnitario(custo, params, inclui);
   const linhas: [string, string][] = [
     ["Custo adotado", brlUnit(custo)],
-    [`Frete (${params.frete_materiais * 100}%)`, brlUnit(p.frete)],
+    [
+      inclui.includes("frete")
+        ? "Frete (já incluído no custo de compra)"
+        : `Frete (${params.frete_materiais * 100}%)`,
+      brlUnit(p.frete),
+    ],
     [`Provisão de imposto (${params.aliquota_precificacao * 100}%)`, brlUnit(p.imposto)],
     [`DIFAL ${params.difal_ativo ? "" : "(inativo)"}`, brlUnit(p.difal)],
     ["Custo composto", brlUnit(p.composto)],

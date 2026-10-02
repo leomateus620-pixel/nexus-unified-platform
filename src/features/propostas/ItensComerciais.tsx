@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { AdicionarDoCatalogo } from "./AdicionarDoCatalogo";
+import { AvisoCustoCatalogo, type AdocaoCusto } from "./AvisoCustoCatalogo";
 import { ItemEstruturaResumo, ItemProposta, quantidadeComOrigem } from "./ItemEstrutura";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Filter, Search, X } from "lucide-react";
@@ -91,7 +92,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     () =>
       lista.map((c) => ({
         item: c,
-        price: brlUnit(precoUnitario(Number(c.custo_adotado), params).preco),
+        price: brlUnit(precoUnitario(Number(c.custo_adotado), params, c.custo_inclui ?? []).preco),
         quantity: rev.data?.desatualizada
           ? "Pendente"
           : rev.data?.resumo
@@ -205,6 +206,17 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
     });
   }
 
+  async function adotarCustos(itens: AdocaoCusto[]) {
+    for (const i of itens) {
+      const ok = await atualizar([i.id], {
+        custo_adotado: i.custo,
+        custo_origem_id: i.origemId,
+        justificativa: "Custo do catálogo adotado explicitamente",
+      });
+      if (!ok) return;
+    }
+  }
+
   async function aplicarColagem() {
     setErroColar(null);
     const linhas = colar.trim().split(/\r?\n/).filter(Boolean);
@@ -289,6 +301,18 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         title="Itens comerciais"
         description="Catálogo adotado nesta revisão. Selecione um item para editar seus valores e consultar a memória de preço."
       >
+        {verCusto && (
+          <AvisoCustoCatalogo
+            comps={comps.data ?? []}
+            editavel={editavel}
+            onAdotar={adotarCustos}
+            quantidades={
+              new Map(
+                (rev.data.resumo?.por_componente ?? []).map((r) => [r.componente_id, r.quantidade]),
+              )
+            }
+          />
+        )}
         {editavel && (
           <AdicionarDoCatalogo
             revisaoId={revisaoId}

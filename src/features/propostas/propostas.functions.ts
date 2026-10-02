@@ -447,13 +447,14 @@ async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string, 
       );
     calculo = {
       motor_versao: MOTOR_VERSAO,
-      entradas: { sistemas, componentes, parametros, overrides },
+      entradas: { sistemas, componentes, parametros, overrides, avulsos },
       itens: r.itens,
       resumo: {
         totais: r.totais,
         pendencias: r.pendencias,
         por_sistema: r.por_sistema,
         por_componente: r.por_componente,
+        avulsos: r.avulsos ?? [],
       },
     };
   }

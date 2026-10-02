@@ -410,7 +410,7 @@ export function ProductEditor({
       {perms.data && !podeSalvar && (
         <p
           role="note"
-          className="rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-foreground"
+          className="rounded border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-foreground"
         >
           {produtoId
             ? "Editar o cadastro mestre exige papel Comercial, Engenharia, Compras ou Admin."

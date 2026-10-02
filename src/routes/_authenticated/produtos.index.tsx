@@ -1,3 +1,4 @@
+import { PendenciasImportacao } from "@/features/custos/PendenciasImportacao";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -217,6 +218,7 @@ function Produtos() {
           ) : null
         }
       />
+      <PendenciasImportacao podeResolver={admin} />
       {importar.isSuccess && (
         <p className="text-sm text-primary">
           Importação concluída: {importar.data.inseridos} componente(s) novo(s).

@@ -183,14 +183,18 @@ function Produto() {
           produtoId={p.id}
           orgId={orgId}
           unidade={p.unidade}
-          custoAdotado={custos[0] ? { custo: Number(custos[0].custo), origem: custos[0].origem } : null}
+          custoAdotado={
+            custos[0] ? { custo: Number(custos[0].custo), origem: custos[0].origem } : null
+          }
           podeEditar={perm.data?.importar_catalogo === true}
         />
       )}
       {(p.descricao_original || p.familia_tecnica) && (
         <Section title="Origem do texto e classificação">
           <p className="text-sm">Descrição original: {p.descricao_original ?? "—"}</p>
-          <p className="text-sm">Família técnica: {p.familia_tecnica ?? "não definida (opcional)"}</p>
+          <p className="text-sm">
+            Família técnica: {p.familia_tecnica ?? "não definida (opcional)"}
+          </p>
         </Section>
       )}
       {org.data?.canSeeCosts && (

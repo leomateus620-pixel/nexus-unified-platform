@@ -65,8 +65,8 @@ export function PendenciasImportacao({ podeResolver }: { podeResolver: boolean }
                   <li key={r.id}>
                     <span className="text-foreground">{String(d["Descrição integral"] ?? "")}</span>{" "}
                     <span className="text-muted-foreground">
-                      · {r.tema} · NF {String(d["Nº NF"] ?? "—")} · {String(d["Quantidade original"] ?? "")}{" "}
-                      {String(d["Unidade"] ?? "")}
+                      · {r.tema} · NF {String(d["Nº NF"] ?? "—")} ·{" "}
+                      {String(d["Quantidade original"] ?? "")} {String(d["Unidade"] ?? "")}
                     </span>
                   </li>
                 );

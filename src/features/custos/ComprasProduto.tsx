@@ -148,7 +148,9 @@ export function ComprasProduto(props: {
             <li className="text-muted-foreground">Nenhum fator confirmado.</li>
           )}
         </ul>
-        {props.podeEditar && <NovaConversao produtoId={props.produtoId} unidade={props.unidade} ok={recarregar} />}
+        {props.podeEditar && (
+          <NovaConversao produtoId={props.produtoId} unidade={props.unidade} ok={recarregar} />
+        )}
       </Section>
 
       <Section
@@ -156,7 +158,12 @@ export function ComprasProduto(props: {
         description="Valores do documento preservados; custo calculado pela política registrada em cada linha."
       >
         {props.podeEditar ? (
-          <NovaCompra produtoId={props.produtoId} orgId={props.orgId} unidade={props.unidade} ok={recarregar} />
+          <NovaCompra
+            produtoId={props.produtoId}
+            orgId={props.orgId}
+            unidade={props.unidade}
+            ok={recarregar}
+          />
         ) : (
           <p className="text-sm text-muted-foreground">
             Registrar compra exige papel Engenharia, Compras ou Admin.
@@ -208,8 +215,9 @@ export function ComprasProduto(props: {
                   label: "Origem",
                   render: (a) =>
                     a.pendencia ??
-                    (a.origem?.aba ? `Planilha · ${a.origem.aba} linha ${a.origem.linha}` : "Registro manual") +
-                      (a.lote ? ` · ${a.lote}` : ""),
+                    (a.origem?.aba
+                      ? `Planilha · ${a.origem.aba} linha ${a.origem.linha}`
+                      : "Registro manual") + (a.lote ? ` · ${a.lote}` : ""),
                 },
               ]}
             />
@@ -224,7 +232,9 @@ function Custo(p: { titulo: string; valor: number | null; origem: string }) {
   return (
     <div className="rounded border border-border p-3">
       <p className="text-xs text-muted-foreground">{p.titulo}</p>
-      <p className="text-lg text-foreground">{p.valor == null ? "Custo pendente" : brlUnit(p.valor)}</p>
+      <p className="text-lg text-foreground">
+        {p.valor == null ? "Custo pendente" : brlUnit(p.valor)}
+      </p>
       <p className="text-xs text-muted-foreground">{p.origem}</p>
     </div>
   );
@@ -242,7 +252,13 @@ function NovaConversao(p: { produtoId: string; unidade: string; ok: () => void }
         e.preventDefault();
         setMsg(null);
         try {
-          await fn({ data: { produto_id: p.produtoId, unidade_compra: un.toUpperCase(), fator: Number(fator.replace(",", ".")) } });
+          await fn({
+            data: {
+              produto_id: p.produtoId,
+              unidade_compra: un.toUpperCase(),
+              fator: Number(fator.replace(",", ".")),
+            },
+          });
           setUn("");
           setFator("");
           p.ok();
@@ -252,12 +268,31 @@ function NovaConversao(p: { produtoId: string; unidade: string; ok: () => void }
       }}
     >
       <label>
-        1 <input aria-label="Unidade de compra" required value={un} onChange={(e) => setUn(e.target.value)} className={`${input} w-16`} placeholder="CT" />
+        1{" "}
+        <input
+          aria-label="Unidade de compra"
+          required
+          value={un}
+          onChange={(e) => setUn(e.target.value)}
+          className={`${input} w-16`}
+          placeholder="CT"
+        />
       </label>
       <label>
-        = <input aria-label="Fator" required inputMode="decimal" value={fator} onChange={(e) => setFator(e.target.value)} className={`${input} w-20`} /> {p.unidade}
+        ={" "}
+        <input
+          aria-label="Fator"
+          required
+          inputMode="decimal"
+          value={fator}
+          onChange={(e) => setFator(e.target.value)}
+          className={`${input} w-20`}
+        />{" "}
+        {p.unidade}
       </label>
-      <ActionButton type="submit" variant="ghost">Confirmar fator</ActionButton>
+      <ActionButton type="submit" variant="ghost">
+        Confirmar fator
+      </ActionButton>
       {msg && <span className="text-destructive">{msg}</span>}
     </form>
   );
@@ -268,17 +303,33 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
   const forn = useFornecedores(p.orgId);
   const [aberto, setAberto] = useState(false);
   const [chave, setChave] = useState(() => crypto.randomUUID());
-  const [f, setF] = useState<Record<string, string>>({
-    fornecedor_id: "", nf_numero: "", nf_serie: "", nf_chave: "", emitido_em: new Date().toISOString().slice(0, 10),
-    quantidade: "", unidade: p.unidade, produtos: "", desconto: "", frete: "", ipi: "", difal: "", outras: "", lote: "",
+  const [f, setF] = useState({
+    fornecedor_id: "",
+    nf_numero: "",
+    nf_serie: "",
+    nf_chave: "",
+    emitido_em: new Date().toISOString().slice(0, 10),
+    quantidade: "",
+    unidade: p.unidade,
+    produtos: "",
+    desconto: "",
+    frete: "",
+    ipi: "",
+    difal: "",
+    outras: "",
+    lote: "",
   });
   const [msg, setMsg] = useState<string | null>(null);
   const [salvando, setSalvando] = useState(false);
   const n = (v: string) => (v.trim() === "" ? null : Number(v.replace(",", ".")));
-  const campo = (k: string, label: string, extra = "") => (
+  const campo = (k: keyof typeof f, label: string, extra = "") => (
     <label className="flex flex-col text-xs">
       {label}
-      <input value={f[k]} onChange={(e) => setF({ ...f, [k]: e.target.value })} className={`${input} ${extra}`} />
+      <input
+        value={f[k]}
+        onChange={(e) => setF({ ...f, [k]: e.target.value })}
+        className={`${input} ${extra}`}
+      />
     </label>
   );
   if (!aberto) return <ActionButton onClick={() => setAberto(true)}>Registrar compra</ActionButton>;
@@ -292,13 +343,33 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
         try {
           const r = await fn({
             data: {
-              chave, produto_id: p.produtoId, fornecedor_id: f.fornecedor_id || null,
-              nf_numero: f.nf_numero, nf_serie: f.nf_serie, nf_chave: f.nf_chave.replace(/\D/g, ""), emitido_em: f.emitido_em,
-              quantidade: n(f.quantidade) ?? 0, unidade: f.unidade.toUpperCase(), lote: f.lote,
-              parcelas: { produtos: n(f.produtos), desconto: n(f.desconto), frete: n(f.frete), ipi: n(f.ipi), difal: n(f.difal), outras: n(f.outras) },
+              chave,
+              produto_id: p.produtoId,
+              fornecedor_id: f.fornecedor_id || null,
+              nf_numero: f.nf_numero,
+              nf_serie: f.nf_serie,
+              nf_chave: f.nf_chave.replace(/\D/g, ""),
+              emitido_em: f.emitido_em,
+              quantidade: n(f.quantidade) ?? 0,
+              unidade: f.unidade.toUpperCase(),
+              lote: f.lote,
+              parcelas: {
+                produtos: n(f.produtos),
+                desconto: n(f.desconto),
+                frete: n(f.frete),
+                ipi: n(f.ipi),
+                difal: n(f.difal),
+                outras: n(f.outras),
+              },
             },
           });
-          setMsg(r.pendencia ? `Compra salva com pendência: ${r.pendencia}` : r.repetido ? "Esta compra já estava registrada." : "Compra registrada; média ponderada atualizada.");
+          setMsg(
+            r.pendencia
+              ? `Compra salva com pendência: ${r.pendencia}`
+              : r.repetido
+                ? "Esta compra já estava registrada."
+                : "Compra registrada; média ponderada atualizada.",
+          );
           setChave(crypto.randomUUID());
           p.ok();
         } catch (er) {
@@ -311,9 +382,17 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
       <div className="flex flex-wrap gap-2">
         <label className="flex flex-col text-xs">
           Fornecedor
-          <select value={f.fornecedor_id} onChange={(e) => setF({ ...f, fornecedor_id: e.target.value })} className={input}>
+          <select
+            value={f.fornecedor_id}
+            onChange={(e) => setF({ ...f, fornecedor_id: e.target.value })}
+            className={input}
+          >
             <option value="">Não informado</option>
-            {(forn.data ?? []).map((x) => <option key={x.id} value={x.id}>{x.nome}</option>)}
+            {(forn.data ?? []).map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.nome}
+              </option>
+            ))}
           </select>
         </label>
         {campo("nf_numero", "Nº NF", "w-24")}
@@ -321,7 +400,12 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
         {campo("nf_chave", "Chave NF-e (44 dígitos)", "w-72")}
         <label className="flex flex-col text-xs">
           Data
-          <input type="date" value={f.emitido_em} onChange={(e) => setF({ ...f, emitido_em: e.target.value })} className={input} />
+          <input
+            type="date"
+            value={f.emitido_em}
+            onChange={(e) => setF({ ...f, emitido_em: e.target.value })}
+            className={input}
+          />
         </label>
       </div>
       <div className="flex flex-wrap gap-2">
@@ -339,10 +423,18 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
         Deixe em branco o que não consta no documento: o sistema não transforma ausência em zero.
       </p>
       <div className="flex gap-2">
-        <ActionButton type="submit" disabled={salvando}>{salvando ? "Salvando…" : "Salvar compra"}</ActionButton>
-        <ActionButton variant="ghost" onClick={() => setAberto(false)}>Fechar</ActionButton>
+        <ActionButton type="submit" disabled={salvando}>
+          {salvando ? "Salvando…" : "Salvar compra"}
+        </ActionButton>
+        <ActionButton variant="ghost" onClick={() => setAberto(false)}>
+          Fechar
+        </ActionButton>
       </div>
-      {msg && <p className="text-sm" role="status">{msg}</p>}
+      {msg && (
+        <p className="text-sm" role="status">
+          {msg}
+        </p>
+      )}
     </form>
   );
 }

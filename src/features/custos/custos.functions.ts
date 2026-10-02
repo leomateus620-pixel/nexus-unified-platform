@@ -24,7 +24,10 @@ export const registrarCompra = createServerFn({ method: "POST" })
         fornecedor_id: z.string().uuid().nullable(),
         nf_numero: z.string().trim().max(20),
         nf_serie: z.string().trim().max(5),
-        nf_chave: z.string().regex(/^\d{44}$/).or(z.literal("")),
+        nf_chave: z
+          .string()
+          .regex(/^\d{44}$/)
+          .or(z.literal("")),
         emitido_em: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         quantidade: z.number().min(0),
         unidade: z.string().trim().min(1).max(10),
@@ -108,7 +111,11 @@ export const definirConversao = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const db: any = context.supabase;
-    const p = await db.from("produtos").select("organization_id").eq("id", data.produto_id).single();
+    const p = await db
+      .from("produtos")
+      .select("organization_id")
+      .eq("id", data.produto_id)
+      .single();
     if (p.error) throw new Error(p.error.message);
     const r = await db
       .from("produto_conversoes")

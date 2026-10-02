@@ -73,7 +73,9 @@ export function resumoCustos(lista: AquisicaoResumo[]) {
   const ultima = [...validas].sort((a, b) => b.data.localeCompare(a.data))[0];
   return {
     media_ponderada: qtd > 0 ? soma / qtd : null,
-    ultima_compra: ultima ? (ultima.custo_total as number) / (ultima.quantidade_uso as number) : null,
+    ultima_compra: ultima
+      ? (ultima.custo_total as number) / (ultima.quantidade_uso as number)
+      : null,
     compras_validas: validas.length,
     compras_pendentes: lista.length - validas.length,
   };
@@ -94,7 +96,9 @@ export function linhaResumo(a: {
   return {
     custo_total: a.custo_total == null ? null : Number(a.custo_total),
     quantidade_uso:
-      a.valores_calculados?.quantidade_uso == null ? null : Number(a.valores_calculados.quantidade_uso),
+      a.valores_calculados?.quantidade_uso == null
+        ? null
+        : Number(a.valores_calculados.quantidade_uso),
     data: a.documentos_fiscais?.emitido_em ?? String(a.created_at).slice(0, 10),
     situacao: a.situacao as "valida" | "pendente",
   };

@@ -150,7 +150,6 @@ export function FamiliaPicker({
           const sigla = v.includes(" — ")
             ? v.split(" — ").pop()!.trim().toUpperCase()
             : v.toUpperCase();
-          console.log("DBG pick", sigla, familias.length, familias.some((f) => f.sigla === sigla));
           onChange(familias.some((f) => f.sigla === sigla) ? sigla : "");
         }}
         onBlur={() => setTexto("")}
@@ -308,7 +307,6 @@ export function ProductEditor({
     },
   });
 
-  console.log("DBG", JSON.stringify({ orgId, fam: f.familia, tipo: f.tipo, st: previa.status, fs: previa.fetchStatus, e: String(previa.error ?? "") }));
   const podeSalvar = produtoId ? perms.data?.editar_cadastro : perms.data?.importar_catalogo;
   const composto = f.tipo === "S" || f.tipo === "M";
   const sugestao = sugerirNome(f);

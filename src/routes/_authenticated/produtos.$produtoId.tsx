@@ -16,6 +16,8 @@ import { useOrg } from "@/features/org/session";
 import { useFornecedores } from "@/features/propostas/hooks";
 import { brlUnit, dataBR } from "@/lib/format";
 import "@/components/nexus/stages.css";
+import { ComprasProduto } from "@/features/custos/ComprasProduto";
+import { usePermissoes } from "@/features/catalogo/ProductEditor";
 
 export const Route = createFileRoute("/_authenticated/produtos/$produtoId")({
   head: () => ({
@@ -34,6 +36,7 @@ function Produto() {
   const forn = useFornecedores(orgId);
   const qc = useQueryClient();
   const [erro, setErro] = useState<string | null>(null);
+  const perm = usePermissoes();
   const q = useQuery({
     queryKey: ["produto", produtoId],
     queryFn: async () => {
@@ -176,8 +179,27 @@ function Produto() {
         </div>
       </Section>
       {org.data?.canSeeCosts && (
+        <ComprasProduto
+          produtoId={p.id}
+          orgId={orgId}
+          unidade={p.unidade}
+          custoAdotado={
+            custos[0] ? { custo: Number(custos[0].custo), origem: custos[0].origem } : null
+          }
+          podeEditar={perm.data?.importar_catalogo === true}
+        />
+      )}
+      {(p.descricao_original || p.familia_tecnica) && (
+        <Section title="Origem do texto e classificação">
+          <p className="text-sm">Descrição original: {p.descricao_original ?? "—"}</p>
+          <p className="text-sm">
+            Família técnica: {p.familia_tecnica ?? "não definida (opcional)"}
+          </p>
+        </Section>
+      )}
+      {org.data?.canSeeCosts && (
         <Section
-          title="Histórico de custos"
+          title="Histórico de custos sugeridos"
           description="Valores do catálogo global, com vigência e origem do registro. A proposta mantém o custo adotado na revisão."
         >
           <ActionButton variant="ghost" onClick={novoCusto}>

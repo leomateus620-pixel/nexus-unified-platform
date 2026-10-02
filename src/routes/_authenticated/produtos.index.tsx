@@ -1,3 +1,4 @@
+import { PendenciasImportacao } from "@/features/custos/PendenciasImportacao";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -58,7 +59,7 @@ function useProdutos(orgId: string) {
       const { data, error } = await supabase
         .from("produtos")
         .select(
-          "id,codigo,codigo_legado,familia,tipo_item,descricao,unidade,ncm,modalidade,ativo,material,dimensoes,composicao_status,base_custo,fabricantes(nome),produto_custos(custo,vigencia,created_at)",
+          "id,codigo,codigo_legado,familia,tipo_item,descricao,unidade,ncm,modalidade,ativo,material,dimensoes,composicao_status,base_custo,descricao_original,fabricantes(nome),produto_referencias(codigo_fornecedor),produto_custos(custo,vigencia,created_at)",
         )
         .eq("organization_id", orgId)
         .order("codigo");
@@ -187,6 +188,8 @@ function Produtos() {
             nomeFam(p.familia),
             p.material,
             p.dimensoes,
+            p.descricao_original,
+            ...(p.produto_referencias ?? []).map((r) => r.codigo_fornecedor),
           ]
             .filter(Boolean)
             .some((v) => String(v).toLowerCase().includes(t))) &&
@@ -215,6 +218,7 @@ function Produtos() {
           ) : null
         }
       />
+      <PendenciasImportacao podeResolver={admin} />
       {importar.isSuccess && (
         <p className="text-sm text-primary">
           Importação concluída: {importar.data.inseridos} componente(s) novo(s).

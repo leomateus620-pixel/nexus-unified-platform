@@ -14,8 +14,13 @@ import {
 } from "./catalogo.functions";
 import { nomeTipo, type TipoItem } from "./codigos";
 
-const input = "h-9 w-full rounded border border-input bg-background px-2 text-sm text-foreground";
-const btn = "inline-flex h-9 items-center gap-1.5 rounded border px-3 text-sm disabled:opacity-50";
+const input =
+  "h-10 w-full rounded border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
+const btn =
+  "inline-flex h-10 items-center gap-1.5 rounded border px-4 text-sm disabled:opacity-50";
+const rotulo =
+  "font-display text-[11px] font-bold uppercase tracking-wider text-muted-foreground";
+const cartao = "rounded-lg border border-border bg-card";
 
 export const TIPOS_GUIADOS: { valor: TipoItem; nome: string; apoio?: string; explica: string }[] = [
   {

@@ -1,4 +1,5 @@
 import { PendenciasImportacao } from "@/features/custos/PendenciasImportacao";
+import { ImportacaoAssistida } from "@/features/importacao/ImportacaoAssistida";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -219,6 +220,16 @@ function Produtos() {
         }
       />
       <PendenciasImportacao podeResolver={admin} />
+      <details className="rounded-lg border border-border">
+        <summary className="cursor-pointer px-4 py-3 font-display text-sm font-bold uppercase tracking-wider">
+          Importar compras de planilha (com prévia)
+        </summary>
+        <div className="p-3">
+          <ImportacaoAssistida
+            podeRegistrar={(org.data?.roles ?? []).some((r) => r === "engenharia" || r === "compras")}
+          />
+        </div>
+      </details>
       {importar.isSuccess && (
         <p className="text-sm text-primary">
           Importação concluída: {importar.data.inseridos} componente(s) novo(s).

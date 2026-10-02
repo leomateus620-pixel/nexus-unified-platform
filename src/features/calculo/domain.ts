@@ -3,7 +3,7 @@ import { codigoAtual } from "../catalogo/codigos";
 // Usado tanto na prévia (navegador) quanto no cálculo canônico (servidor).
 // Categorias: EXISTENTE (planilha), CORREÇÃO (auditoria), EVOLUÇÃO (nova capacidade).
 
-export const MOTOR_VERSAO = "nexus-calc-1.2.0";
+export const MOTOR_VERSAO = "nexus-calc-1.3.0";
 
 export type TipoSistema = "TELHADO" | "OVERHEAD";
 
@@ -288,10 +288,16 @@ export type ComponenteAdotado = {
   indivisivel: boolean;
   multiplo: number;
   produto_id?: string;
+  /** Despesas de aquisição já embutidas no custo (ex.: "frete"); não são somadas de novo. */
+  inclui?: string[];
 };
 
-export function precoUnitario(custo: number, p: Parametros) {
-  const frete = custo * p.frete_materiais;
+/**
+ * Frete de materiais é encargo de aquisição: se o custo adotado já o contém, não é somado de novo.
+ * Imposto de precificação e DIFAL dos parâmetros são encargos de venda e permanecem.
+ */
+export function precoUnitario(custo: number, p: Parametros, inclui: readonly string[] = []) {
+  const frete = inclui.includes("frete") ? 0 : custo * p.frete_materiais;
   const base = custo + frete;
   const imposto = base * p.aliquota_precificacao;
   const difal = p.difal_ativo
@@ -544,7 +550,7 @@ export function calcularRevisao(
     const q = agreg.get(c.id) ?? 0;
     if (q === 0) continue;
     if (!(c.custo > 0)) pendencias.add(`Componente ${c.codigo} sem custo adotado.`);
-    const pu = precoUnitario(c.custo, p);
+    const pu = precoUnitario(c.custo, p, c.inclui ?? []);
     materiais += q * pu.preco;
     custoMat += q * (c.custo + pu.frete); // CORREÇÃO F06: frete integra custo
     impMat += q * (pu.imposto + pu.difal); // CORREÇÃO F06: DIFAL deduzido

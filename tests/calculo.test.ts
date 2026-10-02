@@ -169,3 +169,16 @@ describe("orçamento", () => {
     expect(r.totais.margem).toBeNull();
   });
 });
+
+describe("custo com despesas já incluídas (motor 1.3.0)", () => {
+  it("não soma frete de novo quando o custo de compra já o contém; mantém encargos de venda", async () => {
+    const { precoUnitario, mesclarParametros } = await import("../src/features/calculo/domain");
+    const p = mesclarParametros({ frete_materiais: 0.05, aliquota_precificacao: 0.1, markup: 0.3 });
+    const sem = precoUnitario(100, p);
+    const com = precoUnitario(100, p, ["frete"]);
+    expect(sem.frete).toBeCloseTo(5);
+    expect(com.frete).toBe(0);
+    expect(com.imposto).toBeCloseTo(10);
+    expect(com.preco).toBeLessThan(sem.preco);
+  });
+});

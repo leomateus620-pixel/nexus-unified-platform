@@ -19,3 +19,6 @@
 - No sample/mock data in app code; missing integrations show "Integração não configurada". Why: every number shown must come from real records.
 - The authenticated application rail has one route-independent visual identity; route-specific themes may style only the workspace content. Why: navigation must not shift when users move between modules.
 - Item codes ([FAMILY]-NXS-[TYPE][SEQ]) are generated only by database functions (`cadastrar_produto_codificado`, `recodificar_produto`) with per-organization family+type series; a trigger blocks manual code writes. Why: no duplicates, no reused numbers, retry-safe.
+- Product composition lives only in `produto_estrutura` (child quantity per parent unit, cycle-blocking trigger); revisions copy it into `revisao_componentes.estrutura` (local, editable) with `estrutura_origem` for restore. Why: catalog changes never silently alter a proposal.
+- Manual/standalone items use `revisao_componentes.quantidade_avulsa` and are expanded by `expandirAvulsos` in `domain.ts` (composite = priced by children, complete = priced whole). Why: one calculation path, no double-charging parent and children.
+- Reclassifying an already-coded product only via `reclassificar_produto` (records `codigo_equivalencias`, new active rules version). Why: codes are never edited freely or reused.

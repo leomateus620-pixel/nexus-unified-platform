@@ -126,6 +126,91 @@ export type Database = {
           },
         ]
       }
+      aquisicoes: {
+        Row: {
+          chave: string
+          created_at: string
+          created_by: string | null
+          custo_total: number | null
+          custo_unitario: number | null
+          documento_id: string | null
+          id: string
+          lote: string | null
+          organization_id: string
+          origem: Json | null
+          parcelas: Json
+          pendencia: string | null
+          politica_versao: string | null
+          produto_id: string
+          quantidade: number
+          situacao: string
+          unidade: string
+          valores_calculados: Json | null
+        }
+        Insert: {
+          chave: string
+          created_at?: string
+          created_by?: string | null
+          custo_total?: number | null
+          custo_unitario?: number | null
+          documento_id?: string | null
+          id?: string
+          lote?: string | null
+          organization_id: string
+          origem?: Json | null
+          parcelas?: Json
+          pendencia?: string | null
+          politica_versao?: string | null
+          produto_id: string
+          quantidade: number
+          situacao: string
+          unidade: string
+          valores_calculados?: Json | null
+        }
+        Update: {
+          chave?: string
+          created_at?: string
+          created_by?: string | null
+          custo_total?: number | null
+          custo_unitario?: number | null
+          documento_id?: string | null
+          id?: string
+          lote?: string | null
+          organization_id?: string
+          origem?: Json | null
+          parcelas?: Json
+          pendencia?: string | null
+          politica_versao?: string | null
+          produto_id?: string
+          quantidade?: number
+          situacao?: string
+          unidade?: string
+          valores_calculados?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aquisicoes_documento_id_fkey"
+            columns: ["documento_id"]
+            isOneToOne: false
+            referencedRelation: "documentos_fiscais"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "aquisicoes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "aquisicoes_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       auditoria: {
         Row: {
           acao: string
@@ -493,6 +578,66 @@ export type Database = {
           },
         ]
       }
+      documentos_fiscais: {
+        Row: {
+          chave_acesso: string | null
+          created_at: string
+          emitido_em: string | null
+          fornecedor_id: string | null
+          fornecedor_texto: string | null
+          id: string
+          numero: string
+          observacao: string | null
+          organization_id: string
+          origem: Json | null
+          provisorio: boolean
+          serie: string | null
+        }
+        Insert: {
+          chave_acesso?: string | null
+          created_at?: string
+          emitido_em?: string | null
+          fornecedor_id?: string | null
+          fornecedor_texto?: string | null
+          id?: string
+          numero: string
+          observacao?: string | null
+          organization_id: string
+          origem?: Json | null
+          provisorio?: boolean
+          serie?: string | null
+        }
+        Update: {
+          chave_acesso?: string | null
+          created_at?: string
+          emitido_em?: string | null
+          fornecedor_id?: string | null
+          fornecedor_texto?: string | null
+          id?: string
+          numero?: string
+          observacao?: string | null
+          organization_id?: string
+          origem?: Json | null
+          provisorio?: boolean
+          serie?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documentos_fiscais_fornecedor_id_fkey"
+            columns: ["fornecedor_id"]
+            isOneToOne: false
+            referencedRelation: "fornecedores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documentos_fiscais_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fabricantes: {
         Row: {
           id: string
@@ -577,6 +722,66 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      importacao_registros: {
+        Row: {
+          aba: string
+          arquivo: string
+          chave: string
+          created_at: string
+          dados: Json
+          explicacao: string | null
+          id: string
+          linha: string | null
+          organization_id: string
+          produto_id: string | null
+          situacao: string
+          tema: string
+        }
+        Insert: {
+          aba: string
+          arquivo: string
+          chave: string
+          created_at?: string
+          dados: Json
+          explicacao?: string | null
+          id?: string
+          linha?: string | null
+          organization_id: string
+          produto_id?: string | null
+          situacao: string
+          tema: string
+        }
+        Update: {
+          aba?: string
+          arquivo?: string
+          chave?: string
+          created_at?: string
+          dados?: Json
+          explicacao?: string | null
+          id?: string
+          linha?: string | null
+          organization_id?: string
+          produto_id?: string | null
+          situacao?: string
+          tema?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "importacao_registros_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "importacao_registros_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
             referencedColumns: ["id"]
           },
         ]
@@ -905,6 +1110,92 @@ export type Database = {
         }
         Relationships: []
       }
+      politicas_custo: {
+        Row: {
+          created_at: string
+          descricao: string
+          divergencias: Json
+          id: string
+          organization_id: string
+          parcelas_no_custo: string[]
+          situacao: string
+          versao: string
+        }
+        Insert: {
+          created_at?: string
+          descricao: string
+          divergencias?: Json
+          id?: string
+          organization_id: string
+          parcelas_no_custo: string[]
+          situacao?: string
+          versao: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string
+          divergencias?: Json
+          id?: string
+          organization_id?: string
+          parcelas_no_custo?: string[]
+          situacao?: string
+          versao?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "politicas_custo_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      produto_conversoes: {
+        Row: {
+          confirmado_por: string | null
+          created_at: string
+          fator: number
+          id: string
+          organization_id: string
+          produto_id: string
+          unidade_compra: string
+        }
+        Insert: {
+          confirmado_por?: string | null
+          created_at?: string
+          fator: number
+          id?: string
+          organization_id: string
+          produto_id: string
+          unidade_compra: string
+        }
+        Update: {
+          confirmado_por?: string | null
+          created_at?: string
+          fator?: number
+          id?: string
+          organization_id?: string
+          produto_id?: string
+          unidade_compra?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "produto_conversoes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "produto_conversoes_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       produto_custos: {
         Row: {
           created_at: string
@@ -1015,6 +1306,58 @@ export type Database = {
           },
         ]
       }
+      produto_referencias: {
+        Row: {
+          codigo_fornecedor: string
+          created_at: string
+          descricao_original: string | null
+          fornecedor_id: string
+          id: string
+          organization_id: string
+          produto_id: string
+        }
+        Insert: {
+          codigo_fornecedor: string
+          created_at?: string
+          descricao_original?: string | null
+          fornecedor_id: string
+          id?: string
+          organization_id: string
+          produto_id: string
+        }
+        Update: {
+          codigo_fornecedor?: string
+          created_at?: string
+          descricao_original?: string | null
+          fornecedor_id?: string
+          id?: string
+          organization_id?: string
+          produto_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "produto_referencias_fornecedor_id_fkey"
+            columns: ["fornecedor_id"]
+            isOneToOne: false
+            referencedRelation: "fornecedores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "produto_referencias_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "produto_referencias_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       produtos: {
         Row: {
           acabamento: string | null
@@ -1026,9 +1369,11 @@ export type Database = {
           composicao_status: string
           created_at: string
           descricao: string
+          descricao_original: string | null
           dimensoes: string | null
           fabricante_id: string | null
           familia: string | null
+          familia_tecnica: string | null
           fornecedor_padrao_id: string | null
           id: string
           indivisivel: boolean
@@ -1053,9 +1398,11 @@ export type Database = {
           composicao_status?: string
           created_at?: string
           descricao: string
+          descricao_original?: string | null
           dimensoes?: string | null
           fabricante_id?: string | null
           familia?: string | null
+          familia_tecnica?: string | null
           fornecedor_padrao_id?: string | null
           id?: string
           indivisivel?: boolean
@@ -1080,9 +1427,11 @@ export type Database = {
           composicao_status?: string
           created_at?: string
           descricao?: string
+          descricao_original?: string | null
           dimensoes?: string | null
           fabricante_id?: string | null
           familia?: string | null
+          familia_tecnica?: string | null
           fornecedor_padrao_id?: string | null
           id?: string
           indivisivel?: boolean
@@ -1108,6 +1457,13 @@ export type Database = {
           {
             foreignKeyName: "produtos_familia_fkey"
             columns: ["familia"]
+            isOneToOne: false
+            referencedRelation: "familias_codigo"
+            referencedColumns: ["sigla"]
+          },
+          {
+            foreignKeyName: "produtos_familia_tecnica_fkey"
+            columns: ["familia_tecnica"]
             isOneToOne: false
             referencedRelation: "familias_codigo"
             referencedColumns: ["sigla"]
@@ -1670,6 +2026,7 @@ export type Database = {
         Row: {
           codigo: string
           custo_adotado: number
+          custo_base: string | null
           custo_origem_id: string | null
           descricao: string
           estrutura: Json | null
@@ -1692,6 +2049,7 @@ export type Database = {
         Insert: {
           codigo: string
           custo_adotado?: number
+          custo_base?: string | null
           custo_origem_id?: string | null
           descricao: string
           estrutura?: Json | null
@@ -1714,6 +2072,7 @@ export type Database = {
         Update: {
           codigo?: string
           custo_adotado?: number
+          custo_base?: string | null
           custo_origem_id?: string | null
           descricao?: string
           estrutura?: Json | null
@@ -2117,6 +2476,10 @@ export type Database = {
         Returns: boolean
       }
       hash_tecnico: { Args: { _rev: string }; Returns: string }
+      importar_produto_oficial: {
+        Args: { _codigo: string; _dados: Json; _org: string }
+        Returns: string
+      }
       incluir_produto_revisao: {
         Args: { _produto: string; _quantidade: number; _rev: string }
         Returns: Json
@@ -2144,6 +2507,15 @@ export type Database = {
       }
       recodificar_produto: {
         Args: { _familia: string; _produto: string; _tipo: string }
+        Returns: Json
+      }
+      registrar_aquisicao: {
+        Args: {
+          _chave: string
+          _custo_sugerido: number
+          _dados: Json
+          _produto: string
+        }
         Returns: Json
       }
       registrar_movimento: {

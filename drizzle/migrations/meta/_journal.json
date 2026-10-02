@@ -15,6 +15,13 @@
       "when": 1790951745509,
       "tag": "0001_objeto_rascunho_campos_opcionais",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790959762916,
+      "tag": "0002_cadastro_comercial_aquisicoes",
+      "breakpoints": true
     }
   ]
 }

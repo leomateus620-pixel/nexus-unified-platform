@@ -406,7 +406,9 @@ export type OcorrenciaAvulsa = {
  * filhos ficam apenas informativos — nunca os dois, evitando custo duplicado.
  */
 export function expandirAvulsos(avulsos: ItemAvulso[], componentes: ComponenteAdotado[]) {
-  const porProduto = new Map(componentes.filter((c) => c.produto_id).map((c) => [c.produto_id!, c]));
+  const porProduto = new Map(
+    componentes.filter((c) => c.produto_id).map((c) => [c.produto_id!, c]),
+  );
   const ocorrencias: OcorrenciaAvulsa[] = [];
   const pendencias: string[] = [];
   for (const a of avulsos) {
@@ -418,16 +420,24 @@ export function expandirAvulsos(avulsos: ItemAvulso[], componentes: ComponenteAd
       const comp = porProduto.get(no.produto_id);
       const rotulo = comp?.codigo ?? no.codigo ?? no.produto_id;
       if (no.base_custo === "composto" && filhos.length) {
-        for (const f of filhos) walk(f, q * Number(f.quantidade ?? 0), [...caminho, rotulo], nivel + 1);
+        for (const f of filhos)
+          walk(f, q * Number(f.quantidade ?? 0), [...caminho, rotulo], nivel + 1);
         return;
       }
       if (no.base_custo === "composto" && no.tipo !== "P")
-        pendencias.push(`Composição pendente: ${rotulo} custeado pelo próprio custo até a composição ser cadastrada.`);
+        pendencias.push(
+          `Composição pendente: ${rotulo} custeado pelo próprio custo até a composição ser cadastrada.`,
+        );
       if (!comp) {
         pendencias.push(`Componente ${rotulo} da estrutura não está incluído no orçamento.`);
         return;
       }
-      ocorrencias.push({ componente_id: comp.id, origem_id: a.componente_id, caminho, quantidade_tecnica: q });
+      ocorrencias.push({
+        componente_id: comp.id,
+        origem_id: a.componente_id,
+        caminho,
+        quantidade_tecnica: q,
+      });
     };
     walk(raiz, a.quantidade, [], 0);
   }
@@ -514,7 +524,10 @@ export function calcularRevisao(
   exp.pendencias.forEach((x) => pendencias.add(x));
   const tecnicaAvulsa = new Map<string, number>();
   for (const o of exp.ocorrencias)
-    tecnicaAvulsa.set(o.componente_id, (tecnicaAvulsa.get(o.componente_id) ?? 0) + o.quantidade_tecnica);
+    tecnicaAvulsa.set(
+      o.componente_id,
+      (tecnicaAvulsa.get(o.componente_id) ?? 0) + o.quantidade_tecnica,
+    );
   const qAvulsa = new Map<string, number>();
   for (const [id, t] of tecnicaAvulsa) {
     const c = componentes.find((x) => x.id === id)!;

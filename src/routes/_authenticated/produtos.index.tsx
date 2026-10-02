@@ -3,13 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 
-import {
-  ActionButton,
-  EmptyState,
-  PageHeader,
-  QueryView,
-  Section,
-} from "@/components/nexus/Page";
+import { ActionButton, EmptyState, PageHeader, QueryView, Section } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
 import { useOrg } from "@/features/org/session";
 import { importarModeloPlanilha } from "@/features/propostas/propostas.functions";
@@ -33,7 +27,13 @@ export const Route = createFileRoute("/_authenticated/produtos/")({
   component: Produtos,
 });
 
-type Familia = { sigla: string; nome: string; grupo: string; situacao: string; observacao: string | null };
+type Familia = {
+  sigla: string;
+  nome: string;
+  grupo: string;
+  situacao: string;
+  observacao: string | null;
+};
 
 export function useFamilias() {
   return useQuery({
@@ -92,7 +92,10 @@ function useSeries(orgId: string) {
       if (pl.error) throw pl.error;
       if (sc.error) throw sc.error;
       if (pr.error) throw pr.error;
-      const m = new Map<string, { familia: string; tipo: string; ultimo: number; pendencia: string | null }>();
+      const m = new Map<
+        string,
+        { familia: string; tipo: string; ultimo: number; pendencia: string | null }
+      >();
       const up = (f: string, t: string, n: number, pend?: string | null) => {
         const k = `${f}-${t}`;
         const cur = m.get(k) ?? { familia: f, tipo: t, ultimo: 0, pendencia: null };
@@ -176,13 +179,21 @@ function Produtos() {
     return (q.data ?? []).filter(
       (p) =>
         (!t ||
-          [p.codigo, p.descricao, p.codigo_legado, p.familia, nomeFam(p.familia), p.material, p.dimensoes]
+          [
+            p.codigo,
+            p.descricao,
+            p.codigo_legado,
+            p.familia,
+            nomeFam(p.familia),
+            p.material,
+            p.dimensoes,
+          ]
             .filter(Boolean)
             .some((v) => String(v).toLowerCase().includes(t))) &&
         (!fFam || p.familia === fFam || (fFam === "__pend" && !p.familia)) &&
         (!fTipo || p.tipo_item === fTipo),
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q.data, busca, fFam, fTipo, familias]);
   const pendentes = (q.data ?? []).filter((p) => !p.familia);
 
@@ -194,7 +205,11 @@ function Produtos() {
         description="Códigos no padrão [FAMÍLIA]-NXS-[TIPO][SEQ], gerados pelo sistema ao salvar."
         actions={
           admin ? (
-            <ActionButton variant="ghost" loading={importar.isPending} onClick={() => importar.mutate()}>
+            <ActionButton
+              variant="ghost"
+              loading={importar.isPending}
+              onClick={() => importar.mutate()}
+            >
               Importar biblioteca da planilha modelo
             </ActionButton>
           ) : null
@@ -213,7 +228,10 @@ function Produtos() {
         </p>
       )}
 
-      <Section title="Cadastrar produto" description="Peça, conjunto soldado ou montagem. O código é gerado pelo sistema ao salvar.">
+      <Section
+        title="Cadastrar produto"
+        description="Peça, conjunto soldado ou montagem. O código é gerado pelo sistema ao salvar."
+      >
         <ProductEditor />
       </Section>
 
@@ -239,7 +257,12 @@ function Produtos() {
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
           />
-          <select aria-label="Filtrar família" className={input} value={fFam} onChange={(e) => setFFam(e.target.value)}>
+          <select
+            aria-label="Filtrar família"
+            className={input}
+            value={fFam}
+            onChange={(e) => setFFam(e.target.value)}
+          >
             <option value="">Todas as famílias</option>
             {familias.map((f) => (
               <option key={f.sigla} value={f.sigla}>
@@ -248,7 +271,12 @@ function Produtos() {
             ))}
             <option value="__pend">Código pendente</option>
           </select>
-          <select aria-label="Filtrar tipo" className={input} value={fTipo} onChange={(e) => setFTipo(e.target.value)}>
+          <select
+            aria-label="Filtrar tipo"
+            className={input}
+            value={fTipo}
+            onChange={(e) => setFTipo(e.target.value)}
+          >
             <option value="">Todos os tipos</option>
             {TIPOS_ITEM.map((t) => (
               <option key={t.valor} value={t.valor}>
@@ -259,7 +287,12 @@ function Produtos() {
         </div>
         <QueryView
           query={q}
-          empty={<EmptyState title="Catálogo vazio" hint="Cadastre um componente ou importe a biblioteca da planilha modelo." />}
+          empty={
+            <EmptyState
+              title="Catálogo vazio"
+              hint="Cadastre um componente ou importe a biblioteca da planilha modelo."
+            />
+          }
         >
           {() =>
             linhas.length === 0 ? (
@@ -276,20 +309,34 @@ function Produtos() {
                         onClick={() => setAberto(open ? null : p.id)}
                         className="flex w-full flex-wrap items-baseline gap-x-3 gap-y-1 px-3 py-2.5 text-left hover:bg-muted/40"
                       >
-                        <span className="min-w-0 flex-1 text-sm font-medium text-foreground">{p.descricao}</span>
+                        <span className="min-w-0 flex-1 text-sm font-medium text-foreground">
+                          {p.descricao}
+                        </span>
                         <span className="font-mono text-xs text-muted-foreground">{p.codigo}</span>
                         <span className="text-xs text-muted-foreground">
-                          {p.familia ? `${nomeTipo(p.tipo_item)} · ${p.unidade}` : "Código pendente"}
-                          {p.tipo_item && p.tipo_item !== "P" && (p.composicao_status === "definida" ? " · com composição" : " · composição pendente")}
+                          {p.familia
+                            ? `${nomeTipo(p.tipo_item)} · ${p.unidade}`
+                            : "Código pendente"}
+                          {p.tipo_item &&
+                            p.tipo_item !== "P" &&
+                            (p.composicao_status === "definida"
+                              ? " · com composição"
+                              : " · composição pendente")}
                         </span>
                       </button>
                       {open && (
                         <dl className="grid gap-x-6 gap-y-1 bg-muted/20 px-3 pb-3 pt-1 text-sm sm:grid-cols-2">
-                          <Info k="Família" v={p.familia ? `${p.familia} — ${nomeFam(p.familia)}` : "A definir"} />
+                          <Info
+                            k="Família"
+                            v={p.familia ? `${p.familia} — ${nomeFam(p.familia)}` : "A definir"}
+                          />
                           <Info k="Tipo" v={nomeTipo(p.tipo_item)} />
                           <Info k="Código anterior" v={p.codigo_legado ?? "—"} />
                           <Info k="Suprimento" v={p.modalidade} />
-                          <Info k="Fabricante" v={(p.fabricantes as { nome: string } | null)?.nome ?? "—"} />
+                          <Info
+                            k="Fabricante"
+                            v={(p.fabricantes as { nome: string } | null)?.nome ?? "—"}
+                          />
                           <Info k="NCM" v={p.ncm ?? "—"} />
                           {verCusto && <Info k="Custo vigente" v={brlUnit(p.custo)} />}
                           {p.tipo_item && p.tipo_item !== "P" && (
@@ -298,7 +345,11 @@ function Produtos() {
                             </div>
                           )}
                           <div className="flex flex-wrap gap-4 sm:col-span-2">
-                            <button type="button" className="text-sm font-medium text-primary underline-offset-2 hover:underline" onClick={() => setEditando(editando === p.id ? null : p.id)}>
+                            <button
+                              type="button"
+                              className="text-sm font-medium text-primary underline-offset-2 hover:underline"
+                              onClick={() => setEditando(editando === p.id ? null : p.id)}
+                            >
                               Editar cadastro e composição
                             </button>
                             <Link
@@ -311,7 +362,11 @@ function Produtos() {
                           </div>
                           {editando === p.id && (
                             <div className="rounded border border-border bg-background p-3 sm:col-span-2">
-                              <ProductEditor produtoId={p.id} onSaved={() => setEditando(null)} onCancel={() => setEditando(null)} />
+                              <ProductEditor
+                                produtoId={p.id}
+                                onSaved={() => setEditando(null)}
+                                onCancel={() => setEditando(null)}
+                              />
                             </div>
                           )}
                         </dl>
@@ -325,7 +380,10 @@ function Produtos() {
         </QueryView>
       </Section>
 
-      <Section title="Famílias e séries" description="Último número reservado por família e tipo. Lacunas históricas não são reutilizadas.">
+      <Section
+        title="Famílias e séries"
+        description="Último número reservado por família e tipo. Lacunas históricas não são reutilizadas."
+      >
         <details>
           <summary className="cursor-pointer text-sm text-primary">Mostrar séries</summary>
           <QueryView query={series} empty={null}>
@@ -353,7 +411,9 @@ function Produtos() {
                               <span className="text-muted-foreground">{f.nome}</span>
                             </td>
                             <td className="py-1 pr-3">{nomeTipo(r.tipo)}</td>
-                            <td className="py-1 pr-3 font-mono">{String(r.ultimo).padStart(3, "0")}</td>
+                            <td className="py-1 pr-3 font-mono">
+                              {String(r.ultimo).padStart(3, "0")}
+                            </td>
                             <td className="py-1 pr-3 font-mono">
                               {f.sigla}-NXS-{r.tipo}
                               {String(r.ultimo + 1).padStart(3, "0")}
@@ -392,14 +452,26 @@ function usePrevia(orgId: string, familia: string, tipo: string) {
     queryKey: ["previa_codigo", orgId, familia, tipo],
     enabled: !!orgId && !!familia && !!tipo,
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("previa_codigo", { _org: orgId, _familia: familia, _tipo: tipo });
+      const { data, error } = await supabase.rpc("previa_codigo", {
+        _org: orgId,
+        _familia: familia,
+        _tipo: tipo,
+      });
       if (error) throw error;
       return data as string | null;
     },
   });
 }
 
-function Pendente({ p, familias, orgId }: { p: { id: string; codigo: string; descricao: string }; familias: Familia[]; orgId: string }) {
+function Pendente({
+  p,
+  familias,
+  orgId,
+}: {
+  p: { id: string; codigo: string; descricao: string };
+  familias: Familia[];
+  orgId: string;
+}) {
   const qc = useQueryClient();
   const rec = useServerFn(recodificarProduto);
   const [familia, setFamilia] = useState("");
@@ -418,7 +490,12 @@ function Pendente({ p, familias, orgId }: { p: { id: string; codigo: string; des
         <span className="font-mono font-semibold">{p.codigo}</span> <span>{p.descricao}</span>
       </div>
       <FamiliaPicker id={`fam-${p.id}`} familias={familias} value={familia} onChange={setFamilia} />
-      <select aria-label={`Tipo de ${p.codigo}`} className={input} value={tipo} onChange={(e) => setTipo(e.target.value as TipoItem)}>
+      <select
+        aria-label={`Tipo de ${p.codigo}`}
+        className={input}
+        value={tipo}
+        onChange={(e) => setTipo(e.target.value as TipoItem)}
+      >
         <option value="">Tipo</option>
         {TIPOS_ITEM.map((t) => (
           <option key={t.valor} value={t.valor}>
@@ -429,7 +506,9 @@ function Pendente({ p, familias, orgId }: { p: { id: string; codigo: string; des
       <ActionButton loading={m.isPending} disabled={!familia || !tipo} onClick={() => m.mutate()}>
         {previa.data ? `Gerar ${previa.data}` : "Gerar código"}
       </ActionButton>
-      {m.isError && <p className="text-sm text-destructive sm:col-span-4">{(m.error as Error).message}</p>}
+      {m.isError && (
+        <p className="text-sm text-destructive sm:col-span-4">{(m.error as Error).message}</p>
+      )}
     </li>
   );
 }
@@ -446,7 +525,11 @@ function EstruturaCatalogo({ produtoId }: { produtoId: string }) {
   if (q.isPending) return <p className="text-xs text-muted-foreground">Carregando composição…</p>;
   if (q.isError) return <p className="text-xs text-destructive">{(q.error as Error).message}</p>;
   if (!(q.data.filhos ?? []).length)
-    return <p className="text-xs text-amber-600 dark:text-amber-400">Composição pendente: nenhum componente cadastrado.</p>;
+    return (
+      <p className="text-xs text-amber-600 dark:text-amber-400">
+        Composição pendente: nenhum componente cadastrado.
+      </p>
+    );
   return (
     <div>
       <p className="text-xs text-muted-foreground">Composição (quantidade por unidade)</p>

@@ -22,6 +22,13 @@
       "when": 1790959762916,
       "tag": "0002_cadastro_comercial_aquisicoes",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790959922830,
+      "tag": "0003_importacao_planilha_execucao",
+      "breakpoints": true
     }
   ]
 }

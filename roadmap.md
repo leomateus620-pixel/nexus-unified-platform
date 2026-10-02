@@ -10,3 +10,8 @@
 - [ ] Teste completo logado no navegador — aguarda autorização para alterar uma proposta comercial real
 - [ ] Validação pela Engenharia das fórmulas de pilares/intermediárias — aguarda responsável técnico
 - [ ] Oportunidades, levantamentos, OS/RDO, inspeções, laudos, faturamento — fora deste escopo
+
+## Itens comerciais guiados (2026-10-02)
+- [x] Editor único de produto, composição com anti-ciclo, inclusão avulsa/estrutura na proposta, motor 1.2.0, absorvedor → LVHF-NXS-P054
+- [ ] Cadastro real de ponta a ponta pela tela (aguarda o usuário cadastrar um item verdadeiro)
+- [ ] Decisões: COMP-15, COMP-20, CON/ESC, PAT P47×P047, EMA/ESC M1000+, PAT S1500

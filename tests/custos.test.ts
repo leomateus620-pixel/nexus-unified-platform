@@ -4,7 +4,7 @@ import { calcularAquisicao, parcelasDuplicadas, resumoCustos } from "../src/feat
 
 describe("custos de aquisição", () => {
   it("reproduz a linha Bonier CSB-NXS-P000 (NF 6957)", () => {
-    const r = calcularAquisicao("PC" as never as string === "" ? 0 : 2, "PC", "PC", {
+    const r = calcularAquisicao(2, "PC", "PC", {
       produtos: 155.87,
       frete: 7.8,
       ipi: 10.13,

@@ -57,6 +57,13 @@
       "when": 1790961720701,
       "tag": "0007_produto_custos_inclui_trigger",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790961764232,
+      "tag": "0008_revisao_componente_custo_inclui",
+      "breakpoints": true
     }
   ]
 }

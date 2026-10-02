@@ -43,6 +43,13 @@
       "when": 1790960067808,
       "tag": "0005_importacao_planilha_revogar",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790961696446,
+      "tag": "0006_custo_inclui_e_origem_demanda",
+      "breakpoints": true
     }
   ]
 }

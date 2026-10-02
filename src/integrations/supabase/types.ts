@@ -475,8 +475,10 @@ export type Database = {
           id: string
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
           organization_id: string
+          origem: Json | null
           quantidade_necessaria: number
           quantidade_planejada: number
+          quantidade_tecnica: number | null
           revisao_componente_id: string
           revisao_id: string
           status: string
@@ -486,8 +488,10 @@ export type Database = {
           id?: string
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
           organization_id: string
+          origem?: Json | null
           quantidade_necessaria: number
           quantidade_planejada: number
+          quantidade_tecnica?: number | null
           revisao_componente_id: string
           revisao_id: string
           status?: string
@@ -497,8 +501,10 @@ export type Database = {
           id?: string
           modalidade?: Database["public"]["Enums"]["modalidade_suprimento"]
           organization_id?: string
+          origem?: Json | null
           quantidade_necessaria?: number
           quantidade_planejada?: number
+          quantidade_tecnica?: number | null
           revisao_componente_id?: string
           revisao_id?: string
           status?: string
@@ -1203,6 +1209,7 @@ export type Database = {
           custo: number
           fornecedor_id: string | null
           id: string
+          inclui: string[]
           organization_id: string
           origem: string | null
           produto_id: string
@@ -1214,6 +1221,7 @@ export type Database = {
           custo: number
           fornecedor_id?: string | null
           id?: string
+          inclui?: string[]
           organization_id: string
           origem?: string | null
           produto_id: string
@@ -1225,6 +1233,7 @@ export type Database = {
           custo?: number
           fornecedor_id?: string | null
           id?: string
+          inclui?: string[]
           organization_id?: string
           origem?: string | null
           produto_id?: string
@@ -2026,7 +2035,10 @@ export type Database = {
         Row: {
           codigo: string
           custo_adotado: number
+          custo_atualizado_em: string | null
           custo_base: string | null
+          custo_fonte: Json | null
+          custo_inclui: string[]
           custo_origem_id: string | null
           descricao: string
           estrutura: Json | null
@@ -2049,7 +2061,10 @@ export type Database = {
         Insert: {
           codigo: string
           custo_adotado?: number
+          custo_atualizado_em?: string | null
           custo_base?: string | null
+          custo_fonte?: Json | null
+          custo_inclui?: string[]
           custo_origem_id?: string | null
           descricao: string
           estrutura?: Json | null
@@ -2072,7 +2087,10 @@ export type Database = {
         Update: {
           codigo?: string
           custo_adotado?: number
+          custo_atualizado_em?: string | null
           custo_base?: string | null
+          custo_fonte?: Json | null
+          custo_inclui?: string[]
           custo_origem_id?: string | null
           descricao?: string
           estrutura?: Json | null

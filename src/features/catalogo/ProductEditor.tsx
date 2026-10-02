@@ -150,6 +150,7 @@ export function FamiliaPicker({
           const sigla = v.includes(" — ")
             ? v.split(" — ").pop()!.trim().toUpperCase()
             : v.toUpperCase();
+          console.log("DBG pick", sigla, familias.length, familias.some((f) => f.sigla === sigla));
           onChange(familias.some((f) => f.sigla === sigla) ? sigla : "");
         }}
         onBlur={() => setTexto("")}

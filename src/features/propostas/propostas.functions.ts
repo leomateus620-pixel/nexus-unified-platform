@@ -639,12 +639,17 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     const itens = ok(
       await db
         .from("sistema_componentes")
-        .select("revisao_componente_id,quantidade,revisao_componentes!inner(modalidade)")
+        .select("revisao_componente_id,quantidade,quantidade_tecnica,revisao_componentes!inner(modalidade)")
         .eq("revisao_id", rev.id)
         .eq("revisao_componentes.incluido_orcamento", true),
     ) as any[];
     const agg = new Map<string, { q: number; mod: string }>();
+    const tecSis = new Map<string, number>();
     for (const i of itens) {
+      tecSis.set(
+        i.revisao_componente_id,
+        (tecSis.get(i.revisao_componente_id) ?? 0) + Number(i.quantidade_tecnica ?? 0),
+      );
       const a = agg.get(i.revisao_componente_id) ?? { q: 0, mod: i.revisao_componentes.modalidade };
       a.q += Number(i.quantidade);
       agg.set(i.revisao_componente_id, a);
@@ -688,9 +693,7 @@ export const gerarDemanda = createServerFn({ method: "POST" })
           quantidade_necessaria: a.q,
           quantidade_planejada: a.q,
           quantidade_tecnica:
-            pc == null
-              ? null
-              : Number(pc.quantidade_avulsa_tecnica ?? 0) + Number(pc.quantidade_sistemas ?? 0),
+            Number(pc?.quantidade_avulsa_tecnica ?? 0) + (tecSis.get(id) ?? 0),
           origem: {
             proposta_revisao: rev.id,
             sistemas: Number(pc?.quantidade_sistemas ?? 0),

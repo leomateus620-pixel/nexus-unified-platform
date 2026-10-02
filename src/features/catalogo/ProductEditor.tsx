@@ -307,6 +307,7 @@ export function ProductEditor({
     },
   });
 
+  console.log("DBG", JSON.stringify({ orgId, fam: f.familia, tipo: f.tipo, st: previa.status, fs: previa.fetchStatus, e: String(previa.error ?? "") }));
   const podeSalvar = produtoId ? perms.data?.editar_cadastro : perms.data?.importar_catalogo;
   const composto = f.tipo === "S" || f.tipo === "M";
   const sugestao = sugerirNome(f);

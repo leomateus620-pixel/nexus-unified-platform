@@ -648,6 +648,26 @@ export const gerarDemanda = createServerFn({ method: "POST" })
       a.q += Number(i.quantidade);
       agg.set(i.revisao_componente_id, a);
     }
+    // Itens avulsos/estruturas: quantidade de aquisição consolidada pelo cálculo canônico.
+    const resumo = (rev.totais ?? {}) as any;
+    const mods = new Map(
+      (
+        ok(
+          await db
+            .from("revisao_componentes")
+            .select("id,modalidade")
+            .eq("revisao_id", rev.id)
+            .eq("incluido_orcamento", true),
+        ) as any[]
+      ).map((c) => [c.id, c.modalidade]),
+    );
+    for (const pc of resumo.por_componente ?? []) {
+      const q = Number(pc.quantidade_avulsa ?? 0);
+      if (!(q > 0) || !mods.has(pc.componente_id)) continue;
+      const a = agg.get(pc.componente_id) ?? { q: 0, mod: mods.get(pc.componente_id) };
+      a.q += q;
+      agg.set(pc.componente_id, a);
+    }
     const existentes = ok(
       await db.from("demandas").select("id,revisao_componente_id,status").eq("revisao_id", rev.id),
     ) as any[];

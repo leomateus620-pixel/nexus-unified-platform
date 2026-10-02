@@ -262,6 +262,54 @@ export type Database = {
           },
         ]
       }
+      codigo_equivalencias: {
+        Row: {
+          autor: string | null
+          codigo_anterior: string
+          codigo_novo: string
+          created_at: string
+          id: string
+          motivo: string
+          organization_id: string
+          produto_id: string
+        }
+        Insert: {
+          autor?: string | null
+          codigo_anterior: string
+          codigo_novo: string
+          created_at?: string
+          id?: string
+          motivo: string
+          organization_id: string
+          produto_id: string
+        }
+        Update: {
+          autor?: string | null
+          codigo_anterior?: string
+          codigo_novo?: string
+          created_at?: string
+          id?: string
+          motivo?: string
+          organization_id?: string
+          produto_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "codigo_equivalencias_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "codigo_equivalencias_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       config_orcamento: {
         Row: {
           organization_id: string
@@ -915,19 +963,76 @@ export type Database = {
           },
         ]
       }
+      produto_estrutura: {
+        Row: {
+          created_at: string
+          filho_id: string
+          id: string
+          ordem: number
+          organization_id: string
+          pai_id: string
+          quantidade: number
+        }
+        Insert: {
+          created_at?: string
+          filho_id: string
+          id?: string
+          ordem?: number
+          organization_id: string
+          pai_id: string
+          quantidade: number
+        }
+        Update: {
+          created_at?: string
+          filho_id?: string
+          id?: string
+          ordem?: number
+          organization_id?: string
+          pai_id?: string
+          quantidade?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "produto_estrutura_filho_id_fkey"
+            columns: ["filho_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "produto_estrutura_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "produto_estrutura_pai_id_fkey"
+            columns: ["pai_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       produtos: {
         Row: {
+          acabamento: string | null
           ativo: boolean
+          base_custo: string
           chave_cadastro: string | null
           codigo: string
           codigo_legado: string | null
+          composicao_status: string
           created_at: string
           descricao: string
+          dimensoes: string | null
           fabricante_id: string | null
           familia: string | null
           fornecedor_padrao_id: string | null
           id: string
           indivisivel: boolean
+          material: string | null
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
           multiplo_compra: number
           ncm: string | null
@@ -936,19 +1041,25 @@ export type Database = {
           sequencia: number | null
           tipo_item: string | null
           unidade: string
+          versao: number
         }
         Insert: {
+          acabamento?: string | null
           ativo?: boolean
+          base_custo?: string
           chave_cadastro?: string | null
           codigo: string
           codigo_legado?: string | null
+          composicao_status?: string
           created_at?: string
           descricao: string
+          dimensoes?: string | null
           fabricante_id?: string | null
           familia?: string | null
           fornecedor_padrao_id?: string | null
           id?: string
           indivisivel?: boolean
+          material?: string | null
           modalidade?: Database["public"]["Enums"]["modalidade_suprimento"]
           multiplo_compra?: number
           ncm?: string | null
@@ -957,19 +1068,25 @@ export type Database = {
           sequencia?: number | null
           tipo_item?: string | null
           unidade: string
+          versao?: number
         }
         Update: {
+          acabamento?: string | null
           ativo?: boolean
+          base_custo?: string
           chave_cadastro?: string | null
           codigo?: string
           codigo_legado?: string | null
+          composicao_status?: string
           created_at?: string
           descricao?: string
+          dimensoes?: string | null
           fabricante_id?: string | null
           familia?: string | null
           fornecedor_padrao_id?: string | null
           id?: string
           indivisivel?: boolean
+          material?: string | null
           modalidade?: Database["public"]["Enums"]["modalidade_suprimento"]
           multiplo_compra?: number
           ncm?: string | null
@@ -978,6 +1095,7 @@ export type Database = {
           sequencia?: number | null
           tipo_item?: string | null
           unidade?: string
+          versao?: number
         }
         Relationships: [
           {
@@ -1554,6 +1672,8 @@ export type Database = {
           custo_adotado: number
           custo_origem_id: string | null
           descricao: string
+          estrutura: Json | null
+          estrutura_origem: Json | null
           fabricante: string | null
           fornecedor_id: string | null
           id: string
@@ -1565,6 +1685,7 @@ export type Database = {
           ncm: string | null
           organization_id: string
           produto_id: string
+          quantidade_avulsa: number
           revisao_id: string
           unidade: string
         }
@@ -1573,6 +1694,8 @@ export type Database = {
           custo_adotado?: number
           custo_origem_id?: string | null
           descricao: string
+          estrutura?: Json | null
+          estrutura_origem?: Json | null
           fabricante?: string | null
           fornecedor_id?: string | null
           id?: string
@@ -1584,6 +1707,7 @@ export type Database = {
           ncm?: string | null
           organization_id: string
           produto_id: string
+          quantidade_avulsa?: number
           revisao_id: string
           unidade: string
         }
@@ -1592,6 +1716,8 @@ export type Database = {
           custo_adotado?: number
           custo_origem_id?: string | null
           descricao?: string
+          estrutura?: Json | null
+          estrutura_origem?: Json | null
           fabricante?: string | null
           fornecedor_id?: string | null
           id?: string
@@ -1603,6 +1729,7 @@ export type Database = {
           ncm?: string | null
           organization_id?: string
           produto_id?: string
+          quantidade_avulsa?: number
           revisao_id?: string
           unidade?: string
         }
@@ -1919,6 +2046,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      arvore_produto: {
+        Args: { _nivel?: number; _produto: string }
+        Returns: Json
+      }
       atualizar_componentes_revisao: {
         Args: { _esperados: Json; _ids: string[]; _patch: Json; _rev: string }
         Returns: number
@@ -1973,6 +2104,10 @@ export type Database = {
           objeto: string
         }[]
       }
+      editar_produto: {
+        Args: { _dados: Json; _produto: string }
+        Returns: Json
+      }
       formatar_codigo: {
         Args: { _familia: string; _seq: number; _tipo: string }
         Returns: string
@@ -1982,6 +2117,10 @@ export type Database = {
         Returns: boolean
       }
       hash_tecnico: { Args: { _rev: string }; Returns: string }
+      incluir_produto_revisao: {
+        Args: { _produto: string; _quantidade: number; _rev: string }
+        Returns: Json
+      }
       is_member: { Args: { _org: string }; Returns: boolean }
       objeto_rascunho: { Args: { _r: Json; _t: string }; Returns: Json }
       pode: { Args: { _acao: string; _org: string }; Returns: boolean }
@@ -1994,6 +2133,15 @@ export type Database = {
         Returns: string
       }
       proximo_numero_proposta: { Args: { _org: string }; Returns: string }
+      reclassificar_produto: {
+        Args: {
+          _familia: string
+          _motivo: string
+          _produto: string
+          _tipo: string
+        }
+        Returns: Json
+      }
       recodificar_produto: {
         Args: { _familia: string; _produto: string; _tipo: string }
         Returns: Json
@@ -2013,6 +2161,10 @@ export type Database = {
         Returns: number
       }
       revisao_editavel: { Args: { _rev: string }; Returns: boolean }
+      salvar_composicao: {
+        Args: { _itens: Json; _produto: string; _status: string }
+        Returns: Json
+      }
       snapshot_rascunho: { Args: { _rev: string }; Returns: Json }
     }
     Enums: {

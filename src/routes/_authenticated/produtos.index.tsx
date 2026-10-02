@@ -13,7 +13,8 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useOrg } from "@/features/org/session";
 import { importarModeloPlanilha } from "@/features/propostas/propostas.functions";
-import { cadastrarProduto, recodificarProduto } from "@/features/catalogo/catalogo.functions";
+import { recodificarProduto } from "@/features/catalogo/catalogo.functions";
+import { ArvoreEstrutura, ProductEditor } from "@/features/catalogo/ProductEditor";
 import { TIPOS_ITEM, nomeTipo, type TipoItem } from "@/features/catalogo/codigos";
 import { brlUnit } from "@/lib/format";
 
@@ -57,7 +58,7 @@ function useProdutos(orgId: string) {
       const { data, error } = await supabase
         .from("produtos")
         .select(
-          "id,codigo,codigo_legado,familia,tipo_item,descricao,unidade,ncm,modalidade,ativo,fabricantes(nome),produto_custos(custo,vigencia,created_at)",
+          "id,codigo,codigo_legado,familia,tipo_item,descricao,unidade,ncm,modalidade,ativo,material,dimensoes,composicao_status,base_custo,fabricantes(nome),produto_custos(custo,vigencia,created_at)",
         )
         .eq("organization_id", orgId)
         .order("codigo");
@@ -169,18 +170,20 @@ function Produtos() {
   const [fFam, setFFam] = useState("");
   const [fTipo, setFTipo] = useState("");
   const [aberto, setAberto] = useState<string | null>(null);
+  const [editando, setEditando] = useState<string | null>(null);
   const linhas = useMemo(() => {
     const t = busca.trim().toLowerCase();
     return (q.data ?? []).filter(
       (p) =>
         (!t ||
-          p.codigo.toLowerCase().includes(t) ||
-          p.descricao.toLowerCase().includes(t) ||
-          (p.codigo_legado ?? "").toLowerCase().includes(t)) &&
+          [p.codigo, p.descricao, p.codigo_legado, p.familia, nomeFam(p.familia), p.material, p.dimensoes]
+            .filter(Boolean)
+            .some((v) => String(v).toLowerCase().includes(t))) &&
         (!fFam || p.familia === fFam || (fFam === "__pend" && !p.familia)) &&
         (!fTipo || p.tipo_item === fTipo),
     );
-  }, [q.data, busca, fFam, fTipo]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q.data, busca, fFam, fTipo, familias]);
   const pendentes = (q.data ?? []).filter((p) => !p.familia);
 
   return (
@@ -210,7 +213,9 @@ function Produtos() {
         </p>
       )}
 
-      <NovoProduto familias={familias} orgId={orgId} />
+      <Section title="Cadastrar produto" description="Peça, conjunto soldado ou montagem. O código é gerado pelo sistema ao salvar.">
+        <ProductEditor />
+      </Section>
 
       {pendentes.length > 0 && admin && (
         <Section
@@ -228,8 +233,8 @@ function Produtos() {
       <Section title="Componentes" description="Toque em um item para ver detalhes.">
         <div className="mb-3 grid gap-2 sm:grid-cols-[1fr_auto_auto]">
           <input
-            aria-label="Buscar por código ou descrição"
-            placeholder="Buscar por código ou descrição"
+            aria-label="Buscar produto"
+            placeholder="Nome, código (novo ou antigo), família ou medida"
             className={input}
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
@@ -271,10 +276,11 @@ function Produtos() {
                         onClick={() => setAberto(open ? null : p.id)}
                         className="flex w-full flex-wrap items-baseline gap-x-3 gap-y-1 px-3 py-2.5 text-left hover:bg-muted/40"
                       >
-                        <span className="font-mono text-sm font-semibold text-primary">{p.codigo}</span>
-                        <span className="min-w-0 flex-1 text-sm text-foreground">{p.descricao}</span>
+                        <span className="min-w-0 flex-1 text-sm font-medium text-foreground">{p.descricao}</span>
+                        <span className="font-mono text-xs text-muted-foreground">{p.codigo}</span>
                         <span className="text-xs text-muted-foreground">
                           {p.familia ? `${nomeTipo(p.tipo_item)} · ${p.unidade}` : "Código pendente"}
+                          {p.tipo_item && p.tipo_item !== "P" && (p.composicao_status === "definida" ? " · com composição" : " · composição pendente")}
                         </span>
                       </button>
                       {open && (
@@ -286,7 +292,15 @@ function Produtos() {
                           <Info k="Fabricante" v={(p.fabricantes as { nome: string } | null)?.nome ?? "—"} />
                           <Info k="NCM" v={p.ncm ?? "—"} />
                           {verCusto && <Info k="Custo vigente" v={brlUnit(p.custo)} />}
-                          <div className="sm:col-span-2">
+                          {p.tipo_item && p.tipo_item !== "P" && (
+                            <div className="sm:col-span-2">
+                              <EstruturaCatalogo produtoId={p.id} />
+                            </div>
+                          )}
+                          <div className="flex flex-wrap gap-4 sm:col-span-2">
+                            <button type="button" className="text-sm font-medium text-primary underline-offset-2 hover:underline" onClick={() => setEditando(editando === p.id ? null : p.id)}>
+                              Editar cadastro e composição
+                            </button>
                             <Link
                               to="/produtos/$produtoId"
                               params={{ produtoId: p.id }}
@@ -295,6 +309,11 @@ function Produtos() {
                               Abrir ficha e histórico de custos
                             </Link>
                           </div>
+                          {editando === p.id && (
+                            <div className="rounded border border-border bg-background p-3 sm:col-span-2">
+                              <ProductEditor produtoId={p.id} onSaved={() => setEditando(null)} onCancel={() => setEditando(null)} />
+                            </div>
+                          )}
                         </dl>
                       )}
                     </li>
@@ -373,125 +392,11 @@ function usePrevia(orgId: string, familia: string, tipo: string) {
     queryKey: ["previa_codigo", orgId, familia, tipo],
     enabled: !!orgId && !!familia && !!tipo,
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("previa_codigo", {
-        _org: orgId,
-        _familia: familia,
-        _tipo: tipo,
-      });
+      const { data, error } = await supabase.rpc("previa_codigo", { _org: orgId, _familia: familia, _tipo: tipo });
       if (error) throw error;
       return data as string | null;
     },
   });
-}
-
-function NovoProduto({ familias, orgId }: { familias: Familia[]; orgId: string }) {
-  const qc = useQueryClient();
-  const cad = useServerFn(cadastrarProduto);
-  const vazio = { familia: "", tipo: "" as TipoItem | "", descricao: "", unidade: "PÇ", ncm: "", modalidade: "comprar" as const, custo: "" };
-  const [f, setF] = useState<typeof vazio & { modalidade: "comprar" | "fabricar" | "terceirizar" }>(vazio);
-  const [chave, setChave] = useState(() => crypto.randomUUID());
-  const previa = usePrevia(orgId, f.familia, f.tipo);
-  const salvar = useMutation({
-    mutationFn: () => {
-      const custo = Number(f.custo.replace(/\./g, "").replace(",", "."));
-      if (!f.familia || !f.tipo) throw new Error("Escolha família e tipo.");
-      if (f.descricao.trim().length < 2) throw new Error("Informe a descrição.");
-      if (!f.unidade.trim()) throw new Error("Informe a unidade.");
-      if (!Number.isFinite(custo) || custo < 0) throw new Error("Custo inválido.");
-      return cad({
-        data: { chave, familia: f.familia, tipo: f.tipo, descricao: f.descricao, unidade: f.unidade, ncm: f.ncm, modalidade: f.modalidade, custo },
-      });
-    },
-    onSuccess: () => {
-      setF(vazio);
-      setChave(crypto.randomUUID());
-      qc.invalidateQueries({ queryKey: ["produtos", orgId] });
-      qc.invalidateQueries({ queryKey: ["series_codigo", orgId] });
-      qc.invalidateQueries({ queryKey: ["previa_codigo"] });
-    },
-  });
-  const set = (k: keyof typeof f) => (e: { target: { value: string } }) => {
-    salvar.reset();
-    setF((x) => ({ ...x, [k]: e.target.value }));
-  };
-  return (
-    <Section title="Novo componente" description="Escolha família e tipo; o código é confirmado ao salvar.">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          salvar.mutate();
-        }}
-        className="grid gap-3 sm:grid-cols-6"
-      >
-        <label className="grid gap-1 text-xs sm:col-span-3">
-          Família
-          <FamiliaPicker id="familias-novo" familias={familias} value={f.familia} onChange={(v) => setF((x) => ({ ...x, familia: v }))} />
-        </label>
-        <fieldset className="grid gap-1 text-xs sm:col-span-3">
-          <legend className="mb-1">Tipo</legend>
-          <div className="flex flex-wrap gap-1.5">
-            {TIPOS_ITEM.map((t) => (
-              <button
-                key={t.valor}
-                type="button"
-                aria-pressed={f.tipo === t.valor}
-                onClick={() => setF((x) => ({ ...x, tipo: t.valor }))}
-                className={`h-9 rounded border px-3 text-sm ${f.tipo === t.valor ? "border-primary bg-primary/15 text-primary" : "border-input text-foreground"}`}
-              >
-                {t.nome}
-              </button>
-            ))}
-          </div>
-        </fieldset>
-        <div className="flex items-center gap-3 rounded border border-dashed border-primary/40 bg-primary/5 px-3 py-2 sm:col-span-6">
-          <span className="text-xs text-muted-foreground">Prévia do código</span>
-          <span className="font-mono text-base font-semibold text-primary" aria-live="polite">
-            {salvar.isSuccess ? salvar.data.codigo : (previa.data ?? "—")}
-          </span>
-          {!salvar.isSuccess && previa.data && <span className="text-xs text-muted-foreground">confirmado ao salvar</span>}
-        </div>
-        <label className="grid gap-1 text-xs sm:col-span-6">
-          Descrição e características técnicas
-          <input aria-label="Descrição" className={input} value={f.descricao} onChange={set("descricao")} placeholder="Ex.: Chapa base 6,35 × 180 × 180 mm aço galvanizado" />
-        </label>
-        <label className="grid gap-1 text-xs">
-          Unidade
-          <input aria-label="Unidade" className={input} value={f.unidade} onChange={set("unidade")} />
-        </label>
-        <label className="grid gap-1 text-xs">
-          NCM
-          <input aria-label="NCM" className={input} value={f.ncm} onChange={set("ncm")} />
-        </label>
-        <label className="grid gap-1 text-xs sm:col-span-2">
-          Suprimento
-          <select aria-label="Modalidade" className={input} value={f.modalidade} onChange={set("modalidade")}>
-            <option value="comprar">Comprar</option>
-            <option value="fabricar">Fabricar</option>
-            <option value="terceirizar">Terceirizar</option>
-          </select>
-        </label>
-        <label className="grid gap-1 text-xs sm:col-span-2">
-          Custo unitário (R$)
-          <input aria-label="Custo" inputMode="decimal" className={input} value={f.custo} onChange={set("custo")} placeholder="0,00" />
-        </label>
-        <div className="flex flex-wrap items-center gap-3 sm:col-span-6">
-          <ActionButton type="submit" loading={salvar.isPending}>
-            Cadastrar
-          </ActionButton>
-          {salvar.isSuccess && (
-            <span className="text-sm text-primary">
-              Cadastrado como <strong className="font-mono">{salvar.data.codigo}</strong>.
-            </span>
-          )}
-          {salvar.isError && (
-            <span className="text-sm text-destructive">
-              {salvar.error instanceof Error ? salvar.error.message : "Não foi possível cadastrar."}
-            </span>
-          )}
-        </div>
-      </form>
-    </Section>
-  );
 }
 
 function Pendente({ p, familias, orgId }: { p: { id: string; codigo: string; descricao: string }; familias: Familia[]; orgId: string }) {
@@ -526,5 +431,26 @@ function Pendente({ p, familias, orgId }: { p: { id: string; codigo: string; des
       </ActionButton>
       {m.isError && <p className="text-sm text-destructive sm:col-span-4">{(m.error as Error).message}</p>}
     </li>
+  );
+}
+
+function EstruturaCatalogo({ produtoId }: { produtoId: string }) {
+  const q = useQuery({
+    queryKey: ["arvore", produtoId],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("arvore_produto", { _produto: produtoId });
+      if (error) throw error;
+      return data as unknown as Parameters<typeof ArvoreEstrutura>[0]["no"];
+    },
+  });
+  if (q.isPending) return <p className="text-xs text-muted-foreground">Carregando composição…</p>;
+  if (q.isError) return <p className="text-xs text-destructive">{(q.error as Error).message}</p>;
+  if (!(q.data.filhos ?? []).length)
+    return <p className="text-xs text-amber-600 dark:text-amber-400">Composição pendente: nenhum componente cadastrado.</p>;
+  return (
+    <div>
+      <p className="text-xs text-muted-foreground">Composição (quantidade por unidade)</p>
+      <ArvoreEstrutura no={q.data} />
+    </div>
   );
 }

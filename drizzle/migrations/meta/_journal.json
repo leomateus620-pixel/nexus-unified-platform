@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790951713427,
+      "tag": "0000_estrutura_produtos_itens_avulsos",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790951745509,
+      "tag": "0001_objeto_rascunho_campos_opcionais",
+      "breakpoints": true
+    }
+  ]
+}

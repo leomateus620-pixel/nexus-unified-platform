@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { AdicionarDoCatalogo } from "./AdicionarDoCatalogo";
+import { ItemEstruturaResumo, ItemProposta, quantidadeComOrigem } from "./ItemEstrutura";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Filter, Search, X } from "lucide-react";
 
@@ -94,9 +95,8 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         quantity: rev.data?.desatualizada
           ? "Pendente"
           : rev.data?.resumo
-            ? qtd(
-                rev.data.resumo.por_componente.find((row) => row.componente_id === c.id)
-                  ?.quantidade ?? 0,
+            ? quantidadeComOrigem(
+                rev.data.resumo.por_componente.find((row) => row.componente_id === c.id),
                 c.unidade,
               )
             : "Não calculada",
@@ -282,14 +282,6 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const detalhe = (comps.data ?? []).find((c) => c.id === aberto) ?? null;
   const input = "nx-editor-input";
 
-  if (!comps.data?.length)
-    return (
-      <EmptyState
-        title="Esta revisão não tem componentes"
-        hint="Os componentes são copiados do catálogo de Produtos e Soluções ao criar a proposta. Cadastre ou importe o catálogo e crie uma nova revisão."
-      />
-    );
-
   return (
     <div className="nx-editor-workspace" data-inspector={!!detalhe}>
       <Section
@@ -458,7 +450,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
           </div>
         )}
         <EditorSaveState editavel={editavel} />
-        {lista.length === 0 ? (
+        {comps.data.length === 0 ? (
+          <EmptyState
+            title="Esta revisão ainda não tem itens"
+            hint="Use “Adicionar item existente” ou “Criar e adicionar à proposta” acima. Itens avulsos não exigem sistema de dimensionamento."
+          />
+        ) : lista.length === 0 ? (
           <EmptyState
             title="Nenhum item corresponde aos filtros"
             hint="Revise o código, a descrição ou a modalidade selecionada."
@@ -491,6 +488,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     onInspect={inspectItem}
                     onToggleIncluded={(id, included) => void definirInclusao([id], included)}
                     onToggleBatch={toggleBatch}
+                    extra={<ItemEstruturaResumo item={item} />}
                   />
                 ))}
               </ObjectCollection>
@@ -540,6 +538,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 {detalhe.ncm ?? "—"}
               </span>
             </div>
+            <ItemProposta
+              item={detalhe}
+              editavel={editavel}
+              atualizar={atualizar}
+              revisaoId={revisaoId}
+            />
             <div className="nx-inspector-fields">
               <h4>Condições do item</h4>
               <label className="nx-editor-field">

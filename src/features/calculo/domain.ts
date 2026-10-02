@@ -3,7 +3,7 @@ import { codigoAtual } from "../catalogo/codigos";
 // Usado tanto na prévia (navegador) quanto no cálculo canônico (servidor).
 // Categorias: EXISTENTE (planilha), CORREÇÃO (auditoria), EVOLUÇÃO (nova capacidade).
 
-export const MOTOR_VERSAO = "nexus-calc-1.1.0";
+export const MOTOR_VERSAO = "nexus-calc-1.2.0";
 
 export type TipoSistema = "TELHADO" | "OVERHEAD";
 
@@ -287,6 +287,7 @@ export type ComponenteAdotado = {
   custo: number;
   indivisivel: boolean;
   multiplo: number;
+  produto_id?: string;
 };
 
 export function precoUnitario(custo: number, p: Parametros) {
@@ -314,10 +315,14 @@ export type Override = { sistema_id: string; componente_id: string; quantidade: 
 export type ResultadoRevisao = {
   itens: ItemCalculado[];
   pendencias: string[];
+  avulsos?: OcorrenciaAvulsa[];
   por_componente: {
     componente_id: string;
     codigo: string;
     quantidade: number;
+    quantidade_sistemas?: number;
+    quantidade_avulsa?: number;
+    quantidade_avulsa_tecnica?: number;
     custo: number;
     preco_unit: number;
     total_venda: number;
@@ -370,12 +375,72 @@ export function distribuirParcelas(total: number, pesos: number[]): number[] {
   return brutas.map((c) => c / 100);
 }
 
+/** Nó de estrutura de produto: quantidade = por unidade do pai. */
+export type NoEstrutura = {
+  produto_id: string;
+  codigo?: string;
+  descricao?: string;
+  unidade?: string;
+  tipo?: string | null;
+  base_custo?: string;
+  composicao_status?: string;
+  quantidade?: number;
+  filhos?: NoEstrutura[];
+};
+export type ItemAvulso = {
+  componente_id: string;
+  produto_id: string;
+  quantidade: number;
+  estrutura: NoEstrutura | null;
+};
+export type OcorrenciaAvulsa = {
+  componente_id: string;
+  origem_id: string;
+  caminho: string[];
+  quantidade_tecnica: number;
+};
+
+/**
+ * Percorre a estrutura multiplicando quantidades por nível. Produto composto é custeado pelos
+ * componentes; produto completo (comprado pronto ou sem composição) é custeado por si, e seus
+ * filhos ficam apenas informativos — nunca os dois, evitando custo duplicado.
+ */
+export function expandirAvulsos(avulsos: ItemAvulso[], componentes: ComponenteAdotado[]) {
+  const porProduto = new Map(componentes.filter((c) => c.produto_id).map((c) => [c.produto_id!, c]));
+  const ocorrencias: OcorrenciaAvulsa[] = [];
+  const pendencias: string[] = [];
+  for (const a of avulsos) {
+    if (!(a.quantidade > 0)) continue;
+    const raiz: NoEstrutura = a.estrutura ?? { produto_id: a.produto_id, base_custo: "completo" };
+    const walk = (no: NoEstrutura, q: number, caminho: string[], nivel: number) => {
+      if (nivel > 8) throw new Error("Estrutura de produto muito profunda.");
+      const filhos = no.filhos ?? [];
+      const comp = porProduto.get(no.produto_id);
+      const rotulo = comp?.codigo ?? no.codigo ?? no.produto_id;
+      if (no.base_custo === "composto" && filhos.length) {
+        for (const f of filhos) walk(f, q * Number(f.quantidade ?? 0), [...caminho, rotulo], nivel + 1);
+        return;
+      }
+      if (no.base_custo === "composto" && no.tipo !== "P")
+        pendencias.push(`Composição pendente: ${rotulo} custeado pelo próprio custo até a composição ser cadastrada.`);
+      if (!comp) {
+        pendencias.push(`Componente ${rotulo} da estrutura não está incluído no orçamento.`);
+        return;
+      }
+      ocorrencias.push({ componente_id: comp.id, origem_id: a.componente_id, caminho, quantidade_tecnica: q });
+    };
+    walk(raiz, a.quantidade, [], 0);
+  }
+  return { ocorrencias, pendencias };
+}
+
 export function calcularRevisao(
   sistemas: SistemaEntrada[],
   componentes: ComponenteAdotado[],
   regras: Regras,
   p: Parametros,
   overrides: Override[] = [],
+  avulsos: ItemAvulso[] = [],
 ): ResultadoRevisao {
   const porCodigo = new Map(componentes.map((c) => [c.codigo, c]));
   const pendencias = new Set<string>();
@@ -442,6 +507,21 @@ export function calcularRevisao(
   const agreg = new Map<string, number>();
   for (const i of itens)
     agreg.set(i.componente_id, (agreg.get(i.componente_id) ?? 0) + i.quantidade);
+  const qSistemas = new Map(agreg);
+
+  // Itens avulsos e estruturas de produto: demanda adicional explícita, consolidada por componente.
+  const exp = expandirAvulsos(avulsos, componentes);
+  exp.pendencias.forEach((x) => pendencias.add(x));
+  const tecnicaAvulsa = new Map<string, number>();
+  for (const o of exp.ocorrencias)
+    tecnicaAvulsa.set(o.componente_id, (tecnicaAvulsa.get(o.componente_id) ?? 0) + o.quantidade_tecnica);
+  const qAvulsa = new Map<string, number>();
+  for (const [id, t] of tecnicaAvulsa) {
+    const c = componentes.find((x) => x.id === id)!;
+    const q = quantidadeOperacional(round(t, 6), c.indivisivel, c.multiplo);
+    qAvulsa.set(id, q);
+    agreg.set(id, (agreg.get(id) ?? 0) + q);
+  }
 
   let materiais = 0;
   let custoMat = 0;
@@ -459,6 +539,9 @@ export function calcularRevisao(
       componente_id: c.id,
       codigo: c.codigo,
       quantidade: q,
+      quantidade_sistemas: qSistemas.get(c.id) ?? 0,
+      quantidade_avulsa: qAvulsa.get(c.id) ?? 0,
+      quantidade_avulsa_tecnica: round(tecnicaAvulsa.get(c.id) ?? 0, 6),
       custo: c.custo,
       preco_unit: round(pu.preco, 6),
       total_venda: round(q * pu.preco),
@@ -500,6 +583,7 @@ export function calcularRevisao(
   return {
     itens,
     pendencias: [...pendencias],
+    avulsos: exp.ocorrencias,
     por_componente: porComponente,
     por_sistema: porSistema,
     totais: {

@@ -405,14 +405,22 @@ async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string, 
     metragem: Number(s.metragem),
     trechos: s.trechos,
   }));
-  const componentes = captura.componentes
-    .filter((c: any) => c.incluido_orcamento !== false)
+  const incluidos = captura.componentes.filter((c: any) => c.incluido_orcamento !== false);
+  const componentes = incluidos.map((c: any) => ({
+    id: c.id,
+    codigo: c.codigo,
+    custo: Number(c.custo_adotado),
+    indivisivel: c.indivisivel,
+    multiplo: Number(c.multiplo_compra),
+    produto_id: c.produto_id,
+  }));
+  const avulsos = incluidos
+    .filter((c: any) => Number(c.quantidade_avulsa ?? 0) > 0)
     .map((c: any) => ({
-      id: c.id,
-      codigo: c.codigo,
-      custo: Number(c.custo_adotado),
-      indivisivel: c.indivisivel,
-      multiplo: Number(c.multiplo_compra),
+      componente_id: c.id,
+      produto_id: c.produto_id,
+      quantidade: Number(c.quantidade_avulsa),
+      estrutura: c.estrutura ?? null,
     }));
   const overrides = captura.overrides.map((o: any) => ({
     sistema_id: o.sistema_id,
@@ -423,31 +431,30 @@ async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string, 
   const regras = mesclarRegras(rev.regras_snapshot);
   let calculo = null;
   if (!operacao || captura.alterado) {
-    const r = calcularRevisao(sistemas, componentes, regras, parametros, overrides);
+    const r = calcularRevisao(sistemas, componentes, regras, parametros, overrides, avulsos);
     // Domain pendências remain explicit. Invalid manual numeric inputs cannot be consolidated.
-    if (
-      operacao &&
-      sistemas.some(
-        (s: any) =>
-          !s.identificacao.trim() ||
-          !Number.isFinite(s.metragem) ||
-          s.metragem <= 0 ||
-          !Number.isInteger(s.trechos) ||
-          s.trechos < 1,
-      )
-    )
+    const problemas = sistemas.flatMap((s: any, i: number) => {
+      const nome = `Sistema ${i + 1}${s.identificacao?.trim() ? ` (${s.identificacao.trim()})` : ""}`;
+      const campos: string[] = [];
+      if (!s.identificacao?.trim()) campos.push("identificação");
+      if (!Number.isFinite(s.metragem) || s.metragem <= 0) campos.push("metragem positiva");
+      if (!Number.isInteger(s.trechos) || s.trechos < 1) campos.push("trechos inteiros (≥ 1)");
+      return campos.length ? [`${nome}: informe ${campos.join(", ")}`] : [];
+    });
+    if (operacao && problemas.length)
       throw new Error(
-        "Sistema inválido: preencha identificação, metragem positiva e trechos inteiros. Rascunho preservado.",
+        `Dimensionamento incompleto — ${problemas.join("; ")}. Corrija na etapa Dimensionamento. Rascunho e itens comerciais preservados.`,
       );
     calculo = {
       motor_versao: MOTOR_VERSAO,
-      entradas: { sistemas, componentes, parametros, overrides },
+      entradas: { sistemas, componentes, parametros, overrides, avulsos },
       itens: r.itens,
       resumo: {
         totais: r.totais,
         pendencias: r.pendencias,
         por_sistema: r.por_sistema,
         por_componente: r.por_componente,
+        avulsos: r.avulsos ?? [],
       },
     };
   }
@@ -640,6 +647,26 @@ export const gerarDemanda = createServerFn({ method: "POST" })
       const a = agg.get(i.revisao_componente_id) ?? { q: 0, mod: i.revisao_componentes.modalidade };
       a.q += Number(i.quantidade);
       agg.set(i.revisao_componente_id, a);
+    }
+    // Itens avulsos/estruturas: quantidade de aquisição consolidada pelo cálculo canônico.
+    const resumo = (rev.totais ?? {}) as any;
+    const mods = new Map(
+      (
+        ok(
+          await db
+            .from("revisao_componentes")
+            .select("id,modalidade")
+            .eq("revisao_id", rev.id)
+            .eq("incluido_orcamento", true),
+        ) as any[]
+      ).map((c) => [c.id, c.modalidade]),
+    );
+    for (const pc of resumo.por_componente ?? []) {
+      const q = Number(pc.quantidade_avulsa ?? 0);
+      if (!(q > 0) || !mods.has(pc.componente_id)) continue;
+      const a = agg.get(pc.componente_id) ?? { q: 0, mod: mods.get(pc.componente_id) };
+      a.q += q;
+      agg.set(pc.componente_id, a);
     }
     const existentes = ok(
       await db.from("demandas").select("id,revisao_componente_id,status").eq("revisao_id", rev.id),

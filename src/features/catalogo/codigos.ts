@@ -24,7 +24,7 @@ export function formatarCodigo(familia: string, tipo: TipoItem, seq: number) {
 export const CODIGO_NXS: Record<string, { codigo: string; familia: string; tipo: TipoItem }> = {
   "COMP-01": { codigo: "LVHF-NXS-S007", familia: "LVHF", tipo: "S" },
   "COMP-02": { codigo: "COM-NXS-P009", familia: "COM", tipo: "P" },
-  "COMP-03": { codigo: "LVHF-NXS-M001", familia: "LVHF", tipo: "M" },
+  "COMP-03": { codigo: "LVHF-NXS-P054", familia: "LVHF", tipo: "P" },
   "COMP-04": { codigo: "LVHF-NXS-M002", familia: "LVHF", tipo: "M" },
   "COMP-05": { codigo: "COM-NXS-P010", familia: "COM", tipo: "P" },
   "COMP-06": { codigo: "LVHF-NXS-P050", familia: "LVHF", tipo: "P" },

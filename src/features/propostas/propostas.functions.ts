@@ -413,6 +413,7 @@ async function calcularCheckpoint(db: Db, revisaoId: string, operacao?: string, 
     indivisivel: c.indivisivel,
     multiplo: Number(c.multiplo_compra),
     produto_id: c.produto_id,
+    inclui: c.custo_inclui ?? [],
   }));
   const avulsos = incluidos
     .filter((c: any) => Number(c.quantidade_avulsa ?? 0) > 0)

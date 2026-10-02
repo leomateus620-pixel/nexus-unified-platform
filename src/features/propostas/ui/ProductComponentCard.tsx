@@ -1,5 +1,4 @@
-import { memo, type ReactNode } from "react";
-import { FamilyMark, ObjectCard } from "./ObjectCards";
+import { memo, useId, type ReactNode } from "react";
 
 type ItemIdentity = {
   id: string;
@@ -10,6 +9,7 @@ type ItemIdentity = {
   unidade: string;
   modalidade: string;
   incluido_orcamento: boolean;
+  quantidade_avulsa?: number;
 };
 
 type CommercialRowProps = {
@@ -19,6 +19,8 @@ type CommercialRowProps = {
   editable: boolean;
   price: string;
   quantity: string;
+  typeName?: string;
+  cost?: string | undefined;
   pricePending?: boolean;
   extra?: ReactNode;
   onInspect: (id: string, trigger: HTMLButtonElement) => void;
@@ -26,7 +28,7 @@ type CommercialRowProps = {
   onToggleBatch: (id: string, checked: boolean) => void;
 };
 
-/** A component is an object, with independent selection and editing controls. */
+/** Compact collection entry with separate controls for inspection, inclusion and batch actions. */
 export const ProductComponentCard = memo(function ProductComponentCard({
   item,
   selected,
@@ -34,63 +36,90 @@ export const ProductComponentCard = memo(function ProductComponentCard({
   editable,
   price,
   quantity,
+  typeName,
+  cost,
   pricePending,
   extra,
   onInspect,
   onToggleIncluded,
   onToggleBatch,
 }: CommercialRowProps) {
+  const id = useId();
   return (
-    <ObjectCard
-      title={item.descricao}
-      selected={selected}
-      className="nx-product-card"
-      onOpen={(trigger) => onInspect(item.id, trigger)}
-      openLabel={`${editable ? "Editar" : "Consultar"} item ${item.codigo}`}
-      eyebrow={
-        <>
-          <FamilyMark description={item.descricao} />
-          <span className="nx-editor-code">{item.codigo}</span>
-          <div className="nx-product-controls">
+    <li
+      className="nx-commercial-row"
+      data-selected={selected}
+      data-included={item.incluido_orcamento}
+    >
+      <article aria-labelledby={id}>
+        <div className="nx-commercial-row-identity">
+          <h3 id={id}>
+            <button
+              type="button"
+              className="nx-object-open"
+              aria-label={`${editable ? "Editar" : "Consultar"} item ${item.codigo}`}
+              aria-expanded={selected}
+              title={item.descricao}
+              onClick={(event) => onInspect(item.id, event.currentTarget)}
+            >
+              <span>{item.descricao}</span>
+              <span aria-hidden="true">↗</span>
+            </button>
+          </h3>
+          <code>{item.codigo}</code>
+          <p>
+            {typeName && typeName !== "—" ? typeName : "Tipo não informado"} · {item.unidade} ·{" "}
+            <span className="capitalize">{item.modalidade}</span>
+          </p>
+          {extra}
+        </div>
+        <dl className="nx-commercial-row-values">
+          <div>
+            <dt>Manual adicional</dt>
+            <dd>
+              {Number(item.quantidade_avulsa ?? 0).toLocaleString("pt-BR")} {item.unidade}
+            </dd>
+          </div>
+          <div>
+            <dt>Consolidada</dt>
+            <dd>{item.incluido_orcamento ? quantity : "Fora do orçamento"}</dd>
+          </div>
+          <div>
+            <dt>{pricePending ? "Prévia do preço / un." : "Preço / un."}</dt>
+            <dd>{price}</dd>
+          </div>
+          {cost !== undefined && (
+            <div>
+              <dt>Custo adotado / un.</dt>
+              <dd>{cost}</dd>
+            </div>
+          )}
+        </dl>
+        <div className="nx-commercial-row-controls">
+          <label className="nx-object-check">
+            <input
+              type="checkbox"
+              aria-label={`Incluir ${item.codigo} no orçamento`}
+              checked={item.incluido_orcamento}
+              disabled={!editable}
+              onChange={(e) => onToggleIncluded(item.id, e.target.checked)}
+            />
+            <span>{item.incluido_orcamento ? "No orçamento" : "Disponível na revisão"}</span>
+          </label>
+          {editable && (
             <label className="nx-object-check">
               <input
                 type="checkbox"
-                aria-label={`Incluir ${item.codigo} no orçamento`}
-                checked={item.incluido_orcamento}
-                disabled={!editable}
-                onChange={(e) => onToggleIncluded(item.id, e.target.checked)}
+                aria-label={`Selecionar ${item.codigo} para edição em lote`}
+                checked={batchChecked}
+                onChange={(e) => onToggleBatch(item.id, e.target.checked)}
               />
-              <span>No orçamento</span>
+              <span>Selecionar para lote</span>
             </label>
-          </div>
-        </>
-      }
-    >
-      <div className="nx-product-sourcing">
-        <span className="capitalize">{item.modalidade}</span>
-        <span>Unidade · {item.unidade}</span>
-      </div>
-      <dl className="nx-product-price">
-        <div className="nx-product-price-main">
-          <dt>{pricePending ? "Prévia unitária" : "Preço unitário"}</dt>
-          <dd>{price}</dd>
+          )}
+          {selected && <span className="nx-commercial-selected">Em edição nesta revisão</span>}
         </div>
-        <div className="nx-product-quantity">
-          <dt>Quantidade</dt>
-          <dd>{quantity}</dd>
-        </div>
-      </dl>
-      {extra}
-      <label className="nx-object-check nx-product-batch-check">
-        <input
-          type="checkbox"
-          aria-label={`Selecionar ${item.codigo} para edição em lote`}
-          checked={batchChecked}
-          disabled={!editable}
-          onChange={(e) => onToggleBatch(item.id, e.target.checked)}
-        />
-        <span>Selecionar para ação em lote</span>
-      </label>
-    </ObjectCard>
+      </article>
+    </li>
   );
 });

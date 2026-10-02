@@ -2,14 +2,22 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 
-import { ActionButton, DataTable, EmptyState, Section } from "@/components/nexus/Page";
+import {
+  ActionButton,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  Section,
+} from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
 import { useFornecedores } from "@/features/propostas/hooks";
-import { brlUnit, dataBR } from "@/lib/format";
+import { brlUnit } from "@/lib/format";
 import { definirConversao, registrarCompra } from "./custos.functions";
 import { linhaResumo, resumoCustos } from "./domain";
+import { dataCalendarioValida, dataCustoBR } from "./datas";
+import "./product-costs.css";
 
-const input = "h-8 rounded border border-input bg-background px-2 text-sm text-foreground";
+const input = "nx-cost-input";
 type Aq = {
   id: string;
   quantidade: number;
@@ -32,13 +40,14 @@ type Aq = {
   } | null;
 };
 
-/** Referências de fornecedor, conversões, compras e os três custos (última, média, adotado). */
+/** Referências do catálogo. Nenhum dos valores representa o custo adotado de uma revisão. */
 export function ComprasProduto(props: {
   produtoId: string;
   orgId: string;
   unidade: string;
-  custoAdotado: { custo: number; origem: string | null } | null;
+  custoSugerido: { custo: number; origem: string | null; vigencia: string } | null;
   podeEditar: boolean;
+  secao: "custos" | "compras" | "referencias";
 }) {
   const qc = useQueryClient();
   const q = useQuery({
@@ -68,174 +77,244 @@ export function ComprasProduto(props: {
       };
     },
   });
-  const resumo = useMemo(
-    () => resumoCustos((q.data?.aquisicoes ?? []).map((a) => linhaResumo(a as never))),
-    [q.data],
-  );
+  const resumo = useMemo(() => resumoCustos((q.data?.aquisicoes ?? []).map(linhaResumo)), [q.data]);
   const recarregar = () => {
     qc.invalidateQueries({ queryKey: ["compras-produto", props.produtoId] });
     qc.invalidateQueries({ queryKey: ["produto", props.produtoId] });
   };
-  const aq = [...(q.data?.aquisicoes ?? [])].sort((a, b) =>
+  if (q.isPending) return <LoadingState label="Consultando compras e referências do produto" />;
+  if (!q.data) return <ErrorState error={q.error} onRetry={() => q.refetch()} />;
+  const aq = [...q.data.aquisicoes].sort((a, b) =>
     (b.documentos_fiscais?.emitido_em ?? b.created_at).localeCompare(
       a.documentos_fiscais?.emitido_em ?? a.created_at,
     ),
   );
-  return (
-    <>
+  const ultima = aq.find(
+    (a) =>
+      a.situacao === "valida" &&
+      a.custo_total != null &&
+      Number(a.valores_calculados?.quantidade_uso ?? 0) > 0,
+  );
+  if (props.secao === "custos")
+    return (
       <Section
-        title="Custos deste produto"
-        description="Três valores distintos. O sistema sugere a média ponderada para novas inclusões; propostas existentes só mudam se você adotar o novo valor nelas."
+        title="Referências de custo do catálogo"
+        description="A sugestão vale para novas inclusões. Propostas existentes preservam o custo adotado em cada revisão."
       >
-        <div className="grid gap-3 sm:grid-cols-3">
+        {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
+        <div className="nx-cost-summary">
+          <Custo
+            titulo="Custo sugerido para novas propostas"
+            valor={props.custoSugerido?.custo ?? null}
+            origem={
+              props.custoSugerido?.origem ??
+              (props.custoSugerido ? "Origem não informada" : "Sem referência de custo registrada")
+            }
+            detalhe={
+              props.custoSugerido
+                ? `Vigência: ${dataCustoBR(props.custoSugerido.vigencia)}`
+                : undefined
+            }
+            destaque
+          />
           <Custo
             titulo="Última compra"
             valor={resumo.ultima_compra}
             origem="Compra válida mais recente"
+            detalhe={
+              ultima
+                ? dataCustoBR(ultima.documentos_fiscais?.emitido_em ?? ultima.created_at)
+                : "Ainda não há compra válida"
+            }
           />
           <Custo
             titulo="Média ponderada"
             valor={resumo.media_ponderada}
-            origem={`Soma dos custos ÷ soma das quantidades (${resumo.compras_validas} compra(s) válidas)`}
-          />
-          <Custo
-            titulo="Custo sugerido para novas propostas"
-            valor={props.custoAdotado?.custo ?? null}
-            origem={props.custoAdotado?.origem ?? "Sem custo registrado"}
+            origem={`${resumo.compras_validas} compra(s) válida(s)`}
+            detalhe="Soma dos custos ÷ soma das quantidades de uso"
           />
         </div>
+        <p className="nx-cost-help">
+          O registro de uma compra válida atualiza a referência do catálogo pela média ponderada.
+          Consulte a origem do custo sugerido para identificar seu registro.
+        </p>
         {resumo.compras_pendentes > 0 && (
-          <p className="mt-2 text-sm text-amber-500" role="status">
+          <p className="nx-cost-notice" role="status">
             {resumo.compras_pendentes} compra(s) com custo pendente não entram na média.
           </p>
         )}
       </Section>
-
-      <Section
-        title="Referências de fornecedor"
-        description="Como cada fornecedor identifica este produto. Códigos iguais de fornecedores diferentes não indicam o mesmo produto."
-      >
-        {(q.data?.referencias ?? []).length === 0 ? (
-          <EmptyState title="Nenhuma referência de fornecedor" />
-        ) : (
-          <ul className="space-y-1 text-sm">
-            {q.data!.referencias.map((r) => (
-              <li key={r.id}>
-                <span className="text-foreground">
-                  {(r.fornecedores as { nome: string } | null)?.nome}
-                </span>{" "}
-                — código <strong>{r.codigo_fornecedor}</strong>
-                {r.descricao_original && (
-                  <span className="text-muted-foreground"> · {r.descricao_original}</span>
-                )}
+    );
+  if (props.secao === "referencias")
+    return (
+      <div className="nx-cost-stack">
+        {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
+        <Section
+          title="Referências de fornecedor"
+          description="A identificação é específica de cada fornecedor; códigos iguais não confirmam o mesmo produto."
+        >
+          {q.data.referencias.length === 0 ? (
+            <EmptyState title="Nenhuma referência de fornecedor" />
+          ) : (
+            <ul className="nx-cost-records">
+              {q.data.referencias.map((r) => (
+                <li key={r.id}>
+                  <div>
+                    <strong>
+                      {(r.fornecedores as { nome: string } | null)?.nome ??
+                        "Fornecedor não informado"}
+                    </strong>
+                    <p>
+                      <code>{r.codigo_fornecedor}</code>
+                    </p>
+                    {r.descricao_original && <p>{r.descricao_original}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Section>
+        <Section
+          title="Unidades e embalagens"
+          description={`Unidade de uso: ${props.unidade}. Uma compra em outra unidade requer fator de conversão confirmado.`}
+        >
+          <ul className="nx-cost-records">
+            {q.data.conversoes.map((c) => (
+              <li key={c.id}>
+                1 {c.unidade_compra} = {Number(c.fator)} {props.unidade}
               </li>
             ))}
           </ul>
-        )}
-      </Section>
-
-      <Section
-        title="Unidades e embalagens"
-        description={`Unidade de uso: ${props.unidade}. Compras em outra unidade só têm custo depois de um fator confirmado.`}
-      >
-        <ul className="mb-2 space-y-1 text-sm">
-          {(q.data?.conversoes ?? []).map((c) => (
-            <li key={c.id}>
-              1 {c.unidade_compra} = {Number(c.fator)} {props.unidade}
+          {q.data.conversoes.length === 0 && (
+            <p className="nx-cost-help">Nenhum fator de conversão confirmado.</p>
+          )}
+          {props.podeEditar && (
+            <NovaConversao produtoId={props.produtoId} unidade={props.unidade} ok={recarregar} />
+          )}
+        </Section>
+      </div>
+    );
+  return (
+    <Section
+      title={`Histórico de compras · ${aq.length}`}
+      description="Valores do documento preservados. Abra uma compra para consultar origem e regra do custo."
+    >
+      {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
+      {props.podeEditar ? (
+        <NovaCompra
+          produtoId={props.produtoId}
+          orgId={props.orgId}
+          unidade={props.unidade}
+          ok={recarregar}
+        />
+      ) : (
+        <p className="nx-cost-help">
+          Seu perfil pode consultar compras. O registro exige permissão de Engenharia, Compras ou
+          Admin.
+        </p>
+      )}
+      {aq.length === 0 ? (
+        <EmptyState
+          title="Sem compras registradas"
+          hint="Compras registradas neste produto aparecerão aqui com fornecedor, documento e origem."
+        />
+      ) : (
+        <ul className="nx-purchase-history">
+          {aq.map((a) => (
+            <li key={a.id}>
+              <details>
+                <summary>
+                  <div>
+                    <strong>
+                      {a.documentos_fiscais?.fornecedores?.nome ??
+                        a.documentos_fiscais?.fornecedor_texto ??
+                        "Fornecedor não informado"}
+                    </strong>
+                    <p>
+                      {a.documentos_fiscais
+                        ? `NF ${a.documentos_fiscais.numero}${a.documentos_fiscais.provisorio ? " · provisória" : ""}`
+                        : "Documento não informado"}{" "}
+                      · {dataCustoBR(a.documentos_fiscais?.emitido_em ?? a.created_at)}
+                    </p>
+                  </div>
+                  <div className="nx-purchase-quantity">
+                    <span>Quantidade comprada</span>
+                    <strong>
+                      {Number(a.quantidade)} {a.unidade}
+                    </strong>
+                  </div>
+                  <div className="nx-purchase-value">
+                    <span>Custo por {props.unidade}</span>
+                    <strong>
+                      {a.situacao === "valida" && a.custo_unitario != null ? (
+                        brlUnit(Number(a.custo_unitario))
+                      ) : (
+                        <span className="text-warning">Custo pendente</span>
+                      )}
+                    </strong>
+                  </div>
+                  <span className="nx-record-disclosure">Detalhes</span>
+                </summary>
+                <dl className="nx-cost-facts">
+                  <div>
+                    <dt>Origem</dt>
+                    <dd>
+                      {a.origem?.aba
+                        ? `Planilha · ${a.origem.aba} · linha ${a.origem.linha ?? "não informada"}`
+                        : a.lote
+                          ? a.lote
+                          : "Origem não informada"}
+                    </dd>
+                  </div>
+                  {a.lote && a.origem?.aba && (
+                    <div>
+                      <dt>Lote / referência</dt>
+                      <dd>{a.lote}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>Custo total da compra</dt>
+                    <dd>{a.custo_total == null ? "Pendente" : brlUnit(Number(a.custo_total))}</dd>
+                  </div>
+                  <div>
+                    <dt>Quantidade na unidade de uso</dt>
+                    <dd>
+                      {a.valores_calculados?.quantidade_uso == null
+                        ? "Conversão pendente"
+                        : `${a.valores_calculados.quantidade_uso} ${props.unidade}`}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Política de custo</dt>
+                    <dd>{a.politica_versao ?? "Não informada"}</dd>
+                  </div>
+                </dl>
+                {a.pendencia && <p className="nx-cost-notice">{a.pendencia}</p>}
+              </details>
             </li>
           ))}
-          {(q.data?.conversoes ?? []).length === 0 && (
-            <li className="text-muted-foreground">Nenhum fator confirmado.</li>
-          )}
         </ul>
-        {props.podeEditar && (
-          <NovaConversao produtoId={props.produtoId} unidade={props.unidade} ok={recarregar} />
-        )}
-      </Section>
-
-      <Section
-        title="Histórico de aquisição"
-        description="Valores do documento preservados; custo calculado pela política registrada em cada linha."
-      >
-        {props.podeEditar ? (
-          <NovaCompra
-            produtoId={props.produtoId}
-            orgId={props.orgId}
-            unidade={props.unidade}
-            ok={recarregar}
-          />
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            Registrar compra exige papel Engenharia, Compras ou Admin.
-          </p>
-        )}
-        <div className="mt-3">
-          {aq.length === 0 ? (
-            <EmptyState title="Sem compras registradas" />
-          ) : (
-            <DataTable
-              getRowId={(a) => a.id}
-              rows={aq}
-              columns={[
-                {
-                  key: "nf",
-                  label: "Documento",
-                  render: (a) =>
-                    a.documentos_fiscais
-                      ? `NF ${a.documentos_fiscais.numero}${a.documentos_fiscais.provisorio ? " (provisória)" : ""} · ${dataBR(a.documentos_fiscais.emitido_em ?? a.created_at)}`
-                      : "—",
-                },
-                {
-                  key: "forn",
-                  label: "Fornecedor",
-                  render: (a) =>
-                    a.documentos_fiscais?.fornecedores?.nome ??
-                    a.documentos_fiscais?.fornecedor_texto ??
-                    "—",
-                },
-                {
-                  key: "qtd",
-                  label: "Quantidade",
-                  align: "right",
-                  render: (a) => `${Number(a.quantidade)} ${a.unidade}`,
-                },
-                {
-                  key: "custo",
-                  label: "Custo unitário",
-                  align: "right",
-                  render: (a) =>
-                    a.situacao === "valida" && a.custo_unitario != null ? (
-                      brlUnit(Number(a.custo_unitario))
-                    ) : (
-                      <span className="text-amber-500">Custo pendente</span>
-                    ),
-                },
-                {
-                  key: "origem",
-                  label: "Origem",
-                  render: (a) =>
-                    a.pendencia ??
-                    (a.origem?.aba
-                      ? `Planilha · ${a.origem.aba} linha ${a.origem.linha}`
-                      : "Registro manual") + (a.lote ? ` · ${a.lote}` : ""),
-                },
-              ]}
-            />
-          )}
-        </div>
-      </Section>
-    </>
+      )}
+    </Section>
   );
 }
 
-function Custo(p: { titulo: string; valor: number | null; origem: string }) {
+function Custo(p: {
+  titulo: string;
+  valor: number | null;
+  origem: string;
+  detalhe?: string | undefined;
+  destaque?: boolean;
+}) {
   return (
-    <div className="rounded border border-border p-3">
-      <p className="text-xs text-muted-foreground">{p.titulo}</p>
-      <p className="text-lg text-foreground">
-        {p.valor == null ? "Custo pendente" : brlUnit(p.valor)}
+    <div className="nx-cost-metric" data-featured={p.destaque || undefined}>
+      <h3>{p.titulo}</h3>
+      <p className="nx-cost-metric-value">
+        {p.valor == null ? "Sem referência" : brlUnit(p.valor)}
       </p>
-      <p className="text-xs text-muted-foreground">{p.origem}</p>
+      <p>{p.origem}</p>
+      {p.detalhe && <p className="nx-cost-help">{p.detalhe}</p>}
+      {p.valor === 0 && <p className="nx-cost-help">R$ 0,00 informado</p>}
     </div>
   );
 }
@@ -244,56 +323,78 @@ function NovaConversao(p: { produtoId: string; unidade: string; ok: () => void }
   const fn = useServerFn(definirConversao);
   const [un, setUn] = useState("");
   const [fator, setFator] = useState("");
-  const [msg, setMsg] = useState<string | null>(null);
+  const [erro, setErro] = useState<string | null>(null);
+  const [confirmacao, setConfirmacao] = useState<string | null>(null);
+  const [salvando, setSalvando] = useState(false);
   return (
     <form
-      className="flex flex-wrap items-end gap-2 text-sm"
+      className="nx-cost-inline-form"
       onSubmit={async (e) => {
         e.preventDefault();
-        setMsg(null);
+        setErro(null);
+        setConfirmacao(null);
+        const valor = Number(fator.replace(",", "."));
+        if (!Number.isFinite(valor) || valor <= 0) {
+          setErro("Informe um fator de conversão maior que zero.");
+          return;
+        }
+        setSalvando(true);
         try {
           await fn({
             data: {
               produto_id: p.produtoId,
-              unidade_compra: un.toUpperCase(),
-              fator: Number(fator.replace(",", ".")),
+              unidade_compra: un.trim().toUpperCase(),
+              fator: valor,
             },
           });
+          setConfirmacao(`Conversão confirmada: 1 ${un.toUpperCase()} = ${valor} ${p.unidade}.`);
           setUn("");
           setFator("");
           p.ok();
         } catch (er) {
-          setMsg((er as Error).message);
+          setErro((er as Error).message);
+        } finally {
+          setSalvando(false);
         }
       }}
     >
       <label>
-        1{" "}
+        Unidade de compra
         <input
-          aria-label="Unidade de compra"
           required
+          maxLength={10}
           value={un}
           onChange={(e) => setUn(e.target.value)}
-          className={`${input} w-16`}
-          placeholder="CT"
+          className={input}
+          placeholder="Ex.: CT"
+          disabled={salvando}
         />
       </label>
       <label>
-        ={" "}
+        Quantidade em {p.unidade} por 1 unidade de compra
         <input
-          aria-label="Fator"
           required
           inputMode="decimal"
           value={fator}
           onChange={(e) => setFator(e.target.value)}
-          className={`${input} w-20`}
-        />{" "}
-        {p.unidade}
+          className={input}
+          disabled={salvando}
+          aria-invalid={!!erro}
+        />
       </label>
-      <ActionButton type="submit" variant="ghost">
-        Confirmar fator
+      <ActionButton type="submit" variant="ghost" disabled={salvando}>
+        {salvando ? "Gravando…" : "Confirmar fator"}
       </ActionButton>
-      {msg && <span className="text-destructive">{msg}</span>}
+      {erro && (
+        <p className="nx-cost-error" role="alert">
+          {erro}
+        </p>
+      )}
+      {confirmacao && (
+        <p role="status" className="nx-cost-help">
+          {confirmacao}
+        </p>
+      )}
     </form>
   );
 }
@@ -303,7 +404,7 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
   const forn = useFornecedores(p.orgId);
   const [aberto, setAberto] = useState(false);
   const [chave, setChave] = useState(() => crypto.randomUUID());
-  const [f, setF] = useState({
+  const inicial = () => ({
     fornecedor_id: "",
     nf_numero: "",
     nf_serie: "",
@@ -319,122 +420,191 @@ function NovaCompra(p: { produtoId: string; orgId: string; unidade: string; ok: 
     outras: "",
     lote: "",
   });
-  const [msg, setMsg] = useState<string | null>(null);
+  const [f, setF] = useState(inicial);
+  type Campo = keyof typeof f;
+  const [erros, setErros] = useState<Partial<Record<Campo, string>>>({});
+  const [erro, setErro] = useState<string | null>(null);
+  const [confirmacao, setConfirmacao] = useState<string | null>(null);
   const [salvando, setSalvando] = useState(false);
   const n = (v: string) => (v.trim() === "" ? null : Number(v.replace(",", ".")));
-  const campo = (k: keyof typeof f, label: string, extra = "") => (
-    <label className="flex flex-col text-xs">
+  const campo = (
+    k: Campo,
+    label: string,
+    opts: { numeric?: boolean; type?: "date"; maxLength?: number; required?: boolean } = {},
+  ) => (
+    <label className="nx-cost-field">
       {label}
       <input
         value={f[k]}
-        onChange={(e) => setF({ ...f, [k]: e.target.value })}
-        className={`${input} ${extra}`}
+        onChange={(e) => {
+          setF({ ...f, [k]: e.target.value });
+          setErros({ ...erros, [k]: undefined });
+        }}
+        className={input}
+        inputMode={opts.numeric ? "decimal" : undefined}
+        type={opts.type ?? "text"}
+        maxLength={opts.maxLength}
+        required={opts.required}
+        aria-invalid={!!erros[k]}
+        aria-describedby={erros[k] ? `purchase-${k}-error` : undefined}
       />
+      {erros[k] && (
+        <span id={`purchase-${k}-error`} className="nx-cost-error">
+          {erros[k]}
+        </span>
+      )}
     </label>
   );
-  if (!aberto) return <ActionButton onClick={() => setAberto(true)}>Registrar compra</ActionButton>;
+  const salvar = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErro(null);
+    setConfirmacao(null);
+    const next: Partial<Record<Campo, string>> = {};
+    for (const k of [
+      "quantidade",
+      "produtos",
+      "desconto",
+      "frete",
+      "ipi",
+      "difal",
+      "outras",
+    ] as const) {
+      const v = n(f[k]);
+      if ((v != null && (!Number.isFinite(v) || v < 0)) || (k === "quantidade" && v == null))
+        next[k] = "Informe um número igual ou maior que zero.";
+    }
+    if (f.nf_chave && !/^\d{44}$/.test(f.nf_chave.replace(/\D/g, "")))
+      next.nf_chave = "A chave da NF-e deve conter 44 dígitos.";
+    if (!f.unidade.trim()) next.unidade = "Informe a unidade da compra.";
+    if (!dataCalendarioValida(f.emitido_em))
+      next.emitido_em = "Informe uma data de emissão válida.";
+    setErros(next);
+    if (Object.keys(next).length) return;
+    setSalvando(true);
+    try {
+      const r = await fn({
+        data: {
+          chave,
+          produto_id: p.produtoId,
+          fornecedor_id: f.fornecedor_id || null,
+          nf_numero: f.nf_numero,
+          nf_serie: f.nf_serie,
+          nf_chave: f.nf_chave.replace(/\D/g, ""),
+          emitido_em: f.emitido_em,
+          quantidade: n(f.quantidade) ?? 0,
+          unidade: f.unidade.toUpperCase(),
+          lote: f.lote,
+          parcelas: {
+            produtos: n(f.produtos),
+            desconto: n(f.desconto),
+            frete: n(f.frete),
+            ipi: n(f.ipi),
+            difal: n(f.difal),
+            outras: n(f.outras),
+          },
+        },
+      });
+      setConfirmacao(
+        r.pendencia
+          ? `Compra salva com pendência: ${r.pendencia}`
+          : r.repetido
+            ? "Esta compra já estava registrada."
+            : "Compra registrada. Referência de custo atualizada no catálogo.",
+      );
+      setChave(crypto.randomUUID());
+      setF(inicial());
+      setAberto(false);
+      p.ok();
+    } catch (er) {
+      setErro((er as Error).message);
+    } finally {
+      setSalvando(false);
+    }
+  };
   return (
-    <form
-      className="space-y-2 rounded border border-border p-3"
-      onSubmit={async (e) => {
-        e.preventDefault();
-        setMsg(null);
-        setSalvando(true);
-        try {
-          const r = await fn({
-            data: {
-              chave,
-              produto_id: p.produtoId,
-              fornecedor_id: f.fornecedor_id || null,
-              nf_numero: f.nf_numero,
-              nf_serie: f.nf_serie,
-              nf_chave: f.nf_chave.replace(/\D/g, ""),
-              emitido_em: f.emitido_em,
-              quantidade: n(f.quantidade) ?? 0,
-              unidade: f.unidade.toUpperCase(),
-              lote: f.lote,
-              parcelas: {
-                produtos: n(f.produtos),
-                desconto: n(f.desconto),
-                frete: n(f.frete),
-                ipi: n(f.ipi),
-                difal: n(f.difal),
-                outras: n(f.outras),
-              },
-            },
-          });
-          setMsg(
-            r.pendencia
-              ? `Compra salva com pendência: ${r.pendencia}`
-              : r.repetido
-                ? "Esta compra já estava registrada."
-                : "Compra registrada; média ponderada atualizada.",
-          );
-          setChave(crypto.randomUUID());
-          p.ok();
-        } catch (er) {
-          setMsg((er as Error).message);
-        } finally {
-          setSalvando(false);
-        }
-      }}
-    >
-      <div className="flex flex-wrap gap-2">
-        <label className="flex flex-col text-xs">
-          Fornecedor
-          <select
-            value={f.fornecedor_id}
-            onChange={(e) => setF({ ...f, fornecedor_id: e.target.value })}
-            className={input}
-          >
-            <option value="">Não informado</option>
-            {(forn.data ?? []).map((x) => (
-              <option key={x.id} value={x.id}>
-                {x.nome}
-              </option>
-            ))}
-          </select>
-        </label>
-        {campo("nf_numero", "Nº NF", "w-24")}
-        {campo("nf_serie", "Série", "w-14")}
-        {campo("nf_chave", "Chave NF-e (44 dígitos)", "w-72")}
-        <label className="flex flex-col text-xs">
-          Data
-          <input
-            type="date"
-            value={f.emitido_em}
-            onChange={(e) => setF({ ...f, emitido_em: e.target.value })}
-            className={input}
-          />
-        </label>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {campo("quantidade", "Quantidade", "w-20")}
-        {campo("unidade", "Unidade da compra", "w-16")}
-        {campo("produtos", "Valor dos produtos (R$)", "w-28")}
-        {campo("desconto", "Desconto", "w-20")}
-        {campo("frete", "Frete", "w-20")}
-        {campo("ipi", "IPI", "w-20")}
-        {campo("difal", "DIFAL", "w-20")}
-        {campo("outras", "Outras parcelas", "w-20")}
-        {campo("lote", "Lote / nº série", "w-32")}
-      </div>
-      <p className="text-xs text-muted-foreground">
-        Deixe em branco o que não consta no documento: o sistema não transforma ausência em zero.
-      </p>
-      <div className="flex gap-2">
-        <ActionButton type="submit" disabled={salvando}>
-          {salvando ? "Salvando…" : "Salvar compra"}
-        </ActionButton>
-        <ActionButton variant="ghost" onClick={() => setAberto(false)}>
-          Fechar
-        </ActionButton>
-      </div>
-      {msg && (
-        <p className="text-sm" role="status">
-          {msg}
+    <div className="nx-purchase-entry">
+      {confirmacao && (
+        <p role="status" className="nx-import-result">
+          {confirmacao}
         </p>
       )}
-    </form>
+      {!aberto ? (
+        <ActionButton variant="ghost" onClick={() => setAberto(true)}>
+          Registrar compra
+        </ActionButton>
+      ) : (
+        <form onSubmit={salvar} className="nx-purchase-form">
+          <header className="nx-cost-section-heading">
+            <h3>Registrar compra deste produto</h3>
+            <p>
+              Informe os valores do documento. Campos de valor em branco permanecem sem informação;
+              zero é um valor informado.
+            </p>
+          </header>
+          <fieldset disabled={salvando}>
+            <legend>Fornecedor e documento</legend>
+            <div className="nx-cost-form-grid">
+              <label className="nx-cost-field">
+                Fornecedor
+                <select
+                  value={f.fornecedor_id}
+                  onChange={(e) => setF({ ...f, fornecedor_id: e.target.value })}
+                  className={input}
+                >
+                  <option value="">Não informado</option>
+                  {(forn.data ?? []).map((x) => (
+                    <option key={x.id} value={x.id}>
+                      {x.nome}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {campo("nf_numero", "Nº da nota fiscal", { maxLength: 20 })}
+              {campo("nf_serie", "Série", { maxLength: 5 })}
+              {campo("nf_chave", "Chave NF-e (44 dígitos)", { maxLength: 60 })}
+              {campo("emitido_em", "Data de emissão", { type: "date", required: true })}
+              {campo("lote", "Lote / nº de série", { maxLength: 120 })}
+            </div>
+            {forn.isPending && (
+              <p className="nx-cost-help" role="status">
+                Carregando fornecedores…
+              </p>
+            )}
+            {forn.isError && <ErrorState error={forn.error} onRetry={() => forn.refetch()} />}
+          </fieldset>
+          <fieldset disabled={salvando}>
+            <legend>Quantidade e valores do documento</legend>
+            <div className="nx-cost-form-grid">
+              {campo("quantidade", "Quantidade comprada", { numeric: true, required: true })}
+              {campo("unidade", "Unidade da compra", { maxLength: 10, required: true })}
+              {campo("produtos", "Valor dos produtos (R$)", { numeric: true })}
+              {campo("desconto", "Desconto (R$)", { numeric: true })}
+              {campo("frete", "Frete (R$)", { numeric: true })}
+              {campo("ipi", "IPI (R$)", { numeric: true })}
+              {campo("difal", "DIFAL (R$)", { numeric: true })}
+              {campo("outras", "Outras parcelas (R$)", { numeric: true })}
+            </div>
+          </fieldset>
+          {erro && (
+            <p className="nx-cost-error" role="alert">
+              {erro} Os dados preenchidos foram preservados.
+            </p>
+          )}
+          {Object.keys(erros).some((k) => erros[k as Campo]) && (
+            <p className="nx-cost-error" role="alert">
+              Revise os campos indicados antes de salvar.
+            </p>
+          )}
+          <div className="nx-cost-actions">
+            <ActionButton type="submit" disabled={salvando}>
+              {salvando ? "Salvando…" : "Salvar compra"}
+            </ActionButton>
+            <ActionButton variant="ghost" disabled={salvando} onClick={() => setAberto(false)}>
+              Cancelar
+            </ActionButton>
+          </div>
+        </form>
+      )}
+    </div>
   );
 }

@@ -25,7 +25,7 @@
     "test:industrial:ui": "playwright test --config playwright.industrial.config.ts",
     "test:industrial:performance": "node scripts/benchmark-industrial.mjs",
     "test:industrial:views": "node scripts/capture-industrial-views.mjs",
-    "test:orcamento": "vitest run tests/calculo.test.ts tests/estrutura.test.ts tests/custos.test.ts tests/planilha.test.ts tests/autorizacao.test.ts tests/proposta-save-queue.test.ts",
+    "test:orcamento": "vitest run tests/calculo.test.ts tests/estrutura.test.ts tests/custos.test.ts tests/planilha.test.ts tests/autorizacao.test.ts tests/proposta-save-queue.test.ts tests/importacao.test.ts && vitest run --config tests/vitest.catalogo.config.ts",
     "dev:ui-lab": "vite --config tests/ui/vite.config.mjs",
     "test:ui": "node tests/ui/run.mjs",
     "test:ui:contracts": "node tests/ui/contracts.mjs",

@@ -1,13 +1,17 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { ActionButton, Section } from "@/components/nexus/Page";
+import { ActionButton, ErrorState } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import "./product-costs.css";
 
-/** Fila de decisões vindas das planilhas importadas: nada aqui foi resolvido por suposição. */
+/** Pendências recolhidas: a lista de produtos continua sendo o conteúdo principal. */
 export function PendenciasImportacao({ podeResolver }: { podeResolver: boolean }) {
   const qc = useQueryClient();
   const [aberto, setAberto] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
+  const [salvando, setSalvando] = useState<string | null>(null);
+  const [confirmacao, setConfirmacao] = useState<string | null>(null);
   const q = useQuery({
     queryKey: ["pendencias-importacao"],
     queryFn: async () => {
@@ -21,60 +25,105 @@ export function PendenciasImportacao({ podeResolver }: { podeResolver: boolean }
       return data;
     },
   });
-  const lista = q.data ?? [];
-  if (lista.length === 0) return null;
-  const decisoes = lista.filter((r) => r.aba !== "Outros Itens");
-  const outros = lista.filter((r) => r.aba === "Outros Itens");
-  const marcar = async (id: string, situacao: "resolvido" | "ignorado") => {
-    await supabase.from("importacao_registros").update({ situacao }).eq("id", id);
-    qc.invalidateQueries({ queryKey: ["pendencias-importacao"] });
+  const marcar = async (id: string) => {
+    setErro(null);
+    setConfirmacao(null);
+    setSalvando(id);
+    try {
+      const { error } = await supabase
+        .from("importacao_registros")
+        .update({ situacao: "resolvido" })
+        .eq("id", id);
+      if (error) throw error;
+      setConfirmacao("Pendência marcada como decidida.");
+      await qc.invalidateQueries({ queryKey: ["pendencias-importacao"] });
+    } catch (e) {
+      setErro((e as Error).message);
+    } finally {
+      setSalvando(null);
+    }
   };
+  if (q.isPending)
+    return (
+      <p className="nx-cost-help" role="status">
+        Consultando pendências de importação…
+      </p>
+    );
+  if (q.isError) return <ErrorState error={q.error} onRetry={() => q.refetch()} />;
+  const lista = q.data ?? [];
+  if (lista.length === 0)
+    return confirmacao ? (
+      <p className="nx-cost-help" role="status">
+        {confirmacao} Não há outras pendências de importação.
+      </p>
+    ) : null;
   return (
-    <Section
-      title={`Pendências da planilha comercial (${lista.length})`}
-      description="Itens que exigem decisão técnica, fiscal ou de cadastro. Os demais produtos já foram importados."
-    >
-      <ul className="space-y-2 text-sm">
-        {decisoes.map((r) => (
-          <li key={r.id} className="rounded border border-border p-2">
-            <p className="text-foreground">{r.tema}</p>
-            <p className="text-muted-foreground">{r.explicacao}</p>
-            {podeResolver && (
-              <ActionButton variant="ghost" onClick={() => marcar(r.id, "resolvido")}>
-                Marcar como decidido
-              </ActionButton>
-            )}
-          </li>
-        ))}
-      </ul>
-      {outros.length > 0 && (
-        <div className="mt-3">
-          <button
-            type="button"
-            className="text-sm underline"
-            aria-expanded={aberto}
-            onClick={() => setAberto(!aberto)}
-          >
-            {outros.length} registros de “Outros Itens” sem grupo definido
-          </button>
-          {aberto && (
-            <ul className="mt-2 space-y-1 text-sm">
-              {outros.map((r) => {
-                const d = r.dados as Record<string, string | number>;
-                return (
-                  <li key={r.id}>
-                    <span className="text-foreground">{String(d["Descrição integral"] ?? "")}</span>{" "}
-                    <span className="text-muted-foreground">
-                      · {r.tema} · NF {String(d["Nº NF"] ?? "—")} ·{" "}
-                      {String(d["Quantidade original"] ?? "")} {String(d["Unidade"] ?? "")}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+    <section className="nx-import-pending" aria-label="Pendências de importação">
+      <div className="nx-import-pending-summary">
+        <p>
+          <strong>{lista.length} pendência(s) de importação</strong>
+          <span>Decisões de cadastro, classificação ou documento.</span>
+        </p>
+        <ActionButton
+          variant="ghost"
+          aria-expanded={aberto}
+          aria-controls="import-pending-details"
+          onClick={() => setAberto(!aberto)}
+        >
+          {aberto ? "Recolher detalhes" : "Ver pendências"}
+        </ActionButton>
+      </div>
+      {confirmacao && (
+        <p role="status" className="nx-cost-help">
+          {confirmacao}
+        </p>
+      )}
+      {erro && (
+        <p className="nx-cost-error" role="alert">
+          {erro}
+        </p>
+      )}
+      {aberto && (
+        <div id="import-pending-details">
+          {!podeResolver && (
+            <p className="nx-cost-help">
+              Consulta disponível. Seu perfil não tem permissão para resolver pendências.
+            </p>
           )}
+          <ul className="nx-cost-records">
+            {lista.map((r) => {
+              const d = r.dados as Record<string, string | number> | null;
+              return (
+                <li key={r.id}>
+                  <div>
+                    <strong>
+                      {r.aba === "Outros Itens"
+                        ? String(d?.["Descrição integral"] ?? r.tema)
+                        : r.tema}
+                    </strong>
+                    <p>{r.explicacao}</p>
+                    <p className="nx-cost-help">
+                      {r.aba} · linha {r.linha}
+                      {r.aba === "Outros Itens"
+                        ? ` · NF ${String(d?.["Nº NF"] ?? "—")} · ${String(d?.["Quantidade original"] ?? "")} ${String(d?.["Unidade"] ?? "")}`
+                        : ""}
+                    </p>
+                  </div>
+                  {podeResolver && r.aba !== "Outros Itens" && (
+                    <ActionButton
+                      variant="ghost"
+                      disabled={salvando !== null}
+                      onClick={() => marcar(r.id)}
+                    >
+                      {salvando === r.id ? "Gravando…" : "Marcar como decidido"}
+                    </ActionButton>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       )}
-    </Section>
+    </section>
   );
 }

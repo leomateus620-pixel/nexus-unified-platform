@@ -1,0 +1,503 @@
+/* Presentation only: the proposal engine and catalog continue to own values. */
+.nexus-operational.nx-catalog-shell
+  .nx-commercial-workspace
+  .nx-collection-section
+  > .nx-section-heading {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  padding: 0 0 16px;
+}
+.nexus-operational.nx-catalog-shell .nx-commercial-workspace :where(h2, h3, h4, h5),
+.nx-commercial-sheet :where(h2, h3, h4, h5) {
+  font-family: var(--font-display);
+}
+.nx-commercial-workspace .nx-section-heading p {
+  font-size: 14px;
+}
+.nx-commercial-workspace .nx-item-toolbar {
+  margin-top: 18px;
+  align-items: end;
+}
+.nx-commercial-workspace .nx-editor-search {
+  min-width: min(100%, 230px);
+}
+.nx-commercial-workspace .nx-editor-search .nx-editor-input {
+  width: 100%;
+}
+.nx-commercial-workspace .nx-item-toolbar .nx-editor-count {
+  padding-bottom: 10px;
+}
+.nexus-operational.nx-catalog-shell
+  .nx-revision-flow
+  .nx-commercial-workspace
+  .nx-object-collection.nx-commercial-collection {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.nx-commercial-row {
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+}
+.nx-commercial-row:last-child {
+  border-bottom: 0;
+}
+.nx-commercial-row[data-selected="true"] {
+  background: var(--accent);
+  box-shadow: inset 3px 0 var(--primary);
+}
+.nx-commercial-row article {
+  display: grid;
+  grid-template-columns: minmax(190px, 1.3fr) minmax(190px, 1fr) minmax(150px, 0.65fr);
+  align-items: center;
+  gap: 20px;
+  padding: 17px 20px;
+}
+.nx-commercial-row-identity {
+  min-width: 0;
+}
+.nx-commercial-row h3 {
+  margin: 0 0 5px;
+  font-size: 17px;
+  line-height: 1.35;
+}
+.nx-commercial-row .nx-object-open {
+  font-weight: 600;
+  min-height: 32px;
+}
+.nx-commercial-row code,
+.nx-add-results code,
+.nx-add-confirm code,
+.nx-cost-reference code {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.nx-commercial-row-identity > p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: var(--muted-foreground);
+  line-height: 1.45;
+}
+.nx-commercial-row-identity > .nx-commercial-structure-note {
+  font-size: 13px;
+}
+.nx-commercial-row-values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+}
+.nx-commercial-row-values dt {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nx-commercial-row-values dd {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.nx-commercial-row-controls {
+  display: grid;
+  gap: 3px;
+  font-size: 13px;
+}
+.nx-commercial-row-controls .nx-object-check {
+  margin: 0;
+  justify-content: start;
+  min-height: 34px;
+  font-size: 13px;
+}
+.nx-commercial-selected {
+  color: var(--primary);
+  font-weight: 600;
+}
+.nx-editor-workspace.nx-commercial-workspace[data-side-editor="true"] {
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 0.8fr);
+}
+.nx-commercial-workspace[data-side-editor="true"] .nx-commercial-row article {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+.nx-commercial-workspace[data-side-editor="true"] .nx-commercial-row-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+.nx-commercial-workspace .nx-inspector-identity h3 {
+  font-size: 21px;
+  line-height: 1.3;
+}
+.nx-commercial-workspace .nx-inspector-fields {
+  gap: 13px;
+}
+.nx-commercial-workspace .nx-inspector-fields h4 {
+  font-size: 18px;
+  text-transform: none;
+}
+.nx-commercial-workspace .nx-editor-field,
+.nx-commercial-workspace .nx-editor-field > span {
+  font-size: 14px;
+}
+.nx-commercial-workspace .nx-editor-note {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.nx-commercial-quantities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.nx-commercial-quantities dt {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nx-commercial-quantities dd {
+  font-size: 16px;
+  margin-top: 3px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.nx-composition-basis {
+  padding: 12px 0;
+  border-block: 1px solid var(--border);
+  font-size: 14px;
+}
+.nx-composition-basis p {
+  margin-top: 6px;
+  color: var(--muted-foreground);
+}
+.nx-commercial-secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.nx-commercial-secondary-actions button {
+  min-height: 40px;
+  font-size: 14px;
+  text-align: left;
+}
+.nx-composition-comparison {
+  border-top: 1px solid var(--border);
+  padding-top: 15px;
+  display: grid;
+  gap: 12px;
+  font-size: 14px;
+}
+.nx-composition-comparison h5 {
+  font-size: 17px;
+}
+.nx-composition-comparison li {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.nx-composition-comparison code {
+  display: block;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.nx-composition-comparison li > strong {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.nx-commercial-cost-state {
+  font-size: 14px;
+  font-weight: 600;
+  margin-block: 12px;
+}
+.nx-cost-reference {
+  margin-bottom: 16px;
+  border-left: 3px solid var(--warning);
+  padding: 0 14px;
+  background: var(--nx-warning-surface);
+  border-radius: 3px;
+}
+.nx-cost-reference > summary {
+  min-height: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  font-size: 14px;
+}
+.nx-cost-reference > summary > strong {
+  font-weight: 600;
+}
+.nx-cost-reference > summary > span:last-child {
+  margin-left: auto;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.nx-cost-reference-body {
+  padding: 5px 0 14px;
+  font-size: 14px;
+}
+.nx-cost-reference-body > p {
+  margin-bottom: 8px;
+}
+.nx-cost-reference-body ul {
+  list-style: none;
+  margin-top: 8px;
+}
+.nx-cost-reference-body li {
+  padding: 14px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 18px;
+  border-top: 1px solid var(--border);
+}
+.nx-cost-reference-identity {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+}
+.nx-cost-reference-identity input {
+  margin-top: 3px;
+  flex: none;
+}
+.nx-cost-reference dl {
+  display: flex;
+  gap: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.nx-cost-reference dt {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.nx-cost-reference dd {
+  margin: 0;
+}
+.nx-cost-reference .nx-editor-link {
+  text-align: left;
+  min-height: 40px;
+  font-size: 14px;
+}
+.nx-commercial-sheet {
+  width: min(100vw, 920px);
+  max-width: none;
+  padding: 28px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.nx-commercial-sheet > [data-slot],
+.nx-commercial-sheet > div {
+  min-width: 0;
+}
+.nx-commercial-sheet [hidden] {
+  display: none !important;
+}
+.nx-commercial-sheet .nx-editor-note {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+.nx-commercial-sheet .nx-editor-field {
+  display: grid;
+  gap: 6px;
+  color: var(--foreground);
+  font-size: 14px;
+}
+.nx-commercial-sheet .nx-editor-input {
+  min-height: 44px;
+  width: 100%;
+  font-size: 15px;
+}
+.nx-commercial-sheet .nx-button {
+  min-height: 42px;
+}
+.nx-add-modes {
+  display: flex;
+  gap: 10px;
+  padding-block: 22px;
+}
+.nx-add-modes button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 15px;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+}
+.nx-add-modes button[aria-pressed="true"] {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.nx-add-modes button:disabled {
+  opacity: 0.55;
+}
+.nx-add-search {
+  display: grid;
+  gap: 12px;
+}
+.nx-add-results {
+  max-height: 320px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  border-block: 1px solid var(--border);
+}
+.nx-add-results li + li {
+  border-top: 1px solid var(--border);
+}
+.nx-add-results button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 5px 15px;
+  text-align: left;
+  padding: 14px 10px;
+}
+.nx-add-results button[aria-pressed="true"] {
+  background: var(--accent);
+  box-shadow: inset 3px 0 var(--primary);
+}
+.nx-add-results strong {
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.nx-add-results button > span {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nx-add-confirm {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+.nx-add-confirm h3 {
+  font-size: 21px;
+  line-height: 1.3;
+}
+.nx-add-destination {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  margin-block: 12px;
+}
+.nx-add-destination legend {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 9px;
+}
+.nx-add-destination label {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  cursor: pointer;
+  padding-block: 6px;
+}
+.nx-add-destination input {
+  margin-top: 3px;
+  flex: none;
+}
+.nx-add-destination strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
+.nx-add-destination small {
+  display: block;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nx-add-quantity {
+  width: min(100%, 320px);
+}
+.nx-add-quantity input {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nx-add-create {
+  display: grid;
+  gap: 12px;
+}
+.nx-add-create .nx-product-editor-body {
+  padding-inline: 0;
+}
+.nx-add-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+@media (max-width: 1150px) {
+  .nx-commercial-row article {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 0.8fr);
+  }
+  .nx-commercial-row-controls {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+  }
+}
+@media (max-width: 640px) {
+  .nx-commercial-row article {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+    gap: 12px;
+  }
+  .nx-commercial-row h3 {
+    font-size: 18px;
+  }
+  .nx-commercial-row-values {
+    gap: 12px;
+  }
+  .nx-commercial-row-values dt {
+    font-size: 13px;
+  }
+  .nx-commercial-row-values dd {
+    font-size: 15px;
+  }
+  .nx-commercial-row-controls .nx-object-check {
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .nx-commercial-workspace .nx-modality-filter {
+    flex: 1;
+    min-width: 100%;
+  }
+  .nx-commercial-workspace .nx-editor-search {
+    flex: 1;
+    min-width: 100%;
+  }
+  .nx-cost-reference-body li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-cost-reference > summary > span:last-child {
+    margin-left: 0;
+  }
+  .nx-commercial-sheet {
+    width: 100vw;
+    padding: 24px 18px;
+  }
+  .nx-commercial-sheet .nx-editor-input {
+    font-size: 16px;
+  }
+  .nx-add-modes {
+    gap: 3px;
+  }
+  .nx-add-modes button {
+    padding-inline: 8px;
+    font-size: 14px;
+  }
+  .nx-add-results button {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

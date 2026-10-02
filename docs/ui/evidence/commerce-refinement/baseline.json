@@ -1,0 +1,34 @@
+{
+  "baseCommit": "fe81267",
+  "boundary": "Same isolated test data; original source from git archive",
+  "metrics": [
+    {
+      "screen": "produtos",
+      "width": 1440,
+      "errors": [],
+      "firstRowY": 730,
+      "overflow": false
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1440,
+      "errors": [],
+      "firstRowY": 1578,
+      "overflow": false
+    },
+    {
+      "screen": "produtos",
+      "width": 390,
+      "errors": [],
+      "firstRowY": 1143,
+      "overflow": false
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 390,
+      "errors": [],
+      "firstRowY": 3708,
+      "overflow": false
+    }
+  ]
+}

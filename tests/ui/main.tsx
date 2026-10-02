@@ -17,6 +17,9 @@ import { Route as ListRoute } from "@/routes/_authenticated/comercial.propostas.
 import { Route as OcRoute } from "@/routes/_authenticated/compras.ordens-compra.$ordemId";
 import { Route as OpRoute } from "@/routes/_authenticated/compras.ordens-producao.$ordemId";
 import { Route as DefaultsRoute } from "@/routes/_authenticated/configuracoes.orcamentos";
+import { Route as ProductsRoute } from "@/routes/_authenticated/produtos.index";
+import { Route as ProductRoute } from "@/routes/_authenticated/produtos.$produtoId";
+import { ImportacaoAssistida } from "@/features/importacao/ImportacaoAssistida";
 import { useSave } from "@/features/propostas/hooks";
 import { OutletContext, useFixturePage } from "./router";
 import { query, scenario } from "./data";
@@ -51,12 +54,20 @@ const Workspace = WorkspaceRoute.options.component,
   Oc = OcRoute.options.component,
   Op = OpRoute.options.component;
 const Defaults = DefaultsRoute.options.component;
+const Products = ProductsRoute.options.component;
+const Product = ProductRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
     <QueryClientProvider client={client}>
       <AppShell>
-        {page === "list" ? (
+        {page === "produtos" ? (
+          <Products />
+        ) : page === "produto" ? (
+          <Product />
+        ) : page === "importacao" ? (
+          <ImportacaoAssistida podeRegistrar={scenario !== "restricted"} />
+        ) : page === "list" ? (
           <List />
         ) : page === "oc" ? (
           <Oc />

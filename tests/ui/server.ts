@@ -12,6 +12,7 @@ export const transicionarRevisao = record("transicionarRevisao");
 export const emitirOrdemCompra = record("emitirOrdemCompra");
 export const registrarMovimento = record("registrarMovimento");
 export const aprovarTecnica = record("aprovarTecnica");
+export const importarModeloPlanilha = record("importarModeloPlanilha");
 export const liberarOrdemProducao = record("liberarOrdemProducao");
 
 const operations = new Map();

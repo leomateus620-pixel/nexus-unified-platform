@@ -97,8 +97,10 @@ async function metrics() {
     overflow: document.documentElement.scrollWidth > innerWidth + 1,
     headings: [...document.querySelectorAll("h1,h2")].map((e) => e.textContent),
     rows: document.querySelectorAll("tbody tr").length,
-    firstObjectTop: document.querySelector(".nx-object-card")?.getBoundingClientRect().top ?? null,
-    objectCount: document.querySelectorAll(".nx-object-card").length,
+    firstObjectTop:
+      document.querySelector(".nx-object-card, .nx-commercial-row")?.getBoundingClientRect().top ??
+      null,
+    objectCount: document.querySelectorAll(".nx-object-card, .nx-commercial-row").length,
     unnamedInputs: [...document.querySelectorAll("input,textarea,select")]
       .filter(
         (e) =>
@@ -248,8 +250,6 @@ if (phase !== "visual") {
   for (const count of [17, 100, 500]) {
     for (const action of ["input", "selection", "panel", "scroll"]) {
       await go("itens-comerciais", "normal", count);
-      if (action === "input" && catalog)
-        await page.getByRole("button", { name: "Buscar itens", exact: true }).click();
       const samples = [];
       for (let i = 0; i < 5; i++) {
         if (action === "panel" && i > 0) {

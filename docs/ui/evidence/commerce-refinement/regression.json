@@ -1,0 +1,83 @@
+{
+  "boundary": "Local Chromium, isolated fixtures; no production or physical-device claim",
+  "capture": {
+    "viewports": 88,
+    "scenarios": 12,
+    "errors": []
+  },
+  "accessibility": {
+    "contrastPairs": 16,
+    "checks": 14,
+    "errors": []
+  },
+  "autosave": {
+    "checks": [
+      {
+        "name": "Rapid typing and stage change retain both text fields, one grouped checkpoint and actual history",
+        "passed": true
+      },
+      {
+        "name": "Older checkpoint confirmation cannot overwrite newer typing; the next group confirms automatically",
+        "passed": true
+      },
+      {
+        "name": "Restoring the original value during a pending write survives navigation and is compared in FIFO order",
+        "passed": true
+      },
+      {
+        "name": "Queued full-form edits preserve an untouched field changed by another editor",
+        "passed": true
+      },
+      {
+        "name": "Lost checkpoint response retries the same operation UUID without a second history event",
+        "passed": true
+      },
+      {
+        "name": "Lost revision write response is confirmed by reading identical persisted fields",
+        "passed": true
+      },
+      {
+        "name": "Failed persistence preserves the input, blocks calculation and recovers with explicit retry",
+        "passed": true
+      },
+      {
+        "name": "Successful edits to another field cannot clear a failed field; global retry confirms both after navigation",
+        "passed": true
+      },
+      {
+        "name": "Invalid parameter survives stage round-trip and never reports saved; valid correction confirms",
+        "passed": true
+      },
+      {
+        "name": "Sparse parameters preserve an untouched concurrent value while a newer local edit awaits checkpoint",
+        "passed": true
+      },
+      {
+        "name": "Restoring an implicit default before persistence remains a sparse no-op",
+        "passed": true
+      },
+      {
+        "name": "Restoring an implicit parameter default during a pending write survives navigation in FIFO order",
+        "passed": true
+      },
+      {
+        "name": "Correcting an invalid draft back to its implicit default clears pending without a write",
+        "passed": true
+      },
+      {
+        "name": "Concurrent edit of the same field is rejected with local input preserved",
+        "passed": true
+      },
+      {
+        "name": "Reverted draft is a confirmed no-op and does not pollute history",
+        "passed": true
+      },
+      {
+        "name": "Issued revision has no editable text inputs and schedules no persistence/calculation",
+        "passed": true
+      }
+    ],
+    "errors": []
+  },
+  "execution": "Capture and interface modules passed in the existing UI runner. Autosave was rerun with frozen source after a development-server hot reload interrupted its first execution."
+}

@@ -1,7 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useMemo, useState } from "react";
-import { ArrowDown, ArrowUp, ChevronRight, Plus, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowDown, ArrowLeft, ArrowUp, ChevronRight, Plus, Trash2 } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import "./catalogo.css";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useOrg } from "@/features/org/session";
@@ -16,11 +24,8 @@ import { nomeTipo, type TipoItem } from "./codigos";
 
 const input =
   "h-10 w-full rounded border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
-const btn =
-  "inline-flex h-10 items-center gap-1.5 rounded border px-4 text-sm disabled:opacity-50";
-const rotulo =
-  "font-display text-[11px] font-bold uppercase tracking-wider text-muted-foreground";
-const cartao = "rounded-lg border border-border bg-card";
+const btn = "inline-flex h-10 items-center gap-1.5 rounded border px-4 text-sm disabled:opacity-50";
+const rotulo = "text-sm font-semibold text-foreground";
 
 export const TIPOS_GUIADOS: {
   valor: TipoItem;
@@ -153,10 +158,10 @@ export function FamiliaPicker({
   return (
     <>
       <input
-        aria-label="Família"
+        aria-label="Grupo comercial / prefixo do código"
         list={id}
         className={input}
-        placeholder="Nome ou sigla (ex.: linha de vida, LVHF)"
+        placeholder="Busque pelo nome ou pela sigla"
         value={texto || (atual ? `${atual.nome} — ${atual.sigla}` : "")}
         onChange={(e) => {
           setTexto(e.target.value);
@@ -230,13 +235,19 @@ export function ProductEditor({
   tipoInicial,
   compacto,
   rotuloSalvar,
+  submitDisabled,
+  submitHint,
+  onBusyChange,
   onSaved,
   onCancel,
 }: {
-  produtoId?: string;
+  produtoId?: string | undefined;
   tipoInicial?: TipoItem;
   compacto?: boolean;
   rotuloSalvar?: string;
+  submitDisabled?: boolean;
+  submitHint?: string | undefined;
+  onBusyChange?: (busy: boolean) => void;
   onSaved?: (r: {
     id: string;
     codigo: string;
@@ -264,6 +275,10 @@ export function ProductEditor({
   const [chave, setChave] = useState(() => crypto.randomUUID());
   const [codigoAtual, setCodigoAtual] = useState<string | null>(null);
   const [subCadastro, setSubCadastro] = useState(false);
+  const [subBusy, setSubBusy] = useState(false);
+  const [reclassBusy, setReclassBusy] = useState(false);
+  const hidratado = useRef<string | null>(null);
+  const voltarComposicao = useRef<HTMLDivElement>(null);
 
   const existente = useQuery({
     queryKey: ["produto-editor", produtoId],
@@ -284,7 +299,8 @@ export function ProductEditor({
   });
   useEffect(() => {
     const d = existente.data;
-    if (!d) return;
+    if (!d || hidratado.current === produtoId) return;
+    hidratado.current = produtoId ?? null;
     setCodigoAtual(d.p.codigo);
     setF({
       tipo: (d.p.tipo_item as TipoItem) ?? "",
@@ -305,7 +321,7 @@ export function ProductEditor({
         quantidade: String(x.quantidade).replace(".", ","),
       })),
     );
-  }, [existente.data]);
+  }, [existente.data, produtoId]);
 
   const previa = useQuery({
     queryKey: ["previa_codigo", orgId, f.familia, f.tipo],
@@ -328,7 +344,9 @@ export function ProductEditor({
   const salvar = useMutation({
     mutationFn: async () => {
       if (!f.tipo) throw new Error("Escolha o que você quer cadastrar.");
-      if (!f.familia) throw new Error("Escolha a família.");
+      if (submitDisabled) throw new Error(submitHint || "Revise os dados antes de salvar.");
+      if (!f.familia && !produtoId)
+        throw new Error("Escolha o grupo comercial / prefixo do código.");
       if (f.descricao.trim().length < 2) throw new Error("Informe o nome do produto.");
       if (!f.unidade.trim()) throw new Error("Informe a unidade.");
       const custo = f.custo.trim() ? num(f.custo) : null;
@@ -383,316 +401,334 @@ export function ProductEditor({
     },
   });
   const set = (k: keyof Estado) => (e: { target: { value: string } }) => {
+    if (salvar.isPending || reclassBusy) return;
     salvar.reset();
     setF((x) => ({ ...x, [k]: e.target.value }));
   };
+  useEffect(() => {
+    onBusyChange?.(salvar.isPending || subBusy || reclassBusy);
+  }, [onBusyChange, salvar.isPending, subBusy, reclassBusy]);
 
   if (produtoId && existente.isPending)
-    return <p className="text-sm text-muted-foreground">Carregando cadastro…</p>;
+    return (
+      <p role="status" className="p-6 text-sm text-muted-foreground">
+        Carregando cadastro…
+      </p>
+    );
+  if (produtoId && existente.isError)
+    return (
+      <div role="alert" className="p-6">
+        <p className="text-sm text-destructive">
+          Não foi possível abrir este cadastro: {(existente.error as Error).message}
+        </p>
+        <button type="button" className={btn} onClick={() => existente.refetch()}>
+          Tentar novamente
+        </button>
+      </div>
+    );
   const familiaAtual = familias.find((x) => x.sigla === f.familia);
+  const retornar = () => {
+    setSubCadastro(false);
+    setSubBusy(false);
+    requestAnimationFrame(() => voltarComposicao.current?.focus());
+  };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        salvar.mutate();
-      }}
-      className={`overflow-hidden ${cartao}`}
-    >
-      <div className="border-b border-border px-6 py-4">
-        <h2 className="font-display text-base font-bold uppercase tracking-wide text-foreground">
-          {produtoId ? "Editar cadastro" : "Cadastro de item comercial"}
-        </h2>
-      </div>
-
-      <div className="grid gap-7 p-6">
-      {perms.data && !podeSalvar && (
-        <p
-          role="note"
-          className="rounded border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-foreground"
-        >
-          {produtoId
-            ? "Editar o cadastro mestre exige papel Comercial, Engenharia, Compras ou Admin."
-            : "Cadastrar produto novo exige papel Engenharia, Compras ou Admin. Peça a um administrador o cadastro ou essa permissão."}
-        </p>
-      )}
-
-      {!produtoId ? (
-        <fieldset className="grid gap-3">
-          <legend className={`mb-1 ${rotulo}`}>O que você quer cadastrar?</legend>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {TIPOS_GUIADOS.map((t) => {
-              const ativo = f.tipo === t.valor;
-              return (
-                <button
-                  key={t.valor}
-                  type="button"
-                  aria-pressed={ativo}
-                  onClick={() =>
-                    setF((x) => ({
-                      ...x,
-                      tipo: t.valor,
-                      base_custo:
-                        t.valor === "P"
-                          ? "completo"
-                          : x.base_custo === "completo" && x.tipo === "P"
-                            ? "composto"
-                            : x.base_custo,
-                    }))
-                  }
-                  className={`flex flex-col items-center justify-center rounded border-2 py-4 text-center transition-colors ${
-                    ativo
-                      ? "border-primary bg-primary/10 ring-1 ring-primary/20"
-                      : "border-input hover:bg-muted/40"
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <span
-                      className={`text-sm font-bold ${ativo ? "text-primary" : "text-foreground"}`}
-                    >
-                      {t.nome}
-                    </span>
-                    {t.apoio && (
-                      <span
-                        className={`rounded px-1 text-[10px] font-bold ${
-                          ativo
-                            ? "bg-primary/20 text-primary"
-                            : "bg-muted text-muted-foreground"
-                        }`}
-                      >
-                        {t.apoio}
-                      </span>
-                    )}
-                  </span>
-                  {!compacto && (
-                    <span
-                      className={`mt-1 text-[10px] uppercase ${
-                        ativo ? "font-medium text-primary" : "text-muted-foreground"
-                      }`}
-                    >
-                      {t.curto}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+    <div className="nx-product-editor" data-compact={compacto || undefined}>
+      <form
+        hidden={subCadastro}
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!salvar.isPending && !reclassBusy) salvar.mutate();
+        }}
+      >
+        <fieldset className="nx-product-editor-body" disabled={salvar.isPending || reclassBusy}>
+          <div className="nx-editor-scope">
+            <span>Cadastro mestre</span>
+            <p>
+              {produtoId
+                ? "Alterações no produto reutilizável. Revisões mantêm seus próprios ajustes."
+                : "Cadastre o produto uma vez para utilizá-lo no catálogo e nas propostas."}
+            </p>
           </div>
-        </fieldset>
-      ) : (
-        <ReclassificarBloco
-          produtoId={produtoId}
-          codigo={codigoAtual ?? ""}
-          familia={f.familia}
-          tipo={f.tipo}
-          familias={familias}
-          pode={!!perms.data?.aprovar_tecnica}
-          onDone={() => existente.refetch()}
-        />
-      )}
+          {perms.isPending && (
+            <p role="status" className="text-sm text-muted-foreground">
+              Verificando permissão de cadastro…
+            </p>
+          )}
+          {perms.isError && (
+            <p role="alert" className="text-sm text-destructive">
+              Não foi possível verificar sua permissão.{" "}
+              <button type="button" className="underline" onClick={() => perms.refetch()}>
+                Tentar novamente
+              </button>
+            </p>
+          )}
+          {perms.data && !podeSalvar && (
+            <p role="note" className="nx-catalog-notice">
+              {produtoId
+                ? "Você pode consultar este produto. A edição exige permissão de cadastro."
+                : "Cadastro restrito a Engenharia, Compras ou Admin. Solicite essa permissão ao administrador."}
+            </p>
+          )}
 
-      {f.tipo && (
-        <>
-          <div className="grid grid-cols-12 items-end gap-4 sm:gap-6">
-            {!produtoId && (
-              <label className="col-span-12 grid gap-1.5 sm:col-span-8">
-                <span className={rotulo}>Família — grupo técnico do produto</span>
-                <FamiliaPicker
-                  id={`fam-${chave}`}
-                  familias={familias}
-                  value={f.familia}
-                  onChange={(v) => setF((x) => ({ ...x, familia: v }))}
-                />
-                {familiaAtual?.situacao === "a_confirmar" && (
-                  <span className="text-xs text-warning">
-                    Família com significado a confirmar: {familiaAtual.observacao}
-                  </span>
-                )}
-              </label>
-            )}
-            {!produtoId && (
-              <div className="col-span-12 sm:col-span-4">
-                <div className="rounded border border-border bg-background p-3">
-                  <span className="block text-[9px] font-bold uppercase text-muted-foreground">
-                    Código gerado
-                  </span>
-                  <div className="mt-1 flex items-baseline justify-between gap-2">
-                    <span
-                      className="font-mono text-sm font-bold tracking-wider text-primary"
-                      aria-live="polite"
-                    >
-                      {previa.data ?? "—"}
-                    </span>
-                    <span className="text-[9px] uppercase text-muted-foreground">
-                      {previa.data ? "prévia · confirmado ao salvar" : "prévia"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-            <label className="col-span-12 grid gap-1.5 sm:col-span-7">
+          <section className="nx-editor-section" aria-label="Identificação do produto">
+            <h3>Identificação</h3>
+            <label className="grid gap-1.5">
               <span className={rotulo}>Nome do produto</span>
               <input
+                autoFocus
+                required
+                minLength={2}
+                maxLength={300}
                 aria-label="Nome do produto"
                 className={input}
                 value={f.descricao}
                 onChange={set("descricao")}
-                placeholder="Ex.: Pilar soldado"
+                placeholder="Nome que identifica o produto comercialmente"
               />
               {sugestao && sugestao !== f.descricao && (
                 <button
                   type="button"
-                  className="justify-self-start text-left text-xs text-primary underline"
+                  className="justify-self-start text-left text-sm text-primary underline"
                   onClick={() => setF((x) => ({ ...x, descricao: sugestao }))}
                 >
                   Usar “{sugestao}”
                 </button>
               )}
             </label>
-            <label className="col-span-5 grid gap-1.5 sm:col-span-2">
-              <span className={rotulo}>Unidade</span>
-              <input
-                aria-label="Unidade"
-                className={`${input} text-center`}
-                value={f.unidade}
-                onChange={set("unidade")}
-              />
-            </label>
-            <label className="col-span-7 grid gap-1.5 sm:col-span-3">
-              <span className={rotulo}>Fornecimento</span>
-              <select
-                aria-label="Fornecimento"
-                className={input}
-                value={f.modalidade}
-                onChange={set("modalidade")}
-              >
-                <option value="comprar">Comprar</option>
-                <option value="fabricar">Fabricar</option>
-                <option value="terceirizar">Terceirizar</option>
-              </select>
-            </label>
-          </div>
+            {!produtoId ? (
+              <fieldset className="mt-4">
+                <legend className={`mb-2 ${rotulo}`}>Tipo de item</legend>
+                <div className="nx-product-types">
+                  {TIPOS_GUIADOS.map((t) => (
+                    <label key={t.valor} data-selected={f.tipo === t.valor}>
+                      <input
+                        type="radio"
+                        name={`tipo-${chave}`}
+                        checked={f.tipo === t.valor}
+                        onChange={() =>
+                          setF((x) => ({
+                            ...x,
+                            tipo: t.valor,
+                            base_custo:
+                              t.valor === "P"
+                                ? "completo"
+                                : x.tipo === "P"
+                                  ? "composto"
+                                  : x.base_custo,
+                          }))
+                        }
+                      />
+                      <span>
+                        <strong>{t.nome}</strong>
+                        <small>{t.explica}</small>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            ) : (
+              <div className="mt-4">
+                <ReclassificarBloco
+                  produtoId={produtoId}
+                  codigo={codigoAtual ?? ""}
+                  familia={f.familia}
+                  tipo={f.tipo}
+                  familias={familias}
+                  pode={!!perms.data?.aprovar_tecnica}
+                  onBusyChange={setReclassBusy}
+                  onDone={(identidade) => {
+                    salvar.reset();
+                    setCodigoAtual(identidade.codigo);
+                    setF((draft) => ({
+                      ...draft,
+                      familia: identidade.familia,
+                      tipo: identidade.tipo,
+                    }));
+                    void existente.refetch();
+                  }}
+                />
+              </div>
+            )}
+          </section>
 
-          <details
-            className="group overflow-hidden rounded-md border border-border bg-muted/20"
-            open={!compacto && !!produtoId}
-          >
-            <summary className="flex cursor-pointer list-none items-center justify-between border-b border-transparent px-4 py-3 group-open:border-border">
-              <span
-                className={`flex items-center gap-2 ${rotulo} text-foreground`}
-              >
-                <ChevronRight
-                  size={12}
-                  className="transition-transform group-open:rotate-90"
-                  aria-hidden="true"
+          <section className="nx-editor-section" aria-label="Classificação do produto">
+            <h3>Classificação</h3>
+            {!produtoId && (
+              <label className="grid gap-1.5">
+                <span className={rotulo}>Grupo comercial / prefixo do código</span>
+                <FamiliaPicker
+                  id={`familia-${chave}`}
+                  familias={familias}
+                  value={f.familia}
+                  onChange={(v) => setF((x) => ({ ...x, familia: v }))}
                 />
-                Detalhes complementares
+                <span className="text-sm text-muted-foreground">
+                  Define o prefixo e a série de numeração. A aplicação técnica é uma classificação
+                  independente.
+                </span>
+              </label>
+            )}
+            {fam.isError && (
+              <p role="alert" className="text-sm text-destructive">
+                Não foi possível consultar os grupos.{" "}
+                <button type="button" className="underline" onClick={() => fam.refetch()}>
+                  Tentar novamente
+                </button>
+              </p>
+            )}
+            {familiaAtual?.situacao === "a_confirmar" && (
+              <p className="mt-2 text-sm text-warning">{familiaAtual.observacao}</p>
+            )}
+            {!produtoId && (
+              <div className="nx-code-preview">
+                <span>Prévia do código</span>
+                <strong className="font-mono">
+                  {previa.isFetching
+                    ? "Consultando…"
+                    : (previa.data ?? "Selecione o grupo e o tipo")}
+                </strong>
+                <span>Confirmado ao salvar · a prévia não reserva o número.</span>
+                {previa.isError && (
+                  <p role="alert" className="text-destructive">
+                    Prévia indisponível. O código definitivo é gerado ao salvar.
+                  </p>
+                )}
+              </div>
+            )}
+            <div className="mt-3 text-sm">
+              <span className="font-semibold">
+                Família técnica{" "}
+                <span className="font-normal text-muted-foreground">· opcional</span>
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground italic group-open:hidden">
-                Ver mais campos
-              </span>
-            </summary>
-            <div className="grid gap-4 p-4 sm:grid-cols-6 sm:gap-6 sm:p-6">
-              <label className="grid gap-1.5 sm:col-span-2">
-                <span className={rotulo}>Material</span>
-                <input
-                  aria-label="Material"
-                  className={input}
-                  value={f.material}
-                  onChange={set("material")}
-                />
-              </label>
-              <label className="grid gap-1.5 sm:col-span-2">
-                <span className={rotulo}>Dimensões</span>
-                <input
-                  aria-label="Dimensões"
-                  className={input}
-                  value={f.dimensoes}
-                  onChange={set("dimensoes")}
-                  placeholder="Ex.: 600 mm"
-                />
-              </label>
-              <label className="grid gap-1.5 sm:col-span-2">
-                <span className={rotulo}>Acabamento</span>
-                <input
-                  aria-label="Acabamento"
-                  className={input}
-                  value={f.acabamento}
-                  onChange={set("acabamento")}
-                />
-              </label>
-              <label className="grid gap-1.5 sm:col-span-2">
-                <span className={rotulo}>NCM</span>
-                <input aria-label="NCM" className={input} value={f.ncm} onChange={set("ncm")} />
-              </label>
-              {verCusto && !produtoId && (
-                <label className="grid gap-1.5 sm:col-span-4">
-                  <span className={rotulo}>
-                    Custo unitário (R$){" "}
-                    <span className="font-normal normal-case italic tracking-normal">
-                      — deixe vazio se desconhecido
-                    </span>
-                  </span>
-                  <span className="relative block">
-                    <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-xs font-bold text-muted-foreground">
-                      R$
-                    </span>
-                    <input
-                      aria-label="Custo"
-                      inputMode="decimal"
-                      className={`${input} pl-9`}
-                      value={f.custo}
-                      onChange={set("custo")}
-                      placeholder="0,00"
-                    />
-                  </span>
-                </label>
-              )}
+              <p className="text-muted-foreground">
+                {existente.data?.p.familia_tecnica
+                  ? `${familias.find((grupo) => grupo.sigla === existente.data.p.familia_tecnica)?.nome ?? existente.data.p.familia_tecnica} — ${existente.data.p.familia_tecnica}`
+                  : "Não informada"}
+              </p>
+              <p className="mt-1 text-muted-foreground">
+                Classificação independente do prefixo. A edição opcional está disponível na ficha do
+                produto.
+              </p>
             </div>
-          </details>
+            <details className="nx-editor-details">
+              <summary>Características técnicas</summary>
+              <div className="grid gap-4 pt-3 sm:grid-cols-3">
+                {(
+                  [
+                    ["material", "Material"],
+                    ["dimensoes", "Dimensões"],
+                    ["acabamento", "Acabamento"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="grid gap-1.5">
+                    <span className={rotulo}>{label}</span>
+                    <input
+                      aria-label={label}
+                      maxLength={120}
+                      className={input}
+                      value={f[key]}
+                      onChange={set(key)}
+                    />
+                  </label>
+                ))}
+              </div>
+            </details>
+          </section>
+
+          <section className="nx-editor-section" aria-label="Fornecimento do produto">
+            <h3>Fornecimento</h3>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <label className="grid gap-1.5">
+                <span className={rotulo}>Modalidade</span>
+                <select
+                  aria-label="Fornecimento"
+                  className={input}
+                  value={f.modalidade}
+                  onChange={set("modalidade")}
+                >
+                  <option value="comprar">Comprar</option>
+                  <option value="fabricar">Fabricar</option>
+                  <option value="terceirizar">Terceirizar</option>
+                </select>
+              </label>
+              <label className="grid gap-1.5">
+                <span className={rotulo}>Unidade</span>
+                <input
+                  required
+                  maxLength={10}
+                  aria-label="Unidade"
+                  className={input}
+                  value={f.unidade}
+                  onChange={set("unidade")}
+                />
+              </label>
+              <label className="grid gap-1.5">
+                <span className={rotulo}>
+                  NCM <span className="font-normal text-muted-foreground">· opcional</span>
+                </span>
+                <input
+                  maxLength={20}
+                  aria-label="NCM"
+                  className={input}
+                  value={f.ncm}
+                  onChange={set("ncm")}
+                />
+              </label>
+            </div>
+            {verCusto && !produtoId && (
+              <label className="mt-4 grid max-w-sm gap-1.5">
+                <span className={rotulo}>Referência inicial de custo unitário (R$)</span>
+                <input
+                  aria-label="Custo"
+                  inputMode="decimal"
+                  className={`${input} tabular-nums`}
+                  value={f.custo}
+                  onChange={set("custo")}
+                  placeholder="Deixe vazio se desconhecido"
+                />
+                <span className="text-sm text-muted-foreground">
+                  Vazio: sem referência. Zero: R$ 0,00 informado.
+                </span>
+              </label>
+            )}
+          </section>
 
           {composto && (
-            <section
-              className="overflow-hidden rounded-md border border-border"
-              aria-label="Composição do produto"
-            >
-              <div className="border-b border-border px-4 py-3">
-                <h4 className="font-display text-xs font-bold uppercase tracking-wider text-foreground">
-                  Composição do produto ·{" "}
-                  {f.tipo === "S" ? "Peças deste conjunto" : "Componentes desta montagem"}
-                </h4>
+            <section className="nx-editor-section" aria-label="Composição do produto">
+              <div tabIndex={-1} ref={voltarComposicao} className="outline-none">
+                <h3>Composição</h3>
               </div>
-              <div className="p-4 sm:p-6">
-              <fieldset className="grid gap-2 text-xs sm:grid-cols-2">
-                <label
-                  className={`flex cursor-pointer items-center gap-2 rounded border px-3 py-2.5 transition-colors ${
-                    f.base_custo === "composto"
-                      ? "border-primary bg-primary/10"
-                      : "border-input hover:bg-muted/40"
-                  }`}
-                >
+              <p className="mb-3 text-sm text-muted-foreground">
+                Componentes e quantidades por 1 {f.descricao || "unidade do produto"}.
+              </p>
+              <fieldset className="nx-cost-basis">
+                <legend className="sr-only">Base de custo</legend>
+                <label>
                   <input
                     type="radio"
-                    className="accent-[var(--primary)]"
+                    name={`base-custo-${chave}`}
                     checked={f.base_custo === "composto"}
                     onChange={() => setF((x) => ({ ...x, base_custo: "composto" }))}
                   />
-                  Custo pelos componentes (fabricado/montado)
+                  <span>
+                    <strong>Custo por composição</strong>
+                    <small>Os componentes participam da formação do custo.</small>
+                  </span>
                 </label>
-                <label
-                  className={`flex cursor-pointer items-center gap-2 rounded border px-3 py-2.5 transition-colors ${
-                    f.base_custo === "completo"
-                      ? "border-primary bg-primary/10"
-                      : "border-input hover:bg-muted/40"
-                  }`}
-                >
+                <label>
                   <input
                     type="radio"
-                    className="accent-[var(--primary)]"
+                    name={`base-custo-${chave}`}
                     checked={f.base_custo === "completo"}
                     onChange={() => setF((x) => ({ ...x, base_custo: "completo" }))}
                   />
-                  Produto comprado completo (composição apenas informativa)
+                  <span>
+                    <strong>Produto comprado completo</strong>
+                    <small>Componentes internos informativos; o custo está no produto.</small>
+                  </span>
                 </label>
               </fieldset>
               <ComposicaoEditor
@@ -700,78 +736,148 @@ export function ProductEditor({
                 setLinhas={setLinhas}
                 excluir={produtoId}
                 tipoPai={f.tipo as TipoItem}
+                nomePai={f.descricao}
                 onNovo={() => setSubCadastro(true)}
               />
-              {subCadastro && (
-                <div className="mt-3 rounded border border-primary/30 bg-primary/5 p-3">
-                  <p className="mb-2 text-xs text-muted-foreground">
-                    Cadastrar componente que falta — volta para esta composição ao salvar.
-                  </p>
-                  <ProductEditor
-                    compacto
-                    tipoInicial="P"
-                    rotuloSalvar="Cadastrar e adicionar à composição"
-                    onCancel={() => setSubCadastro(false)}
-                    onSaved={(r) => {
-                      setLinhas((ls) =>
-                        ls.some((l) => l.filho_id === r.id)
-                          ? ls
-                          : [...ls, { filho_id: r.id, quantidade: "1" }],
-                      );
-                      setSubCadastro(false);
-                    }}
-                  />
-                </div>
-              )}
               {!linhas.length && (
-                <p className="mt-2 text-xs text-warning">
-                  Sem componentes: o produto será salvo como “Composição pendente”.
+                <p className="mt-3 text-sm text-warning">
+                  Sem componentes: o produto será salvo com composição pendente.
                 </p>
               )}
-              </div>
             </section>
           )}
-        </>
-      )}
-      </div>
-
-      <div className="flex flex-wrap items-center justify-end gap-3 border-t border-border bg-muted/30 px-6 py-4">
-        {salvar.isSuccess && (
-          <span className="mr-auto text-sm text-primary" role="status">
-            {salvar.data.novo ? (
-              <>
-                Cadastrado como <strong className="font-mono">{salvar.data.codigo}</strong>.
-              </>
-            ) : (
-              "Cadastro salvo."
-            )}
-          </span>
-        )}
-        {salvar.isError && (
-          <span className="mr-auto text-sm text-destructive" role="alert">
-            {(salvar.error as Error).message}
-          </span>
-        )}
-        {onCancel && (
+        </fieldset>
+        <div className="nx-product-editor-footer">
+          {salvar.isSuccess && (
+            <p role="status" className="basis-full text-sm text-primary">
+              {salvar.data.novo ? (
+                <>
+                  Produto cadastrado. Código confirmado:{" "}
+                  <strong className="font-mono">{salvar.data.codigo}</strong>.
+                </>
+              ) : (
+                <>
+                  Cadastro salvo. Código <strong className="font-mono">{salvar.data.codigo}</strong>
+                  .
+                </>
+              )}
+            </p>
+          )}
+          {salvar.isError && (
+            <p role="alert" className="basis-full text-sm text-destructive">
+              {(salvar.error as Error).message}
+            </p>
+          )}
+          {submitDisabled && submitHint && (
+            <p role="status" className="basis-full text-sm text-warning">
+              {submitHint}
+            </p>
+          )}
+          {onCancel && (
+            <button
+              type="button"
+              disabled={salvar.isPending || reclassBusy}
+              className={`${btn} border-border text-foreground`}
+              onClick={onCancel}
+            >
+              Cancelar
+            </button>
+          )}
           <button
-            type="button"
-            className={`${btn} border-transparent font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground`}
-            onClick={onCancel}
+            type="submit"
+            disabled={salvar.isPending || reclassBusy || !podeSalvar || !f.tipo || submitDisabled}
+            className={`${btn} border-primary bg-primary font-semibold text-primary-foreground`}
           >
-            Cancelar
+            {salvar.isPending
+              ? "Salvando…"
+              : (rotuloSalvar ?? (produtoId ? "Salvar cadastro" : "Cadastrar item"))}
           </button>
-        )}
-        <button
-          type="submit"
-          disabled={salvar.isPending || !podeSalvar || !f.tipo}
-          className={`${btn} border-primary bg-primary font-display font-bold uppercase tracking-widest text-primary-foreground shadow-sm transition-colors hover:brightness-110`}
-        >
-          {salvar.isPending
-            ? "Salvando…"
-            : (rotuloSalvar ?? (produtoId ? "Salvar cadastro" : "Cadastrar"))}
-        </button>
-      </div>
-    </form>
+        </div>
+      </form>
+      {subCadastro && (
+        <div>
+          <div className="nx-subproduct-context">
+            <button
+              type="button"
+              className="inline-flex items-center gap-2 text-sm font-semibold"
+              disabled={subBusy}
+              onClick={retornar}
+            >
+              <ArrowLeft size={16} />
+              Voltar para {f.descricao || "o produto principal"}
+            </button>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Cadastrar componente faltante · o preenchimento do produto principal está preservado.
+            </p>
+          </div>
+          <ProductEditor
+            compacto
+            tipoInicial="P"
+            onBusyChange={setSubBusy}
+            rotuloSalvar="Cadastrar e adicionar à composição"
+            onCancel={retornar}
+            onSaved={(r) => {
+              setLinhas((ls) =>
+                ls.some((l) => l.filho_id === r.id)
+                  ? ls
+                  : [...ls, { filho_id: r.id, quantidade: "1" }],
+              );
+              retornar();
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function ProductEditorPanel({
+  open,
+  onOpenChange,
+  title,
+  description,
+  ...props
+}: Parameters<typeof ProductEditor>[0] & {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title?: string;
+  description?: string;
+}) {
+  const [busy, setBusy] = useState(false);
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={(next) => {
+        if (!busy) onOpenChange(next);
+      }}
+    >
+      <SheetContent
+        className="nexus-operational nx-catalog-shell nx-product-panel"
+        onEscapeKeyDown={(event) => {
+          if (busy) event.preventDefault();
+        }}
+        onInteractOutside={(event) => event.preventDefault()}
+      >
+        <SheetHeader className="nx-product-panel-heading">
+          <SheetTitle className="font-display text-xl">
+            {title ?? (props.produtoId ? "Editar cadastro mestre" : "Cadastrar item")}
+          </SheetTitle>
+          <SheetDescription>
+            {description ?? "Produto reutilizável no catálogo e nas propostas."}
+          </SheetDescription>
+        </SheetHeader>
+        <div className="nx-product-panel-scroll">
+          <ProductEditor
+            {...props}
+            onBusyChange={(value) => {
+              setBusy(value);
+              props.onBusyChange?.(value);
+            }}
+            onCancel={props.onCancel ?? (() => onOpenChange(false))}
+          />
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -780,12 +886,14 @@ function ComposicaoEditor({
   setLinhas,
   excluir,
   tipoPai,
+  nomePai,
   onNovo,
 }: {
   linhas: Linha[];
   setLinhas: (f: (l: Linha[]) => Linha[]) => void;
   excluir?: string | undefined;
   tipoPai: TipoItem;
+  nomePai: string;
   onNovo: () => void;
 }) {
   const cat = useCatalogo();
@@ -808,7 +916,7 @@ function ComposicaoEditor({
       return n;
     });
   return (
-    <div className="mt-3 grid gap-2">
+    <div className="nx-composition-editor mt-3 grid gap-3">
       {linhas.length > 0 && (
         <ul className="divide-y divide-border rounded border border-border">
           {linhas.map((l, i) => {
@@ -817,16 +925,16 @@ function ComposicaoEditor({
               <li key={l.filho_id} className="flex flex-wrap items-center gap-2 px-2 py-1.5">
                 <span className="min-w-0 flex-1 text-sm text-foreground">
                   {p?.descricao ?? "…"}{" "}
-                  <span className="font-mono text-xs text-muted-foreground">
+                  <span className="block font-mono text-sm text-muted-foreground">
                     {p?.codigo} · {nomeTipo(p?.tipo_item)}
                   </span>
                 </span>
-                <label className="flex items-center gap-1 text-xs text-muted-foreground">
-                  Quantidade por unidade
+                <label className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                  Por 1 {nomePai || "produto pai"}
                   <input
-                    aria-label={`Quantidade por unidade de ${p?.descricao ?? ""}`}
+                    aria-label={`Quantidade de ${p?.descricao ?? "componente"} por 1 ${nomePai || "produto pai"}`}
                     inputMode="decimal"
-                    className="h-8 w-20 rounded border border-input bg-background px-2 text-right text-sm text-foreground"
+                    className="h-10 w-24 rounded border border-input bg-background px-2 text-right text-sm tabular-nums text-foreground"
                     value={l.quantidade}
                     onChange={(e) =>
                       setLinhas((ls) =>
@@ -840,19 +948,19 @@ function ComposicaoEditor({
                 </label>
                 <button
                   type="button"
-                  aria-label="Subir"
+                  aria-label={`Subir ${p?.descricao ?? "componente"}`}
                   disabled={i === 0}
                   onClick={() => mover(i, -1)}
-                  className="p-1 disabled:opacity-30"
+                  className="nx-composition-icon disabled:opacity-30"
                 >
                   <ArrowUp size={14} />
                 </button>
                 <button
                   type="button"
-                  aria-label="Descer"
+                  aria-label={`Descer ${p?.descricao ?? "componente"}`}
                   disabled={i === linhas.length - 1}
                   onClick={() => mover(i, 1)}
-                  className="p-1 disabled:opacity-30"
+                  className="nx-composition-icon disabled:opacity-30"
                 >
                   <ArrowDown size={14} />
                 </button>
@@ -860,7 +968,7 @@ function ComposicaoEditor({
                   type="button"
                   aria-label={`Remover ${p?.descricao ?? ""}`}
                   onClick={() => setLinhas((ls) => ls.filter((x) => x.filho_id !== l.filho_id))}
-                  className="p-1 text-destructive"
+                  className="nx-composition-icon text-destructive"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -871,8 +979,9 @@ function ComposicaoEditor({
       )}
       <div className="flex flex-wrap gap-2">
         <input
+          type="search"
           aria-label="Buscar componente existente"
-          placeholder="Buscar componente existente (nome, código, família, medida)"
+          placeholder="Buscar componente existente (nome, código, grupo, medida)"
           className={`${input} min-w-[14rem] flex-1`}
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
@@ -883,7 +992,20 @@ function ComposicaoEditor({
       </div>
       {busca.trim() && (
         <ul className="divide-y divide-border rounded border border-border">
-          {opcoes.length === 0 && (
+          {cat.isPending && (
+            <li role="status" className="text-sm text-muted-foreground">
+              Carregando componentes…
+            </li>
+          )}
+          {cat.isError && (
+            <li role="alert" className="text-sm text-destructive">
+              Não foi possível consultar os componentes.{" "}
+              <button type="button" className="underline" onClick={() => cat.refetch()}>
+                Tentar novamente
+              </button>
+            </li>
+          )}
+          {!cat.isPending && !cat.isError && opcoes.length === 0 && (
             <li className="px-2 py-1.5 text-sm text-muted-foreground">
               Nenhum componente encontrado.
             </li>
@@ -899,7 +1021,7 @@ function ComposicaoEditor({
                 }}
               >
                 <span className="text-sm text-foreground">{p.descricao}</span>
-                <span className="font-mono text-xs text-muted-foreground">
+                <span className="font-mono text-sm text-muted-foreground">
                   {p.codigo} · {nomeTipo(p.tipo_item)}
                 </span>
               </button>
@@ -919,6 +1041,7 @@ function ReclassificarBloco({
   familias,
   pode,
   onDone,
+  onBusyChange,
 }: {
   produtoId: string;
   codigo: string;
@@ -926,7 +1049,8 @@ function ReclassificarBloco({
   tipo: string;
   familias: Familia[];
   pode: boolean;
-  onDone: () => void;
+  onDone: (identidade: { codigo: string; familia: string; tipo: TipoItem }) => void;
+  onBusyChange: (busy: boolean) => void;
 }) {
   const fn = useServerFn(reclassificarProduto);
   const qc = useQueryClient();
@@ -937,19 +1061,28 @@ function ReclassificarBloco({
   const m = useMutation({
     mutationFn: () =>
       fn({ data: { produto_id: produtoId, familia: nf, tipo: nt as TipoItem, motivo } }),
-    onSuccess: async () => {
+    onSuccess: async (resultado) => {
       setAberto(false);
-      await qc.invalidateQueries({ queryKey: ["produtos"] });
-      onDone();
+      onDone({ codigo: resultado.codigo, familia: nf, tipo: nt as TipoItem });
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["produtos"] }),
+        qc.invalidateQueries({ queryKey: ["catalogo-busca"] }),
+        qc.invalidateQueries({ queryKey: ["series_codigo"] }),
+        qc.invalidateQueries({ queryKey: ["previa_codigo"] }),
+        qc.invalidateQueries({ queryKey: ["arvore"] }),
+      ]);
     },
   });
+  useEffect(() => {
+    onBusyChange(m.isPending);
+  }, [m.isPending, onBusyChange]);
   const fam = familias.find((x) => x.sigla === familia);
   return (
     <div className="rounded border border-border px-3 py-2 text-sm">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span className="font-mono text-primary">{codigo}</span>
         <span className="text-muted-foreground">
-          {nomeTipo(tipo)} · {fam ? `${fam.nome} — ${fam.sigla}` : "família a definir"}
+          {nomeTipo(tipo)} · {fam ? `${fam.nome} — ${fam.sigla}` : "grupo comercial a definir"}
         </span>
         {pode && familia && (
           <button
@@ -957,7 +1090,7 @@ function ReclassificarBloco({
             className="text-xs text-primary underline"
             onClick={() => setAberto((v) => !v)}
           >
-            Reclassificar família ou tipo
+            Reclassificar grupo comercial ou tipo
           </button>
         )}
       </div>
@@ -1013,7 +1146,26 @@ function ReclassificarBloco({
   );
 }
 
-/** Árvore expansível: nomes, códigos e quantidades (por unidade e totais). */
+/** Quantidades da estrutura: a multiplicação é apenas desta composição, nunca um total da proposta. */
+type NoEstrutura = {
+  produto_id: string;
+  codigo?: string;
+  descricao?: string;
+  unidade?: string;
+  tipo?: string | null;
+  quantidade?: number;
+  base_custo?: string;
+  filhos?: unknown[];
+};
+type ArvoreProps = {
+  no: NoEstrutura;
+  multiplicador?: number;
+  nivel?: number;
+  editavel?: boolean | undefined;
+  onQuantidade?: ((caminho: number[], q: number) => void) | undefined;
+  onRemover?: ((caminho: number[]) => void) | undefined;
+  caminho?: number[];
+};
 export function ArvoreEstrutura({
   no,
   multiplicador = 1,
@@ -1022,101 +1174,130 @@ export function ArvoreEstrutura({
   onQuantidade,
   onRemover,
   caminho = [],
-}: {
-  no: {
-    produto_id: string;
-    codigo?: string;
-    descricao?: string;
-    unidade?: string;
-    tipo?: string | null;
-    quantidade?: number;
-    base_custo?: string;
-    filhos?: unknown[];
-  };
-  multiplicador?: number;
-  nivel?: number;
-  editavel?: boolean | undefined;
-  onQuantidade?: ((caminho: number[], q: number) => void) | undefined;
-  onRemover?: ((caminho: number[]) => void) | undefined;
-  caminho?: number[];
-}) {
-  const filhos = (no.filhos ?? []) as (typeof no)[];
+}: ArvoreProps) {
+  const filhos = (no.filhos ?? []) as NoEstrutura[];
   if (!filhos.length) return null;
   return (
-    <ul className={nivel ? "ml-4 border-l border-border pl-3" : ""}>
-      {filhos.map((f, i) => {
-        const total = multiplicador * Number(f.quantidade ?? 0);
-        const c = [...caminho, i];
-        const temFilhos = (f.filhos ?? []).length > 0;
-        const linha = (
-          <span className="flex flex-wrap items-center gap-x-2 gap-y-1 py-1 text-sm">
-            {temFilhos && <ChevronRight size={14} className="nx-tree-chevron" aria-hidden="true" />}
-            <span className="text-foreground">{f.descricao}</span>
-            <span className="font-mono text-xs text-muted-foreground">
-              {f.codigo} · {nomeTipo(f.tipo)}
+    <ul className={`nx-composition-tree ${nivel ? "nx-composition-tree-child" : ""}`}>
+      {filhos.map((filho, index) => (
+        <LinhaEstrutura
+          key={`${filho.produto_id}-${index}`}
+          no={filho}
+          pai={no.descricao || "produto pai"}
+          multiplicador={multiplicador}
+          nivel={nivel}
+          editavel={editavel}
+          onQuantidade={onQuantidade}
+          onRemover={onRemover}
+          caminho={[...caminho, index]}
+        />
+      ))}
+    </ul>
+  );
+}
+function LinhaEstrutura({
+  no,
+  pai,
+  multiplicador = 1,
+  nivel = 0,
+  editavel,
+  onQuantidade,
+  onRemover,
+  caminho = [],
+}: ArvoreProps & { pai: string }) {
+  const [expandido, setExpandido] = useState(false);
+  const temFilhos = (no.filhos ?? []).length > 0;
+  const total = multiplicador * Number(no.quantidade ?? 0);
+  return (
+    <li>
+      <div className="nx-composition-tree-row">
+        <div className="nx-composition-tree-identity">
+          {temFilhos ? (
+            <button
+              type="button"
+              aria-expanded={expandido}
+              aria-label={`${expandido ? "Recolher" : "Expandir"} composição de ${no.descricao}`}
+              onClick={() => setExpandido((v) => !v)}
+              className="nx-composition-icon"
+            >
+              <ChevronRight size={16} className={expandido ? "rotate-90" : ""} />
+            </button>
+          ) : (
+            <span className="nx-composition-leaf" aria-hidden="true">
+              └
             </span>
+          )}
+          <div className="min-w-0">
+            <span className="block font-medium text-foreground">
+              {no.descricao || "Componente sem descrição"}
+            </span>
+            <span className="font-mono text-sm text-muted-foreground">{no.codigo}</span>
+            <span className="ml-2 text-sm text-muted-foreground">{nomeTipo(no.tipo)}</span>
+          </div>
+        </div>
+        <div className="nx-composition-tree-quantities">
+          <label className="grid gap-1 text-sm text-muted-foreground">
+            <span>Por 1 {pai}</span>
             {editavel && onQuantidade ? (
-              <label className="flex items-center gap-1 text-xs text-muted-foreground">
-                Qtd. por unidade
-                <input
-                  aria-label={`Quantidade por unidade de ${f.descricao}`}
-                  type="number"
-                  min={0.0001}
-                  step="any"
-                  defaultValue={Number(f.quantidade)}
-                  onBlur={(e) => {
-                    const q = Number(e.target.value);
-                    if (q > 0 && q !== Number(f.quantidade)) onQuantidade(c, q);
-                  }}
-                  className="h-7 w-16 rounded border border-input bg-background px-1 text-right text-xs text-foreground"
-                />
-              </label>
+              <input
+                key={Number(no.quantidade)}
+                aria-label={`Quantidade de ${no.descricao} por 1 ${pai}`}
+                type="number"
+                min={0.0001}
+                step="any"
+                defaultValue={Number(no.quantidade)}
+                onBlur={(event) => {
+                  const q = Number(event.target.value);
+                  if (q > 0 && Number.isFinite(q)) {
+                    if (q !== Number(no.quantidade)) onQuantidade(caminho, q);
+                  } else event.target.value = String(no.quantidade ?? "");
+                }}
+                className="h-10 w-24 rounded border border-input bg-background px-2 text-right text-sm tabular-nums text-foreground"
+              />
             ) : (
-              <span className="text-xs text-muted-foreground">
-                {Number(f.quantidade)} por unidade
+              <span className="tabular-nums text-foreground">
+                {Number(no.quantidade)} {no.unidade}
               </span>
             )}
-            <span className="text-xs font-medium text-foreground">
-              = {Number(total.toFixed(4))} {f.unidade}
-            </span>
-            {editavel && onRemover && (
-              <button
-                type="button"
-                aria-label={`Remover ${f.descricao} desta proposta`}
-                className="p-0.5 text-destructive"
-                onClick={() => onRemover(c)}
-              >
-                <Trash2 size={12} />
-              </button>
-            )}
-          </span>
-        );
-        return (
-          <li key={`${f.produto_id}-${i}`}>
-            {temFilhos ? (
-              <details>
-                <summary className="cursor-pointer list-none">{linha}</summary>
-                {f.base_custo === "completo" && (
-                  <p className="ml-5 text-xs text-muted-foreground">
-                    Comprado completo: composição apenas informativa.
-                  </p>
-                )}
-                <ArvoreEstrutura
-                  no={f}
-                  multiplicador={total}
-                  nivel={nivel + 1}
-                  editavel={editavel}
-                  onQuantidade={onQuantidade}
-                  onRemover={onRemover}
-                  caminho={c}
-                />
-              </details>
-            ) : (
-              linha
-            )}
-          </li>
-        );
-      })}
-    </ul>
+          </label>
+          <div className="grid gap-1 text-sm text-muted-foreground">
+            <span>Nesta composição</span>
+            <strong className="tabular-nums text-foreground">
+              {Number(total.toFixed(4))} {no.unidade}
+            </strong>
+          </div>
+          {editavel && onRemover && (
+            <button
+              type="button"
+              aria-label={`Remover ${no.descricao} desta revisão`}
+              className="nx-composition-icon text-destructive"
+              onClick={() => onRemover(caminho)}
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
+        </div>
+      </div>
+      {temFilhos && expandido && (
+        <>
+          <p className="mx-3 mb-2 text-sm text-muted-foreground">
+            {no.base_custo === "completo"
+              ? "Produto comprado completo: componentes internos informativos."
+              : no.base_custo === "composto"
+                ? "Custo por composição: componentes participam da formação do custo."
+                : "Base de custo não informada nesta estrutura."}
+          </p>
+          <ArvoreEstrutura
+            no={no}
+            multiplicador={total}
+            nivel={nivel + 1}
+            editavel={editavel}
+            onQuantidade={onQuantidade}
+            onRemover={onRemover}
+            caminho={caminho}
+          />
+        </>
+      )}
+    </li>
   );
 }

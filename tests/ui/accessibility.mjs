@@ -50,28 +50,26 @@ report.checks.push({
 });
 await batchItem.uncheck();
 expect(await page.evaluate(() => window.__nexusCalls)).toHaveLength(0);
-await expect(page.getByPlaceholder("Código, descrição ou fabricante")).toHaveCount(0);
-const searchTrigger = page.getByRole("button", { name: "Buscar itens", exact: true });
-await searchTrigger.click();
-await expect(page.getByPlaceholder("Código, descrição ou fabricante")).toBeFocused();
-await page.keyboard.press("Escape");
-await expect(page.getByPlaceholder("Código, descrição ou fabricante")).toHaveCount(0);
-const modalityTrigger = page.getByRole("button", { name: "Filtrar modalidade", exact: true });
-await modalityTrigger.click();
+await page.getByPlaceholder("Nome, código ou fabricante").focus();
+await expect(page.getByPlaceholder("Nome, código ou fabricante")).toBeFocused();
+await page.keyboard.press("Tab");
 await expect(page.getByRole("combobox", { name: "Modalidade", exact: true })).toBeFocused();
-await page.keyboard.press("Escape");
 report.checks.push({
-  name: "collapsed search and modality controls open explicitly and move focus",
+  name: "visible search and modality follow the keyboard order",
   pass: true,
 });
 report.checks.push({
   name: "search and modality touch targets are at least 44px",
-  pass: await page.locator(".nx-item-toolbar .nx-editor-icon").evaluateAll((els) =>
-    els.every((e) => {
-      const r = e.getBoundingClientRect();
-      return r.width >= 44 && r.height >= 44;
-    }),
-  ),
+  pass: await page
+    .locator(".nx-item-toolbar input[type=search], .nx-item-toolbar select")
+    .evaluateAll(
+      (els) =>
+        els.length === 2 &&
+        els.every((e) => {
+          const r = e.getBoundingClientRect();
+          return r.width >= 44 && r.height >= 44;
+        }),
+    ),
 });
 report.contrast = await page.evaluate(() => {
   const scope = document.querySelector(".nexus-operational");

@@ -10,6 +10,7 @@ const params = {
   propostaId: "proposal-fixture",
   ordemId: "order-fixture",
   projetoId: "project-fixture",
+  produtoId: "product-0",
 };
 let page = new URLSearchParams(location.search).get("page") || "dimensionamento";
 const pageListeners = new Set<() => void>();

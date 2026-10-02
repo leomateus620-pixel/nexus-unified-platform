@@ -32,30 +32,23 @@ try {
   await go("itens-comerciais");
   await page.waitForTimeout(1200);
   assert.equal((await calls()).length, 0);
-  assert.equal(await page.getByPlaceholder("Código, descrição ou fabricante").count(), 0);
-  const search = page.getByRole("button", { name: "Buscar itens", exact: true });
-  await search.click();
-  const field = page.getByPlaceholder("Código, descrição ou fabricante");
+  const field = page.getByPlaceholder("Nome, código ou fabricante");
+  await field.focus();
   await expect(field).toBeFocused();
   await field.fill("COMP-002");
-  assert.equal(await page.locator(".nx-product-card").count(), 1);
+  assert.equal(await page.locator(".nx-commercial-row").count(), 1);
   await expect(page.getByRole("button", { name: "Limpar filtros", exact: true })).toBeVisible();
-  await field.press("Escape");
-  await expect(search).toBeFocused();
-  assert.equal(await field.count(), 0);
-  assert.equal(await page.locator(".nx-product-card").count(), 1);
+  assert.equal(await page.locator(".nx-commercial-row").count(), 1);
   await page.getByRole("button", { name: "Limpar filtros", exact: true }).click();
-  assert.equal(await page.locator(".nx-product-card").count(), 21);
-  await page.getByRole("button", { name: "Filtrar modalidade", exact: true }).click();
+  assert.equal(await page.locator(".nx-commercial-row").count(), 21);
   await page.getByLabel("Modalidade", { exact: true }).selectOption("fabricar");
-  assert.equal(await page.locator(".nx-product-card").count(), 7);
+  assert.equal(await page.locator(".nx-commercial-row").count(), 7);
   await page.getByRole("button", { name: "Limpar filtros", exact: true }).click();
   assert.equal((await calls()).length, 0);
-  pass("collapsed search/modality focus, code search, active filter clear and reads stay no-op");
+  pass("visible search/modality, code search, active filter clear and reads stay no-op");
 
   for (const checkbox of await page.getByRole("checkbox", { name: /^Selecionar COMP-/ }).all())
     await checkbox.check();
-  await search.click();
   await field.fill("COMP-002");
   await page.getByLabel("Modalidade em lote").selectOption("fabricar");
   await page.waitForFunction(() =>

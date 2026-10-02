@@ -163,6 +163,31 @@ const order = {
   ordem_producao_itens: orderItems,
 };
 export const tables = {
+  produtos: [],
+  produto_custos: [],
+  produto_estrutura: [],
+  produto_referencias: [],
+  produto_conversoes: [],
+  aquisicoes: [],
+  importacao_registros: [],
+  series_codigo: [],
+  series_planilha: [],
+  familias_codigo: [
+    {
+      sigla: "COM",
+      nome: "Componentes gerais",
+      grupo: "Comercial",
+      situacao: "confirmada",
+      observacao: null,
+    },
+    {
+      sigla: "LVHF",
+      nome: "Linha de vida horizontal flexível",
+      grupo: "Proteção",
+      situacao: "confirmada",
+      observacao: null,
+    },
+  ],
   config_orcamento: [],
   proposta_revisoes: [revision],
   propostas: Array.from({ length: count }, (_, i) => ({
@@ -250,9 +275,134 @@ if (scenario === "revision-edge") {
     d.ordem_producao_itens = [];
   });
 }
+if (query.has("commerce") || ["produtos", "produto", "importacao"].includes(query.get("page"))) {
+  tables.produtos = Array.from({ length: scenario === "empty" ? 0 : 24 }, (_, i) => ({
+    id: `product-${i}`,
+    organization_id: "org-fixture",
+    codigo: `COM-NXS-${i === 0 ? "M" : "P"}${String(i + 1).padStart(3, "0")}`,
+    descricao: i === 0 ? "Montagem de ancoragem industrial" : descriptions[i % descriptions.length],
+    codigo_legado: null,
+    familia: "COM",
+    familia_tecnica: i === 0 ? "LVHF" : null,
+    tipo_item: i === 0 ? "M" : "P",
+    unidade: "un",
+    ncm: "7326",
+    modalidade: "fabricar",
+    ativo: true,
+    material: "Aço",
+    dimensoes: null,
+    acabamento: null,
+    base_custo: i === 0 ? "composto" : "completo",
+    composicao_status: i === 0 ? "definida" : "nao_aplicavel",
+    sequencia: i + 1,
+    descricao_original: null,
+    fornecedores: null,
+    fabricantes: null,
+    produto_referencias: [],
+    produto_custos:
+      i === 2
+        ? []
+        : [
+            {
+              id: `ref-${i}`,
+              custo: i === 1 ? 0 : 150,
+              vigencia: "2026-10-01",
+              origem: "Média ponderada",
+              created_at: "2026-10-01T12:00:00Z",
+              fornecedores: null,
+            },
+          ],
+  }));
+  tables.produto_custos = tables.produtos.flatMap((p) =>
+    p.produto_custos.map((c) => ({ ...c, produto_id: p.id })),
+  );
+  tables.produto_estrutura = [
+    { pai_id: "product-0", filho_id: "product-1", quantidade: 2, ordem: 0 },
+  ];
+  tables.series_codigo = [{ familia: "COM", tipo: "P", ultimo: 24 }];
+  if (scenario !== "empty") {
+    const tree = {
+      produto_id: "product-0",
+      codigo: "COM-NXS-M001",
+      descricao: "Montagem de ancoragem industrial",
+      unidade: "un",
+      tipo: "M",
+      base_custo: "composto",
+      quantidade: 1,
+      filhos: [
+        {
+          produto_id: "product-1",
+          codigo: "COM-NXS-P002",
+          descricao: "Cabo de aço galvanizado",
+          unidade: "un",
+          tipo: "P",
+          base_custo: "completo",
+          quantidade: 2,
+          filhos: [],
+        },
+      ],
+    };
+    components.forEach((c, i) =>
+      Object.assign(c, {
+        produto_id: `product-${i}`,
+        quantidade_avulsa: i === 0 ? 3 : 0,
+        estrutura: i === 0 ? tree : null,
+        estrutura_origem: i === 0 ? structuredClone(tree) : null,
+      }),
+    );
+    summary.por_componente[0].quantidade_sistemas = 17;
+    summary.por_componente[0].quantidade_avulsa = 3;
+    tables.aquisicoes = [
+      {
+        id: "purchase-0",
+        produto_id: "product-0",
+        chave: "previous-purchase",
+        quantidade: 2,
+        unidade: "un",
+        custo_total: 300,
+        custo_unitario: 150,
+        valores_calculados: { quantidade_uso: 2 },
+        situacao: "valida",
+        pendencia: null,
+        lote: "Lote de teste",
+        politica_versao: "v1",
+        created_at: "2026-10-01T12:00:00Z",
+        origem: { aba: "Compras", linha: 2 },
+        documentos_fiscais: {
+          numero: "123",
+          emitido_em: "2026-10-01",
+          provisorio: false,
+          fornecedor_texto: "Fornecedor de teste",
+          fornecedores: null,
+        },
+      },
+    ];
+    if (scenario === "zero-reference") {
+      Object.assign(components[0], {
+        custo_adotado: 0,
+        custo_origem_id: null,
+        justificativa: null,
+      });
+      tables.produto_custos[0].custo = 0;
+      Object.assign(summary.por_componente[0], {
+        custo: 0,
+        preco_unit: 0,
+        total_venda: 0,
+        total_custo: 0,
+      });
+    }
+  }
+}
 export const supabase = {
   auth: { signOut: async () => ({ error: null }) },
   rpc: async (name, payload) => {
+    if (name === "previa_codigo")
+      return { data: `${payload._familia}-NXS-${payload._tipo}025`, error: null };
+    if (name === "arvore_produto")
+      return {
+        data: components.find((c) => c.produto_id === payload._produto)?.estrutura ?? null,
+        error: null,
+      };
     window.__nexusCalls.push({ name, payload });
     if (name !== "atualizar_componentes_revisao") throw new Error(`Unexpected test RPC: ${name}`);
     if (scenario === "write-conflict") return { data: 0, error: null };
@@ -279,11 +429,14 @@ export const supabase = {
             return async (resolve) => {
               if (mutation) window.__nexusCalls.push({ table, mutation, payload, filters });
               const error =
-                scenario === "error"
+                scenario === "error" || (scenario === "purchase-error" && table === "aquisicoes")
                   ? { message: "Falha simulada no ambiente isolado de teste" }
                   : null;
               await new Promise((done) =>
-                setTimeout(done, mutation ? (window.__writeDelay ?? 0) : 0),
+                setTimeout(
+                  done,
+                  mutation ? (window.__writeDelay ?? 0) : scenario === "loading" ? 3000 : 0,
+                ),
               );
               const matches = (row) =>
                 filters.every(

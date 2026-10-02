@@ -43,7 +43,7 @@ try {
       await page.locator("h1").waitFor();
       if (phase === "after") {
         const ready = {
-          "itens-comerciais": ".nx-product-card",
+          "itens-comerciais": ".nx-commercial-row",
           dimensionamento: ".nx-system-card",
           orcamento: ".nx-budget-equation",
           compras: ".nx-planning-row",
@@ -58,8 +58,12 @@ try {
       const metrics = await page.evaluate(() => ({
         overflow: document.documentElement.scrollWidth > innerWidth + 1,
         headerHeight: document.querySelector(".nx-proposal-header").getBoundingClientRect().height,
-        firstCardTop: document.querySelector(".nx-object-card")?.getBoundingClientRect().top,
-        firstCardHeight: document.querySelector(".nx-object-card")?.getBoundingClientRect().height,
+        firstCardTop: document
+          .querySelector(".nx-object-card, .nx-commercial-row")
+          ?.getBoundingClientRect().top,
+        firstCardHeight: document
+          .querySelector(".nx-object-card, .nx-commercial-row")
+          ?.getBoundingClientRect().height,
         totalFits: [...document.querySelectorAll(".nx-context-total p")].every(
           (e) => e.scrollWidth <= e.clientWidth + 1,
         ),

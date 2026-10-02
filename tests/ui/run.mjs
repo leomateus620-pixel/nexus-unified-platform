@@ -13,6 +13,7 @@ try {
     ["accessibility.mjs"],
     ["stages-checks.mjs"],
     ["catalog-checks.mjs"],
+    ["commerce-checks.mjs"],
     ["revision-checks.mjs"],
     ["dimension-checks.mjs"],
     ["workspace-visual.mjs", "after"],

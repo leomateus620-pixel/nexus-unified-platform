@@ -1,9 +1,16 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { AdicionarDoCatalogo } from "./AdicionarDoCatalogo";
 import { AvisoCustoCatalogo, type AdocaoCusto } from "./AvisoCustoCatalogo";
-import { ItemEstruturaResumo, ItemProposta, quantidadeComOrigem } from "./ItemEstrutura";
+import {
+  ItemEstruturaResumo,
+  ItemProposta,
+  quantidadeComOrigem,
+  tipoItemRevisao,
+} from "./ItemEstrutura";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Filter, Search, X } from "lucide-react";
+import { X } from "lucide-react";
+import { ProductEditorPanel } from "@/features/catalogo/ProductEditor";
+import "./commercial-items.css";
 
 import {
   ActionButton,
@@ -16,7 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { precoUnitario, mesclarParametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
-import { brlUnit, qtd } from "@/lib/format";
+import { brlUnit } from "@/lib/format";
 import { revKeys, useComponentes, useFornecedores, useRevisao, useSave } from "./hooks";
 
 import { EditorInput, EditorInspector, EditorSaveState } from "./ui/EditorWorkspace";
@@ -48,20 +55,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   }, [comps.data]);
   const [busca, setBusca] = useState("");
   const [filtroMod, setFiltroMod] = useState("");
-  const [buscaAberta, setBuscaAberta] = useState(false);
-  const [modalidadeAberta, setModalidadeAberta] = useState(false);
-  const searchInput = useRef<HTMLInputElement>(null);
-  const modalityInput = useRef<HTMLSelectElement>(null);
-  const searchTrigger = useRef<HTMLButtonElement>(null);
-  const modalityTrigger = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (buscaAberta) searchInput.current?.focus();
-  }, [buscaAberta]);
-  useEffect(() => {
-    if (modalidadeAberta) modalityInput.current?.focus();
-  }, [modalidadeAberta]);
   const [batchSel, setBatchSel] = useState<Set<string>>(new Set());
   const [aberto, setAberto] = useState<string | null>(null);
+  const [mestre, setMestre] = useState<string | null>(null);
   const [colar, setColar] = useState("");
   const [erroColar, setErroColar] = useState<string | null>(null);
   const inspectorTrigger = useRef<HTMLButtonElement | null>(null);
@@ -79,6 +75,12 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   }, []);
   const params = useMemo(() => mesclarParametros(rev.data?.parametros), [rev.data?.parametros]);
   const verCusto = org.data?.canSeeCosts ?? false;
+  const calculoAtual =
+    !!rev.data?.resumo &&
+    !rev.data.desatualizada &&
+    save.calculation === "current" &&
+    !save.busy &&
+    !["local", "salvando", "consolidando", "erro", "conflito"].includes(save.status);
 
   const lista = useMemo(() => {
     const q = busca.toLowerCase();
@@ -90,19 +92,31 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   }, [comps.data, busca, filtroMod]);
   const linhasVisuais = useMemo(
     () =>
-      lista.map((c) => ({
-        item: c,
-        price: brlUnit(precoUnitario(Number(c.custo_adotado), params, c.custo_inclui ?? []).preco),
-        quantity: rev.data?.desatualizada
-          ? "Pendente"
-          : rev.data?.resumo
-            ? quantidadeComOrigem(
-                rev.data.resumo.por_componente.find((row) => row.componente_id === c.id),
-                c.unidade,
-              )
-            : "Não calculada",
-      })),
-    [lista, rev.data, params],
+      lista.map((c) => {
+        const consolidado = rev.data?.resumo?.por_componente.find(
+          (row) => row.componente_id === c.id,
+        );
+        const estrutura = c.estrutura as { base_custo?: string; tipo?: string } | null;
+        const porComposicao = estrutura?.base_custo === "composto" && estrutura?.tipo !== "P";
+        return {
+          item: c,
+          price: !c.incluido_orcamento
+            ? "Fora do orçamento"
+            : calculoAtual
+              ? consolidado
+                ? brlUnit(consolidado.preco_unit)
+                : porComposicao
+                  ? "Pela composição"
+                  : "Sem cobrança calculada"
+              : porComposicao
+                ? "Pela composição"
+                : brlUnit(
+                    precoUnitario(Number(c.custo_adotado), params, c.custo_inclui ?? []).preco,
+                  ),
+          quantity: !calculoAtual ? "Pendente" : quantidadeComOrigem(consolidado, c.unidade),
+        };
+      }),
+    [lista, rev.data, params, calculoAtual],
   );
 
   if (rev.isPending || comps.isPending) return <LoadingState />;
@@ -213,8 +227,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         custo_origem_id: i.origemId,
         justificativa: "Custo do catálogo adotado explicitamente",
       });
-      if (!ok) return;
+      if (!ok) return false;
     }
+    return true;
   }
 
   async function aplicarColagem() {
@@ -295,17 +310,18 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
   const input = "nx-editor-input";
 
   return (
-    <div className="nx-editor-workspace" data-inspector={!!detalhe}>
+    <div className="nx-editor-workspace nx-commercial-workspace" data-inspector={!!detalhe}>
       <Section
         className="nx-collection-section"
         title="Itens comerciais"
-        description="Catálogo adotado nesta revisão. Selecione um item para editar seus valores e consultar a memória de preço."
+        description="Selecione um item para ajustar demanda, composição e fornecimento nesta revisão."
       >
         {verCusto && (
           <AvisoCustoCatalogo
             comps={comps.data ?? []}
             editavel={editavel}
             onAdotar={adotarCustos}
+            calculoAtual={calculoAtual}
             quantidades={
               new Map(
                 (rev.data.resumo?.por_componente ?? []).map((r) => [r.componente_id, r.quantidade]),
@@ -316,78 +332,41 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         {editavel && (
           <AdicionarDoCatalogo
             revisaoId={revisaoId}
-            presentes={new Set((comps.data ?? []).map((c) => c.produto_id))}
+            presentes={
+              new Map(
+                (comps.data ?? []).map((c) => [
+                  c.produto_id,
+                  { quantidade: Number(c.quantidade_avulsa ?? 0), incluido: c.incluido_orcamento },
+                ]),
+              )
+            }
           />
         )}
         <div className="nx-editor-toolbar nx-item-toolbar">
-          <button
-            type="button"
-            className="nx-editor-icon"
-            aria-label="Buscar itens"
-            ref={searchTrigger}
-            title={busca ? `Busca: ${busca}` : "Buscar por código, descrição ou fabricante"}
-            aria-expanded={buscaAberta}
-            aria-controls="nx-item-search"
-            data-active={!!busca}
-            onClick={() => setBuscaAberta((value) => !value)}
-          >
-            <Search size={18} aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className="nx-editor-icon"
-            aria-label="Filtrar modalidade"
-            ref={modalityTrigger}
-            title={filtroMod ? `Modalidade: ${filtroMod}` : "Filtrar modalidade"}
-            aria-expanded={modalidadeAberta}
-            aria-controls="nx-item-modality"
-            data-active={!!filtroMod}
-            onClick={() => setModalidadeAberta((value) => !value)}
-          >
-            <Filter size={18} aria-hidden="true" />
-          </button>
-          {buscaAberta && (
-            <label className="nx-editor-search" id="nx-item-search">
-              <span className="nx-control-label">Buscar item</span>
-              <input
-                ref={searchInput}
-                type="search"
-                placeholder="Código, descrição ou fabricante"
-                value={busca}
-                onChange={(e) => setBusca(e.target.value)}
-                className={input}
-                onKeyDown={(event) => {
-                  if (event.key === "Escape") {
-                    setBuscaAberta(false);
-                    searchTrigger.current?.focus();
-                  }
-                }}
-              />
-            </label>
-          )}
-          {modalidadeAberta && (
-            <label id="nx-item-modality" className="nx-modality-filter">
-              <span className="nx-control-label">Modalidade</span>
-              <select
-                ref={modalityInput}
-                aria-label="Modalidade"
-                value={filtroMod}
-                onChange={(e) => setFiltroMod(e.target.value)}
-                className={input}
-                onKeyDown={(event) => {
-                  if (event.key === "Escape") {
-                    setModalidadeAberta(false);
-                    modalityTrigger.current?.focus();
-                  }
-                }}
-              >
-                <option value="">Todas as modalidades</option>
-                <option value="comprar">Comprar</option>
-                <option value="fabricar">Fabricar</option>
-                <option value="terceirizar">Terceirizar</option>
-              </select>
-            </label>
-          )}
+          <label className="nx-editor-search" id="nx-item-search">
+            <span className="nx-control-label">Buscar item</span>
+            <input
+              type="search"
+              placeholder="Nome, código ou fabricante"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              className={input}
+            />
+          </label>
+          <label className="nx-modality-filter">
+            <span className="nx-control-label">Fornecimento</span>
+            <select
+              aria-label="Modalidade"
+              value={filtroMod}
+              onChange={(e) => setFiltroMod(e.target.value)}
+              className={input}
+            >
+              <option value="">Todas as modalidades</option>
+              <option value="comprar">Comprar</option>
+              <option value="fabricar">Fabricar</option>
+              <option value="terceirizar">Terceirizar</option>
+            </select>
+          </label>
           {(busca || filtroMod) && (
             <button
               type="button"
@@ -400,7 +379,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               title="Limpar filtros"
             >
               <X size={15} aria-hidden="true" />
-              Filtros ativos
+              Limpar filtros
             </button>
           )}
           {lista.length > 0 && editavel && (
@@ -477,7 +456,11 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         {comps.data.length === 0 ? (
           <EmptyState
             title="Esta revisão ainda não tem itens"
-            hint="Use “Adicionar item existente” ou “Criar e adicionar à proposta” acima. Itens avulsos não exigem sistema de dimensionamento."
+            hint={
+              editavel
+                ? "Use Adicionar item para buscar no catálogo ou cadastrar um produto, com quantidade manual ou somente disponível nesta revisão."
+                : "Esta revisão somente leitura não possui itens comerciais."
+            }
           />
         ) : lista.length === 0 ? (
           <EmptyState
@@ -498,7 +481,10 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         ) : (
           <CollectionPage items={linhasVisuais}>
             {(visible) => (
-              <ObjectCollection label="Itens comerciais desta revisão">
+              <ObjectCollection
+                label="Itens comerciais desta revisão"
+                className="nx-commercial-collection"
+              >
                 {visible.map(({ item, price, quantity }) => (
                   <ProductComponentCard
                     key={item.id}
@@ -508,7 +494,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                     editable={editavel}
                     price={price}
                     quantity={quantity}
-                    pricePending={rev.data.desatualizada}
+                    pricePending={!calculoAtual}
+                    typeName={tipoItemRevisao(item)}
+                    cost={verCusto ? estadoCusto(item) : undefined}
                     onInspect={inspectItem}
                     onToggleIncluded={(id, included) => void definirInclusao([id], included)}
                     onToggleBatch={toggleBatch}
@@ -546,9 +534,9 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
         )}
       </Section>
       <EditorInspector
-        open={!!detalhe}
+        open={!!detalhe && !mestre}
         title="Item comercial"
-        description="Valores e condições nesta revisão"
+        description="Esta revisão · ajustes locais da proposta"
         onClose={() => setAberto(null)}
         returnFocus={inspectorTrigger}
       >
@@ -563,15 +551,21 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               </span>
             </div>
             <ItemProposta
+              key={detalhe.id}
+              consolidado={rev.data.resumo?.por_componente.find(
+                (c) => c.componente_id === detalhe.id,
+              )}
+              calculoAtual={calculoAtual}
+              onEditMaster={() => setMestre(detalhe.produto_id)}
               item={detalhe}
               editavel={editavel}
               atualizar={atualizar}
               revisaoId={revisaoId}
             />
             <div className="nx-inspector-fields">
-              <h4>Condições do item</h4>
+              <h4>Fornecimento e custo nesta revisão</h4>
               <label className="nx-editor-field">
-                Modalidade
+                Modalidade de fornecimento
                 <select
                   disabled={!editavel}
                   value={detalhe.modalidade}
@@ -603,7 +597,7 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
               </label>
               {verCusto && (
                 <label className="nx-editor-field">
-                  Custo nesta revisão · R$
+                  Custo adotado nesta revisão · R$
                   <EditorInput
                     draftKey={`item-${detalhe.id}-custo`}
                     aria-label={`Custo ${detalhe.codigo}`}
@@ -621,18 +615,24 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
                 </label>
               )}
             </div>
-            <EditorSaveState editavel={editavel} />
             {verCusto ? (
               <>
+                <p className="nx-commercial-cost-state">{estadoCusto(detalhe)}</p>
                 <details className="nx-composition-memory">
                   <summary>Memória do preço unitário</summary>
-                  <VerCalculo custo={Number(detalhe.custo_adotado)} params={params} inclui={detalhe.custo_inclui ?? []} />
+                  <VerCalculo
+                    custo={Number(detalhe.custo_adotado)}
+                    params={params}
+                    inclui={detalhe.custo_inclui ?? []}
+                  />
                 </details>
                 <p className="nx-editor-note">
                   Origem do custo:{" "}
                   {detalhe.custo_origem_id
                     ? `catálogo — ${String((detalhe.custo_fonte as { origem?: string } | null)?.origem ?? "vigência adotada")}${detalhe.custo_inclui?.length ? ` · já inclui ${detalhe.custo_inclui.join(", ").toUpperCase()}` : ""}`
-                    : `ajuste manual — ${detalhe.justificativa ?? "sem justificativa"}`}
+                    : detalhe.justificativa?.trim()
+                      ? `justificativa registrada — ${detalhe.justificativa}`
+                      : "não documentada nesta revisão"}
                 </p>
               </>
             ) : (
@@ -641,6 +641,16 @@ export function ItensComerciais({ revisaoId }: { revisaoId: string }) {
           </>
         )}
       </EditorInspector>
+      <ProductEditorPanel
+        open={!!mestre}
+        onOpenChange={(open) => {
+          if (!open) setMestre(null);
+        }}
+        produtoId={mestre ?? undefined}
+        title="Editar cadastro mestre"
+        description="Cadastro reutilizável do produto. Para trazer a composição alterada a esta revisão, compare e adote a referência do catálogo."
+        onSaved={() => setMestre(null)}
+      />
       {dialog}
     </div>
   );
@@ -680,4 +690,12 @@ function VerCalculo({
       ))}
     </dl>
   );
+}
+
+function estadoCusto(item: Comp) {
+  const valor = Number(item.custo_adotado);
+  if (valor !== 0) return brlUnit(valor);
+  return item.custo_origem_id || item.justificativa?.trim()
+    ? "R$ 0,00 informado"
+    : "Sem referência de custo";
 }

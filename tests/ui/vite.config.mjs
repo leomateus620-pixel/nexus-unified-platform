@@ -24,6 +24,8 @@ export default defineConfig({
           : html;
       },
       resolveId(id) {
+        if (/\/(catalogo|custos)\.functions(?:\.ts)?$/.test(id))
+          return path.join(root, "commerce-server.ts");
         if (id.endsWith("propostas.functions") || id.endsWith("propostas.functions.ts"))
           return path.join(root, "server.ts");
       },

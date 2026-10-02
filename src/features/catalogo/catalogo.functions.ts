@@ -140,6 +140,7 @@ export const adicionarComponenteRevisao = createServerFn({ method: "POST" })
           ncm: p.ncm,
           fabricante: p.fabricantes?.nome ?? null,
           modalidade: p.modalidade,
+          incluido_orcamento: false,
           fornecedor_id: p.fornecedor_padrao_id,
           custo_adotado: custo?.custo ?? 0,
           custo_origem_id: custo?.id ?? null,

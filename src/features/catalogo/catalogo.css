@@ -1,0 +1,424 @@
+.nx-product-panel {
+  width: min(100vw, 940px);
+  max-width: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nexus-operational.nx-catalog-shell.nx-product-panel :where(h1, h2, h3, h4) {
+  font-family: var(--font-heading);
+}
+.nx-product-panel-heading {
+  padding: 24px 48px 20px 24px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.nx-product-panel-scroll {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-product-panel {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.nx-product-editor {
+  min-width: 0;
+  background: var(--background);
+}
+.nx-product-editor [hidden] {
+  display: none !important;
+}
+.nx-product-editor-body {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 24px;
+  display: grid;
+  gap: 24px;
+}
+.nx-editor-scope {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nx-editor-scope > span {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.nx-editor-scope > p {
+  margin-top: 4px;
+}
+.nx-editor-section {
+  min-width: 0;
+}
+.nx-editor-section + .nx-editor-section {
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.nx-editor-section h3 {
+  margin-bottom: 12px;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.nx-product-types {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.nx-product-types > label {
+  display: flex;
+  align-items: start;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nx-product-types > label[data-selected="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 7%, var(--background));
+}
+.nx-product-types input,
+.nx-cost-basis input {
+  margin-top: 5px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.nx-product-types strong,
+.nx-cost-basis strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.nx-product-types small,
+.nx-cost-basis small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.nx-code-preview {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 5px 16px;
+  padding: 14px 0;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.nx-code-preview > span:last-of-type {
+  grid-column: 1 / -1;
+  color: var(--muted-foreground);
+}
+.nx-code-preview strong {
+  overflow-wrap: anywhere;
+}
+.nx-editor-details {
+  margin-top: 16px;
+  font-size: 14px;
+}
+.nx-editor-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding-block: 8px;
+}
+.nx-cost-basis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.nx-cost-basis > label {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  cursor: pointer;
+}
+.nx-product-editor-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+.nx-subproduct-context {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--muted);
+}
+.nx-composition-icon {
+  display: inline-flex;
+  min-height: 36px;
+  min-width: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.nx-composition-icon:hover {
+  background: var(--muted);
+}
+.nx-composition-editor li {
+  min-width: 0;
+  padding: 12px;
+}
+.nx-composition-editor input {
+  min-width: 0;
+}
+.nx-composition-tree {
+  min-width: 0;
+}
+.nx-composition-tree > li {
+  border-top: 1px solid var(--border);
+}
+.nx-composition-tree-child {
+  margin-left: 18px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+.nx-composition-tree-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 12px 0;
+  font-size: 14px;
+}
+.nx-composition-tree-identity {
+  display: flex;
+  align-items: center;
+  flex: 1 1 240px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.nx-composition-leaf {
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+  color: var(--muted-foreground);
+}
+.nx-composition-tree-quantities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+.nx-catalog {
+  min-width: 0;
+}
+.nx-catalog-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.nx-catalog-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 260px) minmax(140px, 190px);
+  gap: 12px;
+  padding-block: 20px 12px;
+}
+.nx-catalog-search {
+  position: relative;
+  min-width: 0;
+}
+.nx-catalog-search > svg {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: var(--muted-foreground);
+}
+.nx-catalog-search > input {
+  width: 100%;
+  padding-left: 40px;
+}
+.nx-catalog-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nx-catalog-grid {
+  --catalog-cols: minmax(220px, 2.4fr) minmax(130px, 1fr) minmax(145px, 1.3fr) minmax(95px, 0.8fr)
+    36px;
+  border-block: 1px solid var(--border);
+}
+.nx-catalog-grid[data-costs="false"] {
+  --catalog-cols: minmax(220px, 2.4fr) minmax(130px, 1fr) minmax(145px, 1.3fr) 36px;
+}
+.nx-catalog-columns,
+.nx-catalog-row {
+  display: grid;
+  grid-template-columns: var(--catalog-cols);
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+}
+.nx-catalog-columns {
+  color: var(--muted-foreground);
+  background: var(--muted);
+  font-size: 13px;
+}
+.nx-catalog-grid > li + li {
+  border-top: 1px solid var(--border);
+}
+.nx-catalog-row {
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  font-size: 14px;
+}
+.nx-catalog-row:hover {
+  background: var(--muted);
+}
+.nx-catalog-row[aria-current="true"] {
+  box-shadow: inset 3px 0 var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+}
+.nx-catalog-name {
+  min-width: 0;
+}
+.nx-catalog-name > strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nx-catalog-name > span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.nx-catalog-support {
+  min-width: 0;
+  color: var(--muted-foreground);
+}
+.nx-catalog-support > span {
+  display: block;
+}
+.nx-catalog-cost {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nx-catalog-notice {
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--warning) 8%, var(--background));
+  border-left: 3px solid var(--warning);
+  font-size: 14px;
+}
+.nx-catalog-detail {
+  padding: 24px;
+  display: grid;
+  gap: 24px;
+}
+.nx-catalog-detail dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  font-size: 14px;
+}
+.nx-catalog-detail dl > div {
+  display: block;
+  min-width: 0;
+}
+.nx-catalog-detail dt {
+  color: var(--muted-foreground);
+  margin-bottom: 4px;
+}
+.nx-catalog-detail dd {
+  overflow-wrap: anywhere;
+}
+.nx-catalog :is(button, input, select, summary, a):focus-visible,
+.nx-product-editor :is(button, input, select, summary, a):focus-visible,
+.nx-composition-tree :is(button, input):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+@media (min-width: 640px) {
+  .nx-product-panel {
+    max-width: min(100vw, 940px);
+  }
+}
+@media (max-width: 800px) {
+  .nx-catalog-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nx-catalog-search {
+    grid-column: 1 / -1;
+  }
+  .nx-catalog-columns {
+    display: none;
+  }
+  .nx-catalog-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 16px;
+    padding: 16px 12px;
+  }
+  .nx-catalog-name {
+    grid-column: 1 / -1;
+    padding-right: 28px;
+  }
+  .nx-catalog-name > strong {
+    white-space: normal;
+  }
+  .nx-catalog-support {
+    grid-column: 1;
+  }
+  .nx-catalog-cost {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .nx-catalog-row > svg {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+}
+@media (max-width: 560px) {
+  .nx-product-panel-heading,
+  .nx-product-editor-body,
+  .nx-subproduct-context,
+  .nx-catalog-detail {
+    padding: 20px 16px;
+  }
+  .nx-product-editor-footer {
+    padding: 16px;
+  }
+  .nx-product-types,
+  .nx-cost-basis,
+  .nx-catalog-detail dl {
+    grid-template-columns: 1fr;
+  }
+  .nx-product-types > label {
+    padding: 12px;
+  }
+  .nx-code-preview {
+    grid-template-columns: 1fr;
+  }
+  .nx-composition-tree-child {
+    margin-left: 8px;
+    padding-left: 8px;
+  }
+  .nx-composition-tree-quantities {
+    padding-left: 12px;
+  }
+}

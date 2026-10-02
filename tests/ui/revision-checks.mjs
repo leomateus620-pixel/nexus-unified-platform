@@ -64,7 +64,7 @@ try {
       await expect(page.locator("dialog.nx-editor-inspector")).toBeVisible();
       await fit();
       const cardWidth = await page
-        .locator(".nx-object-card")
+        .locator(".nx-object-card, .nx-commercial-row")
         .first()
         .evaluate((el) => el.getBoundingClientRect().width);
       assert.ok(cardWidth >= Math.min(239, width - 40));

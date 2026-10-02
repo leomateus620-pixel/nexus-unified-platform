@@ -1,0 +1,82 @@
+{
+  "checks": [
+    "Catalog, items and product detail fit 320, 390, 768 and 1440 px",
+    "Opening contextual detail preserves search and list; clear restores real count",
+    "Child creation uses one visible form and restores the parent draft/composition",
+    "Existing item shows current manual quantity and sends replacement quantity, not addition",
+    "Invalid manual quantity blocks creation; failed inclusion retries the confirmed product once",
+    "Inspector identifies revision composition base; master edit has a separate explicit surface",
+    "Import refresh retains conclusion and identifies an already imported purchase, including zero value",
+    "Availability selects the existing availability operation, with no manual inclusion",
+    "Repeated availability confirms preserved state without claiming budget exclusion",
+    "A new zero reference can be adopted explicitly without becoming a missing cost",
+    "An unresolved save state suppresses monetary impact based on stale calculation",
+    "Accessible cost form rejects blank, preserves failures, and confirms an explicit zero",
+    "Purchase loading and errors cannot be mistaken for an empty history",
+    "Restricted costs, empty catalog and filtered no-result states remain distinct",
+    "Mobile master editor is above the inspector, retains keyboard focus and returns correctly"
+  ],
+  "metrics": [
+    {
+      "width": 1440,
+      "screen": "produtos",
+      "firstRowY": 370
+    },
+    {
+      "width": 1440,
+      "screen": "itens-comerciais",
+      "firstRowY": 483
+    },
+    {
+      "width": 1440,
+      "screen": "produto",
+      "firstRowY": 113
+    },
+    {
+      "width": 768,
+      "screen": "produtos",
+      "firstRowY": 435
+    },
+    {
+      "width": 768,
+      "screen": "itens-comerciais",
+      "firstRowY": 534
+    },
+    {
+      "width": 768,
+      "screen": "produto",
+      "firstRowY": 113
+    },
+    {
+      "width": 390,
+      "screen": "produtos",
+      "firstRowY": 524
+    },
+    {
+      "width": 390,
+      "screen": "itens-comerciais",
+      "firstRowY": 707
+    },
+    {
+      "width": 390,
+      "screen": "produto",
+      "firstRowY": 129
+    },
+    {
+      "width": 320,
+      "screen": "produtos",
+      "firstRowY": 572
+    },
+    {
+      "width": 320,
+      "screen": "itens-comerciais",
+      "firstRowY": 707
+    },
+    {
+      "width": 320,
+      "screen": "produto",
+      "firstRowY": 129
+    }
+  ],
+  "errors": []
+}

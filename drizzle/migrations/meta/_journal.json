@@ -29,6 +29,13 @@
       "when": 1790959922830,
       "tag": "0003_importacao_planilha_execucao",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790959948659,
+      "tag": "0004_sequencia_permite_zero",
+      "breakpoints": true
     }
   ]
 }

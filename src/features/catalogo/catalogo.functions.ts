@@ -152,7 +152,13 @@ export const adicionarComponenteRevisao = createServerFn({ method: "POST" })
     return { id: row.id, repetido: false };
   });
 
-const acoes = ["importar_catalogo", "editar_cadastro", "editar_revisao", "aprovar_tecnica", "ver_custos"] as const;
+const acoes = [
+  "importar_catalogo",
+  "editar_cadastro",
+  "editar_revisao",
+  "aprovar_tecnica",
+  "ver_custos",
+] as const;
 /** Permissões efetivas do usuário (mesma função pode() usada pelo banco), para a interface avisar antes. */
 export const minhasPermissoes = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -160,7 +166,10 @@ export const minhasPermissoes = createServerFn({ method: "GET" })
     const db: any = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
     const r = await Promise.all(acoes.map((a) => db.rpc("pode", { _org: org, _acao: a })));
-    return Object.fromEntries(acoes.map((a, i) => [a, r[i].data === true])) as Record<(typeof acoes)[number], boolean>;
+    return Object.fromEntries(acoes.map((a, i) => [a, r[i].data === true])) as Record<
+      (typeof acoes)[number],
+      boolean
+    >;
   });
 
 export const editarProduto = createServerFn({ method: "POST" })
@@ -182,7 +191,12 @@ export const editarProduto = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { produto_id, ...dados } = data;
-    return ok(await (context.supabase as any).rpc("editar_produto", { _produto: produto_id, _dados: dados })) as { id: string };
+    return ok(
+      await (context.supabase as any).rpc("editar_produto", {
+        _produto: produto_id,
+        _dados: dados,
+      }),
+    ) as { id: string };
   });
 
 export const salvarComposicao = createServerFn({ method: "POST" })
@@ -191,35 +205,46 @@ export const salvarComposicao = createServerFn({ method: "POST" })
     z
       .object({
         produto_id: z.string().uuid(),
-        itens: z.array(z.object({ filho_id: z.string().uuid(), quantidade: z.number().positive() })).max(200),
+        itens: z
+          .array(z.object({ filho_id: z.string().uuid(), quantidade: z.number().positive() }))
+          .max(200),
         status: z.enum(["pendente", "definida", "nao_aplicavel"]),
       })
       .parse(d),
   )
-  .handler(async ({ data, context }) =>
-    ok(
-      await (context.supabase as any).rpc("salvar_composicao", {
-        _produto: data.produto_id,
-        _itens: data.itens,
-        _status: data.status,
-      }),
-    ) as { id: string; componentes: number },
+  .handler(
+    async ({ data, context }) =>
+      ok(
+        await (context.supabase as any).rpc("salvar_composicao", {
+          _produto: data.produto_id,
+          _itens: data.itens,
+          _status: data.status,
+        }),
+      ) as { id: string; componentes: number },
   );
 
 export const reclassificarProduto = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
-    z.object({ produto_id: z.string().uuid(), familia, tipo, motivo: z.string().trim().min(5).max(500) }).parse(d),
+    z
+      .object({
+        produto_id: z.string().uuid(),
+        familia,
+        tipo,
+        motivo: z.string().trim().min(5).max(500),
+      })
+      .parse(d),
   )
-  .handler(async ({ data, context }) =>
-    ok(
-      await (context.supabase as any).rpc("reclassificar_produto", {
-        _produto: data.produto_id,
-        _familia: data.familia,
-        _tipo: data.tipo,
-        _motivo: data.motivo,
-      }),
-    ) as { codigo: string; anterior: string },
+  .handler(
+    async ({ data, context }) =>
+      ok(
+        await (context.supabase as any).rpc("reclassificar_produto", {
+          _produto: data.produto_id,
+          _familia: data.familia,
+          _tipo: data.tipo,
+          _motivo: data.motivo,
+        }),
+      ) as { codigo: string; anterior: string },
   );
 
 /** Inclui produto na revisão com sua estrutura; idempotente (define a quantidade avulsa, não soma). */
@@ -227,15 +252,20 @@ export const incluirNaRevisao = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
     z
-      .object({ revisao_id: z.string().uuid(), produto_id: z.string().uuid(), quantidade: z.number().min(0).max(1e7) })
+      .object({
+        revisao_id: z.string().uuid(),
+        produto_id: z.string().uuid(),
+        quantidade: z.number().min(0).max(1e7),
+      })
       .parse(d),
   )
-  .handler(async ({ data, context }) =>
-    ok(
-      await (context.supabase as any).rpc("incluir_produto_revisao", {
-        _rev: data.revisao_id,
-        _produto: data.produto_id,
-        _quantidade: data.quantidade,
-      }),
-    ) as { id: string; componentes: number },
+  .handler(
+    async ({ data, context }) =>
+      ok(
+        await (context.supabase as any).rpc("incluir_produto_revisao", {
+          _rev: data.revisao_id,
+          _produto: data.produto_id,
+          _quantidade: data.quantidade,
+        }),
+      ) as { id: string; componentes: number },
   );

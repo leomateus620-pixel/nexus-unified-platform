@@ -3,7 +3,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
 
-import { adicionarComponenteRevisao, incluirNaRevisao } from "@/features/catalogo/catalogo.functions";
+import {
+  adicionarComponenteRevisao,
+  incluirNaRevisao,
+} from "@/features/catalogo/catalogo.functions";
 import { nomeTipo } from "@/features/catalogo/codigos";
 import {
   ProductEditor,
@@ -15,10 +18,17 @@ import {
 import { revKeys, useSave } from "./hooks";
 
 type Modo = null | "existente" | "novo" | "novo-incluir";
-const btn = "inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-sm disabled:opacity-50";
+const btn =
+  "inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-sm disabled:opacity-50";
 
 /** Ações de catálogo dentro da proposta: nada entra no orçamento sem ação explícita. */
-export function AdicionarDoCatalogo({ revisaoId, presentes }: { revisaoId: string; presentes: Set<string> }) {
+export function AdicionarDoCatalogo({
+  revisaoId,
+  presentes,
+}: {
+  revisaoId: string;
+  presentes: Set<string>;
+}) {
   const [modo, setModo] = useState<Modo>(null);
   const perms = usePermissoes();
   const podeCadastrar = !!perms.data?.importar_catalogo;
@@ -26,7 +36,12 @@ export function AdicionarDoCatalogo({ revisaoId, presentes }: { revisaoId: strin
   return (
     <div className="mb-3 grid gap-2">
       <div className="flex flex-wrap gap-2" role="toolbar" aria-label="Ações do catálogo">
-        <button type="button" aria-pressed={modo === "existente"} className={`${btn} border-border`} onClick={() => setModo(modo === "existente" ? null : "existente")}>
+        <button
+          type="button"
+          aria-pressed={modo === "existente"}
+          className={`${btn} border-border`}
+          onClick={() => setModo(modo === "existente" ? null : "existente")}
+        >
           <Search size={14} /> Adicionar item existente
         </button>
         <button
@@ -50,10 +65,24 @@ export function AdicionarDoCatalogo({ revisaoId, presentes }: { revisaoId: strin
           <Plus size={14} /> Criar e adicionar à proposta
         </button>
       </div>
-      {perms.data && !podeCadastrar && <p className="text-xs text-muted-foreground">{motivo} Você ainda pode adicionar itens existentes.</p>}
-      {modo === "existente" && <BuscarExistente revisaoId={revisaoId} presentes={presentes} onClose={() => setModo(null)} />}
+      {perms.data && !podeCadastrar && (
+        <p className="text-xs text-muted-foreground">
+          {motivo} Você ainda pode adicionar itens existentes.
+        </p>
+      )}
+      {modo === "existente" && (
+        <BuscarExistente
+          revisaoId={revisaoId}
+          presentes={presentes}
+          onClose={() => setModo(null)}
+        />
+      )}
       {(modo === "novo" || modo === "novo-incluir") && (
-        <CriarNaProposta revisaoId={revisaoId} incluir={modo === "novo-incluir"} onClose={() => setModo(null)} />
+        <CriarNaProposta
+          revisaoId={revisaoId}
+          incluir={modo === "novo-incluir"}
+          onClose={() => setModo(null)}
+        />
       )}
     </div>
   );
@@ -68,7 +97,9 @@ function useIncluir(revisaoId: string) {
     mutationFn: async (v: { produto_id: string; quantidade: number | null }) =>
       v.quantidade === null
         ? disponibilizar({ data: { revisao_id: revisaoId, produto_id: v.produto_id } })
-        : incluir({ data: { revisao_id: revisaoId, produto_id: v.produto_id, quantidade: v.quantidade } }),
+        : incluir({
+            data: { revisao_id: revisaoId, produto_id: v.produto_id, quantidade: v.quantidade },
+          }),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: revKeys.all(revisaoId) });
       // O cálculo canônico roda pelo coordenador de salvamento (estado visível na tela).
@@ -93,13 +124,24 @@ function Quantidade({ value, onChange }: { value: string; onChange: (v: string) 
 }
 const lerQ = (v: string) => Number(v.trim().replace(",", "."));
 
-function BuscarExistente({ revisaoId, presentes, onClose }: { revisaoId: string; presentes: Set<string>; onClose: () => void }) {
+function BuscarExistente({
+  revisaoId,
+  presentes,
+  onClose,
+}: {
+  revisaoId: string;
+  presentes: Set<string>;
+  onClose: () => void;
+}) {
   const cat = useCatalogo();
   const fam = useFamiliasCodigo();
   const [busca, setBusca] = useState("");
   const [q, setQ] = useState<Record<string, string>>({});
   const m = useIncluir(revisaoId);
-  const lista = useMemo(() => filtrarCatalogo(cat.data ?? [], busca, fam.data ?? []).slice(0, 30), [cat.data, busca, fam.data]);
+  const lista = useMemo(
+    () => filtrarCatalogo(cat.data ?? [], busca, fam.data ?? []).slice(0, 30),
+    [cat.data, busca, fam.data],
+  );
   return (
     <div className="rounded border border-border p-3">
       <div className="mb-2 flex gap-2">
@@ -126,7 +168,11 @@ function BuscarExistente({ revisaoId, presentes, onClose }: { revisaoId: string;
                 <span className="block text-sm text-foreground">{p.descricao}</span>
                 <span className="font-mono text-xs text-muted-foreground">
                   {p.codigo} · {p.tipo_item ? nomeTipo(p.tipo_item) : "Código pendente"}
-                  {p.tipo_item !== "P" && p.tipo_item && (p.composicao_status === "definida" ? " · com composição" : " · composição pendente")}
+                  {p.tipo_item !== "P" &&
+                    p.tipo_item &&
+                    (p.composicao_status === "definida"
+                      ? " · com composição"
+                      : " · composição pendente")}
                   {presentes.has(p.id) && " · já na revisão"}
                 </span>
               </span>
@@ -163,12 +209,23 @@ function BuscarExistente({ revisaoId, presentes, onClose }: { revisaoId: string;
   );
 }
 
-function CriarNaProposta({ revisaoId, incluir, onClose }: { revisaoId: string; incluir: boolean; onClose: () => void }) {
+function CriarNaProposta({
+  revisaoId,
+  incluir,
+  onClose,
+}: {
+  revisaoId: string;
+  incluir: boolean;
+  onClose: () => void;
+}) {
   const [q, setQ] = useState("1");
-  const [criado, setCriado] = useState<{ id: string; codigo: string; descricao: string } | null>(null);
+  const [criado, setCriado] = useState<{ id: string; codigo: string; descricao: string } | null>(
+    null,
+  );
   const m = useIncluir(revisaoId);
   const quantidade = incluir ? lerQ(q) : null;
-  const tentar = (id: string) => m.mutateAsync({ produto_id: id, quantidade }).catch(() => undefined);
+  const tentar = (id: string) =>
+    m.mutateAsync({ produto_id: id, quantidade }).catch(() => undefined);
   return (
     <div className="rounded border border-border p-3">
       {incluir && (
@@ -179,10 +236,17 @@ function CriarNaProposta({ revisaoId, incluir, onClose }: { revisaoId: string; i
       {criado ? (
         <div className="grid gap-2 text-sm">
           <p className="text-primary">
-            Produto cadastrado: <strong>{criado.descricao}</strong> <span className="font-mono">{criado.codigo}</span>.
+            Produto cadastrado: <strong>{criado.descricao}</strong>{" "}
+            <span className="font-mono">{criado.codigo}</span>.
           </p>
           {m.isPending && <p className="text-muted-foreground">Incluindo na proposta…</p>}
-          {m.isSuccess && <p className="text-primary">{incluir ? "Incluído no orçamento desta proposta." : "Disponível no catálogo desta revisão."}</p>}
+          {m.isSuccess && (
+            <p className="text-primary">
+              {incluir
+                ? "Incluído no orçamento desta proposta."
+                : "Disponível no catálogo desta revisão."}
+            </p>
+          )}
           {m.isError && (
             <p className="text-destructive">
               O cadastro foi salvo, mas a inclusão na proposta falhou: {(m.error as Error).message}{" "}
@@ -193,7 +257,14 @@ function CriarNaProposta({ revisaoId, incluir, onClose }: { revisaoId: string; i
             </p>
           )}
           <div className="flex gap-2">
-            <button type="button" className={`${btn} border-border`} onClick={() => { setCriado(null); m.reset(); }}>
+            <button
+              type="button"
+              className={`${btn} border-border`}
+              onClick={() => {
+                setCriado(null);
+                m.reset();
+              }}
+            >
               Cadastrar outro
             </button>
             <button type="button" className={`${btn} border-border`} onClick={onClose}>
@@ -204,7 +275,9 @@ function CriarNaProposta({ revisaoId, incluir, onClose }: { revisaoId: string; i
       ) : (
         <ProductEditor
           compacto
-          rotuloSalvar={incluir ? "Cadastrar e incluir na proposta" : "Cadastrar e disponibilizar na revisão"}
+          rotuloSalvar={
+            incluir ? "Cadastrar e incluir na proposta" : "Cadastrar e disponibilizar na revisão"
+          }
           onCancel={onClose}
           onSaved={async (r) => {
             setCriado(r);

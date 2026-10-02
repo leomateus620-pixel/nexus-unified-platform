@@ -387,6 +387,18 @@ function Info({ k, v }: { k: string; v: string }) {
   );
 }
 
+function usePrevia(orgId: string, familia: string, tipo: string) {
+  return useQuery({
+    queryKey: ["previa_codigo", orgId, familia, tipo],
+    enabled: !!orgId && !!familia && !!tipo,
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("previa_codigo", { _org: orgId, _familia: familia, _tipo: tipo });
+      if (error) throw error;
+      return data as string | null;
+    },
+  });
+}
+
 function Pendente({ p, familias, orgId }: { p: { id: string; codigo: string; descricao: string }; familias: Familia[]; orgId: string }) {
   const qc = useQueryClient();
   const rec = useServerFn(recodificarProduto);

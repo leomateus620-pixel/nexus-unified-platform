@@ -653,25 +653,42 @@ export function ProductEditor({
 
           {composto && (
             <section
-              className="rounded border border-border p-3"
+              className="overflow-hidden rounded-md border border-border"
               aria-label="Composição do produto"
             >
-              <h4 className="text-sm font-semibold text-foreground">
-                Composição do produto ·{" "}
-                {f.tipo === "S" ? "Peças deste conjunto" : "Componentes desta montagem"}
-              </h4>
-              <fieldset className="mt-2 flex flex-wrap gap-3 text-xs">
-                <label className="flex items-center gap-1.5">
+              <div className="border-b border-border px-4 py-3">
+                <h4 className="font-display text-xs font-bold uppercase tracking-wider text-foreground">
+                  Composição do produto ·{" "}
+                  {f.tipo === "S" ? "Peças deste conjunto" : "Componentes desta montagem"}
+                </h4>
+              </div>
+              <div className="p-4 sm:p-6">
+              <fieldset className="grid gap-2 text-xs sm:grid-cols-2">
+                <label
+                  className={`flex cursor-pointer items-center gap-2 rounded border px-3 py-2.5 transition-colors ${
+                    f.base_custo === "composto"
+                      ? "border-primary bg-primary/10"
+                      : "border-input hover:bg-muted/40"
+                  }`}
+                >
                   <input
                     type="radio"
+                    className="accent-[var(--primary)]"
                     checked={f.base_custo === "composto"}
                     onChange={() => setF((x) => ({ ...x, base_custo: "composto" }))}
                   />
                   Custo pelos componentes (fabricado/montado)
                 </label>
-                <label className="flex items-center gap-1.5">
+                <label
+                  className={`flex cursor-pointer items-center gap-2 rounded border px-3 py-2.5 transition-colors ${
+                    f.base_custo === "completo"
+                      ? "border-primary bg-primary/10"
+                      : "border-input hover:bg-muted/40"
+                  }`}
+                >
                   <input
                     type="radio"
+                    className="accent-[var(--primary)]"
                     checked={f.base_custo === "completo"}
                     onChange={() => setF((x) => ({ ...x, base_custo: "completo" }))}
                   />

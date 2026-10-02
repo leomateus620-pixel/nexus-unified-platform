@@ -22,21 +22,30 @@ const rotulo =
   "font-display text-[11px] font-bold uppercase tracking-wider text-muted-foreground";
 const cartao = "rounded-lg border border-border bg-card";
 
-export const TIPOS_GUIADOS: { valor: TipoItem; nome: string; apoio?: string; explica: string }[] = [
+export const TIPOS_GUIADOS: {
+  valor: TipoItem;
+  nome: string;
+  apoio?: string;
+  curto: string;
+  explica: string;
+}[] = [
   {
     valor: "P",
     nome: "Peça",
+    curto: "Individual",
     explica: "Item individual, usado sozinho ou dentro de um conjunto. Código com P.",
   },
   {
     valor: "S",
     nome: "Conjunto soldado",
     apoio: "CJ SD",
+    curto: "Processado",
     explica: "Produto formado por peças unidas por solda. Código com S.",
   },
   {
     valor: "M",
     nome: "Montagem",
+    curto: "Final",
     explica: "Produto formado pela combinação de peças e/ou conjuntos. Código com M.",
   },
 ];

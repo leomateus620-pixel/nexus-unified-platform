@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, type ReactNode } from "react";
 import { FamilyMark, ObjectCard } from "./ObjectCards";
 
 type ItemIdentity = {
@@ -20,6 +20,7 @@ type CommercialRowProps = {
   price: string;
   quantity: string;
   pricePending?: boolean;
+  extra?: ReactNode;
   onInspect: (id: string, trigger: HTMLButtonElement) => void;
   onToggleIncluded: (id: string, included: boolean) => void;
   onToggleBatch: (id: string, checked: boolean) => void;
@@ -34,6 +35,7 @@ export const ProductComponentCard = memo(function ProductComponentCard({
   price,
   quantity,
   pricePending,
+  extra,
   onInspect,
   onToggleIncluded,
   onToggleBatch,
@@ -78,6 +80,7 @@ export const ProductComponentCard = memo(function ProductComponentCard({
           <dd>{quantity}</dd>
         </div>
       </dl>
+      {extra}
       <label className="nx-object-check nx-product-batch-check">
         <input
           type="checkbox"

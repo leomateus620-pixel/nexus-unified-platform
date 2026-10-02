@@ -583,6 +583,7 @@ export function calcularRevisao(
   return {
     itens,
     pendencias: [...pendencias],
+    avulsos: exp.ocorrencias,
     por_componente: porComponente,
     por_sistema: porSistema,
     totais: {

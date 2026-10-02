@@ -389,8 +389,15 @@ export function ProductEditor({
         e.stopPropagation();
         salvar.mutate();
       }}
-      className="grid gap-4"
+      className={`overflow-hidden ${cartao}`}
     >
+      <div className="border-b border-border px-6 py-4">
+        <h2 className="font-display text-base font-bold uppercase tracking-wide text-foreground">
+          {produtoId ? "Editar cadastro" : "Cadastro de item comercial"}
+        </h2>
+      </div>
+
+      <div className="grid gap-7 p-6">
       {perms.data && !podeSalvar && (
         <p
           role="note"

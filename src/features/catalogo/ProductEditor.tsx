@@ -14,24 +14,38 @@ import {
 } from "./catalogo.functions";
 import { nomeTipo, type TipoItem } from "./codigos";
 
-const input = "h-9 w-full rounded border border-input bg-background px-2 text-sm text-foreground";
-const btn = "inline-flex h-9 items-center gap-1.5 rounded border px-3 text-sm disabled:opacity-50";
+const input =
+  "h-10 w-full rounded border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
+const btn =
+  "inline-flex h-10 items-center gap-1.5 rounded border px-4 text-sm disabled:opacity-50";
+const rotulo =
+  "font-display text-[11px] font-bold uppercase tracking-wider text-muted-foreground";
+const cartao = "rounded-lg border border-border bg-card";
 
-export const TIPOS_GUIADOS: { valor: TipoItem; nome: string; apoio?: string; explica: string }[] = [
+export const TIPOS_GUIADOS: {
+  valor: TipoItem;
+  nome: string;
+  apoio?: string;
+  curto: string;
+  explica: string;
+}[] = [
   {
     valor: "P",
     nome: "Peça",
+    curto: "Individual",
     explica: "Item individual, usado sozinho ou dentro de um conjunto. Código com P.",
   },
   {
     valor: "S",
     nome: "Conjunto soldado",
     apoio: "CJ SD",
+    curto: "Processado",
     explica: "Produto formado por peças unidas por solda. Código com S.",
   },
   {
     valor: "M",
     nome: "Montagem",
+    curto: "Final",
     explica: "Produto formado pela combinação de peças e/ou conjuntos. Código com M.",
   },
 ];
@@ -384,12 +398,19 @@ export function ProductEditor({
         e.stopPropagation();
         salvar.mutate();
       }}
-      className="grid gap-4"
+      className={`overflow-hidden ${cartao}`}
     >
+      <div className="border-b border-border px-6 py-4">
+        <h2 className="font-display text-base font-bold uppercase tracking-wide text-foreground">
+          {produtoId ? "Editar cadastro" : "Cadastro de item comercial"}
+        </h2>
+      </div>
+
+      <div className="grid gap-7 p-6">
       {perms.data && !podeSalvar && (
         <p
           role="note"
-          className="rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-foreground"
+          className="rounded border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-foreground"
         >
           {produtoId
             ? "Editar o cadastro mestre exige papel Comercial, Engenharia, Compras ou Admin."
@@ -398,41 +419,64 @@ export function ProductEditor({
       )}
 
       {!produtoId ? (
-        <fieldset className="grid gap-2">
-          <legend className="mb-1 text-sm font-semibold text-foreground">
-            O que você quer cadastrar?
-          </legend>
-          <div className="grid gap-2 sm:grid-cols-3">
-            {TIPOS_GUIADOS.map((t) => (
-              <button
-                key={t.valor}
-                type="button"
-                aria-pressed={f.tipo === t.valor}
-                onClick={() =>
-                  setF((x) => ({
-                    ...x,
-                    tipo: t.valor,
-                    base_custo:
-                      t.valor === "P"
-                        ? "completo"
-                        : x.base_custo === "completo" && x.tipo === "P"
-                          ? "composto"
-                          : x.base_custo,
-                  }))
-                }
-                className={`rounded border p-3 text-left ${f.tipo === t.valor ? "border-primary bg-primary/10" : "border-input"}`}
-              >
-                <span className="block text-sm font-semibold text-foreground">
-                  {t.nome}{" "}
-                  {t.apoio && (
-                    <span className="text-xs font-normal text-muted-foreground">({t.apoio})</span>
+        <fieldset className="grid gap-3">
+          <legend className={`mb-1 ${rotulo}`}>O que você quer cadastrar?</legend>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {TIPOS_GUIADOS.map((t) => {
+              const ativo = f.tipo === t.valor;
+              return (
+                <button
+                  key={t.valor}
+                  type="button"
+                  aria-pressed={ativo}
+                  onClick={() =>
+                    setF((x) => ({
+                      ...x,
+                      tipo: t.valor,
+                      base_custo:
+                        t.valor === "P"
+                          ? "completo"
+                          : x.base_custo === "completo" && x.tipo === "P"
+                            ? "composto"
+                            : x.base_custo,
+                    }))
+                  }
+                  className={`flex flex-col items-center justify-center rounded border-2 py-4 text-center transition-colors ${
+                    ativo
+                      ? "border-primary bg-primary/10 ring-1 ring-primary/20"
+                      : "border-input hover:bg-muted/40"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span
+                      className={`text-sm font-bold ${ativo ? "text-primary" : "text-foreground"}`}
+                    >
+                      {t.nome}
+                    </span>
+                    {t.apoio && (
+                      <span
+                        className={`rounded px-1 text-[10px] font-bold ${
+                          ativo
+                            ? "bg-primary/20 text-primary"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {t.apoio}
+                      </span>
+                    )}
+                  </span>
+                  {!compacto && (
+                    <span
+                      className={`mt-1 text-[10px] uppercase ${
+                        ativo ? "font-medium text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      {t.curto}
+                    </span>
                   )}
-                </span>
-                {!compacto && (
-                  <span className="mt-1 block text-xs text-muted-foreground">{t.explica}</span>
-                )}
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         </fieldset>
       ) : (
@@ -449,10 +493,10 @@ export function ProductEditor({
 
       {f.tipo && (
         <>
-          <div className="grid gap-3 sm:grid-cols-6">
+          <div className="grid grid-cols-12 items-end gap-4 sm:gap-6">
             {!produtoId && (
-              <label className="grid gap-1 text-xs sm:col-span-3">
-                Família — grupo técnico do produto
+              <label className="col-span-12 grid gap-1.5 sm:col-span-8">
+                <span className={rotulo}>Família — grupo técnico do produto</span>
                 <FamiliaPicker
                   id={`fam-${chave}`}
                   familias={familias}
@@ -460,29 +504,34 @@ export function ProductEditor({
                   onChange={(v) => setF((x) => ({ ...x, familia: v }))}
                 />
                 {familiaAtual?.situacao === "a_confirmar" && (
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="text-xs text-warning">
                     Família com significado a confirmar: {familiaAtual.observacao}
                   </span>
                 )}
               </label>
             )}
             {!produtoId && (
-              <div className="flex items-end gap-2 sm:col-span-3">
-                <div className="flex h-9 w-full items-center gap-2 rounded border border-dashed border-primary/40 bg-primary/5 px-3">
-                  <span className="text-xs text-muted-foreground">Código</span>
-                  <span className="font-mono text-sm text-primary" aria-live="polite">
-                    {previa.data ?? "—"}
+              <div className="col-span-12 sm:col-span-4">
+                <div className="rounded border border-border bg-background p-3">
+                  <span className="block text-[9px] font-bold uppercase text-muted-foreground">
+                    Código gerado
                   </span>
-                  {previa.data && (
-                    <span className="text-xs text-muted-foreground">
-                      prévia · confirmado ao salvar
+                  <div className="mt-1 flex items-baseline justify-between gap-2">
+                    <span
+                      className="font-mono text-sm font-bold tracking-wider text-primary"
+                      aria-live="polite"
+                    >
+                      {previa.data ?? "—"}
                     </span>
-                  )}
+                    <span className="text-[9px] uppercase text-muted-foreground">
+                      {previa.data ? "prévia · confirmado ao salvar" : "prévia"}
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
-            <label className="grid gap-1 text-xs sm:col-span-4">
-              Nome do produto
+            <label className="col-span-12 grid gap-1.5 sm:col-span-7">
+              <span className={rotulo}>Nome do produto</span>
               <input
                 aria-label="Nome do produto"
                 className={input}
@@ -500,17 +549,17 @@ export function ProductEditor({
                 </button>
               )}
             </label>
-            <label className="grid gap-1 text-xs">
-              Unidade
+            <label className="col-span-5 grid gap-1.5 sm:col-span-2">
+              <span className={rotulo}>Unidade</span>
               <input
                 aria-label="Unidade"
-                className={input}
+                className={`${input} text-center`}
                 value={f.unidade}
                 onChange={set("unidade")}
               />
             </label>
-            <label className="grid gap-1 text-xs">
-              Fornecimento
+            <label className="col-span-7 grid gap-1.5 sm:col-span-3">
+              <span className={rotulo}>Fornecimento</span>
               <select
                 aria-label="Fornecimento"
                 className={input}
@@ -525,15 +574,27 @@ export function ProductEditor({
           </div>
 
           <details
-            className="rounded border border-border px-3 py-2"
+            className="group overflow-hidden rounded-md border border-border bg-muted/20"
             open={!compacto && !!produtoId}
           >
-            <summary className="cursor-pointer text-sm text-foreground">
-              Detalhes complementares
+            <summary className="flex cursor-pointer list-none items-center justify-between border-b border-transparent px-4 py-3 group-open:border-border">
+              <span
+                className={`flex items-center gap-2 ${rotulo} text-foreground`}
+              >
+                <ChevronRight
+                  size={12}
+                  className="transition-transform group-open:rotate-90"
+                  aria-hidden="true"
+                />
+                Detalhes complementares
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground italic group-open:hidden">
+                Ver mais campos
+              </span>
             </summary>
-            <div className="mt-2 grid gap-3 sm:grid-cols-6">
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                Material
+            <div className="grid gap-4 p-4 sm:grid-cols-6 sm:gap-6 sm:p-6">
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>Material</span>
                 <input
                   aria-label="Material"
                   className={input}
@@ -541,8 +602,8 @@ export function ProductEditor({
                   onChange={set("material")}
                 />
               </label>
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                Dimensões
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>Dimensões</span>
                 <input
                   aria-label="Dimensões"
                   className={input}
@@ -551,8 +612,8 @@ export function ProductEditor({
                   placeholder="Ex.: 600 mm"
                 />
               </label>
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                Acabamento
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>Acabamento</span>
                 <input
                   aria-label="Acabamento"
                   className={input}
@@ -560,21 +621,31 @@ export function ProductEditor({
                   onChange={set("acabamento")}
                 />
               </label>
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                NCM
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>NCM</span>
                 <input aria-label="NCM" className={input} value={f.ncm} onChange={set("ncm")} />
               </label>
               {verCusto && !produtoId && (
-                <label className="grid gap-1 text-xs sm:col-span-2">
-                  Custo unitário (R$) — deixe vazio se desconhecido
-                  <input
-                    aria-label="Custo"
-                    inputMode="decimal"
-                    className={input}
-                    value={f.custo}
-                    onChange={set("custo")}
-                    placeholder="0,00"
-                  />
+                <label className="grid gap-1.5 sm:col-span-4">
+                  <span className={rotulo}>
+                    Custo unitário (R$){" "}
+                    <span className="font-normal normal-case italic tracking-normal">
+                      — deixe vazio se desconhecido
+                    </span>
+                  </span>
+                  <span className="relative block">
+                    <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-xs font-bold text-muted-foreground">
+                      R$
+                    </span>
+                    <input
+                      aria-label="Custo"
+                      inputMode="decimal"
+                      className={`${input} pl-9`}
+                      value={f.custo}
+                      onChange={set("custo")}
+                      placeholder="0,00"
+                    />
+                  </span>
                 </label>
               )}
             </div>
@@ -582,25 +653,42 @@ export function ProductEditor({
 
           {composto && (
             <section
-              className="rounded border border-border p-3"
+              className="overflow-hidden rounded-md border border-border"
               aria-label="Composição do produto"
             >
-              <h4 className="text-sm font-semibold text-foreground">
-                Composição do produto ·{" "}
-                {f.tipo === "S" ? "Peças deste conjunto" : "Componentes desta montagem"}
-              </h4>
-              <fieldset className="mt-2 flex flex-wrap gap-3 text-xs">
-                <label className="flex items-center gap-1.5">
+              <div className="border-b border-border px-4 py-3">
+                <h4 className="font-display text-xs font-bold uppercase tracking-wider text-foreground">
+                  Composição do produto ·{" "}
+                  {f.tipo === "S" ? "Peças deste conjunto" : "Componentes desta montagem"}
+                </h4>
+              </div>
+              <div className="p-4 sm:p-6">
+              <fieldset className="grid gap-2 text-xs sm:grid-cols-2">
+                <label
+                  className={`flex cursor-pointer items-center gap-2 rounded border px-3 py-2.5 transition-colors ${
+                    f.base_custo === "composto"
+                      ? "border-primary bg-primary/10"
+                      : "border-input hover:bg-muted/40"
+                  }`}
+                >
                   <input
                     type="radio"
+                    className="accent-[var(--primary)]"
                     checked={f.base_custo === "composto"}
                     onChange={() => setF((x) => ({ ...x, base_custo: "composto" }))}
                   />
                   Custo pelos componentes (fabricado/montado)
                 </label>
-                <label className="flex items-center gap-1.5">
+                <label
+                  className={`flex cursor-pointer items-center gap-2 rounded border px-3 py-2.5 transition-colors ${
+                    f.base_custo === "completo"
+                      ? "border-primary bg-primary/10"
+                      : "border-input hover:bg-muted/40"
+                  }`}
+                >
                   <input
                     type="radio"
+                    className="accent-[var(--primary)]"
                     checked={f.base_custo === "completo"}
                     onChange={() => setF((x) => ({ ...x, base_custo: "completo" }))}
                   />
@@ -636,32 +724,20 @@ export function ProductEditor({
                 </div>
               )}
               {!linhas.length && (
-                <p className="mt-2 text-xs text-amber-600 dark:text-amber-400">
+                <p className="mt-2 text-xs text-warning">
                   Sem componentes: o produto será salvo como “Composição pendente”.
                 </p>
               )}
+              </div>
             </section>
           )}
         </>
       )}
+      </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="submit"
-          disabled={salvar.isPending || !podeSalvar || !f.tipo}
-          className={`${btn} border-primary bg-primary text-primary-foreground`}
-        >
-          {salvar.isPending
-            ? "Salvando…"
-            : (rotuloSalvar ?? (produtoId ? "Salvar cadastro" : "Cadastrar"))}
-        </button>
-        {onCancel && (
-          <button type="button" className={`${btn} border-input`} onClick={onCancel}>
-            Cancelar
-          </button>
-        )}
+      <div className="flex flex-wrap items-center justify-end gap-3 border-t border-border bg-muted/30 px-6 py-4">
         {salvar.isSuccess && (
-          <span className="text-sm text-primary" role="status">
+          <span className="mr-auto text-sm text-primary" role="status">
             {salvar.data.novo ? (
               <>
                 Cadastrado como <strong className="font-mono">{salvar.data.codigo}</strong>.
@@ -672,10 +748,28 @@ export function ProductEditor({
           </span>
         )}
         {salvar.isError && (
-          <span className="text-sm text-destructive" role="alert">
+          <span className="mr-auto text-sm text-destructive" role="alert">
             {(salvar.error as Error).message}
           </span>
         )}
+        {onCancel && (
+          <button
+            type="button"
+            className={`${btn} border-transparent font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground`}
+            onClick={onCancel}
+          >
+            Cancelar
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={salvar.isPending || !podeSalvar || !f.tipo}
+          className={`${btn} border-primary bg-primary font-display font-bold uppercase tracking-widest text-primary-foreground shadow-sm transition-colors hover:brightness-110`}
+        >
+          {salvar.isPending
+            ? "Salvando…"
+            : (rotuloSalvar ?? (produtoId ? "Salvar cadastro" : "Cadastrar"))}
+        </button>
       </div>
     </form>
   );

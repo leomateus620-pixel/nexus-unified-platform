@@ -724,32 +724,20 @@ export function ProductEditor({
                 </div>
               )}
               {!linhas.length && (
-                <p className="mt-2 text-xs text-amber-600 dark:text-amber-400">
+                <p className="mt-2 text-xs text-warning">
                   Sem componentes: o produto será salvo como “Composição pendente”.
                 </p>
               )}
+              </div>
             </section>
           )}
         </>
       )}
+      </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="submit"
-          disabled={salvar.isPending || !podeSalvar || !f.tipo}
-          className={`${btn} border-primary bg-primary text-primary-foreground`}
-        >
-          {salvar.isPending
-            ? "Salvando…"
-            : (rotuloSalvar ?? (produtoId ? "Salvar cadastro" : "Cadastrar"))}
-        </button>
-        {onCancel && (
-          <button type="button" className={`${btn} border-input`} onClick={onCancel}>
-            Cancelar
-          </button>
-        )}
+      <div className="flex flex-wrap items-center justify-end gap-3 border-t border-border bg-muted/30 px-6 py-4">
         {salvar.isSuccess && (
-          <span className="text-sm text-primary" role="status">
+          <span className="mr-auto text-sm text-primary" role="status">
             {salvar.data.novo ? (
               <>
                 Cadastrado como <strong className="font-mono">{salvar.data.codigo}</strong>.
@@ -760,10 +748,28 @@ export function ProductEditor({
           </span>
         )}
         {salvar.isError && (
-          <span className="text-sm text-destructive" role="alert">
+          <span className="mr-auto text-sm text-destructive" role="alert">
             {(salvar.error as Error).message}
           </span>
         )}
+        {onCancel && (
+          <button
+            type="button"
+            className={`${btn} border-transparent font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground`}
+            onClick={onCancel}
+          >
+            Cancelar
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={salvar.isPending || !podeSalvar || !f.tipo}
+          className={`${btn} border-primary bg-primary font-display font-bold uppercase tracking-widest text-primary-foreground shadow-sm transition-colors hover:brightness-110`}
+        >
+          {salvar.isPending
+            ? "Salvando…"
+            : (rotuloSalvar ?? (produtoId ? "Salvar cadastro" : "Cadastrar"))}
+        </button>
       </div>
     </form>
   );

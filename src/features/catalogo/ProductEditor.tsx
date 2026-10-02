@@ -574,15 +574,27 @@ export function ProductEditor({
           </div>
 
           <details
-            className="rounded border border-border px-3 py-2"
+            className="group overflow-hidden rounded-md border border-border bg-muted/20"
             open={!compacto && !!produtoId}
           >
-            <summary className="cursor-pointer text-sm text-foreground">
-              Detalhes complementares
+            <summary className="flex cursor-pointer list-none items-center justify-between border-b border-transparent px-4 py-3 group-open:border-border">
+              <span
+                className={`flex items-center gap-2 ${rotulo} text-foreground`}
+              >
+                <ChevronRight
+                  size={12}
+                  className="transition-transform group-open:rotate-90"
+                  aria-hidden="true"
+                />
+                Detalhes complementares
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground italic group-open:hidden">
+                Ver mais campos
+              </span>
             </summary>
-            <div className="mt-2 grid gap-3 sm:grid-cols-6">
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                Material
+            <div className="grid gap-4 p-4 sm:grid-cols-6 sm:gap-6 sm:p-6">
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>Material</span>
                 <input
                   aria-label="Material"
                   className={input}
@@ -590,8 +602,8 @@ export function ProductEditor({
                   onChange={set("material")}
                 />
               </label>
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                Dimensões
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>Dimensões</span>
                 <input
                   aria-label="Dimensões"
                   className={input}
@@ -600,8 +612,8 @@ export function ProductEditor({
                   placeholder="Ex.: 600 mm"
                 />
               </label>
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                Acabamento
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>Acabamento</span>
                 <input
                   aria-label="Acabamento"
                   className={input}
@@ -609,21 +621,31 @@ export function ProductEditor({
                   onChange={set("acabamento")}
                 />
               </label>
-              <label className="grid gap-1 text-xs sm:col-span-2">
-                NCM
+              <label className="grid gap-1.5 sm:col-span-2">
+                <span className={rotulo}>NCM</span>
                 <input aria-label="NCM" className={input} value={f.ncm} onChange={set("ncm")} />
               </label>
               {verCusto && !produtoId && (
-                <label className="grid gap-1 text-xs sm:col-span-2">
-                  Custo unitário (R$) — deixe vazio se desconhecido
-                  <input
-                    aria-label="Custo"
-                    inputMode="decimal"
-                    className={input}
-                    value={f.custo}
-                    onChange={set("custo")}
-                    placeholder="0,00"
-                  />
+                <label className="grid gap-1.5 sm:col-span-4">
+                  <span className={rotulo}>
+                    Custo unitário (R$){" "}
+                    <span className="font-normal normal-case italic tracking-normal">
+                      — deixe vazio se desconhecido
+                    </span>
+                  </span>
+                  <span className="relative block">
+                    <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-xs font-bold text-muted-foreground">
+                      R$
+                    </span>
+                    <input
+                      aria-label="Custo"
+                      inputMode="decimal"
+                      className={`${input} pl-9`}
+                      value={f.custo}
+                      onChange={set("custo")}
+                      placeholder="0,00"
+                    />
+                  </span>
                 </label>
               )}
             </div>

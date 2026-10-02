@@ -23,7 +23,8 @@ export type Mapa = Partial<Record<CampoChave, number>>;
 export function lerTabela(texto: string): string[][] {
   const linhas = texto.replace(/\r/g, "").split("\n").filter((l) => l.trim());
   if (!linhas.length) return [];
-  const sep = linhas[0].includes("\t") ? "\t" : linhas[0].split(";").length > 1 ? ";" : ",";
+  const l0 = linhas[0] ?? "";
+  const sep = l0.includes("\t") ? "\t" : l0.split(";").length > 1 ? ";" : ",";
   return linhas.map((l) => l.split(sep).map((c) => c.trim().replace(/^"|"$/g, "")));
 }
 
@@ -66,7 +67,7 @@ export type LinhaClassificada = {
   linha: number;
   situacao: Situacao;
   motivo: string;
-  produto?: ProdutoRef;
+  produto?: ProdutoRef | undefined;
   fornecedor_id: string | null;
   compra?: {
     nf_numero: string;
@@ -94,7 +95,7 @@ export function classificar(
     const linha = i + 2; // linha 1 = cabeçalho
     const fNome = normal(get(r, "fornecedor"));
     const forn = fNome ? fornecedores.filter((f) => normal(f.nome) === fNome) : [];
-    const fornecedor_id = forn.length === 1 ? forn[0].id : null;
+    const fornecedor_id = forn.length === 1 ? (forn[0]?.id ?? null) : null;
     const cod = get(r, "codigo").toUpperCase();
     const ref = get(r, "ref_fornecedor").toUpperCase();
     let cand = cod ? porCodigo.get(cod) : undefined;
@@ -164,8 +165,8 @@ function base(
 /** UUID determinístico (formato v5) a partir da identidade — reenvio gera a mesma chave. */
 export async function uuidDe(texto: string): Promise<string> {
   const h = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto)));
-  h[6] = (h[6] & 0x0f) | 0x50;
-  h[8] = (h[8] & 0x3f) | 0x80;
+  h[6] = ((h[6] ?? 0) & 0x0f) | 0x50;
+  h[8] = ((h[8] ?? 0) & 0x3f) | 0x80;
   const x = [...h.slice(0, 16)].map((b) => b.toString(16).padStart(2, "0")).join("");
   return `${x.slice(0, 8)}-${x.slice(8, 12)}-${x.slice(12, 16)}-${x.slice(16, 20)}-${x.slice(20, 32)}`;
 }

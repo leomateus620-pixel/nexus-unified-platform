@@ -67,7 +67,7 @@ export function ImportacaoAssistida({ podeRegistrar }: { podeRegistrar: boolean 
         aba: aba.trim() || "sem-aba",
       });
       const chaves = await Promise.all(linhas.map((l) => uuidDe(l.identidade)));
-      const novos = chaves.filter((_, i) => linhas[i].situacao === "novo");
+      const novos = chaves.filter((_, i) => linhas[i]?.situacao === "novo");
       const ja = new Set<string>();
       if (novos.length) {
         const { data } = await supabase.from("aquisicoes").select("chave").in("chave", novos);
@@ -75,7 +75,7 @@ export function ImportacaoAssistida({ podeRegistrar }: { podeRegistrar: boolean 
       }
       setPrevia(
         linhas.map((l, i) =>
-          l.situacao === "novo" && ja.has(chaves[i])
+          l.situacao === "novo" && ja.has(chaves[i] ?? "")
             ? { ...l, situacao: "existente", motivo: "Compra já importada — nada será duplicado." }
             : l,
         ),

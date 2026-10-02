@@ -677,14 +677,31 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     );
     const linhas = [...agg.entries()]
       .filter(([id]) => !alocadas.has(id))
-      .map(([id, a]) => ({
-        organization_id: org,
-        revisao_id: rev.id,
-        revisao_componente_id: id,
-        modalidade: a.mod,
-        quantidade_necessaria: a.q,
-        quantidade_planejada: a.q,
-      }));
+      .map(([id, a]) => {
+        const pc = (resumo.por_componente ?? []).find((x: any) => x.componente_id === id);
+        const ocorr = (resumo.avulsos ?? []).filter((o: any) => o.componente_id === id);
+        return {
+          organization_id: org,
+          revisao_id: rev.id,
+          revisao_componente_id: id,
+          modalidade: a.mod,
+          quantidade_necessaria: a.q,
+          quantidade_planejada: a.q,
+          quantidade_tecnica:
+            pc == null
+              ? null
+              : Number(pc.quantidade_avulsa_tecnica ?? 0) + Number(pc.quantidade_sistemas ?? 0),
+          origem: {
+            proposta_revisao: rev.id,
+            sistemas: Number(pc?.quantidade_sistemas ?? 0),
+            avulsos: ocorr.map((o: any) => ({
+              item_origem: o.origem_id,
+              caminho: o.caminho,
+              quantidade_tecnica: o.quantidade_tecnica,
+            })),
+          },
+        };
+      });
     if (linhas.length)
       ok(
         await db
@@ -696,7 +713,10 @@ export const gerarDemanda = createServerFn({ method: "POST" })
       .filter((e) => e.status === "planejada" && !agg.has(e.revisao_componente_id))
       .map((e) => e.id);
     if (remover.length) await db.from("demandas").delete().in("id", remover);
-    return { demandas: agg.size };
+    const diferencas = existentes
+      .filter((e) => e.status !== "planejada")
+      .map((e) => ({ id: e.revisao_componente_id, nova: agg.get(e.revisao_componente_id)?.q ?? 0 }));
+    return { demandas: agg.size, preservadas: diferencas };
   });
 
 /** Numeração atômica no banco (substitui count + 1). */

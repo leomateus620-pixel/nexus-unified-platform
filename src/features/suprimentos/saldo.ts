@@ -14,7 +14,11 @@ export type Reconciliacao = {
   excedente: number;
 };
 
-export function reconciliar(planejada: number, comprometida: number, realizada: number): Reconciliacao {
+export function reconciliar(
+  planejada: number,
+  comprometida: number,
+  realizada: number,
+): Reconciliacao {
   return {
     necessidade: planejada,
     comprometida,

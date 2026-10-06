@@ -639,7 +639,9 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     const itens = ok(
       await db
         .from("sistema_componentes")
-        .select("revisao_componente_id,quantidade,quantidade_tecnica,revisao_componentes!inner(modalidade)")
+        .select(
+          "revisao_componente_id,quantidade,quantidade_tecnica,revisao_componentes!inner(modalidade)",
+        )
         .eq("revisao_id", rev.id)
         .eq("revisao_componentes.incluido_orcamento", true),
     ) as any[];
@@ -686,12 +688,16 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     const fornAtual = new Map(
       (
         ok(
-          await db.from("revisao_componentes").select("id,codigo,fornecedor_id").eq("revisao_id", rev.id),
+          await db
+            .from("revisao_componentes")
+            .select("id,codigo,fornecedor_id")
+            .eq("revisao_id", rev.id),
         ) as any[]
       ).map((c) => [c.id, c]),
     );
     const porComp = new Map(existentes.map((e) => [e.revisao_componente_id, e]));
-    const comOrdem = (e: any) => (e.ordem_compra_itens?.length ?? 0) + (e.ordem_producao_itens?.length ?? 0) > 0;
+    const comOrdem = (e: any) =>
+      (e.ordem_compra_itens?.length ?? 0) + (e.ordem_producao_itens?.length ?? 0) > 0;
     const diferencas: {
       componente_id: string;
       codigo: string;
@@ -707,13 +713,47 @@ export const gerarDemanda = createServerFn({ method: "POST" })
       const antes = Number(e?.quantidade_planejada ?? 0);
       // Modalidade de demanda já comprometida não muda silenciosamente: a mudança fica sinalizada.
       const modalidade = e && comOrdem(e) ? e.modalidade : a.mod;
-      if (!e) diferencas.push({ componente_id: id, codigo: comp?.codigo ?? "", tipo: "novo", antes: 0, depois: a.q });
+      if (!e)
+        diferencas.push({
+          componente_id: id,
+          codigo: comp?.codigo ?? "",
+          tipo: "novo",
+          antes: 0,
+          depois: a.q,
+        });
       else {
-        if (a.q > antes) diferencas.push({ componente_id: id, codigo: comp?.codigo ?? "", tipo: "aumento", antes, depois: a.q });
-        if (a.q < antes) diferencas.push({ componente_id: id, codigo: comp?.codigo ?? "", tipo: "reducao", antes, depois: a.q });
-        if (e.modalidade !== a.mod) diferencas.push({ componente_id: id, codigo: comp?.codigo ?? "", tipo: "modalidade", antes, depois: a.q });
+        if (a.q > antes)
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "aumento",
+            antes,
+            depois: a.q,
+          });
+        if (a.q < antes)
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "reducao",
+            antes,
+            depois: a.q,
+          });
+        if (e.modalidade !== a.mod)
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "modalidade",
+            antes,
+            depois: a.q,
+          });
         if ((e.revisao_componentes?.fornecedor_id ?? null) !== (comp?.fornecedor_id ?? null))
-          diferencas.push({ componente_id: id, codigo: comp?.codigo ?? "", tipo: "fornecedor", antes, depois: a.q });
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "fornecedor",
+            antes,
+            depois: a.q,
+          });
       }
       return {
         organization_id: org,
@@ -724,7 +764,12 @@ export const gerarDemanda = createServerFn({ method: "POST" })
         quantidade_planejada: a.q,
         hash_tecnico: hash,
         anterior: e
-          ? { quantidade: antes, modalidade: e.modalidade, fornecedor_id: e.revisao_componentes?.fornecedor_id ?? null, modalidade_nova: a.mod }
+          ? {
+              quantidade: antes,
+              modalidade: e.modalidade,
+              fornecedor_id: e.revisao_componentes?.fornecedor_id ?? null,
+              modalidade_nova: a.mod,
+            }
           : null,
         quantidade_tecnica: Number(pc?.quantidade_avulsa_tecnica ?? 0) + (tecSis.get(id) ?? 0),
         origem: {
@@ -742,7 +787,13 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     for (const e of existentes) {
       if (agg.has(e.revisao_componente_id)) continue;
       const codigo = e.revisao_componentes?.codigo ?? "";
-      diferencas.push({ componente_id: e.revisao_componente_id, codigo, tipo: "removido", antes: Number(e.quantidade_planejada), depois: 0 });
+      diferencas.push({
+        componente_id: e.revisao_componente_id,
+        codigo,
+        tipo: "removido",
+        antes: Number(e.quantidade_planejada),
+        depois: 0,
+      });
       if (comOrdem(e))
         linhas.push({
           organization_id: org,
@@ -752,13 +803,22 @@ export const gerarDemanda = createServerFn({ method: "POST" })
           quantidade_necessaria: 0,
           quantidade_planejada: 0,
           hash_tecnico: hash,
-          anterior: { quantidade: Number(e.quantidade_planejada), modalidade: e.modalidade, fornecedor_id: e.revisao_componentes?.fornecedor_id ?? null, modalidade_nova: e.modalidade },
+          anterior: {
+            quantidade: Number(e.quantidade_planejada),
+            modalidade: e.modalidade,
+            fornecedor_id: e.revisao_componentes?.fornecedor_id ?? null,
+            modalidade_nova: e.modalidade,
+          },
           quantidade_tecnica: 0,
           origem: { proposta_revisao: rev.id, sistemas: 0, avulsos: [] },
         });
     }
     if (linhas.length)
-      ok(await db.from("demandas").upsert(linhas as never, { onConflict: "revisao_id,revisao_componente_id" }));
+      ok(
+        await db
+          .from("demandas")
+          .upsert(linhas as never, { onConflict: "revisao_id,revisao_componente_id" }),
+      );
     const remover = existentes
       .filter((e) => !agg.has(e.revisao_componente_id) && !comOrdem(e))
       .map((e) => e.id);
@@ -786,7 +846,12 @@ export const gerarOrdens = createServerFn({ method: "POST" })
     return ok(
       await db.rpc("gerar_ordens", { _rev: data.revisao_id, _chave: data.chave }),
     ) as unknown as {
-      ordens: { id: string; tipo: "OC" | "OP"; numero: string; acao: "criada" | "reutilizada" | "complementada" }[];
+      ordens: {
+        id: string;
+        tipo: "OC" | "OP";
+        numero: string;
+        acao: "criada" | "reutilizada" | "complementada";
+      }[];
       itens: number;
       repetido?: boolean;
     };

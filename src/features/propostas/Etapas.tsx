@@ -41,8 +41,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brl, dataBR, pct, qtd } from "@/lib/format";
-import { previaGeracao, reconciliar } from "@/features/suprimentos/saldo";
-import { gerarDemanda, gerarOrdens, novaRevisao, transicionarRevisao } from "./propostas.functions";
+import { reconciliar } from "@/features/suprimentos/saldo";
+import {
+  gerarDemanda,
+  gerarOrdens,
+  novaRevisao,
+  previaOrdens,
+  revisarRascunhoOp,
+  transicionarRevisao,
+} from "./propostas.functions";
 import {
   revKeys,
   useComponentes,
@@ -398,6 +405,17 @@ export function Planejamento({
   const save = useSave();
   const gerarD = useServerFn(gerarDemanda);
   const gerarO = useServerFn(gerarOrdens);
+  const previaFn = useServerFn(previaOrdens);
+  const revisarOp = useServerFn(revisarRascunhoOp);
+  const plano = useQuery({
+    queryKey: ["previa-ordens", revisaoId],
+    queryFn: () => previaFn({ data: { revisao_id: revisaoId } }),
+  });
+  const atualizarTudo = () => {
+    qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) });
+    qc.invalidateQueries({ queryKey: ["previa-ordens", revisaoId] });
+    qc.invalidateQueries({ queryKey: ["ordens"] });
+  };
   const planejar = useMutation({
     mutationFn: async () => {
       if (!(await save.ensureConsistent()))
@@ -409,7 +427,7 @@ export function Planejamento({
     onSuccess: () => {
       chaveOrdens.current = null;
       ordens.reset();
-      qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) });
+      atualizarTudo();
     },
   });
   // Chave fixa por tentativa: retry/duplo clique reenviam a mesma chave (idempotência no banco).
@@ -420,13 +438,37 @@ export function Planejamento({
         throw new Error(
           "Há entradas pendentes. Confirme o salvamento e o cálculo antes de gerar ordens.",
         );
+      if (!plano.data) throw new Error("Prévia indisponível. Atualize a prévia.");
       chaveOrdens.current ??= crypto.randomUUID();
-      return gerarO({ data: { revisao_id: revisaoId, chave: chaveOrdens.current } });
+      return gerarO({
+        data: {
+          revisao_id: revisaoId,
+          chave: chaveOrdens.current,
+          plano_hash: plano.data.plano_hash,
+        },
+      });
     },
     onSuccess: () => {
       chaveOrdens.current = null;
-      qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) });
-      qc.invalidateQueries({ queryKey: ["ordens"] });
+      atualizarTudo();
+    },
+    onError: (e) => {
+      // Plano mudou: nova prévia e nova chave (é outro pedido).
+      if (/planejamento mudou/i.test(erroMsg(e))) {
+        chaveOrdens.current = null;
+        qc.invalidateQueries({ queryKey: ["previa-ordens", revisaoId] });
+      }
+    },
+  });
+  const chaveRevisao = useRef<Record<string, string>>({});
+  const revisar = useMutation({
+    mutationFn: async (ordemId: string) => {
+      chaveRevisao.current[ordemId] ??= crypto.randomUUID();
+      return revisarOp({ data: { ordem_id: ordemId, chave: chaveRevisao.current[ordemId] } });
+    },
+    onSuccess: (_r, ordemId) => {
+      delete chaveRevisao.current[ordemId];
+      atualizarTudo();
     },
   });
   if (rev.isPending) return <LoadingState />;
@@ -446,29 +488,33 @@ export function Planejamento({
     modo === "compras"
       ? d.ordem_compra_itens.reduce((s, i) => s + Number(i.quantidade_recebida), 0)
       : d.ordem_producao_itens.reduce((s, i) => s + Number(i.quantidade_produzida), 0);
-  const doModo = (dem.data ?? []).filter(filtro);
-  const previa = previaGeracao(
-    doModo.map((d) => ({
-      modalidade: d.modalidade,
-      planejada: Number(d.quantidade_planejada),
-      comprometida: alocado(d),
-      fornecedor:
-        (d.revisao_componentes?.fornecedores as { id: string; nome: string } | null) ?? null,
-    })),
-  );
-  const textoGerar =
-    modo === "compras"
-      ? previa.fornecedores.length
-        ? `Gerar ${previa.fornecedores.length} OC (${previa.fornecedores.join(", ")})`
-        : null
-      : previa.op
-        ? "Gerar OP para o saldo de fabricação"
-        : null;
+  const p = plano.data;
+  const opsAntigas = p?.ops_desatualizadas ?? [];
+  const partes: string[] = [];
+  if (p?.oc_fornecedores.length)
+    partes.push(`${p.oc_fornecedores.length} OC (${p.oc_fornecedores.join(", ")})`);
+  if (p?.op) partes.push("1 OP");
+  const motivo = encerrada
+    ? "Revisão recusada ou substituída"
+    : plano.isPending
+      ? "Calculando prévia…"
+      : plano.isError
+        ? "Prévia indisponível"
+        : p?.bloqueio
+          ? p.bloqueio
+          : p?.faltas.length
+            ? `Selecione fornecedor para: ${p.faltas.join(", ")}`
+            : opsAntigas.length
+              ? `Revise o rascunho ${opsAntigas.map((o) => o.numero).join(", ")} antes de gerar`
+              : partes.length
+                ? null
+                : "Sem saldo descoberto";
+  const textoGerar = partes.length ? `Gerar ${partes.join(" e ")}` : "Sem saldo para novas ordens";
   return (
     <div className="nx-planning space-y-4">
       <Section
         title={modo === "compras" ? "Demandas de compra" : "Demandas de produção"}
-        description="Ordens permanecem explícitas. Emissão e liberação exigem dados completos e aprovação técnica."
+        description="Gerar ordens é uma operação conjunta de compra e produção, com o mesmo resumo nas duas etapas. Emissão e liberação exigem dados completos e aprovação técnica."
       >
         <div className="nx-planning-actions">
           <ActionButton loading={planejar.isPending} onClick={() => planejar.mutate()}>
@@ -476,14 +522,12 @@ export function Planejamento({
           </ActionButton>
           <ActionButton
             variant="ghost"
-            disabled={encerrada || !textoGerar}
+            disabled={!!motivo}
             loading={ordens.isPending}
             onClick={() => ordens.mutate()}
-            title={
-              encerrada ? "Revisão recusada ou substituída" : (textoGerar ?? "Sem saldo descoberto")
-            }
+            title={motivo ?? textoGerar}
           >
-            {textoGerar ?? "Sem saldo para novas ordens"}
+            {textoGerar}
           </ActionButton>
           <Link
             to={modo === "compras" ? "/compras/ordens-compra" : "/compras/ordens-producao"}
@@ -492,10 +536,69 @@ export function Planejamento({
             {modo === "compras" ? "Abrir ordens de compra →" : "Abrir ordens de produção →"}
           </Link>
         </div>
-        {previa.semFornecedor > 0 && (
-          <p className="nx-planning-warning mb-2">
-            {previa.semFornecedor} item(ns) de compra sem fornecedor: escolha o fornecedor em Itens
-            antes de gerar.
+        {p && p.linhas.length > 0 && (
+          <div className="mb-2 rounded border border-border bg-muted/20 p-3 text-sm">
+            <p className="font-display text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Prévia da geração (o que será gravado)
+            </p>
+            <ul className="mt-1 space-y-0.5">
+              {p.linhas.map((l) => (
+                <li key={l.demanda_id}>
+                  <span className="font-mono text-primary">{l.codigo}</span> · {l.tipo}
+                  {l.fornecedor ? ` ${l.fornecedor}` : ""} · {l.quantidade}
+                  {l.quantidade !== l.saldo ? ` (saldo ${l.saldo}, arredondado)` : ""} ·{" "}
+                  {l.destino ? "complementa rascunho" : "nova ordem"}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {motivo && !encerrada && !plano.isPending && motivo !== "Sem saldo descoberto" && (
+          <p className="nx-planning-warning mb-2" role="status">
+            {motivo}
+            {plano.isError && (
+              <button className="ml-2 underline" onClick={() => plano.refetch()}>
+                Tentar de novo
+              </button>
+            )}
+          </p>
+        )}
+        {opsAntigas.map((o) => (
+          <div
+            key={o.id}
+            className="mb-2 rounded border border-warning/40 bg-warning/5 p-3 text-sm"
+          >
+            <p className="font-display text-xs font-bold uppercase tracking-wider">
+              Rascunho {o.numero} com composição antiga
+            </p>
+            {o.itens.length ? (
+              <ul className="mt-1 space-y-0.5">
+                {o.itens.map((i) => (
+                  <li key={i.demanda_id}>
+                    <span className="font-mono text-primary">{i.codigo}</span> · antes {i.atual} →
+                    agora {i.alvo} (diferença {Number(i.alvo) - Number(i.atual)})
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-1">Quantidades iguais; só o registro técnico de origem muda.</p>
+            )}
+            <div className="mt-2 flex items-center gap-2">
+              <ActionButton
+                loading={revisar.isPending && revisar.variables === o.id}
+                onClick={() => revisar.mutate(o.id)}
+              >
+                Revisar rascunho
+              </ActionButton>
+              <span className="text-xs text-muted-foreground">
+                Depois, a liberação exige nova aprovação técnica.
+              </span>
+            </div>
+          </div>
+        ))}
+        {revisar.isError && (
+          <p className="mb-2 text-sm text-destructive" role="alert">
+            {erroMsg(revisar.error)} Tentar de novo é seguro.
           </p>
         )}
         {planejar.isError && (

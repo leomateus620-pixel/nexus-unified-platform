@@ -742,24 +742,33 @@ export type Database = {
         Row: {
           autor: string | null
           chave: string
+          chave_operacao: string | null
           created_at: string
+          escopo: string | null
           organization_id: string
+          pedido_hash: string | null
           resposta: Json
           revisao_id: string
         }
         Insert: {
           autor?: string | null
           chave: string
+          chave_operacao?: string | null
           created_at?: string
+          escopo?: string | null
           organization_id: string
+          pedido_hash?: string | null
           resposta: Json
           revisao_id: string
         }
         Update: {
           autor?: string | null
           chave?: string
+          chave_operacao?: string | null
           created_at?: string
+          escopo?: string | null
           organization_id?: string
+          pedido_hash?: string | null
           resposta?: Json
           revisao_id?: string
         }
@@ -2477,6 +2486,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _alvos_rascunho_op: {
+        Args: { _op: string }
+        Returns: {
+          alvo: number
+          atual: number
+          codigo: string
+          demanda_id: string
+          produzida: number
+        }[]
+      }
+      _plano_ordens: { Args: { _escopo: string; _rev: string }; Returns: Json }
+      aplicar_demanda: {
+        Args: { _hash: string; _linhas: Json; _remover: string[]; _rev: string }
+        Returns: Json
+      }
       arvore_produto: {
         Args: { _nivel?: number; _produto: string }
         Returns: Json
@@ -2543,7 +2567,15 @@ export type Database = {
         Args: { _familia: string; _seq: number; _tipo: string }
         Returns: string
       }
-      gerar_ordens: { Args: { _chave: string; _rev: string }; Returns: Json }
+      gerar_ordens: {
+        Args: {
+          _chave: string
+          _escopo?: string
+          _plano_hash?: string
+          _rev: string
+        }
+        Returns: Json
+      }
       has_org_role: {
         Args: { _org: string; _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
@@ -2559,6 +2591,10 @@ export type Database = {
       }
       is_member: { Args: { _org: string }; Returns: boolean }
       objeto_rascunho: { Args: { _r: Json; _t: string }; Returns: Json }
+      planejar_ordens: {
+        Args: { _escopo?: string; _rev: string }
+        Returns: Json
+      }
       pode: { Args: { _acao: string; _org: string }; Returns: boolean }
       previa_codigo: {
         Args: { _familia: string; _org: string; _tipo: string }
@@ -2606,11 +2642,16 @@ export type Database = {
         Returns: number
       }
       revisao_editavel: { Args: { _rev: string }; Returns: boolean }
+      revisar_rascunho_op: {
+        Args: { _chave: string; _op: string }
+        Returns: Json
+      }
       salvar_composicao: {
         Args: { _itens: Json; _produto: string; _status: string }
         Returns: Json
       }
       snapshot_rascunho: { Args: { _rev: string }; Returns: Json }
+      travar_revisao: { Args: { _rev: string }; Returns: undefined }
     }
     Enums: {
       app_role:

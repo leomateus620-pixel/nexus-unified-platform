@@ -813,16 +813,18 @@ export const gerarDemanda = createServerFn({ method: "POST" })
           origem: { proposta_revisao: rev.id, sistemas: 0, avulsos: [] },
         });
     }
-    if (linhas.length)
-      ok(
-        await db
-          .from("demandas")
-          .upsert(linhas as never, { onConflict: "revisao_id,revisao_componente_id" }),
-      );
     const remover = existentes
       .filter((e) => !agg.has(e.revisao_componente_id) && !comOrdem(e))
       .map((e) => e.id);
-    if (remover.length) ok(await db.from("demandas").delete().in("id", remover));
+    // Gravação única sob a trava da revisão: o banco revalida fingerprint e "desatualizada" antes de gravar.
+    ok(
+      await db.rpc("aplicar_demanda", {
+        _rev: rev.id,
+        _hash: hash,
+        _linhas: linhas as never,
+        _remover: remover,
+      }),
+    );
     await auditar(db, org, "revisao", rev.id, "atualizar_demanda", { hash, diferencas });
     return { demandas: agg.size, diferencas };
   });
@@ -832,11 +834,53 @@ async function prefixoNumero(db: Db, org: string, _tabela: string, prefixo: "OC"
   return ok(await db.rpc("proximo_numero", { _org: org, _prefixo: prefixo })) as string;
 }
 
-/** Geração transacional e idempotente (RPC gerar_ordens): só o saldo descoberto, só rascunhos compatíveis. */
+export type PlanoOrdens = {
+  escopo: "ambas" | "compra" | "producao";
+  bloqueio: string | null;
+  linhas: {
+    demanda_id: string;
+    tipo: "OC" | "OP";
+    codigo: string;
+    fornecedor: string | null;
+    saldo: number;
+    quantidade: number;
+    destino: string | null;
+  }[];
+  faltas: string[];
+  ops_desatualizadas: {
+    id: string;
+    numero: string;
+    itens: { demanda_id: string; codigo: string; atual: number; alvo: number }[];
+  }[];
+  oc_fornecedores: string[];
+  op: boolean;
+  plano_hash: string;
+};
+
+/** Prévia calculada pela mesma rotina do banco que a geração executa (sem gravar). */
+export const previaOrdens = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) => idRev.parse(d))
+  .handler(async ({ data, context }) => {
+    const db: Db = context.supabase;
+    const org = await orgDoUsuario(db, context.userId);
+    await revisaoDaOrg(db, org, data.revisao_id);
+    return ok(
+      await db.rpc("planejar_ordens", { _rev: data.revisao_id, _escopo: "ambas" }),
+    ) as unknown as PlanoOrdens;
+  });
+
+/** Geração transacional e idempotente (RPC gerar_ordens): operação conjunta OC+OP do plano confirmado na prévia. */
 export const gerarOrdens = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
-    z.object({ revisao_id: z.string().uuid(), chave: z.string().min(8).max(120) }).parse(d),
+    z
+      .object({
+        revisao_id: z.string().uuid(),
+        chave: z.string().min(8).max(120),
+        plano_hash: z.string().min(8).max(64),
+      })
+      .parse(d),
   )
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
@@ -844,7 +888,12 @@ export const gerarOrdens = createServerFn({ method: "POST" })
     await exigirAcao(db, context.userId, org, "emitir_ordem");
     await revisaoDaOrg(db, org, data.revisao_id);
     return ok(
-      await db.rpc("gerar_ordens", { _rev: data.revisao_id, _chave: data.chave }),
+      await db.rpc("gerar_ordens", {
+        _rev: data.revisao_id,
+        _chave: data.chave,
+        _escopo: "ambas",
+        _plano_hash: data.plano_hash,
+      }),
     ) as unknown as {
       ordens: {
         id: string;
@@ -853,6 +902,25 @@ export const gerarOrdens = createServerFn({ method: "POST" })
         acao: "criada" | "reutilizada" | "complementada";
       }[];
       itens: number;
+      repetido?: boolean;
+    };
+  });
+
+/** Ajusta um rascunho de OP com composição antiga ao saldo atual (sem tocar ordens liberadas). */
+export const revisarRascunhoOp = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z.object({ ordem_id: z.string().uuid(), chave: z.string().min(8).max(120) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const db: Db = context.supabase;
+    const org = await orgDoUsuario(db, context.userId);
+    await exigirAcao(db, context.userId, org, "emitir_ordem");
+    return ok(
+      await db.rpc("revisar_rascunho_op", { _op: data.ordem_id, _chave: data.chave }),
+    ) as unknown as {
+      ordem: { id: string; numero: string };
+      mudancas: { codigo: string; antes: number; depois: number }[];
       repetido?: boolean;
     };
   });

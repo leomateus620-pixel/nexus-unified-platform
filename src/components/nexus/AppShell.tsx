@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useOrg, useSessionUser } from "@/features/org/session";
 import { useState, type ReactNode } from "react";
 
-import { navGroups } from "@/lib/nexus-nav";
+import { menusVisiveis, navGroups } from "@/lib/nexus-nav";
 import { cn } from "@/lib/utils";
 import { NexusLogo } from "./NexusLogo";
 
@@ -26,13 +26,15 @@ function Brand() {
 
 function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const org = useOrg();
+  const grupos = org.data ? menusVisiveis(org.data.roles) : navGroups;
 
   return (
     <nav
       aria-label="Navegação principal"
       className="nx-sidebar-nav flex-1 overflow-y-auto"
     >
-      {navGroups.map((group) => (
+      {grupos.map((group) => (
         <div key={group.label}>
           <p className="nx-nav-group-label">
             {group.label}

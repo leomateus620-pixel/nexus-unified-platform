@@ -11,8 +11,8 @@ export const MATRIZ = {
   aprovar_tecnica: ["engenharia"],
   aceitar_comercial: ["comercial"],
   planejar_suprimentos: ["compras", "engenharia"],
-  emitir_ordem: ["compras"],
-  receber: ["compras"],
+  emitir_ordem: ["compras", "engenharia"],
+  receber: ["compras", "engenharia"],
   produzir: ["compras", "engenharia", "campo"],
   ver_custos: ["comercial", "engenharia", "compras", "financeiro"],
 } as const satisfies Record<string, readonly Papel[]>;

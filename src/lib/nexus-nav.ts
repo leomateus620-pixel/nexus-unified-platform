@@ -129,3 +129,49 @@ export const flowSteps = [
   "Inspeções",
   "Histórico",
 ];
+
+/**
+ * Visibilidade de menus e etapas por papel (somente navegação; ações seguem a matriz do servidor).
+ * Papéis ausentes aqui veem tudo. O acesso do usuário é a união dos seus papéis.
+ */
+type Acesso = { menus: string[]; rotasExtras?: string[]; etapasOcultas?: string[] };
+const ACESSO_POR_PAPEL: Record<string, Acesso> = {
+  engenharia: {
+    menus: ["/", "/comercial", "/produtos", "/engenharia", "/configuracoes"],
+    // abertas a partir das etapas Compras/Produção da proposta
+    rotasExtras: ["/compras/ordens-compra", "/compras/ordens-producao"],
+    etapasOcultas: ["resumo-executivo", "parametros", "historico"],
+  },
+};
+
+function acessos(roles: string[]): Acesso[] | null {
+  if (!roles.length) return null;
+  const lista = roles.map((r) => ACESSO_POR_PAPEL[r]);
+  return lista.some((a) => !a) ? null : (lista as Acesso[]);
+}
+
+const casa = (p: string, base: string) =>
+  base === "/" ? p === "/" : p === base || p.startsWith(base + "/");
+
+export function podeVerRota(roles: string[], pathname: string) {
+  const a = acessos(roles);
+  if (!a) return true;
+  return a.some((x) => {
+    const etapa = pathname.match(/\/revisoes\/[^/]+\/([^/]+)/)?.[1];
+    if (etapa && x.etapasOcultas?.includes(etapa)) return false;
+    return [...x.menus, ...(x.rotasExtras ?? [])].some((b) => casa(pathname, b));
+  });
+}
+
+export function podeVerEtapa(roles: string[], etapa: string) {
+  const a = acessos(roles);
+  return !a || a.some((x) => !x.etapasOcultas?.includes(etapa));
+}
+
+export function menusVisiveis(roles: string[]) {
+  const a = acessos(roles);
+  if (!a) return navGroups;
+  return navGroups
+    .map((g) => ({ ...g, items: g.items.filter((i) => a.some((x) => x.menus.includes(i.to))) }))
+    .filter((g) => g.items.length);
+}

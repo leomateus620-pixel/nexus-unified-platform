@@ -1,4 +1,6 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, redirect, useRouterState } from "@tanstack/react-router";
+
+import { podeVerRota } from "@/lib/nexus-nav";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -20,10 +22,26 @@ export const Route = createFileRoute("/_authenticated")({
 
 function Gate() {
   const org = useOrg();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   if (org.isPending) return <LoadingState />;
   if (org.isError) return <ErrorState error={org.error} onRetry={() => org.refetch()} />;
   if (!org.data) return <Onboarding />;
+  if (!podeVerRota(org.data.roles, pathname)) return <SemAcesso />;
   return <Outlet />;
+}
+
+function SemAcesso() {
+  return (
+    <div className="mx-auto mt-16 max-w-md rounded-lg border border-border bg-card p-6 text-center">
+      <h1 className="text-lg font-semibold text-foreground">Sem acesso</h1>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Seu perfil não tem acesso a esta área. Fale com um administrador se precisar dela.
+      </p>
+      <Link to="/" className="mt-4 inline-block text-sm text-primary underline">
+        Voltar ao Dashboard
+      </Link>
+    </div>
+  );
 }
 
 function Onboarding() {

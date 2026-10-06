@@ -16,6 +16,8 @@ import { StepRuler, SaveFeedback } from "@/components/nexus/Workspace";
 import { useSave, useRevisao, type RevisaoData } from "@/features/propostas/hooks";
 import { ProposalSaveProvider } from "@/features/propostas/ProposalSaveProvider";
 import { brl } from "@/lib/format";
+import { podeVerEtapa } from "@/lib/nexus-nav";
+import { useOrg } from "@/features/org/session";
 import "@/features/propostas/ui/revision.css";
 
 export const Route = createFileRoute(
@@ -52,6 +54,7 @@ const stages = [
 function Workspace() {
   const { propostaId, revisaoId } = Route.useParams();
   const rev = useRevisao(revisaoId);
+  const roles = useOrg().data?.roles ?? [];
   if (rev.isPending) return <LoadingState />;
   if (rev.isError) return <ErrorState error={rev.error} onRetry={() => rev.refetch()} />;
   const r = rev.data;
@@ -66,7 +69,7 @@ function Workspace() {
         <header className="nx-proposal-header">
           <ProposalContext revision={r} />
           <StepRuler>
-            {stages.map(({ path, label, Icon }, index) => (
+            {stages.filter((s) => podeVerEtapa(roles, s.path)).map(({ path, label, Icon }, index) => (
               <Link
                 key={path}
                 to={`/comercial/propostas/$propostaId/revisoes/$revisaoId/${path}`}

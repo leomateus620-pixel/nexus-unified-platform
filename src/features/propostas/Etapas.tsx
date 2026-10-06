@@ -564,7 +564,10 @@ export function Planejamento({
           </p>
         )}
         {opsAntigas.map((o) => (
-          <div key={o.id} className="mb-2 rounded border border-warning/40 bg-warning/5 p-3 text-sm">
+          <div
+            key={o.id}
+            className="mb-2 rounded border border-warning/40 bg-warning/5 p-3 text-sm"
+          >
             <p className="font-display text-xs font-bold uppercase tracking-wider">
               Rascunho {o.numero} com composição antiga
             </p>

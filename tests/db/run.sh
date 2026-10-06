@@ -13,7 +13,7 @@ run "pg_ctl -D $DIR/data -o '-p $PORT -k $DIR' -l $DIR/log start -w >/dev/null"
 trap 'run "pg_ctl -D $DIR/data stop -m fast >/dev/null" || true; rm -rf "$DIR"' EXIT
 P="psql -X -q -v ON_ERROR_STOP=1 -h $DIR -p $PORT -U postgres -d postgres"
 $P -f "$ROOT/tests/db/bootstrap.sql"
-for f in "$ROOT"/supabase/migrations/*.sql; do $P -f "$f" >/dev/null; done
+for f in "$ROOT"/supabase/migrations/*.sql "$ROOT"/drizzle/migrations/*.sql; do $P -f "$f" >/dev/null; done
 OUT="$($P -A -F ' | ' -f "$ROOT/tests/db/cenarios.sql")"
 # T07/T05: concorrência real com sessões paralelas
 $P -f "$ROOT/tests/db/concorrencia.sql"
@@ -28,6 +28,14 @@ N=$($P -At -c "select count(*) from recebimentos where chave='dup'")
 T5=$([ "$N" = 1 ] && echo PASSOU || echo FALHOU)
 OUT="$OUT
 T05 dez chamadas simultâneas mesma chave | exatamente 1 efeito | $T5 | $N movimento(s)"
+GOUT="$($P -f "$ROOT/tests/db/ordens.sql")"
+# G08: duas sessões simultâneas com chaves diferentes cobrem o saldo uma única vez
+for k in a b; do ($P -At -c "set role authenticated; select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-00000000000e',false); select gerar_ordens('42000000-0000-0000-0000-000000000001','par-$k-xxxx')" >/dev/null 2>&1 || true) & done; wait
+GQ=$($P -At -c "select trim_scale(sum(quantidade)) from ordem_compra_itens where demanda_id='44000000-0000-0000-0000-000000000001'")
+G8=$([ "$GQ" = 30 ] && echo PASSOU || echo FALHOU)
+OUT="$OUT
+$GOUT
+G08 duas sessões, chaves diferentes | $G8 | comprometido $GQ (esperado 30)"
 $P -f "$ROOT/tests/db/save-checkpoints.sql"
 PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/save-concurrency.mjs"
 echo "$OUT"

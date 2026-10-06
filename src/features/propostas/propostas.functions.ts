@@ -639,7 +639,9 @@ export const gerarDemanda = createServerFn({ method: "POST" })
     const itens = ok(
       await db
         .from("sistema_componentes")
-        .select("revisao_componente_id,quantidade,quantidade_tecnica,revisao_componentes!inner(modalidade)")
+        .select(
+          "revisao_componente_id,quantidade,quantidade_tecnica,revisao_componentes!inner(modalidade)",
+        )
         .eq("revisao_id", rev.id)
         .eq("revisao_componentes.incluido_orcamento", true),
     ) as any[];
@@ -674,52 +676,155 @@ export const gerarDemanda = createServerFn({ method: "POST" })
       a.q += q;
       agg.set(pc.componente_id, a);
     }
+    const hash = ok(await db.rpc("hash_tecnico", { _rev: rev.id })) as string;
     const existentes = ok(
-      await db.from("demandas").select("id,revisao_componente_id,status").eq("revisao_id", rev.id),
+      await db
+        .from("demandas")
+        .select(
+          "id,revisao_componente_id,status,modalidade,quantidade_planejada,revisao_componentes(codigo,fornecedor_id),ordem_compra_itens(id),ordem_producao_itens(id)",
+        )
+        .eq("revisao_id", rev.id),
     ) as any[];
-    const alocadas = new Set(
-      existentes.filter((e) => e.status !== "planejada").map((e) => e.revisao_componente_id),
+    const fornAtual = new Map(
+      (
+        ok(
+          await db
+            .from("revisao_componentes")
+            .select("id,codigo,fornecedor_id")
+            .eq("revisao_id", rev.id),
+        ) as any[]
+      ).map((c) => [c.id, c]),
     );
-    const linhas = [...agg.entries()]
-      .filter(([id]) => !alocadas.has(id))
-      .map(([id, a]) => {
-        const pc = (resumo.por_componente ?? []).find((x: any) => x.componente_id === id);
-        const ocorr = (resumo.avulsos ?? []).filter((o: any) => o.componente_id === id);
-        return {
+    const porComp = new Map(existentes.map((e) => [e.revisao_componente_id, e]));
+    const comOrdem = (e: any) =>
+      (e.ordem_compra_itens?.length ?? 0) + (e.ordem_producao_itens?.length ?? 0) > 0;
+    const diferencas: {
+      componente_id: string;
+      codigo: string;
+      tipo: "novo" | "aumento" | "reducao" | "removido" | "modalidade" | "fornecedor";
+      antes: number;
+      depois: number;
+    }[] = [];
+    const linhas = [...agg.entries()].map(([id, a]) => {
+      const pc = (resumo.por_componente ?? []).find((x: any) => x.componente_id === id);
+      const ocorr = (resumo.avulsos ?? []).filter((o: any) => o.componente_id === id);
+      const e = porComp.get(id);
+      const comp = fornAtual.get(id);
+      const antes = Number(e?.quantidade_planejada ?? 0);
+      // Modalidade de demanda já comprometida não muda silenciosamente: a mudança fica sinalizada.
+      const modalidade = e && comOrdem(e) ? e.modalidade : a.mod;
+      if (!e)
+        diferencas.push({
+          componente_id: id,
+          codigo: comp?.codigo ?? "",
+          tipo: "novo",
+          antes: 0,
+          depois: a.q,
+        });
+      else {
+        if (a.q > antes)
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "aumento",
+            antes,
+            depois: a.q,
+          });
+        if (a.q < antes)
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "reducao",
+            antes,
+            depois: a.q,
+          });
+        if (e.modalidade !== a.mod)
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "modalidade",
+            antes,
+            depois: a.q,
+          });
+        if ((e.revisao_componentes?.fornecedor_id ?? null) !== (comp?.fornecedor_id ?? null))
+          diferencas.push({
+            componente_id: id,
+            codigo: comp?.codigo ?? "",
+            tipo: "fornecedor",
+            antes,
+            depois: a.q,
+          });
+      }
+      return {
+        organization_id: org,
+        revisao_id: rev.id,
+        revisao_componente_id: id,
+        modalidade,
+        quantidade_necessaria: a.q,
+        quantidade_planejada: a.q,
+        hash_tecnico: hash,
+        anterior: e
+          ? {
+              quantidade: antes,
+              modalidade: e.modalidade,
+              fornecedor_id: e.revisao_componentes?.fornecedor_id ?? null,
+              modalidade_nova: a.mod,
+            }
+          : null,
+        quantidade_tecnica: Number(pc?.quantidade_avulsa_tecnica ?? 0) + (tecSis.get(id) ?? 0),
+        origem: {
+          proposta_revisao: rev.id,
+          sistemas: Number(pc?.quantidade_sistemas ?? 0),
+          avulsos: ocorr.map((o: any) => ({
+            item_origem: o.origem_id,
+            caminho: o.caminho,
+            quantidade_tecnica: o.quantidade_tecnica,
+          })),
+        },
+      };
+    });
+    // Componentes que saíram: sem ordem → removidos; com ordem → necessidade zero (pendência, sem cancelar).
+    for (const e of existentes) {
+      if (agg.has(e.revisao_componente_id)) continue;
+      const codigo = e.revisao_componentes?.codigo ?? "";
+      diferencas.push({
+        componente_id: e.revisao_componente_id,
+        codigo,
+        tipo: "removido",
+        antes: Number(e.quantidade_planejada),
+        depois: 0,
+      });
+      if (comOrdem(e))
+        linhas.push({
           organization_id: org,
           revisao_id: rev.id,
-          revisao_componente_id: id,
-          modalidade: a.mod,
-          quantidade_necessaria: a.q,
-          quantidade_planejada: a.q,
-          quantidade_tecnica:
-            Number(pc?.quantidade_avulsa_tecnica ?? 0) + (tecSis.get(id) ?? 0),
-          origem: {
-            proposta_revisao: rev.id,
-            sistemas: Number(pc?.quantidade_sistemas ?? 0),
-            avulsos: ocorr.map((o: any) => ({
-              item_origem: o.origem_id,
-              caminho: o.caminho,
-              quantidade_tecnica: o.quantidade_tecnica,
-            })),
+          revisao_componente_id: e.revisao_componente_id,
+          modalidade: e.modalidade,
+          quantidade_necessaria: 0,
+          quantidade_planejada: 0,
+          hash_tecnico: hash,
+          anterior: {
+            quantidade: Number(e.quantidade_planejada),
+            modalidade: e.modalidade,
+            fornecedor_id: e.revisao_componentes?.fornecedor_id ?? null,
+            modalidade_nova: e.modalidade,
           },
-        };
-      });
+          quantidade_tecnica: 0,
+          origem: { proposta_revisao: rev.id, sistemas: 0, avulsos: [] },
+        });
+    }
     if (linhas.length)
       ok(
         await db
           .from("demandas")
-          .upsert(linhas, { onConflict: "revisao_id,revisao_componente_id" }),
+          .upsert(linhas as never, { onConflict: "revisao_id,revisao_componente_id" }),
       );
-    // demandas planejadas cujo componente saiu da composição
     const remover = existentes
-      .filter((e) => e.status === "planejada" && !agg.has(e.revisao_componente_id))
+      .filter((e) => !agg.has(e.revisao_componente_id) && !comOrdem(e))
       .map((e) => e.id);
-    if (remover.length) await db.from("demandas").delete().in("id", remover);
-    const diferencas = existentes
-      .filter((e) => e.status !== "planejada")
-      .map((e) => ({ id: e.revisao_componente_id, nova: agg.get(e.revisao_componente_id)?.q ?? 0 }));
-    return { demandas: agg.size, preservadas: diferencas };
+    if (remover.length) ok(await db.from("demandas").delete().in("id", remover));
+    await auditar(db, org, "revisao", rev.id, "atualizar_demanda", { hash, diferencas });
+    return { demandas: agg.size, diferencas };
   });
 
 /** Numeração atômica no banco (substitui count + 1). */
@@ -727,112 +832,29 @@ async function prefixoNumero(db: Db, org: string, _tabela: string, prefixo: "OC"
   return ok(await db.rpc("proximo_numero", { _org: org, _prefixo: prefixo })) as string;
 }
 
+/** Geração transacional e idempotente (RPC gerar_ordens): só o saldo descoberto, só rascunhos compatíveis. */
 export const gerarOrdens = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d) => idRev.parse(d))
+  .inputValidator((d) =>
+    z.object({ revisao_id: z.string().uuid(), chave: z.string().min(8).max(120) }).parse(d),
+  )
   .handler(async ({ data, context }) => {
     const db: Db = context.supabase;
     const org = await orgDoUsuario(db, context.userId);
     await exigirAcao(db, context.userId, org, "emitir_ordem");
-    const rev = await revisaoDaOrg(db, org, data.revisao_id);
-    if (rev.status === "recusada" || rev.status === "substituida")
-      throw new Error("Revisão recusada ou substituída não gera ordens.");
-    const projRow = ok(
-      await db.from("projetos").select("id").eq("revisao_id", rev.id).maybeSingle(),
-    ) as any;
-    const proj = { id: (projRow?.id ?? null) as string | null };
-    const dem = ok(
-      await db
-        .from("demandas")
-        .select(
-          "id,modalidade,quantidade_planejada,revisao_componentes(codigo,fornecedor_id,custo_adotado)",
-        )
-        .eq("revisao_id", rev.id),
-    ) as any[];
-    if (!dem.length) throw new Error("Planeje a demanda antes de gerar ordens.");
-    const compra = dem.filter((d) => d.modalidade !== "fabricar");
-    const semForn = compra
-      .filter((d) => !d.revisao_componentes.fornecedor_id)
-      .map((d) => d.revisao_componentes.codigo);
-    if (semForn.length) throw new Error(`Selecione fornecedor para: ${semForn.join(", ")}.`);
-    const porForn = new Map<string, any[]>();
-    for (const d of compra)
-      porForn.set(d.revisao_componentes.fornecedor_id, [
-        ...(porForn.get(d.revisao_componentes.fornecedor_id) ?? []),
-        d,
-      ]);
-    let ocs = 0;
-    for (const [forn, ds] of porForn) {
-      let oc = ok(
-        await db
-          .from("ordens_compra")
-          .select("id")
-          .eq("revisao_id", rev.id)
-          .eq("fornecedor_id", forn)
-          .maybeSingle(),
-      ) as any;
-      if (!oc) {
-        const numero = await prefixoNumero(db, org, "ordens_compra", "OC");
-        oc = ok(
-          await db
-            .from("ordens_compra")
-            .insert({
-              organization_id: org,
-              numero,
-              revisao_id: rev.id,
-              projeto_id: proj.id,
-              fornecedor_id: forn,
-            })
-            .select("id")
-            .single(),
-        );
-        ocs++;
-      }
-      ok(
-        await db.from("ordem_compra_itens").upsert(
-          ds.map((d) => ({
-            organization_id: org,
-            ordem_id: oc.id,
-            demanda_id: d.id,
-            quantidade: d.quantidade_planejada,
-            preco_unitario: d.revisao_componentes.custo_adotado,
-          })),
-          { onConflict: "ordem_id,demanda_id", ignoreDuplicates: true },
-        ),
-      );
-    }
-    const fab = dem.filter((d) => d.modalidade === "fabricar");
-    let ops = 0;
-    if (fab.length) {
-      let op = ok(
-        await db.from("ordens_producao").select("id").eq("revisao_id", rev.id).maybeSingle(),
-      ) as any;
-      if (!op) {
-        const numero = await prefixoNumero(db, org, "ordens_producao", "OP");
-        op = ok(
-          await db
-            .from("ordens_producao")
-            .insert({ organization_id: org, numero, revisao_id: rev.id, projeto_id: proj.id })
-            .select("id")
-            .single(),
-        );
-        ops++;
-      }
-      ok(
-        await db.from("ordem_producao_itens").upsert(
-          fab.map((d) => ({
-            organization_id: org,
-            ordem_id: op.id,
-            demanda_id: d.id,
-            quantidade: d.quantidade_planejada,
-          })),
-          { onConflict: "ordem_id,demanda_id", ignoreDuplicates: true },
-        ),
-      );
-    }
-    await db.from("demandas").update({ status: "alocada" }).eq("revisao_id", rev.id);
-    await auditar(db, org, "revisao", rev.id, "gerar_ordens", { ocs, ops });
-    return { ocs, ops };
+    await revisaoDaOrg(db, org, data.revisao_id);
+    return ok(
+      await db.rpc("gerar_ordens", { _rev: data.revisao_id, _chave: data.chave }),
+    ) as unknown as {
+      ordens: {
+        id: string;
+        tipo: "OC" | "OP";
+        numero: string;
+        acao: "criada" | "reutilizada" | "complementada";
+      }[];
+      itens: number;
+      repetido?: boolean;
+    };
   });
 
 export const emitirOrdemCompra = createServerFn({ method: "POST" })

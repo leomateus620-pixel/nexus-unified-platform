@@ -18,7 +18,7 @@ try {
   $start.WaitForExit()
   if ($start.ExitCode -ne 0) { throw 'PostgreSQL startup failed' }
   Invoke-TestSql "$PSScriptRoot\bootstrap.sql"
-  Get-ChildItem "$PSScriptRoot\..\..\supabase\migrations\*.sql" | Sort-Object Name | ForEach-Object { Invoke-TestSql $_.FullName }
+  foreach ($dir in @("supabase", "drizzle")) { Get-ChildItem "$PSScriptRoot\..\..\$dir\migrations\*.sql" | Sort-Object Name | ForEach-Object { Invoke-TestSql $_.FullName } }
   Invoke-TestSql "$PSScriptRoot\cenarios.sql"
   Invoke-TestSql "$PSScriptRoot\save-checkpoints.sql"
   $env:PGTEST_PSQL = $psql; $env:PGTEST_HOST = '127.0.0.1'; $env:PGTEST_PORT = "$Port"

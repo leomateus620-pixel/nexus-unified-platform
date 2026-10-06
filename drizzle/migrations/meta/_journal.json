@@ -71,6 +71,13 @@
       "when": 1791294770811,
       "tag": "0009_engenharia_emite_recebe",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791306873353,
+      "tag": "0010_ordens_transacionais_hash_tecnico_v2",
+      "breakpoints": true
     }
   ]
 }

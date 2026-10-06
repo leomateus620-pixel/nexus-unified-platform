@@ -471,7 +471,9 @@ export type Database = {
       }
       demandas: {
         Row: {
+          anterior: Json | null
           created_at: string
+          hash_tecnico: string | null
           id: string
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
           organization_id: string
@@ -484,7 +486,9 @@ export type Database = {
           status: string
         }
         Insert: {
+          anterior?: Json | null
           created_at?: string
+          hash_tecnico?: string | null
           id?: string
           modalidade: Database["public"]["Enums"]["modalidade_suprimento"]
           organization_id: string
@@ -497,7 +501,9 @@ export type Database = {
           status?: string
         }
         Update: {
+          anterior?: Json | null
           created_at?: string
+          hash_tecnico?: string | null
           id?: string
           modalidade?: Database["public"]["Enums"]["modalidade_suprimento"]
           organization_id?: string
@@ -728,6 +734,48 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      geracao_ordens: {
+        Row: {
+          autor: string | null
+          chave: string
+          created_at: string
+          organization_id: string
+          resposta: Json
+          revisao_id: string
+        }
+        Insert: {
+          autor?: string | null
+          chave: string
+          created_at?: string
+          organization_id: string
+          resposta: Json
+          revisao_id: string
+        }
+        Update: {
+          autor?: string | null
+          chave?: string
+          created_at?: string
+          organization_id?: string
+          resposta?: Json
+          revisao_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "geracao_ordens_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "geracao_ordens_revisao_id_fkey"
+            columns: ["revisao_id"]
+            isOneToOne: false
+            referencedRelation: "proposta_revisoes"
             referencedColumns: ["id"]
           },
         ]
@@ -971,6 +1019,7 @@ export type Database = {
           entrega_prevista: string | null
           fornecedor_id: string
           frete: number
+          hash_tecnico: string | null
           id: string
           numero: string
           organization_id: string
@@ -985,6 +1034,7 @@ export type Database = {
           entrega_prevista?: string | null
           fornecedor_id: string
           frete?: number
+          hash_tecnico?: string | null
           id?: string
           numero: string
           organization_id: string
@@ -999,6 +1049,7 @@ export type Database = {
           entrega_prevista?: string | null
           fornecedor_id?: string
           frete?: number
+          hash_tecnico?: string | null
           id?: string
           numero?: string
           organization_id?: string
@@ -1040,6 +1091,7 @@ export type Database = {
       ordens_producao: {
         Row: {
           created_at: string
+          hash_tecnico: string | null
           id: string
           liberada_em: string | null
           numero: string
@@ -1052,6 +1104,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          hash_tecnico?: string | null
           id?: string
           liberada_em?: string | null
           numero: string
@@ -1064,6 +1117,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          hash_tecnico?: string | null
           id?: string
           liberada_em?: string | null
           numero?: string
@@ -2489,6 +2543,7 @@ export type Database = {
         Args: { _familia: string; _seq: number; _tipo: string }
         Returns: string
       }
+      gerar_ordens: { Args: { _chave: string; _rev: string }; Returns: Json }
       has_org_role: {
         Args: { _org: string; _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean

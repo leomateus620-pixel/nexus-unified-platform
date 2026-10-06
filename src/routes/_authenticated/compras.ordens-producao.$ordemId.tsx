@@ -143,7 +143,9 @@ function Page() {
         title="Responsabilidade e prazo"
         description={
           rascunho
-            ? "Complete a ficha dos itens e registre a aprovação técnica antes da liberação."
+            ? (o as { hash_tecnico?: string | null }).hash_tecnico
+              ? "Complete a ficha dos itens. A liberação exige aprovação técnica do mesmo conteúdo que originou esta OP."
+              : "OP gerada antes do controle de origem técnica: atualize a demanda e gere novamente antes de liberar."
             : "Planejamento preservado após a liberação. Acompanhe os apontamentos nos itens."
         }
       >

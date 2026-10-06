@@ -7,13 +7,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useOrg, useSessionUser } from "@/features/org/session";
 import { useState, type ReactNode } from "react";
 
-import { menusVisiveis, navGroups } from "@/lib/nexus-nav";
+import { destinoInicial, menusVisiveis, navGroups } from "@/lib/nexus-nav";
 import { cn } from "@/lib/utils";
 import { NexusLogo } from "./NexusLogo";
 
 function Brand() {
+  const org = useOrg();
+  const inicio = destinoInicial(org.data?.roles ?? []);
   return (
-    <Link to="/" className="nx-brand">
+    <Link to={inicio} className="nx-brand">
       <NexusLogo className="text-3xl" />
       <span>
         Tecnologia em Segurança
@@ -89,8 +91,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div
       className={cn(
-        "nx-app-shell min-h-screen bg-background",
-        operational && "nexus-operational nx-shell",
+        "nx-app-shell nexus-operational nx-shell min-h-screen bg-background",
         (/\/revisoes\//.test(pathname) || /\/compras\/ordens-(compra|producao)\//.test(pathname)) &&
           "nx-catalog-shell",
       )}

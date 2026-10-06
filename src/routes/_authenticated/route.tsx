@@ -1,6 +1,6 @@
-import { createFileRoute, Link, Outlet, redirect, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Navigate, Outlet, redirect, useRouterState } from "@tanstack/react-router";
 
-import { podeVerRota } from "@/lib/nexus-nav";
+import { destinoInicial, podeVerRota } from "@/lib/nexus-nav";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -26,19 +26,23 @@ function Gate() {
   if (org.isPending) return <LoadingState />;
   if (org.isError) return <ErrorState error={org.error} onRetry={() => org.refetch()} />;
   if (!org.data) return <Onboarding />;
-  if (!podeVerRota(org.data.roles, pathname)) return <SemAcesso />;
+  if (!podeVerRota(org.data.roles, pathname)) {
+    const inicio = destinoInicial(org.data.roles);
+    if (pathname === "/" && inicio !== "/") return <Navigate to={inicio} replace />;
+    return <SemAcesso inicio={inicio} />;
+  }
   return <Outlet />;
 }
 
-function SemAcesso() {
+function SemAcesso({ inicio }: { inicio: "/" | "/comercial" }) {
   return (
     <div className="mx-auto mt-16 max-w-md rounded-lg border border-border bg-card p-6 text-center">
       <h1 className="text-lg font-semibold text-foreground">Sem acesso</h1>
       <p className="mt-1 text-sm text-muted-foreground">
         Seu perfil não tem acesso a esta área. Fale com um administrador se precisar dela.
       </p>
-      <Link to="/" className="mt-4 inline-block text-sm text-primary underline">
-        Voltar ao Dashboard
+      <Link to={inicio} className="mt-4 inline-block text-sm text-primary underline">
+        Voltar à área inicial
       </Link>
     </div>
   );

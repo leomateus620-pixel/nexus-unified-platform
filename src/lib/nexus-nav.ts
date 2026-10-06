@@ -134,10 +134,17 @@ export const flowSteps = [
  * Visibilidade de menus e etapas por papel (somente navegação; ações seguem a matriz do servidor).
  * Papéis ausentes aqui veem tudo. O acesso do usuário é a união dos seus papéis.
  */
-type Acesso = { menus: string[]; rotasExtras?: string[]; etapasOcultas?: string[] };
+type DestinoInicial = "/" | "/comercial";
+type Acesso = {
+  menus: string[];
+  inicio?: DestinoInicial;
+  rotasExtras?: string[];
+  etapasOcultas?: string[];
+};
 const ACESSO_POR_PAPEL: Record<string, Acesso> = {
   engenharia: {
-    menus: ["/", "/comercial", "/produtos", "/engenharia"],
+    menus: ["/comercial", "/produtos", "/engenharia"],
+    inicio: "/comercial",
     // abertas a partir das etapas Compras/Produção da proposta
     rotasExtras: ["/compras/ordens-compra", "/compras/ordens-producao"],
     etapasOcultas: ["resumo-executivo", "parametros", "historico"],
@@ -174,4 +181,9 @@ export function menusVisiveis(roles: string[]) {
   return navGroups
     .map((g) => ({ ...g, items: g.items.filter((i) => a.some((x) => x.menus.includes(i.to))) }))
     .filter((g) => g.items.length);
+}
+
+export function destinoInicial(roles: string[]): DestinoInicial {
+  const a = acessos(roles);
+  return a?.[0]?.inicio ?? "/";
 }

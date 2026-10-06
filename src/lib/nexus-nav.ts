@@ -137,7 +137,7 @@ export const flowSteps = [
 type Acesso = { menus: string[]; rotasExtras?: string[]; etapasOcultas?: string[] };
 const ACESSO_POR_PAPEL: Record<string, Acesso> = {
   engenharia: {
-    menus: ["/", "/comercial", "/produtos", "/engenharia", "/configuracoes"],
+    menus: ["/", "/comercial", "/produtos", "/engenharia"],
     // abertas a partir das etapas Compras/Produção da proposta
     rotasExtras: ["/compras/ordens-compra", "/compras/ordens-producao"],
     etapasOcultas: ["resumo-executivo", "parametros", "historico"],

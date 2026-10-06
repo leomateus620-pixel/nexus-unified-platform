@@ -41,6 +41,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brl, dataBR, pct, qtd } from "@/lib/format";
+import { previaGeracao, reconciliar } from "@/features/suprimentos/saldo";
 import { gerarDemanda, gerarOrdens, novaRevisao, transicionarRevisao } from "./propostas.functions";
 import {
   revKeys,
@@ -360,6 +361,14 @@ export function Orcamento({ revisaoId }: { revisaoId: string }) {
 }
 
 // ---------------- Planejamento de compras / produção ----------------
+const ROTULO_DIF = {
+  novo: "novo item",
+  aumento: "aumentou (complemento possível)",
+  reducao: "reduziu",
+  removido: "saiu da composição (ordens preservadas)",
+  modalidade: "modalidade mudou",
+  fornecedor: "fornecedor mudou",
+} as const;
 function useDemandas(revisaoId: string) {
   return useQuery({
     queryKey: revKeys.demandas(revisaoId),
@@ -367,7 +376,7 @@ function useDemandas(revisaoId: string) {
       const { data, error } = await supabase
         .from("demandas")
         .select(
-          "*, revisao_componentes(codigo,descricao,unidade,fornecedor_id,fornecedores(nome)), ordem_compra_itens(quantidade,quantidade_recebida,quantidade_cancelada,ordens_compra(id,numero,status)), ordem_producao_itens(quantidade,quantidade_produzida,ordens_producao(id,numero,status))",
+          "*, revisao_componentes(id,codigo,descricao,unidade,fornecedor_id,multiplo_compra,indivisivel,fornecedores(id,nome)), ordem_compra_itens(quantidade,quantidade_recebida,quantidade_cancelada,ordens_compra(id,numero,status)), ordem_producao_itens(quantidade,quantidade_produzida,ordens_producao(id,numero,status))",
         )
         .eq("revisao_id", revisaoId);
       if (error) throw error;
@@ -397,17 +406,25 @@ export function Planejamento({
         );
       return gerarD({ data: { revisao_id: revisaoId } });
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) }),
+    onSuccess: () => {
+      chaveOrdens.current = null;
+      ordens.reset();
+      qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) });
+    },
   });
+  // Chave fixa por tentativa: retry/duplo clique reenviam a mesma chave (idempotência no banco).
+  const chaveOrdens = useRef<string | null>(null);
   const ordens = useMutation({
     mutationFn: async () => {
       if (!(await save.ensureConsistent()))
         throw new Error(
           "Há entradas pendentes. Confirme o salvamento e o cálculo antes de gerar ordens.",
         );
-      return gerarO({ data: { revisao_id: revisaoId } });
+      chaveOrdens.current ??= crypto.randomUUID();
+      return gerarO({ data: { revisao_id: revisaoId, chave: chaveOrdens.current } });
     },
     onSuccess: () => {
+      chaveOrdens.current = null;
       qc.invalidateQueries({ queryKey: revKeys.demandas(revisaoId) });
       qc.invalidateQueries({ queryKey: ["ordens"] });
     },
@@ -429,6 +446,23 @@ export function Planejamento({
     modo === "compras"
       ? d.ordem_compra_itens.reduce((s, i) => s + Number(i.quantidade_recebida), 0)
       : d.ordem_producao_itens.reduce((s, i) => s + Number(i.quantidade_produzida), 0);
+  const doModo = (dem.data ?? []).filter(filtro);
+  const previa = previaGeracao(
+    doModo.map((d) => ({
+      modalidade: d.modalidade,
+      planejada: Number(d.quantidade_planejada),
+      comprometida: alocado(d),
+      fornecedor: (d.revisao_componentes?.fornecedores as { id: string; nome: string } | null) ?? null,
+    })),
+  );
+  const textoGerar =
+    modo === "compras"
+      ? previa.fornecedores.length
+        ? `Gerar ${previa.fornecedores.length} OC (${previa.fornecedores.join(", ")})`
+        : null
+      : previa.op
+        ? "Gerar OP para o saldo de fabricação"
+        : null;
   return (
     <div className="nx-planning space-y-4">
       <Section
@@ -441,12 +475,12 @@ export function Planejamento({
           </ActionButton>
           <ActionButton
             variant="ghost"
-            disabled={encerrada}
+            disabled={encerrada || !textoGerar}
             loading={ordens.isPending}
             onClick={() => ordens.mutate()}
-            title={encerrada ? "Revisão recusada ou substituída" : ""}
+            title={encerrada ? "Revisão recusada ou substituída" : (textoGerar ?? "Sem saldo descoberto")}
           >
-            Gerar ordens em rascunho
+            {textoGerar ?? "Sem saldo para novas ordens"}
           </ActionButton>
           <Link
             to={modo === "compras" ? "/compras/ordens-compra" : "/compras/ordens-producao"}
@@ -455,15 +489,59 @@ export function Planejamento({
             {modo === "compras" ? "Abrir ordens de compra →" : "Abrir ordens de produção →"}
           </Link>
         </div>
-        {planejar.isError && (
-          <p className="mb-2 text-sm text-destructive">{erroMsg(planejar.error)}</p>
-        )}
-        {ordens.isError && <p className="mb-2 text-sm text-destructive">{erroMsg(ordens.error)}</p>}
-        {ordens.isSuccess && (
-          <p className="mb-2 text-sm text-primary">
-            Ordens verificadas: {ordens.data.ocs} OC nova(s), {ordens.data.ops} OP nova(s). Itens
-            existentes não foram duplicados.
+        {previa.semFornecedor > 0 && (
+          <p className="nx-planning-warning mb-2">
+            {previa.semFornecedor} item(ns) de compra sem fornecedor: escolha o fornecedor em Itens antes de gerar.
           </p>
+        )}
+        {planejar.isError && (
+          <p className="mb-2 text-sm text-destructive" role="alert">{erroMsg(planejar.error)}</p>
+        )}
+        {planejar.isSuccess && (
+          <div className="mb-2 rounded border border-border bg-muted/30 p-3 text-sm" role="status">
+            <p className="font-display text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Demanda atualizada · {planejar.data.diferencas.length} diferença(s)
+            </p>
+            {planejar.data.diferencas.length === 0 ? (
+              <p className="mt-1">Sem mudanças em relação ao planejamento anterior.</p>
+            ) : (
+              <ul className="mt-1 space-y-0.5">
+                {planejar.data.diferencas.map((x, k) => (
+                  <li key={k}>
+                    <span className="font-mono text-primary">{x.codigo}</span> · {ROTULO_DIF[x.tipo]}
+                    {(x.tipo === "aumento" || x.tipo === "reducao" || x.tipo === "removido") &&
+                      ` (${x.antes} → ${x.depois})`}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+        {ordens.isError && (
+          <p className="mb-2 text-sm text-destructive" role="alert">
+            {erroMsg(ordens.error)} Tentar de novo é seguro: a mesma operação não duplica ordens.
+          </p>
+        )}
+        {ordens.isSuccess && (
+          <div className="mb-2 rounded border border-primary/30 bg-primary/5 p-3 text-sm" role="status">
+            <p className="font-display text-xs font-bold uppercase tracking-wider text-primary">
+              {ordens.data.ordens.length ? "Ordens em rascunho" : "Nenhuma ordem necessária"}
+              {ordens.data.repetido ? " · operação já registrada" : ""}
+            </p>
+            <ul className="mt-1 flex flex-wrap gap-2">
+              {ordens.data.ordens.map((o) => (
+                <li key={o.id}>
+                  <Link
+                    className="nx-card-primary"
+                    to={o.tipo === "OC" ? "/compras/ordens-compra/$ordemId" : "/compras/ordens-producao/$ordemId"}
+                    params={{ ordemId: o.id }}
+                  >
+                    {o.numero} · {o.acao} →
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
         <QueryView
           query={{ ...dem, data: dem.data?.filter(filtro) }}
@@ -490,24 +568,44 @@ export function Planejamento({
                   label={modo === "compras" ? "Demandas de compra" : "Demandas de produção"}
                 >
                   {visible.map((d) => {
+                    const un = d.revisao_componentes?.unidade;
+                    const rc = reconciliar(Number(d.quantidade_planejada), alocado(d), realizado(d));
+                    const ant = d.anterior as
+                      | { quantidade: number; modalidade: string; modalidade_nova: string; fornecedor_id: string | null }
+                      | null;
                     const facts: [string, string][] = [
-                      [
-                        "Necessidade",
-                        qtd(Number(d.quantidade_necessaria), d.revisao_componentes?.unidade),
-                      ],
-                      ["Comprometida", qtd(alocado(d), d.revisao_componentes?.unidade)],
-                      [
-                        modo === "compras" ? "Recebida" : "Produzida",
-                        qtd(realizado(d), d.revisao_componentes?.unidade),
-                      ],
-                      [
-                        "Saldo a realizar",
-                        qtd(
-                          Math.max(0, Number(d.quantidade_planejada) - realizado(d)),
-                          d.revisao_componentes?.unidade,
-                        ),
-                      ],
+                      ["Necessidade atual", qtd(rc.necessidade, un)],
+                      ["Comprometida", qtd(rc.comprometida, un)],
+                      [modo === "compras" ? "Recebida" : "Produzida", qtd(rc.realizada, un)],
+                      ["Saldo sem ordem", qtd(rc.semOrdem, un)],
                     ];
+                    const selos = [
+                      ant && Number(ant.quantidade) < rc.necessidade && `Aumentou (era ${qtd(Number(ant.quantidade), un)})`,
+                      ant && Number(ant.quantidade) > rc.necessidade && `Reduziu (era ${qtd(Number(ant.quantidade), un)})`,
+                      ant && ant.modalidade_nova !== ant.modalidade && `Modalidade mudou para ${ant.modalidade_nova}: ajuste manual`,
+                      ant && (ant.fornecedor_id ?? null) !== (d.revisao_componentes?.fornecedor_id ?? null) && "Fornecedor mudou",
+                    ].filter(Boolean) as string[];
+                    const origem = d.origem as { sistemas?: number; avulsos?: { caminho?: string[] }[] } | null;
+                    const avisos = (
+                      <>
+                        {selos.map((t) => (
+                          <p key={t} className="nx-object-meta">{t}</p>
+                        ))}
+                        {rc.excedente > 0 && (
+                          <p className="nx-planning-warning" role="note">
+                            Comprometido {qtd(rc.excedente, un)} acima da necessidade: revise a ordem manualmente (nada foi cancelado).
+                          </p>
+                        )}
+                        {origem && (
+                          <p className="nx-object-meta">
+                            Origem: {Number(origem.sistemas ?? 0) > 0 ? `sistemas (${origem.sistemas})` : ""}
+                            {origem.avulsos?.length
+                              ? `${Number(origem.sistemas ?? 0) > 0 ? " · " : ""}${origem.avulsos.map((a) => (a.caminho ?? []).join(" › ") || "item avulso").join("; ")}`
+                              : ""}
+                          </p>
+                        )}
+                      </>
+                    );
                     return modo === "compras" ? (
                       <ProcurementCard
                         key={d.id}
@@ -521,6 +619,7 @@ export function Planejamento({
                         facts={facts}
                       >
                         <p className="nx-object-meta">Modalidade: {d.modalidade}</p>
+                        {avisos}
                         {d.ordem_compra_itens.length ? (
                           d.ordem_compra_itens.map(
                             (i) =>
@@ -547,6 +646,7 @@ export function Planejamento({
                         status={d.status}
                         facts={facts}
                       >
+                        {avisos}
                         {d.ordem_producao_itens.length ? (
                           d.ordem_producao_itens.map(
                             (i) =>

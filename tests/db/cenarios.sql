@@ -25,7 +25,9 @@ insert into user_roles(organization_id,user_id,role) values
 insert into clientes(id,organization_id,razao_social) values ('20000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','Cliente A');
 insert into clientes(id,organization_id,razao_social) values ('20000000-0000-0000-0000-000000000002','10000000-0000-0000-0000-000000000002','Cliente B');
 insert into fornecedores(id,organization_id,nome) values ('21000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','Forn');
+set session_replication_role = replica; -- fixture: código fixo de teste (gatilho de código protegido)
 insert into produtos(id,organization_id,codigo,descricao,unidade,indivisivel) values ('22000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','COMP-01','Pilar','PÇ',true);
+set session_replication_role = origin;
 insert into propostas(id,organization_id,numero,cliente_id) values ('23000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','001/26','20000000-0000-0000-0000-000000000001');
 insert into proposta_revisoes(id,organization_id,proposta_id,numero,parametros,textos,totais,desatualizada)
   values ('24000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','23000000-0000-0000-0000-000000000001',1,'{}','{}','{"final":1}',false);

@@ -41,8 +41,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { mesclarParametros, type Parametros } from "@/features/calculo/domain";
 import { useOrg } from "@/features/org/session";
 import { brl, dataBR, pct, qtd } from "@/lib/format";
-import { previaGeracao, reconciliar } from "@/features/suprimentos/saldo";
-import { gerarDemanda, gerarOrdens, novaRevisao, transicionarRevisao } from "./propostas.functions";
+import { reconciliar } from "@/features/suprimentos/saldo";
+import {
+  gerarDemanda,
+  gerarOrdens,
+  novaRevisao,
+  previaOrdens,
+  revisarRascunhoOp,
+  transicionarRevisao,
+} from "./propostas.functions";
 import {
   revKeys,
   useComponentes,
@@ -480,8 +487,7 @@ export function Planejamento({
   const realizado = (d: D) =>
     modo === "compras"
       ? d.ordem_compra_itens.reduce((s, i) => s + Number(i.quantidade_recebida), 0)
-      : d.ordem_producao_itens.reduce((s, i) => s + Number(i.quantidade), 0) &&
-        d.ordem_producao_itens.reduce((s, i) => s + Number(i.quantidade_produzida), 0);
+      : d.ordem_producao_itens.reduce((s, i) => s + Number(i.quantidade_produzida), 0);
   const p = plano.data;
   const opsAntigas = p?.ops_desatualizadas ?? [];
   const partes: string[] = [];

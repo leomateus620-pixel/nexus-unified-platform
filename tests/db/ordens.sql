@@ -36,7 +36,7 @@ update ordens_compra set entrega_prevista=current_date, condicoes='x', status='e
 update demandas set quantidade_planejada=12 where id='44000000-0000-0000-0000-000000000001';
 set role authenticated;
 select gerar_ordens('42000000-0000-0000-0000-000000000001','k4-aaaaaa'), (select count(*) from ordens_compra where revisao_id='42000000-0000-0000-0000-000000000001'), (select string_agg(status||':'||i.quantidade,',') from ordem_compra_itens i join ordens_compra o on o.id=i.ordem_id where o.revisao_id='42000000-0000-0000-0000-000000000001');
-select 'G05 OC emitida intacta; saldo vai a OC complementar', case when (select resposta->'ordens'->0->>'acao' from geracao_ordens where chave='k4-aaaaaa')='criada'
+select 'G05 OC emitida intacta; saldo vai a OC complementar', case when (select resposta->'ordens'->0->>'acao' from geracao_ordens where chave_operacao='k4-aaaaaa')='criada'
   and (select count(*) from ordens_compra where revisao_id='42000000-0000-0000-0000-000000000001')=2
   and (select sum(i.quantidade) from ordem_compra_itens i join ordens_compra o on o.id=i.ordem_id where o.status='emitida' and o.revisao_id='42000000-0000-0000-0000-000000000001')=10
   and pg_temp.oc_qtd()=15 then 'PASSOU' else 'FALHOU' end;
@@ -105,8 +105,10 @@ insert into ordem_producao_itens(organization_id,ordem_id,demanda_id,quantidade)
 set role authenticated;
 select 'R00 prévia sinaliza rascunho antigo e geração recusa', case when (select planejar_ordens('42000000-0000-0000-0000-000000000001')->'ops_desatualizadas'->0->'itens'->0->>'alvo')::numeric=3
   and pg_temp.msg($$select gerar_ordens('42000000-0000-0000-0000-000000000001','r0-aaaaaa')$$) like 'Revise o rascunho OP-T-R%' then 'PASSOU' else 'FALHOU' end;
-select 'R01 revisar rascunho ajusta ao saldo e grava fingerprint', case when jsonb_array_length(revisar_rascunho_op('45000000-0000-0000-0000-000000000001','r1-aaaaaa')->'mudancas')=1
-  and (revisar_rascunho_op('45000000-0000-0000-0000-000000000001','r1-aaaaaa')->>'repetido')='true'
+create temp table r1 as select revisar_rascunho_op('45000000-0000-0000-0000-000000000001','r1-aaaaaa') v;
+create temp table r1b as select revisar_rascunho_op('45000000-0000-0000-0000-000000000001','r1-aaaaaa') v;
+select 'R01 revisar rascunho ajusta ao saldo e grava fingerprint', case when jsonb_array_length((select v->'mudancas' from r1))=1
+  and (select v->>'repetido' from r1b)='true'
   and (select quantidade from ordem_producao_itens where ordem_id='45000000-0000-0000-0000-000000000001')=3
   and (select hash_tecnico from ordens_producao where id='45000000-0000-0000-0000-000000000001')=(select h from h0) then 'PASSOU' else 'FALHOU' end;
 reset role;

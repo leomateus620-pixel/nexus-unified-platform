@@ -5,6 +5,7 @@
 - **Dashboard** e **Configurações** não aparecerão para o papel Engenharia e continuarão bloqueadas por acesso direto.
 - Ao entrar, clicar na marca NEXUS ou tentar voltar para a página inicial, o Ricardo será direcionado para **Comercial**, evitando uma página sem acesso.
 - A barra lateral, a marca, o cabeçalho e a área do usuário manterão exatamente a mesma aparência ao alternar entre os módulos.
+- A palavra NEXUS será apresentada em uma única cor clara, sem destacar o “X” em verde, em todas as aparições da logo do sistema.
 - Administradores e outros papéis continuarão com seus menus e página inicial atuais.
 
 ## Implementação
@@ -25,7 +26,13 @@
    - Manter os estilos específicos apenas dentro das áreas de trabalho de Comercial, Produtos, Compras e Engenharia.
    - Usar os mesmos estados ativo, foco, cores e dimensões no menu normal e no menu móvel.
 
-4. **Revisar o acesso da Engenharia**
+4. **Padronizar a logo NEXUS no sistema inteiro**
+   - Ajustar o componente central da marca para que todas as letras usem a mesma cor clara, sem o “X” verde.
+   - Preservar o desenho tipográfico NEXUS, sua inclinação, proporção e nitidez nos diferentes tamanhos.
+   - Aplicar a mesma apresentação na barra lateral, no menu móvel e na tela de acesso.
+   - Revisar as demais aparições identificadas da marca e retirar variações conflitantes, sem transformar títulos comuns ou nomes de módulos em logos.
+
+5. **Revisar o acesso da Engenharia**
    - Confirmar que Configurações, Usuários, Orçamentos e Dashboard não aparecem e retornam “Sem acesso” por endereço direto.
    - Confirmar que Comercial, Produtos e Soluções e Engenharia continuam navegáveis e editáveis conforme as permissões existentes.
    - Confirmar que Resumo, Parâmetros e Histórico continuam ocultos dentro das propostas.
@@ -34,6 +41,7 @@
 - Criar testes da matriz de navegação para o papel Engenharia: menus visíveis, rotas bloqueadas, etapas liberadas e destino inicial.
 - Entrar como Ricardo e percorrer Comercial → Produtos e Soluções → Engenharia, comparando a barra lateral em cada tela.
 - Testar login, clique na marca, acesso direto a `/`, Dashboard e Configurações.
+- Conferir a logo na tela de acesso, barra lateral e menu móvel, garantindo que o “X” não receba cor verde.
 - Conferir menu móvel e tela ampla, além de erros visuais, carregamento e navegação.
 
 ## Limites desta entrega

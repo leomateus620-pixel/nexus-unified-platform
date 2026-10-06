@@ -2,10 +2,7 @@ interface NexusLogoProps {
   className?: string;
 }
 
-/**
- * NEXUS-sana piirrettynä fontilla (Saira) rasterikuvan sijaan:
- * pysyy terävänä missä tahansa koossa, X on brändin neonvihreä.
- */
+/** Marca tipográfica central: nítida em qualquer tamanho e sempre monocromática. */
 export function NexusLogo({ className = "text-3xl" }: NexusLogoProps) {
   return (
     <span
@@ -13,7 +10,7 @@ export function NexusLogo({ className = "text-3xl" }: NexusLogoProps) {
       role="img"
       className={`select-none whitespace-nowrap font-display font-extrabold italic leading-none tracking-tight text-foreground ${className}`}
     >
-      NE<span className="text-primary">X</span>US
+      NEXUS
     </span>
   );
 }

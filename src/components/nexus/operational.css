@@ -114,7 +114,7 @@
 
 /* Shell: a quiet, compact frame around the active work. */
 .nexus-operational .nx-sidebar {
-  width: 15rem;
+  width: 16rem;
 }
 .nexus-operational .nx-brand {
   display: flex;

@@ -1,0 +1,36 @@
+{
+  "testedAt": "2026-10-14T10:39:53.672Z",
+  "command": "node scripts/silo-engolfamento/validate-connected-line.mjs",
+  "route": "http://127.0.0.1:5185/mapas-3d/silo-engolfamento",
+  "browser": "155.0.8059.41",
+  "benchmarkPerformed": false,
+  "method": "Paused t=9; connected first person; 19 ArrowLeft + 16 ArrowUp from default view",
+  "screenshot": "desktop-connected-line.png",
+  "requiresVisualReview": false,
+  "result": "passed",
+  "domainUnchanged": true,
+  "snapshot": {
+    "engine": "three.js r186",
+    "camera": "connected",
+    "status": "paused",
+    "time": "9",
+    "calls": "43",
+    "triangles": "217110",
+    "occluded": "false",
+    "ready": "true"
+  },
+  "errors": [],
+  "visualReview": {
+    "reviewedAt": "2026-10-14T10:41:11.7112915Z",
+    "reviewed": true,
+    "visible": [
+      "linha de segurança",
+      "dispositivo superior",
+      "estrutura de suporte",
+      "fechamento interno",
+      "HUD",
+      "saída persistente"
+    ],
+    "scope": "Inspeção visual local da captura; sem certificação de engenharia"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "license": "CC0-1.0",
+  "generator": "scripts/silo-engolfamento/prepare-workers.mjs",
+  "upstreamGenerator": "scripts/escada-lc02/build-people.py",
+  "textureLimit": 1024,
+  "sourceManifest": "public/models/escada-lc02/people/manifest.json",
+  "models": [
+    {
+      "variant": "a",
+      "nearTriangles": 18684,
+      "farTriangles": 7640,
+      "bones": 53,
+      "bytes": 2008068,
+      "sha256": "df6f578bb82e1fc10b98b7bfcdcb94d932c4b7e928af4caf7b0f1c375d11391f",
+      "sourceFile": "public/models/escada-lc02/people/worker-a.glb",
+      "sourceSha256": "435ac288d82e791ccc51c363a193eeebd3c1710bbcdb1180e8d05b4d4c4710a0",
+      "textures": [
+        {
+          "name": "young_lightskinned_male_diffuse",
+          "sourceSize": [
+            2048,
+            2048
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 160547,
+          "sha256": "9bdb995af28fabedea6754c0937412cce2c566eade2ecab3090b45acf4e721af"
+        },
+        {
+          "name": "shoes02_diffuse",
+          "sourceSize": [
+            1024,
+            1024
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 196156,
+          "sha256": "fdf81d73a321a93d7128867e594284c583813e813d4c791a878292555ee24c0e"
+        },
+        {
+          "name": "brown_eye",
+          "sourceSize": [
+            1024,
+            1024
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 83851,
+          "sha256": "b09b8f812569ab92a7ee5947860f65e28add07f7d5276b75f4963fa0f6e91d20"
+        },
+        {
+          "name": "male_worksuit01_normal-normal",
+          "sourceSize": [
+            2048,
+            2048
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 149884,
+          "sha256": "bcc3d4501396449a683299389dd5e90e1d136e8b7a29b2c9942cab59359297dc"
+        },
+        {
+          "name": "male_worksuit01_diffuse",
+          "sourceSize": [
+            2048,
+            2048
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 208111,
+          "sha256": "11aec544729e70ff082c8c4b8d3556fbc55dc1e25cb5c185597168211005c26e"
+        }
+      ],
+      "errors": 0,
+      "warnings": 10
+    },
+    {
+      "variant": "b",
+      "nearTriangles": 18684,
+      "farTriangles": 7640,
+      "bones": 53,
+      "bytes": 1984504,
+      "sha256": "dafdacd629744a9f2b633d76ea7a3f3475578a932d1347dda7d8736815c1861e",
+      "sourceFile": "public/models/escada-lc02/people/worker-b.glb",
+      "sourceSha256": "8fc3c116d80f5a5666c7b1ef5238511f9059061ed8f5f2749e7a32a38e1c1dfb",
+      "textures": [
+        {
+          "name": "young_darkskinned_female_diffuse",
+          "sourceSize": [
+            2048,
+            2048
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 138577,
+          "sha256": "5539c38bafaeae8ba18b21196be45f4321cb1e87b0806749725ad69670ce52a8"
+        },
+        {
+          "name": "shoes02_diffuse",
+          "sourceSize": [
+            1024,
+            1024
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 196156,
+          "sha256": "fdf81d73a321a93d7128867e594284c583813e813d4c791a878292555ee24c0e"
+        },
+        {
+          "name": "brown_eye",
+          "sourceSize": [
+            1024,
+            1024
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 83851,
+          "sha256": "b09b8f812569ab92a7ee5947860f65e28add07f7d5276b75f4963fa0f6e91d20"
+        },
+        {
+          "name": "male_worksuit01_normal-normal",
+          "sourceSize": [
+            2048,
+            2048
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 149884,
+          "sha256": "bcc3d4501396449a683299389dd5e90e1d136e8b7a29b2c9942cab59359297dc"
+        },
+        {
+          "name": "male_worksuit01_diffuse",
+          "sourceSize": [
+            2048,
+            2048
+          ],
+          "size": [
+            1024,
+            1024
+          ],
+          "bytes": 208111,
+          "sha256": "11aec544729e70ff082c8c4b8d3556fbc55dc1e25cb5c185597168211005c26e"
+        }
+      ],
+      "errors": 0,
+      "warnings": 10
+    }
+  ]
+}

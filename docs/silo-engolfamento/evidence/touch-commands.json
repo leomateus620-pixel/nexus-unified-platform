@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "testedAt": "2026-10-14T10:37:20.073Z",
+  "command": "node scripts/silo-engolfamento/validate-touch-commands.mjs",
+  "browser": "155.0.8059.41",
+  "environment": "Chrome headless 390×844 touch emulation; not a physical telephone.",
+  "benchmarksPerformed": false,
+  "retainedPerformanceEvidence": "ui.json — 12 samples from the unchanged 3D scene",
+  "checks": [
+    {
+      "name": "Canvas drag then sources-header touch opens one modal; close touch closes once",
+      "result": "passed",
+      "evidence": {
+        "afterOpen": {
+          "camera": "connected",
+          "status": "paused",
+          "time": "6",
+          "dialogs": 1,
+          "optionsExpanded": "false",
+          "canvases": 1,
+          "reason": "Instante selecionado"
+        },
+        "afterClose": {
+          "camera": "connected",
+          "status": "paused",
+          "time": "6",
+          "dialogs": 0,
+          "optionsExpanded": "false",
+          "canvases": 1,
+          "reason": "Instante selecionado"
+        }
+      }
+    },
+    {
+      "name": "Options touch toggles once each way; immediate keyboard Enter remains usable",
+      "result": "passed",
+      "evidence": {
+        "camera": "connected",
+        "status": "paused",
+        "time": "6",
+        "dialogs": 0,
+        "optionsExpanded": "false",
+        "canvases": 1,
+        "reason": "Instante selecionado"
+      }
+    },
+    {
+      "name": "Sources and modal-close keyboard Enter execute after recent touch",
+      "result": "passed",
+      "evidence": {
+        "camera": "connected",
+        "status": "paused",
+        "time": "6",
+        "dialogs": 0,
+        "optionsExpanded": "false",
+        "canvases": 1,
+        "reason": "Instante selecionado"
+      }
+    },
+    {
+      "name": "Sidebar inspection, annotation close and analysis commands work by touch",
+      "result": "passed",
+      "evidence": {
+        "camera": "frontal",
+        "status": "paused",
+        "time": "6",
+        "dialogs": 0,
+        "optionsExpanded": "false",
+        "canvases": 1,
+        "reason": "Instante selecionado"
+      }
+    },
+    {
+      "name": "After canvas drag, transport touch resumes once then pauses once",
+      "result": "passed",
+      "evidence": {
+        "running": {
+          "camera": "connected",
+          "status": "running",
+          "time": "6.058325166666667",
+          "dialogs": 0,
+          "optionsExpanded": "false",
+          "canvases": 1
+        },
+        "paused": {
+          "camera": "connected",
+          "status": "paused",
+          "time": "6.120800166666666",
+          "dialogs": 0,
+          "optionsExpanded": "false",
+          "canvases": 1,
+          "reason": "Pausado"
+        }
+      }
+    },
+    {
+      "name": "Transport keyboard Enter resumes/pauses once during touch-click deduplication window",
+      "result": "passed",
+      "evidence": {
+        "camera": "connected",
+        "status": "paused",
+        "time": "6.129092833333333",
+        "dialogs": 0,
+        "optionsExpanded": "false",
+        "canvases": 1,
+        "reason": "Pausado"
+      }
+    },
+    {
+      "name": "Touch reset returns to zero with one canvas and no page errors",
+      "result": "passed",
+      "evidence": {
+        "camera": "connected",
+        "status": "idle",
+        "time": "0",
+        "dialogs": 0,
+        "optionsExpanded": "false",
+        "canvases": 1
+      }
+    }
+  ],
+  "errors": [],
+  "failures": [],
+  "completedAt": "2026-10-14T10:37:40.172Z"
+}

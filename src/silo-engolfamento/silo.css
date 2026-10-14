@@ -1,0 +1,995 @@
+.silo-viewer {
+  --silo-ink: #243d39;
+  --silo-muted: #657b73;
+  --silo-green: #176653;
+  --silo-line: #d2ded5;
+  height: 100dvh;
+  min-height: 600px;
+  background: #f1f5ed;
+  color: var(--silo-ink);
+  font-family: Barlow, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+.silo-viewer * {
+  box-sizing: border-box;
+}
+.silo-viewer button,
+.silo-dialog button {
+  font: inherit;
+  cursor: pointer;
+  min-height: 44px;
+  border: 1px solid var(--silo-line, #d2ded5);
+  border-radius: 6px;
+  background: #fbfcf8;
+  color: #294b40;
+  padding: 8px 12px;
+}
+.silo-viewer button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.silo-viewer button:hover,
+.silo-dialog button:hover {
+  background: #e3eee2;
+}
+.silo-viewer button:focus-visible,
+.silo-viewer a:focus-visible,
+.silo-viewer input:focus-visible,
+.silo-viewer select:focus-visible,
+.silo-dialog :focus-visible {
+  outline: 3px solid #b07d16;
+  outline-offset: 3px;
+}
+.silo-viewer button[aria-pressed="true"] {
+  background: #176653;
+  color: #fff;
+  border-color: #176653;
+}
+.silo-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 24px;
+  background: #f8faf4;
+  border-bottom: 1px solid var(--silo-line);
+}
+.silo-back {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--silo-green);
+  min-height: 44px;
+}
+.silo-title {
+  flex: 1;
+}
+.silo-title h1 {
+  margin: 2px 0;
+  font:
+    600 23px Saira,
+    sans-serif;
+  letter-spacing: -0.5px;
+}
+.silo-title h1 span {
+  font-weight: 500;
+}
+.silo-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.17em;
+  font-weight: 600;
+  color: #59776a;
+}
+.silo-icon-button {
+  display: grid;
+  place-items: center;
+}
+.silo-mobile-options {
+  display: none !important;
+}
+.silo-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 282px;
+  flex: 1;
+  min-height: 0;
+}
+.silo-stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  background: #dce6df;
+}
+.silo-canvas-host {
+  position: absolute;
+  inset: 0;
+}
+.silo-canvas-host canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+.silo-stage-caption {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  color: #406158;
+  pointer-events: none;
+  z-index: 3;
+}
+.silo-stage-caption span:last-child {
+  margin-left: auto;
+}
+.silo-live-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: #99673d;
+}
+.silo-hud {
+  position: absolute;
+  left: 20px;
+  bottom: 118px;
+  width: 312px;
+  padding: 14px 16px;
+  background: rgba(248, 250, 240, 0.95);
+  border: 1px solid #acbdb0;
+  border-radius: 8px;
+  z-index: 6;
+  box-shadow: 0 5px 15px #2b463512;
+}
+.silo-hud-values {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  gap: 8px;
+}
+.silo-hud-values div > span {
+  display: block;
+  font-size: 10px;
+  color: #657b73;
+}
+.silo-hud-values strong {
+  font-size: 23px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.silo-hud-values small {
+  font-size: 10px;
+  font-weight: 400;
+  color: #657b73;
+}
+.silo-hud p {
+  font-size: 12px;
+  margin: 6px 0;
+}
+.silo-hud p span {
+  color: #657b73;
+}
+.silo-hud > small {
+  font-size: 9px;
+  color: #50665b;
+  display: block;
+  border-top: 1px solid #d0dacb;
+  margin-top: 8px;
+  padding-top: 6px;
+}
+.silo-hud-ventilation {
+  font-weight: 600;
+}
+.silo-legend {
+  position: absolute;
+  bottom: 91px;
+  left: 22px;
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  z-index: 6;
+  background: #eff5e9df;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.silo-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.silo-legend i {
+  height: 7px;
+  width: 7px;
+  border-radius: 2px;
+}
+.silo-a {
+  background: #1a706d;
+}
+.silo-b {
+  background: #b57937;
+}
+.silo-camera-bar {
+  position: absolute;
+  bottom: 21px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  gap: 6px;
+  z-index: 6;
+  justify-content: center;
+}
+.silo-camera-bar button {
+  min-width: 120px;
+  box-shadow: 0 2px 10px #23463414;
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.silo-camera-bar button > span {
+  font-size: 10px;
+  color: #8aa38f;
+}
+.silo-camera-bar button[aria-pressed="true"] > span {
+  color: #b7d4c1;
+}
+.silo-sidebar {
+  background: #f8faf4;
+  border-left: 1px solid var(--silo-line);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  min-height: 0;
+  overflow-y: auto;
+}
+.silo-panel-intro h2 {
+  font:
+    600 20px/1.25 Saira,
+    sans-serif;
+  margin: 8px 0;
+}
+.silo-panel-intro p,
+.silo-safety p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 8px 0 0;
+  color: var(--silo-muted);
+}
+.silo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #476457;
+}
+.silo-event-readout {
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 10px 12px;
+  background: #edf1e7;
+  border-left: 2px solid #92ac90;
+  border-radius: 3px;
+}
+.silo-event-readout p {
+  margin: 6px 0 0;
+}
+.silo-viewer select {
+  font:
+    400 12px Barlow,
+    sans-serif;
+  color: #294b40;
+  padding: 10px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--silo-line);
+  width: 100%;
+  min-height: 44px;
+  background: #fffef8;
+}
+.silo-data-pair {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  font-size: 11px;
+  padding: 14px 0;
+  border-top: 1px solid var(--silo-line);
+  border-bottom: 1px solid var(--silo-line);
+}
+.silo-data-pair span {
+  color: var(--silo-muted);
+}
+.silo-data-pair strong {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.silo-section-label {
+  display: flex;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  align-items: center;
+  color: #59776a;
+}
+.silo-inspect {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+.silo-inspect button {
+  font-size: 11px;
+}
+.silo-check {
+  font-size: 12px;
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  min-height: 32px;
+}
+.silo-check input {
+  accent-color: #176653;
+  width: 16px;
+  height: 16px;
+}
+.silo-sound {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px !important;
+}
+.silo-safety {
+  display: flex;
+  gap: 10px;
+  background: #e9eee0;
+  padding: 12px;
+  border-left: 2px solid #a78c45;
+}
+.silo-safety svg {
+  flex-shrink: 0;
+}
+.silo-safety strong {
+  font-size: 12px;
+  line-height: 1.3;
+  display: block;
+}
+.silo-analysis-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+.silo-arrow {
+  transform: rotate(180deg);
+}
+.silo-note {
+  font-size: 10px;
+  line-height: 1.5;
+  color: #6a7d70;
+  margin: 0;
+}
+.silo-transport {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 24px;
+  background: #f8faf4;
+  border-top: 1px solid var(--silo-line);
+}
+.silo-transport-actions {
+  display: flex;
+  gap: 7px;
+}
+.silo-transport-actions button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.silo-primary {
+  background: #176653 !important;
+  color: #fff !important;
+  min-width: 110px;
+}
+.silo-timeline {
+  flex: 1;
+  min-width: 0;
+}
+.silo-timeline > span {
+  display: block;
+  font-size: 11px;
+  color: #59776a;
+}
+.silo-timeline b {
+  font-size: 15px;
+  color: #243d39;
+  font-variant-numeric: tabular-nums;
+}
+.silo-timeline small {
+  font-size: 11px;
+  margin-left: 16px;
+}
+.silo-timeline input {
+  width: 100%;
+  accent-color: #176653;
+  min-height: 28px;
+  display: block;
+}
+.silo-rate {
+  width: 155px;
+}
+.silo-rate > span {
+  font-size: 10px;
+  display: block;
+  margin-bottom: 5px;
+  color: #59776a;
+}
+.silo-rate select {
+  min-height: 34px;
+}
+.silo-reason {
+  padding: 8px 24px;
+  background: #f0e7d1;
+  font-size: 12px;
+  color: #745918;
+}
+.silo-training-note {
+  padding: 8px 24px;
+  font-size: 10px;
+  color: #657b73;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.silo-training-note svg {
+  flex-shrink: 0;
+}
+.silo-occlusion {
+  position: absolute;
+  inset: 0;
+  background: #171309;
+  z-index: 4;
+}
+.silo-exit-camera {
+  position: absolute;
+  top: 53px;
+  right: 20px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px !important;
+  background: #fbfcf5 !important;
+}
+.silo-annotation {
+  position: absolute;
+  right: 20px;
+  top: 95px;
+  max-width: 290px;
+  padding: 16px;
+  background: #f8faf4f5;
+  border: 1px solid #aec4b0;
+  border-radius: 7px;
+  z-index: 7;
+}
+.silo-annotation strong {
+  font-size: 13px;
+}
+.silo-annotation p {
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 6px 0;
+}
+.silo-annotation button {
+  float: right;
+  min-height: 24px;
+  padding: 0 8px;
+  margin-left: 8px;
+}
+.silo-load {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #e7eee3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 28px;
+}
+.silo-load h2 {
+  font: 600 24px Saira;
+  margin: 0;
+}
+.silo-load p {
+  margin: 0;
+  max-width: 490px;
+  font-size: 13px;
+}
+.silo-load .silo-note {
+  font-size: 11px;
+}
+.silo-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.silo-fallback {
+  position: absolute;
+  inset: 0;
+  padding: 60px 30px 240px;
+  text-align: center;
+  overflow: auto;
+  background: #e6ede0;
+  z-index: 1;
+}
+.silo-fallback img {
+  max-height: 290px;
+  width: 100%;
+}
+.silo-fallback h2 {
+  font: 600 25px Saira;
+  margin: 8px;
+}
+.silo-fallback p {
+  font-size: 14px;
+  max-width: 550px;
+  margin: auto;
+  line-height: 1.5;
+}
+.silo-dialog {
+  --silo-line: #d2ded5;
+  width: min(920px, calc(100% - 32px));
+  max-height: 90dvh;
+  padding: 0;
+  border: 1px solid #bbcbbc;
+  border-radius: 12px;
+  background: #f8faf4;
+  color: #243d39;
+  font-family: Barlow, sans-serif;
+  margin: auto;
+  box-shadow: 0 22px 80px #14261e45;
+}
+.silo-dialog::backdrop {
+  background: #18392f99;
+}
+.silo-dialog > header {
+  position: sticky;
+  top: 0;
+  background: #f8faf4;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #d2ded5;
+  z-index: 1;
+}
+.silo-dialog h2 {
+  font: 600 25px/1.25 Saira;
+  margin: 5px 0;
+}
+.silo-dialog-body {
+  padding: 22px 24px;
+  line-height: 1.55;
+  font-size: 14px;
+}
+.silo-dialog h3 {
+  font: 600 18px Saira;
+  margin: 20px 0 8px;
+}
+.silo-dialog p {
+  margin: 7px 0 14px;
+}
+.silo-dialog a {
+  color: #176653;
+  text-decoration: underline;
+}
+.silo-dialog details {
+  border: 1px solid #cad8c9;
+  padding: 14px;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+.silo-dialog summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 30px;
+}
+.silo-dialog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.silo-dialog th,
+.silo-dialog td {
+  text-align: left;
+  padding: 9px;
+  border-bottom: 1px solid #d4ded0;
+}
+.silo-dialog input {
+  padding: 9px;
+  border: 1px solid #a7bda7;
+  background: #fff;
+  border-radius: 4px;
+  max-width: 100%;
+  font: inherit;
+}
+.silo-dialog ol,
+.silo-dialog ul {
+  padding-left: 22px;
+}
+.silo-sources li {
+  padding: 12px 0;
+  border-bottom: 1px solid #d4ded0;
+}
+.silo-sources li p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+.silo-dialog .silo-note {
+  font-size: 12px;
+}
+.silo-stat-totals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 18px 0;
+  background: #e5ecdf;
+  padding: 16px;
+  border-radius: 7px;
+}
+.silo-stat-totals strong {
+  display: block;
+  font:
+    600 32px Saira,
+    sans-serif;
+  color: #245b49;
+}
+.silo-stat-totals span {
+  display: block;
+  font-size: 12px;
+  color: #5b7464;
+}
+.silo-stat-bar {
+  display: flex;
+  height: 18px;
+  min-width: 85px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #e4ebdd;
+}
+.silo-stat-bar span {
+  display: block;
+  height: 18px;
+}
+.silo-chart-legend {
+  display: flex;
+  gap: 18px;
+  font-size: 12px;
+  margin: 14px 0;
+}
+.silo-fatal-key::before,
+.silo-nonfatal-key::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  background: #a66543;
+}
+.silo-nonfatal-key::before {
+  background: #76957e;
+}
+.silo-analysis-callout {
+  padding: 14px 16px;
+  background: #e9eee0;
+  border-left: 3px solid #a78c45;
+  border-radius: 5px;
+}
+.silo-hypothesis label {
+  display: block;
+  margin: 10px 0;
+  font-weight: 600;
+  font-size: 13px;
+}
+.silo-stat-chart {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
+}
+.silo-stat-year {
+  font-size: 12px;
+}
+.silo-stat-bars {
+  display: flex;
+  height: 22px;
+  min-width: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.silo-stat-fatal {
+  background: #a66543;
+}
+.silo-stat-nonfatal {
+  background: #76957e;
+}
+.silo-stat-row {
+  display: grid;
+  grid-template-columns: 42px 1fr 110px;
+  gap: 12px;
+  align-items: center;
+}
+.silo-stat-total {
+  padding: 14px;
+  background: #e5ecdf;
+  border-radius: 6px;
+}
+.silo-stat-legend {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+}
+.silo-stat-legend span {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.silo-stat-legend i {
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+.silo-analysis-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.silo-analysis-outcome {
+  padding: 14px;
+  background: #e9eee3;
+  border-radius: 6px;
+}
+.silo-analysis button {
+  margin-right: 8px;
+}
+.silo-hypothetical-result {
+  padding: 12px;
+  background: #f0e9d4;
+  font-size: 13px;
+}
+@media (max-width: 900px) {
+  .silo-workspace {
+    grid-template-columns: minmax(0, 1fr) 248px;
+  }
+  .silo-sidebar {
+    padding: 18px 14px;
+    gap: 13px;
+  }
+  .silo-header {
+    gap: 14px;
+    padding: 12px 18px;
+  }
+  .silo-title h1 {
+    font-size: 20px;
+  }
+  .silo-title h1 span {
+    display: block;
+  }
+  .silo-camera-bar {
+    left: 12px;
+    right: 12px;
+    gap: 4px;
+  }
+  .silo-camera-bar button {
+    min-width: 0;
+    flex: 1;
+    padding: 8px;
+    font-size: 11px;
+    gap: 6px;
+  }
+  .silo-stage-caption span:last-child {
+    display: none;
+  }
+  .silo-hud {
+    width: 275px;
+    left: 12px;
+  }
+  .silo-legend {
+    left: 12px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 640px) {
+  .silo-viewer {
+    height: auto;
+    min-height: 100dvh;
+  }
+  .silo-header {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .silo-title h1 {
+    font-size: 17px;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+  .silo-title > .silo-eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+  .silo-back span {
+    display: none;
+  }
+  .silo-mobile-options {
+    display: grid !important;
+  }
+  .silo-workspace {
+    display: block;
+    min-height: 0;
+    flex: 1;
+    position: relative;
+  }
+  .silo-stage {
+    min-height: 480px;
+    height: calc(100dvh - 240px);
+  }
+  .silo-sidebar {
+    display: none;
+    border-top: 1px solid #cad8c9;
+    border-left: none;
+  }
+  .silo-sidebar.is-open {
+    display: flex;
+  }
+  .silo-stage-caption {
+    top: 13px;
+    left: 12px;
+    right: 12px;
+    font-size: 8px;
+  }
+  .silo-hud {
+    left: 12px;
+    bottom: 91px;
+    width: min(292px, calc(100% - 24px));
+    padding: 11px 13px;
+  }
+  .silo-hud-values {
+    margin-top: 7px;
+  }
+  .silo-hud-values strong {
+    font-size: 21px;
+  }
+  .silo-hud > small {
+    font-size: 8px;
+  }
+  .silo-hud p {
+    font-size: 10px;
+  }
+  .silo-hud-ventilation {
+    margin: 3px 0 !important;
+  }
+  .silo-legend {
+    bottom: 67px;
+    left: 12px;
+    gap: 12px;
+    padding: 3px 7px;
+    font-size: 9px;
+  }
+  .silo-camera-bar {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    gap: 4px;
+  }
+  .silo-camera-bar button {
+    padding: 7px;
+    justify-content: center;
+    font-size: 10px;
+    gap: 4px;
+    min-height: 44px;
+  }
+  .silo-camera-bar button > span {
+    font-size: 8px;
+  }
+  .silo-transport {
+    padding: 10px 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .silo-transport-actions {
+    gap: 5px;
+  }
+  .silo-transport-actions button {
+    padding: 8px 10px;
+    min-height: 44px;
+  }
+  .silo-primary {
+    min-width: 95px;
+  }
+  .silo-timeline {
+    min-width: 160px;
+  }
+  .silo-timeline small {
+    display: none;
+  }
+  .silo-rate {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .silo-rate select {
+    width: auto;
+    flex: 1;
+    min-height: 35px;
+    padding: 5px 8px;
+  }
+  .silo-rate > span {
+    margin: 0;
+  }
+  .silo-training-note {
+    font-size: 9px;
+    padding: 6px 12px;
+    line-height: 1.4;
+  }
+  .silo-exit-camera {
+    top: 40px;
+    right: 12px;
+    font-size: 11px !important;
+  }
+  .silo-annotation {
+    top: 95px;
+    left: 12px;
+    right: 12px;
+    max-width: none;
+  }
+  .silo-dialog {
+    width: calc(100% - 18px);
+    max-height: 94dvh;
+  }
+  .silo-dialog > header {
+    padding: 15px;
+  }
+  .silo-dialog h2 {
+    font-size: 21px;
+  }
+  .silo-dialog-body {
+    padding: 16px;
+    font-size: 13px;
+  }
+  .silo-analysis-columns {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .silo-dialog table {
+    font-size: 11px;
+  }
+  .silo-dialog th,
+  .silo-dialog td {
+    padding: 6px 3px;
+  }
+  .silo-stat-row {
+    grid-template-columns: 32px 1fr 92px;
+    gap: 7px;
+  }
+  .silo-fallback {
+    padding-top: 50px;
+  }
+  .silo-fallback img {
+    max-height: 230px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .silo-viewer * {
+    scroll-behavior: auto;
+  }
+}

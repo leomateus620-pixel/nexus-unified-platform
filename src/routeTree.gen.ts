@@ -27,6 +27,7 @@ import { Route as AuthenticatedLevantamentosRouteImport } from './routes/_authen
 import { Route as AuthenticatedProdutosRouteImport } from './routes/_authenticated/produtos'
 import { Route as AuthenticatedProjetosRouteImport } from './routes/_authenticated/projetos'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
+import { Route as Mapas3dSiloEngolfamentoRouteImport } from './routes/mapas-3d_.silo-engolfamento'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
 import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
@@ -151,6 +152,11 @@ const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const Mapas3dSiloEngolfamentoRoute = Mapas3dSiloEngolfamentoRouteImport.update({
+  id: '/mapas-3d_/silo-engolfamento',
+  path: '/mapas-3d/silo-engolfamento',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
   id: '/mapas-3d_/trevisan',
@@ -388,6 +394,7 @@ export interface FileRoutesByFullPath {
   '/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/projetos': typeof AuthenticatedProjetosRouteWithChildren
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
@@ -432,6 +439,7 @@ export interface FileRoutesByTo {
   '/inspecoes': typeof AuthenticatedInspecoesRoute
   '/levantamentos': typeof AuthenticatedLevantamentosRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/': typeof AuthenticatedIndexRoute
@@ -484,6 +492,7 @@ export interface FileRoutesById {
   '/_authenticated/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/_authenticated/projetos': typeof AuthenticatedProjetosRouteWithChildren
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/mapas-3d_/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
@@ -538,6 +547,7 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/projetos'
     | '/relatorios'
+    | '/mapas-3d/silo-engolfamento'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/compras/demandas'
@@ -582,6 +592,7 @@ export interface FileRouteTypes {
     | '/inspecoes'
     | '/levantamentos'
     | '/relatorios'
+    | '/mapas-3d/silo-engolfamento'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/'
@@ -633,6 +644,7 @@ export interface FileRouteTypes {
     | '/_authenticated/produtos'
     | '/_authenticated/projetos'
     | '/_authenticated/relatorios'
+    | '/mapas-3d_/silo-engolfamento'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
     | '/_authenticated/'
@@ -673,6 +685,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   EscadaLc02Route: typeof EscadaLc02Route
   Mapas3dRoute: typeof Mapas3dRoute
+  Mapas3dSiloEngolfamentoRoute: typeof Mapas3dSiloEngolfamentoRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
 }
@@ -804,6 +817,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/relatorios'
       preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/mapas-3d_/silo-engolfamento': {
+      id: '/mapas-3d_/silo-engolfamento'
+      path: '/mapas-3d/silo-engolfamento'
+      fullPath: '/mapas-3d/silo-engolfamento'
+      preLoaderRoute: typeof Mapas3dSiloEngolfamentoRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/mapas-3d_/trevisan': {
       id: '/mapas-3d_/trevisan'
@@ -1233,6 +1253,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   EscadaLc02Route: EscadaLc02Route,
   Mapas3dRoute: Mapas3dRoute,
+  Mapas3dSiloEngolfamentoRoute: Mapas3dSiloEngolfamentoRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
 }

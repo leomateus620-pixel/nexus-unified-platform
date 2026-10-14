@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" role="img" aria-label="Silo elevado em corte didático">
+<defs><linearGradient id="metal"><stop stop-color="#95a6a7"/><stop offset=".6" stop-color="#dbe4e2"/><stop offset="1" stop-color="#7c9093"/></linearGradient><pattern id="grain" width="12" height="10" patternUnits="userSpaceOnUse"><rect width="12" height="10" fill="#b69958"/><ellipse cx="3" cy="3" rx="3" ry="2.7" fill="#dac18b"/><ellipse cx="9" cy="8" rx="3.2" ry="2.6" fill="#c4a76a"/></pattern><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#c8d6cc" stroke-width=".5"/></pattern></defs>
+<rect width="800" height="320" fill="url(#grid)"/><ellipse cx="406" cy="299" rx="140" ry="12" fill="#c2cfc7"/><path d="M310 230V294M500 230V294M310 230L500 294M500 230L310 294" stroke="#637c7c" stroke-width="7"/>
+<path d="M306 83L403 28 507 83V220L412 275H394L306 220Z" fill="url(#metal)" stroke="#71898b" stroke-width="2"/>
+<path d="M310 89H500M310 99H500M310 109H500M310 119H500M310 129H500M310 139H500M310 149H500M310 159H500M310 169H500M310 179H500M310 189H500M310 199H500M310 209H500" stroke="#71898b" opacity=".55"/>
+<path d="M309 220V172Q403 192 504 172V220L412 270H394Z" fill="url(#grain)"/>
+<path d="M306 83H507M394 277H413" stroke="#5c7879" stroke-width="6"/><path d="M279 289V82H316M287 112H308M287 138H308M287 164H308M287 190H308M287 216H308M287 242H308M287 268H308M323 83V66H486V83M379 38V20H423V39" fill="none" stroke="#d5a629" stroke-width="4"/>
+<path d="M348 76H456M355 76L356 138" stroke="#314b4a" stroke-width="5"/><path d="M356 79Q370 113 358 148" fill="none" stroke="#e9b438" stroke-width="2"/>
+<g fill="#376d68"><path d="M350 150H365V174H350Z"/><circle cx="357" cy="142" r="6" fill="#eac355"/><path d="M350 163L344 173M365 163L371 173" stroke="#376d68" stroke-width="5"/></g>
+<g fill="#7b5243"><path d="M430 157H444V181H430Z"/><circle cx="437" cy="149" r="6" fill="#ebdec7"/><path d="M430 170L424 179M444 170L450 179" stroke="#7b5243" stroke-width="5"/></g>
+<text x="550" y="138" font-family="sans-serif" font-size="12" fill="#426559" letter-spacing="2">ENGOLFAMENTO</text><text x="550" y="158" font-family="sans-serif" font-size="11" fill="#617b71">4 perspectivas · 1 relógio</text><path d="M533 147H501" stroke="#7b958a"/>
+</svg>

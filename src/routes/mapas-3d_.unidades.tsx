@@ -15,6 +15,37 @@ function Maps() {
         description="Explore cada unidade em uma visualização dedicada, com estruturas, setores e referências técnicas próprias."
       />
       <Link
+        to="/mapas-3d/silo-engolfamento"
+        className="group block max-w-4xl overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/50"
+      >
+        <div className="relative bg-[#e3e9e5]">
+          <img
+            src="/models/silo-engolfamento/thumbnail.svg"
+            alt="Silo elevado em corte com dois técnicos e conexão superior de retenção"
+            className="h-64 w-full object-contain"
+          />
+          <span className="absolute left-5 top-5 rounded border border-[#809d90] bg-[#f1f6ee] px-2 py-1 text-[10px] tracking-widest text-[#38634d]">
+            TREINAMENTO · SIMULAÇÃO EDUCATIVA
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-5 p-6 md:p-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[.2em] text-primary">
+              Segurança · Massa granular
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold">Silo de Grãos — Engolfamento</h2>
+            <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+              Explore a descarga, o aprisionamento e os limites da retenção em quatro perspectivas.
+              Reprodução determinística, prevenção e dados documentados.
+            </p>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Experiência independente · Desktop e celular · Fontes e hipóteses identificadas
+            </p>
+          </div>
+          <ArrowUpRight className="shrink-0 text-primary" size={26} />
+        </div>
+      </Link>
+      <Link
         to="/mapas-3d/trevisan"
         className="group block max-w-4xl overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/50"
       >

@@ -1,0 +1,31 @@
+name: Silo de Grãos — Engolfamento
+on:
+  pull_request:
+    paths:
+      - "src/silo-engolfamento/**"
+      - "src/routes/mapas-3d_.silo-engolfamento.tsx"
+      - "tests/silo-*/**"
+      - "tests/silo-*.test.ts"
+      - "public/models/silo-engolfamento/**"
+      - "scripts/silo-engolfamento/**"
+      - ".github/workflows/silo-engolfamento.yml"
+  push:
+    branches: [main]
+    paths: ["src/silo-engolfamento/**", "tests/silo-*", "public/models/silo-engolfamento/**"]
+permissions:
+  contents: read
+jobs:
+  domain-and-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: "24"
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bun run test:silo
+      - run: bunx eslint src/silo-engolfamento src/routes/mapas-3d_.silo-engolfamento.tsx
+      - run: bun run build

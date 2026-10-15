@@ -1,0 +1,66 @@
+{
+  "schema": "nexus-procedural-environment/1.0.0",
+  "generatedAt": "2026-10-15T05:12:33.864Z",
+  "origin": "Original Nexus procedural scene: two colours and one plane, no third-party imagery",
+  "license": "Nexus project-generated resource; no independent asset licence specified",
+  "asset": {
+    "path": "public/models/silo-engolfamento/environment-pmrem-256.png",
+    "bytes": 75806,
+    "sha256": "b523d5f065bf777f214cd0dbf1ebbcbf1c14c25a78bc88b9fe4c41abb37261fd"
+  },
+  "generator": {
+    "path": "scripts/silo-engolfamento/bake-environment-map.mjs",
+    "sha256": "b4bee7bc7a18cf224ef3402afc5999a6e07889bc911629ea82ec96fb183768a4",
+    "threeVersion": "0.186.0",
+    "background": "#cad8dc",
+    "floor": {
+      "colour": "#6c7668",
+      "width": 100,
+      "height": 100,
+      "y": -1,
+      "rotateX": -1.5707963267948966
+    },
+    "pmrem": {
+      "size": 256,
+      "sigma": 0.15,
+      "near": 0.1,
+      "far": 100
+    }
+  },
+  "upload": {
+    "mapping": "CubeUVReflectionMapping",
+    "colourSpace": "LinearSRGBColorSpace",
+    "flipY": false,
+    "minFilter": "LinearFilter",
+    "magFilter": "LinearFilter",
+    "generateMipmaps": false,
+    "pngColourMetadata": "None; row0 preserves GPU row0; no display gamma conversion"
+  },
+  "width": 768,
+  "height": 1024,
+  "generationAndReadbackMs": 1222.2000000476837,
+  "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "revision": "186",
+  "quantization": {
+    "sourceType": "RGBA16F linear-sRGB",
+    "outputType": "RGBA8 linear-sRGB",
+    "minimumRGB": 0,
+    "maximumRGB": 0.71533203125,
+    "clippedSamples": 0,
+    "maximumAbsoluteError": 0.0019607843137254832,
+    "rootMeanSquaredError": 0.0008461143850420382,
+    "theoreticalMaximumError": 0.00196078431372549,
+    "sourceSamples": 3145728
+  },
+  "browser": "155.0.8059.41",
+  "comparison": {
+    "width": 768,
+    "height": 512,
+    "maximumChannelDifference": 1,
+    "meanAbsoluteRGBDifference": 0.00714111328125,
+    "changedRGBSamples": 8424,
+    "totalRGBSamples": 1179648,
+    "glError": 0
+  },
+  "errors": []
+}

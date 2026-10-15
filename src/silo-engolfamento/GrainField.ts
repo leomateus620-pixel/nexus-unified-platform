@@ -1,9 +1,6 @@
-/**
- * Educational, axisymmetric bulk approximation, not a DEM or certified flow model.
- * Coordinates: metres, Y up, silo axis X=Z=0; feet and volume use this frame.
- * The upper surface is volume-equivalent: the radial depression has an exactly
- * integrated compensating offset. No invisible particles are counted as volume.
- */
+/** Flat-floor educational bulk model. Local collapse redistributes existing volume;
+ * it is a deterministic cinematic illustration, not DEM/contact or load physics. */
+import { INCIDENT_CENTRES, SILO_CONFIG } from "./SiloConfig";
 export type Metres = number & { readonly __unit: "m" };
 export type Seconds = number & { readonly __unit: "s" };
 export type Speed = number & { readonly __unit: "m/s" };
@@ -16,20 +13,32 @@ export const seconds = (value: number) => value as Seconds;
 export const ratio = (value: number) => value as Ratio;
 
 export const SILO = Object.freeze({
-  radius: metres(3),
+  radius: metres(SILO_CONFIG.radius.value),
   outletRadius: metres(0.18),
-  outletY: metres(1.2),
-  hopperTop: metres(3.5),
-  bodyTop: metres(9.5),
-  roofTop: metres(11.2),
-  initialSurface: metres(6.35),
-  flowRadius: metres(2.1),
-  maximumDepression: metres(0.42),
-  nominalDischarge: 0.65 as VolumeFlow,
+  outletY: metres(SILO_CONFIG.floorY.value),
+  floorY: metres(SILO_CONFIG.floorY.value),
+  /** Compatibility alias only. No hopper volume or hopper geometry is present. */
+  hopperTop: metres(SILO_CONFIG.floorY.value),
+  bodyTop: metres(SILO_CONFIG.bodyTop.value),
+  roofTop: metres(SILO_CONFIG.roofTop.value),
+  initialSurface: metres(SILO_CONFIG.initialSurface.value),
+  ringRadius: metres(SILO_CONFIG.ringRadius.value),
+  ringY: metres(SILO_CONFIG.ringY.value),
+  workerRadius: metres(SILO_CONFIG.workerRadius.value),
+  flowRadius: metres(SILO_CONFIG.collapseRadius.value),
+  maximumDepression: metres(SILO_CONFIG.collapseDepth.value),
+  nominalRedistribution: SILO_CONFIG.nominalRedistribution.value as VolumeFlow,
+  /** Compatibility alias for historical flow consumers; no net discharge. */
+  nominalDischarge: SILO_CONFIG.nominalRedistribution.value as VolumeFlow,
   eyeHeight: metres(1.65),
   dorsalHeight: metres(1.42),
   dorsalBack: metres(-0.14),
-  anchor: Object.freeze([-0.7, 9.25, 0] as const),
+  /** Legacy coordinate, only catalogue reference. Domain uses frame.trolley.eye. */
+  anchor: Object.freeze([
+    0,
+    SILO_CONFIG.ringY.value - SILO_CONFIG.trolleyEyeOffset.value,
+    SILO_CONFIG.ringRadius.value,
+  ] as const),
   fixedStep: seconds(1 / 60),
   maxSubsteps: 8,
   duration: seconds(30),
@@ -57,33 +66,29 @@ export const smooth = (value: number) => {
 };
 
 export const BODY_AREA = Math.PI * SILO.radius ** 2;
-export const HOPPER_VOLUME =
-  (Math.PI *
-    (SILO.hopperTop - SILO.outletY) *
-    (SILO.radius ** 2 + SILO.radius * SILO.outletRadius + SILO.outletRadius ** 2)) /
-  3;
+export const HOPPER_VOLUME = 0;
 export const INITIAL_GRAIN_VOLUME = grainVolume(SILO.initialSurface);
 
 export function grainVolume(meanSurface: number): CubicMetres {
-  // This module's incident stays above the hopper. Deeper empties use the exact
-  // similar-frustum volume rather than treating the cone as a cylinder.
-  if (meanSurface <= SILO.outletY) return 0 as CubicMetres;
-  if (meanSurface >= SILO.hopperTop)
-    return (HOPPER_VOLUME + BODY_AREA * (meanSurface - SILO.hopperTop)) as CubicMetres;
-  const h = meanSurface - SILO.outletY;
-  const r =
-    SILO.outletRadius + ((SILO.radius - SILO.outletRadius) * h) / (SILO.hopperTop - SILO.outletY);
-  return ((Math.PI * h * (r * r + r * SILO.outletRadius + SILO.outletRadius ** 2)) /
-    3) as CubicMetres;
+  return (BODY_AREA *
+    clamp(meanSurface - SILO.floorY, 0, SILO.bodyTop - SILO.floorY)) as CubicMetres;
 }
 
-/** Mean of (1-r/Rf)^2 on a disc of silo radius R is Rf²/(6R²). */
-export const DEPRESSION_MEAN = SILO.flowRadius ** 2 / (6 * SILO.radius ** 2);
+/** Each compact patch has exactly zero integral; no global hidden compensator. */
+export const DEPRESSION_MEAN = 0;
+const CORE_RADIUS = SILO.flowRadius * 0.64;
+const REDISTRIBUTION_RATIO = (CORE_RADIUS / SILO.flowRadius) ** 2;
+export function collapseShape(distance: number): number {
+  const broad = Math.max(0, 1 - distance ** 2 / SILO.flowRadius ** 2) ** 2;
+  const core = Math.max(0, 1 - distance ** 2 / CORE_RADIUS ** 2) ** 2;
+  return (REDISTRIBUTION_RATIO * broad - core) / (1 - REDISTRIBUTION_RATIO);
+}
 
 export function surfaceAt(x: number, z: number, grain: GrainState): Metres {
-  const radial = Math.hypot(x, z);
-  const shape = Math.max(0, 1 - radial / SILO.flowRadius) ** 2;
-  return metres(grain.surfaceHeight + grain.depression * (DEPRESSION_MEAN - shape));
+  let shape = 0;
+  for (const centre of INCIDENT_CENTRES)
+    shape += collapseShape(Math.hypot(x - centre.x, z - centre.z));
+  return metres(grain.surfaceHeight + grain.depression * shape);
 }
 
 /** Reuses an output buffer. Velocity is visual advection, not grain contact physics. */
@@ -93,7 +98,14 @@ export function flowAt(
   grain: GrainState,
   out: FlowVector = { x: 0 as Speed, y: 0 as Speed, z: 0 as Speed },
 ): FlowVector {
-  const r = Math.hypot(x, z);
+  const centre = INCIDENT_CENTRES.reduce((nearest, candidate) =>
+    Math.hypot(x - candidate.x, z - candidate.z) < Math.hypot(x - nearest.x, z - nearest.z)
+      ? candidate
+      : nearest,
+  );
+  const dx = x - centre.x,
+    dz = z - centre.z;
+  const r = Math.hypot(dx, dz);
   const influence = Math.max(0, 1 - r / SILO.flowRadius);
   const speed = (grain.flow / SILO.nominalDischarge) * 0.045 * influence;
   if (speed === 0) {
@@ -101,8 +113,8 @@ export function flowAt(
     return out;
   }
   const inverseR = r > 1e-5 ? 1 / r : 0;
-  out.x = (-x * inverseR * speed) as Speed;
-  out.z = (-z * inverseR * speed) as Speed;
+  out.x = (-dx * inverseR * speed) as Speed;
+  out.z = (-dz * inverseR * speed) as Speed;
   out.y = (-speed * (0.8 + influence)) as Speed;
   return out;
 }
@@ -115,8 +127,13 @@ export function seededValue(index: number, seed = SILO.seed): number {
   return ((value ^ (value >>> 16)) >>> 0) / 0x1_0000_0000;
 }
 
-/** Gate opens over 1 s, stays open, and closes over 1 s at t=22 s. */
-export function dischargeAt(time: number): { gate: Ratio; discharged: CubicMetres } {
+/** Internal redistribution activity ramps up and ceases at 22s. No exterior
+ * discharge is present in this flat-floor crust-collapse scenario. */
+export function dischargeAt(time: number): {
+  gate: Ratio;
+  discharged: CubicMetres;
+  mobilised: CubicMetres;
+} {
   const incident = Math.max(0, time - SILO.incidentStart);
   const closing = SILO.dischargeStop - SILO.incidentStart - 1;
   let gate: number;
@@ -135,6 +152,7 @@ export function dischargeAt(time: number): { gate: Ratio; discharged: CubicMetre
   }
   return {
     gate: ratio(gate),
-    discharged: (integral * SILO.nominalDischarge) as CubicMetres,
+    discharged: 0 as CubicMetres,
+    mobilised: (integral * SILO.nominalDischarge) as CubicMetres,
   };
 }

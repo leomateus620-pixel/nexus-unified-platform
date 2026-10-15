@@ -1,0 +1,236 @@
+{
+  "schema": "nexus-silo-bulk-cpu-benchmark/1.0",
+  "testedAt": "2026-10-15T04:15:25.843Z",
+  "sourceSha256": "280e00738f62e7afaea372b3075c3fe85ffb4e5529e34e10b3db342ee8fe1937",
+  "runtime": "v24.15.0",
+  "platform": "win32",
+  "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+  "method": "Identical cloned bulk geometry; former full surfaceAt plus computeVertexNormals versus exact private production updater; two warmup loops; ten loops each in alternating order; 20 forward/reverse/mode/level states per loop; time excludes setup and validation.",
+  "frames": [
+    {
+      "time": 0,
+      "height": 22.6,
+      "depression": 0
+    },
+    {
+      "time": 6,
+      "height": 22.6,
+      "depression": 0
+    },
+    {
+      "time": 6.1,
+      "height": 22.6,
+      "depression": 0.0007743749999999946
+    },
+    {
+      "time": 7,
+      "height": 22.6,
+      "depression": 0.065625
+    },
+    {
+      "time": 8,
+      "height": 22.6,
+      "depression": 0.21
+    },
+    {
+      "time": 9,
+      "height": 22.6,
+      "depression": 0.354375
+    },
+    {
+      "time": 9.9,
+      "height": 22.6,
+      "depression": 0.419225625
+    },
+    {
+      "time": 10,
+      "height": 22.6,
+      "depression": 0.42
+    },
+    {
+      "time": 15,
+      "height": 22.6,
+      "depression": 0.42
+    },
+    {
+      "time": 22,
+      "height": 22.6,
+      "depression": 0.42
+    },
+    {
+      "time": 23,
+      "height": 22.6,
+      "depression": 0.4075555555555555
+    },
+    {
+      "time": 25,
+      "height": 22.6,
+      "depression": 0.336
+    },
+    {
+      "time": 27.9,
+      "height": 22.6,
+      "depression": 0.25213844444444444
+    },
+    {
+      "time": 28,
+      "height": 22.6,
+      "depression": 0.252
+    },
+    {
+      "time": 8,
+      "height": 22.6,
+      "depression": 0.21
+    },
+    {
+      "time": 0,
+      "height": 22.6,
+      "depression": 0
+    },
+    {
+      "time": 0,
+      "height": 5,
+      "depression": 0
+    },
+    {
+      "time": 8,
+      "height": 22.6,
+      "depression": 0
+    },
+    {
+      "time": 8,
+      "height": 22.6,
+      "depression": 0.21
+    },
+    {
+      "time": 0,
+      "height": 22.6,
+      "depression": 0
+    }
+  ],
+  "stats": {
+    "activeVertices": 96,
+    "normalVertices": 158,
+    "positionVertices": 18761,
+    "fullNormalBuilds": 1,
+    "updates": 209,
+    "normalUpdates": 183
+  },
+  "equality": {
+    "maximumPositionDifference": 0,
+    "maximumNormalDifference": 0
+  },
+  "cpuMillisecondsPerUpdate": {
+    "full": {
+      "samples": 200,
+      "p50": 8.955500000000029,
+      "p95": 10.071799999999712,
+      "p99": 12.771600000000035,
+      "max": 18.9378999999999
+    },
+    "localized": {
+      "samples": 200,
+      "p50": 0.01929999999993015,
+      "p95": 0.04730000000017753,
+      "p99": 0.17070000000012442,
+      "max": 0.6323999999999614
+    }
+  },
+  "repetitions": [
+    {
+      "iteration": 0,
+      "order": [
+        "full",
+        "localized"
+      ],
+      "fullMs": 194.97680000000037,
+      "localizedMs": 0.4317999999998392
+    },
+    {
+      "iteration": 1,
+      "order": [
+        "localized",
+        "full"
+      ],
+      "fullMs": 188.80209999999943,
+      "localizedMs": 0.3325000000008913
+    },
+    {
+      "iteration": 2,
+      "order": [
+        "full",
+        "localized"
+      ],
+      "fullMs": 178.49039999999923,
+      "localizedMs": 1.154999999998381
+    },
+    {
+      "iteration": 3,
+      "order": [
+        "localized",
+        "full"
+      ],
+      "fullMs": 185.7744000000007,
+      "localizedMs": 0.5778999999997723
+    },
+    {
+      "iteration": 4,
+      "order": [
+        "full",
+        "localized"
+      ],
+      "fullMs": 181.63280000000032,
+      "localizedMs": 0.5940000000000509
+    },
+    {
+      "iteration": 5,
+      "order": [
+        "localized",
+        "full"
+      ],
+      "fullMs": 174.21950000000106,
+      "localizedMs": 0.3172999999997046
+    },
+    {
+      "iteration": 6,
+      "order": [
+        "full",
+        "localized"
+      ],
+      "fullMs": 170.89449999999988,
+      "localizedMs": 0.40200000000186265
+    },
+    {
+      "iteration": 7,
+      "order": [
+        "localized",
+        "full"
+      ],
+      "fullMs": 182.04949999999963,
+      "localizedMs": 0.45519999999896754
+    },
+    {
+      "iteration": 8,
+      "order": [
+        "full",
+        "localized"
+      ],
+      "fullMs": 174.95069999999896,
+      "localizedMs": 0.36059999999633874
+    },
+    {
+      "iteration": 9,
+      "order": [
+        "localized",
+        "full"
+      ],
+      "fullMs": 189.32550000000083,
+      "localizedMs": 0.31779999999889696
+    }
+  ],
+  "limitations": [
+    "Node CPU microbenchmark, not browser frame time, GPU duration or physical mobile performance.",
+    "Only bulk positions and normals are measured; no local grain detail, renderer upload, rig, camera, HUD or environment in either alternative.",
+    "Previous browser profiles used a frontal camera subsequently corrected; their end-to-end delta is not an identical-view causal comparison."
+  ]
+}

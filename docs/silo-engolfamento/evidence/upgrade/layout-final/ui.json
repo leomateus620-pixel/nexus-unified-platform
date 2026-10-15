@@ -1,0 +1,2515 @@
+{
+  "schema": "nexus-silo-upgrade-validation/2.0.0",
+  "testedAt": "2026-10-15T06:03:47.339Z",
+  "base": "http://127.0.0.1:5185",
+  "command": "node scripts/silo-engolfamento/validate-upgrade.mjs",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584
+  },
+  "browser": "155.0.8059.41",
+  "scopeFilter": "Scene occupancy",
+  "checks": [
+    {
+      "name": "Scene occupancy, panels and targets at required viewport sizes",
+      "result": "aprovado",
+      "durationMs": 32483.153100000003,
+      "evidence": [
+        {
+          "width": 390,
+          "height": 844,
+          "explore": {
+            "usefulArea": 306540,
+            "canvasArea": 306540,
+            "occupiedOverlayArea": 22356.4375,
+            "visibleSceneFraction": 0.9270684494682586,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 65.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 95.0625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 76.140625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Câmeras e corte",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "preincidentRoi": {
+            "time": 4,
+            "cameraPosition": [
+              4.227948217175775,
+              25.957567450796212,
+              2.166781086795922
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.5629476536166385,
+                  24.26,
+                  -10.029441391825083
+                ],
+                "screen": [
+                  94.8330148666712,
+                  344.5938177802005
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  1.562947653616641,
+                  24.21,
+                  -10.029441391825081
+                ],
+                "screen": [
+                  308.98498620131693,
+                  358.12713187131084
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.7997099226754218,
+                  24.020000000000003,
+                  -9.990152360911402
+                ],
+                "screen": [
+                  79.11357643264117,
+                  360.77793552923197
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.7911705489252114,
+                  24.281,
+                  -10.793893195444493
+                ],
+                "screen": [
+                  102.72955257552614,
+                  336.60444883226916
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "incident": {
+            "usefulArea": 306540,
+            "canvasArea": 281580,
+            "occupiedOverlayArea": 24468.4375,
+            "visibleSceneFraction": 0.8387537107718406,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 65.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 95.0625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 76.140625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Câmeras e corte",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Indicadores dos técnicos",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 56,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "incidentRoi": {
+            "time": 12,
+            "cameraPosition": [
+              4.227948217175774,
+              25.957567450796205,
+              2.102844395156895
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.0574329105807672,
+                  24.026270367020604,
+                  -10.096016503315145
+                ],
+                "screen": [
+                  127.59088460830388,
+                  362.40385373631534
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  0.994965390847041,
+                  23.058902879197912,
+                  -10.103548795441872
+                ],
+                "screen": [
+                  266.4244213636124,
+                  439.28645835909623
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.3245848563466873,
+                  23.819407706757783,
+                  -10.063803498759981
+                ],
+                "screen": [
+                  109.74306838507913,
+                  376.13380059848646
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.309831116051711,
+                  24.281,
+                  -10.862815689195077
+                ],
+                "screen": [
+                  132.12293040520262,
+                  337.81279878748506
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "firstPerson": {
+            "usefulArea": 306540,
+            "canvasArea": 281580,
+            "occupiedOverlayArea": 26404.4375,
+            "visibleSceneFraction": 0.8324380586546617,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 65.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 95.0625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 76.140625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sair da primeira pessoa",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Câmeras e corte",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Indicadores dos técnicos",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 56,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "panel": {
+            "x": 0,
+            "y": 529.609375,
+            "width": 390,
+            "height": 314.390625
+          }
+        },
+        {
+          "width": 844,
+          "height": 390,
+          "explore": {
+            "usefulArea": 288648,
+            "canvasArea": 288648,
+            "occupiedOverlayArea": 22788.4375,
+            "visibleSceneFraction": 0.9210511158920207,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 65.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 95.0625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 76.140625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Câmeras e corte",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "preincidentRoi": {
+            "time": 4,
+            "cameraPosition": [
+              2.2694652268237294,
+              24.726520999717785,
+              -3.4288845999242072
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.5629476536166385,
+                  24.26,
+                  -10.029441391825083
+                ],
+                "screen": [
+                  348.7465377189633,
+                  139.08575906563362
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  1.562947653616641,
+                  24.21,
+                  -10.029441391825081
+                ],
+                "screen": [
+                  511.1801430139494,
+                  145.87398129085278
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.7997099226754218,
+                  24.020000000000003,
+                  -9.990152360911402
+                ],
+                "screen": [
+                  337.70106406107044,
+                  151.1476870027772
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.7911705489252114,
+                  24.281,
+                  -10.793893195444493
+                ],
+                "screen": [
+                  357.38422568143136,
+                  135.79948496276575
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "incident": {
+            "usefulArea": 288648,
+            "canvasArea": 245604,
+            "occupiedOverlayArea": 24944.4375,
+            "visibleSceneFraction": 0.7644590037000083,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 65.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 95.0625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 76.140625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Câmeras e corte",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Indicadores dos técnicos",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 112.46875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 79,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "incidentRoi": {
+            "time": 12,
+            "cameraPosition": [
+              2.2694652268237294,
+              24.726520999717778,
+              -3.492821291563234
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.0574329105807672,
+                  24.026270367020604,
+                  -10.096016503315145
+                ],
+                "screen": [
+                  372.3595832271325,
+                  151.8223089052202
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  0.994965390847041,
+                  23.058902879197912,
+                  -10.103548795441872
+                ],
+                "screen": [
+                  476.1944958838005,
+                  208.89269570616392
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.3245848563466873,
+                  23.819407706757783,
+                  -10.063803498759981
+                ],
+                "screen": [
+                  359.59443630304656,
+                  162.12320416033725
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.309831116051711,
+                  24.281,
+                  -10.862815689195077
+                ],
+                "screen": [
+                  377.6176573572487,
+                  136.19328698616732
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "firstPerson": {
+            "usefulArea": 288648,
+            "canvasArea": 245604,
+            "occupiedOverlayArea": 26880.4375,
+            "visibleSceneFraction": 0.7577518725229345,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 65.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 95.0625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 76.140625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sair da primeira pessoa",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Câmeras e corte",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Indicadores dos técnicos",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 112.46875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 79,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "panel": {
+            "x": 508,
+            "y": 48,
+            "width": 336,
+            "height": 342
+          }
+        },
+        {
+          "width": 1366,
+          "height": 768,
+          "explore": {
+            "usefulArea": 958932,
+            "canvasArea": 958932,
+            "occupiedOverlayArea": 49966.8515625,
+            "visibleSceneFraction": 0.9478932275046614,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 87.046875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 121.234375,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 99.15625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Vista de inspeção",
+                "width": 187,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Corte",
+                "width": 83.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Cobertura",
+                "width": 157.953125,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "preincidentRoi": {
+            "time": 4,
+            "cameraPosition": [
+              2.2694652268237294,
+              24.726520999717785,
+              -3.4288845999242072
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.5629476536166385,
+                  24.26,
+                  -10.029441391825083
+                ],
+                "screen": [
+                  523.4031096694939,
+                  264.4480111601777
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  1.562947653616641,
+                  24.21,
+                  -10.029441391825081
+                ],
+                "screen": [
+                  877.2962566008382,
+                  279.23747126598164
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.7997099226754218,
+                  24.020000000000003,
+                  -9.990152360911402
+                ],
+                "screen": [
+                  499.3384007378648,
+                  290.7272630919613
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.7911705489252114,
+                  24.281,
+                  -10.793893195444493
+                ],
+                "screen": [
+                  542.2219899726031,
+                  257.2882249704244
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "incident": {
+            "usefulArea": 958932,
+            "canvasArea": 866044,
+            "occupiedOverlayArea": 72487.359375,
+            "visibleSceneFraction": 0.8275421412832192,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 87.046875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 121.234375,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 99.15625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Perspectiva de câmera",
+                "width": 218,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Corte",
+                "width": 83.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Cobertura",
+                "width": 157.953125,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 112.46875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 79,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "incidentRoi": {
+            "time": 12,
+            "cameraPosition": [
+              2.2694652268237294,
+              24.726520999717778,
+              -3.492821291563234
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.0574329105807672,
+                  24.026270367020604,
+                  -10.096016503315145
+                ],
+                "screen": [
+                  574.8487139725154,
+                  292.19705788972374
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  0.994965390847041,
+                  23.058902879197912,
+                  -10.103548795441872
+                ],
+                "screen": [
+                  801.0732315818885,
+                  416.5359762120547
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.3245848563466873,
+                  23.819407706757783,
+                  -10.063803498759981
+                ],
+                "screen": [
+                  547.0373629420327,
+                  314.63955820499586
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.309831116051711,
+                  24.281,
+                  -10.862815689195077
+                ],
+                "screen": [
+                  586.3044493625281,
+                  258.14619913824765
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "firstPerson": {
+            "usefulArea": 958932,
+            "canvasArea": 866044,
+            "occupiedOverlayArea": 80905.109375,
+            "visibleSceneFraction": 0.8187638858907618,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 87.046875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 121.234375,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 99.15625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sair da primeira pessoa",
+                "width": 191.3125,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Perspectiva de câmera",
+                "width": 218,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Corte",
+                "width": 83.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Cobertura",
+                "width": 157.953125,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 112.46875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 79,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "panel": {
+            "x": 1030,
+            "y": 66,
+            "width": 336,
+            "height": 702
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "explore": {
+            "usefulArea": 1200960,
+            "canvasArea": 1200960,
+            "occupiedOverlayArea": 49966.8515625,
+            "visibleSceneFraction": 0.9583942416379396,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 87.046875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 121.234375,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 99.15625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Vista de inspeção",
+                "width": 187,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Corte",
+                "width": 83.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Cobertura",
+                "width": 157.953125,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "preincidentRoi": {
+            "time": 4,
+            "cameraPosition": [
+              2.2694652268237294,
+              24.726520999717785,
+              -3.4288845999242072
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.5629476536166385,
+                  24.26,
+                  -10.029441391825083
+                ],
+                "screen": [
+                  527.1747350265495,
+                  305.7652626951043
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  1.562947653616641,
+                  24.21,
+                  -10.029441391825081
+                ],
+                "screen": [
+                  954.7491049782998,
+                  323.6339163876056
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.7997099226754218,
+                  24.020000000000003,
+                  -9.990152360911402
+                ],
+                "screen": [
+                  498.09970814701006,
+                  337.5159046189942
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.7911705489252114,
+                  24.281,
+                  -10.793893195444493
+                ],
+                "screen": [
+                  549.9117418280977,
+                  297.1147954689985
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "incident": {
+            "usefulArea": 1200960,
+            "canvasArea": 1103040,
+            "occupiedOverlayArea": 72487.359375,
+            "visibleSceneFraction": 0.858107381282474,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 87.046875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 121.234375,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 99.15625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Perspectiva de câmera",
+                "width": 218,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Corte",
+                "width": 83.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Cobertura",
+                "width": 157.953125,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 112.46875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 79,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "incidentRoi": {
+            "time": 12,
+            "cameraPosition": [
+              2.2694652268237294,
+              24.726520999717778,
+              -3.492821291563234
+            ],
+            "interests": [
+              {
+                "name": "A.eye",
+                "world": [
+                  -1.0574329105807672,
+                  24.026270367020604,
+                  -10.096016503315145
+                ],
+                "screen": [
+                  589.3314115188434,
+                  339.2917134755968
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "B.eye",
+                "world": [
+                  0.994965390847041,
+                  23.058902879197912,
+                  -10.103548795441872
+                ],
+                "screen": [
+                  862.656301879695,
+                  489.51822993443835
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "A.dorsal",
+                "world": [
+                  -1.3245848563466873,
+                  23.819407706757783,
+                  -10.063803498759981
+                ],
+                "screen": [
+                  555.7296845640333,
+                  366.40678483442724
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              },
+              {
+                "name": "trolley.eye",
+                "world": [
+                  -1.309831116051711,
+                  24.281,
+                  -10.862815689195077
+                ],
+                "screen": [
+                  603.1722526998368,
+                  298.1514014824885
+                ],
+                "withinViewport": true,
+                "coveredByUi": false,
+                "behindRetainedShell": false
+              }
+            ]
+          },
+          "firstPerson": {
+            "usefulArea": 1200960,
+            "canvasArea": 1103040,
+            "occupiedOverlayArea": 80905.109375,
+            "visibleSceneFraction": 0.8510981969632627,
+            "essential": [
+              {
+                "text": "Explorar",
+                "width": 87.046875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sistema LVHF",
+                "width": 121.234375,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Simulação",
+                "width": 99.15625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Enquadrar silo",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Componentes e estrutura",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Exibição e qualidade",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Voltar à vista anterior",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Sair da primeira pessoa",
+                "width": 191.3125,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Perspectiva de câmera",
+                "width": 218,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Corte",
+                "width": 83.765625,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Cobertura",
+                "width": 157.953125,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Continuar",
+                "width": 112.46875,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Reiniciar simulação",
+                "width": 44,
+                "height": 44,
+                "onScreen": true
+              },
+              {
+                "text": "Velocidade de reprodução",
+                "width": 79,
+                "height": 44,
+                "onScreen": true
+              }
+            ],
+            "overflow": false
+          },
+          "panel": {
+            "x": 1104,
+            "y": 66,
+            "width": 336,
+            "height": 834
+          }
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "screenshots": [
+    {
+      "filename": "390x844-external.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "390x844-panel.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "390x844-panel-expanded.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "390x844-preincident-frontal.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "4",
+          "calls": "56",
+          "triangles": "210918",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 1.897149936107019e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 56,
+          "triangles": 210918
+        }
+      }
+    },
+    {
+      "filename": "390x844-incident-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "12",
+          "calls": "56",
+          "triangles": "210918",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 56,
+          "triangles": 210918
+        }
+      }
+    },
+    {
+      "filename": "390x844-first-person-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "victim",
+          "status": "paused",
+          "time": "12",
+          "calls": "58",
+          "triangles": "355623",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": true,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "victim",
+          "errors": [],
+          "calls": 58,
+          "triangles": 355623
+        }
+      }
+    },
+    {
+      "filename": "844x390-external.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Reprodução somente por comando",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "844x390-panel.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Reprodução somente por comando",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "844x390-preincident-frontal.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "4",
+          "calls": "58",
+          "triangles": "237704",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 1.897149936107019e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 58,
+          "triangles": 237704
+        }
+      }
+    },
+    {
+      "filename": "844x390-incident-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "12",
+          "calls": "58",
+          "triangles": "226660",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 58,
+          "triangles": 226660
+        }
+      }
+    },
+    {
+      "filename": "844x390-first-person-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "victim",
+          "status": "paused",
+          "time": "12",
+          "calls": "57",
+          "triangles": "286113",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": true,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "victim",
+          "errors": [],
+          "calls": 57,
+          "triangles": 286113
+        }
+      }
+    },
+    {
+      "filename": "1366x768-external.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "237392",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Reprodução somente por comando",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 237392
+        }
+      }
+    },
+    {
+      "filename": "1366x768-panel.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "237392",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Reprodução somente por comando",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 237392
+        }
+      }
+    },
+    {
+      "filename": "1366x768-preincident-frontal.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "4",
+          "calls": "58",
+          "triangles": "237704",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 1.897149936107019e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 58,
+          "triangles": 237704
+        }
+      }
+    },
+    {
+      "filename": "1366x768-incident-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "12",
+          "calls": "58",
+          "triangles": "237704",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 58,
+          "triangles": 237704
+        }
+      }
+    },
+    {
+      "filename": "1366x768-first-person-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "victim",
+          "status": "paused",
+          "time": "12",
+          "calls": "57",
+          "triangles": "275069",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": true,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "victim",
+          "errors": [],
+          "calls": 57,
+          "triangles": 275069
+        }
+      }
+    },
+    {
+      "filename": "1440x900-external.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "257792",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Reprodução somente por comando",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 257792
+        }
+      }
+    },
+    {
+      "filename": "1440x900-panel.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "257792",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Reprodução somente por comando",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 257792
+        }
+      }
+    },
+    {
+      "filename": "1440x900-preincident-frontal.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "4",
+          "calls": "58",
+          "triangles": "258104",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 1.897149936107019e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 58,
+          "triangles": 258104
+        }
+      }
+    },
+    {
+      "filename": "1440x900-incident-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "12",
+          "calls": "58",
+          "triangles": "258104",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 58,
+          "triangles": 258104
+        }
+      }
+    },
+    {
+      "filename": "1440x900-first-person-layout.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "victim",
+          "status": "paused",
+          "time": "12",
+          "calls": "54",
+          "triangles": "323201",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 12,
+        "dialogs": 0,
+        "exitVisible": true,
+        "metrics": {
+          "readyMs": 2799.1999999284744,
+          "explorationMs": 1012.2999999523163,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 3.580361673049448e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "victim",
+          "errors": [],
+          "calls": 54,
+          "triangles": 323201
+        }
+      }
+    }
+  ],
+  "loading": [],
+  "samples": [],
+  "consoleErrors": [],
+  "renderErrors": [],
+  "gpuDeletionTraces": [],
+  "limitations": [
+    "Desktop local Chrome headless. Mobile dimensions and touch are Chromium emulation, not Android/iOS hardware.",
+    "RAF interval is active frame time; synchronous renderer.render is CPU submission, not GPU completion. GPU timer query not measured.",
+    "Development-server Resource Timing is not compressed production bytes or mobile-network readiness.",
+    "Shadow passes are estimates; renderer.info totals include shadow work. Resource byte estimates are not actual driver VRAM.",
+    "Parametric mechanical passage and appearance require separate visual review; screenshots and numeric tests do not certify CAD, loads or rescue procedures."
+  ],
+  "criteria": [
+    {
+      "criterion": "Scene occupancy, panels and targets at required viewport sizes",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Android/iOS físico e rede móvel",
+      "condition": "Hardware indisponível nesta execução",
+      "status": "não verificado",
+      "measured": "Somente Chrome desktop e emulação",
+      "evidence": "ui.json → limitations",
+      "pending": "Executar no telefone de referência com rede e duração documentadas"
+    },
+    {
+      "criterion": "Passagem mecânica exata e dimensionamento LVHF",
+      "condition": "Sem CAD/desenho executivo autorizado",
+      "status": "não verificado",
+      "measured": "Cinemática paramétrica identificada",
+      "evidence": "upgrade-references.md",
+      "pending": "Obter desenhos/recursos autorizados do fabricante e conferir compatibilidade/cargas"
+    }
+  ]
+}

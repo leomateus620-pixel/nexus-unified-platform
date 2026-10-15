@@ -3,20 +3,45 @@ import type { Quality } from "./GrainRenderer";
 
 export function createMetrics() {
   return {
-    version: 1,
+    version: 3,
     startedAt: performance.now(),
     readyMs: 0,
+    explorationMs: 0,
+    preparationMs: 0,
+    assetReadyMs: 0,
+    mainCompileMs: 0,
+    workerCompileMs: 0,
+    parallelShaderCompile: false,
+    renderCount: 0,
+    statusReason: "",
     assets: {} as Record<string, number>,
     frames: [] as {
+      atMs: number;
       ms: number;
       cpuMs: number;
+      updateCpuMs: number;
+      tickCpuMs: number;
       camera: string;
       quality: Quality;
       calls: number;
       triangles: number;
       shadowCalls: number;
       shadowTriangles: number;
+      activity?: "playback" | "navigation";
     }[],
+    picking: [] as number[],
+    dorsalError: 0,
+    cameraPosition: [0, 0, 0],
+    cameraTarget: [0, 0, 0],
+    cameraQuaternion: [0, 0, 0, 1],
+    projection: [] as number[],
+    cameraLens: [0, 0, 0],
+    controllerCamera: "frontal",
+    selectedId: null as string | null,
+    isolatedId: null as string | null,
+    workerVisible: { A: false, B: false },
+    grainsVisible: false,
+    ropeVisible: false,
     calls: 0,
     triangles: 0,
     shadowCalls: 0,

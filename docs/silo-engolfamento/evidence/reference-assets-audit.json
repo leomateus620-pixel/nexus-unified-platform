@@ -1,0 +1,1292 @@
+{
+  "inspectedAt": "2026-10-15",
+  "policy": "Read-only public resource geometry audit, not manufacturer certification or permission to redistribute.",
+  "assemblyAudit": {
+    "url": "https://lvhfinternsilo.pplx.app/scene.js",
+    "bytes": 53402,
+    "sha256": "70332213a4c62f825e83acdfc4175e5560583da3f133732b5463b32e9b311281",
+    "policy": "Read-only source inspection; no external source redistributed or imported at runtime.",
+    "observedTrolleyMount": {
+      "sourceToYUpRotationXRad": -1.5707963267948966,
+      "translation": [
+        0,
+        -0.004,
+        0.0205
+      ],
+      "rollerCentresSource": [
+        [
+          -0.0355,
+          0.0205,
+          -0.017
+        ],
+        [
+          0.0355,
+          0.0205,
+          -0.017
+        ]
+      ],
+      "rollerRadius": 0.017,
+      "nominalCableRadius": 0.004,
+      "mountedEyeOffset": [
+        0,
+        -0.094,
+        0.0155
+      ],
+      "sourceLineRange": [
+        467,
+        503
+      ]
+    }
+  },
+  "assets": [
+    {
+      "name": "lvhf_silo",
+      "url": "https://lvhfinternsilo.pplx.app/assets/lvhf_silo.glb",
+      "bytes": 2702532,
+      "sha256": "ca3dbe97f54e037da8dae236b6b205440f2fb83992bd047cd2c97ed485f002d4",
+      "authorisation": "Published URL only. No asset licence or redistribution authorisation found. Audit in TEMP; not included in runtime.",
+      "generator": "https://github.com/mikedh/trimesh",
+      "units": "metres: measured 22.64m silo envelope and 0.105m trolley agree with published scale",
+      "axes": "Y up, origin ground centre; all node transforms identity; positions baked in world metres.",
+      "bounds": {
+        "min": [
+          -11.29766273,
+          0,
+          -11.31999969
+        ],
+        "max": [
+          11.29766273,
+          24.875,
+          11.31999969
+        ],
+        "size": [
+          22.59532547,
+          24.875,
+          22.63999939
+        ]
+      },
+      "triangles": 128808,
+      "materials": [],
+      "textures": 0,
+      "animations": 0,
+      "nodes": [
+        {
+          "name": "SILO_03",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -11.29766273,
+              0,
+              -11.31999969
+            ],
+            "max": [
+              11.29766273,
+              24.875,
+              11.31999969
+            ],
+            "size": [
+              22.59532547,
+              24.875,
+              22.63999939
+            ]
+          },
+          "triangles": 59664
+        },
+        {
+          "name": "PASSANTE_CURVA_30G_INTERNA",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -10.8914957,
+              24.34899521,
+              -10.56298923
+            ],
+            "max": [
+              10.89234924,
+              24.40399551,
+              9.27025509
+            ],
+            "size": [
+              21.78384495,
+              0.05500031,
+              19.83324432
+            ]
+          },
+          "triangles": 25160
+        },
+        {
+          "name": "Ancopro",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0485,
+              24.35499954,
+              10.92509842
+            ],
+            "max": [
+              0.0485,
+              24.39500046,
+              10.999897
+            ],
+            "size": [
+              0.097,
+              0.04000092,
+              0.07479858
+            ]
+          },
+          "triangles": 11246
+        },
+        {
+          "name": "ESTICADOR_COM_INDICADOR_DE_TENSAO_DOIS_DEZ",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              1.74080992,
+              24.34833336,
+              10.63205528
+            ],
+            "max": [
+              2.10641074,
+              24.4046402,
+              10.85420799
+            ],
+            "size": [
+              0.36560082,
+              0.05630684,
+              0.22215271
+            ]
+          },
+          "triangles": 7952
+        },
+        {
+          "name": "Peca1-LVHF_INTERNA_SILO",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -10.82082653,
+              24.37103081,
+              -10.50069904
+            ],
+            "max": [
+              10.82169056,
+              24.37896919,
+              10.97816753
+            ],
+            "size": [
+              21.64251709,
+              0.00793839,
+              21.47886658
+            ]
+          },
+          "triangles": 24786
+        }
+      ]
+    },
+    {
+      "name": "silo_com_chapeu",
+      "url": "https://lvhfinternsilo.pplx.app/assets/silo_com_chapeu.glb",
+      "bytes": 1406480,
+      "sha256": "14751cbdfe7953b0f901334ddbc5dead248159be1446572f8aaaad6cf247dc96",
+      "authorisation": "Published URL only. No asset licence or redistribution authorisation found. Audit in TEMP; not included in runtime.",
+      "generator": "https://github.com/mikedh/trimesh",
+      "units": "metres: measured 22.64m silo envelope and 0.105m trolley agree with published scale",
+      "axes": "Y up, origin ground centre; all node transforms identity; positions baked in world metres.",
+      "bounds": {
+        "min": [
+          -11.29766273,
+          0,
+          -11.31999969
+        ],
+        "max": [
+          11.29766273,
+          30.40299988,
+          11.31999969
+        ],
+        "size": [
+          22.59532547,
+          30.40299988,
+          22.63999939
+        ]
+      },
+      "triangles": 62796,
+      "materials": [],
+      "textures": 0,
+      "animations": 0,
+      "roofMeasurement": {
+        "method": "Triangles with maxY > 24.8751m and minY >= 24.8749m; rim vertices satisfy abs(Y - 24.875m) < .0001m. Duplicate triangle-corner occurrences are counted separately from unique positions.",
+        "triangles": 2460,
+        "eaveY": 24.875,
+        "eaveVertexOccurrences": 288,
+        "uniqueEavePositions": 50,
+        "eaveRadiusRange": [
+          11.102999522923453,
+          11.10300036773834
+        ],
+        "roofRadiusRange": [
+          1.0000280891953472,
+          11.104650460563471
+        ],
+        "interpretation": "Measured eave radius is 11.103m. The published 11.32m external assembly envelope is not interpreted as this rim radius or as plate thickness."
+      },
+      "nodes": [
+        {
+          "name": "SILO_03_COM_CHAPEU",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -11.29766273,
+              0,
+              -11.31999969
+            ],
+            "max": [
+              11.29766273,
+              30.40299988,
+              11.31999969
+            ],
+            "size": [
+              22.59532547,
+              30.40299988,
+              22.63999939
+            ]
+          },
+          "triangles": 62796
+        }
+      ]
+    },
+    {
+      "name": "trole_passante",
+      "url": "https://lvhfinternsilo.pplx.app/assets/trole_passante.glb",
+      "bytes": 126352,
+      "sha256": "8aa8c3393152958b511144be59363ace48b564118ddc3c1a1747a25ba0c4505c",
+      "authorisation": "Published URL only. No asset licence or redistribution authorisation found. Audit in TEMP; not included in runtime.",
+      "generator": "https://github.com/mikedh/trimesh",
+      "units": "metres: measured 22.64m silo envelope and 0.105m trolley agree with published scale",
+      "axes": "Source X travel, Y axle, Z vertical down body. Reference mounting Rx(-90deg), then translation(0,-.004,+.0205). Eye local mounted offset=(0,-.094,+.0155).",
+      "bounds": {
+        "min": [
+          -0.0525,
+          -0.009,
+          -0.1
+        ],
+        "max": [
+          0.0525,
+          0.053,
+          0
+        ],
+        "size": [
+          0.105,
+          0.062,
+          0.1
+        ]
+      },
+      "triangles": 5356,
+      "materials": [],
+      "textures": 0,
+      "animations": 0,
+      "eyeMeasurement": {
+        "method": "In the body mesh, source centreline vertices abs(X)<1e-7m and -.095m<Z<-.07m delimit the circular hole on both plate faces.",
+        "sourceVertices": [
+          [
+            5.204749144166479e-19,
+            0.009999999776482582,
+            -0.09049999713897705
+          ],
+          [
+            -2.4209975107761217e-17,
+            0.009999999776482582,
+            -0.07349999994039536
+          ],
+          [
+            5.204749144166479e-19,
+            0,
+            -0.09049999713897705
+          ],
+          [
+            -2.4209975107761217e-17,
+            0,
+            -0.07349999994039536
+          ]
+        ],
+        "sourceExtremaZ": [
+          -0.09049999713897705,
+          -0.07349999994039536
+        ],
+        "sourceCentreZ": -0.0819999985396862,
+        "holeRadius": 0.008499998599290848,
+        "mountedCentreY": -0.0859999985396862,
+        "mountedBearingDatumY": -0.094,
+        "interpretation": "The aperture centre is 86mm below the cable axis, radius 8.5mm; the 94mm lower bearing datum is a separate attachment reference."
+      },
+      "nodes": [
+        {
+          "name": "corpo",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0475,
+              0,
+              -0.1
+            ],
+            "max": [
+              0.0475,
+              0.01,
+              0
+            ],
+            "size": [
+              0.095,
+              0.01,
+              0.1
+            ]
+          },
+          "triangles": 1256
+        },
+        {
+          "name": "roldana_esq",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0525,
+              0.01,
+              -0.034
+            ],
+            "max": [
+              -0.0185,
+              0.031,
+              0
+            ],
+            "size": [
+              0.034,
+              0.021,
+              0.034
+            ]
+          },
+          "triangles": 288
+        },
+        {
+          "name": "eixo_esq",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.046,
+              -0.009,
+              -0.02609327
+            ],
+            "max": [
+              -0.025,
+              0.053,
+              -0.00790673
+            ],
+            "size": [
+              0.021,
+              0.062,
+              0.01818653
+            ]
+          },
+          "triangles": 188
+        },
+        {
+          "name": "roldana_dir",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              0.0185,
+              0.01,
+              -0.034
+            ],
+            "max": [
+              0.0525,
+              0.031,
+              0
+            ],
+            "size": [
+              0.034,
+              0.021,
+              0.034
+            ]
+          },
+          "triangles": 288
+        },
+        {
+          "name": "eixo_dir",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              0.025,
+              -0.009,
+              -0.02609327
+            ],
+            "max": [
+              0.046,
+              0.053,
+              -0.00790673
+            ],
+            "size": [
+              0.021,
+              0.062,
+              0.01818653
+            ]
+          },
+          "triangles": 188
+        },
+        {
+          "name": "chapa_retencao",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.022,
+              0.035,
+              -0.05
+            ],
+            "max": [
+              0.022,
+              0.041,
+              0
+            ],
+            "size": [
+              0.044,
+              0.006,
+              0.05
+            ]
+          },
+          "triangles": 764
+        },
+        {
+          "name": "espacador_1",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0155,
+              0.01,
+              -0.021
+            ],
+            "max": [
+              -0.0045,
+              0.035,
+              -0.01
+            ],
+            "size": [
+              0.011,
+              0.025,
+              0.011
+            ]
+          },
+          "triangles": 288
+        },
+        {
+          "name": "parafuso_1",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0155,
+              -0.004,
+              -0.0205
+            ],
+            "max": [
+              -0.0045,
+              0.046,
+              -0.0105
+            ],
+            "size": [
+              0.011,
+              0.05,
+              0.01
+            ]
+          },
+          "triangles": 308
+        },
+        {
+          "name": "espacador_2",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              0.0045,
+              0.01,
+              -0.021
+            ],
+            "max": [
+              0.0155,
+              0.035,
+              -0.01
+            ],
+            "size": [
+              0.011,
+              0.025,
+              0.011
+            ]
+          },
+          "triangles": 288
+        },
+        {
+          "name": "parafuso_2",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              0.0045,
+              -0.004,
+              -0.0205
+            ],
+            "max": [
+              0.0155,
+              0.046,
+              -0.0105
+            ],
+            "size": [
+              0.011,
+              0.05,
+              0.01
+            ]
+          },
+          "triangles": 308
+        },
+        {
+          "name": "espacador_3",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0215,
+              0.01,
+              -0.0485
+            ],
+            "max": [
+              -0.0105,
+              0.035,
+              -0.0375
+            ],
+            "size": [
+              0.011,
+              0.025,
+              0.011
+            ]
+          },
+          "triangles": 288
+        },
+        {
+          "name": "parafuso_3",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              -0.0215,
+              -0.004,
+              -0.048
+            ],
+            "max": [
+              -0.0105,
+              0.046,
+              -0.038
+            ],
+            "size": [
+              0.011,
+              0.05,
+              0.01
+            ]
+          },
+          "triangles": 308
+        },
+        {
+          "name": "espacador_4",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              0.0105,
+              0.01,
+              -0.0485
+            ],
+            "max": [
+              0.0215,
+              0.035,
+              -0.0375
+            ],
+            "size": [
+              0.011,
+              0.025,
+              0.011
+            ]
+          },
+          "triangles": 288
+        },
+        {
+          "name": "parafuso_4",
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "worldMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounds": {
+            "min": [
+              0.0105,
+              -0.004,
+              -0.048
+            ],
+            "max": [
+              0.0215,
+              0.046,
+              -0.038
+            ],
+            "size": [
+              0.011,
+              0.05,
+              0.01
+            ]
+          },
+          "triangles": 308
+        }
+      ]
+    }
+  ]
+}

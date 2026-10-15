@@ -1,0 +1,259 @@
+{
+  "schema": "nexus-silo-upgrade-validation/2.0.0",
+  "testedAt": "2026-10-15T04:45:58.928Z",
+  "base": "http://127.0.0.1:5185",
+  "command": "node scripts/silo-engolfamento/validate-upgrade.mjs",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584
+  },
+  "browser": "155.0.8059.41",
+  "scopeFilter": "Trolley following enters",
+  "checks": [
+    {
+      "name": "Trolley following enters from the general view and clears the closed shell around all supports",
+      "result": "não atingido",
+      "error": "AssertionError [ERR_ASSERTION]: orbit maximum caused an abrupt opening jump [{\"atMs\":10227.300000071526,\"distance\":69.94546267371871,\"position\":[41.92072486932141,31.80400411584721,53.56537066635513]},{\"atMs\":10239.6,\"distance\":69.94546267371871,\"position\":[41.92072486932141,31.80400411584721,53.56537066635513]},{\"atMs\":10256.2,\"distance\":14.999999999999998,\"position\":[8.729434524567013,19.968828338186775,10.321625715508537]},{\"atMs\":10272.8,\"distance\":13.417591933035512,\"position\":[7.483054777158513,20.474796732343677,8.123857477834916]},{\"atMs\":10289.5,\"distance\":12.009717452157004,\"position\":[6.373406445132452,20.92525894965865,6.167190688130496]},{\"atMs\":10306.3,\"distance\":10.750219860045373,\"position\":[5.379879436076241,21.328581666004848,4.415283126799622]},{\"atMs\":10322.9,\"distance\":9.62452332385824,\"position\":[4.490976316794875,21.689432269329394,2.8478611224004267]},{\"atMs\":10339.6,\"distance\":8.636224392748701,\"position\":[3.709567531079615,22.006645501741506,1.469986190258055]},{\"atMs\":10356.2,\"distance\":7.752743884356751,\"position\":[3.0099307981479013,22.29066333418035,0.23630167898117094]},{\"atMs\":10372.9,\"distance\":6.972690192957045,\"position\":[2.390996932641591,22.541919802901607,-0.8550777289870943]},{\"atMs\":10389.6,\"distance\":6.275930357928849,\"position\":[1.836832613683729,22.766883046363443,-1.8322476013233224]},{\"atMs\":10406.2,\"distance\":5.657851624834486,\"position\":[1.343806940857039,22.967027030150824,-2.7016103828905935]}]\n    at file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:901:18\n    at async check (file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:131:22)\n    at async file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:862:3",
+      "durationMs": 2757.4179000000004,
+      "screenshot": "failure-1.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "43",
+          "triangles": "246426",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2641.399999976158,
+          "explorationMs": 1828.6000000238419,
+          "dorsalError": 7.407775423123775e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 43,
+          "triangles": 246426
+        }
+      }
+    }
+  ],
+  "failures": [
+    {
+      "name": "Trolley following enters from the general view and clears the closed shell around all supports",
+      "result": "não atingido",
+      "error": "AssertionError [ERR_ASSERTION]: orbit maximum caused an abrupt opening jump [{\"atMs\":10227.300000071526,\"distance\":69.94546267371871,\"position\":[41.92072486932141,31.80400411584721,53.56537066635513]},{\"atMs\":10239.6,\"distance\":69.94546267371871,\"position\":[41.92072486932141,31.80400411584721,53.56537066635513]},{\"atMs\":10256.2,\"distance\":14.999999999999998,\"position\":[8.729434524567013,19.968828338186775,10.321625715508537]},{\"atMs\":10272.8,\"distance\":13.417591933035512,\"position\":[7.483054777158513,20.474796732343677,8.123857477834916]},{\"atMs\":10289.5,\"distance\":12.009717452157004,\"position\":[6.373406445132452,20.92525894965865,6.167190688130496]},{\"atMs\":10306.3,\"distance\":10.750219860045373,\"position\":[5.379879436076241,21.328581666004848,4.415283126799622]},{\"atMs\":10322.9,\"distance\":9.62452332385824,\"position\":[4.490976316794875,21.689432269329394,2.8478611224004267]},{\"atMs\":10339.6,\"distance\":8.636224392748701,\"position\":[3.709567531079615,22.006645501741506,1.469986190258055]},{\"atMs\":10356.2,\"distance\":7.752743884356751,\"position\":[3.0099307981479013,22.29066333418035,0.23630167898117094]},{\"atMs\":10372.9,\"distance\":6.972690192957045,\"position\":[2.390996932641591,22.541919802901607,-0.8550777289870943]},{\"atMs\":10389.6,\"distance\":6.275930357928849,\"position\":[1.836832613683729,22.766883046363443,-1.8322476013233224]},{\"atMs\":10406.2,\"distance\":5.657851624834486,\"position\":[1.343806940857039,22.967027030150824,-2.7016103828905935]}]\n    at file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:901:18\n    at async check (file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:131:22)\n    at async file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:862:3",
+      "durationMs": 2757.4179000000004,
+      "screenshot": "failure-1.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "43",
+          "triangles": "246426",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2641.399999976158,
+          "explorationMs": 1828.6000000238419,
+          "dorsalError": 7.407775423123775e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 43,
+          "triangles": 246426
+        }
+      }
+    }
+  ],
+  "screenshots": [],
+  "loading": [],
+  "samples": [],
+  "consoleErrors": [],
+  "renderErrors": [],
+  "gpuDeletionTraces": [],
+  "limitations": [
+    "Desktop local Chrome headless. Mobile dimensions and touch are Chromium emulation, not Android/iOS hardware.",
+    "RAF interval is active frame time; synchronous renderer.render is CPU submission, not GPU completion. GPU timer query not measured.",
+    "Development-server Resource Timing is not compressed production bytes or mobile-network readiness.",
+    "Shadow passes are estimates; renderer.info totals include shadow work. Resource byte estimates are not actual driver VRAM.",
+    "Parametric mechanical passage and appearance require separate visual review; screenshots and numeric tests do not certify CAD, loads or rescue procedures."
+  ],
+  "followOpening": [
+    {
+      "atMs": 10227.300000071526,
+      "distance": 69.94546267371871,
+      "position": [
+        41.92072486932141,
+        31.80400411584721,
+        53.56537066635513
+      ]
+    },
+    {
+      "atMs": 10239.6,
+      "distance": 69.94546267371871,
+      "position": [
+        41.92072486932141,
+        31.80400411584721,
+        53.56537066635513
+      ]
+    },
+    {
+      "atMs": 10256.2,
+      "distance": 14.999999999999998,
+      "position": [
+        8.729434524567013,
+        19.968828338186775,
+        10.321625715508537
+      ]
+    },
+    {
+      "atMs": 10272.8,
+      "distance": 13.417591933035512,
+      "position": [
+        7.483054777158513,
+        20.474796732343677,
+        8.123857477834916
+      ]
+    },
+    {
+      "atMs": 10289.5,
+      "distance": 12.009717452157004,
+      "position": [
+        6.373406445132452,
+        20.92525894965865,
+        6.167190688130496
+      ]
+    },
+    {
+      "atMs": 10306.3,
+      "distance": 10.750219860045373,
+      "position": [
+        5.379879436076241,
+        21.328581666004848,
+        4.415283126799622
+      ]
+    },
+    {
+      "atMs": 10322.9,
+      "distance": 9.62452332385824,
+      "position": [
+        4.490976316794875,
+        21.689432269329394,
+        2.8478611224004267
+      ]
+    },
+    {
+      "atMs": 10339.6,
+      "distance": 8.636224392748701,
+      "position": [
+        3.709567531079615,
+        22.006645501741506,
+        1.469986190258055
+      ]
+    },
+    {
+      "atMs": 10356.2,
+      "distance": 7.752743884356751,
+      "position": [
+        3.0099307981479013,
+        22.29066333418035,
+        0.23630167898117094
+      ]
+    },
+    {
+      "atMs": 10372.9,
+      "distance": 6.972690192957045,
+      "position": [
+        2.390996932641591,
+        22.541919802901607,
+        -0.8550777289870943
+      ]
+    },
+    {
+      "atMs": 10389.6,
+      "distance": 6.275930357928849,
+      "position": [
+        1.836832613683729,
+        22.766883046363443,
+        -1.8322476013233224
+      ]
+    },
+    {
+      "atMs": 10406.2,
+      "distance": 5.657851624834486,
+      "position": [
+        1.343806940857039,
+        22.967027030150824,
+        -2.7016103828905935
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "criterion": "Trolley following enters from the general view and clears the closed shell around all supports",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "não atingido",
+      "measured": "AssertionError [ERR_ASSERTION]: orbit maximum caused an abrupt opening jump [{\"atMs\":10227.300000071526,\"distance\":69.94546267371871,\"position\":[41.92072486932141,31.80400411584721,53.56537066635513]},{\"atMs\":10239.6,\"distance\":69.94546267371871,\"position\":[41.92072486932141,31.80400411584721,53.56537066635513]},{\"atMs\":10256.2,\"distance\":14.999999999999998,\"position\":[8.729434524567013,19.968828338186775,10.321625715508537]},{\"atMs\":10272.8,\"distance\":13.417591933035512,\"position\":[7.483054777158513,20.474796732343677,8.123857477834916]},{\"atMs\":10289.5,\"distance\":12.009717452157004,\"position\":[6.373406445132452,20.92525894965865,6.167190688130496]},{\"atMs\":10306.3,\"distance\":10.750219860045373,\"position\":[5.379879436076241,21.328581666004848,4.415283126799622]},{\"atMs\":10322.9,\"distance\":9.62452332385824,\"position\":[4.490976316794875,21.689432269329394,2.8478611224004267]},{\"atMs\":10339.6,\"distance\":8.636224392748701,\"position\":[3.709567531079615,22.006645501741506,1.469986190258055]},{\"atMs\":10356.2,\"distance\":7.752743884356751,\"position\":[3.0099307981479013,22.29066333418035,0.23630167898117094]},{\"atMs\":10372.9,\"distance\":6.972690192957045,\"position\":[2.390996932641591,22.541919802901607,-0.8550777289870943]},{\"atMs\":10389.6,\"distance\":6.275930357928849,\"position\":[1.836832613683729,22.766883046363443,-1.8322476013233224]},{\"atMs\":10406.2,\"distance\":5.657851624834486,\"position\":[1.343806940857039,22.967027030150824,-2.7016103828905935]}]\n    at file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:901:18\n    at async check (file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:131:22)\n    at async file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:862:3",
+      "evidence": "ui.json",
+      "pending": "Corrigir e repetir a verificação"
+    },
+    {
+      "criterion": "Android/iOS físico e rede móvel",
+      "condition": "Hardware indisponível nesta execução",
+      "status": "não verificado",
+      "measured": "Somente Chrome desktop e emulação",
+      "evidence": "ui.json → limitations",
+      "pending": "Executar no telefone de referência com rede e duração documentadas"
+    },
+    {
+      "criterion": "Passagem mecânica exata e dimensionamento LVHF",
+      "condition": "Sem CAD/desenho executivo autorizado",
+      "status": "não verificado",
+      "measured": "Cinemática paramétrica identificada",
+      "evidence": "upgrade-references.md",
+      "pending": "Obter desenhos/recursos autorizados do fabricante e conferir compatibilidade/cargas"
+    }
+  ]
+}

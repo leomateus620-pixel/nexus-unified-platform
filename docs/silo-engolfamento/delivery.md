@@ -1,5 +1,7 @@
 # Entrega e validação — Silo de Grãos: Engolfamento
 
+> **Entrega histórica da PR #11**, head `bc90e2d20403cfb9a2941263e71ad2984ac71b80`, de 14/10/2026. Resultados, dimensões e capturas abaixo pertencem à versão anterior. A [entrega do upgrade LVHF](upgrade-delivery.md) registra o estado atual e suas verificações; medições antigas não são aprovação do upgrade.
+
 Implementação revisável de 14/10/2026, branch `codex/silo-engolfamento`. Rota pública **`/mapas-3d/silo-engolfamento`**, com card em **`/mapas-3d/unidades`**. Preview local não é implantação. Nenhuma migração ou alteração de produção foi executada.
 
 ## Comportamento entregue

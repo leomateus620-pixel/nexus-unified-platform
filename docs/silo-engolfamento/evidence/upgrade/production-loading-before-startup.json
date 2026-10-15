@@ -1,0 +1,1439 @@
+{
+  "testedAt": "2026-10-15T05:01:20.246Z",
+  "browser": "155.0.8059.41",
+  "server": "http://127.0.0.1:5190",
+  "environment": "Build de produção, Wrangler local; não é implantação",
+  "runtimeNote": "CLI compatibility-date 2026-09-18: installed workerd does not support configured 2026-10-12. Override only in local command; source deployment configuration unchanged.",
+  "library": {
+    "modelRequests": [],
+    "canvases": 0,
+    "card": true
+  },
+  "runs": [
+    {
+      "name": "cold",
+      "routeReadyMs": 6238,
+      "navigationToCommitMs": 62,
+      "navigation": {
+        "responseStartMs": 49.299999952316284,
+        "responseEndMs": 49.799999952316284,
+        "domInteractiveMs": 427.7000000476837,
+        "domContentLoadedMs": 428.2000000476837
+      },
+      "readyMs": 3482.100000023842,
+      "explorationMs": 2672.899999976158,
+      "preparationMs": 1210.5,
+      "rendererStartedAtMs": 1799.6000000238419,
+      "documentExplorationMs": 4472.5,
+      "documentSimulationMs": 5281.700000047684,
+      "documentStateAtReady": "complete",
+      "assets": {
+        "a": 2008068,
+        "b": 1984504
+      },
+      "geometryBytes": 7475072,
+      "textureBytes": 35217408,
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "errors": [],
+      "loadingLongTasks": [
+        {
+          "startMs": 454.5,
+          "durationMs": 52
+        },
+        {
+          "startMs": 1798,
+          "durationMs": 1218
+        },
+        {
+          "startMs": 3018.2000000476837,
+          "durationMs": 1455
+        },
+        {
+          "startMs": 4614.399999976158,
+          "durationMs": 669
+        }
+      ],
+      "heapAtReady": {
+        "usedBytes": 42682493,
+        "totalBytes": 71945613
+      },
+      "encodedNetworkBytes": 4780378,
+      "resourceTimingBytes": 4511624,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:5190/assets/styles-YH0-clm8.css",
+          "startMs": 57.299999952316284,
+          "durationMs": 108.20000004768372,
+          "responseEndMs": 165.5,
+          "transferBytes": 18745,
+          "encodedBytes": 18445,
+          "decodedBytes": 110828
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap",
+          "startMs": 57.799999952316284,
+          "durationMs": 349.90000009536743,
+          "responseEndMs": 407.7000000476837,
+          "transferBytes": 964,
+          "encodedBytes": 664,
+          "decodedBytes": 9003
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-DLLlwrIp.css",
+          "startMs": 58.299999952316284,
+          "durationMs": 53.300000071525574,
+          "responseEndMs": 111.60000002384186,
+          "transferBytes": 8067,
+          "encodedBytes": 7767,
+          "decodedBytes": 54088
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-CkjEBlxO.js",
+          "startMs": 58.60000002384186,
+          "durationMs": 177.5,
+          "responseEndMs": 236.10000002384186,
+          "transferBytes": 203103,
+          "encodedBytes": 202803,
+          "decodedBytes": 714663
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/jsx-runtime-B-hcVAMW.js",
+          "startMs": 58.799999952316284,
+          "durationMs": 83.20000004768372,
+          "responseEndMs": 142,
+          "transferBytes": 3564,
+          "encodedBytes": 3264,
+          "decodedBytes": 8557
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/react-dom-8HkkFvw6.js",
+          "startMs": 58.89999997615814,
+          "durationMs": 95.60000002384186,
+          "responseEndMs": 154.5,
+          "transferBytes": 1640,
+          "encodedBytes": 1340,
+          "decodedBytes": 3546
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useStore-4f3pzbFE.js",
+          "startMs": 59.200000047683716,
+          "durationMs": 117.39999997615814,
+          "responseEndMs": 176.60000002384186,
+          "transferBytes": 6294,
+          "encodedBytes": 5994,
+          "decodedBytes": 16783
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/qss-Bqk2G4CH.js",
+          "startMs": 59.39999997615814,
+          "durationMs": 145,
+          "responseEndMs": 204.39999997615814,
+          "transferBytes": 592,
+          "encodedBytes": 292,
+          "decodedBytes": 444
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/matchContext-B0YTMpvO.js",
+          "startMs": 59.39999997615814,
+          "durationMs": 181.10000002384186,
+          "responseEndMs": 240.5,
+          "transferBytes": 442,
+          "encodedBytes": 142,
+          "decodedBytes": 162
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/redirect-Dhm19zUi.js",
+          "startMs": 59.5,
+          "durationMs": 190,
+          "responseEndMs": 249.5,
+          "transferBytes": 611,
+          "encodedBytes": 311,
+          "decodedBytes": 500
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/link-Drd7hhXx.js",
+          "startMs": 59.700000047683716,
+          "durationMs": 237.69999992847443,
+          "responseEndMs": 297.39999997615814,
+          "transferBytes": 2495,
+          "encodedBytes": 2195,
+          "decodedBytes": 4454
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useRouter-BXRWbVwb.js",
+          "startMs": 59.799999952316284,
+          "durationMs": 208.70000004768372,
+          "responseEndMs": 268.5,
+          "transferBytes": 696,
+          "encodedBytes": 396,
+          "decodedBytes": 690
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/ClientOnly-jySlJXUI.js",
+          "startMs": 59.799999952316284,
+          "durationMs": 246.40000009536743,
+          "responseEndMs": 306.2000000476837,
+          "transferBytes": 518,
+          "encodedBytes": 218,
+          "decodedBytes": 311
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/createLucideIcon-CLdWFMku.js",
+          "startMs": 59.89999997615814,
+          "durationMs": 254.60000002384186,
+          "responseEndMs": 314.5,
+          "transferBytes": 989,
+          "encodedBytes": 689,
+          "decodedBytes": 1195
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/mapas-3d_.silo-engolfamento-D4mKxYBy.js",
+          "startMs": 60,
+          "durationMs": 283.5,
+          "responseEndMs": 343.5,
+          "transferBytes": 1056,
+          "encodedBytes": 756,
+          "decodedBytes": 1315
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 60.200000047683716,
+          "durationMs": 48.5,
+          "responseEndMs": 108.70000004768372,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 422,
+          "durationMs": 3.299999952316284,
+          "responseEndMs": 425.2999999523163,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 431.60000002384186,
+          "durationMs": 1.5,
+          "responseEndMs": 433.10000002384186,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/with-selector-dQnI5o1Q.js",
+          "startMs": 433.2000000476837,
+          "durationMs": 19.699999928474426,
+          "responseEndMs": 452.89999997615814,
+          "transferBytes": 1017,
+          "encodedBytes": 717,
+          "decodedBytes": 1626
+        },
+        {
+          "url": "http://127.0.0.1:5190/favicon.png",
+          "startMs": 532.2000000476837,
+          "durationMs": 15,
+          "responseEndMs": 547.2000000476837,
+          "transferBytes": 2695,
+          "encodedBytes": 2395,
+          "decodedBytes": 2395
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-BerAWJxq.js",
+          "startMs": 1038.5,
+          "durationMs": 502.39999997615814,
+          "responseEndMs": 1540.8999999761581,
+          "transferBytes": 48679,
+          "encodedBytes": 48379,
+          "decodedBytes": 144455
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/arrow-left-Bdt1PfM_.js",
+          "startMs": 1039.2000000476837,
+          "durationMs": 88.19999992847443,
+          "responseEndMs": 1127.3999999761581,
+          "transferBytes": 462,
+          "encodedBytes": 162,
+          "decodedBytes": 165
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/box-CtdF9Q2T.js",
+          "startMs": 1039.7000000476837,
+          "durationMs": 48.199999928474426,
+          "responseEndMs": 1087.8999999761581,
+          "transferBytes": 526,
+          "encodedBytes": 226,
+          "decodedBytes": 310
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/eye-Cbs9C6DS.js",
+          "startMs": 1039.8999999761581,
+          "durationMs": 100.30000007152557,
+          "responseEndMs": 1140.2000000476837,
+          "transferBytes": 499,
+          "encodedBytes": 199,
+          "decodedBytes": 256
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/layers-C_9oEa0w.js",
+          "startMs": 1040.2999999523163,
+          "durationMs": 59.800000071525574,
+          "responseEndMs": 1100.1000000238419,
+          "transferBytes": 541,
+          "encodedBytes": 241,
+          "decodedBytes": 421
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/play-B3lrLyfe.js",
+          "startMs": 1042,
+          "durationMs": 119.10000002384186,
+          "responseEndMs": 1161.1000000238419,
+          "transferBytes": 549,
+          "encodedBytes": 249,
+          "decodedBytes": 348
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/rotate-ccw-CLESVSgn.js",
+          "startMs": 1042.2999999523163,
+          "durationMs": 161.10000002384186,
+          "responseEndMs": 1203.3999999761581,
+          "transferBytes": 482,
+          "encodedBytes": 182,
+          "decodedBytes": 200
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/settings-2-C4npFlLj.js",
+          "startMs": 1042.5,
+          "durationMs": 200.89999997615814,
+          "responseEndMs": 1243.3999999761581,
+          "transferBytes": 493,
+          "encodedBytes": 193,
+          "decodedBytes": 252
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.core-DOQ_Anfr.js",
+          "startMs": 1042.7999999523163,
+          "durationMs": 608,
+          "responseEndMs": 1650.7999999523163,
+          "transferBytes": 100215,
+          "encodedBytes": 99915,
+          "decodedBytes": 377362
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.module-CH1IZa3a.js",
+          "startMs": 1043.1000000238419,
+          "durationMs": 640,
+          "responseEndMs": 1683.1000000238419,
+          "transferBytes": 89009,
+          "encodedBytes": 88709,
+          "decodedBytes": 365019
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/OrbitControls-ueK4VAY1.js",
+          "startMs": 1043.5,
+          "durationMs": 376.2000000476837,
+          "responseEndMs": 1419.7000000476837,
+          "transferBytes": 4726,
+          "encodedBytes": 4426,
+          "decodedBytes": 19852
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/GLTFLoader-BJVGCGIT.js",
+          "startMs": 1043.7000000476837,
+          "durationMs": 420.6999999284744,
+          "responseEndMs": 1464.3999999761581,
+          "transferBytes": 14513,
+          "encodedBytes": 14213,
+          "decodedBytes": 48981
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-CTnoaVSC.css",
+          "startMs": 1043.7999999523163,
+          "durationMs": 176.80000007152557,
+          "responseEndMs": 1220.6000000238419,
+          "transferBytes": 4270,
+          "encodedBytes": 3970,
+          "decodedBytes": 16087
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-a.glb",
+          "startMs": 3012.2000000476837,
+          "durationMs": 82.5,
+          "responseEndMs": 3094.7000000476837,
+          "transferBytes": 2008368,
+          "encodedBytes": 2008068,
+          "decodedBytes": 2008068
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-b.glb",
+          "startMs": 3013,
+          "durationMs": 88.29999995231628,
+          "responseEndMs": 3101.2999999523163,
+          "transferBytes": 1984804,
+          "encodedBytes": 1984504,
+          "decodedBytes": 1984504
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 4479.299999952316,
+          "durationMs": 3.8000000715255737,
+          "responseEndMs": 4483.100000023842,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 6189.600000023842,
+          "durationMs": 1.899999976158142,
+          "responseEndMs": 6191.5,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 6692.399999976158,
+          "durationMs": 2.3000000715255737,
+          "responseEndMs": 6694.700000047684,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        }
+      ],
+      "network": [
+        {
+          "url": "http://127.0.0.1:5190/mapas-3d/silo-engolfamento",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 4230
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-DLLlwrIp.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 8017
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 184194
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/jsx-runtime-B-hcVAMW.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 3514
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/react-dom-8HkkFvw6.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 1590
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/styles-YH0-clm8.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 18731
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useStore-4f3pzbFE.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 6251
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/qss-Bqk2G4CH.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 542
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/matchContext-B0YTMpvO.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 391
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/redirect-Dhm19zUi.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 561
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useRouter-BXRWbVwb.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 646
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-CkjEBlxO.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 203570
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/link-Drd7hhXx.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 2445
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/ClientOnly-jySlJXUI.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 467
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/createLucideIcon-CLdWFMku.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 939
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/mapas-3d_.silo-engolfamento-D4mKxYBy.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 1006
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 1137
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 978
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 278
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/with-selector-dQnI5o1Q.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 967
+        },
+        {
+          "url": "http://127.0.0.1:5190/favicon.png",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 2576
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/box-CtdF9Q2T.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 475
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/layers-C_9oEa0w.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 490
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/arrow-left-Bdt1PfM_.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 411
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/eye-Cbs9C6DS.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 448
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/play-B3lrLyfe.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 498
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/rotate-ccw-CLESVSgn.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 431
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-CTnoaVSC.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 4213
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/settings-2-C4npFlLj.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 442
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5.woff2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 22738
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/OrbitControls-ueK4VAY1.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 4684
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/GLTFLoader-BJVGCGIT.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 14486
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-BerAWJxq.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 48751
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.core-DOQ_Anfr.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 100427
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.module-CH1IZa3a.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 89171
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-a.glb",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 2008260
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-b.glb",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 1984696
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/saira/v23/memjYa2wxmKQyPMrZX79wwYZQMhsyuSLiIvS.woff2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 33024
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E30-8s51os.woff2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 22899
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 268
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/c6a840ed-ba46-4d4d-b279-5658f06f150a",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/e538e158-b3df-4113-851a-14d1da958204",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/bb253af9-3011-4e0e-8daf-006c96cf8a23",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/9cdf5f73-0785-4ded-925e-41237aadb9ba",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/0a787867-136e-4f50-8a31-34a323d5aca2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/cfc208ec-6c5a-49f2-accf-983b44b1fdf8",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/5708cd46-ce88-489c-b4a4-54a17322c36e",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/9b79ede8-c60c-405b-952a-4d583982c047",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/8bf962f7-928b-4555-a40d-ae2b49256d54",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/111e3f9d-fdd2-4c51-b7df-c5e509838d74",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 268
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 268
+        }
+      ]
+    },
+    {
+      "name": "warm",
+      "routeReadyMs": 2375,
+      "navigationToCommitMs": 158,
+      "navigation": {
+        "responseStartMs": 101.90000009536743,
+        "responseEndMs": 102.30000007152557,
+        "domInteractiveMs": 165.10000002384186,
+        "domContentLoadedMs": 165.90000009536743
+      },
+      "readyMs": 1147.2999999523163,
+      "explorationMs": 391.60000002384186,
+      "preparationMs": 187.89999997615814,
+      "rendererStartedAtMs": 1047.2000000476837,
+      "documentExplorationMs": 1438.8000000715256,
+      "documentSimulationMs": 2194.5,
+      "documentStateAtReady": "complete",
+      "assets": {
+        "a": 2008068,
+        "b": 1984504
+      },
+      "geometryBytes": 7475072,
+      "textureBytes": 35217408,
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "errors": [],
+      "loadingLongTasks": [
+        {
+          "startMs": 1046.7000000476837,
+          "durationMs": 192
+        },
+        {
+          "startMs": 1240.1000000238419,
+          "durationMs": 200
+        },
+        {
+          "startMs": 1560.3000000715256,
+          "durationMs": 635
+        }
+      ],
+      "heapAtReady": {
+        "usedBytes": 60131532,
+        "totalBytes": 95472348
+      },
+      "encodedNetworkBytes": 190739,
+      "resourceTimingBytes": 900,
+      "resources": [
+        {
+          "url": "http://127.0.0.1:5190/assets/styles-YH0-clm8.css",
+          "startMs": 130.30000007152557,
+          "durationMs": 0,
+          "responseEndMs": 130.30000007152557,
+          "transferBytes": 0,
+          "encodedBytes": 18445,
+          "decodedBytes": 110828
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap",
+          "startMs": 131.80000007152557,
+          "durationMs": 0,
+          "responseEndMs": 131.80000007152557,
+          "transferBytes": 0,
+          "encodedBytes": 664,
+          "decodedBytes": 9003
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-DLLlwrIp.css",
+          "startMs": 132.10000002384186,
+          "durationMs": 0,
+          "responseEndMs": 132.10000002384186,
+          "transferBytes": 0,
+          "encodedBytes": 7767,
+          "decodedBytes": 54088
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-CkjEBlxO.js",
+          "startMs": 132.20000004768372,
+          "durationMs": 0,
+          "responseEndMs": 132.20000004768372,
+          "transferBytes": 0,
+          "encodedBytes": 202803,
+          "decodedBytes": 714663
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/jsx-runtime-B-hcVAMW.js",
+          "startMs": 132.5,
+          "durationMs": 0,
+          "responseEndMs": 132.5,
+          "transferBytes": 0,
+          "encodedBytes": 3264,
+          "decodedBytes": 8557
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/react-dom-8HkkFvw6.js",
+          "startMs": 132.80000007152557,
+          "durationMs": 0,
+          "responseEndMs": 132.80000007152557,
+          "transferBytes": 0,
+          "encodedBytes": 1340,
+          "decodedBytes": 3546
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useStore-4f3pzbFE.js",
+          "startMs": 133.10000002384186,
+          "durationMs": 0,
+          "responseEndMs": 133.10000002384186,
+          "transferBytes": 0,
+          "encodedBytes": 5994,
+          "decodedBytes": 16783
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/qss-Bqk2G4CH.js",
+          "startMs": 133.20000004768372,
+          "durationMs": 0,
+          "responseEndMs": 133.20000004768372,
+          "transferBytes": 0,
+          "encodedBytes": 292,
+          "decodedBytes": 444
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/matchContext-B0YTMpvO.js",
+          "startMs": 133.40000009536743,
+          "durationMs": 0,
+          "responseEndMs": 133.40000009536743,
+          "transferBytes": 0,
+          "encodedBytes": 142,
+          "decodedBytes": 162
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/redirect-Dhm19zUi.js",
+          "startMs": 133.70000004768372,
+          "durationMs": 0,
+          "responseEndMs": 133.70000004768372,
+          "transferBytes": 0,
+          "encodedBytes": 311,
+          "decodedBytes": 500
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/link-Drd7hhXx.js",
+          "startMs": 133.90000009536743,
+          "durationMs": 0,
+          "responseEndMs": 133.90000009536743,
+          "transferBytes": 0,
+          "encodedBytes": 2195,
+          "decodedBytes": 4454
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useRouter-BXRWbVwb.js",
+          "startMs": 134,
+          "durationMs": 0,
+          "responseEndMs": 134,
+          "transferBytes": 0,
+          "encodedBytes": 396,
+          "decodedBytes": 690
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/ClientOnly-jySlJXUI.js",
+          "startMs": 134.20000004768372,
+          "durationMs": 0,
+          "responseEndMs": 134.20000004768372,
+          "transferBytes": 0,
+          "encodedBytes": 218,
+          "decodedBytes": 311
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/createLucideIcon-CLdWFMku.js",
+          "startMs": 134.30000007152557,
+          "durationMs": 0,
+          "responseEndMs": 134.30000007152557,
+          "transferBytes": 0,
+          "encodedBytes": 689,
+          "decodedBytes": 1195
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/mapas-3d_.silo-engolfamento-D4mKxYBy.js",
+          "startMs": 134.5,
+          "durationMs": 0,
+          "responseEndMs": 134.5,
+          "transferBytes": 0,
+          "encodedBytes": 756,
+          "decodedBytes": 1315
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 134.60000002384186,
+          "durationMs": 5.200000047683716,
+          "responseEndMs": 139.80000007152557,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 158.5,
+          "durationMs": 3.600000023841858,
+          "responseEndMs": 162.10000002384186,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5.woff2",
+          "startMs": 161.90000009536743,
+          "durationMs": 0,
+          "responseEndMs": 161.90000009536743,
+          "transferBytes": 0,
+          "encodedBytes": 22196,
+          "decodedBytes": 22196
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E30-8s51os.woff2",
+          "startMs": 162.20000004768372,
+          "durationMs": 0,
+          "responseEndMs": 162.20000004768372,
+          "transferBytes": 0,
+          "encodedBytes": 22772,
+          "decodedBytes": 22772
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/saira/v23/memjYa2wxmKQyPMrZX79wwYZQMhsyuSLiIvS.woff2",
+          "startMs": 162.40000009536743,
+          "durationMs": 0,
+          "responseEndMs": 162.40000009536743,
+          "transferBytes": 0,
+          "encodedBytes": 32888,
+          "decodedBytes": 32888
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 179.90000009536743,
+          "durationMs": 1.5,
+          "responseEndMs": 181.40000009536743,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/with-selector-dQnI5o1Q.js",
+          "startMs": 181.90000009536743,
+          "durationMs": 0,
+          "responseEndMs": 181.90000009536743,
+          "transferBytes": 0,
+          "encodedBytes": 717,
+          "decodedBytes": 1626
+        },
+        {
+          "url": "http://127.0.0.1:5190/favicon.png",
+          "startMs": 218.10000002384186,
+          "durationMs": 20,
+          "responseEndMs": 238.10000002384186,
+          "transferBytes": 300,
+          "encodedBytes": 2395,
+          "decodedBytes": 2395
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-BerAWJxq.js",
+          "startMs": 724.6000000238419,
+          "durationMs": 0,
+          "responseEndMs": 724.6000000238419,
+          "transferBytes": 0,
+          "encodedBytes": 48379,
+          "decodedBytes": 144455
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/arrow-left-Bdt1PfM_.js",
+          "startMs": 725,
+          "durationMs": 0,
+          "responseEndMs": 725,
+          "transferBytes": 0,
+          "encodedBytes": 162,
+          "decodedBytes": 165
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/box-CtdF9Q2T.js",
+          "startMs": 725.2000000476837,
+          "durationMs": 0,
+          "responseEndMs": 725.2000000476837,
+          "transferBytes": 0,
+          "encodedBytes": 226,
+          "decodedBytes": 310
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/eye-Cbs9C6DS.js",
+          "startMs": 725.5,
+          "durationMs": 0,
+          "responseEndMs": 725.5,
+          "transferBytes": 0,
+          "encodedBytes": 199,
+          "decodedBytes": 256
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/layers-C_9oEa0w.js",
+          "startMs": 725.7000000476837,
+          "durationMs": 0,
+          "responseEndMs": 725.7000000476837,
+          "transferBytes": 0,
+          "encodedBytes": 241,
+          "decodedBytes": 421
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/play-B3lrLyfe.js",
+          "startMs": 726.3000000715256,
+          "durationMs": 0,
+          "responseEndMs": 726.3000000715256,
+          "transferBytes": 0,
+          "encodedBytes": 249,
+          "decodedBytes": 348
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/rotate-ccw-CLESVSgn.js",
+          "startMs": 726.6000000238419,
+          "durationMs": 0,
+          "responseEndMs": 726.6000000238419,
+          "transferBytes": 0,
+          "encodedBytes": 182,
+          "decodedBytes": 200
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/settings-2-C4npFlLj.js",
+          "startMs": 726.7000000476837,
+          "durationMs": 0,
+          "responseEndMs": 726.7000000476837,
+          "transferBytes": 0,
+          "encodedBytes": 193,
+          "decodedBytes": 252
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.core-DOQ_Anfr.js",
+          "startMs": 726.9000000953674,
+          "durationMs": 0,
+          "responseEndMs": 726.9000000953674,
+          "transferBytes": 0,
+          "encodedBytes": 99915,
+          "decodedBytes": 377362
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.module-CH1IZa3a.js",
+          "startMs": 727.1000000238419,
+          "durationMs": 0,
+          "responseEndMs": 727.1000000238419,
+          "transferBytes": 0,
+          "encodedBytes": 88709,
+          "decodedBytes": 365019
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/OrbitControls-ueK4VAY1.js",
+          "startMs": 727.2000000476837,
+          "durationMs": 0,
+          "responseEndMs": 727.2000000476837,
+          "transferBytes": 0,
+          "encodedBytes": 4426,
+          "decodedBytes": 19852
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/GLTFLoader-BJVGCGIT.js",
+          "startMs": 727.3000000715256,
+          "durationMs": 0,
+          "responseEndMs": 727.3000000715256,
+          "transferBytes": 0,
+          "encodedBytes": 14213,
+          "decodedBytes": 48981
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-CTnoaVSC.css",
+          "startMs": 727.7000000476837,
+          "durationMs": 0,
+          "responseEndMs": 727.7000000476837,
+          "transferBytes": 0,
+          "encodedBytes": 3970,
+          "decodedBytes": 16087
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-a.glb",
+          "startMs": 1236.6000000238419,
+          "durationMs": 19.800000071525574,
+          "responseEndMs": 1256.4000000953674,
+          "transferBytes": 300,
+          "encodedBytes": 2008068,
+          "decodedBytes": 2008068
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-b.glb",
+          "startMs": 1237.5,
+          "durationMs": 25.90000009536743,
+          "responseEndMs": 1263.4000000953674,
+          "transferBytes": 300,
+          "encodedBytes": 1984504,
+          "decodedBytes": 1984504
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 2310.9000000953674,
+          "durationMs": 1.899999976158142,
+          "responseEndMs": 2312.8000000715256,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "startMs": 2813.600000023842,
+          "durationMs": 1.7000000476837158,
+          "responseEndMs": 2815.3000000715256,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        }
+      ],
+      "network": [
+        {
+          "url": "http://127.0.0.1:5190/mapas-3d/silo-engolfamento",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 4230
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/styles-YH0-clm8.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-DLLlwrIp.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/index-CkjEBlxO.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/jsx-runtime-B-hcVAMW.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/react-dom-8HkkFvw6.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useStore-4f3pzbFE.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/qss-Bqk2G4CH.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/matchContext-B0YTMpvO.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/redirect-Dhm19zUi.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/link-Drd7hhXx.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/useRouter-BXRWbVwb.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/ClientOnly-jySlJXUI.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/createLucideIcon-CLdWFMku.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/mapas-3d_.silo-engolfamento-D4mKxYBy.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 184194
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5.woff2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E30-8s51os.woff2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/saira/v23/memjYa2wxmKQyPMrZX79wwYZQMhsyuSLiIvS.woff2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 978
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/with-selector-dQnI5o1Q.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 278
+        },
+        {
+          "url": "http://127.0.0.1:5190/favicon.png",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 169
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-BerAWJxq.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/arrow-left-Bdt1PfM_.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/box-CtdF9Q2T.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/eye-Cbs9C6DS.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/layers-C_9oEa0w.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/play-B3lrLyfe.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/rotate-ccw-CLESVSgn.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/settings-2-C4npFlLj.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.core-DOQ_Anfr.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/three.module-CH1IZa3a.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/OrbitControls-ueK4VAY1.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/GLTFLoader-BJVGCGIT.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/assets/SiloViewer-CTnoaVSC.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-a.glb",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 177
+        },
+        {
+          "url": "http://127.0.0.1:5190/models/silo-engolfamento/worker-b.glb",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 177
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/13c6aa8d-cb43-4da8-a1c3-973ed7c27290",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/77313684-7bee-4f40-b915-f10f16c735df",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/8bc64b52-ac7c-4645-bcb8-8ae3f0e5ddd2",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/436b1229-dfaf-4cda-a085-ee488e5f45d4",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/9eddf1ef-b830-4673-9e84-6359a3c394e0",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/cc843b8d-98c8-4a3d-81bf-85a2581d4041",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/c13ab5df-6ccf-4771-ac8c-2d71003185db",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/b4107191-5d1d-4334-b8d7-531ad9e7ecb0",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/12369a60-6fb8-4bbf-8575-455e93d2fc1e",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "blob:http://127.0.0.1:5190/fca458e9-ae95-4102-80fb-22a044fa50fb",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 0
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 268
+        },
+        {
+          "url": "http://gc.kis.v2.scr.kaspersky-labs.com/[system-injected]",
+          "status": 200,
+          "fromDiskCache": false,
+          "encodedDataLength": 268
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

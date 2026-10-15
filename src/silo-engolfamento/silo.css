@@ -1,550 +1,587 @@
+/* Dedicated workspace; the commercial navigation theme is intentionally scoped out. */
 .silo-viewer {
-  --silo-ink: #243d39;
-  --silo-muted: #657b73;
-  --silo-green: #176653;
-  --silo-line: #d2ded5;
+  --silo-bg: #06110c;
+  --silo-panel: #0d251b;
+  --silo-line: #294838;
+  --silo-lime: #a6d953;
+  color: #e8eee9;
+  background: var(--silo-bg);
   height: 100dvh;
-  min-height: 600px;
-  background: #f1f5ed;
-  color: var(--silo-ink);
-  font-family: Barlow, sans-serif;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  font-family: Barlow, system-ui, sans-serif;
+  font-size: 14px;
 }
 .silo-viewer * {
   box-sizing: border-box;
 }
 .silo-viewer button,
-.silo-dialog button {
+.silo-viewer select,
+.silo-viewer input {
   font: inherit;
-  cursor: pointer;
+}
+.silo-viewer button,
+.silo-viewer select {
   min-height: 44px;
-  border: 1px solid var(--silo-line, #d2ded5);
+  border: 1px solid var(--silo-line);
   border-radius: 6px;
-  background: #fbfcf8;
-  color: #294b40;
+  background: #0c2119;
+  color: #e8eee9;
   padding: 8px 12px;
-}
-.silo-viewer button:disabled {
-  opacity: 0.55;
-  cursor: wait;
-}
-.silo-viewer button:hover,
-.silo-dialog button:hover {
-  background: #e3eee2;
-}
-.silo-viewer button:focus-visible,
-.silo-viewer a:focus-visible,
-.silo-viewer input:focus-visible,
-.silo-viewer select:focus-visible,
-.silo-dialog :focus-visible {
-  outline: 3px solid #b07d16;
-  outline-offset: 3px;
-}
-.silo-viewer button[aria-pressed="true"] {
-  background: #176653;
-  color: #fff;
-  border-color: #176653;
-}
-.silo-header {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 16px 24px;
-  background: #f8faf4;
-  border-bottom: 1px solid var(--silo-line);
-}
-.silo-back {
-  display: flex;
+  cursor: pointer;
+  display: inline-flex;
   gap: 8px;
   align-items: center;
-  font-size: 13px;
-  text-decoration: none;
-  color: var(--silo-green);
+  justify-content: center;
+  touch-action: manipulation;
+}
+.silo-viewer button:hover,
+.silo-viewer select:hover {
+  background: #193e2c;
+  border-color: #749b57;
+}
+.silo-viewer button[aria-pressed="true"] {
+  background: #304e23;
+  color: #d9f3b2;
+  border-color: #85ae48;
+}
+.silo-viewer button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.silo-viewer :focus-visible {
+  outline: 2px solid var(--silo-lime);
+  outline-offset: 3px;
+}
+.silo-header {
+  height: 66px;
+  flex: 0 0 66px;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 8px max(18px, env(safe-area-inset-right)) 8px max(18px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--silo-line);
+  z-index: 12;
+}
+.silo-back {
+  min-width: 44px;
   min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d7e9d9;
+  text-decoration: none;
+  border-right: 1px solid var(--silo-line);
+  padding-right: 14px;
+}
+.silo-brand {
+  font-size: 25px !important;
+  color: #e8eee9 !important;
 }
 .silo-title {
   flex: 1;
-}
-.silo-title h1 {
-  margin: 2px 0;
-  font:
-    600 23px Saira,
-    sans-serif;
-  letter-spacing: -0.5px;
-}
-.silo-title h1 span {
-  font-weight: 500;
+  min-width: 0;
 }
 .silo-eyebrow {
   font-size: 10px;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.13em;
   font-weight: 600;
-  color: #59776a;
+  color: #a9c3b2;
 }
-.silo-icon-button {
-  display: grid;
-  place-items: center;
+.silo-title h1 {
+  font-family: Saira, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.1;
+  margin: 4px 0 0;
 }
-.silo-mobile-options {
-  display: none !important;
+.silo-title h1 span {
+  color: #b3c7b8;
+}
+.silo-header-scale {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #c0d1c5;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.silo-header-scale i {
+  height: 18px;
+  border-left: 1px solid var(--silo-line);
 }
 .silo-workspace {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 282px;
+  display: flex;
   flex: 1;
   min-height: 0;
+  position: relative;
 }
 .silo-stage {
-  position: relative;
-  overflow: hidden;
+  flex: 1;
+  min-width: 0;
   min-height: 0;
-  background: #dce6df;
+  position: relative;
+  isolation: isolate;
+  background: #b5c4bf;
+  overflow: hidden;
 }
-.silo-canvas-host {
-  position: absolute;
-  inset: 0;
-}
+.silo-canvas-host,
 .silo-canvas-host canvas {
   width: 100%;
   height: 100%;
   display: block;
+  outline: none;
+}
+.silo-canvas-host {
+  position: absolute;
+  inset: 0;
   touch-action: none;
+}
+.silo-selection-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  border: 1px solid #91bd48;
+  border-radius: 4px;
+  background: #0a2419ed;
+  color: #d5f1a6;
+  padding: 6px 9px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.silo-selection-marker[hidden] {
+  display: none;
+}
+.silo-mode-bar {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  display: flex;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid #36503d;
+  background: #07170fef;
+  border-radius: 9px;
+  z-index: 3;
+}
+.silo-mode-bar button {
+  border: 0;
+  background: transparent;
+  padding: 8px 18px;
+}
+.silo-tools {
+  position: absolute;
+  right: 18px;
+  top: 16px;
+  display: flex;
+  gap: 5px;
+  z-index: 3;
+}
+.silo-tools button {
+  width: 44px;
+  padding: 0;
+  background: #0a2019f0;
 }
 .silo-stage-caption {
   position: absolute;
-  top: 18px;
+  bottom: 75px;
   left: 22px;
-  right: 22px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-size: 9px;
-  letter-spacing: 0.13em;
-  color: #406158;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  max-width: calc(100% - 44px);
+  padding: 6px 9px;
+  color: #e7efe9;
+  background: #081d15d9;
+  border-radius: 3px;
   pointer-events: none;
-  z-index: 3;
-}
-.silo-stage-caption span:last-child {
-  margin-left: auto;
 }
 .silo-live-dot {
-  width: 6px;
   height: 6px;
-  flex: 0 0 6px;
+  width: 6px;
   border-radius: 50%;
-  background: #99673d;
-}
-.silo-hud {
-  position: absolute;
-  left: 20px;
-  bottom: 118px;
-  width: 312px;
-  padding: 14px 16px;
-  background: rgba(248, 250, 240, 0.95);
-  border: 1px solid #acbdb0;
-  border-radius: 8px;
-  z-index: 6;
-  box-shadow: 0 5px 15px #2b463512;
-}
-.silo-hud-values {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  gap: 8px;
-}
-.silo-hud-values div > span {
-  display: block;
-  font-size: 10px;
-  color: #657b73;
-}
-.silo-hud-values strong {
-  font-size: 23px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.silo-hud-values small {
-  font-size: 10px;
-  font-weight: 400;
-  color: #657b73;
-}
-.silo-hud p {
-  font-size: 12px;
-  margin: 6px 0;
-}
-.silo-hud p span {
-  color: #657b73;
-}
-.silo-hud > small {
-  font-size: 9px;
-  color: #50665b;
-  display: block;
-  border-top: 1px solid #d0dacb;
-  margin-top: 8px;
-  padding-top: 6px;
-}
-.silo-hud-ventilation {
-  font-weight: 600;
-}
-.silo-legend {
-  position: absolute;
-  bottom: 91px;
-  left: 22px;
-  display: flex;
-  gap: 16px;
-  font-size: 11px;
-  z-index: 6;
-  background: #eff5e9df;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-.silo-legend span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.silo-legend i {
-  height: 7px;
-  width: 7px;
-  border-radius: 2px;
-}
-.silo-a {
-  background: #1a706d;
-}
-.silo-b {
-  background: #b57937;
-}
-.silo-camera-bar {
-  position: absolute;
-  bottom: 21px;
-  left: 22px;
-  right: 22px;
-  display: flex;
-  gap: 6px;
-  z-index: 6;
-  justify-content: center;
-}
-.silo-camera-bar button {
-  min-width: 120px;
-  box-shadow: 0 2px 10px #23463414;
-  font-size: 12px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.silo-camera-bar button > span {
-  font-size: 10px;
-  color: #8aa38f;
-}
-.silo-camera-bar button[aria-pressed="true"] > span {
-  color: #b7d4c1;
-}
-.silo-sidebar {
-  background: #f8faf4;
-  border-left: 1px solid var(--silo-line);
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 17px;
-  min-height: 0;
-  overflow-y: auto;
-}
-.silo-panel-intro h2 {
-  font:
-    600 20px/1.25 Saira,
-    sans-serif;
-  margin: 8px 0;
-}
-.silo-panel-intro p,
-.silo-safety p {
-  font-size: 12px;
-  line-height: 1.5;
-  margin: 8px 0 0;
-  color: var(--silo-muted);
-}
-.silo-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #476457;
-}
-.silo-event-readout {
-  font-size: 11px;
-  line-height: 1.4;
-  padding: 10px 12px;
-  background: #edf1e7;
-  border-left: 2px solid #92ac90;
-  border-radius: 3px;
-}
-.silo-event-readout p {
-  margin: 6px 0 0;
-}
-.silo-viewer select {
-  font:
-    400 12px Barlow,
-    sans-serif;
-  color: #294b40;
-  padding: 10px 7px;
-  border-radius: 5px;
-  border: 1px solid var(--silo-line);
-  width: 100%;
-  min-height: 44px;
-  background: #fffef8;
-}
-.silo-data-pair {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-  font-size: 11px;
-  padding: 14px 0;
-  border-top: 1px solid var(--silo-line);
-  border-bottom: 1px solid var(--silo-line);
-}
-.silo-data-pair span {
-  color: var(--silo-muted);
-}
-.silo-data-pair strong {
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.silo-section-label {
-  display: flex;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.11em;
-  align-items: center;
-  color: #59776a;
-}
-.silo-inspect {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-}
-.silo-inspect button {
-  font-size: 11px;
-}
-.silo-check {
-  font-size: 12px;
-  display: flex;
-  gap: 9px;
-  align-items: center;
-  min-height: 32px;
-}
-.silo-check input {
-  accent-color: #176653;
-  width: 16px;
-  height: 16px;
-}
-.silo-sound {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 12px !important;
-}
-.silo-safety {
-  display: flex;
-  gap: 10px;
-  background: #e9eee0;
-  padding: 12px;
-  border-left: 2px solid #a78c45;
-}
-.silo-safety svg {
+  background: #b1dc62;
   flex-shrink: 0;
 }
-.silo-safety strong {
-  font-size: 12px;
-  line-height: 1.3;
-  display: block;
-}
-.silo-analysis-button {
+.silo-view-bar {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px !important;
-  font-weight: 600 !important;
+  gap: 5px;
+  z-index: 4;
+  max-width: calc(100% - 40px);
 }
-.silo-arrow {
-  transform: rotate(180deg);
+.silo-view-bar select {
+  max-width: 245px;
+  background: #091e17ee;
 }
-.silo-note {
-  font-size: 10px;
-  line-height: 1.5;
-  color: #6a7d70;
-  margin: 0;
+.silo-view-bar button {
+  background: #091e17ee;
+}
+.silo-view-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.silo-context-readout {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid var(--silo-line);
+  background: #081c15eb;
+  border-radius: 6px;
+  padding: 9px 12px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 3px 12px;
+  max-width: 320px;
+  z-index: 3;
+}
+.silo-context-readout strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+.silo-context-readout > span {
+  grid-column: 1;
+  font-size: 11px;
+  color: #c9d9cd;
+  font-variant-numeric: tabular-nums;
+}
+.silo-context-readout button {
+  grid-column: 2;
+  grid-row: 1/3;
+  min-width: 44px;
+  padding: 0;
 }
 .silo-transport {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 16px 24px;
-  background: #f8faf4;
+  gap: 9px;
+  padding: 8px max(20px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  min-height: 68px;
   border-top: 1px solid var(--silo-line);
+  background: #08180f;
+  flex-shrink: 0;
 }
-.silo-transport-actions {
-  display: flex;
-  gap: 7px;
-}
-.silo-transport-actions button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.silo-primary {
-  background: #176653 !important;
-  color: #fff !important;
+.silo-viewer .silo-primary {
+  background: #a4d450;
+  color: #10210b;
+  font-weight: 700;
+  border-color: #a4d450;
   min-width: 110px;
 }
 .silo-timeline {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  gap: 3px;
   min-width: 0;
+  padding: 0 9px;
+  font-variant-numeric: tabular-nums;
+  height: 44px;
+  position: relative;
 }
 .silo-timeline > span {
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 9px;
+  right: 9px;
+  pointer-events: none;
   font-size: 11px;
-  color: #59776a;
+  color: #bdd0c1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .silo-timeline b {
-  font-size: 15px;
-  color: #243d39;
-  font-variant-numeric: tabular-nums;
+  color: #f0f5ee;
+  font-size: 12px;
+  font-weight: 600;
 }
 .silo-timeline small {
-  font-size: 11px;
   margin-left: 16px;
 }
-.silo-timeline input {
+.silo-viewer input[type="range"] {
   width: 100%;
-  accent-color: #176653;
-  min-height: 28px;
-  display: block;
+  height: 44px;
+  accent-color: #a6d953;
+  cursor: pointer;
+  touch-action: pan-y;
 }
-.silo-rate {
-  width: 155px;
+.silo-timeline input[type="range"] {
+  position: absolute;
+  inset: 0;
+  padding-top: 14px;
 }
-.silo-rate > span {
-  font-size: 10px;
-  display: block;
-  margin-bottom: 5px;
-  color: #59776a;
+.silo-inspector {
+  width: 336px;
+  flex: 0 0 336px;
+  background: var(--silo-panel);
+  border-left: 1px solid var(--silo-line);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  z-index: 8;
 }
-.silo-rate select {
-  min-height: 34px;
+.silo-inspector > header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 18px;
+  border-bottom: 1px solid var(--silo-line);
 }
-.silo-reason {
-  padding: 8px 24px;
-  background: #f0e7d1;
+.silo-inspector h2 {
+  font:
+    500 19px Saira,
+    system-ui,
+    sans-serif;
+  margin: 3px 0 0;
+}
+.silo-inspector h3 {
+  font:
+    500 19px Saira,
+    system-ui,
+    sans-serif;
+  margin: 8px 0;
+}
+.silo-inspector > header button {
+  min-width: 44px;
+  font-size: 24px;
+}
+.silo-inspector-body {
+  overflow: auto;
+  padding: 17px 18px;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  scrollbar-color: #63845f #0d251b;
+}
+.silo-inspector p {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 13px;
+  color: #cbd9cd;
+}
+.silo-inspector a {
+  color: #b9e07e;
   font-size: 12px;
-  color: #745918;
 }
-.silo-training-note {
-  padding: 8px 24px;
-  font-size: 10px;
-  color: #657b73;
+.silo-inspector input[type="search"] {
+  width: 100%;
+  background: #071a11;
+  border: 1px solid #355340;
+  color: #e8eee9;
+  border-radius: 6px;
+  min-height: 44px;
+  padding: 10px;
+}
+.silo-tabs {
+  display: flex;
+  gap: 4px;
+}
+.silo-tabs button {
+  flex: 1;
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 8px;
+}
+.silo-component-detail {
+  padding: 15px;
+  border: 1px solid #506642;
+  background: #142e1c;
+  border-radius: 6px;
+}
+.silo-component-detail > .silo-eyebrow {
+  color: #c5e69a;
+  font-size: 9px;
+}
+.silo-component-detail .silo-actions {
+  margin: 14px 0 8px;
+}
+.silo-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.silo-actions button {
+  font-size: 12px;
+  padding: 7px 10px;
+}
+.silo-component-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.silo-component-list button {
+  justify-content: space-between;
+  text-align: left;
+  line-height: 1.25;
+}
+.silo-component-list small {
+  color: #b9cdb4;
+  white-space: nowrap;
+}
+.silo-data-pair {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  font-size: 12px;
+  align-items: start;
+  font-variant-numeric: tabular-nums;
+  margin: 14px 0;
+}
+.silo-data-pair > div {
+  display: contents;
+}
+.silo-data-pair dt {
+  color: #b5c9bb;
+  margin: 0;
+  min-width: 0;
+}
+.silo-data-pair dd {
+  margin: 0;
+  text-align: right;
+  max-width: 155px;
+  overflow-wrap: anywhere;
+}
+.silo-data-pair dd small {
+  display: block;
+  color: #9bb494;
+  font-size: 9px;
+  margin-top: 3px;
+}
+.silo-note {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  color: #a9c0ac !important;
+  margin-top: 12px !important;
+}
+.silo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.silo-field small {
+  font-size: 11px;
+  color: #b4cbb9;
+}
+.silo-check {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  min-height: 44px;
+  line-height: 1.3;
+  font-size: 13px;
 }
-.silo-training-note svg {
+.silo-check input {
+  width: 19px;
+  height: 19px;
+  accent-color: #a6d953;
   flex-shrink: 0;
+}
+.silo-viewer .silo-sheet-expand {
+  display: none;
 }
 .silo-occlusion {
   position: absolute;
   inset: 0;
-  background: #171309;
-  z-index: 4;
+  background: radial-gradient(ellipse at 50% 42%, #332919, #0c0907 76%);
+  z-index: 2;
+  pointer-events: none;
 }
 .silo-exit-camera {
   position: absolute;
-  top: 53px;
-  right: 20px;
-  z-index: 7;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px !important;
-  background: #fbfcf5 !important;
-}
-.silo-annotation {
-  position: absolute;
-  right: 20px;
-  top: 95px;
-  max-width: 290px;
-  padding: 16px;
-  background: #f8faf4f5;
-  border: 1px solid #aec4b0;
-  border-radius: 7px;
-  z-index: 7;
-}
-.silo-annotation strong {
-  font-size: 13px;
-}
-.silo-annotation p {
-  font-size: 11px;
-  line-height: 1.5;
-  margin: 6px 0;
-}
-.silo-annotation button {
-  float: right;
-  min-height: 24px;
-  padding: 0 8px;
-  margin-left: 8px;
+  z-index: 6;
+  top: 80px;
+  left: 20px;
 }
 .silo-load {
   position: absolute;
   inset: 0;
+  background: #071a13f2;
   z-index: 10;
-  background: #e7eee3;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 16px;
   text-align: center;
-  gap: 12px;
-  padding: 28px;
+  padding: 24px;
 }
 .silo-load h2 {
-  font: 600 24px Saira;
+  font: 500 24px Saira;
   margin: 0;
 }
 .silo-load p {
-  margin: 0;
-  max-width: 490px;
-  font-size: 13px;
+  max-width: 500px;
 }
-.silo-load .silo-note {
-  font-size: 11px;
-}
-.silo-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
+.silo-resource-state {
+  position: absolute;
+  left: 20px;
+  top: 78px;
+  padding: 9px;
+  background: #092016e8;
+  color: #def0d7;
+  font-size: 12px;
+  z-index: 5;
+  border-radius: 4px;
 }
 .silo-fallback {
   position: absolute;
   inset: 0;
-  padding: 60px 30px 240px;
+  padding: 90px 24px 120px;
   text-align: center;
+  background: #10251b;
   overflow: auto;
-  background: #e6ede0;
-  z-index: 1;
 }
 .silo-fallback img {
-  max-height: 290px;
   width: 100%;
-}
-.silo-fallback h2 {
-  font: 600 25px Saira;
-  margin: 8px;
+  max-height: 300px;
 }
 .silo-fallback p {
-  font-size: 14px;
   max-width: 550px;
   margin: auto;
-  line-height: 1.5;
+  line-height: 1.6;
 }
+.silo-completion {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 90px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 40px);
+  padding: 16px;
+  border: 1px solid #6e9252;
+  background: #0a2118f5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.silo-completion strong {
+  font: 500 18px Saira;
+}
+.silo-completion span {
+  font-size: 12px;
+  color: #bbd3c0;
+}
+
 .silo-dialog {
   --silo-line: #d2ded5;
   width: min(920px, calc(100% - 32px));
@@ -766,230 +803,316 @@
   background: #f0e9d4;
   font-size: 13px;
 }
-@media (max-width: 900px) {
-  .silo-workspace {
-    grid-template-columns: minmax(0, 1fr) 248px;
-  }
-  .silo-sidebar {
-    padding: 18px 14px;
-    gap: 13px;
-  }
+
+/* Panels are a single mutually exclusive surface. Mobile sheet keeps 60%+ free. */
+@media (max-width: 800px) {
   .silo-header {
-    gap: 14px;
-    padding: 12px 18px;
+    height: 58px;
+    flex-basis: 58px;
+    padding: 6px 10px;
+    gap: 9px;
   }
   .silo-title h1 {
-    font-size: 20px;
+    font-size: 16px;
   }
   .silo-title h1 span {
-    display: block;
+    display: none;
   }
-  .silo-camera-bar {
-    left: 12px;
-    right: 12px;
+  .silo-title .silo-eyebrow {
+    font-size: 8px;
+  }
+  .silo-brand {
+    font-size: 21px !important;
+  }
+  .silo-header-scale {
+    display: none;
+  }
+  .silo-back {
+    min-width: 44px;
+    padding-right: 8px;
+  }
+  .silo-header > button {
+    padding: 8px;
+    min-width: 44px;
+  }
+  .silo-mode-bar {
+    left: 10px;
+    top: 10px;
+    padding: 2px;
+    gap: 0;
+  }
+  .silo-mode-bar button {
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+  .silo-tools {
+    right: 10px;
+    top: 67px;
+    flex-direction: column;
     gap: 4px;
   }
-  .silo-camera-bar button {
-    min-width: 0;
-    flex: 1;
+  .silo-view-bar {
+    left: 10px;
+    bottom: 12px;
+    gap: 4px;
+    max-width: calc(100% - 20px);
+  }
+  .silo-view-bar select {
+    max-width: 174px;
+    font-size: 12px;
     padding: 8px;
-    font-size: 11px;
-    gap: 6px;
   }
-  .silo-stage-caption span:last-child {
+  .silo-view-bar button {
+    padding: 8px;
+    min-width: 44px;
+  }
+  .silo-view-bar button span {
     display: none;
-  }
-  .silo-hud {
-    width: 275px;
-    left: 12px;
-  }
-  .silo-legend {
-    left: 12px;
-    font-size: 10px;
-  }
-}
-@media (max-width: 640px) {
-  .silo-viewer {
-    height: auto;
-    min-height: 100dvh;
-  }
-  .silo-header {
-    gap: 10px;
-    padding: 10px 12px;
-  }
-  .silo-title h1 {
-    font-size: 17px;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
-  }
-  .silo-title > .silo-eyebrow {
-    font-size: 8px;
-    letter-spacing: 0.08em;
-  }
-  .silo-back span {
-    display: none;
-  }
-  .silo-mobile-options {
-    display: grid !important;
-  }
-  .silo-workspace {
-    display: block;
-    min-height: 0;
-    flex: 1;
-    position: relative;
-  }
-  .silo-stage {
-    min-height: 480px;
-    height: calc(100dvh - 240px);
-  }
-  .silo-sidebar {
-    display: none;
-    border-top: 1px solid #cad8c9;
-    border-left: none;
-  }
-  .silo-sidebar.is-open {
-    display: flex;
   }
   .silo-stage-caption {
-    top: 13px;
-    left: 12px;
-    right: 12px;
+    bottom: 68px;
+    left: 10px;
+    max-width: calc(100% - 20px);
     font-size: 8px;
+    line-height: 1.4;
+    padding: 5px;
   }
-  .silo-hud {
-    left: 12px;
-    bottom: 91px;
-    width: min(292px, calc(100% - 24px));
-    padding: 11px 13px;
+  .silo-context-readout {
+    left: 10px;
+    right: auto;
+    bottom: 106px;
+    max-width: calc(100% - 72px);
+    padding: 7px 9px;
   }
-  .silo-hud-values {
-    margin-top: 7px;
-  }
-  .silo-hud-values strong {
-    font-size: 21px;
-  }
-  .silo-hud > small {
-    font-size: 8px;
-  }
-  .silo-hud p {
-    font-size: 10px;
-  }
-  .silo-hud-ventilation {
-    margin: 3px 0 !important;
-  }
-  .silo-legend {
-    bottom: 67px;
-    left: 12px;
-    gap: 12px;
-    padding: 3px 7px;
-    font-size: 9px;
-  }
-  .silo-camera-bar {
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    gap: 4px;
-  }
-  .silo-camera-bar button {
-    padding: 7px;
-    justify-content: center;
-    font-size: 10px;
-    gap: 4px;
-    min-height: 44px;
-  }
-  .silo-camera-bar button > span {
-    font-size: 8px;
+  .silo-context-readout strong {
+    font-size: 11px;
   }
   .silo-transport {
-    padding: 10px 12px;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .silo-transport-actions {
+    min-height: 72px;
+    padding: 7px 10px max(7px, env(safe-area-inset-bottom));
     gap: 5px;
   }
-  .silo-transport-actions button {
-    padding: 8px 10px;
-    min-height: 44px;
+  .silo-viewer .silo-primary {
+    min-width: 44px;
+    width: 44px;
+    padding: 0;
   }
-  .silo-primary {
-    min-width: 95px;
+  .silo-primary span {
+    display: none;
+  }
+  .silo-transport > button {
+    min-width: 44px;
+    padding: 8px;
+  }
+  .silo-transport > select {
+    padding: 6px;
+    width: 56px;
+    font-size: 12px;
   }
   .silo-timeline {
-    min-width: 160px;
+    padding: 0 3px;
   }
   .silo-timeline small {
     display: none;
   }
-  .silo-rate {
+  .silo-inspector {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
+    height: 40%;
+    max-height: 40%;
+    min-height: 190px;
+    border: 1px solid #45653e;
+    border-radius: 12px 12px 0 0;
+  }
+  .silo-inspector.is-expanded {
+    height: 85%;
+    max-height: 85%;
+  }
+  .silo-inspector > header {
+    padding: 9px 15px;
+  }
+  .silo-inspector h2 {
+    font-size: 17px;
+  }
+  .silo-viewer .silo-sheet-expand {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    min-height: 44px;
+    border: 0;
+    border-radius: 0;
+    background: #153724;
+    font-size: 11px;
+    padding: 4px;
   }
-  .silo-rate select {
-    width: auto;
-    flex: 1;
-    min-height: 35px;
-    padding: 5px 8px;
+  .silo-inspector-body {
+    padding: 14px 15px;
+    gap: 13px;
   }
-  .silo-rate > span {
-    margin: 0;
+  .silo-viewer[data-panel="components"] .silo-view-bar,
+  .silo-viewer[data-panel="settings"] .silo-view-bar,
+  .silo-viewer[data-panel="indicators"] .silo-view-bar {
+    bottom: calc(40% + 12px);
   }
-  .silo-training-note {
-    font-size: 9px;
-    padding: 6px 12px;
-    line-height: 1.4;
+  .silo-viewer[data-panel="components"] .silo-stage-caption,
+  .silo-viewer[data-panel="settings"] .silo-stage-caption,
+  .silo-viewer[data-panel="indicators"] .silo-stage-caption {
+    display: none;
+  }
+  .silo-viewer[data-panel="components"] .silo-context-readout,
+  .silo-viewer[data-panel="settings"] .silo-context-readout,
+  .silo-viewer[data-panel="indicators"] .silo-context-readout {
+    display: none;
   }
   .silo-exit-camera {
-    top: 40px;
-    right: 12px;
-    font-size: 11px !important;
+    top: 64px;
+    left: 10px;
+    font-size: 12px;
   }
-  .silo-annotation {
-    top: 95px;
-    left: 12px;
-    right: 12px;
-    max-width: none;
+  .silo-exit-camera {
+    top: auto;
+    bottom: 12px;
+    left: 118px;
+    min-width: 44px;
+    width: 44px;
+    padding: 0;
+  }
+  .silo-exit-camera span {
+    display: none;
+  }
+  .silo-stage-caption,
+  .silo-context-readout {
+    display: none;
+  }
+  .silo-transport {
+    min-height: 64px;
+  }
+  .silo-viewer[data-panel="views"] .silo-view-bar {
+    bottom: calc(40% + 12px);
+  }
+  .silo-completion {
+    top: 73px;
+    padding: 12px;
+    gap: 8px;
+    width: calc(100% - 20px);
+  }
+  .silo-completion strong {
+    font-size: 16px;
+  }
+  .silo-completion button {
+    font-size: 12px;
+  }
+  .silo-resource-state {
+    top: 64px;
+    left: 10px;
+    max-width: calc(100% - 70px);
+    font-size: 11px;
   }
   .silo-dialog {
-    width: calc(100% - 18px);
+    width: calc(100% - 16px);
     max-height: 94dvh;
   }
   .silo-dialog > header {
-    padding: 15px;
+    padding: 12px 15px;
   }
   .silo-dialog h2 {
-    font-size: 21px;
+    font-size: 20px;
   }
   .silo-dialog-body {
-    padding: 16px;
-    font-size: 13px;
-  }
-  .silo-analysis-columns {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .silo-dialog table {
-    font-size: 11px;
-  }
-  .silo-dialog th,
-  .silo-dialog td {
-    padding: 6px 3px;
-  }
-  .silo-stat-row {
-    grid-template-columns: 32px 1fr 92px;
-    gap: 7px;
-  }
-  .silo-fallback {
-    padding-top: 50px;
-  }
-  .silo-fallback img {
-    max-height: 230px;
+    padding: 14px 16px;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .silo-viewer * {
-    scroll-behavior: auto;
+@media (max-width: 375px) {
+  .silo-title .silo-eyebrow {
+    display: none;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .silo-header {
+    height: 48px;
+    flex-basis: 48px;
+  }
+  .silo-title .silo-eyebrow {
+    display: none;
+  }
+  .silo-mode-bar {
+    top: 8px;
+  }
+  .silo-mode-bar button {
+    min-height: 44px;
+  }
+  .silo-mode-bar {
+    left: 10px;
+    padding: 2px;
+  }
+  .silo-mode-bar button {
+    font-size: 12px;
+    padding: 8px 11px;
+  }
+  .silo-tools {
+    top: 8px;
+    right: 10px;
+    flex-direction: row;
+  }
+  .silo-view-bar {
+    bottom: 8px;
+  }
+  .silo-stage-caption {
+    display: none;
+  }
+  .silo-context-readout {
+    left: auto;
+    right: 10px;
+    bottom: 8px;
+    max-width: 240px;
+  }
+  .silo-transport {
+    min-height: 50px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  .silo-stage-caption,
+  .silo-context-readout {
+    display: none;
+  }
+  .silo-exit-camera {
+    top: auto;
+    bottom: 8px;
+    left: 118px;
+    width: 44px;
+    padding: 0;
+  }
+  .silo-exit-camera span {
+    display: none;
+  }
+  .silo-inspector {
+    left: auto;
+    width: 330px;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+  .silo-inspector.is-expanded {
+    height: 100%;
+    max-height: 100%;
+  }
+  .silo-viewer .silo-sheet-expand {
+    display: none;
+  }
+  .silo-viewer[data-panel="components"] .silo-view-bar,
+  .silo-viewer[data-panel="settings"] .silo-view-bar,
+  .silo-viewer[data-panel="indicators"] .silo-view-bar {
+    bottom: 8px;
+    max-width: calc(100% - 350px);
+  }
+  .silo-viewer[data-panel="components"] .silo-tools,
+  .silo-viewer[data-panel="settings"] .silo-tools,
+  .silo-viewer[data-panel="indicators"] .silo-tools {
+    display: none;
+  }
+  .silo-viewer[data-panel="views"] .silo-view-bar {
+    bottom: 8px;
   }
 }

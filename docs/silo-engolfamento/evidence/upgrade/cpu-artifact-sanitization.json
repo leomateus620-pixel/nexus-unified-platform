@@ -1,0 +1,99 @@
+{
+  "schema": "nexus-silo-cpu-artifact-sanitization/1.0",
+  "sanitizedAt": "2026-10-15T04:48:19.852Z",
+  "policy": "Kaspersky injection URL path/query replaced with origin/[system-injected]; no profiling IDs, samples, timings or function names modified.",
+  "reports": [
+    {
+      "file": "docs\\silo-engolfamento\\evidence\\upgrade\\cpu-economic-after-cache-changing.cpuprofile",
+      "redactedPaths": [
+        "$.nodes[921].callFrame.url",
+        "$.nodes[922].callFrame.url",
+        "$.nodes[923].callFrame.url",
+        "$.nodes[924].callFrame.url",
+        "$.nodes[925].callFrame.url"
+      ],
+      "urlsRedacted": 5,
+      "nodeCount": 928,
+      "sampleCount": 4902,
+      "timeDeltaTotalMicros": 8579597,
+      "profileDurationMicros": 8579997,
+      "timingDeltaMicros": 0,
+      "idsAndSamplesUnchanged": true,
+      "onlyAllowedUrlStringsChanged": true,
+      "beforeSha256": "7968dcbd731a84624c783c02e3f0fa70c6e5db86c447e51a89b5e33f735f6124",
+      "afterSha256": "9411684078924cf1cc54bf8fcf667543388a776c8e5ff62ee7ddff81407da57d"
+    },
+    {
+      "file": "docs\\silo-engolfamento\\evidence\\upgrade\\cpu-economic-after-cache-late.cpuprofile",
+      "redactedPaths": [
+        "$.nodes[1160].callFrame.url",
+        "$.nodes[1161].callFrame.url",
+        "$.nodes[1162].callFrame.url",
+        "$.nodes[1163].callFrame.url"
+      ],
+      "urlsRedacted": 4,
+      "nodeCount": 1165,
+      "sampleCount": 7478,
+      "timeDeltaTotalMicros": 12662615,
+      "profileDurationMicros": 12663035,
+      "timingDeltaMicros": 0,
+      "idsAndSamplesUnchanged": true,
+      "onlyAllowedUrlStringsChanged": true,
+      "beforeSha256": "1c1be2421773764d9cb6cf2032c3b063da831619c0c45b6eae2e36b9962f714f",
+      "afterSha256": "f0304800cb3344089c839e41ce94638d0a537c8ed2367fcebbd3887c17c53193"
+    },
+    {
+      "file": "docs\\silo-engolfamento\\evidence\\upgrade\\cpu-economic-after-cache.cpuprofile",
+      "redactedPaths": [
+        "$.nodes[995].callFrame.url",
+        "$.nodes[996].callFrame.url",
+        "$.nodes[997].callFrame.url",
+        "$.nodes[998].callFrame.url",
+        "$.nodes[999].callFrame.url"
+      ],
+      "urlsRedacted": 5,
+      "nodeCount": 1006,
+      "sampleCount": 5034,
+      "timeDeltaTotalMicros": 8618997,
+      "profileDurationMicros": 8619471,
+      "timingDeltaMicros": 0,
+      "idsAndSamplesUnchanged": true,
+      "onlyAllowedUrlStringsChanged": true,
+      "beforeSha256": "fb09daa3cb8c9e5d7d8224838621a7b4cb71c7724cc0befbc599516998082e48",
+      "afterSha256": "de6d1151b345ccb861723156a5fa74551b3d3dcd2f7f4f3f54d55e8731e740ff"
+    },
+    {
+      "file": "docs\\silo-engolfamento\\evidence\\upgrade\\cpu-economic-after-dirty-changing.cpuprofile",
+      "redactedPaths": [
+        "$.nodes[1089].callFrame.url"
+      ],
+      "urlsRedacted": 1,
+      "nodeCount": 1094,
+      "sampleCount": 4792,
+      "timeDeltaTotalMicros": 8627018,
+      "profileDurationMicros": 8627384,
+      "timingDeltaMicros": 0,
+      "idsAndSamplesUnchanged": true,
+      "onlyAllowedUrlStringsChanged": true,
+      "beforeSha256": "6ffe0f4eb0c59cb62e1ced3f2b424da5e27ac6a26747ef4de1d29ba5482a9c5b",
+      "afterSha256": "596932505d960f01607feb7582011825abe62ddb0ee6c320e358f4036197be36"
+    },
+    {
+      "file": "docs\\silo-engolfamento\\evidence\\upgrade\\cpu-economic-baseline.cpuprofile",
+      "redactedPaths": [
+        "$.nodes[1040].callFrame.url",
+        "$.nodes[1041].callFrame.url"
+      ],
+      "urlsRedacted": 2,
+      "nodeCount": 1042,
+      "sampleCount": 5058,
+      "timeDeltaTotalMicros": 8551756,
+      "profileDurationMicros": 8552134,
+      "timingDeltaMicros": 0,
+      "idsAndSamplesUnchanged": true,
+      "onlyAllowedUrlStringsChanged": true,
+      "beforeSha256": "6a8131d594224523569268f30be70a5e6bc89e77d20d4ef9dbfe696977898477",
+      "afterSha256": "a2a4a1ace7f4ce8984013b895f2c751db0e128b2a869f4e82e796d20f2e6e637"
+    }
+  ]
+}

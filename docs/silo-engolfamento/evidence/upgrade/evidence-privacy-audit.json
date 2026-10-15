@@ -1,0 +1,1149 @@
+{
+  "schema": "nexus-silo-evidence-privacy/1.0.0",
+  "auditedAt": "2026-10-15T06:08:35.579Z",
+  "policy": "Read-only audit using evidence-privacy.mjs; no raw URLs, tokens or external host paths in this report. Original evidence is preserved.",
+  "roots": [
+    "docs/silo-engolfamento/evidence",
+    "public/models/silo-engolfamento"
+  ],
+  "excluded": [
+    "docs/silo-engolfamento/evidence/upgrade/evidence-privacy-audit.json"
+  ],
+  "fileCount": 59,
+  "jsonCount": 50,
+  "cpuProfileCount": 9,
+  "numericValues": 275507,
+  "numericConsistency": true,
+  "filesRequiringNormalization": 0,
+  "totals": {
+    "parseErrors": 0,
+    "unsanitizedSystemUrls": 0,
+    "sensitiveQueryParameters": 0,
+    "credentialFields": 0,
+    "credentialLikeStrings": 0,
+    "externalHostPaths": 0
+  },
+  "results": [
+    {
+      "file": "docs/silo-engolfamento/evidence/baseline-pr11/comparison.json",
+      "type": "json",
+      "bytes": 137541,
+      "sha256": "05b6446bea0be1ca6776d10c6772d6becdf8562e1750354eb4c8c2b7b280985b",
+      "numericValues": 2911,
+      "stringValues": 4894,
+      "numericDigest": "25eb3a566874a9c673820b1df366fb764d19fac3c629fcc4e79b37d2ac07f4cf",
+      "normalizedNumericDigest": "25eb3a566874a9c673820b1df366fb764d19fac3c629fcc4e79b37d2ac07f4cf",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/baseline-pr11/production-loading.json",
+      "type": "json",
+      "bytes": 45942,
+      "sha256": "32d366d8c5a6f2b0aca4ab8b2d244d8b25a3b1d964b8c540f0eee403763eaa3b",
+      "numericValues": 705,
+      "stringValues": 1213,
+      "numericDigest": "904defad4a86539f62cbd89561afdbd8db3bdbb5a2446182714c775b67c0b839",
+      "normalizedNumericDigest": "904defad4a86539f62cbd89561afdbd8db3bdbb5a2446182714c775b67c0b839",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/camera-inspection.json",
+      "type": "json",
+      "bytes": 1056,
+      "sha256": "0e67c8fe44491c938d77cd47834ca87cc653593e78c36a47bccbb85b762e47b8",
+      "numericValues": 0,
+      "stringValues": 48,
+      "numericDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "normalizedNumericDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/production-loading-first.json",
+      "type": "json",
+      "bytes": 33888,
+      "sha256": "1f23c821be0dcc5785295ff2992e00476b8ce67a3bc9d79535db3a17b8754f0a",
+      "numericValues": 436,
+      "stringValues": 906,
+      "numericDigest": "391625fcfdd8e30246c991571b8f8c0d7e786f2625cf6fe978dc6882cc172918",
+      "normalizedNumericDigest": "391625fcfdd8e30246c991571b8f8c0d7e786f2625cf6fe978dc6882cc172918",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/production-loading.json",
+      "type": "json",
+      "bytes": 46017,
+      "sha256": "33f1f3398d7ea9bf664b9af2098d096efcc3f734fb9783f941bccf24533ec64f",
+      "numericValues": 711,
+      "stringValues": 1216,
+      "numericDigest": "13ff55138302093d7f70851ab8893552790c48b5258977b0cb5c477318d581d4",
+      "normalizedNumericDigest": "13ff55138302093d7f70851ab8893552790c48b5258977b0cb5c477318d581d4",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/reference-assets-audit.json",
+      "type": "json",
+      "bytes": 25376,
+      "sha256": "332ad2b88995bc6134c345617d12d20c6793e27f9187f3ee66dd2e74e3345c9a",
+      "numericValues": 803,
+      "stringValues": 335,
+      "numericDigest": "a060ba55d579933f6ec273b9cb03b023e17dc2fc0f11f53bf9e729e5422858cb",
+      "normalizedNumericDigest": "a060ba55d579933f6ec273b9cb03b023e17dc2fc0f11f53bf9e729e5422858cb",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/touch-commands.json",
+      "type": "json",
+      "bytes": 3502,
+      "sha256": "8c28bf29e107dd22824d29bb30572a51c7d490bc2cc1a4950d97b18086f3e79d",
+      "numericValues": 19,
+      "stringValues": 160,
+      "numericDigest": "4d334409eeceea9de9b8f70faf0f7b1c1a12376856d7c674853d2eda3b8fdd0f",
+      "normalizedNumericDigest": "4d334409eeceea9de9b8f70faf0f7b1c1a12376856d7c674853d2eda3b8fdd0f",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/ui.json",
+      "type": "json",
+      "bytes": 559202,
+      "sha256": "b2706c17623ec72d2c7d628d676ddbdc7b3fc7d36a6802489230d44b84a079bd",
+      "numericValues": 11504,
+      "stringValues": 20775,
+      "numericDigest": "3b7e6e964188f4f8c6c12ca9987c43a18879bcecb1efff224718669eea8d12d8",
+      "normalizedNumericDigest": "3b7e6e964188f4f8c6c12ca9987c43a18879bcecb1efff224718669eea8d12d8",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/asset-audit.json",
+      "type": "json",
+      "bytes": 165042,
+      "sha256": "5ba212aace9ebb005136f91d2d9c69b2e1311ff43001d56eaf488def95a20615",
+      "numericValues": 2813,
+      "stringValues": 3377,
+      "numericDigest": "75e0a23d9d30c4ffa70a2a1e1ab64466f3e3e6dd3fc90e96f777d816d96e779c",
+      "normalizedNumericDigest": "75e0a23d9d30c4ffa70a2a1e1ab64466f3e3e6dd3fc90e96f777d816d96e779c",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/asset-recovery-final/ui.json",
+      "type": "json",
+      "bytes": 13615,
+      "sha256": "1940d1764cc8aeb5a46a37c30d880b10bb8fa377bacd2298181097740d7d8130",
+      "numericValues": 69,
+      "stringValues": 519,
+      "numericDigest": "898ab04c669c15364e748da0706783b940e86e85be892cda135f67d74252e809",
+      "normalizedNumericDigest": "898ab04c669c15364e748da0706783b940e86e85be892cda135f67d74252e809",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/attempt-before-recovery-fixes/touch-commands.json",
+      "type": "json",
+      "bytes": 253003,
+      "sha256": "c8b1201fdf1d5aa1a46db6b9c2639c404a8dc05d8de14b933454c2724976d986",
+      "numericValues": 3173,
+      "stringValues": 7205,
+      "numericDigest": "cfeaa336be047b01072f0a95b9cba6c85e4b1ff6733c123e43b1cd73e96848eb",
+      "normalizedNumericDigest": "cfeaa336be047b01072f0a95b9cba6c85e4b1ff6733c123e43b1cd73e96848eb",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/attempt-before-recovery-fixes/ui.json",
+      "type": "json",
+      "bytes": 1570272,
+      "sha256": "ad561a0677794f9d86cbb1aab04e65b0ede83fd8565bcc637e628588bf9f35a7",
+      "numericValues": 30585,
+      "stringValues": 53932,
+      "numericDigest": "65416dd47d2b3a068dcf7cee1ee59d6d7a9f43709ea8fe564383ffa409d8430c",
+      "normalizedNumericDigest": "65416dd47d2b3a068dcf7cee1ee59d6d7a9f43709ea8fe564383ffa409d8430c",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/bulk-cpu-benchmark.json",
+      "type": "json",
+      "bytes": 4994,
+      "sha256": "c8438266a34e263f74e2f405557c7b9a0b342a677b36c8e980ad5cfa3bf1c959",
+      "numericValues": 108,
+      "stringValues": 163,
+      "numericDigest": "be115aed8b5b0b75e55bc673bb91149cec14a6d0bb0fd042b423ffab6c48b6d7",
+      "normalizedNumericDigest": "be115aed8b5b0b75e55bc673bb91149cec14a6d0bb0fd042b423ffab6c48b6d7",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/camera-controls-evaluation.json",
+      "type": "json",
+      "bytes": 2039,
+      "sha256": "ccbee6d7128b2a47e6f32100efda5c23b9b079eb6d4a600a28df3d1bb00915a2",
+      "numericValues": 21,
+      "stringValues": 58,
+      "numericDigest": "107c4c6b053ed4746ba9613dd95c60bc04188f76c6e8daced88a73efce1efae7",
+      "normalizedNumericDigest": "107c4c6b053ed4746ba9613dd95c60bc04188f76c6e8daced88a73efce1efae7",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/clearance-audit.json",
+      "type": "json",
+      "bytes": 1953,
+      "sha256": "d7c2e6c469e498cf98dfd41d2fc41461bc15ddc3fadb7d07283aeed3499167a0",
+      "numericValues": 48,
+      "stringValues": 60,
+      "numericDigest": "7023005cb337138bd93fb94cf3de4d5f4f4a41eb90713adfb281c7040a0de6d2",
+      "normalizedNumericDigest": "7023005cb337138bd93fb94cf3de4d5f4f4a41eb90713adfb281c7040a0de6d2",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/comparison/comparison.json",
+      "type": "json",
+      "bytes": 203639,
+      "sha256": "27949b139dce8d6aade6eb5cb7b2fd0830f989cf2020192ac3ead96078585a98",
+      "numericValues": 4362,
+      "stringValues": 7304,
+      "numericDigest": "b1afabca6f549024c2ac3bba815eb8460e6d92ff6fc947394b98ccb5d60e8c56",
+      "normalizedNumericDigest": "b1afabca6f549024c2ac3bba815eb8460e6d92ff6fc947394b98ccb5d60e8c56",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-artifact-sanitization.json",
+      "type": "json",
+      "bytes": 3894,
+      "sha256": "a905b7aaa54961975eb166e007f65eb3e1edf65d2e3a6bc99669d8a919c42246",
+      "numericValues": 30,
+      "stringValues": 99,
+      "numericDigest": "5c8ed17e1494e30410e48e1001724cccf9f26bdbb571898467fc0b8644df1bbc",
+      "normalizedNumericDigest": "5c8ed17e1494e30410e48e1001724cccf9f26bdbb571898467fc0b8644df1bbc",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-cache-changing.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 271430,
+      "sha256": "9411684078924cf1cc54bf8fcf667543388a776c8e5ff62ee7ddff81407da57d",
+      "numericValues": 15699,
+      "stringValues": 12572,
+      "numericDigest": "c84373c0c7a8fd34a3ac0fad703284aa59f84cddb36270a6044fdb8afaff45ab",
+      "normalizedNumericDigest": "c84373c0c7a8fd34a3ac0fad703284aa59f84cddb36270a6044fdb8afaff45ab",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-cache-changing.json",
+      "type": "json",
+      "bytes": 23701,
+      "sha256": "bf0fcb977870c26ecc3a06e510d9325fbf2e8958bf6e186d8f76795a76bebe6a",
+      "numericValues": 360,
+      "stringValues": 716,
+      "numericDigest": "185cc61798576ec6061ddfaacd62b220fecb01a1861e50efe5998857acdf790c",
+      "normalizedNumericDigest": "185cc61798576ec6061ddfaacd62b220fecb01a1861e50efe5998857acdf790c",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-cache-late.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 345941,
+      "sha256": "f0304800cb3344089c839e41ce94638d0a537c8ed2367fcebbd3887c17c53193",
+      "numericValues": 22462,
+      "stringValues": 15909,
+      "numericDigest": "f7bf6f2d7163eab8e7c341f48161782f05e3a15bb4226359dae20b1d35241a44",
+      "normalizedNumericDigest": "f7bf6f2d7163eab8e7c341f48161782f05e3a15bb4226359dae20b1d35241a44",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-cache-late.json",
+      "type": "json",
+      "bytes": 23577,
+      "sha256": "05e1a9f05edb440db6842c84b6f10dcfeceea3137a53793b4819b2c24e721a45",
+      "numericValues": 360,
+      "stringValues": 716,
+      "numericDigest": "e00e83eea527c6350730e93d6b4fe0aef105c6f5f5e107e45d68e84a6d5dae10",
+      "normalizedNumericDigest": "e00e83eea527c6350730e93d6b4fe0aef105c6f5f5e107e45d68e84a6d5dae10",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-cache.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 285416,
+      "sha256": "de6d1151b345ccb861723156a5fa74551b3d3dcd2f7f4f3f54d55e8731e740ff",
+      "numericValues": 16291,
+      "stringValues": 13452,
+      "numericDigest": "60659656f8daac80f1b1064daff735ef2e9c18e5344bcc4352fd3cdd79f53612",
+      "normalizedNumericDigest": "60659656f8daac80f1b1064daff735ef2e9c18e5344bcc4352fd3cdd79f53612",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-cache.json",
+      "type": "json",
+      "bytes": 23457,
+      "sha256": "4659c6a473329baca18c569bb5266110e15dca8ec8fba671b640501ebcd4c5f2",
+      "numericValues": 360,
+      "stringValues": 716,
+      "numericDigest": "2cd1e081240bb7400365d8992df3d6c40751a6bb0433e518c8c3fa31335e9e30",
+      "normalizedNumericDigest": "2cd1e081240bb7400365d8992df3d6c40751a6bb0433e518c8c3fa31335e9e30",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-dirty-changing.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 303307,
+      "sha256": "596932505d960f01607feb7582011825abe62ddb0ee6c320e358f4036197be36",
+      "numericValues": 16359,
+      "stringValues": 14619,
+      "numericDigest": "bb3231b5a1d0be7a137fe412c9dbe392c32913afa71ea4066bf666c48fdac868",
+      "normalizedNumericDigest": "bb3231b5a1d0be7a137fe412c9dbe392c32913afa71ea4066bf666c48fdac868",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-dirty-changing.json",
+      "type": "json",
+      "bytes": 25056,
+      "sha256": "2097778231eb154ecb0cd122aaac46d82a21fecfd1f056d0d9a16f77545ba670",
+      "numericValues": 389,
+      "stringValues": 742,
+      "numericDigest": "294397e6f505afe7b6bdbc60d6eb00af337803317f44be95ef20040d460cdd23",
+      "normalizedNumericDigest": "294397e6f505afe7b6bdbc60d6eb00af337803317f44be95ef20040d460cdd23",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-dirty-late.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 375378,
+      "sha256": "a86403b5bfcda2d2e7a8887222b2c25c013010d61ba08e96459e6e4bfb4e5420",
+      "numericValues": 22880,
+      "stringValues": 17344,
+      "numericDigest": "472159f82d56d470b13479c847595cac15af9ea385d72bc777286d07582e0aad",
+      "normalizedNumericDigest": "472159f82d56d470b13479c847595cac15af9ea385d72bc777286d07582e0aad",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-dirty-late.json",
+      "type": "json",
+      "bytes": 25058,
+      "sha256": "a5e1ed5a782bde1d4156551fcdc7c8e7346870c32d02adbe5aa1c1cdc1985c13",
+      "numericValues": 387,
+      "stringValues": 740,
+      "numericDigest": "9293760481e3b9fe41e36d9301c0a43eac77a140fbb718cfb33d525b75f2e2a4",
+      "normalizedNumericDigest": "9293760481e3b9fe41e36d9301c0a43eac77a140fbb718cfb33d525b75f2e2a4",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-dirty.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 270646,
+      "sha256": "70c9809445595d4ea4217ad39b01d1d4621433b2cd8e700d4f9151eea588b1d5",
+      "numericValues": 15803,
+      "stringValues": 12878,
+      "numericDigest": "ba36b090010e662c72a7a229bb16ee4bcb7537ba20b54d3a6c950d7a8366aa5b",
+      "normalizedNumericDigest": "ba36b090010e662c72a7a229bb16ee4bcb7537ba20b54d3a6c950d7a8366aa5b",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-after-dirty.json",
+      "type": "json",
+      "bytes": 24980,
+      "sha256": "b9164fb8398493e7d3caba286c1fbae3daf7a99b223b8962072f08723325505d",
+      "numericValues": 387,
+      "stringValues": 740,
+      "numericDigest": "6058b44ff26803eab8d8df33e116736b293ef39957a0bbc1ede1ce2e27be6e73",
+      "normalizedNumericDigest": "6058b44ff26803eab8d8df33e116736b293ef39957a0bbc1ede1ce2e27be6e73",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-baseline.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 294476,
+      "sha256": "a2a4a1ace7f4ce8984013b895f2c751db0e128b2a869f4e82e796d20f2e6e637",
+      "numericValues": 16463,
+      "stringValues": 13817,
+      "numericDigest": "00ffe25a5351daacff813c1b55f21f4561b6548ed098fdf3a8ee40bee62281ed",
+      "normalizedNumericDigest": "00ffe25a5351daacff813c1b55f21f4561b6548ed098fdf3a8ee40bee62281ed",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/cpu-economic-baseline.json",
+      "type": "json",
+      "bytes": 23795,
+      "sha256": "6e85a832ba2cb57ade4656f467faadd9fd23e6e3fc7710540c7970b324697a0a",
+      "numericValues": 359,
+      "stringValues": 715,
+      "numericDigest": "1e3b0455aabbb2f5f2679b41722b2e6151de668fc86138cd4d569367f98b9c5e",
+      "normalizedNumericDigest": "1e3b0455aabbb2f5f2679b41722b2e6151de668fc86138cd4d569367f98b9c5e",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/environment-map/bake.json",
+      "type": "json",
+      "bytes": 2094,
+      "sha256": "a1e8ab979ad84e80c7467895a32fb35b405fea4864f54947a2068fd51275048e",
+      "numericValues": 26,
+      "stringValues": 78,
+      "numericDigest": "17935df328e09203dc131e98d5dd756f77a72e1a2b749778c52c709f85688aad",
+      "normalizedNumericDigest": "17935df328e09203dc131e98d5dd756f77a72e1a2b749778c52c709f85688aad",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/final-flows/ui.json",
+      "type": "json",
+      "bytes": 38195,
+      "sha256": "6d815f37c894ed92508bb3cfaf16f520460a5a08017b9f5a8b06e76f4bdea933",
+      "numericValues": 355,
+      "stringValues": 1397,
+      "numericDigest": "4fe5e4a3a5e3c002f333b8293d54bba47879251320a04c33c5fe2f391ac0b32a",
+      "normalizedNumericDigest": "4fe5e4a3a5e3c002f333b8293d54bba47879251320a04c33c5fe2f391ac0b32a",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/final-verification.json",
+      "type": "json",
+      "bytes": 3209,
+      "sha256": "621578691ed700c675529e5d3f428a51d37354e04cf07c78539bf9e2351fcfd6",
+      "numericValues": 27,
+      "stringValues": 115,
+      "numericDigest": "f74378bc1d54b4f444c314e2d8da08e785f01d1c94c8f6b042cb7e13a29d25ba",
+      "normalizedNumericDigest": "f74378bc1d54b4f444c314e2d8da08e785f01d1c94c8f6b042cb7e13a29d25ba",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/follow-opening-after/ui.json",
+      "type": "json",
+      "bytes": 16347,
+      "sha256": "23de99a0d755157c6421799ec017856e4ae5dbfaabba63630ed3341093f6f96a",
+      "numericValues": 254,
+      "stringValues": 378,
+      "numericDigest": "71af321a3deeba2f0d7da43ba3809c0a1e3f7f99b612333cd16b3575d83c5559",
+      "normalizedNumericDigest": "71af321a3deeba2f0d7da43ba3809c0a1e3f7f99b612333cd16b3575d83c5559",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/follow-opening-before/ui.json",
+      "type": "json",
+      "bytes": 12861,
+      "sha256": "3de1a8c2e6cbddcc814c19c575317d34c3bd8b0a54ba5cecd7865279b41ad2a5",
+      "numericValues": 81,
+      "stringValues": 220,
+      "numericDigest": "2c3e1ed1ab533976580884839fc149ef637af74ea6c1215609428cbc70369d5e",
+      "normalizedNumericDigest": "2c3e1ed1ab533976580884839fc149ef637af74ea6c1215609428cbc70369d5e",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/layout-final/narrow-331x502.json",
+      "type": "json",
+      "bytes": 9437,
+      "sha256": "1c13b7333dfff845d9cd01fa99b89eff6afd63b0b4ef811a06b1bc5bedd91b63",
+      "numericValues": 145,
+      "stringValues": 381,
+      "numericDigest": "203ffc91f0bf9110fa0b8dec32301314dc8f1a878c05d4bd617157519c97b82b",
+      "normalizedNumericDigest": "203ffc91f0bf9110fa0b8dec32301314dc8f1a878c05d4bd617157519c97b82b",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/layout-final/ui.json",
+      "type": "json",
+      "bytes": 72469,
+      "sha256": "b5c511d30fefdfdb975f75089d2eff6b49a80152e5bca87c17e2d8dd637d3e07",
+      "numericValues": 735,
+      "stringValues": 2216,
+      "numericDigest": "9793fe7a5f8961c9cd61dbbb5a6d125f78e2c3854ccf2b66e4ba77d2d50f5ac8",
+      "normalizedNumericDigest": "9793fe7a5f8961c9cd61dbbb5a6d125f78e2c3854ccf2b66e4ba77d2d50f5ac8",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/layout-production-runner-attempt/ui.json",
+      "type": "json",
+      "bytes": 10249,
+      "sha256": "b5c1b5b74194d64be9962b51587f54b7342e9944df4a1c6289b342591f38ab44",
+      "numericValues": 48,
+      "stringValues": 340,
+      "numericDigest": "c1a151a56a29b0e73ee9972729e2b613f608a5b8427269c399fa89a37f276b24",
+      "normalizedNumericDigest": "c1a151a56a29b0e73ee9972729e2b613f608a5b8427269c399fa89a37f276b24",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/production-loading-before-narrow-header.json",
+      "type": "json",
+      "bytes": 49601,
+      "sha256": "b0b12e606ccfcbfae3daf16698a7e32d2b158419a4af579bf1920a624cadc367",
+      "numericValues": 777,
+      "stringValues": 1309,
+      "numericDigest": "f6e16b5a71eb714d9165edd27054839e0e74d82726f54a66a269f33f813cd76e",
+      "normalizedNumericDigest": "f6e16b5a71eb714d9165edd27054839e0e74d82726f54a66a269f33f813cd76e",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/production-loading-before-startup.json",
+      "type": "json",
+      "bytes": 46950,
+      "sha256": "fc6acd853c27762e918212aaa70ee40df0b317532e476929c66cfe50fa56647e",
+      "numericValues": 729,
+      "stringValues": 1235,
+      "numericDigest": "c99a20eecd1b72620db9c48926fc8e696cc17ae73fa1f9419b5992ef9e451bf4",
+      "normalizedNumericDigest": "c99a20eecd1b72620db9c48926fc8e696cc17ae73fa1f9419b5992ef9e451bf4",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/production-loading.json",
+      "type": "json",
+      "bytes": 50238,
+      "sha256": "adc7aaa5d7b3caedee1476f4f82d5bc141c08f1361d8d345a655f6f39e35becb",
+      "numericValues": 785,
+      "stringValues": 1322,
+      "numericDigest": "fbe27b378bb2ba33af7d3639ecc0402e512f2d8daa10f95058844c7c2bac08a6",
+      "normalizedNumericDigest": "fbe27b378bb2ba33af7d3639ecc0402e512f2d8daa10f95058844c7c2bac08a6",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/reference-audit.json",
+      "type": "json",
+      "bytes": 8415,
+      "sha256": "daf6bc686a0742079a2e63d4dfc49d3c256495c0ebe09fb955f28017cc575241",
+      "numericValues": 16,
+      "stringValues": 269,
+      "numericDigest": "e3cc76b13775784cff39b3b2b93ac05664e966f50d41c213afc6d7aa5e6ef252",
+      "normalizedNumericDigest": "e3cc76b13775784cff39b3b2b93ac05664e966f50d41c213afc6d7aa5e6ef252",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/replay-diagnostic/ui.json",
+      "type": "json",
+      "bytes": 40222,
+      "sha256": "9411ff4461d95117e898509696ecbe9d74988358effa30bf8ae4ccb9c31157ee",
+      "numericValues": 570,
+      "stringValues": 936,
+      "numericDigest": "cc7418a83353372aa05fab5e32f0bd293269590392393316e8bef5bd2191a756",
+      "normalizedNumericDigest": "cc7418a83353372aa05fab5e32f0bd293269590392393316e8bef5bd2191a756",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/spatial-benchmark.json",
+      "type": "json",
+      "bytes": 1579,
+      "sha256": "9b19e08f01d3f198aee1d56bbf6885952ce9da38d6ba851bda883759ec8aedf2",
+      "numericValues": 23,
+      "stringValues": 42,
+      "numericDigest": "c3da9e4d0b18351557ac950e4d448fd90327c935d92d1d12961b62a983a99c7c",
+      "normalizedNumericDigest": "c3da9e4d0b18351557ac950e4d448fd90327c935d92d1d12961b62a983a99c7c",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-cold.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 315520,
+      "sha256": "2b450dcdffbd73492ecdc53a564853aa4bb85aaaceff732548000787d9c52a23",
+      "numericValues": 17082,
+      "stringValues": 18123,
+      "numericDigest": "d062a5176820b2868095938fc14474baac6d57ec30c79a93c3777717b6f346ac",
+      "normalizedNumericDigest": "d062a5176820b2868095938fc14474baac6d57ec30c79a93c3777717b6f346ac",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-cold.json",
+      "type": "json",
+      "bytes": 459493,
+      "sha256": "2108bced236d30054cf157c5bd89cf644011a67cf5407270e61a9bd73147b4f7",
+      "numericValues": 8190,
+      "stringValues": 20141,
+      "numericDigest": "e5275d35b929a3503d7168ce97cf3051aa5caf282bb88f5372ac922ff196bb9e",
+      "normalizedNumericDigest": "e5275d35b929a3503d7168ce97cf3051aa5caf282bb88f5372ac922ff196bb9e",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-connection/startup-state.json",
+      "type": "json",
+      "bytes": 2162,
+      "sha256": "93d10ba1dc821bbcc0070f34ca2458e4f131ae5e2736d386b81e120b27a3b2ea",
+      "numericValues": 31,
+      "stringValues": 67,
+      "numericDigest": "66f425b60afd23364db450bfc7177c9a950ad531875e54e0b749913df088ada5",
+      "normalizedNumericDigest": "66f425b60afd23364db450bfc7177c9a950ad531875e54e0b749913df088ada5",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-final-fixes/startup-state.json",
+      "type": "json",
+      "bytes": 4313,
+      "sha256": "5b4608293ca7c88f566ec4bb5e2b2d770e067ac50142eb11ebe13e092a0d492b",
+      "numericValues": 62,
+      "stringValues": 126,
+      "numericDigest": "105e67cd0fde92dedbefabab1146974a64a296395337d13f90d640e4adbb038e",
+      "normalizedNumericDigest": "105e67cd0fde92dedbefabab1146974a64a296395337d13f90d640e4adbb038e",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-state/startup-state.json",
+      "type": "json",
+      "bytes": 10533,
+      "sha256": "98aecd906ac42257d6404cd2887caa1be20633795633544658bda15b5c124d99",
+      "numericValues": 160,
+      "stringValues": 312,
+      "numericDigest": "dba797dd6c8bb80ce55db80c92afdc652faed813f3497075c0e0b957be29b7ae",
+      "normalizedNumericDigest": "dba797dd6c8bb80ce55db80c92afdc652faed813f3497075c0e0b957be29b7ae",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-warm.cpuprofile",
+      "type": "cpuprofile",
+      "bytes": 214699,
+      "sha256": "0ffeff5acc98d6169cfce28f30af82456f85a8e27528ef1fc765dd958c78a570",
+      "numericValues": 10746,
+      "stringValues": 12702,
+      "numericDigest": "5dc6d1798431fe8ebc33a37e331febeecb6e5e68dd5f24101c46d5e86efe1e3e",
+      "normalizedNumericDigest": "5dc6d1798431fe8ebc33a37e331febeecb6e5e68dd5f24101c46d5e86efe1e3e",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/startup-warm.json",
+      "type": "json",
+      "bytes": 500474,
+      "sha256": "f53e4c13a4265dd171d0c1eadc62673247b32604e4f27b72346e0de7d1f310c5",
+      "numericValues": 8922,
+      "stringValues": 21845,
+      "numericDigest": "53658123522fb5fb38df432a7655d277f973e5c30e5c2742c5c8c835de33ab12",
+      "normalizedNumericDigest": "53658123522fb5fb38df432a7655d277f973e5c30e5c2742c5c8c835de33ab12",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/texture-before/ui.json",
+      "type": "json",
+      "bytes": 6332,
+      "sha256": "2cac26c61587fd83bae9e0f604de4f93840b77a3e7632d887e32e078e509d14f",
+      "numericValues": 21,
+      "stringValues": 183,
+      "numericDigest": "6b95cbe6a366874d1c266a8351c6fe0ef53a23da14cb756002b76a4579a49f5a",
+      "normalizedNumericDigest": "6b95cbe6a366874d1c266a8351c6fe0ef53a23da14cb756002b76a4579a49f5a",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/touch-attempt-before-render-wait/touch-commands.json",
+      "type": "json",
+      "bytes": 253003,
+      "sha256": "c8b1201fdf1d5aa1a46db6b9c2639c404a8dc05d8de14b933454c2724976d986",
+      "numericValues": 3173,
+      "stringValues": 7205,
+      "numericDigest": "cfeaa336be047b01072f0a95b9cba6c85e4b1ff6733c123e43b1cd73e96848eb",
+      "normalizedNumericDigest": "cfeaa336be047b01072f0a95b9cba6c85e4b1ff6733c123e43b1cd73e96848eb",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/touch-commands.json",
+      "type": "json",
+      "bytes": 250312,
+      "sha256": "a0c87d0989843c310a6a619c6451c6a9e0b0789963dc188e08307ec99157e883",
+      "numericValues": 3163,
+      "stringValues": 7143,
+      "numericDigest": "8f8f9eb3b727c371fda463212c2df41ce58d6366380bad5bec8c3534c8dfea82",
+      "normalizedNumericDigest": "8f8f9eb3b727c371fda463212c2df41ce58d6366380bad5bec8c3534c8dfea82",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "docs/silo-engolfamento/evidence/upgrade/ui.json",
+      "type": "json",
+      "bytes": 1604847,
+      "sha256": "e04570c45f82ac957c75b9537bd5c5b07ef76c3e9ba85663b3481e92b0d522ce",
+      "numericValues": 30989,
+      "stringValues": 54516,
+      "numericDigest": "ca12b1699fe7d8fb017e13a271b0a7173d60f1a19d25df2d12be6c158a9d31e6",
+      "normalizedNumericDigest": "ca12b1699fe7d8fb017e13a271b0a7173d60f1a19d25df2d12be6c158a9d31e6",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "public/models/silo-engolfamento/environment-pmrem-256.manifest.json",
+      "type": "json",
+      "bytes": 2094,
+      "sha256": "a1e8ab979ad84e80c7467895a32fb35b405fea4864f54947a2068fd51275048e",
+      "numericValues": 26,
+      "stringValues": 78,
+      "numericDigest": "17935df328e09203dc131e98d5dd756f77a72e1a2b749778c52c709f85688aad",
+      "normalizedNumericDigest": "17935df328e09203dc131e98d5dd756f77a72e1a2b749778c52c709f85688aad",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "public/models/silo-engolfamento/manifest.json",
+      "type": "json",
+      "bytes": 4362,
+      "sha256": "671e1ed461ab34c37391eb75565fcb83d5e5d37a426f70e84c73fd01dccdf111",
+      "numericValues": 63,
+      "stringValues": 110,
+      "numericDigest": "e5f6af2147916fae055b3b5e6a6bb73e9f9d8572167e722a38fcd196828634fc",
+      "normalizedNumericDigest": "e5f6af2147916fae055b3b5e6a6bb73e9f9d8572167e722a38fcd196828634fc",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    },
+    {
+      "file": "public/models/silo-engolfamento/upgrade-manifest.json",
+      "type": "json",
+      "bytes": 87633,
+      "sha256": "2a4fca4deba2f132fe47509ff909ec70daf70c8e894b64afaa5dd9e48dee3453",
+      "numericValues": 1451,
+      "stringValues": 1853,
+      "numericDigest": "f9dc3d95d38e4a39eff5ac3a129d17269d7f5070ad0a5c85e4292bfd140f9653",
+      "normalizedNumericDigest": "f9dc3d95d38e4a39eff5ac3a129d17269d7f5070ad0a5c85e4292bfd140f9653",
+      "numericConsistency": true,
+      "normalizationWouldChangeContent": false,
+      "findings": {
+        "unsanitizedSystemUrls": 0,
+        "sensitiveQueryParameters": 0,
+        "credentialFields": 0,
+        "credentialLikeStrings": 0,
+        "externalHostPaths": 0
+      }
+    }
+  ]
+}

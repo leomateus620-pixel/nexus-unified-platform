@@ -1,0 +1,1349 @@
+{
+  "schema": "nexus-silo-upgrade-validation/2.0.0",
+  "testedAt": "2026-10-15T04:41:13.532Z",
+  "base": "http://127.0.0.1:5185",
+  "command": "node scripts/silo-engolfamento/validate-upgrade.mjs",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584
+  },
+  "browser": "155.0.8059.41",
+  "scopeFilter": "Scene selection|Trolley following enters|Structure index|Selecting another|Following the trolley|Hidden-grain|Returning to exploration|Context loss|Library stays lazy|No unexpected",
+  "checks": [
+    {
+      "name": "Scene selection resolves the same support ID through the technical cut",
+      "result": "aprovado",
+      "durationMs": 6984.9445,
+      "evidence": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "38",
+          "triangles": "301506",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 7.407775423123775e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 38,
+          "triangles": 301506
+        },
+        "point": {
+          "x": 720,
+          "y": 383,
+          "hidden": false
+        }
+      }
+    },
+    {
+      "name": "Trolley following enters from the general view and clears the closed shell around all supports",
+      "result": "aprovado",
+      "durationMs": 22174.117599999998,
+      "evidence": [
+        {
+          "instant": 0,
+          "position": [
+            -2.631981360775414,
+            24.580999999999996,
+            -9.712203476376036
+          ],
+          "target": [
+            -2.1737404828941624,
+            24.280999999999995,
+            -10.723398461449944
+          ],
+          "mode": "frontal",
+          "distance": 1.150000000000001
+        },
+        {
+          "instant": 7.3,
+          "position": [
+            -7.256663026327274,
+            24.580999999999996,
+            -6.971015992833086
+          ],
+          "target": [
+            -7.384434211757781,
+            24.280999999999995,
+            -8.073819023375568
+          ],
+          "mode": "frontal",
+          "distance": 1.15
+        },
+        {
+          "instant": 14.5,
+          "position": [
+            -9.876305902484162,
+            24.580999999999996,
+            -1.9268637654376297
+          ],
+          "target": [
+            -10.581255142028763,
+            24.280999999999995,
+            -2.7845038820748416
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000004
+        },
+        {
+          "instant": 21.8,
+          "position": [
+            -9.314853469521953,
+            24.580999999999996,
+            3.8062746999309973
+          ],
+          "target": [
+            -10.374722317815369,
+            24.280999999999995,
+            3.475853719336256
+          ],
+          "mode": "frontal",
+          "distance": 1.150000000000001
+        },
+        {
+          "instant": 29.1,
+          "position": [
+            -5.700638659265321,
+            24.580999999999996,
+            8.2919805310004
+          ],
+          "target": [
+            -6.768075678571777,
+            24.280999999999995,
+            8.597067747733826
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000001
+        },
+        {
+          "instant": 36.4,
+          "position": [
+            -0.21815020600435886,
+            24.580999999999996,
+            10.060150731356874
+          ],
+          "target": [
+            -0.9433236374741606,
+            24.280999999999995,
+            10.900759733384756
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000001
+        },
+        {
+          "instant": 43.6,
+          "position": [
+            5.267811846312775,
+            24.580999999999996,
+            8.573469577822435
+          ],
+          "target": [
+            5.113814392477944,
+            24.280999999999995,
+            9.672917068252236
+          ],
+          "mode": "frontal",
+          "distance": 1.15
+        },
+        {
+          "instant": 50.9,
+          "position": [
+            9.107355491039431,
+            24.580999999999996,
+            4.279053424512701
+          ],
+          "target": [
+            9.58166638302974,
+            24.280999999999995,
+            5.282810953868949
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000006
+        },
+        {
+          "instant": 58.2,
+          "position": [
+            9.962140192358058,
+            24.580999999999996,
+            -1.4177394111063153
+          ],
+          "target": [
+            10.909313244042218,
+            24.280999999999995,
+            -0.8386338851757513
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000001
+        },
+        {
+          "instant": 65.5,
+          "position": [
+            7.5520268600070235,
+            24.580999999999996,
+            -6.649895680063895
+          ],
+          "target": [
+            8.661644493005571,
+            24.280999999999995,
+            -6.685232750382461
+          ],
+          "mode": "frontal",
+          "distance": 1.15
+        },
+        {
+          "instant": 72.7,
+          "position": [
+            2.7439674530791436,
+            24.580999999999996,
+            -9.681160305791982
+          ],
+          "target": [
+            3.6574210950475785,
+            24.280999999999995,
+            -10.312113904699702
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000008
+        },
+        {
+          "instant": 79.9,
+          "position": [
+            -2.631247525472436,
+            24.580999999999996,
+            -9.71240231403617
+          ],
+          "target": [
+            -2.172930245744862,
+            24.280999999999995,
+            -10.723562672784038
+          ],
+          "mode": "frontal",
+          "distance": 1.1499999999999997
+        },
+        {
+          "instant": 0.1,
+          "position": [
+            -2.632715181052657,
+            24.580999999999996,
+            -9.712004583269863
+          ],
+          "target": [
+            -2.1745507076337796,
+            24.280999999999995,
+            -10.723234188896994
+          ],
+          "mode": "frontal",
+          "distance": 1.1500000000000001
+        }
+      ]
+    },
+    {
+      "name": "Structure index restores a closed roof, opens the real manhole and exposes the isolated floor",
+      "result": "aprovado",
+      "durationMs": 9636.017200000002,
+      "evidence": [
+        {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "0.1",
+            "calls": "93",
+            "triangles": "257768",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "lvhf",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 0.1,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 3.978256139440565e-15,
+            "contextLosses": 0,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": true,
+              "B": true
+            },
+            "grainsVisible": true,
+            "ropeVisible": true,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 93,
+            "triangles": 257768
+          }
+        },
+        {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "0.1",
+            "calls": "59",
+            "triangles": "245226",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "lvhf",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 0.1,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 3.978256139440565e-15,
+            "contextLosses": 0,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": true,
+              "B": true
+            },
+            "grainsVisible": true,
+            "ropeVisible": true,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 59,
+            "triangles": 245226
+          }
+        },
+        {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "0.1",
+            "calls": "18",
+            "triangles": "9774",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "lvhf",
+          "panel": "components",
+          "selected": "structure.floor",
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 0.1,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 3.978256139440565e-15,
+            "contextLosses": 0,
+            "disposed": false,
+            "isolatedId": "structure.floor",
+            "workerVisible": {
+              "A": false,
+              "B": false
+            },
+            "grainsVisible": false,
+            "ropeVisible": false,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 18,
+            "triangles": 9774
+          }
+        },
+        {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "0.1",
+            "calls": "19",
+            "triangles": "9786",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "lvhf",
+          "panel": "components",
+          "selected": "structure.extraction",
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 0.1,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 3.978256139440565e-15,
+            "contextLosses": 0,
+            "disposed": false,
+            "isolatedId": "structure.extraction",
+            "workerVisible": {
+              "A": false,
+              "B": false
+            },
+            "grainsVisible": false,
+            "ropeVisible": false,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 19,
+            "triangles": 9786
+          }
+        }
+      ]
+    },
+    {
+      "name": "Selecting another component restores the previous isolation",
+      "result": "aprovado",
+      "durationMs": 2415.1880999999994,
+      "evidence": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "54",
+          "triangles": "353404",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 54,
+          "triangles": 353404
+        }
+      }
+    },
+    {
+      "name": "Following the trolley exits first-person without advancing or resetting time",
+      "result": "aprovado",
+      "durationMs": 3099.309300000001,
+      "evidence": {
+        "pausedTime": 4,
+        "playingBefore": 4.2,
+        "playingAfter": 5.3
+      }
+    },
+    {
+      "name": "Hidden-grain inspection is restored per mode without floating rigs or rope",
+      "result": "aprovado",
+      "durationMs": 4219.235200000003,
+      "evidence": {
+        "floor": {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "idle",
+            "time": "0",
+            "calls": "29",
+            "triangles": "135224",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "explore",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 0,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 4.440892098500626e-16,
+            "contextLosses": 0,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": false,
+              "B": false
+            },
+            "grainsVisible": false,
+            "ropeVisible": false,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 29,
+            "triangles": 135224
+          }
+        },
+        "transitions": [
+          {
+            "canvas": {
+              "engine": "three.js r186",
+              "explorationReady": "true",
+              "camera": "frontal",
+              "status": "paused",
+              "time": "8",
+              "calls": "46",
+              "triangles": "245320",
+              "occluded": "false",
+              "ready": "true"
+            },
+            "mode": "incident",
+            "panel": "none",
+            "selected": null,
+            "canvases": 1,
+            "horizontalOverflow": false,
+            "time": 8,
+            "dialogs": 0,
+            "exitVisible": false,
+            "metrics": {
+              "readyMs": 2493,
+              "explorationMs": 1722.7999999523163,
+              "dorsalError": 3.552713678800501e-15,
+              "contextLosses": 0,
+              "disposed": false,
+              "isolatedId": null,
+              "workerVisible": {
+                "A": true,
+                "B": true
+              },
+              "grainsVisible": true,
+              "ropeVisible": true,
+              "controllerCamera": "frontal",
+              "errors": [],
+              "calls": 46,
+              "triangles": 245320
+            }
+          },
+          {
+            "canvas": {
+              "engine": "three.js r186",
+              "explorationReady": "true",
+              "camera": "frontal",
+              "status": "paused",
+              "time": "0.1",
+              "calls": "86",
+              "triangles": "252958",
+              "occluded": "false",
+              "ready": "true"
+            },
+            "mode": "lvhf",
+            "panel": "none",
+            "selected": null,
+            "canvases": 1,
+            "horizontalOverflow": false,
+            "time": 0.1,
+            "dialogs": 0,
+            "exitVisible": false,
+            "metrics": {
+              "readyMs": 2493,
+              "explorationMs": 1722.7999999523163,
+              "dorsalError": 3.978256139440565e-15,
+              "contextLosses": 0,
+              "disposed": false,
+              "isolatedId": null,
+              "workerVisible": {
+                "A": true,
+                "B": true
+              },
+              "grainsVisible": true,
+              "ropeVisible": true,
+              "controllerCamera": "frontal",
+              "errors": [],
+              "calls": 86,
+              "triangles": 252958
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Returning to exploration restores its camera bookmark without autoplay",
+      "result": "aprovado",
+      "durationMs": 5636.350699999995,
+      "evidence": {
+        "before": {
+          "position": [
+            -34.33979270143217,
+            31.804004115847164,
+            58.71434871831589
+          ],
+          "target": [
+            0,
+            15.5015,
+            0
+          ]
+        },
+        "after": {
+          "position": [
+            -34.339792706202914,
+            31.804004115847164,
+            58.71434871552566
+          ],
+          "target": [
+            0,
+            15.5015,
+            0
+          ]
+        },
+        "toleranceMetres": 0.03
+      }
+    },
+    {
+      "name": "Context loss pauses, restore preserves owner and time",
+      "result": "aprovado",
+      "durationMs": 1866.9969000000056,
+      "evidence": {
+        "lost": {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "9",
+            "calls": "58",
+            "triangles": "269148",
+            "occluded": "false",
+            "ready": "false"
+          },
+          "mode": "incident",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 9,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 0,
+            "contextLosses": 1,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": true,
+              "B": true
+            },
+            "grainsVisible": true,
+            "ropeVisible": true,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 58,
+            "triangles": 269148
+          }
+        },
+        "restored": {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "9",
+            "calls": "58",
+            "triangles": "269148",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "incident",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 9,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2493,
+            "explorationMs": 1722.7999999523163,
+            "dorsalError": 0,
+            "contextLosses": 1,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": true,
+              "B": true
+            },
+            "grainsVisible": true,
+            "ropeVisible": true,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 58,
+            "triangles": 269148
+          }
+        }
+      }
+    },
+    {
+      "name": "Library stays lazy and repeated reentry disposes the prior owner",
+      "result": "aprovado",
+      "durationMs": 4692.727599999998,
+      "evidence": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 1108.7000000476837,
+          "explorationMs": 353,
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "name": "No unexpected JavaScript errors in the exercised sessions",
+      "result": "aprovado",
+      "durationMs": 0.16170000001147855,
+      "evidence": {
+        "errors": []
+      }
+    }
+  ],
+  "failures": [],
+  "screenshots": [
+    {
+      "filename": "1440-before-scene-pick-passant04.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "33",
+          "triangles": "195718",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 7.407775423123775e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 33,
+          "triangles": 195718
+        }
+      }
+    },
+    {
+      "filename": "1440-scene-selected-passant04.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "33",
+          "triangles": "195718",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "components",
+        "selected": "lvhf.passant.04",
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 7.407775423123775e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 33,
+          "triangles": 195718
+        }
+      }
+    },
+    {
+      "filename": "1440-follow-support-0.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "43",
+          "triangles": "246426",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 7.407775423123775e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 43,
+          "triangles": 246426
+        }
+      }
+    },
+    {
+      "filename": "1440-follow-support-5.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "36.4",
+          "calls": "46",
+          "triangles": "287678",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 36.4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 1.7763568394002505e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 46,
+          "triangles": 287678
+        }
+      }
+    },
+    {
+      "filename": "1440-follow-support-10.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "72.7",
+          "calls": "45",
+          "triangles": "335486",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 72.7,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 3.66205343881779e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 45,
+          "triangles": 335486
+        }
+      }
+    },
+    {
+      "filename": "1440-index-roof.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "0.1",
+          "calls": "93",
+          "triangles": "257768",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0.1,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 3.978256139440565e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 93,
+          "triangles": 257768
+        }
+      }
+    },
+    {
+      "filename": "1440-index-manhole.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "0.1",
+          "calls": "59",
+          "triangles": "245226",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0.1,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 3.978256139440565e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 59,
+          "triangles": 245226
+        }
+      }
+    },
+    {
+      "filename": "1440-index-floor.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "0.1",
+          "calls": "18",
+          "triangles": "9774",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "components",
+        "selected": "structure.floor",
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0.1,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 3.978256139440565e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": "structure.floor",
+          "workerVisible": {
+            "A": false,
+            "B": false
+          },
+          "grainsVisible": false,
+          "ropeVisible": false,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 18,
+          "triangles": 9774
+        }
+      }
+    },
+    {
+      "filename": "1440-index-extraction.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "0.1",
+          "calls": "19",
+          "triangles": "9786",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "components",
+        "selected": "structure.extraction",
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0.1,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 3.978256139440565e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": "structure.extraction",
+          "workerVisible": {
+            "A": false,
+            "B": false
+          },
+          "grainsVisible": false,
+          "ropeVisible": false,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 19,
+          "triangles": 9786
+        }
+      }
+    },
+    {
+      "filename": "1440-selection-restores-isolation-foundation.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "47",
+          "triangles": "242964",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": "structure.foundation",
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2493,
+          "explorationMs": 1722.7999999523163,
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 47,
+          "triangles": 242964
+        }
+      }
+    }
+  ],
+  "loading": [],
+  "samples": [],
+  "consoleErrors": [],
+  "renderErrors": [],
+  "gpuDeletionTraces": [],
+  "limitations": [
+    "Desktop local Chrome headless. Mobile dimensions and touch are Chromium emulation, not Android/iOS hardware.",
+    "RAF interval is active frame time; synchronous renderer.render is CPU submission, not GPU completion. GPU timer query not measured.",
+    "Development-server Resource Timing is not compressed production bytes or mobile-network readiness.",
+    "Shadow passes are estimates; renderer.info totals include shadow work. Resource byte estimates are not actual driver VRAM.",
+    "Parametric mechanical passage and appearance require separate visual review; screenshots and numeric tests do not certify CAD, loads or rescue procedures."
+  ],
+  "scenePick": {
+    "point": {
+      "x": 720,
+      "y": 383,
+      "hidden": false
+    },
+    "camera": {
+      "position": [
+        8.038351338892497,
+        24.432800821572286,
+        -6.965271084664483
+      ],
+      "target": [
+        8.271188701360252,
+        24.376499999314547,
+        -7.16702580772311
+      ],
+      "projection": [
+        1.3857626552468416,
+        0,
+        0,
+        0,
+        0,
+        2.6050890646938014,
+        0,
+        0,
+        0,
+        0,
+        -1.000026667022227,
+        -1,
+        0,
+        0,
+        -0.004000053334044454,
+        0
+      ]
+    }
+  },
+  "criteria": [
+    {
+      "criterion": "Scene selection resolves the same support ID through the technical cut",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Trolley following enters from the general view and clears the closed shell around all supports",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Structure index restores a closed roof, opens the real manhole and exposes the isolated floor",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Selecting another component restores the previous isolation",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Following the trolley exits first-person without advancing or resetting time",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Hidden-grain inspection is restored per mode without floating rigs or rope",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Returning to exploration restores its camera bookmark without autoplay",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Context loss pauses, restore preserves owner and time",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Library stays lazy and repeated reentry disposes the prior owner",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "No unexpected JavaScript errors in the exercised sessions",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Android/iOS físico e rede móvel",
+      "condition": "Hardware indisponível nesta execução",
+      "status": "não verificado",
+      "measured": "Somente Chrome desktop e emulação",
+      "evidence": "ui.json → limitations",
+      "pending": "Executar no telefone de referência com rede e duração documentadas"
+    },
+    {
+      "criterion": "Passagem mecânica exata e dimensionamento LVHF",
+      "condition": "Sem CAD/desenho executivo autorizado",
+      "status": "não verificado",
+      "measured": "Cinemática paramétrica identificada",
+      "evidence": "upgrade-references.md",
+      "pending": "Obter desenhos/recursos autorizados do fabricante e conferir compatibilidade/cargas"
+    }
+  ]
+}

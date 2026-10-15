@@ -15,8 +15,9 @@ export function SourcesPanel() {
   return (
     <div className="silo-sources">
       <p>
-        Fontes primárias conferidas em {SOURCE_REVIEW_DATE.split("-").reverse().join("/")}. Os dados
-        ficam versionados no módulo; a reprodução não consulta sites externos.
+        Fontes e referências versionadas no módulo. A série epidemiológica conserva a revisão de{" "}
+        {SOURCE_REVIEW_DATE.split("-").reverse().join("/")}; cada registro informa sua própria
+        consulta e seus limites. A reprodução não consulta sites externos.
       </p>
       <ol>
         {SILO_SOURCES.map((source) => (
@@ -25,7 +26,8 @@ export function SourcesPanel() {
               {source.title} <span aria-label="abre em nova aba">↗</span>
             </a>
             <p>
-              {source.institution} · {source.edition}
+              {source.institution} · {source.edition} · Consulta:{" "}
+              {source.accessedOn.split("-").reverse().join("/")}
             </p>
             <p>
               <strong>Local:</strong> {source.locator}
@@ -61,19 +63,23 @@ export function IncidentAnalysis({ onReplayPrevention, onClose }: IncidentAnalys
   return (
     <article className="silo-analysis">
       <p className="silo-eyebrow">Análise educativa</p>
-      <h2>O fluxo é a condição que precisa ser eliminada</h2>
+      <h2>Impedir a exposição antes da entrada</h2>
       <p>
-        A reconstituição mostra uma entrada insegura seguida de descarga. O caminho sem conexão
-        permite perda de apoio, aprisionamento e ocultação pela massa granular. A retenção precoce
-        configurada limita o deslocamento do técnico conectado; ele permanece em emergência e
-        depende da interrupção do fluxo e de retirada planejada.
+        A reconstituição mostra uma condição insegura: dois técnicos sobre grãos, próximos ao
+        perímetro, sofrem perda localizada de apoio. O roteiro ilustra o colapso de uma crosta e o
+        aprisionamento progressivo. A superfície redistribui o volume no entorno, sem descarga
+        externa. A conexão de A limita geometricamente seu deslocamento; ela não comprova
+        salvamento. A emergência exige interrupção da movimentação e resgate planejado.
       </p>
       <div className="silo-analysis-callout">
         <strong>A proteção ilustrada tem limites.</strong>
         <p>
-          A comparação usa exposição local comparável e a mesma trajetória livre. A linha impõe uma
-          restrição geométrica; não há içamento automático, simulação de cargas ou certificação. Um
-          trava-quedas para queda livre não garante resposta ao engolfamento lento.
+          A e B ocupam duas regiões espelhadas, com o mesmo nível, seed e roteiro livre. No replay
+          de A, somente a conexão é alterada. A LVHF impõe uma restrição geométrica com comprimento
+          fixo de 0,95 m nesta hipótese de apresentação. Não há içamento, cálculo de cargas,
+          previsão física calibrada nem validação da compatibilidade mecânica entre trole e
+          passantes. A ancoragem, os reforços e o resgate dependem do projeto e da documentação
+          técnica aplicáveis.
         </p>
       </div>
       <section aria-labelledby="silo-statistics-title">
@@ -165,16 +171,17 @@ export function IncidentAnalysis({ onReplayPrevention, onClose }: IncidentAnalys
         </ol>
         {onReplayPrevention && (
           <button type="button" onClick={onReplayPrevention}>
-            Rever prevenção correta
+            Rever controles preventivos
           </button>
         )}
         <details>
           <summary>Outros mecanismos de engolfamento</summary>
           <p>
-            O cenário anima fluxo pela descarga. Em uma ponte/crosta, material aglomerado cobre um
-            vazio e pode ceder sob o trabalhador, mesmo após interromper a descarga. Uma massa
-            aderida à parede pode desmoronar sobre quem está próximo. São mecanismos distintos;
-            parar o fluxo não elimina automaticamente esses riscos.
+            O colapso local desta cena é uma representação cinemática de perda de apoio, sem cálculo
+            da resistência da crosta ou de uma cavidade real. Outros mecanismos incluem o arraste
+            por grãos em descarga e o desmoronamento de massa aderida à parede. Pontes e acúmulos
+            podem continuar perigosos após interromper equipamentos. O bloqueio da movimentação não
+            autoriza a entrada nem dispensa a avaliação desses riscos.
           </p>
         </details>
       </section>

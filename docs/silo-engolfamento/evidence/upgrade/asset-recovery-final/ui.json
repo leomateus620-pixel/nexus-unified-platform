@@ -1,0 +1,441 @@
+{
+  "schema": "nexus-silo-upgrade-validation/2.0.0",
+  "testedAt": "2026-10-15T05:18:57.477Z",
+  "base": "http://127.0.0.1:5185",
+  "command": "node scripts/silo-engolfamento/validate-upgrade.mjs",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584
+  },
+  "browser": "155.0.8059.41",
+  "scopeFilter": "Context loss|Library stays|GLB 404|Hung GLB|Invalid GLB|Corrupt embedded|No-WebGL|No unexpected",
+  "checks": [
+    {
+      "name": "Context loss pauses, restore preserves owner and time",
+      "result": "aprovado",
+      "durationMs": 4080.9228000000003,
+      "evidence": {
+        "lost": {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "9",
+            "calls": "58",
+            "triangles": "233308",
+            "occluded": "false",
+            "ready": "false"
+          },
+          "mode": "incident",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 9,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2836.7000000476837,
+            "explorationMs": 1070.1000000238419,
+            "dorsalError": 0,
+            "contextLosses": 1,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": true,
+              "B": true
+            },
+            "grainsVisible": true,
+            "ropeVisible": true,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 58,
+            "triangles": 233308
+          }
+        },
+        "restored": {
+          "canvas": {
+            "engine": "three.js r186",
+            "explorationReady": "true",
+            "camera": "frontal",
+            "status": "paused",
+            "time": "9",
+            "calls": "58",
+            "triangles": "233308",
+            "occluded": "false",
+            "ready": "true"
+          },
+          "mode": "incident",
+          "panel": "none",
+          "selected": null,
+          "canvases": 1,
+          "horizontalOverflow": false,
+          "time": 9,
+          "dialogs": 0,
+          "exitVisible": false,
+          "metrics": {
+            "readyMs": 2836.7000000476837,
+            "explorationMs": 1070.1000000238419,
+            "dorsalError": 0,
+            "contextLosses": 1,
+            "disposed": false,
+            "isolatedId": null,
+            "workerVisible": {
+              "A": true,
+              "B": true
+            },
+            "grainsVisible": true,
+            "ropeVisible": true,
+            "controllerCamera": "frontal",
+            "errors": [],
+            "calls": 58,
+            "triangles": 233308
+          }
+        }
+      }
+    },
+    {
+      "name": "Library stays lazy and repeated reentry disposes the prior owner",
+      "result": "aprovado",
+      "durationMs": 5383.808800000001,
+      "evidence": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 1272.8999999761581,
+          "explorationMs": 388.39999997615814,
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "name": "GLB 404 exposes a recoverable error and retry aborts the failed owner",
+      "result": "aprovado",
+      "durationMs": 7292.972699999998,
+      "evidence": {
+        "retried": true
+      }
+    },
+    {
+      "name": "Hung GLB request times out clearly and retry cancels its owner",
+      "result": "aprovado",
+      "durationMs": 26907.491599999998,
+      "evidence": {
+        "errorAfterMs": 24872.153599999998,
+        "heldRequests": 1,
+        "retryReady": true,
+        "infiniteSpinner": false
+      }
+    },
+    {
+      "name": "Invalid GLB decoding fails clearly and recovers through retry",
+      "result": "aprovado",
+      "durationMs": 5368.9038999999975,
+      "evidence": {
+        "decodingErrorHandled": true,
+        "retryReady": true
+      }
+    },
+    {
+      "name": "Corrupt embedded worker image is identified and retry restores the textured rig",
+      "result": "aprovado",
+      "durationMs": 6483.2212,
+      "evidence": {
+        "glbContainerValid": true,
+        "damagedImageBytes": 32,
+        "recoverableError": true,
+        "identifiedFallback": true,
+        "retryReady": true
+      }
+    },
+    {
+      "name": "No-WebGL gets a usable lightweight sequence and persistent first-person exit",
+      "result": "aprovado",
+      "durationMs": 3782.503199999992,
+      "evidence": {
+        "fallback": true,
+        "infiniteSpinner": false
+      }
+    },
+    {
+      "name": "No unexpected JavaScript errors in the exercised sessions",
+      "result": "aprovado",
+      "durationMs": 3.6836999999941327,
+      "evidence": {
+        "errors": []
+      }
+    }
+  ],
+  "failures": [],
+  "screenshots": [
+    {
+      "filename": "1366-glb-recovered.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 1386.3999999761581,
+          "explorationMs": 383.2999999523163,
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "1366-corrupt-texture-identified.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "67",
+          "triangles": "189856",
+          "occluded": "false"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 0,
+          "explorationMs": 433.10000002384186,
+          "dorsalError": 0,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": false,
+            "B": false
+          },
+          "grainsVisible": true,
+          "ropeVisible": false,
+          "controllerCamera": "frontal",
+          "errors": [
+            "Textura do técnico A indisponível. Tente carregar novamente."
+          ],
+          "calls": 67,
+          "triangles": 189856
+        }
+      }
+    },
+    {
+      "filename": "1366-corrupt-texture-recovered.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 1330.2000000476837,
+          "explorationMs": 369.40000009536743,
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "390-no-webgl-sequence.png",
+      "state": {
+        "canvas": {},
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 0,
+        "horizontalOverflow": false,
+        "time": 25,
+        "dialogs": 0,
+        "exitVisible": true,
+        "metrics": null
+      }
+    }
+  ],
+  "loading": [],
+  "samples": [],
+  "consoleErrors": [],
+  "renderErrors": [],
+  "gpuDeletionTraces": [],
+  "limitations": [
+    "Desktop local Chrome headless. Mobile dimensions and touch are Chromium emulation, not Android/iOS hardware.",
+    "RAF interval is active frame time; synchronous renderer.render is CPU submission, not GPU completion. GPU timer query not measured.",
+    "Development-server Resource Timing is not compressed production bytes or mobile-network readiness.",
+    "Shadow passes are estimates; renderer.info totals include shadow work. Resource byte estimates are not actual driver VRAM.",
+    "Parametric mechanical passage and appearance require separate visual review; screenshots and numeric tests do not certify CAD, loads or rescue procedures."
+  ],
+  "criteria": [
+    {
+      "criterion": "Context loss pauses, restore preserves owner and time",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Library stays lazy and repeated reentry disposes the prior owner",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "GLB 404 exposes a recoverable error and retry aborts the failed owner",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Hung GLB request times out clearly and retry cancels its owner",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Invalid GLB decoding fails clearly and recovers through retry",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Corrupt embedded worker image is identified and retry restores the textured rig",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "No-WebGL gets a usable lightweight sequence and persistent first-person exit",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "No unexpected JavaScript errors in the exercised sessions",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Android/iOS físico e rede móvel",
+      "condition": "Hardware indisponível nesta execução",
+      "status": "não verificado",
+      "measured": "Somente Chrome desktop e emulação",
+      "evidence": "ui.json → limitations",
+      "pending": "Executar no telefone de referência com rede e duração documentadas"
+    },
+    {
+      "criterion": "Passagem mecânica exata e dimensionamento LVHF",
+      "condition": "Sem CAD/desenho executivo autorizado",
+      "status": "não verificado",
+      "measured": "Cinemática paramétrica identificada",
+      "evidence": "upgrade-references.md",
+      "pending": "Obter desenhos/recursos autorizados do fabricante e conferir compatibilidade/cargas"
+    }
+  ]
+}

@@ -1,24 +1,126 @@
 import * as T from "three";
-import { surfaceAt, INITIAL_GRAIN_VOLUME } from "./GrainField";
+import { surfaceAt, dischargeAt, metres, type VolumeFlow } from "./GrainField";
 import { SILO, type SiloFrame } from "./simulation";
 import { CUT_PLANE_Z } from "./SiloModel";
 
 export type Quality = "economic" | "balanced" | "high";
-// Keep bulk just inside the corrugated sheets, including their inward valleys.
+// Inset includes the inward corrugation valley AND the circumferential chord.
+// At 80 shell sectors the valley chord reaches R10.9795m, so a 15mm inset leaks.
+// 25mm retains >4mm clearance; an actual wall-triangle containment test guards it.
 // <2% volume display approximation; the domain's conserved volume is unchanged.
-const GRAIN_RADIUS = SILO.radius - 0.015;
-const GRAIN_OUTLET_RADIUS = SILO.outletRadius - 0.003;
+const GRAIN_RADIUS = SILO.radius - 0.025;
 export const QUALITY = {
   economic: { grains: 900, dpr: 0.8 },
   balanced: { grains: 1800, dpr: 1.15 },
   high: { grains: 3000, dpr: 1.5 },
 } as const;
+
+/** Exact indexed normals on the affected one-ring only. Adjacency retains the
+ * original index order, including Float32 accumulation after each face, so its
+ * result matches Three.computeVertexNormals rather than approximating slopes. */
+function createBulkUpdater(geometry: T.BufferGeometry) {
+  const attribute = geometry.getAttribute("position") as T.BufferAttribute;
+  const positions = attribute.array as Float32Array;
+  const indices = geometry.index!.array as Uint16Array | Uint32Array;
+  const count = attribute.count,
+    shape = new Float64Array(count),
+    moving = new Uint8Array(count),
+    dirty = new Uint8Array(count);
+  const active: number[] = [];
+  const unitSurface = { surfaceHeight: metres(0), depression: metres(1), flow: 0 as VolumeFlow };
+  for (let vertex = 0; vertex < count; vertex++) {
+    shape[vertex] = surfaceAt(positions[vertex * 3]!, positions[vertex * 3 + 2]!, unitSurface);
+    if (shape[vertex] !== 0) {
+      moving[vertex] = 1;
+      active.push(vertex);
+    }
+  }
+  for (let face = 0; face < indices.length; face += 3) {
+    const a = indices[face]!,
+      b = indices[face + 1]!,
+      c = indices[face + 2]!;
+    if (moving[a] || moving[b] || moving[c]) dirty[a] = dirty[b] = dirty[c] = 1;
+  }
+  const adjacency = new Map<number, number[]>();
+  for (let vertex = 0; vertex < count; vertex++) if (dirty[vertex]) adjacency.set(vertex, []);
+  for (let face = 0; face < indices.length; face += 3)
+    for (let corner = 0; corner < 3; corner++) {
+      const vertex = indices[face + corner]!;
+      if (dirty[vertex]) adjacency.get(vertex)!.push(face);
+    }
+  // One full flat build at construction. Dynamic updates retain all unaffected normals.
+  geometry.computeVertexNormals();
+  const normal = geometry.getAttribute("normal") as T.BufferAttribute,
+    normals = normal.array as Float32Array;
+  let height = NaN,
+    depression = NaN,
+    updates = 0,
+    normalUpdates = 0;
+  return {
+    get stats() {
+      return {
+        activeVertices: active.length,
+        normalVertices: adjacency.size,
+        positionVertices: count,
+        fullNormalBuilds: 1,
+        updates,
+        normalUpdates,
+      };
+    },
+    update(nextHeight: number, nextDepression: number) {
+      if (nextHeight === height && nextDepression === depression) return false;
+      const heightChanged = nextHeight !== height;
+      if (heightChanged)
+        for (let vertex = 0; vertex < count; vertex++)
+          positions[vertex * 3 + 1] = nextHeight + nextDepression * shape[vertex]!;
+      else
+        for (const vertex of active)
+          positions[vertex * 3 + 1] = nextHeight + nextDepression * shape[vertex]!;
+      attribute.needsUpdate = true;
+      if (nextDepression !== depression || (heightChanged && nextDepression !== 0)) {
+        for (const [vertex, faces] of adjacency) {
+          let nx = 0,
+            ny = 0,
+            nz = 0;
+          for (const face of faces) {
+            const a = indices[face]! * 3,
+              b = indices[face + 1]! * 3,
+              c = indices[face + 2]! * 3;
+            const cbx = positions[c]! - positions[b]!,
+              cby = positions[c + 1]! - positions[b + 1]!,
+              cbz = positions[c + 2]! - positions[b + 2]!;
+            const abx = positions[a]! - positions[b]!,
+              aby = positions[a + 1]! - positions[b + 1]!,
+              abz = positions[a + 2]! - positions[b + 2]!;
+            const cx = cby * abz - cbz * aby,
+              cy = cbz * abx - cbx * abz,
+              cz = cbx * aby - cby * abx;
+            nx = Math.fround(nx + cx);
+            ny = Math.fround(ny + cy);
+            nz = Math.fround(nz + cz);
+          }
+          const inverseLength = 1 / (Math.sqrt(nx * nx + ny * ny + nz * nz) || 1),
+            offset = vertex * 3;
+          normals[offset] = nx * inverseLength;
+          normals[offset + 1] = ny * inverseLength;
+          normals[offset + 2] = nz * inverseLength;
+        }
+        normal.needsUpdate = true;
+        normalUpdates++;
+      }
+      height = nextHeight;
+      depression = nextDepression;
+      updates++;
+      return true;
+    },
+  };
+}
 /** Visible shell + bounded local instances. No rigid body per grain. */
 export function createGrains() {
   const root = new T.Group(),
     geo = new T.BufferGeometry();
-  const radial = 28,
-    angular = 80,
+  const radial = 72,
+    angular = 256,
     count = (radial + 1) * (angular + 1);
   const position = new Float32Array(count * 3),
     uv = new Float32Array(count * 2),
@@ -40,6 +142,7 @@ export function createGrains() {
   geo.setAttribute("position", new T.BufferAttribute(position, 3).setUsage(T.DynamicDrawUsage));
   geo.setAttribute("uv", new T.BufferAttribute(uv, 2));
   geo.setIndex(indices);
+  const bulk = createBulkUpdater(geo);
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = 512;
   const ctx = canvas.getContext("2d")!;
@@ -87,9 +190,11 @@ export function createGrains() {
     side: T.DoubleSide,
   });
   const top = new T.Mesh(geo, mat);
+  top.name = "Massa_soja_superficie";
+  top.userData["componentId"] = "grain";
   top.receiveShadow = true;
   root.add(top);
-  const sideGeo = new T.CylinderGeometry(GRAIN_RADIUS, GRAIN_RADIUS, 1, 80, 1, true);
+  const sideGeo = new T.CylinderGeometry(GRAIN_RADIUS, GRAIN_RADIUS, 1, 128, 1, true);
   const sidePos = sideGeo.getAttribute("position");
   const sideUV = sideGeo.getAttribute("uv");
   for (let i = 0; i < sidePos.count; i++)
@@ -97,29 +202,6 @@ export function createGrains() {
   const sideMat = mat.clone(),
     side = new T.Mesh(sideGeo, sideMat);
   root.add(side);
-  const coneGeo = new T.CylinderGeometry(
-    GRAIN_RADIUS,
-    GRAIN_OUTLET_RADIUS,
-    SILO.hopperTop - SILO.outletY,
-    64,
-    1,
-    true,
-  );
-  coneGeo.translate(0, (SILO.hopperTop + SILO.outletY) / 2, 0);
-  const conePosition = coneGeo.getAttribute("position"),
-    coneUV = coneGeo.getAttribute("uv");
-  for (let i = 0; i < conePosition.count; i++) {
-    coneUV.setXY(
-      i,
-      (Math.atan2(conePosition.getX(i), conePosition.getZ(i)) *
-        Math.hypot(conePosition.getX(i), conePosition.getZ(i))) /
-        0.22,
-      conePosition.getY(i) / 0.22,
-    );
-  }
-  const coneMat = mat.clone(),
-    cone = new T.Mesh(coneGeo, coneMat);
-  root.add(cone);
   // The didactic section face fills the bulk, not an acrylic wall or a physical escape.
   const faceGeo = new T.BufferGeometry(),
     facePosition = new Float32Array(65 * 2 * 3),
@@ -168,11 +250,12 @@ export function createGrains() {
     color.setHSL(0.105 + random() * 0.02, 0.36, 0.48 + random() * 0.16);
     instances.setColorAt(i, color);
   }
-  const outlet = new T.InstancedMesh(grainGeo, grainMat, 180);
-  outlet.instanceMatrix.setUsage(T.DynamicDrawUsage);
-  outlet.frustumCulled = false;
-  root.add(outlet);
   let lastTime = -1,
+    lastDepression = NaN,
+    lastWorkerAX = NaN,
+    lastWorkerAZ = NaN,
+    lastWorkerBX = NaN,
+    lastWorkerBZ = NaN,
     lastQuality: Quality = "balanced",
     lastCut = false,
     lastEntryBlocked = false,
@@ -180,9 +263,12 @@ export function createGrains() {
     near = false;
   return {
     root,
+    get bulkStats() {
+      return bulk.stats;
+    },
     update(frame: SiloFrame, quality: Quality, cut: boolean, internal: boolean, camera: T.Camera) {
       const clipped = cut && !internal;
-      for (const m of [mat, sideMat, coneMat]) {
+      for (const m of [mat, sideMat, grainMat]) {
         const active = !!m.clippingPlanes?.length;
         if (active !== clipped) {
           m.clippingPlanes = clipped ? [cutPlane] : [];
@@ -191,7 +277,7 @@ export function createGrains() {
       }
       face.visible = clipped;
       // Detail belongs to the grain surface, never to workers outside the silo.
-      instances.visible = !frame.entryBlocked;
+      instances.visible = !frame.entryBlocked && frame.supportAvailable;
       const distance = Math.min(
         Math.hypot(
           camera.position.x - frame.workers.A.position.x,
@@ -214,55 +300,65 @@ export function createGrains() {
         clipped === lastCut &&
         frame.entryBlocked === lastEntryBlocked &&
         frame.connection.connected === lastConnected &&
+        frame.depression === lastDepression &&
+        frame.workers.A.position.x === lastWorkerAX &&
+        frame.workers.A.position.z === lastWorkerAZ &&
+        frame.workers.B.position.x === lastWorkerBX &&
+        frame.workers.B.position.z === lastWorkerBZ &&
+        top.userData["surfaceHeight"] === frame.surfaceHeight &&
         instances.userData["count"] === instances.count
       )
         return;
       lastTime = frame.time;
+      lastDepression = frame.depression;
+      lastWorkerAX = frame.workers.A.position.x;
+      lastWorkerAZ = frame.workers.A.position.z;
+      lastWorkerBX = frame.workers.B.position.x;
+      lastWorkerBZ = frame.workers.B.position.z;
       lastQuality = quality;
       lastCut = clipped;
       lastEntryBlocked = frame.entryBlocked;
       lastConnected = frame.connection.connected;
+      top.userData["surfaceHeight"] = frame.surfaceHeight;
       instances.userData["count"] = instances.count;
-      for (let i = 0; i < count; i++)
-        position[i * 3 + 1] = surfaceAt(position[i * 3]!, position[i * 3 + 2]!, frame);
-      geo.getAttribute("position").needsUpdate = true;
-      geo.computeVertexNormals();
-      for (let i = 0; i < sidePos.count; i++) {
-        const x = sidePos.getX(i),
-          z = sidePos.getZ(i);
-        sidePos.setY(i, i < 81 ? surfaceAt(x, z, frame) : SILO.hopperTop);
-        sideUV.setY(i, sidePos.getY(i) / 0.22);
+      // Bulk geometry depends only on these domain surface parameters. Keep its
+      // exact buffers/normals when only technicians or local grain detail move.
+      // The CPU profile found full normal rebuilding consumed 45% of wall time.
+      if (bulk.update(frame.surfaceHeight, frame.depression)) {
+        for (let i = 0; i < sidePos.count; i++) {
+          const x = sidePos.getX(i),
+            z = sidePos.getZ(i);
+          sidePos.setY(i, i < 129 ? surfaceAt(x, z, frame) : SILO.floorY);
+          sideUV.setY(i, sidePos.getY(i) / 0.22);
+        }
+        sidePos.needsUpdate = true;
+        sideUV.needsUpdate = true;
+        for (let i = 0; i < 65; i++) {
+          const x = facePosition[i * 6]!;
+          const bottom = SILO.floorY;
+          facePosition[i * 6 + 1] = bottom;
+          facePosition[i * 6 + 4] = surfaceAt(x, CUT_PLANE_Z, frame);
+          faceUV[i * 4 + 1] = bottom / 0.22;
+          faceUV[i * 4 + 3] = facePosition[i * 6 + 4]! / 0.22;
+        }
+        faceGeo.getAttribute("position").needsUpdate = true;
+        faceGeo.getAttribute("uv").needsUpdate = true;
+        faceGeo.computeVertexNormals();
       }
-      sidePos.needsUpdate = true;
-      sideUV.needsUpdate = true;
-      for (let i = 0; i < 65; i++) {
-        const x = facePosition[i * 6]!,
-          edge = Math.hypot(x, CUT_PLANE_Z);
-        const bottom =
-          SILO.outletY +
-          (SILO.hopperTop - SILO.outletY) *
-            Math.max(0, (edge - GRAIN_OUTLET_RADIUS) / (GRAIN_RADIUS - GRAIN_OUTLET_RADIUS));
-        facePosition[i * 6 + 1] = bottom;
-        facePosition[i * 6 + 4] = surfaceAt(x, CUT_PLANE_Z, frame);
-        faceUV[i * 4 + 1] = bottom / 0.22;
-        faceUV[i * 4 + 3] = facePosition[i * 6 + 4]! / 0.22;
-      }
-      faceGeo.getAttribute("position").needsUpdate = true;
-      faceGeo.getAttribute("uv").needsUpdate = true;
-      faceGeo.computeVertexNormals();
+      const phase = dischargeAt(frame.time).mobilised * 0.025;
       for (let i = 0; i < instances.count; i++) {
         const w = i % 2 === 0 ? frame.workers.A : frame.workers.B;
-        // Cumulative discharged volume prevents a visual rewind when the gate closes.
-        const phase = (INITIAL_GRAIN_VOLUME - frame.volume) * 0.025;
+        // Local redistribution uses the same deterministic motion integral.
+        // No particles emerge under the floor: this scenario has no net discharge.
         const ox = offsets[i * 4]!,
           oz = offsets[i * 4 + 1]!,
           seed = offsets[i * 4 + 2]!;
         const theta = Math.atan2(oz, ox),
           rr = Math.hypot(ox, oz);
         const localTravel = (phase * (0.8 + seed * 0.2) + seed * 0.15) % 0.15;
-        const length = Math.max(0.1, Math.hypot(w.position.x, w.position.z));
-        const x = w.position.x + Math.cos(theta) * rr - (localTravel * w.position.x) / length,
-          z = w.position.z + Math.sin(theta) * rr - (localTravel * w.position.z) / length;
+        const localRadius = Math.max(0, rr - localTravel * frame.gate);
+        const x = w.position.x + Math.cos(theta) * localRadius,
+          z = w.position.z + Math.sin(theta) * localRadius;
         scratch.position.set(x, surfaceAt(x, z, frame) + 0.003, z);
         scratch.rotation.set(seed * 6.28, theta, seed * 3);
         scratch.scale.setScalar(offsets[i * 4 + 3]!);
@@ -270,23 +366,12 @@ export function createGrains() {
         instances.setMatrixAt(i, scratch.matrix);
       }
       instances.instanceMatrix.needsUpdate = true;
-      outlet.visible = frame.gate > 0.01;
-      for (let i = 0; i < 180 && outlet.visible; i++) {
-        const p = (frame.time * 2 + offsets[i * 4 + 2]!) % 1,
-          a = offsets[i * 4 + 2]! * 6.28;
-        scratch.position.set(Math.sin(a) * 0.16, SILO.outletY - 0.35 - p * 0.7, Math.cos(a) * 0.16);
-        scratch.scale.setScalar(0.0045);
-        scratch.updateMatrix();
-        outlet.setMatrixAt(i, scratch.matrix);
-      }
-      if (outlet.visible) outlet.instanceMatrix.needsUpdate = true;
     },
     dispose() {
-      for (const g of [geo, sideGeo, coneGeo, faceGeo, grainGeo]) g.dispose();
-      for (const m of [mat, sideMat, coneMat, faceMat, grainMat]) m.dispose();
+      for (const g of [geo, sideGeo, faceGeo, grainGeo]) g.dispose();
+      for (const m of [mat, sideMat, faceMat, grainMat]) m.dispose();
       texture.dispose();
       instances.dispose();
-      outlet.dispose();
       root.clear();
     },
   };

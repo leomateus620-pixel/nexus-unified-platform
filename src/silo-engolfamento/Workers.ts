@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { SILO_CONFIG } from "./SiloConfig";
+import { CUT_PLANE_Z } from "./SiloModel";
 
 export type WorkerId = "A" | "B";
 export type FootSide = "left" | "right";
@@ -21,6 +23,8 @@ export interface WorkerPose {
   tension: number;
   lean?: number;
   connected?: boolean;
+  /** Exact point constrained by the domain, in world metres. */
+  dorsal?: readonly [number, number, number];
   surfaceAt?: (x: number, z: number) => number;
   feet?: { left: FootGoal; right: FootGoal };
 }
@@ -144,11 +148,25 @@ async function loadWorker(
   if (!response.ok) throw new Error(`Técnico ${id.toUpperCase()}: recurso HTTP ${response.status}`);
   const bytes = await response.arrayBuffer();
   if (signal?.aborted) throw abortError();
-  const result = await new GLTFLoader().parseAsync(bytes, "/models/silo-engolfamento/");
+  // GLTFLoader can catch image decode failures and still resolve an untextured
+  // scene. Track this load locally so a damaged texture is recoverable through
+  // the same explicit retry flow, instead of silently claiming full readiness.
+  let resourceFailed = false;
+  const manager = new THREE.LoadingManager();
+  manager.onError = () => {
+    resourceFailed = true;
+  };
+  const result = await new GLTFLoader(manager).parseAsync(bytes, "/models/silo-engolfamento/");
   // GLTF image decoding is not abortable. Dispose the late result before exposing it.
   if (signal?.aborted) {
     disposeSources([result.scene]);
     throw abortError();
+  }
+  if (resourceFailed) {
+    disposeSources([result.scene]);
+    throw new Error(
+      `Textura do técnico ${id.toUpperCase()} indisponível. Tente carregar novamente.`,
+    );
   }
   onAsset?.(id, bytes.byteLength);
   return result.scene;
@@ -307,6 +325,7 @@ class Technician {
   private readonly worldQ = new THREE.Quaternion();
   private readonly yaw = new THREE.Quaternion();
   private harnessMaterial: THREE.MeshStandardMaterial | undefined;
+  private cut = false;
 
   constructor(source: THREE.Object3D, id: WorkerId | "watch") {
     const instance = clone(source);
@@ -357,11 +376,14 @@ class Technician {
         headless,
       });
       const mapMaterial = (material: THREE.Material) => {
-        if (!/^(uniform|helmet)/.test(material.name)) return material;
+        // A/B own every material so their technical section cannot cut the
+        // external watchperson's shared source skin, boots or eyes. Textures
+        // and geometry still share their existing immutable source owner.
+        if (id === "watch" && !/^(uniform|helmet)/.test(material.name)) return material;
         if (!copies.has(material)) {
           const copy = material.clone() as THREE.MeshStandardMaterial;
           if (material.name.startsWith("uniform")) copy.color.multiply(tint);
-          else {
+          else if (material.name.startsWith("helmet")) {
             copy.color.set(id === "A" ? "#eeb631" : id === "B" ? "#e4e6d7" : "#dc922b");
             copy.roughness = 0.62;
           }
@@ -684,6 +706,16 @@ class Technician {
       this.solve(arm, this.target, this.b);
     }
     this.root.updateMatrixWorld(true);
+    if (pose.dorsal) {
+      // Keep the visible dorsal ring and the domain endpoint identical. The
+      // torso correction is local to the spine; planted feet retain their IK.
+      this.harnessPoint.getWorldPosition(this.a);
+      this.b.fromArray(pose.dorsal);
+      this.spine.parent!.worldToLocal(this.a);
+      this.spine.parent!.worldToLocal(this.b);
+      this.spine.position.add(this.b.sub(this.a));
+      this.root.updateMatrixWorld(true);
+    }
     const distance = camera.position.distanceTo(this.root.position);
     // Hysteresis prevents near/far flashing at the 8 m threshold.
     if (ownFirstPerson || distance < 7) this.near = true;
@@ -694,6 +726,20 @@ class Technician {
     });
   }
 
+  getGpuResources(): (THREE.BufferGeometry | THREE.Material | THREE.Texture)[] {
+    return [
+      ...this.geometries,
+      ...this.materials,
+      ...this.textures,
+      ...this.meshViews.flatMap((view) => [
+        view.geometry,
+        ...(view.headless ? [view.headless] : []),
+      ]),
+      ...[...this.skeletons].flatMap((skeleton) =>
+        skeleton.boneTexture ? [skeleton.boneTexture] : [],
+      ),
+    ];
+  }
   dispose() {
     this.skeletons.forEach((skeleton) => skeleton.dispose());
     this.materials.forEach((material) => material.dispose());
@@ -705,6 +751,23 @@ class Technician {
 
   setHarnessHighlight(enabled: boolean) {
     this.harnessMaterial?.emissive.set(enabled ? "#66351d" : "#000000");
+  }
+
+  setCut(enabled: boolean, plane: THREE.Plane) {
+    if (this.cut === enabled) return;
+    this.cut = enabled;
+    const update = (material: THREE.Material) => {
+      material.clippingPlanes = enabled ? [plane] : [];
+      material.clipShadows = enabled;
+      material.needsUpdate = true;
+    };
+    // Update retained originals as well as currently attached inspection clones;
+    // clearing a highlight must not restore the previous clipping policy.
+    this.materials.forEach(update);
+    this.root.traverse((node) => {
+      if (node instanceof THREE.Mesh)
+        (Array.isArray(node.material) ? node.material : [node.material]).forEach(update);
+    });
   }
 
   getFoot(side: FootSide, out: THREE.Vector3) {
@@ -745,8 +808,9 @@ export async function createWorkers(
     throw error;
   }
   const [A, B, watch] = technicians as [Technician, Technician, Technician];
+  const cutPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), CUT_PLANE_Z);
   const defaultWatch: WorkerPose = {
-    position: [-4.25, 0, 2],
+    position: [-13.3, SILO_CONFIG.groundY.value, 3.5],
     heading: 2.5,
     walkPhase: 0,
     mobility: 0,
@@ -756,6 +820,9 @@ export async function createWorkers(
   let disposed = false;
   return {
     root,
+    getGpuResources() {
+      return technicians.flatMap((worker) => worker.getGpuResources());
+    },
     update(frame: WorkersFrame, camera: THREE.Camera, firstPerson: WorkerId | null = null) {
       if (disposed) return;
       A.update(frame.A, camera, firstPerson === "A");
@@ -767,6 +834,17 @@ export async function createWorkers(
     },
     getHarness(id: WorkerId, out: THREE.Vector3) {
       return (id === "A" ? A : B).harnessPoint.getWorldPosition(out);
+    },
+    setSupported(supported: boolean, showComparison = true) {
+      A.root.visible = supported;
+      B.root.visible = supported && showComparison;
+    },
+    setCut(enabled: boolean) {
+      A.setCut(enabled, cutPlane);
+      B.setCut(enabled, cutPlane);
+    },
+    getTechnician(id: WorkerId) {
+      return (id === "A" ? A : B).root;
     },
     getFoot(id: WorkerId, side: FootSide, out: THREE.Vector3) {
       return (id === "A" ? A : B).getFoot(side, out);

@@ -1,0 +1,1302 @@
+{
+  "schema": "nexus-silo-upgrade-validation/2.0.0",
+  "testedAt": "2026-10-15T05:40:01.538Z",
+  "base": "http://127.0.0.1:5185",
+  "command": "node scripts/silo-engolfamento/validate-upgrade.mjs",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584
+  },
+  "browser": "155.0.8059.41",
+  "scopeFilter": "One continuous|No unexpected",
+  "checks": [
+    {
+      "name": "One continuous LVHF replay completes a full eighty-second circuit without seeks",
+      "result": "aprovado",
+      "durationMs": 86831.1323,
+      "evidence": {
+        "wallDurationMs": 84488.519,
+        "commandsDuringPlayback": [
+          "Read state and capture screenshots; no seek/camera/quality commands"
+        ],
+        "checkpoints": [
+          {
+            "time": 4.033200666666667,
+            "status": "running",
+            "position": [
+              -5.129423755278991,
+              24.581000000000017,
+              -8.656222043300264
+            ],
+            "target": [
+              -4.957839616443387,
+              24.281000000000017,
+              -9.752990015182796
+            ],
+            "dorsalError": 3.66205343881779e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.799999999999272,
+                "tickCpuMs": 4.300000071525574,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.5,
+                "tickCpuMs": 4.5,
+                "updateCpuMs": 3
+              },
+              {
+                "ms": 16.5,
+                "tickCpuMs": 4.299999952316284,
+                "updateCpuMs": 2.799999952316284
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 4.399999976158142,
+                "updateCpuMs": 3.100000023841858
+              },
+              {
+                "ms": 16.69999999999891,
+                "tickCpuMs": 4.399999976158142,
+                "updateCpuMs": 3.1999999284744263
+              },
+              {
+                "ms": 16.600000000000364,
+                "tickCpuMs": 4.600000023841858,
+                "updateCpuMs": 2.899999976158142
+              }
+            ]
+          },
+          {
+            "time": 8.06640066666667,
+            "status": "running",
+            "position": [
+              -7.597114696294344,
+              24.581000000000007,
+              -6.597349163974168
+            ],
+            "target": [
+              -7.780097892542404,
+              24.281000000000006,
+              -7.692273017753911
+            ],
+            "dorsalError": 3.66205343881779e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.899999999997817,
+                "tickCpuMs": 4.200000047683716,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.400000000001455,
+                "tickCpuMs": 4.399999976158142,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 6,
+                "updateCpuMs": 3.5999999046325684
+              },
+              {
+                "ms": 16.899999999997817,
+                "tickCpuMs": 5.200000047683716,
+                "updateCpuMs": 3.700000047683716
+              },
+              {
+                "ms": 16.400000000001455,
+                "tickCpuMs": 4.5,
+                "updateCpuMs": 3
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 4.199999928474426,
+                "updateCpuMs": 2.799999952316284
+              }
+            ]
+          },
+          {
+            "time": 12.082900666666669,
+            "status": "running",
+            "position": [
+              -9.284617962590337,
+              24.580999999999992,
+              -3.8777617897270007
+            ],
+            "target": [
+              -9.802196834720062,
+              24.28099999999999,
+              -4.859827572062544
+            ],
+            "dorsalError": 3.66205343881779e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4.600000023841858,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.799999999999272,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.299999952316284
+              },
+              {
+                "ms": 16.600000000002183,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.299999952316284
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4.5,
+                "updateCpuMs": 3.1999999284744263
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 4,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.700000047683716
+              }
+            ]
+          },
+          {
+            "time": 16.099400666666668,
+            "status": "running",
+            "position": [
+              -10.0326812943873,
+              24.580999999999996,
+              -0.7658158577614761
+            ],
+            "target": [
+              -10.832485780702925,
+              24.280999999999995,
+              -1.5356560240157442
+            ],
+            "dorsalError": 7.273443782444743e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.799999952316284
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.399999976158142,
+                "updateCpuMs": 2.1999999284744263
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 4.299999952316284,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.600000000002183,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.9000000953674316,
+                "updateCpuMs": 2.8000000715255737
+              },
+              {
+                "ms": 16.600000000002183,
+                "tickCpuMs": 4.199999928474426,
+                "updateCpuMs": 2.899999976158142
+              }
+            ]
+          },
+          {
+            "time": 20.66600066666667,
+            "status": "running",
+            "position": [
+              -9.65026525754343,
+              24.580999999999992,
+              2.848428940664234
+            ],
+            "target": [
+              -10.671393470981743,
+              24.28099999999999,
+              2.4129541899257654
+            ],
+            "dorsalError": 7.160723346098895e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 4.100000023841858,
+                "updateCpuMs": 2.799999952316284
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4,
+                "updateCpuMs": 2.6999999284744263
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 4.100000023841858,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.600000000002183,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5999999046325684
+              },
+              {
+                "ms": 16.700000000000728,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 24.68240066666667,
+            "status": "running",
+            "position": [
+              -8.267566504801536,
+              24.580999999999985,
+              5.734850647320283
+            ],
+            "target": [
+              -9.373791581122887,
+              24.280999999999985,
+              5.642075768553005
+            ],
+            "dorsalError": 2.5121479338940403e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.9000000953674316,
+                "updateCpuMs": 2.8000000715255737
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.3000000715255737
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5999999046325684
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4.299999952316284,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 28.699000666666674,
+            "status": "running",
+            "position": [
+              -6.048245748357595,
+              24.58099999999999,
+              8.041137393994756
+            ],
+            "target": [
+              -7.127638741304062,
+              24.280999999999988,
+              8.30046702330787
+            ],
+            "dorsalError": 3.552713678800501e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.299999952316284
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4.100000023841858,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.799999999995634,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.799999952316284
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.5999999046325684,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 32.71550066666668,
+            "status": "running",
+            "position": [
+              -3.21699812387096,
+              24.581000000000003,
+              9.533734350933972
+            ],
+            "target": [
+              -4.160342850889624,
+              24.281000000000002,
+              10.118919638267768
+            ],
+            "dorsalError": 0,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.200000047683716
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.700000047683716
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.3000000715255737
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 4.300000071525574,
+                "updateCpuMs": 2.9000000953674316
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.8000000715255737,
+                "updateCpuMs": 2.4000000953674316
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.399999976158142
+              }
+            ]
+          },
+          {
+            "time": 37.26530066666667,
+            "status": "running",
+            "position": [
+              0.3664512007530543,
+              24.58100000000001,
+              10.055191746228695
+            ],
+            "target": [
+              -0.3086352171131143,
+              24.28100000000001,
+              10.936440531816734
+            ],
+            "dorsalError": 7.359572882443051e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.399999976158142
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.399999976158142
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.4000000953674316,
+                "updateCpuMs": 2.200000047683716
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.399999976158142,
+                "updateCpuMs": 2.200000047683716
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.399999976158142
+              }
+            ]
+          },
+          {
+            "time": 41.28180066666667,
+            "status": "running",
+            "position": [
+              3.5056707471752135,
+              24.58100000000001,
+              9.43140714333382
+            ],
+            "target": [
+              3.1414873742501483,
+              24.28100000000001,
+              10.480078479514972
+            ],
+            "dorsalError": 3.9968028886505635e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.100000023841858
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 4.099999904632568,
+                "updateCpuMs": 2.799999952316284
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.399999976158142
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 45.298500666666676,
+            "status": "running",
+            "position": [
+              6.29031088242095,
+              24.581000000000014,
+              7.853225802178848
+            ],
+            "target": [
+              6.273898126171402,
+              24.281000000000013,
+              8.963213055474906
+            ],
+            "dorsalError": 3.66205343881779e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.4000000953674316
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.299999952316284
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.1999999284744263
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 4,
+                "updateCpuMs": 2.6999999284744263
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.399999976158142
+              }
+            ]
+          },
+          {
+            "time": 49.31490066666667,
+            "status": "running",
+            "position": [
+              8.43827905418178,
+              24.58100000000001,
+              5.480566966303202
+            ],
+            "target": [
+              8.77127112414698,
+              24.28100000000001,
+              6.539555812627797
+            ],
+            "dorsalError": 7.160723346098895e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.3000000715255737
+              },
+              {
+                "ms": 16.799999999995634,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.299999952316284
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4.100000023841858,
+                "updateCpuMs": 2.6999999284744263
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.5999999046325684
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.8000000715255737,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.599999999998545,
+                "tickCpuMs": 4.799999952316284,
+                "updateCpuMs": 3.399999976158142
+              }
+            ]
+          },
+          {
+            "time": 53.881500666666675,
+            "status": "running",
+            "position": [
+              9.834872857908456,
+              24.581000000000003,
+              2.125192360975813
+            ],
+            "target": [
+              10.522366553989869,
+              24.281000000000002,
+              2.9967963429477944
+            ],
+            "dorsalError": 3.972054645195637e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 3.899999976158142,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.5,
+                "tickCpuMs": 4.300000071525574,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 4.200000047683716,
+                "updateCpuMs": 2.700000047683716
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 4.199999928474426,
+                "updateCpuMs": 2.799999952316284
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 4,
+                "updateCpuMs": 2.700000047683716
+              },
+              {
+                "ms": 16.700000000004366,
+                "tickCpuMs": 3.5999999046325684,
+                "updateCpuMs": 2.399999976158142
+              }
+            ]
+          },
+          {
+            "time": 57.898000666666675,
+            "status": "running",
+            "position": [
+              10.00471658686405,
+              24.58099999999999,
+              -1.0708934997019701
+            ],
+            "target": [
+              10.931150057008933,
+              24.280999999999988,
+              -0.4592873265879897
+            ],
+            "dorsalError": 3.3306690738754696e-16,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 4.100000023841858,
+                "updateCpuMs": 2.9000000953674316
+              },
+              {
+                "ms": 16.70000000001164,
+                "tickCpuMs": 3.299999952316284,
+                "updateCpuMs": 2.100000023841858
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.70000000001164,
+                "tickCpuMs": 4.100000023841858,
+                "updateCpuMs": 2.899999976158142
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.6999999284744263,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 61.914400666666666,
+            "status": "running",
+            "position": [
+              9.162295557181205,
+              24.581,
+              -4.1585464340853395
+            ],
+            "target": [
+              10.233927709847674,
+              24.281,
+              -3.868812706980407
+            ],
+            "dorsalError": 3.972054645195637e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 4.200000047683716,
+                "updateCpuMs": 2.3000000715255737
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.1999999284744263,
+                "updateCpuMs": 2
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.8000000715255737,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 4.199999928474426,
+                "updateCpuMs": 3
+              }
+            ]
+          },
+          {
+            "time": 65.91430066666669,
+            "status": "running",
+            "position": [
+              7.401805623336111,
+              24.580999999999996,
+              -6.815749486374526
+            ],
+            "target": [
+              8.510291596893184,
+              24.280999999999995,
+              -6.875748988416702
+            ],
+            "dorsalError": 3.76822190084106e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.79999999998836,
+                "tickCpuMs": 3.3000000715255737,
+                "updateCpuMs": 2.200000047683716
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 4.5,
+                "updateCpuMs": 3.399999976158142
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 3.8000000715255737,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 4,
+                "updateCpuMs": 2.899999976158142
+              }
+            ]
+          },
+          {
+            "time": 70.46410066666667,
+            "status": "running",
+            "position": [
+              4.509558722681179,
+              24.581,
+              -8.994723340968903
+            ],
+            "target": [
+              5.525016816281591,
+              24.281,
+              -9.443260917654555
+            ],
+            "dorsalError": 1.9860273225978185e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.600000023841858
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.5999999046325684,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 3.100000023841858,
+                "updateCpuMs": 2.100000023841858
+              },
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 3.399999976158142,
+                "updateCpuMs": 2.299999952316284
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 74.48070066666668,
+            "status": "running",
+            "position": [
+              1.456603660458864,
+              24.580999999999985,
+              -9.955876290524957
+            ],
+            "target": [
+              2.2798223220945792,
+              24.280999999999985,
+              -10.700625994464705
+            ],
+            "dorsalError": 3.9968028886505635e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.799999952316284,
+                "updateCpuMs": 2.5999999046325684
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 4.5,
+                "updateCpuMs": 3.399999976158142
+              },
+              {
+                "ms": 16.70000000001164,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.399999976158142
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.5999999046325684,
+                "updateCpuMs": 2.399999976158142
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 78.49730066666667,
+            "status": "running",
+            "position": [
+              -1.7437404858138654,
+              24.580999999999992,
+              -9.909618329460798
+            ],
+            "target": [
+              -1.1960606571393297,
+              24.28099999999999,
+              -10.875220672104355
+            ],
+            "dorsalError": 1.790180836524724e-15,
+            "statusReason": "",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.700000047683716
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.600000023841858,
+                "updateCpuMs": 2.1999999284744263
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.9000000953674316,
+                "updateCpuMs": 2.700000047683716
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 3.700000047683716,
+                "updateCpuMs": 2.5
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.3000000715255737
+              },
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 3.5,
+                "updateCpuMs": 2.5
+              }
+            ]
+          },
+          {
+            "time": 80,
+            "status": "completed",
+            "position": [
+              -2.6319813607754035,
+              24.580999999999996,
+              -9.71220347637604
+            ],
+            "target": [
+              -2.1737404828941504,
+              24.280999999999995,
+              -10.723398461449946
+            ],
+            "dorsalError": 1.9860273225978185e-15,
+            "statusReason": "Ciclo didático encerrado",
+            "hidden": false,
+            "visibilityEvents": [],
+            "frameTail": [
+              {
+                "ms": 16.80000000000291,
+                "tickCpuMs": 2.8000000715255737,
+                "updateCpuMs": 1.100000023841858
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 2.399999976158142,
+                "updateCpuMs": 0.6000000238418579
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 2.299999952316284,
+                "updateCpuMs": 0.6999999284744263
+              },
+              {
+                "ms": 16.60000000000582,
+                "tickCpuMs": 2.700000047683716,
+                "updateCpuMs": 0.8999999761581421
+              },
+              {
+                "ms": 16.69999999999709,
+                "tickCpuMs": 2.1999999284744263,
+                "updateCpuMs": 0.6000000238418579
+              },
+              {
+                "ms": 16.59999999999127,
+                "tickCpuMs": 2.5999999046325684,
+                "updateCpuMs": 0.7999999523162842
+              }
+            ]
+          }
+        ],
+        "closureError": 1.1234667099445444e-14
+      }
+    },
+    {
+      "name": "No unexpected JavaScript errors in the exercised sessions",
+      "result": "aprovado",
+      "durationMs": 0.8153999999922235,
+      "evidence": {
+        "errors": []
+      }
+    }
+  ],
+  "failures": [],
+  "screenshots": [
+    {
+      "filename": "1440-active-circuit-16.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "running",
+          "time": "16.64940066666667",
+          "calls": "46",
+          "triangles": "246750",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 16.6,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2679.399999976158,
+          "explorationMs": 1014.5,
+          "statusReason": "",
+          "dorsalError": 7.229248575812844e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 46,
+          "triangles": 246750
+        }
+      }
+    },
+    {
+      "filename": "1440-active-circuit-32.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "running",
+          "time": "33.249000666666674",
+          "calls": "46",
+          "triangles": "249558",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 33.2,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2679.399999976158,
+          "explorationMs": 1014.5,
+          "statusReason": "",
+          "dorsalError": 1.831026719408895e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 46,
+          "triangles": 249558
+        }
+      }
+    },
+    {
+      "filename": "1440-active-circuit-48.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "running",
+          "time": "49.84820066666668",
+          "calls": "46",
+          "triangles": "249558",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 49.8,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2679.399999976158,
+          "explorationMs": 1014.5,
+          "statusReason": "",
+          "dorsalError": 3.66205343881779e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 46,
+          "triangles": 249558
+        }
+      }
+    },
+    {
+      "filename": "1440-active-circuit-64.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "running",
+          "time": "66.43100066666668",
+          "calls": "45",
+          "triangles": "246726",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 66.4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2679.399999976158,
+          "explorationMs": 1014.5,
+          "statusReason": "",
+          "dorsalError": 8.881784197001252e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 45,
+          "triangles": 246726
+        }
+      }
+    },
+    {
+      "filename": "1440-active-circuit-80.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "completed",
+          "time": "80",
+          "calls": "43",
+          "triangles": "246426",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "lvhf",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 80,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2679.399999976158,
+          "explorationMs": 1014.5,
+          "statusReason": "Ciclo didático encerrado",
+          "dorsalError": 1.9860273225978185e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 43,
+          "triangles": 246426
+        }
+      }
+    }
+  ],
+  "loading": [],
+  "samples": [],
+  "consoleErrors": [],
+  "renderErrors": [],
+  "gpuDeletionTraces": [],
+  "limitations": [
+    "Desktop local Chrome headless. Mobile dimensions and touch are Chromium emulation, not Android/iOS hardware.",
+    "RAF interval is active frame time; synchronous renderer.render is CPU submission, not GPU completion. GPU timer query not measured.",
+    "Development-server Resource Timing is not compressed production bytes or mobile-network readiness.",
+    "Shadow passes are estimates; renderer.info totals include shadow work. Resource byte estimates are not actual driver VRAM.",
+    "Parametric mechanical passage and appearance require separate visual review; screenshots and numeric tests do not certify CAD, loads or rescue procedures."
+  ],
+  "criteria": [
+    {
+      "criterion": "One continuous LVHF replay completes a full eighty-second circuit without seeks",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "No unexpected JavaScript errors in the exercised sessions",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "aprovado",
+      "measured": "Verificação executada sem divergência",
+      "evidence": "ui.json",
+      "pending": "—"
+    },
+    {
+      "criterion": "Android/iOS físico e rede móvel",
+      "condition": "Hardware indisponível nesta execução",
+      "status": "não verificado",
+      "measured": "Somente Chrome desktop e emulação",
+      "evidence": "ui.json → limitations",
+      "pending": "Executar no telefone de referência com rede e duração documentadas"
+    },
+    {
+      "criterion": "Passagem mecânica exata e dimensionamento LVHF",
+      "condition": "Sem CAD/desenho executivo autorizado",
+      "status": "não verificado",
+      "measured": "Cinemática paramétrica identificada",
+      "evidence": "upgrade-references.md",
+      "pending": "Obter desenhos/recursos autorizados do fabricante e conferir compatibilidade/cargas"
+    }
+  ]
+}

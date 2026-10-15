@@ -26,7 +26,9 @@ function renderedBudget(root: THREE.Object3D) {
   for (const mesh of meshes(root)) {
     if (!visible(mesh)) continue;
     calls += Array.isArray(mesh.material) ? mesh.material.length : 1;
-    triangles += (mesh.geometry.index?.count ?? mesh.geometry.getAttribute("position").count) / 3;
+    triangles +=
+      ((mesh.geometry.index?.count ?? mesh.geometry.getAttribute("position").count) / 3) *
+      (mesh instanceof THREE.InstancedMesh ? mesh.count : 1);
     if (mesh.castShadow) shadowCalls++;
   }
   return { calls, triangles, shadowCalls };
@@ -36,10 +38,11 @@ test("new parametric silo stays inside its static budget without DOM or industri
   const model = createSiloModel();
   const budget = renderedBudget(model.root);
   assert.ok(budget.calls <= 26, `${budget.calls} static calls`);
-  // Static construction receives at most one third of the complete 300k budget.
-  // Corrugation needs four height samples per period to avoid visible aliasing.
-  assert.ok(budget.triangles <= 100000, `${budget.triangles} static triangles`);
-  assert.ok(budget.shadowCalls <= 8, `${budget.shadowCalls} shadow calls`);
+  // Large grounded shell + real corrugated silhouette + 32 stiffeners and full
+  // access. This is a model-only ceiling, NOT approval of the complete scene's
+  // 250k economic target (measured separately with grains, rigs and LVHF).
+  assert.ok(budget.triangles <= 130000, `${budget.triangles} static triangles including instances`);
+  assert.ok(budget.shadowCalls <= 7, `${budget.shadowCalls} shadow calls`);
   assert.ok(budget.triangles > 10000, "the industrial shell must retain its structural silhouette");
   model.dispose();
 });
@@ -53,17 +56,17 @@ test("every merged attribute is finite and the complete assembly keeps metre-sca
     }
   }
   const bounds = new THREE.Box3().setFromObject(model.root);
-  assert.ok(bounds.min.y >= -0.1 && bounds.min.y <= 0);
+  assert.ok(Math.abs(bounds.min.y + 0.18) < 1e-5, "base contacts the yard at −0.18m");
   assert.ok(bounds.max.y > SILO.roofTop && bounds.max.y < SILO.roofTop + 0.5);
   assert.ok(bounds.getSize(new THREE.Vector3()).x >= SILO.radius * 2);
-  assert.ok(bounds.getSize(new THREE.Vector3()).x < 9);
+  assert.ok(bounds.getSize(new THREE.Vector3()).x < 24.5);
   model.dispose();
 });
 
 test("didactic cut clips wall, roof and structure on one plane; first person restores enclosure", () => {
   const model = createSiloModel();
-  const [back, front, roof, access] = model.root.children;
-  assert.ok(back && front && roof && access);
+  const [shell, roof, access] = model.root.children;
+  assert.ok(shell && roof && access);
   model.setView(false, false, false);
   const modelMaterials = new Set<THREE.Material>();
   for (const mesh of meshes(model.root))
@@ -71,44 +74,49 @@ test("didactic cut clips wall, roof and structure on one plane; first person res
       modelMaterials.add(material);
   assert.ok([...modelMaterials].every((material) => !material.clippingPlanes?.length));
   model.setView(true, false, false);
-  // Both physical halves retain their original geometry; a coordinated material
-  // plane cuts the shell, roof, accessories and structural bracing together.
-  assert.equal(front.visible, true);
-  assert.equal(back.visible, true);
+  // Intact geometry is clipped by one material plane; the section is not an
+  // opening or physical grain outlet. Foundation/floor stay grounded.
+  assert.equal(shell.visible, true);
   assert.equal(roof.visible, true);
-  assert.equal(roof.children[1]!.visible, true);
   const clipped = [...modelMaterials].filter((material) => material.clippingPlanes?.length);
-  assert.ok(clipped.length >= 5, "steel, structure, accesses and gate share the cut");
+  assert.ok(clipped.length >= 4, "steel, structure and accesses share the cut");
+  for (const object of model.bindings.get("structure.extraction")!)
+    for (const mesh of meshes(object))
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+        assert.ok(!material.clippingPlanes?.length, "external channel stays with floor context");
   const plane = clipped[0]!.clippingPlanes![0]!;
   assert.ok(clipped.every((material) => material.clippingPlanes![0] === plane));
   assert.ok(plane.distanceToPoint(new THREE.Vector3(0, 6, 2)) < 0, "front side removed");
   assert.ok(plane.distanceToPoint(new THREE.Vector3(0, 6, -2)) > 0, "rear enclosure retained");
   model.setView(true, true, false);
-  assert.equal(front.visible, true);
-  assert.equal(roof.children[1]!.visible, true);
-  assert.equal(access.visible, false);
+  assert.equal(shell.visible, true);
+  assert.equal(roof.visible, true);
+  assert.equal(access.visible, true, "external access is still part of the enclosure");
   assert.ok([...modelMaterials].every((material) => !material.clippingPlanes?.length));
   model.setView(true, false, true);
   assert.equal(roof.visible, false);
-  assert.equal(back.visible, true);
+  assert.equal(shell.visible, true);
   model.dispose();
 });
 
-test("model hopper bottom follows the domain outlet radius, not a separate physical dimension", () => {
+test("flat internal floor and cylinder replace the suspended hopper and ground columns", () => {
   const model = createSiloModel();
-  const back = model.root.children[0]!;
+  const shell = model.bindings.get("structure.shell")![0]!;
   const bottomRadii: number[] = [];
-  for (const mesh of meshes(back)) {
+  for (const mesh of meshes(shell)) {
     const attribute = mesh.geometry.getAttribute("position");
     for (let i = 0; i < attribute.count; i++)
-      if (Math.abs(attribute.getY(i) - SILO.outletY) < 1e-5)
+      if (Math.abs(attribute.getY(i) - SILO.floorY) < 1e-5)
         bottomRadii.push(Math.hypot(attribute.getX(i), attribute.getZ(i)));
   }
-  assert.ok(bottomRadii.length > 30, "hopper contour is present");
+  assert.ok(bottomRadii.length > 30, "full diameter cylinder meets the base");
   assert.ok(
-    bottomRadii.every((r) => Math.abs(r - SILO.outletRadius) < 1e-5),
-    `model outlet ${Math.max(...bottomRadii)}m; domain outlet ${SILO.outletRadius}m`,
+    bottomRadii.every((r) => Math.abs(r - SILO.radius) < 0.013),
+    `wall base retains 11m radius, observed ${Math.max(...bottomRadii)}m`,
   );
+  const internalFloor = new THREE.Box3().setFromObject(model.bindings.get("structure.floor")![0]!);
+  assert.ok(Math.abs(internalFloor.max.y - SILO.floorY) < 1e-5);
+  assert.ok(!model.root.getObjectByName("Estrutura_independente_ancoragem"));
   model.dispose();
 });
 

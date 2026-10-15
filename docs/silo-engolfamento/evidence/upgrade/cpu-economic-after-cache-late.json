@@ -1,0 +1,729 @@
+{
+  "schema": "nexus-silo-cpu-profile/1.0",
+  "tag": "after-cache-late",
+  "sourceHashes": {
+    "Workers.ts": "e0338018e8072901bf576de09350a69914aa75f140876e48a4fe0e09e77ad890",
+    "GrainRenderer.ts": "59956d3085ef0fd168952225247b12d2cd639d254c0bca6fee1443d5f764b68c",
+    "simulation.ts": "a4febb76da3f46efcb597559eb397fce1ac94892a0668665f4cb71fc5f5a40a2",
+    "SiloScene.ts": "a67d1f8e6fad28b2e86642c39fe1d4b59d5c65e63a2056ba40d37f415e21f995",
+    "SiloViewer.tsx": "7225bc253c6533a6647f6f3f3be8ab4131b5b1d1a713c23d367080bb26e7e3f0",
+    "performance.ts": "c0262919e93aae29969c4e38a38cf1e8c5d6bd71eec11685d8f38b24da7c7291"
+  },
+  "testedAt": "2026-10-15T04:00:33.306Z",
+  "base": "http://127.0.0.1:5185",
+  "condition": {
+    "browser": "155.0.8059.41",
+    "viewport": "1440x900",
+    "dpr": 1,
+    "quality": "economic",
+    "durationMs": 12000,
+    "warmupMs": 2500,
+    "incidentStartSeconds": 10,
+    "playbackRate": 1,
+    "start": {
+      "time": 10,
+      "at": 11804.799999952316
+    },
+    "endSeconds": 22.01623066666667,
+    "finalStatus": "running",
+    "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "platform": "win32",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz"
+  },
+  "metrics": {
+    "calls": 84,
+    "triangles": 221050,
+    "readyMs": 2362.399999976158
+  },
+  "interval": {
+    "samples": 722,
+    "p50": 16.69999999999891,
+    "p95": 16.799999999999272,
+    "p99": 17,
+    "max": 18
+  },
+  "rendererSubmissionCpu": {
+    "samples": 722,
+    "p50": 2.0999999046325684,
+    "p95": 2.700000047683716,
+    "p99": 3.100000023841858,
+    "max": 4.200000047683716
+  },
+  "updateCpu": {
+    "samples": 722,
+    "p50": 1.600000023841858,
+    "p95": 2,
+    "p99": 2.399999976158142,
+    "max": 16.899999976158142
+  },
+  "tickCpu": {
+    "samples": 722,
+    "p50": 3.6999999284744263,
+    "p95": 4.300000071525574,
+    "p99": 5,
+    "max": 18.899999976158142
+  },
+  "independentRAF": {
+    "samples": 721,
+    "p50": 16.69999999999891,
+    "p95": 16.799999999999272,
+    "p99": 17,
+    "max": 18
+  },
+  "hud": {
+    "mutations": 120,
+    "intervals": {
+      "samples": 119,
+      "p50": 100,
+      "p95": 115.89999997615814,
+      "p99": 117.20000004768372,
+      "max": 118.39999997615814
+    },
+    "frameIntervalsWithHudMutation": {
+      "samples": 119,
+      "p50": 16.69999999999709,
+      "p95": 16.799999999999272,
+      "p99": 17,
+      "max": 17.5
+    },
+    "frameIntervalsWithoutHudMutation": {
+      "samples": 602,
+      "p50": 16.69999999999891,
+      "p95": 16.799999999999272,
+      "p99": 16.899999999999636,
+      "max": 18
+    },
+    "sceneIntervalsWithHudMutation": {
+      "samples": 119,
+      "p50": 16.69999999999709,
+      "p95": 16.799999999999272,
+      "p99": 17,
+      "max": 17.5
+    },
+    "sceneIntervalsWithoutHudMutation": {
+      "samples": 603,
+      "p50": 16.69999999999891,
+      "p95": 16.799999999999272,
+      "p99": 16.899999999999636,
+      "max": 18
+    }
+  },
+  "cpuProfile": {
+    "durationMs": 12662.61500000003,
+    "samples": 7478,
+    "groups": [
+      {
+        "group": "idle",
+        "ms": 7602.758000000012,
+        "percentOfProfile": 60.04097889732881
+      },
+      {
+        "group": "SiloScene-other-inclusive",
+        "ms": 1586.4410000000018,
+        "percentOfProfile": 12.528541695376491
+      },
+      {
+        "group": "React-inclusive",
+        "ms": 1321.4679999999992,
+        "percentOfProfile": 10.435980245786482
+      },
+      {
+        "group": "other",
+        "ms": 843.9299999999998,
+        "percentOfProfile": 6.664737102091454
+      },
+      {
+        "group": "GrainRenderer-inclusive",
+        "ms": 641.8749999999995,
+        "percentOfProfile": 5.069055641350527
+      },
+      {
+        "group": "Workers-inclusive",
+        "ms": 598.0529999999999,
+        "percentOfProfile": 4.722981785357909
+      },
+      {
+        "group": "garbage-collector",
+        "ms": 50.987,
+        "percentOfProfile": 0.4026577448654948
+      },
+      {
+        "group": "simulation-inclusive",
+        "ms": 17.102999999999998,
+        "percentOfProfile": 0.1350668878426767
+      }
+    ],
+    "topSelf": [
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 7602.758000000012,
+        "percentOfProfile": 60.04097889732881,
+        "selfMs": 7602.758000000012
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 781.6489999999998,
+        "percentOfProfile": 6.172887669726971,
+        "selfMs": 781.6489999999998
+      },
+      {
+        "function": "exports.jsxDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e71776b",
+        "line": 191,
+        "ms": 298.722,
+        "percentOfProfile": 2.359086176117644,
+        "selfMs": 298.722
+      },
+      {
+        "function": "toArray",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 8761,
+        "ms": 285.4370000000001,
+        "percentOfProfile": 2.254171038130745,
+        "selfMs": 285.4370000000001
+      },
+      {
+        "function": "exports.jsxDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e71776b",
+        "line": 191,
+        "ms": 274.672,
+        "percentOfProfile": 2.169157002720207,
+        "selfMs": 274.672
+      },
+      {
+        "function": "toArray",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 8761,
+        "ms": 147.39100000000002,
+        "percentOfProfile": 1.1639854800923797,
+        "selfMs": 147.39100000000002
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/GrainRenderer.ts?t=1792036533084",
+        "line": 142,
+        "ms": 140.41899999999998,
+        "percentOfProfile": 1.10892576296444,
+        "selfMs": 140.41899999999998
+      },
+      {
+        "function": "setProgram",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52684,
+        "ms": 85.06900000000002,
+        "percentOfProfile": 0.6718122599478845,
+        "selfMs": 85.06900000000002
+      },
+      {
+        "function": "setFromEuler",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 3592,
+        "ms": 83.38399999999999,
+        "percentOfProfile": 0.6585053719156729,
+        "selfMs": 83.38399999999999
+      },
+      {
+        "function": "tick",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/SiloScene.ts?t=1792036533084",
+        "line": 446,
+        "ms": 80.12700000000001,
+        "percentOfProfile": 0.632783986562016,
+        "selfMs": 80.12700000000001
+      },
+      {
+        "function": "exports.createElement",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react.js?v=0e71776b",
+        "line": 591,
+        "ms": 61.17500000000003,
+        "percentOfProfile": 0.48311505956707906,
+        "selfMs": 61.17500000000003
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 50.987,
+        "percentOfProfile": 0.4026577448654948,
+        "selfMs": 50.987
+      },
+      {
+        "function": "exports.createElement",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react.js?v=0e71776b",
+        "line": 591,
+        "ms": 49.86,
+        "percentOfProfile": 0.3937575295466211,
+        "selfMs": 49.86
+      },
+      {
+        "function": "surfaceAt",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/GrainField.ts?t=1792036424360",
+        "line": 61,
+        "ms": 43.101000000000006,
+        "percentOfProfile": 0.34037992942216044,
+        "selfMs": 43.101000000000006
+      },
+      {
+        "function": "toArray",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 8761,
+        "ms": 41.958,
+        "percentOfProfile": 0.33135335789645265,
+        "selfMs": 41.958
+      },
+      {
+        "function": "setFromRotationMatrix",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 8929,
+        "ms": 41.115,
+        "percentOfProfile": 0.32469596524888344,
+        "selfMs": 41.115
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/Workers.ts?t=1792036530836",
+        "line": 566,
+        "ms": 34.727999999999994,
+        "percentOfProfile": 0.2742561469333144,
+        "selfMs": 34.727999999999994
+      },
+      {
+        "function": "exports.jsxDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e71776b",
+        "line": 191,
+        "ms": 33.023,
+        "percentOfProfile": 0.2607913136425606,
+        "selfMs": 33.023
+      },
+      {
+        "function": "(anonymous)",
+        "url": "",
+        "line": 0,
+        "ms": 32.042,
+        "percentOfProfile": 0.25304409871104766,
+        "selfMs": 32.042
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/ProtectionSystem.ts?t=1792036530710",
+        "line": 246,
+        "ms": 31.833999999999996,
+        "percentOfProfile": 0.2514014680222049,
+        "selfMs": 31.833999999999996
+      },
+      {
+        "function": "bindVertexArray",
+        "url": "",
+        "line": 0,
+        "ms": 30.975,
+        "percentOfProfile": 0.24461771916780162,
+        "selfMs": 30.975
+      },
+      {
+        "function": "WebGLRenderer.renderBufferDirect",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52146,
+        "ms": 30.491999999999997,
+        "percentOfProfile": 0.24080334117399863,
+        "selfMs": 30.491999999999997
+      },
+      {
+        "function": "exports.jsxDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e71776b",
+        "line": 191,
+        "ms": 30.335000000000004,
+        "percentOfProfile": 0.23956347089443952,
+        "selfMs": 30.335000000000004
+      },
+      {
+        "function": "upload",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 45815,
+        "ms": 30.113999999999997,
+        "percentOfProfile": 0.23781817578754408,
+        "selfMs": 30.113999999999997
+      },
+      {
+        "function": "copyArray",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 45306,
+        "ms": 29.61,
+        "percentOfProfile": 0.23383795527227139,
+        "selfMs": 29.61
+      },
+      {
+        "function": "toArray",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 8761,
+        "ms": 29.402,
+        "percentOfProfile": 0.23219532458342867,
+        "selfMs": 29.402
+      },
+      {
+        "function": "flatten",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 45283,
+        "ms": 29.040000000000003,
+        "percentOfProfile": 0.22933651540380826,
+        "selfMs": 29.040000000000003
+      },
+      {
+        "function": "refreshUniformsCommon",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 50445,
+        "ms": 27.168000000000003,
+        "percentOfProfile": 0.2145528392042239,
+        "selfMs": 27.168000000000003
+      },
+      {
+        "function": "getBindingState",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 43316,
+        "ms": 26.689999999999998,
+        "percentOfProfile": 0.21077794752505652,
+        "selfMs": 26.689999999999998
+      },
+      {
+        "function": "exports.createElement",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react.js?v=0e71776b",
+        "line": 591,
+        "ms": 25.654,
+        "percentOfProfile": 0.2025963831325515,
+        "selfMs": 25.654
+      },
+      {
+        "function": "projectObject",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52436,
+        "ms": 24.869,
+        "percentOfProfile": 0.19639703173475573,
+        "selfMs": 24.869
+      },
+      {
+        "function": "exports.createElement",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react.js?v=0e71776b",
+        "line": 591,
+        "ms": 22.233000000000004,
+        "percentOfProfile": 0.17557984665884535,
+        "selfMs": 22.233000000000004
+      },
+      {
+        "function": "multiplyMatrices",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 8249,
+        "ms": 21.303,
+        "percentOfProfile": 0.16823539213661592,
+        "selfMs": 21.303
+      },
+      {
+        "function": "exports.jsxDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e71776b",
+        "line": 191,
+        "ms": 20.988999999999997,
+        "percentOfProfile": 0.16575565157749758,
+        "selfMs": 20.988999999999997
+      },
+      {
+        "function": "setValue",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 45758,
+        "ms": 20.862,
+        "percentOfProfile": 0.16475269918575228,
+        "selfMs": 20.862
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 12662.614999999952,
+        "percentOfProfile": 99.99999999999937,
+        "selfMs": 0
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 7602.758000000012,
+        "percentOfProfile": 60.04097889732881,
+        "selfMs": 7602.758000000012
+      },
+      {
+        "function": "tick",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/SiloScene.ts?t=1792036533084",
+        "line": 446,
+        "ms": 2843.4719999999998,
+        "percentOfProfile": 22.455646009927595,
+        "selfMs": 80.12700000000001
+      },
+      {
+        "function": "WebGLRenderer.render",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52352,
+        "ms": 1439.902000000002,
+        "percentOfProfile": 11.371284683298027,
+        "selfMs": 12.748000000000001
+      },
+      {
+        "function": "performWorkOnRoot",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 7692,
+        "ms": 1318.470999999999,
+        "percentOfProfile": 10.412312148793877,
+        "selfMs": 1.623
+      },
+      {
+        "function": "performSyncWorkOnRoot",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8815,
+        "ms": 1318.470999999999,
+        "percentOfProfile": 10.412312148793877,
+        "selfMs": 0
+      },
+      {
+        "function": "flushSyncWorkAcrossRoots_impl",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8720,
+        "ms": 1318.470999999999,
+        "percentOfProfile": 10.412312148793877,
+        "selfMs": 0
+      },
+      {
+        "function": "processRootScheduleInMicrotask",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8747,
+        "ms": 1318.470999999999,
+        "percentOfProfile": 10.412312148793877,
+        "selfMs": 0
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8829,
+        "ms": 1318.470999999999,
+        "percentOfProfile": 10.412312148793877,
+        "selfMs": 0
+      },
+      {
+        "function": "renderRootSync",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8020,
+        "ms": 1196.0939999999996,
+        "percentOfProfile": 9.445868803560693,
+        "selfMs": 1.579
+      },
+      {
+        "function": "performUnitOfWork",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8179,
+        "ms": 1189.5769999999998,
+        "percentOfProfile": 9.394402341064598,
+        "selfMs": 5.48
+      },
+      {
+        "function": "workLoopSync",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 8076,
+        "ms": 1189.5769999999998,
+        "percentOfProfile": 9.394402341064598,
+        "selfMs": 0
+      },
+      {
+        "function": "runWithFiberInDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 600,
+        "ms": 1146.723,
+        "percentOfProfile": 9.055973035585438,
+        "selfMs": 4.824
+      },
+      {
+        "function": "run",
+        "url": "",
+        "line": 0,
+        "ms": 1135.5050000000003,
+        "percentOfProfile": 8.967381540068917,
+        "selfMs": 10.618
+      },
+      {
+        "function": "beginWork",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 5833,
+        "ms": 1124.8870000000006,
+        "percentOfProfile": 8.883528402308668,
+        "selfMs": 10.481
+      },
+      {
+        "function": "renderScene",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52481,
+        "ms": 854.7310000000004,
+        "percentOfProfile": 6.750035438967372,
+        "selfMs": 0
+      },
+      {
+        "function": "renderObjects",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52556,
+        "ms": 853.1370000000004,
+        "percentOfProfile": 6.73744720186153,
+        "selfMs": 11.142000000000001
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52566,
+        "ms": 841.9950000000005,
+        "percentOfProfile": 6.649455898327465,
+        "selfMs": 3.0069999999999997
+      },
+      {
+        "function": "updateFunctionComponent",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 5313,
+        "ms": 821.8620000000006,
+        "percentOfProfile": 6.490460303815591,
+        "selfMs": 0
+      },
+      {
+        "function": "renderWithHooks",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 3953,
+        "ms": 818.6730000000007,
+        "percentOfProfile": 6.465275932340979,
+        "selfMs": 0
+      },
+      {
+        "function": "WebGLRenderer.renderBufferDirect",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52146,
+        "ms": 811.8490000000004,
+        "percentOfProfile": 6.411385010126253,
+        "selfMs": 30.491999999999997
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 781.6489999999998,
+        "percentOfProfile": 6.172887669726971,
+        "selfMs": 781.6489999999998
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/GrainRenderer.ts?t=1792036533084",
+        "line": 142,
+        "ms": 641.8749999999995,
+        "percentOfProfile": 5.069055641350527,
+        "selfMs": 140.41899999999998
+      },
+      {
+        "function": "setProgram",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52684,
+        "ms": 628.9399999999997,
+        "percentOfProfile": 4.966904545388123,
+        "selfMs": 85.06900000000002
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/Workers.ts?t=1792036530836",
+        "line": 696,
+        "ms": 596.2379999999998,
+        "percentOfProfile": 4.708648253145171,
+        "selfMs": 2.12
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/Workers.ts?t=1792036530836",
+        "line": 566,
+        "ms": 592.4979999999998,
+        "percentOfProfile": 4.679112489797711,
+        "selfMs": 34.727999999999994
+      },
+      {
+        "function": "react_stack_bottom_frame",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 12614,
+        "ms": 433.34400000000016,
+        "percentOfProfile": 3.4222315058935227,
+        "selfMs": 1.605
+      },
+      {
+        "function": "react_stack_bottom_frame",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 12614,
+        "ms": 385.32899999999984,
+        "percentOfProfile": 3.0430444264474508,
+        "selfMs": 1.636
+      },
+      {
+        "function": "renderWithHooksAgain",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react-dom_client.js?v=0e71776b",
+        "line": 4000,
+        "ms": 385.32899999999984,
+        "percentOfProfile": 3.0430444264474508,
+        "selfMs": 0
+      },
+      {
+        "function": "SiloViewer",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/SiloViewer.tsx?t=1792036609034",
+        "line": 147,
+        "ms": 382.65500000000014,
+        "percentOfProfile": 3.021927145380312,
+        "selfMs": 3.246
+      },
+      {
+        "function": "projectObject",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52436,
+        "ms": 382.14900000000017,
+        "percentOfProfile": 3.0179311303391856,
+        "selfMs": 1.211
+      },
+      {
+        "function": "projectObject",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52436,
+        "ms": 380.93800000000016,
+        "percentOfProfile": 3.008367544934433,
+        "selfMs": 8.370000000000001
+      },
+      {
+        "function": "projectObject",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/three.module-59gKndIy.js?v=0e71776b",
+        "line": 52436,
+        "ms": 372.56800000000015,
+        "percentOfProfile": 2.9422674542343685,
+        "selfMs": 24.869
+      },
+      {
+        "function": "SiloViewer",
+        "url": "http://127.0.0.1:5185/src/silo-engolfamento/SiloViewer.tsx?t=1792036609034",
+        "line": 147,
+        "ms": 356.5909999999999,
+        "percentOfProfile": 2.8160928844476363,
+        "selfMs": 5.397
+      },
+      {
+        "function": "exports.jsxDEV",
+        "url": "http://127.0.0.1:5185/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=0e71776b",
+        "line": 191,
+        "ms": 325.4150000000001,
+        "percentOfProfile": 2.569887815431483,
+        "selfMs": 298.722
+      }
+    ]
+  },
+  "longtasks": [],
+  "errors": [],
+  "limitations": [
+    "Sampling profiler adds overhead; compare unprofiled frame metrics separately.",
+    "Self/inclusive times are CPU sampling estimates, not GPU durations. Module groups attribute each sample once by its calling stack.",
+    "HUD correlation is temporal association of DOM commits and RAF intervals, not proof of causation.",
+    "One local desktop capture; no physical mobile evidence."
+  ]
+}

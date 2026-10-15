@@ -1,0 +1,42 @@
+{
+  "measuredAt": "2026-10-15T03:40:12.567Z",
+  "condition": {
+    "runtime": "v24.15.0",
+    "platform": "win32 10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "samples": 720,
+    "scenario": "CPU raycasts over current static grounded silo; deterministic rays, no WebGL, no skin/grain/cut shaders; proxy comparison is broad-phase budget, not identical-hit equivalence",
+    "staticMeshes": 16,
+    "simpleProxies": 19,
+    "triangleCount": 113948,
+    "bvhVersion": "0.8.3 (existing transitive dev availability)"
+  },
+  "ordinary": {
+    "p50Ms": 11.67529999999897,
+    "p95Ms": 24.635200000000623,
+    "p99Ms": 37.7195999999999,
+    "worstMs": 64.8075000000008,
+    "samples": 720
+  },
+  "simpleProxies": {
+    "p50Ms": 0.017899999998917338,
+    "p95Ms": 0.02509999999892898,
+    "p99Ms": 0.6257000000005064,
+    "worstMs": 17.44759999999951,
+    "samples": 720
+  },
+  "bvh": {
+    "p50Ms": 0.04739999999947031,
+    "p95Ms": 0.2191000000002532,
+    "p99Ms": 0.7989999999990687,
+    "worstMs": 3.7497999999995955,
+    "samples": 720,
+    "buildMs": 148.29899999999907,
+    "staticGeometryCount": 16
+  },
+  "validation": {
+    "ordinaryVersusBVHMismatches": 0,
+    "maxHitDeltaMetres": 0
+  },
+  "decision": "Use selective simple proxies in runtime. BVH is faster for precise shell triangles, but current component inspection needs identity and touch envelopes; no detailed authorized CAD needing precision has been received. No global Mesh prototype mutation, new runtime import or dependency. Reevaluate on actual CAD with clipping-aware hit policy."
+}

@@ -1,5 +1,7 @@
 # Recursos, origem e propriedade
 
+> **Registro histórico da PR #11**, head `bc90e2d20403cfb9a2941263e71ad2984ac71b80`, de 14/10/2026. As geometrias, comprimentos, cadeia do pórtico e medições abaixo descrevem aquele snapshot e não comprovam o upgrade atual. Consulte a [entrega do upgrade LVHF](upgrade-delivery.md), a [auditoria do modelo e dos recursos públicos](model-and-reference-audit.md) e o [pipeline/manifesto atual](upgrade-references.md).
+
 Inspeção atual: 14/10/2026. Metros; eixo vertical Y; origem de cada técnico no apoio das botas. O módulo do silo não importa a escada, a unidade industrial nem o singleton de métricas. Não modifica suas geometrias, cotas, ativos ou controladores.
 
 | Existente                                                                   | Recurso aproveitado                                                                      | Adaptação isolada                                                                               | Risco e controle                                                                                     |

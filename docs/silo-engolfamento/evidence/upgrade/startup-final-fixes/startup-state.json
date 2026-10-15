@@ -1,0 +1,140 @@
+{
+  "testedAt": "2026-10-15T05:38:55.651Z",
+  "browser": "155.0.8059.41",
+  "base": "http://127.0.0.1:5185",
+  "scopeFilter": "Late harness|hidden first-frame",
+  "condition": "Chrome local 1440×900 DPR1. Synthetic shader holds exercise lifecycle, not startup speed.",
+  "checks": [
+    {
+      "name": "Late harness binding preserves isolation, restoration and an earlier selection",
+      "result": "aprovado",
+      "evidence": [
+        {
+          "strategy": "isolation",
+          "before": {
+            "startedAt": 3569.600000023842,
+            "preparationMs": 173.5,
+            "explorationMs": 1060,
+            "assetReadyMs": 0,
+            "mainCompileMs": 575.7999999523163,
+            "workerCompileMs": 0,
+            "readyMs": 0,
+            "renderCount": 60,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": false,
+              "B": false
+            },
+            "ropeVisible": false,
+            "dorsalError": 0,
+            "time": 0
+          },
+          "complete": {
+            "startedAt": 3569.600000023842,
+            "preparationMs": 173.5,
+            "explorationMs": 1060,
+            "assetReadyMs": 3856.600000023842,
+            "mainCompileMs": 575.7999999523163,
+            "workerCompileMs": 495.1999999284744,
+            "readyMs": 4568.700000047684,
+            "renderCount": 157,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": true,
+              "B": true
+            },
+            "ropeVisible": true,
+            "dorsalError": 4.440892098500626e-16,
+            "time": 0
+          }
+        },
+        {
+          "strategy": "selection",
+          "before": {
+            "startedAt": 4797.399999976158,
+            "preparationMs": 165.29999995231628,
+            "explorationMs": 479.5,
+            "assetReadyMs": 0,
+            "mainCompileMs": 64.79999995231628,
+            "workerCompileMs": 0,
+            "readyMs": 0,
+            "renderCount": 29,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": false,
+              "B": false
+            },
+            "ropeVisible": false,
+            "dorsalError": 0,
+            "time": 0
+          },
+          "complete": {
+            "startedAt": 4797.399999976158,
+            "preparationMs": 165.29999995231628,
+            "explorationMs": 479.5,
+            "assetReadyMs": 3329.1999999284744,
+            "mainCompileMs": 64.79999995231628,
+            "workerCompileMs": 625.0999999046326,
+            "readyMs": 4293.399999976158,
+            "renderCount": 129,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": true,
+              "B": true
+            },
+            "ropeVisible": true,
+            "dorsalError": 4.440892098500626e-16,
+            "time": 0
+          }
+        }
+      ],
+      "durationMs": 22418.3382
+    },
+    {
+      "name": "A hidden first-frame deadline remains an error after visibility returns until explicit retry",
+      "result": "aprovado",
+      "evidence": {
+        "syntheticVisibility": true,
+        "failed": {
+          "startedAt": 3755.2000000476837,
+          "preparationMs": 155.29999995231628,
+          "explorationMs": 0,
+          "assetReadyMs": 0,
+          "mainCompileMs": 49.799999952316284,
+          "workerCompileMs": 0,
+          "readyMs": 0,
+          "renderCount": 0,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": false,
+            "B": false
+          },
+          "ropeVisible": false,
+          "dorsalError": 0,
+          "time": 0
+        },
+        "retry": {
+          "startedAt": 24841.299999952316,
+          "preparationMs": 92.80000007152557,
+          "explorationMs": 298.2000000476837,
+          "assetReadyMs": 1183.7000000476837,
+          "mainCompileMs": 53.199999928474426,
+          "workerCompileMs": 47.10000002384186,
+          "readyMs": 1321.4000000953674,
+          "renderCount": 43,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": true,
+            "B": true
+          },
+          "ropeVisible": true,
+          "dorsalError": 4.440892098500626e-16,
+          "time": 0
+        }
+      },
+      "durationMs": 27057.4537
+    }
+  ],
+  "failures": [],
+  "errors": []
+}

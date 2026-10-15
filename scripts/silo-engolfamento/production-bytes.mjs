@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 
 const base = process.env.SILO_URL ?? "http://127.0.0.1:5190";
-const output = process.env.SILO_OUTPUT ?? "docs/silo-engolfamento/evidence";
+const output = process.env.SILO_OUTPUT ?? "docs/silo-engolfamento/evidence/upgrade";
 // Keep measurements, without publishing transient identifiers injected by the
 // host's web protection software. This does not alter browser/network settings.
 const evidenceUrl = (url) => {
@@ -19,6 +19,7 @@ const report = {
   browser: browser.version(),
   server: base,
   environment: "Build de produção, Wrangler local; não é implantação",
+  runtimeNote: process.env.SILO_RUNTIME_NOTE ?? null,
   library: null,
   runs: [],
   errors: [],
@@ -28,7 +29,8 @@ try {
   const library = await libraryContext.newPage();
   const modelRequests = [];
   library.on("request", (request) => {
-    if (/\.glb(?:\?|$)/.test(request.url())) modelRequests.push(request.url());
+    if (/\.glb(?:\?|$)|\/environment-pmrem-256\.png(?:\?|$)/.test(request.url()))
+      modelRequests.push(request.url());
   });
   // Ambient host-injected polling is unrelated to route/model readiness.
   await library.goto(`${base}/mapas-3d/unidades`, {
@@ -41,8 +43,20 @@ try {
   assert.equal(modelRequests.length, 0);
   report.library = { modelRequests, canvases: 0, card: true };
   await libraryContext.close();
-  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } }),
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } }),
     page = await context.newPage();
+  await context.addInitScript(() => {
+    window.__siloLoadingLongTasks = [];
+    if (!PerformanceObserver.supportedEntryTypes.includes("longtask")) return;
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries())
+        window.__siloLoadingLongTasks.push({
+          startMs: entry.startTime,
+          durationMs: entry.duration,
+        });
+    });
+    observer.observe({ type: "longtask", buffered: true });
+  });
   page.on("pageerror", (error) => report.errors.push(error.message));
   const cdp = await context.newCDPSession(page);
   await cdp.send("Network.enable");
@@ -78,14 +92,35 @@ try {
     const metrics = await page.evaluate(() => {
       const m = window.__siloMetrics;
       return {
+        metricsVersion: m.version,
+        readinessSemantics:
+          m.assetReadyMs > 0 ? "first rendered frame with prepared rigs" : "asset/domain ready",
         readyMs: m.readyMs,
+        assetReadyMs: m.assetReadyMs ?? null,
+        documentAssetReadyMs: m.assetReadyMs > 0 ? m.startedAt + m.assetReadyMs : null,
+        mainCompileMs: m.mainCompileMs ?? null,
+        workerCompileMs: m.workerCompileMs ?? null,
+        parallelShaderCompile: m.parallelShaderCompile ?? null,
+        explorationMs: m.explorationMs ?? null,
+        preparationMs: m.preparationMs ?? null,
         rendererStartedAtMs: m.startedAt,
+        documentExplorationMs: m.explorationMs > 0 ? m.startedAt + m.explorationMs : null,
+        documentSimulationMs: m.startedAt + m.readyMs,
         documentStateAtReady: document.readyState,
         assets: m.assets,
         geometryBytes: m.geometryBytes,
         textureBytes: m.textureBytes,
         renderer: m.renderer,
         errors: m.errors,
+        loadingLongTasks: (window.__siloLoadingLongTasks ?? []).filter(
+          (entry) => entry.startMs <= m.startedAt + m.readyMs,
+        ),
+        heapAtReady: performance.memory
+          ? {
+              usedBytes: performance.memory.usedJSHeapSize,
+              totalBytes: performance.memory.totalJSHeapSize,
+            }
+          : null,
       };
     });
     const rawResources = await page.evaluate(() =>
@@ -147,6 +182,9 @@ console.log(
       name: r.name,
       routeReadyMs: r.routeReadyMs,
       rendererReadyMs: r.readyMs,
+      explorationMs: r.explorationMs,
+      documentExplorationMs: r.documentExplorationMs,
+      documentSimulationMs: r.documentSimulationMs,
       navigationToCommitMs: r.navigationToCommitMs,
       rendererStartedAtMs: r.rendererStartedAtMs,
       encodedNetworkBytes: r.encodedNetworkBytes,

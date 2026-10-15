@@ -1,0 +1,4898 @@
+{
+  "testedAt": "2026-10-15T04:04:05.48Z",
+  "sourceCommit": "bc90e2d20403cfb9a2941263e71ad2984ac71b80",
+  "sourceDirty": "M src/routeTree.gen.ts",
+  "sourceVerification": {
+    "checkedAt": "2026-10-15T04:11:49.8893766Z",
+    "note": "Vite regenerated routeTree line endings; normalized blob is identical to HEAD. No source diff in silo or route tree.",
+    "routeTreeNormalizedWorkingBlob": "a9f26eb0bed1547a656cdcfcd55c3bb196eba83b",
+    "routeTreeHeadBlob": "a9f26eb0bed1547a656cdcfcd55c3bb196eba83b",
+    "siloAndRouteTreeDiffExitCode": 0
+  },
+  "browser": "155.0.8059.41",
+  "host": {
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584,
+    "platform": "win32",
+    "release": "10.0.26200"
+  },
+  "base": "http://127.0.0.1:5186",
+  "upgrade": false,
+  "screenshots": [
+    {
+      "filename": "1440x900-incident.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false
+    },
+    {
+      "filename": "1366x768-incident.png",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": false
+    },
+    {
+      "filename": "390x844-incident.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": false
+    },
+    {
+      "filename": "844x390-incident.png",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "overflow": false
+    }
+  ],
+  "samples": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "quality": "economic",
+      "durationMs": 8000,
+      "frameMs": {
+        "samples": 481,
+        "p50": 16.69999999999891,
+        "p95": 16.799999999999272,
+        "p99": 16.80000000000291,
+        "max": 17.5
+      },
+      "cpuRenderMs": {
+        "samples": 481,
+        "p50": 1.2999999523162842,
+        "p95": 1.7999999523162842,
+        "p99": 2.200000047683716,
+        "max": 2.600000023841858
+      },
+      "maxTotalCalls": 61,
+      "maxPrincipalTriangles": 147398,
+      "frames": [
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 2.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 17.5,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 15.899999999999636,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 2.299999952316284,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 2.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.8000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 2.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 2,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.8000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.899999999999636,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 17.100000000000364,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.299999999999272,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 2,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 2.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 2.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 2.200000047683716,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.8000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 2.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.8000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.80000000000109,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000000364,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999891,
+          "cpuMs": 1.8000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000291,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.399999999997817,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 17.200000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.19999999999709,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.600000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.4000000953674316,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000291,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.899999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.80000000000291,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 2.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.5,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 2.200000047683716,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.6999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.3000000715255737,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1.5999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.0999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 2,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.7000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.799999999999272,
+          "cpuMs": 2,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.399999976158142,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.600000000002183,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.69999999999709,
+          "cpuMs": 1.2000000476837158,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.5,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.2999999523162842,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.100000023841858,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 2.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 61,
+          "triangles": 190158,
+          "shadowCalls": 5,
+          "shadowTriangles": 42760
+        },
+        {
+          "ms": 16.599999999998545,
+          "cpuMs": 1.5999999046325684,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        },
+        {
+          "ms": 16.700000000000728,
+          "cpuMs": 1.1999999284744263,
+          "camera": "frontal",
+          "quality": "economic",
+          "calls": 56,
+          "triangles": 147398,
+          "shadowCalls": 0,
+          "shadowTriangles": 0
+        }
+      ],
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "errors": [],
+      "status": "running"
+    }
+  ],
+  "errors": [],
+  "condition": "Local development server, Chrome headless, DPR1, economic quality. Eight-second active playback after 2.5s warmup, seek8, speed0.5. Sources/scenarios intentionally differ; not a calibrated accident comparison. Mobile dimensions are emulation."
+}

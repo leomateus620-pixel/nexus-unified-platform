@@ -1,0 +1,263 @@
+{
+  "inspectedAt": "2026-10-15T03:09:39.363Z",
+  "references": [
+    {
+      "repository": "ThatOpen/engine_components",
+      "revision": "9b38c8768cc8b0eadc633591f7639ecbce664ada",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/ThatOpen/engine_components/9b38c8768cc8b0eadc633591f7639ecbce664ada/README.md",
+          "bytes": 3449,
+          "sha256": "e637ad819d4f292d3cd02d56672b129d92fa378aa91cbad11d98727708a4957e",
+          "terms": [
+            "Components",
+            "render"
+          ]
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "url": "https://raw.githubusercontent.com/ThatOpen/engine_components/9b38c8768cc8b0eadc633591f7639ecbce664ada/CONTRIBUTING.md",
+          "bytes": 8629,
+          "sha256": "9faef97a7e9682971d385a67b5fd3a7dc386eb9bbfb6cca26bcc9561b63e1afd",
+          "terms": [
+            "Components",
+            "Fragments",
+            "render"
+          ]
+        },
+        {
+          "path": "LICENSE.md",
+          "url": "https://raw.githubusercontent.com/ThatOpen/engine_components/9b38c8768cc8b0eadc633591f7639ecbce664ada/LICENSE.md",
+          "bytes": 1023,
+          "sha256": "cb5aedb296c5246d1f22e9099f925a65146f9f0d6b4eebba97fd27a6cdbbab2d",
+          "license": "MIT",
+          "terms": []
+        }
+      ],
+      "terms": [
+        "Components",
+        "Fragments",
+        "render"
+      ]
+    },
+    {
+      "repository": "yomotsu/camera-controls",
+      "revision": "c51601107e266097edf6a9caa57bfa9eaa77427c",
+      "files": [
+        {
+          "path": "readme.md",
+          "url": "https://raw.githubusercontent.com/yomotsu/camera-controls/c51601107e266097edf6a9caa57bfa9eaa77427c/readme.md",
+          "bytes": 36794,
+          "sha256": "df13390f0c726f5070bad5d133c905b244cab5b623d9f575f1d192961d96df9a",
+          "terms": [
+            "fitToBox",
+            "setFocalOffset",
+            "controlstart",
+            "stop()",
+            "update"
+          ]
+        },
+        {
+          "path": "package.json",
+          "url": "https://raw.githubusercontent.com/yomotsu/camera-controls/c51601107e266097edf6a9caa57bfa9eaa77427c/package.json",
+          "bytes": 2294,
+          "sha256": "a446bc98fa41b25445b3d9565a65589e6924a9918b17df150ca7a97001c75896",
+          "terms": [],
+          "version": "0.0.0-semantic-release",
+          "peerDependencies": {
+            "three": ">=0.126.1"
+          }
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/yomotsu/camera-controls/c51601107e266097edf6a9caa57bfa9eaa77427c/LICENSE",
+          "bytes": 1065,
+          "sha256": "d175c34ca3b4fb17d0568627ef8fd9363ae6f63f9ffdc97d4da71f0d7f3473ee",
+          "license": "MIT",
+          "terms": []
+        }
+      ],
+      "terms": [
+        "fitToBox",
+        "setFocalOffset",
+        "controlstart",
+        "stop()",
+        "update"
+      ]
+    },
+    {
+      "repository": "gkjohnson/three-mesh-bvh",
+      "revision": "b0935a7ec5904d2c009880be8da843b2637f185d",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/gkjohnson/three-mesh-bvh/b0935a7ec5904d2c009880be8da843b2637f185d/README.md",
+          "bytes": 13658,
+          "sha256": "ce234014b785f2be0b0ead89ab52b9c7ffa9ab761bb8dc2f8bfa940dc8d82176",
+          "terms": [
+            "firstHitOnly",
+            "refit",
+            "worker",
+            "Skinned"
+          ]
+        },
+        {
+          "path": "package.json",
+          "url": "https://raw.githubusercontent.com/gkjohnson/three-mesh-bvh/b0935a7ec5904d2c009880be8da843b2637f185d/package.json",
+          "bytes": 2645,
+          "sha256": "cd543c9ad2047e1fedc413681f5b9a33365fc4d686c38dd48039e5f4622934e0",
+          "terms": [
+            "worker"
+          ],
+          "version": "0.9.15",
+          "peerDependencies": {
+            "three": ">= 0.159.0"
+          }
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/gkjohnson/three-mesh-bvh/b0935a7ec5904d2c009880be8da843b2637f185d/LICENSE",
+          "bytes": 1072,
+          "sha256": "b106ef6198a9862ed2b5b873e944ecf3583c631a84a7462d400ecc1910ce7fee",
+          "license": "MIT",
+          "terms": []
+        }
+      ],
+      "terms": [
+        "firstHitOnly",
+        "refit",
+        "worker",
+        "Skinned"
+      ]
+    },
+    {
+      "repository": "donmccurdy/glTF-Transform",
+      "revision": "3797aad585021e68cf5fbf3f2fba37783596ffac",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/3797aad585021e68cf5fbf3f2fba37783596ffac/README.md",
+          "bytes": 6647,
+          "sha256": "d89d0c933e18062a4e664e6389774bc84e0bebc5011e5e801406c6895bc948a3",
+          "terms": [
+            "dedup",
+            "mesh",
+            "texture"
+          ]
+        },
+        {
+          "path": "packages/functions/src/dedup.ts",
+          "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/3797aad585021e68cf5fbf3f2fba37783596ffac/packages/functions/src/dedup.ts",
+          "bytes": 12906,
+          "sha256": "955c53e7b854a55fe23a67f8181f08c8baaf939d106d6ca976edfa0377dc859f",
+          "terms": [
+            "dedup",
+            "join",
+            "mesh",
+            "texture"
+          ]
+        },
+        {
+          "path": "packages/functions/src/join.ts",
+          "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/3797aad585021e68cf5fbf3f2fba37783596ffac/packages/functions/src/join.ts",
+          "bytes": 9524,
+          "sha256": "ecd1fe4703b9cde389a022606b964773091035ed5197caea3f788877ad34f3ed",
+          "terms": [
+            "dedup",
+            "join",
+            "mesh"
+          ]
+        },
+        {
+          "path": "LICENSE.md",
+          "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/3797aad585021e68cf5fbf3f2fba37783596ffac/LICENSE.md",
+          "bytes": 1078,
+          "sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165",
+          "license": "MIT",
+          "terms": []
+        }
+      ],
+      "terms": [
+        "dedup",
+        "join",
+        "mesh",
+        "texture"
+      ]
+    },
+    {
+      "repository": "donmccurdy/three-gltf-viewer",
+      "revision": "b5ee5dafe27f953ae1b55f42b5fa3697fef08683",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/donmccurdy/three-gltf-viewer/b5ee5dafe27f953ae1b55f42b5fa3697fef08683/README.md",
+          "bytes": 710,
+          "sha256": "6c91f21921d4b1adb5d83e1295d4d1e2ed91fe260739f12b28f274cf9b735c95",
+          "terms": []
+        },
+        {
+          "path": "src/viewer.js",
+          "url": "https://raw.githubusercontent.com/donmccurdy/three-gltf-viewer/b5ee5dafe27f953ae1b55f42b5fa3697fef08683/src/viewer.js",
+          "bytes": 20034,
+          "sha256": "506b3246b0f7e994e448e708abb64d01c4262964198c195de7cef73e173264cb",
+          "terms": [
+            "PMREMGenerator",
+            "KTX2Loader",
+            "MeshoptDecoder",
+            "SkeletonHelper",
+            "ACESFilmicToneMapping"
+          ]
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/donmccurdy/three-gltf-viewer/b5ee5dafe27f953ae1b55f42b5fa3697fef08683/LICENSE",
+          "bytes": 1078,
+          "sha256": "b951340896f853eeba83f72e442a2b254d0b581fda9ec80f0a70a53cd278893d",
+          "license": "MIT",
+          "terms": []
+        }
+      ],
+      "terms": [
+        "PMREMGenerator",
+        "KTX2Loader",
+        "MeshoptDecoder",
+        "SkeletonHelper",
+        "ACESFilmicToneMapping"
+      ]
+    }
+  ],
+  "localPackages": [
+    {
+      "name": "three",
+      "version": "0.186.0",
+      "license": "MIT"
+    },
+    {
+      "name": "camera-controls",
+      "version": "3.1.2",
+      "license": "MIT",
+      "peerDependencies": {
+        "three": ">=0.126.1"
+      }
+    },
+    {
+      "name": "three-mesh-bvh",
+      "version": "0.8.3",
+      "license": "MIT",
+      "peerDependencies": {
+        "three": ">= 0.159.0"
+      }
+    },
+    {
+      "name": "@gltf-transform/core",
+      "version": "4.5.0",
+      "license": "MIT"
+    },
+    {
+      "name": "@gltf-transform/functions",
+      "version": "4.5.0",
+      "license": "MIT"
+    }
+  ]
+}

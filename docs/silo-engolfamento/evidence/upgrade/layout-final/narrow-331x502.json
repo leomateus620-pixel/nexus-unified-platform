@@ -1,0 +1,401 @@
+{
+  "testedAt": "2026-10-15T06:06:16.585Z",
+  "base": "http://127.0.0.1:5190",
+  "browser": "155.0.8059.41",
+  "viewport": {
+    "width": 331,
+    "height": 502
+  },
+  "dpr": 1,
+  "condition": "Production local Wrangler; touch emulation. DOM header/glyph overflow envelope and 44 CSS-pixel visible targets; not an FPS or physical-phone test.",
+  "states": [
+    {
+      "name": "explore",
+      "result": "aprovado",
+      "screenshot": "331x502-explore.png",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 331,
+        "height": 58,
+        "top": 0,
+        "right": 331,
+        "bottom": 58,
+        "left": 0
+      },
+      "title": {
+        "x": 138.765625,
+        "y": 21.703125,
+        "width": 129.234375,
+        "height": 17.59375,
+        "top": 21.703125,
+        "right": 268,
+        "bottom": 39.296875,
+        "left": 138.765625
+      },
+      "titleScrollHeight": 21,
+      "titleClientHeight": 18,
+      "conservativeGlyphTop": 18.703125,
+      "conservativeGlyphBottom": 42.296875,
+      "eyebrowDisplay": "none",
+      "titleContained": true,
+      "glyphEnvelopeContained": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "controls": [
+        {
+          "name": "Voltar à biblioteca",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Fontes e critérios",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Explorar",
+          "width": 65.765625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Sistema LVHF",
+          "width": 95.0625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Simulação",
+          "width": 76.140625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Enquadrar silo",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Componentes e estrutura",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Exibição e qualidade",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Voltar à vista anterior",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Câmeras e corte",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        }
+      ],
+      "canvas": {
+        "engine": "three.js r186",
+        "explorationReady": "true",
+        "camera": "frontal",
+        "status": "idle",
+        "time": "0",
+        "calls": "95",
+        "triangles": "221952",
+        "occluded": "false",
+        "ready": "true"
+      }
+    },
+    {
+      "name": "incident",
+      "result": "aprovado",
+      "screenshot": "331x502-incident.png",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 331,
+        "height": 58,
+        "top": 0,
+        "right": 331,
+        "bottom": 58,
+        "left": 0
+      },
+      "title": {
+        "x": 138.765625,
+        "y": 21.703125,
+        "width": 129.234375,
+        "height": 17.59375,
+        "top": 21.703125,
+        "right": 268,
+        "bottom": 39.296875,
+        "left": 138.765625
+      },
+      "titleScrollHeight": 21,
+      "titleClientHeight": 18,
+      "conservativeGlyphTop": 18.703125,
+      "conservativeGlyphBottom": 42.296875,
+      "eyebrowDisplay": "none",
+      "titleContained": true,
+      "glyphEnvelopeContained": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "controls": [
+        {
+          "name": "Voltar à biblioteca",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Fontes e critérios",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Explorar",
+          "width": 65.765625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Sistema LVHF",
+          "width": 95.0625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Simulação",
+          "width": 76.140625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Enquadrar silo",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Componentes e estrutura",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Exibição e qualidade",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Voltar à vista anterior",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Câmeras e corte",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Indicadores dos técnicos",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Iniciar",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Reiniciar simulação",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Instante da simulação",
+          "width": 152,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Velocidade de reprodução",
+          "width": 56,
+          "height": 44,
+          "onScreen": true
+        }
+      ],
+      "canvas": {
+        "engine": "three.js r186",
+        "explorationReady": "true",
+        "camera": "frontal",
+        "status": "idle",
+        "time": "0",
+        "calls": "55",
+        "triangles": "210918",
+        "occluded": "false",
+        "ready": "true"
+      }
+    },
+    {
+      "name": "first-person",
+      "result": "aprovado",
+      "screenshot": "331x502-first-person.png",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 331,
+        "height": 58,
+        "top": 0,
+        "right": 331,
+        "bottom": 58,
+        "left": 0
+      },
+      "title": {
+        "x": 138.765625,
+        "y": 21.703125,
+        "width": 129.234375,
+        "height": 17.59375,
+        "top": 21.703125,
+        "right": 268,
+        "bottom": 39.296875,
+        "left": 138.765625
+      },
+      "titleScrollHeight": 21,
+      "titleClientHeight": 18,
+      "conservativeGlyphTop": 18.703125,
+      "conservativeGlyphBottom": 42.296875,
+      "eyebrowDisplay": "none",
+      "titleContained": true,
+      "glyphEnvelopeContained": true,
+      "horizontalOverflow": false,
+      "verticalOverflow": false,
+      "controls": [
+        {
+          "name": "Voltar à biblioteca",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Fontes e critérios",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Explorar",
+          "width": 65.765625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Sistema LVHF",
+          "width": 95.0625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Simulação",
+          "width": 76.140625,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Enquadrar silo",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Componentes e estrutura",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Exibição e qualidade",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Voltar à vista anterior",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Sair da primeira pessoa",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Câmeras e corte",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Indicadores dos técnicos",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Continuar",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Reiniciar simulação",
+          "width": 44,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Instante da simulação",
+          "width": 152,
+          "height": 44,
+          "onScreen": true
+        },
+        {
+          "name": "Velocidade de reprodução",
+          "width": 56,
+          "height": 44,
+          "onScreen": true
+        }
+      ],
+      "canvas": {
+        "engine": "three.js r186",
+        "explorationReady": "true",
+        "camera": "victim",
+        "status": "paused",
+        "time": "25",
+        "calls": "48",
+        "triangles": "351725",
+        "occluded": "true",
+        "ready": "true"
+      }
+    }
+  ],
+  "errors": []
+}

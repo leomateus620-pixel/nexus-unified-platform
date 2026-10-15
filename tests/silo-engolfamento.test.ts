@@ -15,10 +15,19 @@ import {
 import { educationalVitals } from "../src/silo-engolfamento/educationalVitals.ts";
 import {
   CONNECTION_LENGTH,
+  CONNECTOR_REACH,
+  evaluateDemonstrationFrame,
+  evaluateExplorationFrame,
   evaluateFrame,
   SiloSimulation,
   type SiloFrame,
 } from "../src/silo-engolfamento/simulation.ts";
+import {
+  INCIDENT_CENTRES,
+  SILO_CONFIG,
+  SUPPORT_ANGLES,
+} from "../src/silo-engolfamento/SiloConfig.ts";
+import { evaluateTrolley, LIFE_LINE_LENGTH, TAU } from "../src/silo-engolfamento/LifeLinePath.ts";
 
 const close = (a: number, b: number, tolerance = 1e-9) =>
   assert.ok(Math.abs(a - b) <= tolerance, `${a} != ${b}`);
@@ -213,7 +222,9 @@ test("after loss of support the final footprint sinks and advects with its own b
   const prevention = evaluateFrame(12, "prevention");
   assert.ok(
     Object.values(prevention.workers).every(
-      (w) => w.feet.left.position.y === 0 && w.feet.right.position.y === 0,
+      (w) =>
+        w.feet.left.position.y === SILO_CONFIG.groundY.value &&
+        w.feet.right.position.y === SILO_CONFIG.groundY.value,
     ),
   );
 });
@@ -269,7 +280,7 @@ test("HUD keeps real-time 10Hz publication under slow playback and clears its ca
   }
 });
 
-test("volume never increases without feeding and exactly follows integrated gate discharge", () => {
+test("flat-floor local collapse conserves bulk volume and has no hidden external discharge", () => {
   let previous = INITIAL_GRAIN_VOLUME;
   for (let tick = 0; tick <= 1800; tick++) {
     const time = tick / 60;
@@ -282,21 +293,32 @@ test("volume never increases without feeding and exactly follows integrated gate
   }
   close(grainVolume(SILO.hopperTop), HOPPER_VOLUME);
   close(grainVolume(SILO.outletY), 0);
-  assert.ok(grainVolume(2.4) < HOPPER_VOLUME);
+  close(grainVolume(2.4), BODY_AREA * (2.4 - SILO.floorY));
+  close(grainVolume(-1), 0);
+  close(grainVolume(100), BODY_AREA * (SILO.bodyTop - SILO.floorY));
 });
 
 test("surface redistribution conserves mass; increasing depression does not create grain", () => {
   const frame = evaluateFrame(18);
-  // Independent polar midpoint quadrature of the rendered surface volume.
-  const rings = 600;
-  let mean = 0;
-  for (let i = 0; i < rings; i++) {
-    const r = ((i + 0.5) * SILO.radius) / rings;
-    mean += (surfaceAt(r, 0, frame) * 2 * r * (SILO.radius / rings)) / SILO.radius ** 2;
+  // Independent local polar quadrature resolves each compact collapse and ridge.
+  const rings = 1000;
+  for (const centre of INCIDENT_CENTRES) {
+    let redistributed = 0;
+    for (let i = 0; i < rings; i++) {
+      const r = ((i + 0.5) * SILO.flowRadius) / rings;
+      redistributed +=
+        ((surfaceAt(centre.x + r, centre.z, frame) - frame.surfaceHeight) *
+          TAU *
+          r *
+          SILO.flowRadius) /
+        rings;
+    }
+    close(redistributed, 0, 2e-7);
+    assert.ok(surfaceAt(centre.x, centre.z, frame) < frame.surfaceHeight - 0.3);
+    assert.ok(surfaceAt(centre.x + SILO.flowRadius * 0.8, centre.z, frame) > frame.surfaceHeight);
+    assert.ok(Math.hypot(centre.x, centre.z) + SILO.flowRadius < SILO.radius);
   }
-  close(mean, frame.surfaceHeight, 1e-6);
-  close(HOPPER_VOLUME + BODY_AREA * (mean - SILO.hopperTop), frame.volume, 0.00003);
-  assert.ok(surfaceAt(0, 0, frame) < frame.surfaceHeight);
+  close(surfaceAt(0, 0, frame), frame.surfaceHeight);
   close(surfaceAt(SILO.radius, 0, frame), frame.surfaceHeight + frame.depression * DEPRESSION_MEAN);
 });
 
@@ -305,6 +327,17 @@ test("connected technician shares exposure but line geometrically limits descent
   for (let tick = 0; tick <= 1800; tick++) {
     const frame = evaluateFrame(tick / 60);
     assert.ok(frame.connection.distance <= CONNECTION_LENGTH + 1e-9);
+    close(frame.connection.ropeAnchor.x, frame.connection.anchor.x);
+    close(frame.connection.ropeAnchor.y, frame.connection.anchor.y - CONNECTOR_REACH);
+    close(frame.connection.ropeAnchor.z, frame.connection.anchor.z);
+    close(
+      frame.connection.totalDistance,
+      frame.connection.connectorReach + frame.connection.ropeDistance,
+    );
+    assert.ok(
+      frame.connection.totalDistance <= CONNECTION_LENGTH + 1e-9,
+      "fixed total includes the vertical rigid connector",
+    );
     close(frame.workers.A.position.x, -frame.workers.B.position.x);
     close(frame.workers.A.position.z, frame.workers.B.position.z);
     for (const technician of Object.values(frame.workers)) {
@@ -388,8 +421,146 @@ test("seeded grain attributes reproduce without PRNG consumption and flow reuses
     Array.from({ length: 100 }, (_, index) => seededValue(index, 123)),
   );
   const frame = evaluateFrame(14);
-  const buffer = flowAt(0.7, 0.3, frame);
-  assert.equal(flowAt(-0.7, 0.3, frame, buffer), buffer);
-  assert.ok(buffer.x > 0 && buffer.y < 0 && buffer.z < 0);
+  const centre = INCIDENT_CENTRES[0]!;
+  const buffer = flowAt(centre.x + 0.2, centre.z, frame);
+  assert.equal(flowAt(centre.x + 0.2, centre.z, frame, buffer), buffer);
+  assert.ok(buffer.x < 0 && buffer.y < 0);
   assert.equal(flowAt(4, 4, frame, buffer).y, 0);
+});
+
+test("versioned metre configuration and eleven support angles close without rounding accumulation", () => {
+  assert.equal(SILO_CONFIG.coordinates.units, "m");
+  assert.equal(SILO_CONFIG.coordinates.up, "Y");
+  assert.equal(SILO_CONFIG.radius.value, 11);
+  assert.equal(SILO_CONFIG.externalEnvelope.value, 11.32);
+  assert.equal(SILO_CONFIG.bodyTop.value, 24.88);
+  assert.equal(SILO_CONFIG.roofTop.value, 30.403);
+  assert.equal(SUPPORT_ANGLES.length, 11);
+  assert.equal(SUPPORT_ANGLES[0], 0);
+  for (let index = 0; index < 11; index++) close(SUPPORT_ANGLES[index]!, (index * TAU) / 11);
+  assert.ok(
+    SILO_CONFIG.tensionerAngle.value > 0 && SILO_CONFIG.tensionerAngle.value < SUPPORT_ANGLES[1]!,
+  );
+  assert.ok(SILO_CONFIG.manholeAngle.value < SILO_CONFIG.tensionerAngle.value);
+  assert.ok(
+    Math.abs(
+      Math.atan2(SILO_CONFIG.manholeX.value, SILO_CONFIG.manholeZ.value) -
+        SILO_CONFIG.manholeAngle.value,
+    ) < 0.002,
+  );
+  close(LIFE_LINE_LENGTH, 68.6500826662, 1e-6);
+});
+
+test("trolley path origin, eye, tangent and wheel rotation remain continuous over closure and reverse seeks", () => {
+  const original = evaluateTrolley(-0.1);
+  for (const support of SUPPORT_ANGLES) {
+    const before = evaluateTrolley((support - 1e-7) * SILO.ringRadius);
+    const after = evaluateTrolley((support + 1e-7) * SILO.ringRadius);
+    assert.ok(
+      Math.hypot(before.position.x - after.position.x, before.position.z - after.position.z) <
+        0.000003,
+    );
+    assert.ok(
+      Math.hypot(before.tangent.x - after.tangent.x, before.tangent.z - after.tangent.z) < 0.000001,
+    );
+    close(after.eye.y, 24.281);
+    close(Math.hypot(after.eye.x, after.eye.z), SILO.ringRadius + 0.0155);
+    close(after.position.x * after.tangent.x + after.position.z * after.tangent.z, 0, 1e-10);
+    close(Math.cos(after.yaw), after.tangent.x);
+    close(-Math.sin(after.yaw), after.tangent.z);
+  }
+  const closeStart = evaluateTrolley(-1e-6);
+  const closeEnd = evaluateTrolley(1e-6);
+  assert.ok(closeStart.angle > 6 && closeEnd.angle < 0.01);
+  close(closeEnd.unwrappedAngle - closeStart.unwrappedAngle, 2e-6 / SILO.ringRadius);
+  const buffer = evaluateTrolley(LIFE_LINE_LENGTH * 3);
+  assert.deepEqual(evaluateTrolley(-0.1, buffer), original);
+  close(evaluateTrolley(1).wheelRotation, 1 / 0.017);
+});
+
+test("whole LVHF demonstration follows a full circuit with a fixed reachable connection", () => {
+  const start = evaluateDemonstrationFrame(0);
+  const end = evaluateDemonstrationFrame(80);
+  close(end.trolley.distance - start.trolley.distance, LIFE_LINE_LENGTH);
+  close(start.trolley.travelledDistance, 0);
+  close(end.trolley.travelledDistance, LIFE_LINE_LENGTH);
+  close(start.workers.A.position.x, end.workers.A.position.x);
+  close(start.workers.A.position.z, end.workers.A.position.z);
+  for (let tick = 0; tick <= 4800; tick++) {
+    const frame = evaluateDemonstrationFrame(tick / 60);
+    assert.ok(frame.connection.distance <= CONNECTION_LENGTH);
+    assert.ok(frame.connection.totalDistance <= CONNECTION_LENGTH);
+    close(frame.workers.A.harness.x, frame.connection.harness.x);
+    close(frame.connection.anchor.x, frame.trolley.eye.x);
+    close(frame.volume, INITIAL_GRAIN_VOLUME);
+    assert.equal(frame.depression, 0);
+    for (const worker of Object.values(frame.workers))
+      assert.ok(Math.hypot(worker.position.x, worker.position.z) + 0.35 < SILO.radius);
+  }
+});
+
+test("incompatible exploration levels take workers out of mass; mode return preserves incident without automatic playback", () => {
+  for (const level of [0.18, 5, 14, 21, 23.8]) {
+    const frame = evaluateExplorationFrame(level);
+    assert.equal(frame.supportAvailable, false);
+    assert.equal(frame.connection.connected, false);
+    close(frame.volume, grainVolume(level));
+    assert.ok(
+      Object.values(frame.workers).every(
+        (worker) =>
+          worker.position.y === SILO_CONFIG.groundY.value &&
+          Math.hypot(worker.position.x, worker.position.z) > SILO.radius,
+      ),
+    );
+  }
+  const simulation = new SiloSimulation();
+  simulation.setReady(true);
+  simulation.seek(18.25);
+  const incident = structuredClone(simulation.getFrame());
+  simulation.setExperience("explore");
+  simulation.setExplorationLevel(5);
+  assert.equal(simulation.start(), false);
+  simulation.setExperience("lvhf");
+  simulation.seek(65);
+  assert.equal(simulation.getDuration(), 80);
+  simulation.setExperience("incident");
+  assert.deepEqual(simulation.getFrame(), incident);
+  assert.equal(simulation.getSnapshot().status, "paused");
+  assert.equal(simulation.setExplorationLevel(3), false);
+});
+
+test("prevention mode keeps both technicians outside on the apron and restores the saved incident scenario", () => {
+  const simulation = new SiloSimulation();
+  simulation.setReady(true);
+  simulation.seek(13.2);
+  simulation.resume();
+  simulation.setScenario("no-connection");
+  assert.equal(simulation.getSnapshot().status, "paused");
+  simulation.setScenario("prevention");
+  assert.equal(simulation.getSnapshot().experience, "prevention");
+  assert.equal(simulation.getSnapshot().scenario, "prevention");
+  const prevented = simulation.getFrame();
+  assert.equal(
+    prevented.supportAvailable,
+    true,
+    "external workers remain visible on supported ground",
+  );
+  assert.ok(
+    Object.values(prevented.workers).every(
+      (worker) =>
+        worker.position.y === SILO_CONFIG.groundY.value &&
+        Math.abs(worker.position.x) > SILO.radius,
+    ),
+  );
+  simulation.setExperience("incident");
+  assert.equal(simulation.getSnapshot().scenario, "no-connection");
+  close(simulation.getFrame().time, 13.2);
+  assert.deepEqual(simulation.getFrame(), evaluateFrame(13.2, "no-connection"));
+  simulation.setExperience("lvhf");
+  simulation.seek(25);
+  assert.ok(
+    !simulation
+      .getSnapshot()
+      .events.some((event) => /colapso|descarga|engolfamento/i.test(event.label)),
+  );
 });

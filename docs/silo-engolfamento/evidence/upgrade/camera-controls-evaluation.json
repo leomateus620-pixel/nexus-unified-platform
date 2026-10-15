@@ -1,0 +1,61 @@
+{
+  "evaluatedAt": "2026-10-15T03:32:10.864Z",
+  "runtime": "v24.15.0",
+  "package": "camera-controls",
+  "version": "3.1.2",
+  "license": "MIT",
+  "authority": "Candidate adapter only; no DOM connection, second renderer or production import",
+  "cases": [
+    {
+      "name": "silo",
+      "sizeMetres": [
+        24.64,
+        31,
+        24.64
+      ],
+      "aspect": 1.7266187050359711,
+      "distanceMetres": 52.69888050275392,
+      "maxAbsNDC": 0.9999999999999999,
+      "fit": "passed",
+      "restore": "passed",
+      "installedStopJumpMetres": 48.616740819278824,
+      "cancellationAdapterHold": "passed"
+    },
+    {
+      "name": "trolley",
+      "sizeMetres": [
+        0.105,
+        0.1,
+        0.062
+      ],
+      "aspect": 1.7266187050359711,
+      "distanceMetres": 0.1612544532346901,
+      "maxAbsNDC": 0.9999999999999998,
+      "fit": "passed",
+      "restore": "passed",
+      "installedStopJumpMetres": 6.804876433485825,
+      "cancellationAdapterHold": "passed"
+    },
+    {
+      "name": "portrait-trolley",
+      "sizeMetres": [
+        0.105,
+        0.1,
+        0.062
+      ],
+      "aspect": 0.4961832061068702,
+      "distanceMetres": 0.30663846219125573,
+      "maxAbsNDC": 1,
+      "fit": "passed",
+      "restore": "passed",
+      "installedStopJumpMetres": 6.724771283407586,
+      "cancellationAdapterHold": "passed"
+    }
+  ],
+  "notVerified": [
+    "Native pointer/touch gesture behavior of camera-controls; production keeps the existing OrbitControls gesture contract",
+    "Candidate panel offsets; production pixel-inset fitting has its own eight-corner projection tests",
+    "Relative runtime FPS or bundle reduction; no such benefit claimed"
+  ],
+  "decision": "Candidate supports small/large box fit, stop and restore. Keep the established single OrbitControls adapter: current requirements are already implemented/tested and no concrete benefit justifies migrating gesture/lifecycle authority. camera-controls remains a documented candidate, not a dependency added for attribution."
+}

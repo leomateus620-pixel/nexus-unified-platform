@@ -20,6 +20,20 @@ const purdueBase = "https://www.purdue.edu/engineering/abe/agconfinespaces/wp-co
 export const SILO_SOURCES: readonly EvidenceSource[] = Object.freeze(
   [
     {
+      id: "lvhf-presentation",
+      institution: "Referência LVHF interna de silo fornecida para o upgrade Nexus",
+      title: "LVHF interna — visualizador, componentes e cotas publicadas",
+      url: "https://lvhfinternsilo.pplx.app/#visualizador",
+      edition: "Referência de apresentação; configuração Nexus nexus-lvhf-2.0.0",
+      locator:
+        "Visualizador; Componentes do sistema; Cotas do silo e do anel; descrições da estrutura",
+      purpose:
+        "Origem dos valores publicados: raio interno 11 m, costado 24,88 m, topo 30,403 m, anel R10,926 m na cota 24,375 m, cabo Ø8 mm e onze pontos principais.",
+      limitation:
+        "Página de apresentação não é projeto executivo. CAD original, resistência das fixações, capacidade, pré-tensão e passagem mecânica exata não foram validados. Fundação, materiais, postura, conexão de 0,95 m e colapso local são hipóteses Nexus, identificadas em SiloConfig.ts.",
+      accessedOn: "2026-10-15",
+    },
+    {
       id: "kepler-elevated",
       institution: "Kepler Weber",
       title: "Silos elevados",
@@ -27,9 +41,9 @@ export const SILO_SOURCES: readonly EvidenceSource[] = Object.freeze(
       edition: "Página do fabricante consultada em outubro de 2026",
       locator: "Base cônica; Escada interna com cabo de vida; imagens do conjunto",
       purpose:
-        "Referência de construção industrial, descarga por gravidade e acesso interno com monovia/trole.",
+        "Referência histórica da PR #11 para a composição elevada anterior. Não define a geometria do silo de fundo plano deste upgrade.",
       limitation:
-        "A aparência não fornece cotas nem dimensiona a ancoragem. O modelo educativo não é um produto comercial do fabricante.",
+        "A aparência não fornece cotas nem dimensiona a ancoragem. Tremonha suspensa e pilares desse modelo não integram o silo atual; a cena não é produto comercial do fabricante.",
       accessedOn: SOURCE_REVIEW_DATE,
     },
     {

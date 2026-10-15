@@ -1,0 +1,111 @@
+{
+  "schema": "nexus-silo-final-verification/1",
+  "verifiedAt": "2026-10-15T06:08:20.166Z",
+  "baseCommit": "4b663b9d0386900997c2113fda86c7a5a1f00d4c",
+  "configuration": "nexus-lvhf-2.0.0",
+  "checks": [
+    {
+      "exitCode": 0,
+      "skipped": 0,
+      "failed": 0,
+      "evidence": "test-silo.tap",
+      "durationMs": 5797.8338,
+      "command": "npm run test:silo",
+      "passed": 69
+    },
+    {
+      "exitCode": 0,
+      "evidence": "typecheck.log",
+      "command": "npm run typecheck"
+    },
+    {
+      "exitCode": 0,
+      "evidence": [
+        "scoped-lint.log",
+        "scripts-lint.log"
+      ],
+      "command": "npx eslint [module, public routes, scripts, tests]"
+    },
+    {
+      "exitCode": 0,
+      "evidence": "build.log",
+      "command": "npm run build"
+    },
+    {
+      "exitCode": 0,
+      "evidence": "regression-industrial.log",
+      "passed": 16,
+      "command": "npm run test:industrial"
+    },
+    {
+      "exitCode": 0,
+      "evidence": "regression-trevisan.log",
+      "passed": 8,
+      "command": "npm run test:trevisan"
+    },
+    {
+      "exitCode": 0,
+      "evidence": "regression-escada.log",
+      "passed": 10,
+      "command": "npm run test:escada"
+    },
+    {
+      "command": "npm run test:silo:ui",
+      "condition": "DEV 5185; final JavaScript/geometry; CSS-only <375px adjustment checked separately",
+      "exitCode": 0,
+      "passed": 34,
+      "startupPassed": 9,
+      "performanceSamplesPassed": 8,
+      "evidence": [
+        "ui.json",
+        "startup-state/startup-state.json"
+      ]
+    },
+    {
+      "command": "npm run test:silo:touch",
+      "condition": "Chrome desktop touch emulation, portrait/landscape",
+      "exitCode": 0,
+      "passed": 19,
+      "evidence": "touch-commands.json"
+    },
+    {
+      "command": "npm run test:silo:loading",
+      "condition": "Final production build, Wrangler local 5190, fresh HTTP context; not mobile network",
+      "exitCode": 0,
+      "evidence": "production-loading.json"
+    },
+    {
+      "command": "node scripts/silo-engolfamento/compare-pr11.mjs",
+      "condition": "Four viewports and 8s active economy playback; same host as exact PR11 baseline",
+      "exitCode": 0,
+      "viewports": 4,
+      "evidence": "comparison/comparison.json"
+    },
+    {
+      "command": "validate-upgrade.mjs with SILO_CHECKS=Scene occupancy",
+      "condition": "DEV final CSS, four required viewports",
+      "exitCode": 0,
+      "passed": 1,
+      "evidence": "layout-final/ui.json"
+    },
+    {
+      "command": "Directed production header/target verification",
+      "condition": "331x502 production local; Explore/Incident/First person",
+      "exitCode": 0,
+      "passed": 3,
+      "evidence": "layout-final/narrow-331x502.json"
+    }
+  ],
+  "protectedChanges": [],
+  "unrelatedUntrackedPreserved": [
+    "docs/casos-comerciais/"
+  ],
+  "productionDeployed": false,
+  "merged": false,
+  "caveat": "Local verification; remote CI is reported separately in the draft PR.",
+  "lastPresentationChange": {
+    "scope": "CSS only at max-width 375px; compact header kicker hidden",
+    "reason": "Avoid title clipping in the Codex panel at 331x502",
+    "runtimeJavaScriptChanged": false
+  }
+}

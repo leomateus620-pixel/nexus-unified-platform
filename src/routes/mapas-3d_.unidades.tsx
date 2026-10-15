@@ -18,10 +18,10 @@ function Maps() {
         to="/mapas-3d/silo-engolfamento"
         className="group block max-w-4xl overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/50"
       >
-        <div className="relative bg-[#e3e9e5]">
+        <div className="relative bg-[#06110c]">
           <img
             src="/models/silo-engolfamento/thumbnail.svg"
-            alt="Silo elevado em corte com dois técnicos e conexão superior de retenção"
+            alt="Silo metálico no chão com fundação, anel LVHF interno e técnicos em escala humana"
             className="h-64 w-full object-contain"
           />
           <span className="absolute left-5 top-5 rounded border border-[#809d90] bg-[#f1f6ee] px-2 py-1 text-[10px] tracking-widest text-[#38634d]">
@@ -33,10 +33,10 @@ function Maps() {
             <p className="text-[10px] uppercase tracking-[.2em] text-primary">
               Segurança · Massa granular
             </p>
-            <h2 className="mt-2 text-2xl font-semibold">Silo de Grãos — Engolfamento</h2>
+            <h2 className="mt-2 text-2xl font-semibold">Silo metálico · LVHF interna</h2>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-              Explore a descarga, o aprisionamento e os limites da retenção em quatro perspectivas.
-              Reprodução determinística, prevenção e dados documentados.
+              Explore o silo de 22 m, inspecione o trole e os componentes da linha de vida circular.
+              Incidente educativo, quatro perspectivas e reprodução determinística.
             </p>
             <p className="mt-4 text-xs text-muted-foreground">
               Experiência independente · Desktop e celular · Fontes e hipóteses identificadas

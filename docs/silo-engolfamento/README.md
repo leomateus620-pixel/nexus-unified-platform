@@ -1,5 +1,7 @@
 # Silo de Grãos — Engolfamento
 
+> **Arquitetura histórica da PR #11**, head `bc90e2d20403cfb9a2941263e71ad2984ac71b80`, de 14/10/2026. Este documento preserva o reconhecimento, a geometria elevada e os resultados originais. Para a arquitetura vigente do silo no chão com LVHF circular, consulte a [entrega do upgrade](upgrade-delivery.md), o [domínio atual](upgrade-domain.md) e a [auditoria do modelo](model-and-reference-audit.md).
+
 Experiência educativa independente em **`/mapas-3d/silo-engolfamento`**, com card próprio em **`/mapas-3d/unidades`**. Implementação local em 14/10/2026, sem implantação em produção. A rota usa `mapas-3d_.silo-engolfamento.tsx`: o sublinhado do TanStack evita renderizá-la dentro da cena `/mapas-3d`. `ssr: false` e `React.lazy` impedem a criação do contexto WebGL no servidor; a biblioteca carrega apenas a miniatura SVG.
 
 ## Reconhecimento e reutilização

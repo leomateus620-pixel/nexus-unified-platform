@@ -1,0 +1,89 @@
+
+> test:silo
+> tsx --test tests/silo-engolfamento.test.ts tests/silo-evidence.test.ts tests/silo-engolfamento/*.test.ts
+
+✔ essential readiness gates start; resource failures pause instead of advancing (11.8424ms)
+✔ different live FPS reproduce the same time, positions, volume and event (93.7745ms)
+✔ pause, resume and slow playback use one clock without suspended-frame debt (1.5562ms)
+✔ overload pauses at the last presented instant; it never jumps or drains a queue (0.9979ms)
+✔ seek reconstructs gate, volume, surface, both technicians, connection and logs (0.9538ms)
+✔ all four camera changes preserve every domain value and seed (0.8109ms)
+✔ immutable HUD snapshots do not alias mutable rendering buffers; HUD publishes at 10Hz (2.3044ms)
+✔ walking support is fixed in world during stance while the body moves (1.8869ms)
+✔ swing support lifts from the surface and stays continuous across every phase and walking endpoint (4.9625ms)
+✔ after loss of support the final footprint sinks and advects with its own body without another gait (0.9082ms)
+✔ feet reuse presentation buffers and seek rebuilds every support target without future residues (0.6777ms)
+✔ HUD keeps real-time 10Hz publication under slow playback and clears its cadence on pause/seek (5.7971ms)
+✔ flat-floor local collapse conserves bulk volume and has no hidden external discharge (37.7611ms)
+✔ surface redistribution conserves mass; increasing depression does not create grain (1.3443ms)
+✔ connected technician shares exposure but line geometrically limits descent before representation (21.357ms)
+✔ same trajectory replay isolates connection, while prevention blocks entry and discharge (0.9191ms)
+✔ reset eliminates late grain, entrapment, vitals and future events; completion remains seekable (0.4765ms)
+✔ vitals are explicitly illustrative and never provide a survival countdown or invented saturation (0.24ms)
+✔ seeded grain attributes reproduce without PRNG consumption and flow reuses caller buffer (0.8297ms)
+✔ versioned metre configuration and eleven support angles close without rounding accumulation (0.5405ms)
+✔ trolley path origin, eye, tangent and wheel rotation remain continuous over closure and reverse seeks (0.5209ms)
+✔ whole LVHF demonstration follows a full circuit with a fixed reachable connection (167.7485ms)
+✔ incompatible exploration levels take workers out of mass; mode return preserves incident without automatic playback (3.536ms)
+✔ prevention mode keeps both technicians outside on the apron and restores the saved incident scenario (0.9788ms)
+✔ box fitting protects the free CSS viewport in desktop, mobile and centimeter inspection (8.1171ms)
+✔ exterior navigation respects the opaque shell and roof, and ground (3.2454ms)
+✔ frontal incident framing sees both rigs and the connection through the actual section (632.4858ms)
+✔ the trolley camera stays inside the closed silo around eleven supports and the angular seam (473.2255ms)
+✔ lost-context GPU release deduplicates resources and preserves CPU mesh, pixels and instance transforms (7.0419ms)
+✔ baked environment preserves linear CubeUV upload and CPU bitmap across GPU release (49.6432ms)
+✔ environment rejects HTTP, invalid images and cancellation without leaking a late bitmap (2.8504ms)
+✔ grain detail remains inside the incident region and is absent when entry is blocked (108.0843ms)
+✔ visible flat-floor bulk mesh follows conserved domain volume within the two-percent tolerance (49.8553ms)
+ℹ Visual volume: maximum relative error=0.00464045611533229; maximum redistribution increase=0.0008908397903724108m³
+✔ continuous grain bulk stays inside every corrugated wall sector and height valley (402.3395ms)
+ℹ Continuous wall/bulk containment: wall minimum R10.97952838750881m; bulk maximum R10.97500041514409m; clearance=0.004527972364719801m across 81920 triangles
+✔ unchanged bulk retains exact geometry and normals while local detail moves; mode changes and reverse seeks invalidate the right buffers (60.9052ms)
+✔ localized dirty normals are Float32-identical to a full Three rebuild through deformation and reverse seeks (404.3304ms)
+ℹ Exact dirty normal workload: {"activeVertices":96,"normalVertices":158,"positionVertices":18761,"fullNormalBuilds":1,"updates":17,"normalUpdates":15}
+✔ isolation snapshots late rig meshes before hiding them and restores exact owner visibility (6.0218ms)
+✔ a selection made before a rig arrives highlights its binding and restores shared materials (10.8675ms)
+✔ an eye inside its own rig proxy can select the visible opaque wall (11.694ms)
+✔ cut hides the actual front strap triangles even when the harness bounds span the plane (2.3193ms)
+✔ the retained underfloor extraction remains selectable in a technical section (1.393ms)
+✔ grounded model has physical shell scale, capped roof and genuine hatch perforation (368.0584ms)
+✔ protection has eleven support identities and exact moving eye, without a pórtico (24.5874ms)
+✔ individual highlight restores shared materials and isolation restores exact visibility (24.4765ms)
+✔ registry IDs are unique and cover every selectable required subsystem (0.3762ms)
+✔ parametric passants, anchor and tensioner stay outside the trolley solid sweep at every angle (63.5724ms)
+✔ audited trolley envelope and underside wheel tangency survive reconstruction (33.1131ms)
+✔ underside roller spin cancels local tangent contact velocity forward and in reverse (20.4337ms)
+✔ scene picking agrees with index identity and filters clipped hits (6.6368ms)
+✔ connector and rope meet at a tangent plane without bow penetration through the circuit (60.6935ms)
+✔ vertical connector threads the measured eye without crossing its metal bridge (128.7966ms)
+✔ floor isolation excludes opaque grain and coincident foundation, then restores both (0.7422ms)
+✔ external extraction remains rendered and selectable through shell section and isolation (264.3395ms)
+✔ new parametric silo stays inside its static budget without DOM or industrial scene (286.4866ms)
+✔ every merged attribute is finite and the complete assembly keeps metre-scale proportions (261.9843ms)
+✔ didactic cut clips wall, roof and structure on one plane; first person restores enclosure (206.7598ms)
+✔ flat internal floor and cylinder replace the suspended hopper and ground columns (153.7821ms)
+✔ gate uses the domain opening and keeps a reproducible transform after reverse seeking (110.6009ms)
+✔ silo owners release every live geometry, material and texture without disposing another session (237.9402ms)
+✔ optimized CC0 assets preserve rig and LOD budgets, and common texture identity (22.7143ms)
+✔ rope follows the connector lower attachment and exact dorsal in one reusable buffer (81.8192ms)
+✔ connector plus rendered rope stay inside fixed total length through incident, full circuit and reverse seeks (56.7753ms)
+ℹ Rendered rope maximum centreline length=0.898000291450102m; connector reach=0.052m; maximum total=0.950000291450102m; Float32 tolerance=0.05mm
+✔ untensioned diagonal slack uses the remaining rope budget up to near-taut lengths (49.5117ms)
+✔ real rig clones remain independent through seek, burial and first person (1411.8651ms)
+ℹ Real-rig planted soles: maximum target error=0.01368803557418035m; maximum stance drift=0.009799039631197753m
+ℹ Dorsal constraint audit: [{"time":0,"actualLength":0.8825138469646349,"straightEyeDistance":0.8450995503489493,"maximumLength":0.95,"excess":0,"dorsalDifference":4.440892098500626e-16},{"time":6,"actualLength":0.8825138469646335,"straightEyeDistance":0.8450995503489478,"maximumLength":0.95,"excess":0,"dorsalDifference":3.5596458096434965e-15},{"time":6.5,"actualLength":0.8868211764309916,"straightEyeDistance":0.8503894976706362,"maximumLength":0.95,"excess":0,"dorsalDifference":3.972054645195637e-15},{"time":7,"actualLength":0.8997753539040592,"straightEyeDistance":0.8658504726448188,"maximumLength":0.95,"excess":0,"dorsalDifference":3.9968028886505635e-15},{"time":10,"actualLength":0.9499999999999968,"straightEyeDistance":0.9228789728329408,"maximumLength":0.95,"excess":0,"dorsalDifference":3.972054645195637e-15},{"time":15,"actualLength":0.9499999999999968,"straightEyeDistance":0.9228789728329408,"maximumLength":0.95,"excess":0,"dorsalDifference":3.972054645195637e-15},{"time":20,"actualLength":0.9499999999999968,"straightEyeDistance":0.9228789728329408,"maximumLength":0.95,"excess":0,"dorsalDifference":3.972054645195637e-15},{"time":30,"actualLength":0.9499999999999968,"straightEyeDistance":0.9228789728329408,"maximumLength":0.95,"excess":0,"dorsalDifference":3.972054645195637e-15}]
+ℹ Actual first-person eye/domain maximum difference=2.6679421832163084e-10m; all sampled skeletal eye occlusion states agree with the grain surface
+ℹ Full-circuit real rig dorsal endpoint maximum error=7.377764055609925e-15m; foot target maximum error=0.014284884535704211m; numerical kinematics only, no certified support transposition
+✔ the shared section clips both real rigs and highlight clones while preserving the external watchperson (965.6721ms)
+✔ grain-case totals reconcile and every annual row retains primary provenance (2.4458ms)
+✔ the documented annual percentages resolve to the reported integer fatal cases (0.2763ms)
+✔ a prevention hypothesis is absent until explicitly entered, including valid zero (0.4333ms)
+✔ hypothetical arithmetic rejects out-of-range inputs and rounds transparently (0.3264ms)
+ℹ tests 69
+ℹ suites 0
+ℹ pass 69
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5797.8338

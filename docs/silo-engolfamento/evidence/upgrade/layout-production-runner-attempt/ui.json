@@ -1,0 +1,281 @@
+{
+  "schema": "nexus-silo-upgrade-validation/2.0.0",
+  "testedAt": "2026-10-15T06:02:02.291Z",
+  "base": "http://127.0.0.1:5190",
+  "command": "node scripts/silo-engolfamento/validate-upgrade.mjs",
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "ramBytes": 8375107584
+  },
+  "browser": "155.0.8059.41",
+  "scopeFilter": "Scene occupancy",
+  "checks": [
+    {
+      "name": "Scene occupancy, panels and targets at required viewport sizes",
+      "result": "não atingido",
+      "error": "page.evaluate: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5190/node_modules/three/build/three.module.js\n    at incidentInterest (C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:546:15)\n    at C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:1329:36\n    at async check (C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:132:22)\n    at async file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:1269:3",
+      "durationMs": 7842.283799999999,
+      "screenshot": "failure-1.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "4",
+          "calls": "56",
+          "triangles": "210918",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2675.600000023842,
+          "explorationMs": 992.1999999284744,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 1.897149936107019e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 56,
+          "triangles": 210918
+        }
+      }
+    }
+  ],
+  "failures": [
+    {
+      "name": "Scene occupancy, panels and targets at required viewport sizes",
+      "result": "não atingido",
+      "error": "page.evaluate: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5190/node_modules/three/build/three.module.js\n    at incidentInterest (C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:546:15)\n    at C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:1329:36\n    at async check (C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:132:22)\n    at async file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:1269:3",
+      "durationMs": 7842.283799999999,
+      "screenshot": "failure-1.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "paused",
+          "time": "4",
+          "calls": "56",
+          "triangles": "210918",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "incident",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 4,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2675.600000023842,
+          "explorationMs": 992.1999999284744,
+          "statusReason": "Instante selecionado",
+          "dorsalError": 1.897149936107019e-15,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 56,
+          "triangles": 210918
+        }
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "filename": "390x844-external.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "none",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2675.600000023842,
+          "explorationMs": 992.1999999284744,
+          "statusReason": "",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "390x844-panel.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2675.600000023842,
+          "explorationMs": 992.1999999284744,
+          "statusReason": "",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    },
+    {
+      "filename": "390x844-panel-expanded.png",
+      "state": {
+        "canvas": {
+          "engine": "three.js r186",
+          "explorationReady": "true",
+          "camera": "frontal",
+          "status": "idle",
+          "time": "0",
+          "calls": "95",
+          "triangles": "221952",
+          "occluded": "false",
+          "ready": "true"
+        },
+        "mode": "explore",
+        "panel": "components",
+        "selected": null,
+        "canvases": 1,
+        "horizontalOverflow": false,
+        "time": 0,
+        "dialogs": 0,
+        "exitVisible": false,
+        "metrics": {
+          "readyMs": 2675.600000023842,
+          "explorationMs": 992.1999999284744,
+          "statusReason": "",
+          "dorsalError": 4.440892098500626e-16,
+          "contextLosses": 0,
+          "disposed": false,
+          "isolatedId": null,
+          "workerVisible": {
+            "A": true,
+            "B": true
+          },
+          "grainsVisible": true,
+          "ropeVisible": true,
+          "controllerCamera": "frontal",
+          "errors": [],
+          "calls": 95,
+          "triangles": 221952
+        }
+      }
+    }
+  ],
+  "loading": [],
+  "samples": [],
+  "consoleErrors": [],
+  "renderErrors": [],
+  "gpuDeletionTraces": [],
+  "limitations": [
+    "Desktop local Chrome headless. Mobile dimensions and touch are Chromium emulation, not Android/iOS hardware.",
+    "RAF interval is active frame time; synchronous renderer.render is CPU submission, not GPU completion. GPU timer query not measured.",
+    "Development-server Resource Timing is not compressed production bytes or mobile-network readiness.",
+    "Shadow passes are estimates; renderer.info totals include shadow work. Resource byte estimates are not actual driver VRAM.",
+    "Parametric mechanical passage and appearance require separate visual review; screenshots and numeric tests do not certify CAD, loads or rescue procedures."
+  ],
+  "criteria": [
+    {
+      "criterion": "Scene occupancy, panels and targets at required viewport sizes",
+      "condition": "Chrome local, viewport indicado na evidência",
+      "status": "não atingido",
+      "measured": "page.evaluate: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5190/node_modules/three/build/three.module.js\n    at incidentInterest (C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:546:15)\n    at C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:1329:36\n    at async check (C:\\Users\\Leonardo\\Documents\\Nexus-Dev\\scripts\\silo-engolfamento\\validate-upgrade.mjs:132:22)\n    at async file:///C:/Users/Leonardo/Documents/Nexus-Dev/scripts/silo-engolfamento/validate-upgrade.mjs:1269:3",
+      "evidence": "ui.json",
+      "pending": "Corrigir e repetir a verificação"
+    },
+    {
+      "criterion": "Android/iOS físico e rede móvel",
+      "condition": "Hardware indisponível nesta execução",
+      "status": "não verificado",
+      "measured": "Somente Chrome desktop e emulação",
+      "evidence": "ui.json → limitations",
+      "pending": "Executar no telefone de referência com rede e duração documentadas"
+    },
+    {
+      "criterion": "Passagem mecânica exata e dimensionamento LVHF",
+      "condition": "Sem CAD/desenho executivo autorizado",
+      "status": "não verificado",
+      "measured": "Cinemática paramétrica identificada",
+      "evidence": "upgrade-references.md",
+      "pending": "Obter desenhos/recursos autorizados do fabricante e conferir compatibilidade/cargas"
+    }
+  ]
+}

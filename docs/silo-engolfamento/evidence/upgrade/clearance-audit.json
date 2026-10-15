@@ -1,0 +1,100 @@
+{
+  "kind": "actual-rig-deformed-vertex-clearance",
+  "testedAt": "2026-10-15T04:07:24.044Z",
+  "configuration": "nexus-lvhf-2.0.0",
+  "frames": 26,
+  "vertices": 480116,
+  "minWall": 0.46938753385544274,
+  "minRing": 0.6645817450307648,
+  "minHelmetRing": 0.6645817450307648,
+  "minRoof": 0.9558892523583609,
+  "samples": [
+    {
+      "mode": "incident",
+      "times": [
+        0,
+        3.25,
+        4.2,
+        6,
+        7,
+        10,
+        15,
+        20,
+        30
+      ]
+    },
+    {
+      "mode": "lvhf",
+      "times": [
+        0,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80
+      ]
+    }
+  ],
+  "critical": {
+    "minWall": {
+      "mode": "incident",
+      "time": 15,
+      "id": "B",
+      "mesh": "near_body",
+      "point": [
+        1.0883846612145223,
+        22.09199651412456,
+        -10.474216808017298
+      ]
+    },
+    "minRing": {
+      "mode": "incident",
+      "time": 0,
+      "id": "A",
+      "mesh": "near_helmet",
+      "point": [
+        -1.7915053364941307,
+        24.2695417167858,
+        -10.108259421967498
+      ]
+    },
+    "minRoof": {
+      "mode": "incident",
+      "time": 6,
+      "id": "A",
+      "mesh": "near_helmet",
+      "point": [
+        -1.173840881530364,
+        24.36794966266887,
+        -10.128587160297107
+      ]
+    },
+    "minHelmetRing": {
+      "mode": "incident",
+      "time": 0,
+      "id": "A",
+      "mesh": "near_helmet",
+      "point": [
+        -1.7915053364941307,
+        24.2695417167858,
+        -10.108259421967498
+      ]
+    }
+  },
+  "limitations": [
+    "Deformed rendered vertex samples, not certified triangle contact/CAD support mechanics.",
+    "Cylinder wall, nominal cable torus and analytical conical roof only; guides, rope and connectors need separate inspection.",
+    "No GPU or physical device."
+  ]
+}

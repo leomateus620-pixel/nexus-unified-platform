@@ -1,0 +1,349 @@
+{
+  "testedAt": "2026-10-15T05:47:39.940Z",
+  "browser": "155.0.8059.41",
+  "base": "http://127.0.0.1:5185",
+  "scopeFilter": null,
+  "condition": "Chrome local 1440×900 DPR1. Synthetic shader holds exercise lifecycle, not startup speed.",
+  "checks": [
+    {
+      "name": "Ready follows a visible compiled worker frame",
+      "result": "aprovado",
+      "evidence": {
+        "startedAt": 2906.1999999284744,
+        "preparationMs": 143.70000004768372,
+        "explorationMs": 916.4000000953674,
+        "assetReadyMs": 1907.6000000238419,
+        "mainCompileMs": 532.2999999523163,
+        "workerCompileMs": 471.10000002384186,
+        "readyMs": 2581.3000000715256,
+        "renderCount": 47,
+        "parallelShaderCompile": true,
+        "workers": {
+          "A": true,
+          "B": true
+        },
+        "ropeVisible": true,
+        "dorsalError": 4.440892098500626e-16,
+        "time": 0
+      },
+      "durationMs": 6679.394799999951
+    },
+    {
+      "name": "Exploration and cut work before rigs load without a floating individual rope",
+      "result": "aprovado",
+      "evidence": {
+        "before": {
+          "startedAt": 2630.5,
+          "preparationMs": 178.10000002384186,
+          "explorationMs": 607.8999999761581,
+          "assetReadyMs": 0,
+          "mainCompileMs": 60.5,
+          "workerCompileMs": 0,
+          "readyMs": 0,
+          "renderCount": 13,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": false,
+            "B": false
+          },
+          "ropeVisible": false,
+          "dorsalError": 0,
+          "time": 0
+        },
+        "cut": {
+          "startedAt": 2630.5,
+          "preparationMs": 178.10000002384186,
+          "explorationMs": 607.8999999761581,
+          "assetReadyMs": 0,
+          "mainCompileMs": 60.5,
+          "workerCompileMs": 0,
+          "readyMs": 0,
+          "renderCount": 21,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": false,
+            "B": false
+          },
+          "ropeVisible": false,
+          "dorsalError": 0,
+          "time": 0
+        },
+        "complete": {
+          "startedAt": 2630.5,
+          "preparationMs": 178.10000002384186,
+          "explorationMs": 607.8999999761581,
+          "assetReadyMs": 3152.100000023842,
+          "mainCompileMs": 60.5,
+          "workerCompileMs": 596.1999999284744,
+          "readyMs": 4062.2999999523163,
+          "renderCount": 62,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": true,
+            "B": true
+          },
+          "ropeVisible": true,
+          "dorsalError": 4.440892098500626e-16,
+          "time": 0
+        }
+      },
+      "durationMs": 7397.180099999998
+    },
+    {
+      "name": "Pending shader compilation cannot publish readiness or survive owner disposal",
+      "result": "aprovado",
+      "evidence": {
+        "pending": {
+          "startedAt": 2531.5,
+          "preparationMs": 148,
+          "explorationMs": 0,
+          "assetReadyMs": 0,
+          "mainCompileMs": 0,
+          "workerCompileMs": 0,
+          "readyMs": 0,
+          "renderCount": 0,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": false,
+            "B": false
+          },
+          "ropeVisible": false,
+          "dorsalError": 0,
+          "time": 0
+        },
+        "detached": true,
+        "lateReady": false
+      },
+      "durationMs": 4494.557900000014
+    },
+    {
+      "name": "Late harness binding preserves isolation, restoration and an earlier selection",
+      "result": "aprovado",
+      "evidence": [
+        {
+          "strategy": "isolation",
+          "before": {
+            "startedAt": 2523.8000000715256,
+            "preparationMs": 143.5,
+            "explorationMs": 397.5,
+            "assetReadyMs": 0,
+            "mainCompileMs": 55.200000047683716,
+            "workerCompileMs": 0,
+            "readyMs": 0,
+            "renderCount": 44,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": false,
+              "B": false
+            },
+            "ropeVisible": false,
+            "dorsalError": 0,
+            "time": 0
+          },
+          "complete": {
+            "startedAt": 2523.8000000715256,
+            "preparationMs": 143.5,
+            "explorationMs": 397.5,
+            "assetReadyMs": 1893.8999999761581,
+            "mainCompileMs": 55.200000047683716,
+            "workerCompileMs": 31.200000047683716,
+            "readyMs": 1988.2999999523163,
+            "renderCount": 107,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": true,
+              "B": true
+            },
+            "ropeVisible": true,
+            "dorsalError": 4.440892098500626e-16,
+            "time": 0
+          }
+        },
+        {
+          "strategy": "selection",
+          "before": {
+            "startedAt": 2710.2999999523163,
+            "preparationMs": 145.20000004768372,
+            "explorationMs": 394.10000002384186,
+            "assetReadyMs": 0,
+            "mainCompileMs": 59.5,
+            "workerCompileMs": 0,
+            "readyMs": 0,
+            "renderCount": 30,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": false,
+              "B": false
+            },
+            "ropeVisible": false,
+            "dorsalError": 0,
+            "time": 0
+          },
+          "complete": {
+            "startedAt": 2710.2999999523163,
+            "preparationMs": 145.20000004768372,
+            "explorationMs": 394.10000002384186,
+            "assetReadyMs": 1797.2000000476837,
+            "mainCompileMs": 59.5,
+            "workerCompileMs": 54.39999997615814,
+            "readyMs": 1944.7000000476837,
+            "renderCount": 107,
+            "parallelShaderCompile": true,
+            "workers": {
+              "A": true,
+              "B": true
+            },
+            "ropeVisible": true,
+            "dorsalError": 4.440892098500626e-16,
+            "time": 0
+          }
+        }
+      ],
+      "durationMs": 12493.313800000004
+    },
+    {
+      "name": "Context loss during shader compilation restores the same owner without advancing time",
+      "result": "aprovado",
+      "evidence": {
+        "startedAt": 2610.5999999046326,
+        "preparationMs": 148.20000004768372,
+        "explorationMs": 804.5,
+        "assetReadyMs": 1670.9000000953674,
+        "mainCompileMs": 40.200000047683716,
+        "workerCompileMs": 36.09999990463257,
+        "readyMs": 1790.5,
+        "renderCount": 45,
+        "parallelShaderCompile": true,
+        "workers": {
+          "A": true,
+          "B": true
+        },
+        "ropeVisible": true,
+        "dorsalError": 4.440892098500626e-16,
+        "time": 0
+      },
+      "durationMs": 5124.372600000002
+    },
+    {
+      "name": "Missing local environment has a recoverable identified error",
+      "result": "aprovado",
+      "evidence": {
+        "identified": true,
+        "retry": {
+          "startedAt": 2791.2999999523163,
+          "preparationMs": 97.70000004768372,
+          "explorationMs": 290.10000002384186,
+          "assetReadyMs": 1169.7000000476837,
+          "mainCompileMs": 48.5,
+          "workerCompileMs": 29.90000009536743,
+          "readyMs": 1280,
+          "renderCount": 47,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": true,
+            "B": true
+          },
+          "ropeVisible": true,
+          "dorsalError": 4.440892098500626e-16,
+          "time": 0
+        }
+      },
+      "durationMs": 4819.1716000000015
+    },
+    {
+      "name": "No parallel-compile extension retains the completed-frame readiness contract",
+      "result": "aprovado",
+      "evidence": {
+        "startedAt": 2350.2000000476837,
+        "preparationMs": 147.79999995231628,
+        "explorationMs": 394,
+        "assetReadyMs": 1324.7000000476837,
+        "mainCompileMs": 43.800000071525574,
+        "workerCompileMs": 33.5,
+        "readyMs": 1439.8999999761581,
+        "renderCount": 48,
+        "parallelShaderCompile": false,
+        "workers": {
+          "A": true,
+          "B": true
+        },
+        "ropeVisible": true,
+        "dorsalError": 4.440892098500626e-16,
+        "time": 0
+      },
+      "durationMs": 4549.7650999999605
+    },
+    {
+      "name": "A stalled shader compilation reaches the deadline and retries with a new owner",
+      "result": "aprovado",
+      "evidence": {
+        "deadlineMs": 20000,
+        "retry": {
+          "startedAt": 23121.200000047684,
+          "preparationMs": 90.89999997615814,
+          "explorationMs": 283.6999999284744,
+          "assetReadyMs": 1121.5,
+          "mainCompileMs": 49.09999990463257,
+          "workerCompileMs": 31.300000071525574,
+          "readyMs": 1232.5,
+          "renderCount": 44,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": true,
+            "B": true
+          },
+          "ropeVisible": true,
+          "dorsalError": 4.440892098500626e-16,
+          "time": 0
+        }
+      },
+      "durationMs": 25096.5711
+    },
+    {
+      "name": "A hidden first-frame deadline remains an error after visibility returns until explicit retry",
+      "result": "aprovado",
+      "evidence": {
+        "syntheticVisibility": true,
+        "failed": {
+          "startedAt": 2401.899999976158,
+          "preparationMs": 148.40000009536743,
+          "explorationMs": 0,
+          "assetReadyMs": 0,
+          "mainCompileMs": 57.700000047683716,
+          "workerCompileMs": 0,
+          "readyMs": 0,
+          "renderCount": 0,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": false,
+            "B": false
+          },
+          "ropeVisible": false,
+          "dorsalError": 0,
+          "time": 0
+        },
+        "retry": {
+          "startedAt": 23450.200000047684,
+          "preparationMs": 115,
+          "explorationMs": 319.89999997615814,
+          "assetReadyMs": 1184.6999999284744,
+          "mainCompileMs": 51.89999997615814,
+          "workerCompileMs": 41.10000002384186,
+          "readyMs": 1304.7999999523163,
+          "renderCount": 43,
+          "parallelShaderCompile": true,
+          "workers": {
+            "A": true,
+            "B": true
+          },
+          "ropeVisible": true,
+          "dorsalError": 4.440892098500626e-16,
+          "time": 0
+        }
+      },
+      "durationMs": 25510.69789999997
+    }
+  ],
+  "failures": [],
+  "errors": []
+}

@@ -317,7 +317,7 @@ function acessos(roles: string[], capabilities: string[] = []): Acesso[] {
 const casa = (p: string, base: string) =>
   base === "/" ? p === "/" : p === base || p.startsWith(base + "/");
 
-function rotaDisponivel(pathname: string) {
+export function rotaDisponivel(pathname: string) {
   // A fronteira mais específica vence; módulos ausentes permanecem indisponíveis.
   return (
     Object.entries(DISPONIBILIDADE_MODULOS)

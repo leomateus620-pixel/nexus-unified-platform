@@ -16,6 +16,7 @@ import { useOrg } from "@/features/org/session";
 import { useOperationalAccess } from "@/features/operacao/access";
 import { Pagination, useCommandKey } from "@/features/operacao/components";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
+import { rotaDisponivel } from "@/lib/nexus-nav";
 import { executarEstudo, obterEstudo } from "./estudos.functions";
 import { invalidarEstudos, useEstudosList, useEstudoDetail, useMetodosEstudo } from "./queries";
 import { EstudoEditor, type StudyEditor, type StudyCommand } from "./EstudoForms";
@@ -726,15 +727,21 @@ function EstudoFicha({
                         Abrir levantamento de origem · V{fonte.numero}
                       </Link>
                     )}
-                    {fonte.pe_projeto_id && (
-                      <Link
-                        to="/projetos-engenharia"
-                        search={{ projeto: fonte.pe_projeto_id }}
-                        className="mt-2 inline-flex min-h-11 items-center text-sm text-primary underline"
-                      >
-                        Abrir acervo do projeto · referência V{fonte.numero}
-                      </Link>
-                    )}
+                    {fonte.pe_projeto_id &&
+                      (rotaDisponivel("/projetos-engenharia") ? (
+                        <Link
+                          to="/projetos-engenharia"
+                          search={{ projeto: fonte.pe_projeto_id }}
+                          className="mt-2 inline-flex min-h-11 items-center text-sm text-primary underline"
+                        >
+                          Abrir acervo do projeto · referência V{fonte.numero}
+                        </Link>
+                      ) : (
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          Projetos de Engenharia temporariamente desativado · referência V
+                          {fonte.numero}
+                        </p>
+                      ))}
                     {fonte.sha256 && (
                       <p className="mt-2 break-all font-mono text-xs text-muted-foreground">
                         SHA-256 {fonte.sha256}
@@ -1019,7 +1026,7 @@ function PerigoDetail({
                   Ação vinculada:{" "}
                   {detail.acoes.find((a) => a.acao_id === m.acao_id)?.titulo || "Ação operacional"}
                   <Link
-                    to="/seguranca"
+                    to="/agenda-equipe"
                     search={{ acao: m.acao_id }}
                     className="ml-2 inline-flex min-h-11 items-center text-primary underline"
                   >

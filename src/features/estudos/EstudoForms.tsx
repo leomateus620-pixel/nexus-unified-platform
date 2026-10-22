@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } fr
 import { useServerFn } from "@tanstack/react-start";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Link } from "@tanstack/react-router";
+import { rotaDisponivel } from "@/lib/nexus-nav";
 import { ActionButton, ErrorState } from "@/components/nexus/Page";
 import { EntityPicker } from "@/components/nexus/EntityPicker";
 import { OperationalDialog, fieldClass } from "@/features/operacao/components";
@@ -490,11 +491,17 @@ export function EstudoEditor({
         {fonteTipo === "projeto_engenharia" && (
           <p className="text-sm text-muted-foreground">
             Versões antigas sem empresa e unidade identificadas no snapshot não aparecem como fonte.{" "}
-            <Link to="/projetos-engenharia" className="text-primary underline">
-              Abra o acervo
-            </Link>
-            , confira o contexto e prepare uma nova revisão congelada; a anterior permanece
-            preservada.
+            {rotaDisponivel("/projetos-engenharia") ? (
+              <>
+                <Link to="/projetos-engenharia" className="text-primary underline">
+                  Abra o acervo
+                </Link>
+                , confira o contexto e prepare uma nova revisão congelada; a anterior permanece
+                preservada.
+              </>
+            ) : (
+              "Projetos de Engenharia está temporariamente desativado. As fontes já vinculadas e as versões congeladas disponíveis permanecem preservadas."
+            )}
           </p>
         )}
         {fonteTipo === "documento" && (

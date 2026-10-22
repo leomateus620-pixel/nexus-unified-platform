@@ -26,6 +26,7 @@ do $$declare
  org uuid:='93000000-0000-4000-8000-000000000010';eng uuid:='93000000-0000-4000-8000-000000000001';reviewer uuid:='93000000-0000-4000-8000-000000000002';
  p1 uuid;p2 uuid;pf uuid;met jsonb;met2 jsonb;data jsonb;result jsonb;original jsonb;eid uuid;rid uuid;pid uuid;mid uuid;sid uuid;rev2 uuid;measure2 uuid;action jsonb;acdata jsonb;
  key uuid:=gen_random_uuid();snap jsonb;hash text;sub1 jsonb;lev jsonb;levr uuid;pe jsonb;pev uuid;sourceid uuid;doc uuid;legacydoc uuid;prop uuid;pr uuid;
+ action_detail jsonb;action_receipt jsonb;action_transition jsonb;action_key uuid;
 begin
  p1:=(public.salvar_pessoa(org,gen_random_uuid(),jsonb_build_object('nome','Author professional','vinculo','colaborador','user_id',eng,'registro_profissional','TEST declared author'))->>'id')::uuid;
  p2:=(public.salvar_pessoa(org,gen_random_uuid(),jsonb_build_object('nome','Independent reviewer','vinculo','colaborador','user_id',reviewer,'registro_profissional','TEST declared reviewer'))->>'id')::uuid;
@@ -91,13 +92,36 @@ begin
  perform pg_temp.est_assert((select count(*)=0 from public.estudos_tecnicos) and(select count(*)=0 from public.estudo_submissoes),'E30 field payload cannot read technical assessment');
  perform pg_temp.est_assert((select descricao='Explicit released work instructions, without private assessment contents' from public.acoes_operacionais where id=(action->>'acao_id')::uuid),'E31 assigned field person receives only explicitly released canonical task');
  perform pg_temp.est_reject(format('select public.est_obter(%L,%L)',org,eid),'42501','E32 direct technical detail denied to field');
+ -- A mesma ação liberada do estudo abre e executa pela Agenda, sem carregar a análise técnica.
+ action_detail:=public.ag_obter_acao(org,(action->>'acao_id')::uuid);
+ perform pg_temp.est_assert(action_detail->'acao'->>'id'=action->>'acao_id' and action_detail->'acao'->>'descricao'=acdata->>'descricao'
+  and (action_detail->'permissoes'->>'iniciar')::boolean and not(action_detail::text like '%Professional assessment of identified condition%')
+  and not(action_detail ? 'estudo' or action_detail ? 'revisao' or action_detail ? 'snapshot'),'E57 study action opens in Agenda with its canonical identity and only released instructions');
+ action_key:=gen_random_uuid();action_transition:=jsonb_build_object('acao_id',action->>'acao_id','expected_version',action_detail->'acao'->'version','estado','em_execucao');
+ action_receipt:=public.ag_executar(org,action_key,'transicionar_acao',action_transition);
+ perform pg_temp.est_assert(action_receipt->>'tipo'='acao' and action_receipt->>'acao_id'=action->>'acao_id'
+  and action_receipt->'detalhe'->'acao'->>'id'=action->>'acao_id' and action_receipt->'detalhe'->'acao'->>'estado'='em_execucao'
+  and action_receipt->'detalhe'->'acao'->>'descricao'=acdata->>'descricao' and action_receipt->>'evento_id' is null
+  and not(action_receipt::text like '%Professional assessment of identified condition%')
+  and (select count(*)=1 from public.acoes_operacionais where organization_id=org),'E58 assigned field executes the released study action through Agenda without copying task or creating an event');
+ action_detail:=public.ag_obter_acao(org,(action->>'acao_id')::uuid);
+ perform set_config('request.jwt.claim.sub',reviewer::text,true);
+ perform pg_temp.est_assert(action_detail->'acao'->>'estado'='em_execucao' and (action_detail->'acao'->>'version')::integer=2
+  and (select acao_id=(action->>'acao_id')::uuid from public.estudo_medida_linhagens where id=(action->>'linhagem_id')::uuid),'E59 Agenda mutation preserves the approved measure lineage and current action version');
+ perform public.salvar_acao_operacional(org,gen_random_uuid(),acdata||jsonb_build_object('responsavel_id',p2),(action->>'acao_id')::uuid,(action_detail->'acao'->>'version')::integer);
+ perform set_config('request.jwt.claim.sub','93000000-0000-4000-8000-000000000004',true);
+ perform pg_temp.est_reject(format('select public.ag_obter_acao(%L,%L)',org,action->>'acao_id'),'42501','E60 study task reassignment revokes the former field recipient Agenda detail');
+ perform pg_temp.est_reject(format('select public.ag_executar(%L,%L,%L,%L::jsonb)',org,action_key,'transicionar_acao',action_transition),'42501','E61 study task reassignment denies an earlier successful Agenda command replay');
  perform set_config('request.jwt.claim.sub','93000000-0000-4000-8000-000000000005',true);
  perform pg_temp.est_reject(format('select public.est_listar(%L)',org),'42501','E33 member without role has no default access');
+ perform pg_temp.est_reject(format('select public.ag_obter_acao(%L,%L)',org,action->>'acao_id'),'42501','E62 roleless member cannot open the released study task in Agenda');
  perform set_config('request.jwt.claim.sub','93000000-0000-4000-8000-000000000007',true);
  perform pg_temp.est_reject(format('select public.est_listar(%L)',org),'42501','E34 coordination capability is not technical permission');
  perform set_config('request.jwt.claim.sub','93000000-0000-4000-8000-000000000008',true);
  perform pg_temp.est_assert((select count(*)=0 from public.estudos_tecnicos) and(select count(*)=0 from public.estudo_medidas),'E35 other tenant sees neither root nor children');
  perform pg_temp.est_reject(format('select public.est_obter(%L,%L)',org,eid),'42501','E36 foreign tenant direct detail denied');
+ perform pg_temp.est_reject(format('select public.ag_obter_acao(%L,%L)',org,action->>'acao_id'),'42501','E63 foreign tenant cannot open the study task through Agenda');
+ perform pg_temp.est_reject(format('select public.ag_executar(%L,%L,%L,%L::jsonb)',org,gen_random_uuid(),'transicionar_acao',action_transition),'42501','E64 foreign tenant cannot execute the study task through Agenda');
  perform set_config('request.jwt.claim.sub',eng::text,true);
  perform pg_temp.est_assert((public.est_listar(org,'%',null,null,0,25)->>'total')::int=0,'E37 search wildcard is literal');
  perform pg_temp.est_assert((public.est_opcoes(org,'pessoas')->>'total')::int=3 and(public.est_metodos(org)->>'total')::int=1,'E38 selectors expose paginated canonical metadata');

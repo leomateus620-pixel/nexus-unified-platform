@@ -1,0 +1,293 @@
+{
+  "passed": 64,
+  "postgres": "16.15",
+  "rollback_confirmed": true,
+  "port": 55480,
+  "checks": [
+    {
+      "id": "E01",
+      "label": "unsafe bibliographic URL rejected"
+    },
+    {
+      "id": "E02",
+      "label": "missing URL authority rejected"
+    },
+    {
+      "id": "E03",
+      "label": "method policy must be boolean"
+    },
+    {
+      "id": "E04",
+      "label": "method publication is retry safe"
+    },
+    {
+      "id": "E05",
+      "label": "same key different method conflicts"
+    },
+    {
+      "id": "E06",
+      "label": "one study identity on repeated create"
+    },
+    {
+      "id": "E07",
+      "label": "same key different study conflicts"
+    },
+    {
+      "id": "E08",
+      "label": "foreign tenant unit rejected"
+    },
+    {
+      "id": "E09",
+      "label": "incomplete draft is real and readiness is explicit"
+    },
+    {
+      "id": "E10",
+      "label": "revision expected version rejects stale edit"
+    },
+    {
+      "id": "E11",
+      "label": "bulk child conflict rolls back entire parent write"
+    },
+    {
+      "id": "E12",
+      "label": "failed bulk leaves content, versions and history intact"
+    },
+    {
+      "id": "E13",
+      "label": "parent delete cannot erase a new measure edit"
+    },
+    {
+      "id": "E14",
+      "label": "submission rejects missing technical scope/reviewer"
+    },
+    {
+      "id": "E15",
+      "label": "submission has immutable content and hash"
+    },
+    {
+      "id": "E16",
+      "label": "submitted content cannot be edited"
+    },
+    {
+      "id": "E17",
+      "label": "admin alone cannot approve technical study"
+    },
+    {
+      "id": "E18",
+      "label": "return preserves original submission and professional decision"
+    },
+    {
+      "id": "E19",
+      "label": "revised submission does not overwrite first one"
+    },
+    {
+      "id": "E20",
+      "label": "approval is atomic, hashed and retry safe"
+    },
+    {
+      "id": "E21",
+      "label": "approved revision protected by database trigger"
+    },
+    {
+      "id": "E22",
+      "label": "prior submission immutable even under privileged direct write"
+    },
+    {
+      "id": "E23",
+      "label": "canonical action retry reuses one identity"
+    },
+    {
+      "id": "E24",
+      "label": "same action key with different payload conflicts"
+    },
+    {
+      "id": "E25",
+      "label": "new revision keeps measure lineage, not approvals/files"
+    },
+    {
+      "id": "E26",
+      "label": "V1 reader uses frozen context after root/source changes"
+    },
+    {
+      "id": "E27",
+      "label": "supersession is a relation; old approved row/hash remain intact"
+    },
+    {
+      "id": "E28",
+      "label": "same measure across revisions never creates second action"
+    },
+    {
+      "id": "E29",
+      "label": "approved study does not claim PDF emission"
+    },
+    {
+      "id": "E30",
+      "label": "field payload cannot read technical assessment"
+    },
+    {
+      "id": "E31",
+      "label": "assigned field person receives only explicitly released canonical task"
+    },
+    {
+      "id": "E32",
+      "label": "direct technical detail denied to field"
+    },
+    {
+      "id": "E57",
+      "label": "study action opens in Agenda with its canonical identity and only released instructions"
+    },
+    {
+      "id": "E58",
+      "label": "assigned field executes the released study action through Agenda without copying task or creating an event"
+    },
+    {
+      "id": "E59",
+      "label": "Agenda mutation preserves the approved measure lineage and current action version"
+    },
+    {
+      "id": "E60",
+      "label": "study task reassignment revokes the former field recipient Agenda detail"
+    },
+    {
+      "id": "E61",
+      "label": "study task reassignment denies an earlier successful Agenda command replay"
+    },
+    {
+      "id": "E33",
+      "label": "member without role has no default access"
+    },
+    {
+      "id": "E62",
+      "label": "roleless member cannot open the released study task in Agenda"
+    },
+    {
+      "id": "E34",
+      "label": "coordination capability is not technical permission"
+    },
+    {
+      "id": "E35",
+      "label": "other tenant sees neither root nor children"
+    },
+    {
+      "id": "E36",
+      "label": "foreign tenant direct detail denied"
+    },
+    {
+      "id": "E63",
+      "label": "foreign tenant cannot open the study task through Agenda"
+    },
+    {
+      "id": "E64",
+      "label": "foreign tenant cannot execute the study task through Agenda"
+    },
+    {
+      "id": "E37",
+      "label": "search wildcard is literal"
+    },
+    {
+      "id": "E38",
+      "label": "selectors expose paginated canonical metadata"
+    },
+    {
+      "id": "E39",
+      "label": "browser cannot forge official history"
+    },
+    {
+      "id": "E40",
+      "label": "unapproved survey is not a technical source"
+    },
+    {
+      "id": "E41",
+      "label": "approved source has FK/hash metadata, without uncontrolled raw snapshot copy"
+    },
+    {
+      "id": "E42",
+      "label": "editable PE version cannot become fixed technical source"
+    },
+    {
+      "id": "E55",
+      "label": "legacy document without canonical frozen IDs is not a technical source"
+    },
+    {
+      "id": "E56",
+      "label": "legacy document excluded from source selector while original remains intact"
+    },
+    {
+      "id": "E43",
+      "label": "sources whitelist excludes raw private PE content and financial snapshot"
+    },
+    {
+      "id": "E44",
+      "label": "same-tenant engineer can read study while all source ACLs allow"
+    },
+    {
+      "id": "E45",
+      "label": "source access revocation hides study and source list through RLS"
+    },
+    {
+      "id": "E46",
+      "label": "source access revocation denies direct study endpoint"
+    },
+    {
+      "id": "E47",
+      "label": "deactivating private source cannot bypass historical inheritance"
+    },
+    {
+      "id": "E48",
+      "label": "duplicate source is explicit conflict, not a second identity"
+    },
+    {
+      "id": "E49",
+      "label": "cancellation preserves source history"
+    },
+    {
+      "id": "E50",
+      "label": "cancelled revision cannot be edited"
+    },
+    {
+      "id": "E51",
+      "label": "publishing procedure V2 never reclassifies existing V1 study"
+    },
+    {
+      "id": "E52",
+      "label": "published method immutable at database boundary"
+    },
+    {
+      "id": "E53",
+      "label": "privileged cross-tenant child write rejected by parent guard"
+    },
+    {
+      "id": "E54",
+      "label": "privileged functions have minimum explicit grants"
+    }
+  ],
+  "started_at": "2026-10-22T20:06:38.5819142+00:00",
+  "finished_at": "2026-10-22T20:06:39.3172737+00:00",
+  "exit_code": 0,
+  "limits": [
+    "No remote database or operational fixture",
+    "No HTTP Auth, browser navigation or binary Storage evidence",
+    "Schema cloned from validated45+27 with unchanged28/29; this targeted test is not a clean-install or upgrade test"
+  ],
+  "sources": {
+    "drizzle/migrations/0029_agenda_listagem_performance.sql": "d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70",
+    "tests/db/estudos.sql": "53af7e329af6dfd808fb9561437a66046058129a213f17298ed95dd8b2c1e189",
+    "drizzle/migrations/0022_estudos_tecnicos.sql": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b",
+    "drizzle/migrations/0028_agenda_anexos.sql": "793ed8fa0a682a6143cc9b9d35f10fab66a0107981efca777785f17398a60acb",
+    "drizzle/migrations/0027_agenda_equipe.sql": "21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b"
+  },
+  "all_passed": true,
+  "database": "agenda47_estudos_1792699478338",
+  "method": "psql ON_ERROR_STOP, real authenticated SQL/RPC in disposable local PostgreSQL; existing study test transaction rolls back",
+  "host": "127.0.0.1",
+  "new_scenarios": [
+    "E57",
+    "E58",
+    "E59",
+    "E60",
+    "E61",
+    "E62",
+    "E63",
+    "E64"
+  ]
+}

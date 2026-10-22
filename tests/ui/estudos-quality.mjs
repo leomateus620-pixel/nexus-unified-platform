@@ -290,24 +290,60 @@ try {
       expect(sent).not.toHaveProperty("analise");
       expect(await page.evaluate(() => window.__nexusEstudos.acoes.length)).toBe(1);
       const actionId = await page.evaluate(() => window.__nexusEstudos.acoes[0].acao_id);
+      const beforeNavigation = await page.evaluate(() => ({
+        actions: window.__nexusOperational.acoes.length,
+        events: window.__nexusAgenda.events.length,
+      }));
       await page.getByRole("link", { name: "Abrir ação", exact: true }).click();
       await expect(
-        page.getByRole("heading", { level: 1, name: "Ações operacionais" }),
+        page.getByRole("heading", { level: 1, name: "Agenda Equipe", exact: true }),
       ).toBeVisible();
-      const region = page.getByRole("region", { name: "Detalhe da ação selecionada" });
       await expect(
-        region.getByRole("heading", {
+        page.getByRole("heading", {
+          level: 2,
           name: "Instrução liberada exclusivamente na fixture",
           exact: true,
         }),
       ).toBeVisible();
+      expect(new URL(page.url()).searchParams.get("page")).toBe("agenda-equipe");
       expect(new URL(page.url()).searchParams.get("acao")).toBe(actionId);
+      expect(
+        await page.evaluate(
+          () =>
+            window.__nexusCalls.filter((call) => call.name === "obterAcaoAgenda").at(-1)?.payload
+              .data.id,
+        ),
+      ).toBe(actionId);
       await expect(
         page.getByText(
           "Análise de teste sem critério normativo, fórmula ou declaração de conformidade.",
           { exact: true },
         ),
       ).toHaveCount(0);
+      await page.getByRole("button", { name: "Iniciar ação", exact: true }).click();
+      await page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Iniciar ação", exact: true })
+        .click();
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      await expect(
+        page.getByText("Em execução · Ação operacional · V2", { exact: true }),
+      ).toBeVisible();
+      const afterNavigation = await page.evaluate(
+        (id) => ({
+          actions: window.__nexusOperational.acoes.length,
+          events: window.__nexusAgenda.events.length,
+          action: window.__nexusOperational.acoes.find((action) => action.id === id),
+          ownCopy: window.__nexusAgenda.actions.some((action) => action.id === id),
+        }),
+        actionId,
+      );
+      expect(afterNavigation.actions).toBe(beforeNavigation.actions);
+      expect(afterNavigation.events).toBe(beforeNavigation.events);
+      expect(afterNavigation.action.estado).toBe("em_execucao");
+      expect(afterNavigation.action.version).toBe(2);
+      expect(afterNavigation.action.descricao).toBe("");
+      expect(afterNavigation.ownCopy).toBe(false);
     },
   );
   await check("file query revocation hides cached original and upload controls", async () => {

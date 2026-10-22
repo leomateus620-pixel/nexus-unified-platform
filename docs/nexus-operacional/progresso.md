@@ -2,6 +2,15 @@
 
 ## Fechamento de CI — navegação dos módulos em off
 
+O vínculo de ação do estudo foi direcionado para a mesma tarefa na Agenda.
+Referências ao acervo PE respeitam a disponibilidade central e apresentam
+texto de módulo temporariamente desativado, preservando a versão e o hash.
+Estudos passou em 61 layouts/14 verificações e ações vinculadas em três fluxos;
+typecheck e ESLint passaram. O teste SQL de Estudos agora tem 64 verificações:
+oito novas encadeiam estudo → ação → Agenda, executam como Campo e comprovam
+revogação, negação entre organizações e ausência de cópia/análise privada.
+Foram executadas no PostgreSQL local descartável, com rollback confirmado.
+
 No commit `609f2d1`, os workflows Industrial map e Escada LC-02 passaram.
 Operational UI detectou uma expectativa antiga: o teste de busca ainda exigia
 o link de Projetos de Engenharia, desativado no recorte final. O teste agora

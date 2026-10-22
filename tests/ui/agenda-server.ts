@@ -194,9 +194,17 @@ function days(e, start, end) {
   }
   return values;
 }
+function canonicalAction(id) {
+  return (
+    state.actions.find((action) => action.id === id) ??
+    window.__nexusOperational?.acoes.find(
+      (action) => action.id === id && action.organization_id === org,
+    )
+  );
+}
 function eventView(e, start = null, end = null) {
   const origin = e.acao_id
-    ? state.actions.find((a) => a.id === e.acao_id)
+    ? canonicalAction(e.acao_id)
     : e.levantamento_id
       ? { id: lev, titulo: "Levantamento existente do laboratório", estado: "em_coleta" }
       : null;
@@ -359,11 +367,14 @@ export const obterEventoAgenda = async ({ data }) => {
 };
 export const obterAcaoAgenda = async ({ data }) => {
   await before("obterAcaoAgenda", data);
-  const a = state.actions.find((a) => a.id === data.id);
+  const a = canonicalAction(data.id);
   if (!a) throw new Error(AGENDA_ACESSO_NEGADO);
   return s.acaoAgenda.parse({
     acao: copy(a),
-    responsavel_nome: names[a.responsavel_id],
+    responsavel_nome: state.actions.includes(a)
+      ? names[a.responsavel_id]
+      : (window.__nexusOperational?.pessoas.find((person) => person.id === a.responsavel_id)
+          ?.nome ?? names[a.responsavel_id]),
     permissoes: {
       iniciar: a.estado === "aberta",
       enviar_verificacao: a.estado === "em_execucao",
@@ -603,7 +614,7 @@ export const executarAgenda = async ({ data }) => {
       : null;
     r = receipt("acao", a.id, e?.id ?? null, a.id, { acao: a, evento: e ? detail(e.id) : null });
   } else if (parsed.comando === "transicionar_acao") {
-    const a = state.actions.find((a) => a.id === d.acao_id);
+    const a = canonicalAction(d.acao_id);
     if (!a || a.version !== d.expected_version)
       throw new Error("A ação mudou; compare a versão atual.");
     a.estado = d.estado;

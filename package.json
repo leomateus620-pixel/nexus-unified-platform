@@ -17,6 +17,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
+    "test:pessoas": "vitest run --config tests/vitest.pessoas.config.ts",
+    "test:ui:pessoas": "node tests/ui/run.mjs --pessoas",
     "test:levantamentos": "vitest run --config tests/vitest.levantamentos.config.ts && vitest run tests/levantamento-arquivos.test.ts",
     "test:estudos": "vitest run --config tests/vitest.estudos.config.ts && vitest run --config tests/vitest.estudo-arquivos.config.ts",
     "test:almoxarifado": "vitest run --config tests/vitest.almoxarifado.config.ts && vitest run --config tests/vitest.operacao-arquivos.config.ts && vitest run --config tests/vitest.aceite-projeto.config.ts && node --test scripts/nexus-operacional/acceptance-contract.test.mjs",

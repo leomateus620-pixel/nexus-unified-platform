@@ -20,6 +20,7 @@ jobs:
       - run: bun run typecheck
       - run: bun run test:orcamento
       - run: bun run test:operacional
+      - run: bun run test:pessoas
       - run: bun run test:levantamentos
       - run: bun run test:estudos
       - run: bun run test:almoxarifado

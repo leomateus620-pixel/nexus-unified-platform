@@ -12,213 +12,434 @@ import {
   PageHeader,
   Section,
 } from "@/components/nexus/Page";
-import { useOrg, useOrgId } from "@/features/org/session";
-import { pessoaDados, type Pessoa } from "./schemas";
+import { useOrg } from "@/features/org/session";
+import { pessoaDados, type Pessoa, type salvarPessoaInput } from "./schemas";
 import { listarPessoas, obterPessoa, salvarPessoa } from "./operacao.functions";
 import { fieldClass, OperationalDialog, Pagination, useCommandKey } from "./components";
 import { RecordFiles } from "./RecordFiles";
 import { useOperationalAccess, type OperationalAccess } from "./access";
+import { captureOperationalContinuation } from "./continuation";
+import { acessoPessoaNegado, PESSOA_ACESSO_INDISPONIVEL } from "./pessoas-domain";
 
-export function PessoasWorkspace() {
+export type PessoasSearch = { busca: string; pagina: number; arquivadas: boolean; pessoa: string };
+const personKey = (org: string, id: string) => ["pessoas", org, "ficha", id] as const;
+const freshness = {
+  staleTime: 30_000,
+  refetchInterval: 30_000,
+  refetchOnWindowFocus: "always" as const,
+  retry: false,
+};
+
+export function PessoasWorkspace({
+  search,
+  onSearch,
+}: {
+  search: PessoasSearch;
+  onSearch: (patch: Partial<PessoasSearch>) => void;
+}) {
   const org = useOrg();
   const access = useOperationalAccess(org.data?.orgId ?? "", org.data?.userId ?? "");
-  if (access.isPending) return <LoadingState label="Conferindo acesso operacional…" />;
-  if (access.isError) return <ErrorState error={access.error} onRetry={() => access.refetch()} />;
+  if (org.isPending || access.isPending)
+    return <LoadingState label="Conferindo acesso operacional…" />;
+  if (org.isError || access.isError || !org.data)
+    return (
+      <ErrorState
+        error={org.error || access.error || new Error("Sessão indisponível.")}
+        onRetry={async () => {
+          const current = await org.refetch();
+          if (!current.isError) await access.refetch();
+        }}
+      />
+    );
   return (
     <PessoasContent
-      key={`${org.data?.userId}:${org.data?.orgId}:${org.data?.roles.slice().sort().join(",")}:${JSON.stringify(access.data)}`}
+      key={`${org.data.userId}:${org.data.orgId}:${JSON.stringify(access.data)}`}
+      orgId={org.data.orgId}
+      userId={org.data.userId}
       access={access.data}
+      search={search}
+      onSearch={onSearch}
     />
   );
 }
 
-function PessoasContent({ access }: { access: OperationalAccess }) {
-  const orgId = useOrgId();
+function PessoasContent({
+  orgId,
+  userId,
+  access,
+  search,
+  onSearch,
+}: {
+  orgId: string;
+  userId: string;
+  access: OperationalAccess;
+  search: PessoasSearch;
+  onSearch: (patch: Partial<PessoasSearch>) => void;
+}) {
   const qc = useQueryClient();
-  const [search, setSearch] = useState("");
-  const [busca, setBusca] = useState("");
-  const [pagina, setPagina] = useState(0);
-  const [arquivados, setArquivados] = useState(false);
-  const [selected, setSelected] = useState<Pessoa | null>(null);
+  const [busca, setBusca] = useState(search.busca);
   const [form, setForm] = useState<Pessoa | "nova" | null>(null);
-  const canManage = access.gerirEquipe;
-  const ficha = useRef<HTMLDivElement>(null);
-  const listTrigger = useRef<HTMLElement | null>(null);
-  const selectPessoa = (p: Pessoa) => {
-    if (document.activeElement instanceof HTMLElement) listTrigger.current = document.activeElement;
-    setSelected(p);
-    requestAnimationFrame(() => {
-      if (window.innerWidth < 1280) {
-        ficha.current?.scrollIntoView({
-          block: "start",
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            ? "auto"
-            : "smooth",
-        });
-        ficha.current?.focus({ preventScroll: true });
-      }
-    });
+  const [boundaryError, setBoundaryError] = useState<unknown>(null);
+  const [saved, setSaved] = useState("");
+  const feedback = useRef<HTMLDivElement>(null),
+    ficha = useRef<HTMLDivElement>(null),
+    list = useRef<HTMLDivElement>(null),
+    listTrigger = useRef<HTMLElement | null>(null);
+  const currentForm = useRef(form);
+  currentForm.current = form;
+  const lifecycle = useRef({ active: false, generation: 0 });
+  useEffect(() => {
+    const scope = lifecycle.current;
+    scope.active = true;
+    scope.generation += 1;
+    return () => {
+      scope.active = false;
+      scope.generation += 1;
+    };
+  }, []);
+  const continuation = () => {
+    const generation = lifecycle.current.generation;
+    return captureOperationalContinuation(
+      qc,
+      ["operacao-acesso", orgId, userId],
+      () => lifecycle.current.active && lifecycle.current.generation === generation,
+    );
   };
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setBusca(search);
-      setPagina(0);
-    }, 300);
+    const timer = setTimeout(() => setBusca(search.busca), 300);
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [search.busca]);
   const q = useQuery({
-    queryKey: ["pessoas", orgId, busca, pagina, arquivados],
-    enabled: !!orgId,
+    queryKey: ["pessoas", orgId, "lista", busca, search.pagina, search.arquivadas],
     queryFn: ({ signal }) =>
-      listarPessoas({ data: { organization_id: orgId, busca, pagina, arquivados }, signal }),
+      listarPessoas({
+        data: {
+          organization_id: orgId,
+          busca,
+          pagina: search.pagina,
+          arquivados: search.arquivadas,
+        },
+        signal,
+      }),
+    ...freshness,
   });
-  async function saved(p: Pessoa) {
-    setForm(null);
-    selectPessoa(p);
-    await qc.invalidateQueries({ queryKey: ["pessoas", orgId] });
+  const detail = useQuery({
+    queryKey: personKey(orgId, search.pessoa),
+    enabled: !!search.pessoa,
+    queryFn: ({ signal }) =>
+      obterPessoa({ data: { organization_id: orgId, id: search.pessoa }, signal }),
+    ...freshness,
+  });
+  const denied =
+    acessoPessoaNegado(q.error) ||
+    acessoPessoaNegado(detail.error) ||
+    acessoPessoaNegado(boundaryError);
+  const selected = !denied && !detail.isError ? detail.data : undefined;
+  const canManage = access.gerirEquipe && !denied;
+  useEffect(() => {
+    if (denied) {
+      setForm(null);
+      requestAnimationFrame(() => {
+        const alert = feedback.current?.querySelector<HTMLElement>('[role="alert"]');
+        if (alert) {
+          alert.tabIndex = -1;
+          alert.focus();
+        }
+      });
+    }
+  }, [denied]);
+  useEffect(() => {
+    if (selected?.id && innerWidth < 1280)
+      requestAnimationFrame(() => {
+        ficha.current?.scrollIntoView({ block: "start", behavior: "auto" });
+        ficha.current?.focus({ preventScroll: true });
+      });
+  }, [selected?.id]);
+  const selectPessoa = (p: Pessoa) => {
+    if (document.activeElement instanceof HTMLElement) listTrigger.current = document.activeElement;
+    setBoundaryError(null);
+    setSaved("");
+    onSearch({ pessoa: p.id });
+  };
+  const back = () => {
+    onSearch({ pessoa: "" });
+    setBoundaryError(null);
+    requestAnimationFrame(() => {
+      (listTrigger.current?.isConnected ? listTrigger.current : list.current)?.focus();
+    });
+  };
+  async function retryAccess() {
+    const [a, b] = await Promise.all([
+      q.refetch(),
+      search.pessoa ? detail.refetch() : Promise.resolve(null),
+    ]);
+    if (!a.isError && !b?.isError) setBoundaryError(null);
+  }
+  async function save(command: z.output<typeof salvarPessoaInput>) {
+    const current = continuation();
+    try {
+      const p = await salvarPessoa({ data: command });
+      if (!current()) return false;
+      qc.setQueryData(personKey(orgId, p.id), p);
+      setForm(null);
+      setBoundaryError(null);
+      setSaved("Cadastro confirmado no servidor.");
+      onSearch({ pessoa: p.id });
+      await qc.invalidateQueries({ queryKey: ["pessoas", orgId] });
+      return true;
+    } catch (failure) {
+      if (current() && acessoPessoaNegado(failure)) setBoundaryError(failure);
+      throw failure;
+    }
+  }
+  async function comparePerson(id: string) {
+    const current = continuation(),
+      editor = currentForm.current;
+    try {
+      const p = await obterPessoa({ data: { organization_id: orgId, id } });
+      return current() && currentForm.current === editor ? p : undefined;
+    } catch (failure) {
+      if (current() && currentForm.current === editor && acessoPessoaNegado(failure))
+        setBoundaryError(failure);
+      throw failure;
+    }
   }
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 min-w-0">
       <PageHeader
         eyebrow="Recursos"
         title="Pessoas e competências"
-        description="Identidade operacional, vínculo profissional e evidências privadas. Cadastrar uma pessoa não concede acesso ao sistema."
+        description="Identidade, vínculo profissional e evidências para o trabalho técnico."
         actions={
-          canManage && <ActionButton onClick={() => setForm("nova")}>Nova pessoa</ActionButton>
+          !search.pessoa &&
+          canManage && (
+            <ActionButton
+              onClick={() => {
+                setBoundaryError(null);
+                setForm("nova");
+              }}
+            >
+              Nova pessoa
+            </ActionButton>
+          )
         }
       />
-      <div className="flex flex-wrap gap-3">
-        <label className="min-w-0 flex-1 text-sm">
-          Buscar pessoa
-          <input
-            className={fieldClass}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Nome"
+      {saved && !denied && (
+        <p role="status" className="rounded border border-primary/40 p-3 text-sm">
+          {saved}
+        </p>
+      )}
+      <div ref={feedback} tabIndex={-1}>
+        {denied ? (
+          <ErrorState
+            error={
+              boundaryError || q.error || detail.error || new Error(PESSOA_ACESSO_INDISPONIVEL)
+            }
+            onRetry={retryAccess}
           />
-        </label>
-        <label className="text-sm">
-          Situação
-          <select
-            className={fieldClass}
-            value={String(arquivados)}
-            onChange={(e) => {
-              setArquivados(e.target.value === "true");
-              setPagina(0);
-            }}
-          >
-            <option value="false">Ativas</option>
-            <option value="true">Arquivadas</option>
-          </select>
-        </label>
-      </div>
-      <div
-        className={`grid min-w-0 gap-4 ${selected ? "xl:grid-cols-[minmax(0,1.4fr)_minmax(300px,1fr)]" : ""}`}
-      >
-        <Section title="Pessoas">
-          {q.isPending && <p role="status">Consultando pessoas…</p>}
-          {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
-          {q.data && !q.data.rows.length && (
-            <EmptyState
-              title="Nenhuma pessoa neste recorte"
-              hint={
-                canManage
-                  ? "Cadastre uma pessoa ou ajuste a busca."
-                  : "Seu perfil consulta apenas as pessoas autorizadas."
-              }
-            />
-          )}
-          {q.data && q.data.rows.length > 0 && (
-            <DataTable
-              rows={q.data.rows}
-              getRowId={(p) => p.id}
-              selectedId={selected?.id ?? null}
-              onRowClick={selectPessoa}
-              label="Pessoas operacionais"
-              columns={[
-                {
-                  key: "nome",
-                  label: "Pessoa",
-                  render: (p) => <span className="font-medium">{p.nome}</span>,
-                },
-                { key: "funcao", label: "Função", render: (p) => p.funcao || "Não informada" },
-                { key: "vinculo", label: "Vínculo" },
-                {
-                  key: "user_id",
-                  label: "Acesso",
-                  render: (p) => (p.user_id ? "Usuário vinculado" : "Sem login"),
-                },
-              ]}
-            />
-          )}
-          {q.data && <Pagination page={pagina} total={q.data.total} onChange={setPagina} />}
-        </Section>
-        {selected && (
-          <div
-            ref={ficha}
-            tabIndex={-1}
-            className="scroll-mt-20 outline-none"
-            role="region"
-            aria-label="Ficha da pessoa selecionada"
-          >
-            <Section title={selected.nome}>
-              <div className="space-y-4">
-                <ActionButton
-                  variant="ghost"
-                  onClick={() => {
-                    setSelected(null);
-                    requestAnimationFrame(() => listTrigger.current?.focus());
-                  }}
-                >
-                  Voltar à lista de pessoas
-                </ActionButton>
-                <dl className="grid gap-3 text-sm">
-                  <div>
-                    <dt className="text-muted-foreground">Função</dt>
-                    <dd>{selected.funcao || "Não informada"}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-muted-foreground">Contato profissional</dt>
-                    <dd className="break-all">
-                      {selected.email_profissional ||
-                        selected.telefone_profissional ||
-                        "Não informado"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-muted-foreground">Situação</dt>
-                    <dd>
-                      {selected.ativa ? "Ativa" : "Arquivada"} · versão {selected.version}
-                    </dd>
-                  </div>
-                </dl>
-                {canManage && (
-                  <ActionButton variant="ghost" onClick={() => setForm(selected)}>
-                    Editar cadastro e situação
-                  </ActionButton>
-                )}
-                <RecordFiles
-                  key={selected.id}
-                  pai={{ organization_id: orgId, pessoa_id: selected.id }}
+        ) : (
+          <>
+            <div className={`flex-wrap gap-3 ${search.pessoa ? "hidden xl:flex" : "flex"}`}>
+              <label className="min-w-0 flex-1 text-sm">
+                Buscar pessoa
+                <input
+                  type="search"
+                  className={fieldClass}
+                  value={search.busca}
+                  onChange={(event) => onSearch({ busca: event.target.value, pagina: 0 })}
+                  placeholder="Nome"
                 />
+              </label>
+              <label className="text-sm">
+                Situação
+                <select
+                  className={fieldClass}
+                  value={String(search.arquivadas)}
+                  onChange={(event) =>
+                    onSearch({ arquivadas: event.target.value === "true", pagina: 0 })
+                  }
+                >
+                  <option value="false">Ativas</option>
+                  <option value="true">Arquivadas</option>
+                </select>
+              </label>
+            </div>
+            <div
+              className={`mt-4 grid min-w-0 gap-4 ${search.pessoa ? "xl:grid-cols-[minmax(0,1.4fr)_minmax(300px,1fr)]" : ""}`}
+            >
+              <div
+                ref={list}
+                tabIndex={-1}
+                className={search.pessoa ? "hidden min-w-0 xl:block" : "min-w-0"}
+              >
+                <Section
+                  title="Pessoas"
+                  description="Cadastrar uma pessoa não concede acesso ao sistema."
+                >
+                  {q.isPending ? (
+                    <LoadingState label="Consultando pessoas…" />
+                  ) : q.isError ? (
+                    <ErrorState error={q.error} onRetry={() => q.refetch()} />
+                  ) : (
+                    q.data && (
+                      <>
+                        {!q.data.rows.length ? (
+                          <EmptyState
+                            title={
+                              search.busca
+                                ? "Nenhuma pessoa encontrada"
+                                : "Nenhuma pessoa neste recorte"
+                            }
+                            hint={
+                              search.busca
+                                ? "Ajuste a busca ou limpe os filtros."
+                                : canManage
+                                  ? "Cadastre a pessoa que será alocada ao trabalho."
+                                  : "Seu perfil consulta apenas pessoas autorizadas."
+                            }
+                            action={
+                              canManage && !search.busca ? (
+                                <ActionButton onClick={() => setForm("nova")}>
+                                  Nova pessoa
+                                </ActionButton>
+                              ) : undefined
+                            }
+                          />
+                        ) : (
+                          <>
+                            <ul aria-label="Pessoas operacionais" className="grid gap-3 md:hidden">
+                              {q.data.rows.map((p) => (
+                                <li key={p.id} className="rounded border border-border p-3 text-sm">
+                                  <button
+                                    className="min-h-11 w-full break-words text-left font-semibold underline decoration-muted-foreground/40 underline-offset-4"
+                                    onClick={() => selectPessoa(p)}
+                                  >
+                                    {p.nome}
+                                  </button>
+                                  <p className="mt-1 break-words">
+                                    {p.funcao || "Função não informada"}
+                                  </p>
+                                  <p className="mt-2 text-muted-foreground">
+                                    {p.vinculo === "prestador"
+                                      ? "Prestador"
+                                      : p.vinculo === "parceiro"
+                                        ? "Parceiro"
+                                        : "Colaborador"}{" "}
+                                    · {p.user_id ? "Usuário vinculado" : "Sem login"}
+                                  </p>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="hidden md:block">
+                              <DataTable
+                                rows={q.data.rows}
+                                getRowId={(p) => p.id}
+                                selectedId={search.pessoa || null}
+                                onRowClick={selectPessoa}
+                                label="Pessoas operacionais"
+                                columns={[
+                                  {
+                                    key: "nome",
+                                    label: "Pessoa",
+                                    render: (p) => <span className="font-medium">{p.nome}</span>,
+                                  },
+                                  {
+                                    key: "funcao",
+                                    label: "Função",
+                                    render: (p) => p.funcao || "Não informada",
+                                  },
+                                  { key: "vinculo", label: "Vínculo" },
+                                  {
+                                    key: "user_id",
+                                    label: "Acesso",
+                                    render: (p) => (p.user_id ? "Usuário vinculado" : "Sem login"),
+                                  },
+                                ]}
+                              />
+                            </div>
+                          </>
+                        )}
+                        <Pagination
+                          page={search.pagina}
+                          total={q.data.total}
+                          onChange={(pagina) => onSearch({ pagina })}
+                        />
+                      </>
+                    )
+                  )}
+                </Section>
               </div>
-            </Section>
-          </div>
+              {search.pessoa && (
+                <div
+                  ref={ficha}
+                  tabIndex={-1}
+                  className="min-w-0 scroll-mt-20 outline-none"
+                  role="region"
+                  aria-label="Ficha da pessoa selecionada"
+                >
+                  <ActionButton variant="ghost" onClick={back} className="mb-3">
+                    Voltar à lista de pessoas
+                  </ActionButton>
+                  {detail.isPending ? (
+                    <LoadingState label="Consultando ficha e acesso atual…" />
+                  ) : detail.isError ? (
+                    <ErrorState error={detail.error} onRetry={() => detail.refetch()} />
+                  ) : (
+                    selected && (
+                      <Section title={selected.nome}>
+                        <div className="space-y-4">
+                          <dl className="grid gap-3 text-sm">
+                            <div>
+                              <dt className="text-muted-foreground">Função</dt>
+                              <dd>{selected.funcao || "Não informada"}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-muted-foreground">Contato profissional</dt>
+                              <dd className="break-all">
+                                {selected.email_profissional || "E-mail não informado"}
+                              </dd>
+                              <dd>{selected.telefone_profissional || "Telefone não informado"}</dd>
+                            </div>
+                            <div>
+                              <dt className="text-muted-foreground">Situação</dt>
+                              <dd>
+                                {selected.ativa ? "Ativa" : "Arquivada"} · versão {selected.version}
+                              </dd>
+                            </div>
+                          </dl>
+                          {canManage && (
+                            <ActionButton variant="ghost" onClick={() => setForm(selected)}>
+                              Editar cadastro e situação
+                            </ActionButton>
+                          )}
+                          <RecordFiles
+                            key={selected.id}
+                            pai={{ organization_id: orgId, pessoa_id: selected.id }}
+                          />
+                        </div>
+                      </Section>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+          </>
         )}
       </div>
       <OperationalDialog
         title={form === "nova" ? "Nova pessoa" : "Editar pessoa"}
-        open={form !== null}
+        open={form !== null && !denied}
         onOpenChange={(open) => {
           if (!open) setForm(null);
         }}
       >
-        {form && (
+        {form && !denied && (
           <PessoaForm
             key={form === "nova" ? "nova" : form.id}
             pessoa={form === "nova" ? null : form}
             orgId={orgId}
-            onSaved={saved}
+            onSave={save}
+            onCompare={comparePerson}
           />
         )}
       </OperationalDialog>
@@ -229,17 +450,21 @@ function PessoasContent({ access }: { access: OperationalAccess }) {
 function PessoaForm({
   pessoa,
   orgId,
-  onSaved,
+  onSave,
+  onCompare,
 }: {
   pessoa: Pessoa | null;
   orgId: string;
-  onSaved: (p: Pessoa) => Promise<void>;
+  onSave: (command: z.output<typeof salvarPessoaInput>) => Promise<boolean>;
+  onCompare: (id: string) => Promise<Pessoa | undefined>;
 }) {
   const keyFor = useCommandKey();
   const fieldPrefix = useId();
   const [erro, setErro] = useState<string | null>(null);
   const [latest, setLatest] = useState<Pessoa | null>(null);
   const [version, setVersion] = useState(pessoa?.version ?? null);
+  const submitLock = useRef(false);
+  const [comparing, setComparing] = useState(false);
   const f = useForm<z.input<typeof pessoaDados>, unknown, z.output<typeof pessoaDados>>({
     resolver: zodResolver(pessoaDados),
     defaultValues: pessoa
@@ -268,6 +493,8 @@ function PessoaForm({
       aria-busy={f.formState.isSubmitting}
       className="space-y-4"
       onSubmit={f.handleSubmit(async (dados) => {
+        if (submitLock.current) return;
+        submitLock.current = true;
         setErro(null);
         try {
           const payload = {
@@ -276,9 +503,11 @@ function PessoaForm({
             id: pessoa?.id ?? null,
             expected_version: version,
           };
-          await onSaved(await salvarPessoa({ data: { ...payload, chave: keyFor(payload) } }));
+          await onSave({ ...payload, chave: keyFor(payload) });
         } catch (e) {
           setErro(e instanceof Error ? e.message : "Não foi possível salvar.");
+        } finally {
+          submitLock.current = false;
         }
       })}
     >
@@ -369,11 +598,17 @@ function PessoaForm({
       {erro && pessoa && (
         <ActionButton
           variant="ghost"
+          loading={comparing}
           onClick={async () => {
+            setComparing(true);
+            setLatest(null);
             try {
-              setLatest(await obterPessoa({ data: { organization_id: orgId, id: pessoa.id } }));
+              const current = await onCompare(pessoa.id);
+              if (current) setLatest(current);
             } catch (error) {
               setErro(error instanceof Error ? error.message : "Registro indisponível.");
+            } finally {
+              setComparing(false);
             }
           }}
         >

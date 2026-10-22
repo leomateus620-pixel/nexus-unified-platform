@@ -1,0 +1,56 @@
+{
+  "checkpoint": 44,
+  "basedOn": "88d8ccf14b0d630166b8cf7205579b9d2e4c35d0",
+  "date": "2026-10-22T14:46:29.450Z",
+  "schemaMigrationCount": 43,
+  "newMigrations": 0,
+  "method": "Local handler/contracts and source UI with synthetic transport. No connected fixture writes or connected Auth/Storage HTTP proof.",
+  "commands": {
+    "pessoas": {
+      "exitCode": 0,
+      "handlers": 8,
+      "sharedContinuation": 4
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "logSha256LF": "8fa1cf5506304e8abac55868e7f1a136c9b1dde57a3981a382da4c21ea129a6f"
+    },
+    "build": {
+      "exitCode": 0,
+      "logSha256LF": "89f04f94b802dfa0e4b82c7658c0c1e652af533e6d516bc0718e19d3d45e56f5"
+    },
+    "lint": {
+      "exitCode": 0,
+      "files": 13,
+      "errors": 0,
+      "warnings": 0
+    },
+    "operacional": {
+      "exitCode": 0,
+      "tests": 49,
+      "manifest": 9,
+      "typeGenerationContracts": 3,
+      "protectedFiles": 134,
+      "exception": "Acceptance branch only; remainder unchanged"
+    }
+  },
+  "ui": {
+    "pessoas": {
+      "layouts": 18,
+      "behaviors": 8,
+      "success": true
+    },
+    "legacy": {
+      "layouts": 36,
+      "behaviors": 9,
+      "contrastPairs": 7,
+      "errors": []
+    }
+  },
+  "limits": [
+    "Not the complete Teams/Competencies module",
+    "No new SQL/remote schema mutation",
+    "No connected Auth/Storage HTTP or physical-device proof",
+    "CI of this new commit requires separate observation"
+  ]
+}

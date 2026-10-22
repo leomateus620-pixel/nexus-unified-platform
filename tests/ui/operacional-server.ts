@@ -342,6 +342,9 @@ export const consultarAcessoOperacional = async () => ({
 });
 export const obterPessoa = async ({ data }) => {
   await read("obterPessoa", { data });
+  if (window.__peopleDenied || window.__peopleDetailDenied)
+    throw new Error("Pessoa indisponível para seu acesso atual.");
+  if (window.__peopleDetailError) throw new Error("Não foi possível atualizar a ficha (fixture).");
   return copy(state.pessoas.find((p) => p.id === data.id));
 };
 export const obterAcao = async ({ data }) => {
@@ -439,6 +442,7 @@ export const administrarVinculo = async ({ data }) =>
   });
 export const listarPessoas = async ({ data }) => {
   await read("listarPessoas", { data });
+  if (window.__peopleDenied) throw new Error("Pessoa indisponível para seu acesso atual.");
   return paginar(
     rows(
       state.pessoas.filter((p) => p.ativa !== data.arquivados),
@@ -449,6 +453,7 @@ export const listarPessoas = async ({ data }) => {
 };
 export const salvarPessoa = async ({ data }) =>
   write("salvarPessoa", data, () => {
+    if (window.__peopleDenied) throw new Error("Pessoa indisponível para seu acesso atual.");
     const atual = state.pessoas.find((p) => p.id === data.id);
     if (atual && atual.version !== data.expected_version)
       throw new Error("Conflito de versão (fixture).");

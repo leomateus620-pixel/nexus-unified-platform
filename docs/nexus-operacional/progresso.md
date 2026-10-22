@@ -1,5 +1,13 @@
 # Checkpoint de execução
 
+## Checkpoint44 — consulta e edição de pessoas
+
+Checkpoint43 publicado no commit `88d8ccf14b0d630166b8cf7205579b9d2e4c35d0`, na PR13 draft. Verify, presentation e circulation passaram; evidência `evidencias/ci-43.json`. A suíte UI completa passou no CI desse head. O CI do novo checkpoint44 deve ser observado separadamente.
+
+A nova fatia remove a cópia estática da pessoa selecionada, preserva recorte na URL e apresenta lista mobile/ficha com consultas próprias. Rede preserva o formulário; negação oculta cache/arquivos e fecha o editor. O servidor revalida leituras e retorna a pessoa atual após retry de escrita. Não há migração nova ou alteração remota de dados/schema.
+
+Passaram12 testes isolados (oito de pessoa, quatro do guard compartilhado),18 layouts/oito comportamentos UI, typecheck global e build. A regressão de estrutura/formulários existentes passou36 layouts, nove comportamentos e sete pares de contraste, sem erros JS; operacional49 + manifesto9 + tipos3 + contratos134 também passaram. Auditoria/capturas e alcance em `pessoas-competencias.md`. Equipes/competências/qualificações e leitor PE continuam próximos fluxos, sem serem marcados implementados por estas correções.
+
 ## Checkpoint 43 — controle físico e integração de aceite
 
 Último checkpoint publicado antes desta consolidação: `07d91f8e666ad6aa9d882dc2155c863d57af99b4`; verify, presentation e circulation passaram (`evidencias/ci-41.json`). PR13 continua draft. A nova jornada de Almoxarifado/Ferramentas integra este checkpoint. Migração0023 aplicada ao projeto confirmado em22/10/2026 às13:16:47.507078 UTC, posição42, SHA-256 `4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8`; nenhum registro operacional fictício foi criado.

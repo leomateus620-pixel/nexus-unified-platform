@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { PESSOA_ACESSO_INDISPONIVEL } from "./pessoas-domain";
 import {
   acaoRow,
   listInput,
@@ -55,22 +56,38 @@ export const consultarAcessoOperacional = createServerFn({ method: "GET" })
     };
   });
 
+function pessoaResult<T>(response: { data: T; error: { message: string; code?: string } | null }) {
+  if (response.error && ["42501", "23503", "PGRST116"].includes(response.error.code ?? ""))
+    throw new Error(PESSOA_ACESSO_INDISPONIVEL);
+  return result(response);
+}
+async function exigirPessoas(db: SupabaseClient, org: string) {
+  if (pessoaResult(await db.rpc("operacao_pode", { _org: org, _acao: "ver_equipe" })) !== true)
+    throw new Error(PESSOA_ACESSO_INDISPONIVEL);
+}
+async function lerPessoaAtual(db: SupabaseClient, org: string, id: string) {
+  await exigirPessoas(db, org);
+  const row = pessoaResult(
+    await db
+      .from("pessoas")
+      .select(
+        "id,organization_id,nome,vinculo,funcao,email_profissional,telefone_profissional,registro_profissional,user_id,ativa,version",
+      )
+      .eq("organization_id", org)
+      .eq("id", id)
+      .single(),
+  );
+  if (!row) throw new Error(PESSOA_ACESSO_INDISPONIVEL);
+  const person = pessoaRow.parse(row);
+  await exigirPessoas(db, org);
+  return person;
+}
+
 export const obterPessoa = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator(orgInput.extend({ id: pessoaRow.shape.id }))
   .handler(async ({ context, data }) =>
-    pessoaRow.parse(
-      result(
-        await operationalDb(context.supabase)
-          .from("pessoas")
-          .select(
-            "id,organization_id,nome,vinculo,funcao,email_profissional,telefone_profissional,registro_profissional,user_id,ativa,version",
-          )
-          .eq("organization_id", data.organization_id)
-          .eq("id", data.id)
-          .single(),
-      ),
-    ),
+    lerPessoaAtual(operationalDb(context.supabase), data.organization_id, data.id),
   );
 export const obterAcao = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -95,7 +112,7 @@ export const listarPessoas = createServerFn({ method: "GET" })
   .inputValidator(listInput)
   .handler(async ({ context, data }) => {
     const db = operationalDb(context.supabase);
-    await exigirOperacao(db, data.organization_id, "ver_equipe");
+    await exigirPessoas(db, data.organization_id);
     let query = db
       .from("pessoas")
       .select(
@@ -109,16 +126,22 @@ export const listarPessoas = createServerFn({ method: "GET" })
       .order("nome")
       .order("id")
       .range(data.pagina * 25, data.pagina * 25 + 24);
-    result(r);
-    return { rows: pessoaRow.array().parse(r.data ?? []), total: r.count ?? 0 };
+    pessoaResult(r);
+    if (!Array.isArray(r.data) || typeof r.count !== "number")
+      throw new Error(
+        "Não foi possível confirmar a lista e a contagem de pessoas. Tente novamente.",
+      );
+    await exigirPessoas(db, data.organization_id);
+    return { rows: pessoaRow.array().parse(r.data), total: r.count };
   });
 export const salvarPessoa = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(salvarPessoaInput)
   .handler(async ({ context, data }) => {
-    return pessoaRow.parse(
-      result(
-        await operationalDb(context.supabase).rpc("salvar_pessoa", {
+    const db = operationalDb(context.supabase);
+    const receipt = pessoaRow.parse(
+      pessoaResult(
+        await db.rpc("salvar_pessoa", {
           _org: data.organization_id,
           _chave: data.chave,
           _dados: data.dados,
@@ -127,6 +150,7 @@ export const salvarPessoa = createServerFn({ method: "POST" })
         }),
       ),
     );
+    return lerPessoaAtual(db, data.organization_id, receipt.id);
   });
 export const listarAcoes = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

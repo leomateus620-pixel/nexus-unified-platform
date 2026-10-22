@@ -22,6 +22,8 @@ const routeSearchKeys = [
   "revisao",
   "ponto",
   "estado",
+  "pessoa",
+  "arquivadas",
 ];
 let search = Object.fromEntries(
   [...new URLSearchParams(location.search)].filter(([key]) => routeSearchKeys.includes(key)),

@@ -1,5 +1,11 @@
 # Validação do checkpoint operacional
 
+## Checkpoint44 — identidade operacional e cache
+
+Sem migração nova: banco conectado permanece na última verificação do manifesto43. Passaram `npm run test:pessoas` (oito casos de handler/domínio e quatro do guard compartilhado), typecheck global e build. UI isolada:18 layouts/oito comportamentos; regressão de estrutura/formulários:36 layouts/nove comportamentos/sete pares de contraste, sem erros JS. `test:operacional` passou49 testes + nove de manifesto + três de geração, mantendo134 arquivos protegidos e a exceção restrita de aceite.
+
+Evidências em `ui-44/`, `ui-44-regressao/` e capturas `pessoas/`; auditoria em `pessoas-competencias.md`. Read/retry conferem acesso atual e não devolvem snapshot antigo como estado vigente. UI remove ficha/arquivos após negação e mantém rascunho em rede indisponível; seleção/recorte sobrevivem a recarga e retorno. Não se declara Auth/Storage HTTP conectado, logout real E2E ou conclusão de equipes/qualificações nesta fatia.
+
 ## Checkpoint43 — Almoxarifado e qualidade de arquivos
 
 | Método | Resultado e alcance |
@@ -14,6 +20,8 @@
 | Compilação | Tipos oficiais43:108 tabelas/161 funções RPC/quatro enums, AST preservada. Typecheck global e build passaram. ESLint dos48 arquivos de código alterados/novos: zero erros, um aviso preexistente em `operacao/components.tsx` |
 
 Evidências de banco: `banco-local-43.json`, `schema-diff-43.json`, `verificacao-remota-0024.json`; catálogo42 e preflight permanecem como histórico discriminado. UI: `ui-43/` para as etapas gerais e `ui-43-final/` para a fatia final. A primeira tentativa42 foi interrompida por HMR enquanto arquivos de laboratório mudavam e não conta como aprovação. A falha43 da nova expectativa textual foi corrigida preservando as verificações de versão/payload/retomada. O CI do novo commit deve ser acompanhado separadamente; o CI41 aprovado não comprova o head seguinte.
+
+Posteriormente o CI do commit43 `88d8ccf14b0d630166b8cf7205579b9d2e4c35d0` passou verify, presentation (suíte UI completa) e circulation, conforme `evidencias/ci-43.json`. Essa execução completa resolve o gate geral pendente daquele checkpoint; não substitui o CI de commits posteriores.
 
 Product Design: inspeção e capturas reais dos componentes no navegador integrado em390×845/1440×900, incluindo lista, ficha, reserva e consulta de política. As capturas usam transporte de laboratório e não comprovam backend operacional. Arquivos privados canônicos agora distinguem ler/adicionar/retomar/cancelar e PE preserva a identidade original quando nomes locais diferentes são deduplicados.
 

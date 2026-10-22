@@ -1,0 +1,34 @@
+{
+  "headRevision": "88d8ccf14b0d630166b8cf7205579b9d2e4c35d0",
+  "checkedAt": "2026-10-22T14:44:07.134Z",
+  "method": "Read-only Code Review GitHub backend, per Actions run with preserved headRevision",
+  "checks": [
+    {
+      "id": 119880739948,
+      "head_sha": "88d8ccf14b0d630166b8cf7205579b9d2e4c35d0",
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119880739435,
+      "head_sha": "88d8ccf14b0d630166b8cf7205579b9d2e4c35d0",
+      "name": "presentation",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119880739352,
+      "head_sha": "88d8ccf14b0d630166b8cf7205579b9d2e4c35d0",
+      "name": "circulation",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "runs": [
+    39795224064,
+    39795224079,
+    39795224019
+  ],
+  "limits": "CI uses isolated fixtures/SQL; no connected Auth/Storage HTTP or deployment proof"
+}

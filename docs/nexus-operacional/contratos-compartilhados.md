@@ -26,6 +26,8 @@ Estado local em 22/10/2026. Este registro descreve objetos reais; nomes proposto
 
 ## Propriedade das identidades
 
+Pessoas no checkpoint44: lista `['pessoas',org,'lista',busca,pagina,arquivadas]` e ficha `['pessoas',org,'ficha',id]`, com recorte/seleção na URL e revalidação30s/foco. Leituras revalidam a capacidade antes/depois do SELECT; salvar relê a identidade autorizada atual após o RPC, sem tratar snapshot antigo do recibo como estado vigente. O formulário conserva a versão aberta e a comparação só altera campos por decisão explícita. `operacao/continuation.ts` compartilha a proteção de respostas tardias com Almoxarifado. Esse contrato não acrescenta tabelas/RPCs de equipe ou qualificação e não comprova Auth HTTP conectado.
+
 | Conceito                     | Fonte / proprietário                                                                | Contrato de integração                                                                                                            |
 | ---------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Organização e usuário        | `organizations`, Auth, `memberships`, `user_roles`; acesso                          | Toda operação recebe contexto de organização e revalida membership do ator autenticado                                            |

@@ -20,6 +20,7 @@ try {
     ["autosave-checks.mjs"],
   ];
   const features = {
+    "--pessoas": [["pessoas-quality.mjs"]],
     "--levantamentos": [["levantamentos-quality.mjs"]],
     "--estudos": [["estudos-quality.mjs"], ["acoes-vinculadas.mjs"]],
     "--almoxarifado": [["almoxarifado-quality.mjs"], ["anexos-canonicos-quality.mjs"]],

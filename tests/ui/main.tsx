@@ -23,7 +23,7 @@ import { ImportacaoAssistida } from "@/features/importacao/ImportacaoAssistida";
 import { useSave } from "@/features/propostas/hooks";
 import { OutletContext, useFixturePage } from "./router";
 import { query, scenario } from "./data";
-import { PessoasWorkspace } from "@/features/operacao/PessoasWorkspace";
+import { Route as PessoasRoute } from "@/routes/_authenticated/equipe";
 import { Route as SegurancaRoute } from "@/routes/_authenticated/seguranca";
 import { Route as PeRoute } from "@/routes/_authenticated/projetos-engenharia";
 import { Route as MapsLibraryRoute } from "@/routes/mapas-3d_.unidades";
@@ -73,6 +73,7 @@ const Levantamentos = LevantamentosRoute.options.component;
 const Engenharia = EngenhariaRoute.options.component;
 const Almoxarifado = AlmoxarifadoRoute.options.component;
 const Seguranca = SegurancaRoute.options.component;
+const Pessoas = PessoasRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
@@ -85,7 +86,7 @@ function Harness() {
         ) : page === "levantamentos" ? (
           <Levantamentos />
         ) : page === "equipe" ? (
-          <PessoasWorkspace />
+          <Pessoas />
         ) : page === "seguranca" ? (
           <Seguranca />
         ) : page === "projetos-engenharia" ? (

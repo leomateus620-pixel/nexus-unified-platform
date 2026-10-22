@@ -7,6 +7,24 @@ export const useServerFn = (fn) => fn;
 export const recalcularRevisao = record("recalcularRevisao");
 export const gerarDemanda = record("gerarDemanda");
 export const gerarOrdens = record("gerarOrdens");
+export const previaOrdens = async () => ({
+  plano_hash: "plano-fixture",
+  comprar: [],
+  fabricar: [],
+  alertas: [],
+  itens: [],
+  ordens_compra: [],
+  ordens_producao: [],
+  bloqueios: [],
+  oc_fornecedores: [],
+  op: false,
+  ops_desatualizadas: [],
+  escopo: "ambas",
+  bloqueio: null,
+  linhas: [],
+  faltas: [],
+});
+export const revisarRascunhoOp = record("revisarRascunhoOp");
 export const novaRevisao = record("novaRevisao");
 export const transicionarRevisao = record("transicionarRevisao");
 export const emitirOrdemCompra = record("emitirOrdemCompra");

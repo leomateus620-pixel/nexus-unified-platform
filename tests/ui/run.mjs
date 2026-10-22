@@ -8,7 +8,7 @@ process.env.NEXUS_UI_URL = `http://127.0.0.1:${port}`;
 const server = await createServer({ configFile: "tests/ui/vite.config.mjs" });
 try {
   await server.listen();
-  for (const [file, ...args] of [
+  const legacyChecks = [
     ["capture.mjs", process.env.NEXUS_UI_CAPTURE_LABEL || "catalog-after"],
     ["accessibility.mjs"],
     ["stages-checks.mjs"],
@@ -18,7 +18,10 @@ try {
     ["dimension-checks.mjs"],
     ["workspace-visual.mjs", "after"],
     ["autosave-checks.mjs"],
-  ]) {
+  ];
+  const checks = process.argv.includes("--operacional") ? [] : legacyChecks;
+  checks.push(["operational-quality.mjs"]);
+  for (const [file, ...args] of checks) {
     await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [`tests/ui/${file}`, ...args], {
         stdio: "inherit",

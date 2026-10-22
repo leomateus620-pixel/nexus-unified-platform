@@ -24,6 +24,12 @@ export default defineConfig({
           : html;
       },
       resolveId(id) {
+        if (
+          /\/(operacao|files|clientes|projetos-engenharia|pe-arquivos|admin)\.functions(?:\.ts)?$/.test(
+            id,
+          )
+        )
+          return path.join(root, "operacional-server.ts");
         if (/\/(catalogo|custos)\.functions(?:\.ts)?$/.test(id))
           return path.join(root, "commerce-server.ts");
         if (id.endsWith("propostas.functions") || id.endsWith("propostas.functions.ts"))

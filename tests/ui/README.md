@@ -18,7 +18,9 @@ Para inspeção interativa: `bun run dev:ui-lab`, endereço `http://127.0.0.1:41
 
 Defina `NEXUS_UI_SOURCE` para um checkout da base e `NEXUS_UI_PORT=4181`, inicie `dev:ui-lab` e execute `node tests/ui/capture.mjs before`. O teste usa as mesmas fixtures e dependências para as duas versões. Não execute builds, outros benchmarks ou edições durante a medição.
 
-Auditoria desta entrega: `bun run test:ui:contracts -- 5286881c`. O argumento é a revisão Git contra a qual comparar declarações de rotas, consultas, mutations, invalidações, handlers e arquivos protegidos. A auditoria de escopo é explícita e separada do CI visual, pois futuras entregas podem legitimamente alterar domínio ou backend.
+Auditoria histórica desta entrega: `bun run test:ui:legacy-contracts -- 5286881c`. O argumento é a revisão Git contra a qual comparar declarações de rotas, consultas, mutations, invalidações, handlers e arquivos protegidos. A auditoria de escopo é explícita e separada do CI visual, pois futuras entregas podem legitimamente alterar domínio ou backend.
+
+Na evolução operacional iniciada na base `820c79d`, `bun run test:ui:contracts` utiliza o perfil explícito de preservação de motores, catálogo, transações, migrações históricas e cenas. O comparador AST anterior permanece em `test:ui:legacy-contracts`, sem substituir seu histórico de falhas. Escopos e gates complementares estão em [contratos-validacao.md](../../docs/nexus-operacional/contratos-validacao.md).
 
 ## Refinamento das oito abas de revisão
 
@@ -44,3 +46,8 @@ Os perfis simulam respostas autorizadas e restritas, não exercitam autenticaç�
 A carga count=17 tem 21 componentes e 17 sistemas; 100/500 preservam a quantidade indicada. capture.mjs aceita catalog-before e catalog-after. NEXUS_UI_PHASE=visual preserva a medição anterior; performance mede novamente. catalog-checks.mjs verifica a fila, edições durante gravação, retry, seleção filtrada e a prévia de colagem.
 
 O comparador de contratos usa a base 5286881c e enumera a exceção de coordenação de salvamento. Fórmulas, rotas, guards, migrations anteriores e transições comerciais/operacionais continuam protegidos. Os testes SQL de checkpoint estão em tests/db; no Windows, executar run.ps1 com -PostgresBin apontando para um runtime PostgreSQL isolado.
+# Qualidade operacional
+
+`npm run test:ui:operacional` inicia um servidor isolado e executa seis larguras, formulários, foco, recuperação de falhas, busca persistida na biblioteca, paridade do shell e contraste selecionado. A mesma suíte integra `npm run test:ui`. Use `NEXUS_UI_PORT` para outra porta e `NEXUS_UI_EVIDENCE_DIR` para salvar uma rodada sem sobrescrever evidências anteriores.
+
+Os adapters aplicam contratos `validateSearch` reais (função ou schema) e substituem somente fronteiras externas. Fixtures continuam exclusivas do laboratório; screenshots não comprovam banco/Auth/Storage conectados.

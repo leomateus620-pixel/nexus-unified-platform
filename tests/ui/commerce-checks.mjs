@@ -67,7 +67,7 @@ try {
   await page.setViewportSize({ width: 1440, height: 950 });
   await go("produtos");
   await expect(page.locator("form:visible")).toHaveCount(0);
-  const search = page.getByRole("searchbox");
+  const search = page.getByRole("searchbox", { name: "Buscar produto", exact: true });
   await search.fill("COM-NXS-M001");
   await expect(page.locator(".nx-catalog-row")).toHaveCount(1);
   await page.locator(".nx-catalog-row").click();
@@ -267,7 +267,9 @@ try {
   await expect(page.locator(".nx-catalog-row")).toHaveCount(0);
   await expect(page.getByText(/catálogo.*vazio|Nenhum produto cadastrado/i)).toBeVisible();
   await go("produtos");
-  await page.getByRole("searchbox").fill("não existe 9999");
+  await page
+    .getByRole("searchbox", { name: "Buscar produto", exact: true })
+    .fill("não existe 9999");
   await expect(
     page.getByRole("button", { name: "Limpar filtros", exact: true }).first(),
   ).toBeVisible();

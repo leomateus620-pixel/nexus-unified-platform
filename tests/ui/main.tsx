@@ -23,6 +23,12 @@ import { ImportacaoAssistida } from "@/features/importacao/ImportacaoAssistida";
 import { useSave } from "@/features/propostas/hooks";
 import { OutletContext, useFixturePage } from "./router";
 import { query, scenario } from "./data";
+import { PessoasWorkspace } from "@/features/operacao/PessoasWorkspace";
+import { AcoesWorkspace } from "@/features/operacao/AcoesWorkspace";
+import { Route as PeRoute } from "@/routes/_authenticated/projetos-engenharia";
+import { Route as MapsLibraryRoute } from "@/routes/mapas-3d_.unidades";
+import { Route as ClientesRoute } from "@/routes/_authenticated/clientes";
+import { Route as ConfiguracoesRoute } from "@/routes/_authenticated/configuracoes.index";
 import "@/styles.css";
 
 const client = new QueryClient({
@@ -56,12 +62,28 @@ const Workspace = WorkspaceRoute.options.component,
 const Defaults = DefaultsRoute.options.component;
 const Products = ProductsRoute.options.component;
 const Product = ProductRoute.options.component;
+const ProjetosEngenharia = PeRoute.options.component;
+const MapsLibrary = MapsLibraryRoute.options.component;
+const Clientes = ClientesRoute.options.component;
+const Configuracoes = ConfiguracoesRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
     <QueryClientProvider client={client}>
       <AppShell>
-        {page === "produtos" ? (
+        {page === "equipe" ? (
+          <PessoasWorkspace />
+        ) : page === "seguranca" ? (
+          <AcoesWorkspace />
+        ) : page === "projetos-engenharia" ? (
+          <ProjetosEngenharia />
+        ) : page === "mapas-library" ? (
+          <MapsLibrary />
+        ) : page === "clientes" ? (
+          <Clientes />
+        ) : page === "configuracoes" ? (
+          <Configuracoes />
+        ) : page === "produtos" ? (
           <Products />
         ) : page === "produto" ? (
           <Product />

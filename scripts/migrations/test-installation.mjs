@@ -33,6 +33,45 @@ try {
     path.join(root, "drizzle/migrations/0014_projetos_engenharia.sql"),
     "utf8",
   );
+  const peopleCorrection = migrations.find((item) =>
+    item.path.endsWith("0025_pessoas_autorizacao_atual.sql"),
+  );
+  if (peopleCorrection) {
+    const legacyPeople = (
+      await readFile(path.join(root, "drizzle/migrations/0012_operational_foundation.sql"), "utf8")
+    ).replace(/\r\n/g, "\n");
+    const names = [
+      "salvar_pessoa",
+      "salvar_equipe",
+      "vincular_membro_equipe",
+      "encerrar_membro_equipe",
+      "salvar_competencia",
+      "salvar_qualificacao",
+      "transicionar_qualificacao",
+    ];
+    for (const name of names) {
+      const original = legacyPeople.match(
+        new RegExp(`create function public\\.${name}\\([\\s\\S]*?\\$\\$;`),
+      )[0];
+      const updated = peopleCorrection.source
+        .replace(/\r\n/g, "\n")
+        .match(new RegExp(`create or replace function public\\.${name}\\([\\s\\S]*?\\$\\$;`))[0];
+      let expected = original
+        .replace("create function", "create or replace function")
+        .replace(" begin\n", " begin\n  perform public.lev_travar_autor(_org,auth.uid());\n");
+      if (name === "transicionar_qualificacao")
+        expected = expected.replace(
+          "if public.operacao_minha_pessoa(_org,q.pessoa_id) then",
+          "if exists(select 1 from public.pessoas where organization_id=_org and id=q.pessoa_id and user_id=auth.uid()) then",
+        );
+      assert.equal(
+        updated,
+        expected,
+        `${name}: correction preserves its canonical payload, signature and business rules`,
+      );
+    }
+    assert.equal((peopleCorrection.source.match(/create or replace function/g) || []).length, 7);
+  }
   const studiesSource = migrations.find((item) =>
     item.path.endsWith("0022_estudos_tecnicos.sql"),
   )?.source;
@@ -154,12 +193,65 @@ try {
       "checkpoint42 must reproduce the ambiguous PostgREST relationship before the corrective upgrade",
     );
   }
+  let peopleAuthorizationCheckpoint = [];
+  let identityCheckpoint = [];
+  let historicalIdentity;
+  if (peopleCorrection) {
+    peopleAuthorizationCheckpoint = await applyMigrations(sql, migrations.slice(0, 43));
+    const [oldCommand] =
+      await sql`select pg_get_functiondef('public.salvar_equipe(uuid,uuid,jsonb,uuid,integer)'::regprocedure) as definition`;
+    assert.equal(
+      oldCommand.definition.includes("perform public.lev_travar_autor(_org,auth.uid())"),
+      false,
+    );
+  }
+  if (migrations.some((item) => item.path.endsWith("0026_pessoas_identidade_conferencia.sql"))) {
+    identityCheckpoint = await applyMigrations(sql, migrations.slice(0, 44));
+    historicalIdentity = await sql.begin(async (tx) => {
+      await tx.unsafe(`insert into auth.users(id,email) values('58000000-0000-0000-0000-000000000101','identity-upgrade@test.invalid');
+        insert into public.memberships(organization_id,user_id) values('58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000101');
+        set local role authenticated;
+        select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true);`);
+      const data = {
+        nome: "Person with a server-recorded former association",
+        vinculo: "prestador",
+        user_id: "58000000-0000-0000-0000-000000000101",
+      };
+      const [created] =
+        await tx`select public.salvar_pessoa('58000000-0000-0000-0000-000000000001',gen_random_uuid(),${data}::jsonb) as value`;
+      await tx`select public.salvar_pessoa('58000000-0000-0000-0000-000000000001',gen_random_uuid(),${{ ...data, user_id: null }}::jsonb,${created.value.id},1)`;
+      return created.value.id;
+    });
+  }
   const upgrade = [
     ...beforeLatest,
     ...warehouseCheckpoint,
     ...warehouseRelationsCheckpoint,
+    ...peopleAuthorizationCheckpoint,
+    ...identityCheckpoint,
     ...(await applyMigrations(sql, migrations)),
   ];
+  if (historicalIdentity) {
+    const [retained] =
+      await sql`select count(*)::integer as count from public.pessoa_usuario_identidades where organization_id='58000000-0000-0000-0000-000000000001' and pessoa_id=${historicalIdentity} and user_id='58000000-0000-0000-0000-000000000101'`;
+    assert.equal(retained.count, 1);
+    const [person] = await sql`select user_id from public.pessoas where id=${historicalIdentity}`;
+    assert.equal(person.user_id, null);
+    console.log(
+      "PASS: checkpoint44 → 45 preserves known identity from private receipts without rebinding the operational person",
+    );
+  }
+  if (peopleCorrection) {
+    const [currentCommand] =
+      await sql`select pg_get_functiondef('public.salvar_equipe(uuid,uuid,jsonb,uuid,integer)'::regprocedure) as definition`;
+    assert.equal(
+      currentCommand.definition.includes("perform public.lev_travar_autor(_org,auth.uid())"),
+      true,
+    );
+    console.log(
+      "PASS: checkpoint43 → 44 hardens current authorization without changing existing records or RPC signatures",
+    );
+  }
   if (warehouseRelationsCheckpoint.length) {
     const [after] =
       await sql`select count(*)::int count from pg_constraint where contype='f' and conrelid='public.ordem_compra_itens'::regclass and confrelid='public.ordens_compra'::regclass`;

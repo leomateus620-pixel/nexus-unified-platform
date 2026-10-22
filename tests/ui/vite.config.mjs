@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import os from "node:os";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
@@ -12,10 +13,48 @@ export default defineConfig({
   root,
   cacheDir: path.join(os.tmpdir(), `nexus-ui-vite-${process.env.NEXUS_UI_PORT || 4182}`),
   publicDir: path.join(app, "public"),
+  define: {
+    __NEXUS_PDF_FIXTURE__: JSON.stringify({
+      sha256: createHash("sha256")
+        .update(readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf")))
+        .digest("hex"),
+      tamanho: readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf")).length,
+    }),
+    "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(
+      `http://127.0.0.1:${process.env.NEXUS_UI_PORT || 4182}`,
+    ),
+  },
   plugins: [
     {
       name: "isolated-network-boundary",
       enforce: "pre",
+      configureServer(server) {
+        // Synthetic PDF bytes exist only in this isolated laboratory, never app/API code.
+        server.middlewares.use((request, response, next) => {
+          const url = new URL(request.url || "/", "http://isolated.invalid");
+          if (url.pathname !== "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf")
+            return next();
+          const send = () => {
+            if (response.destroyed) return;
+            response.setHeader("Cache-Control", "no-store");
+            const flags = (url.searchParams.get("token") || "").split(".");
+            if (flags.includes("expired")) {
+              response.statusCode = 403;
+              return response.end("Expired isolated fixture");
+            }
+            const bytes = Buffer.from(
+              readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf")),
+            );
+            if (flags.includes("corrupt")) bytes[bytes.length - 20] ^= 1;
+            response.setHeader("Content-Type", "application/pdf");
+            response.setHeader("Content-Length", bytes.length);
+            response.end(bytes);
+          };
+          if ((url.searchParams.get("token") || "").split(".").includes("slow"))
+            setTimeout(send, 2000);
+          else send();
+        });
+      },
       transformIndexHtml(html) {
         const rootRoute = readFileSync(path.join(app, "src/routes/__root.tsx"), "utf8");
         const font = rootRoute.match(/https:\/\/fonts.googleapis.com\/css2[^\"]+/)?.[0];
@@ -23,7 +62,13 @@ export default defineConfig({
           ? html.replace("</head>", `<link rel="stylesheet" href="${font}"/></head>`)
           : html;
       },
-      resolveId(id) {
+      resolveId(id, importer) {
+        if (
+          /\/pessoas-competencias\/(equipes|qualificacoes)\/functions(?:\.ts)?$/.test(id) ||
+          (id === "./functions" &&
+            /\/pessoas-competencias\/(equipes|qualificacoes)\//.test(importer || ""))
+        )
+          return path.join(root, "pessoas-competencias-server.ts");
         if (/\/almoxarifado\.functions(?:\.ts)?$/.test(id))
           return path.join(root, "almoxarifado-server.ts");
         if (/\/(levantamentos|lev-arquivos)\.functions(?:\.ts)?$/.test(id))

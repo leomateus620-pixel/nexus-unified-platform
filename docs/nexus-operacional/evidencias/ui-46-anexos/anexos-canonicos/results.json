@@ -1,0 +1,71 @@
+{
+  "method": "Actual RecordFiles source with test-only transport fixtures; not real Auth, SQL/RLS, Storage HTTP, operational persistence or physical-device evidence",
+  "layouts": [
+    {
+      "name": "pending-with-cancellation",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "cancel validates reason, preserves it after failure and restores section focus",
+      "pass": true
+    },
+    {
+      "name": "new selection after cancellation uses a new intention key",
+      "pass": true
+    },
+    {
+      "name": "resume accepts renamed original bytes, preserves metadata and does not prepare a second record",
+      "pass": true
+    },
+    {
+      "name": "current parent capability hides upload and recovery after focus revalidation",
+      "pass": true
+    },
+    {
+      "name": "query failure hides cached filenames and upload, then retry recovers",
+      "pass": true
+    },
+    {
+      "name": "an authorized delayed response opens once while its parent context is unchanged",
+      "pass": true
+    },
+    {
+      "name": "a response delivered after the parent unmounts is aborted and never opens its old URL",
+      "pass": true
+    },
+    {
+      "name": "a failed current parent revalidation blocks a late URL even if the transport ignores abort",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

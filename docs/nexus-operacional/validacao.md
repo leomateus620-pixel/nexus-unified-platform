@@ -1,5 +1,81 @@
 # Validação do checkpoint operacional
 
+## Checkpoint46 — leitor PE e continuidade de respostas
+
+Sem SQL nova; ledger44 até0025 permanece a referência de banco.47 testes
+isolados do leitor (10 domínio/ciclo de vida,34 adaptador, três recursos),28 de
+handlers PE e build final passaram, conforme execução observada pela raiz.
+Typecheck global e ESLint dos67 arquivos de código alterados passaram;
+operacional49 + nove testes de manifesto + três de tipos passaram, com134
+arquivos protegidos conferidos. SELECT conectado reconfirmou ledger44 e último
+0025/checksum igual, sem testar Auth/Storage HTTP. Bundle
+local em `pe-reader-bundle-46.json`:541231bytes gzip dos chunks,199 recursos/
+3059136bytes com checksums; não comprova transferência ou desempenho de campo.
+
+`ui-46-leitor/`: seis larguras/oito comportamentos passaram, mas revisão visual
+descobriu canvas300px fixo. Callback do contêiner e verificação de largura foram
+corrigidos. `ui-46-leitor-refinado/` foi interrompida por HMR do laboratório;
+não conta como rodada final. `ui-46-leitor-final/` terminou EXIT0: seis larguras/
+oito jornadas, ajuste à largura conferido, zero erros JS/overflow e sem HMR no
+laboratório4193. CUA final03/04 em `pe-leitor/` usa390×845/1440×900 CSS px,
+DPR1,14; capturas01/02 rejeitadas. `ui-46-equipes/estavel/` terminou EXIT0,
+36 layouts/17 cenários, incluindo lista retida sem fechar o editor seguinte;
+tentativas anteriores com timeout de laboratório não são a rodada final.
+`ui-46-anexos/` passou seis layouts/oito comportamentos, inclusive URL tardia
+após mudança/desmontagem/negação do pai. A primeira suíte UI completa46 parou
+em `capture.mjs` com `net::ERR_NETWORK_IO_SUSPENDED` ao navegar no laboratório
+local; o log `nexus-ui-46-completa.log` não representa PASS completo. A nova
+rodada `ui-46-consolidacao/` está em execução; seu resultado não é inferido
+dessas fatias aprovadas.
+O [resumo do checkpoint](evidencias/checkpoint-46.json) registra os paths/hashes
+focados e mantém a revisão de identidade como pendente, aguardando prova local e
+decisão da raiz. Nenhuma correção de banco posterior à0025 é declarada aplicada.
+
+Método: componentes/render PDF.js reais e PDF sintético com transporte local
+isolado. Não comprova Auth/Storage HTTP conectado, aparelhos físicos, CSP na
+borda implantada, memória ou métricas de campo. OCR/IA, extração estruturada,
+evidência por página persistida, editor geométrico/3D e emissão PDF/dossiê são
+próximas capacidades. Detalhes em [projetos-engenharia-leitor.md](projetos-engenharia-leitor.md).
+
+## Checkpoint45 — equipes, qualificações e autorização atual
+
+| Método | Resultado observado |
+|---|---|
+| PostgreSQL16.15 descartável | Oito falhas reproduzidas na43; sete revogações durante lock e autovalidação após arquivamento rejeitadas na44 sem efeito; instalação limpa/upgrade43→44 e regressões completas passaram |
+| Metadados conectados |0025 aplicada15:06:58.253153 UTC, conferida15:07:25.869853 UTC;44 caminhos/checksums, assinaturas/grants/search_path e catálogo compatíveis; nenhum registro fictício operacional |
+| Tipos oficiais | Manifesto44, hash público igual43; geração sem diagnóstico; typecheck global passou antes da integração do leitor PE seguinte |
+| Contratos/regras isolados |57 testes de Pessoas/Equipes/Qualificações/continuation passaram |
+| UI isolada de Equipes |36 layouts/16 cenários, zero erros JS; vigências, encerramento, conflito/retry, permissões, foco e retorno |
+| UI isolada de Qualificações |30 layouts/seis cenários, zero erros JS; política utilizada, versão fixa, devolução/correção/evidência/validação/revogação, negação e links |
+| Anexos canônicos | Seis layouts/cinco comportamentos passaram após atualizar o locator da ficha de pessoas que interrompeu presentation no CI347 |
+| Build e lint | Build e ESLint delimitado passaram; não substituem o lint global preexistente |
+| UI completa local | `npm run test:ui` terminou EXIT0;19 relatórios conferidos,445 entradas de layout operacional,88 capturas do catálogo e32 vistas de workspace; zero erros JS registrados e zero overflow nas matrizes de viewport normal |
+
+Evidências: `pessoas-autorizacao-44.json`, `geracao-tipos-44.json`,
+`verificacao-remota-0025.json`, `schema-diff-44.json`, `ui-45-equipes-final/`,
+`ui-45-qual-refinada/`, `ui-45-anexos/` e capturas `pessoas-equipes/`.
+O [resumo da suíte completa](evidencias/ui-45-completa-resumo.json) registra os19
+relatórios e hashes dos244 arquivos em `ui-45-completa/`, o SHA256 do log local e
+a seleção de cinco capturas CUA. São contagens de unidades diferentes, com
+jornadas sobrepostas, e não um total de testes independentes. O log registrou
+HMR; esta execução valida a árvore de trabalho, não um commit imutável.
+
+Ressalva preservada: o proxy separado de CSS zoom a200% do catálogo, em viewport
+1366px, registrou largura1730px e overflow; não se declara ausência universal de
+overflow ou zoom real validado. CI347 passou verify/circulation e falhou no locator
+antigo de anexos, preservado em `ci-44.json`; o PASS local não altera aquele CI.
+Auth/Storage HTTP conectado, aparelho físico, teclado virtual e métricas reais de
+produção continuam sem comprovação. A plataforma e PR13 permanecem em desenvolvimento.
+
+Essa observação de zoom já aparece com1366/1730 nos relatórios anteriores
+`ui-regressao-final`,40,41,42 e43. A inspeção estática confirmou os blobs de
+`ItensComerciais.tsx`, `commercial-items.css` e `tests/ui/capture.mjs` idênticos ao
+commit820c79; hashes e reprodução estão no resumo. O script aplica `zoom = '2'`
+ao elemento raiz, mantendo viewport1366×768; as colunas mínimas desktop da linha
+comercial são a causa provável do extravasamento visível. A causa exata por DOM
+não foi reproduzida nesta auditoria. O problema permanece registrado, sem ser
+marcado resolvido ou atribuído como regressão nova desta fatia.
+
 ## Checkpoint44 — identidade operacional e cache
 
 Sem migração nova: banco conectado permanece na última verificação do manifesto43. Passaram `npm run test:pessoas` (oito casos de handler/domínio e quatro do guard compartilhado), typecheck global e build. UI isolada:18 layouts/oito comportamentos; regressão de estrutura/formulários:36 layouts/nove comportamentos/sete pares de contraste, sem erros JS. `test:operacional` passou49 testes + nove de manifesto + três de geração, mantendo134 arquivos protegidos e a exceção restrita de aceite.
@@ -176,3 +252,21 @@ Mesmo em consulta de planejamento solicitada sem mudanças, a plataforma produzi
 A revisão do broker e nove testes smoke em VM passaram: SSR/host comum, iframe de preview, seed/revogação da sessão, concorrência local e origem não autorizada. São respostas simuladas do editor, sem login real. [preview-auth-smoke.json](evidencias/preview-auth-smoke.json) registra fonte, método e limites.
 
 O agente Lovable informou presença das duas variáveis no sandbox/dev; isso não foi tratado como comprovação do runtime publicado. Informou também que `supabase--get_types` escreve o arquivo gerado na branch conectada. Nenhuma regeneração ou aprovação de execução desse plano foi solicitada; o Codex continua editor da branch da PR.
+# Retomada45/46 — recorte Agenda e Equipe
+
+Em22/10/2026 a suíte completa PostgreSQL descartável com45 migrações terminou
+exit0: instalação limpa, upgrade44→45 e cenários anteriores, incluindo11 casos
+de identidade de qualificação e reservas concorrentes. O upgrade usa recibo
+privado anterior para preservar associação conhecida sem reatar login.
+0026 aplicada e verificada somente por metadados no banco operacional; nenhum
+registro fictício, teste Auth/Storage HTTP ou jornada conectada é alegado.
+
+As duas tentativas locais completas UI46 pararam com
+`net::ERR_NETWORK_IO_SUSPENDED` em navegação Chromium. Asserções não foram
+removidas. Retomada delimitada: dimensionamento responsivo,32 vistas de
+workspace sem overflow/erro e16 cenários de autosave passaram em
+`ui-46-retomada-legacy/`. Fatias finais anteriores de Pessoas, Equipes,
+Qualificações, anexos e leitor PE permanecem identificadas por relatório/hash.
+A execução operacional separada terminou exit0, com11 relatórios,451 layouts
+e108 comportamentos, sem erros JS. O CI Linux da próxima revisão será registrado
+por commit; estas fatias não equivalem a PASS de um comando completo interrompido.

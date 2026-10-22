@@ -1,5 +1,24 @@
 # Regeneração oficial dos tipos Supabase
 
+## Atualização45
+
+Geração oficial repetida sobre45 migrações:109 tabelas/163 funções não trigger/
+quatro enums. Arquivo241.098bytes, SHA-256
+`03612663994451fb03bb720f0c6c0925629cb928df60ef7782de2f4add4de3c9`.
+AST preservada, sem diagnóstico isolado; aviso upstream de11 listeners mantido.
+`pessoa_usuario_identidades` aparece no contrato estrutural, sem grant de leitura
+de registros. Proveniência em `evidencias/geracao-tipos-45.json`.
+
+## Atualização44
+
+Processo oficial repetido sobre44 migrações em PostgreSQL16.15 descartável:
+108 tabelas/161 funções não trigger/quatro enums, somente `public`. O hash público
+permanece `60ace1c4b951e3dcfb052bd35c31613937cf9605b1359c9a3a5001f27bd9617d`,
+239.637bytes; a0025 corrige corpos sem mudar assinaturas. Sem diagnóstico isolado,
+AST preservada, typecheck global aprovado antes da fatia PE seguinte. Proveniência
+em `evidencias/geracao-tipos-44.json`. O aviso upstream de listeners foi preservado.
+Os registros abaixo documentam execuções anteriores.
+
 `src/integrations/supabase/types.ts` foi regenerado a partir do catálogo PostgreSQL descartável do manifesto de 41 migrações. A saída oficial passa automaticamente pelo Prettier do repositório, com comparação da AST TypeScript antes/depois, sem edição manual. O processo não consulta dados do banco conectado, não usa credenciais do Lovable/Supabase e não aplica migrações remotas.
 
 ## Checkpoint 41

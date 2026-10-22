@@ -2,7 +2,11 @@ import { describe, expect, it, vi } from "vitest";
 
 const request = vi.hoisted(() => ({ signal: new AbortController().signal }));
 vi.mock("@/integrations/supabase/auth-middleware", () => ({ requireSupabaseAuth: {} }));
-vi.mock("@tanstack/react-start/server", () => ({ getRequest: () => request }));
+const responseHeader = vi.hoisted(() => vi.fn());
+vi.mock("@tanstack/react-start/server", () => ({
+  getRequest: () => request,
+  setResponseHeader: responseHeader,
+}));
 vi.mock("@tanstack/react-start", () => ({
   createServerFn: () => {
     let parse: (value: unknown) => unknown;
@@ -19,7 +23,11 @@ vi.mock("@tanstack/react-start", () => ({
     return chain;
   },
 }));
-import { listarArquivosPe } from "../src/features/projetos-engenharia/pe-arquivos.functions";
+import {
+  baixarArquivoPe,
+  listarArquivosPe,
+  obterArquivoPe,
+} from "../src/features/projetos-engenharia/pe-arquivos.functions";
 
 const id = (n: number) => "00000000-0000-4000-8000-" + String(n).padStart(12, "0");
 const input = { organization_id: id(1), versao_id: id(3) };
@@ -179,5 +187,221 @@ describe("Arquivos PE: autorização atual e projeção mínima do pai", () => {
     const f = fixture();
     f.state.error = { message: "Falha de transporte do ambiente isolado" };
     await expect(f.call()).rejects.toThrow("Falha de transporte");
+  });
+});
+
+function directFileFixture() {
+  const file = {
+    id: id(14),
+    organization_id: id(11),
+    projeto_id: id(12),
+    versao_id: id(13),
+    nome: "Original histórico autorizado.pdf",
+    mime: "application/pdf",
+    tamanho: 321,
+    sha256: "b".repeat(64),
+    caminho: id(11) + "/pe/" + id(14),
+    estado: "vinculado",
+    created_by: id(15),
+    created_at: "2026-10-22T10:00:00Z",
+    confirmado_em: "2026-10-22T10:00:01Z",
+  };
+  const state = {
+    missing: false,
+    readable: true as boolean | null,
+    queryError: null as { message: string; code?: string } | null,
+    parentError: null as { message: string; code?: string } | null,
+    afterMetadata: null as (() => void) | null,
+  };
+  const filters: Array<[string, unknown]> = [],
+    signals: AbortSignal[] = [],
+    trace: string[] = [],
+    columns: string[] = [];
+  let querySignal: AbortSignal | undefined;
+  const response = async () => {
+    if (querySignal?.aborted) throw new DOMException("Consulta cancelada", "AbortError");
+    trace.push("metadata");
+    state.afterMetadata?.();
+    return { data: state.missing ? null : { ...file }, error: state.queryError };
+  };
+  const signed = vi.fn().mockResolvedValue({
+    data: { signedUrl: "https://storage.test.invalid/original" },
+    error: null,
+  });
+  const storage = { from: vi.fn(() => ({ createSignedUrl: signed })) };
+  const db = {
+    from: vi.fn((table: string) => {
+      expect(table).toBe("pe_arquivos");
+      const chain = {
+        select: (projection: string) => {
+          columns.push(projection);
+          return chain;
+        },
+        eq: (name: string, value: unknown) => {
+          filters.push([name, value]);
+          return chain;
+        },
+        abortSignal: (signal: AbortSignal) => {
+          querySignal = signal;
+          signals.push(signal);
+          return chain;
+        },
+        maybeSingle: response,
+        single: response,
+      };
+      return chain;
+    }),
+    rpc: vi.fn((name: string) => {
+      expect(name).toBe("pe_ler_projeto");
+      return {
+        abortSignal: async (signal: AbortSignal) => {
+          signals.push(signal);
+          if (signal.aborted) throw new DOMException("Consulta cancelada", "AbortError");
+          trace.push("parent");
+          return { data: state.readable, error: state.parentError };
+        },
+      };
+    }),
+    storage,
+  };
+  const data = { organization_id: file.organization_id, id: file.id };
+  const call = (extra: Record<string, unknown> = {}) =>
+    obterArquivoPe({
+      data: { ...data, ...extra },
+      context: { supabase: db, userId: id(15) },
+    } as never);
+  return { file, state, db, filters, signals, trace, columns, signed, call, data };
+}
+
+describe("Arquivo PE por ID: metadados atuais sem assinatura ou leitura de bytes", () => {
+  it("consulta ID e organização exatos e revalida o projeto depois da leitura", async () => {
+    const f = directFileFixture();
+    const value = await f.call();
+    expect(value).toEqual(f.file);
+    expect(responseHeader).toHaveBeenCalledWith("Cache-Control", "private, no-store");
+    expect(f.filters).toEqual([
+      ["organization_id", id(11)],
+      ["id", id(14)],
+    ]);
+    expect(f.columns).toHaveLength(1);
+    expect(f.columns[0]).not.toBe("*");
+    expect(f.trace).toEqual(["metadata", "parent"]);
+    expect(f.db.rpc).toHaveBeenCalledWith("pe_ler_projeto", { _org: id(11), _id: id(12) });
+    expect(f.db.storage.from).not.toHaveBeenCalled();
+  });
+  it("retorna hash e versão do registro, sem aceitar caminho ou projeto arbitrário", async () => {
+    const f = directFileFixture();
+    const value = await f.call({
+      caminho: "outro/arquivo",
+      projeto_id: id(999),
+      sha256: "c".repeat(64),
+      url: "https://example.invalid",
+    });
+    expect(value.sha256).toBe(f.file.sha256);
+    expect(value.versao_id).toBe(id(13));
+    expect(f.db.rpc).toHaveBeenCalledWith("pe_ler_projeto", { _org: id(11), _id: id(12) });
+    expect(value).not.toHaveProperty("url");
+    expect(f.db.storage.from).not.toHaveBeenCalled();
+  });
+  it.each(["42501", "PGRST116"])(
+    "normaliza %s na consulta sem revelar detalhe interno",
+    async (code) => {
+      const f = directFileFixture();
+      f.state.queryError = { code, message: "PRIVATE DATABASE DETAIL" };
+      await expect(f.call()).rejects.toThrow(/^Arquivo indisponível para seu acesso atual\.$/);
+      expect(f.db.rpc).not.toHaveBeenCalled();
+    },
+  );
+  it("registro ausente/RLS silencioso é negação, não metadado vazio", async () => {
+    const f = directFileFixture();
+    f.state.missing = true;
+    await expect(f.call()).rejects.toThrow("Arquivo indisponível para seu acesso atual.");
+    expect(f.db.rpc).not.toHaveBeenCalled();
+  });
+  it.each(["pendente", "enviado", "cancelado"])(
+    "não expõe original %s como disponível",
+    async (state) => {
+      const f = directFileFixture();
+      f.file.estado = state;
+      await expect(f.call()).rejects.toThrow("Arquivo indisponível para seu acesso atual.");
+      expect(f.db.rpc).not.toHaveBeenCalled();
+      expect(f.db.storage.from).not.toHaveBeenCalled();
+    },
+  );
+  it.each([false, null])(
+    "nega autorização atual de pai %s sem devolver metadados",
+    async (readable) => {
+      const f = directFileFixture();
+      f.state.readable = readable;
+      await expect(f.call()).rejects.toThrow("Arquivo indisponível para seu acesso atual.");
+      expect(f.trace).toEqual(["metadata", "parent"]);
+    },
+  );
+  it("nega revogação ocorrida após a consulta dos metadados", async () => {
+    const f = directFileFixture();
+    f.state.afterMetadata = () => {
+      f.state.readable = false;
+    };
+    await expect(f.call()).rejects.toThrow("Arquivo indisponível para seu acesso atual.");
+  });
+  it.each(["42501", "PGRST116"])("normaliza %s também na consulta do pai", async (code) => {
+    const f = directFileFixture();
+    f.state.parentError = { code, message: "PRIVATE PARENT DETAIL" };
+    await expect(f.call()).rejects.toThrow(/^Arquivo indisponível para seu acesso atual\.$/);
+  });
+  it("não mistura ID/tenant mesmo diante de uma resposta incompatível do transporte", async () => {
+    const f = directFileFixture();
+    await expect(f.call({ organization_id: id(888) })).rejects.toThrow(
+      "Arquivo indisponível para seu acesso atual.",
+    );
+    await expect(f.call({ id: id(889) })).rejects.toThrow(
+      "Arquivo indisponível para seu acesso atual.",
+    );
+    expect(f.db.rpc).not.toHaveBeenCalled();
+  });
+  it("erro de rede permanece recuperável e distinto de acesso negado", async () => {
+    const f = directFileFixture();
+    f.state.missing = true;
+    f.state.queryError = { message: "Falha de rede isolada" };
+    await expect(f.call()).rejects.toThrow(/^Falha de rede isolada$/);
+    f.state.missing = false;
+    f.state.queryError = null;
+    f.state.parentError = { message: "Falha de rede no pai" };
+    await expect(f.call()).rejects.toThrow(/^Falha de rede no pai$/);
+  });
+  it("propaga o signal HTTP para metadado e autorização do pai", async () => {
+    const f = directFileFixture();
+    await f.call();
+    expect(f.signals).toHaveLength(2);
+    expect(f.signals.every((signal) => signal === request.signal)).toBe(true);
+  });
+  it("cancelamento durante a leitura alcança a consulta seguinte e não vira negação", async () => {
+    const prior = request.signal,
+      controller = new AbortController();
+    request.signal = controller.signal;
+    try {
+      const f = directFileFixture();
+      f.state.afterMetadata = () => controller.abort();
+      await expect(f.call()).rejects.toMatchObject({ name: "AbortError" });
+      expect(f.db.storage.from).not.toHaveBeenCalled();
+    } finally {
+      request.signal = prior;
+    }
+  });
+  it("payload inválido é recusado antes de consultar tabelas", async () => {
+    const f = directFileFixture();
+    await expect(f.call({ id: "id-inválido" })).rejects.toThrow();
+    expect(f.db.from).not.toHaveBeenCalled();
+  });
+  it("download existente conserva URL temporária, 60 segundos e nome original", async () => {
+    const f = directFileFixture();
+    const response = await baixarArquivoPe({
+      data: f.data,
+      context: { supabase: f.db, userId: id(15) },
+    } as never);
+    expect(response).toEqual({ url: "https://storage.test.invalid/original" });
+    expect(f.db.storage.from).toHaveBeenCalledWith("nexus-operacional");
+    expect(f.signed).toHaveBeenCalledWith(f.file.caminho, 60, { download: f.file.nome });
+    expect(f.db.rpc).not.toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$PostgresBin, [int]$Port = 55440, [switch]$FingerprintBaseline, [switch]$FingerprintCurrent, [switch]$CaptureFingerprint, [switch]$OnlyLevantamentos, [switch]$OnlyEstudos, [switch]$OnlyAlmoxarifado)
+param([Parameter(Mandatory=$true)][string]$PostgresBin, [int]$Port = 55440, [switch]$FingerprintBaseline, [switch]$FingerprintCurrent, [switch]$CaptureFingerprint, [switch]$OnlyLevantamentos, [switch]$OnlyEstudos, [switch]$OnlyAlmoxarifado, [switch]$OnlyPessoas)
 $ErrorActionPreference = 'Stop'
 $testRoot = Join-Path $env:TEMP ('nexus-checkpoint-test-' + [guid]::NewGuid().ToString('N'))
 $absoluteRoot = [IO.Path]::GetFullPath($testRoot)
@@ -39,6 +39,14 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Clean installation / upgrade / ledger test failed' }
   if ($FingerprintCurrent -or $CaptureFingerprint) { Save-CatalogFingerprint 'schema-local-depois.json' }
   if ($FingerprintCurrent) { return }
+  if ($OnlyPessoas) {
+    Invoke-TestSql "$PSScriptRoot\operacional.sql"
+    node "$PSScriptRoot\pessoas-concurrency.mjs"
+    if ($LASTEXITCODE -ne 0) { throw 'People authorization concurrency test failed' }
+    node "$PSScriptRoot\pessoas-identidade.mjs"
+    if ($LASTEXITCODE -ne 0) { throw 'People identity review test failed' }
+    return
+  }
   Invoke-TestSql "$PSScriptRoot\suprimentos-relacoes.sql"
   if ($OnlyAlmoxarifado) {
     Invoke-TestSql "$PSScriptRoot\almoxarifado.sql"
@@ -108,6 +116,10 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Attachment confirmation concurrency test failed' }
   node "$PSScriptRoot\operacional-concurrency.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Operational concurrency test failed' }
+  node "$PSScriptRoot\pessoas-concurrency.mjs"
+  if ($LASTEXITCODE -ne 0) { throw 'People authorization concurrency test failed' }
+  node "$PSScriptRoot\pessoas-identidade.mjs"
+  if ($LASTEXITCODE -ne 0) { throw 'People identity review test failed' }
   Invoke-TestSql "$PSScriptRoot\agenda-foundation.sql"
   Invoke-TestSql "$PSScriptRoot\admin-vinculos.sql"
   node "$PSScriptRoot\agenda-concurrency.mjs"

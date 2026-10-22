@@ -244,6 +244,7 @@ function PessoasContent({
                 Buscar pessoa
                 <input
                   type="search"
+                  maxLength={120}
                   className={fieldClass}
                   value={search.busca}
                   onChange={(event) => onSearch({ busca: event.target.value, pagina: 0 })}

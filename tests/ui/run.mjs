@@ -1,10 +1,12 @@
 import { spawn } from "node:child_process";
 import { createServer } from "vite";
+import { preparePdfAssets } from "../../src/features/projetos-engenharia/leitor/prepare-assets.mjs";
 
 // Dedicated test server. The Vite config replaces external boundaries only in this laboratory.
 const port = process.env.NEXUS_UI_PORT || "4190";
 process.env.NEXUS_UI_PORT = port;
 process.env.NEXUS_UI_URL = `http://127.0.0.1:${port}`;
+await preparePdfAssets("node_modules/pdfjs-dist", "public/pdfjs/6.4.299");
 const server = await createServer({ configFile: "tests/ui/vite.config.mjs" });
 try {
   await server.listen();
@@ -20,11 +22,12 @@ try {
     ["autosave-checks.mjs"],
   ];
   const features = {
-    "--pessoas": [["pessoas-quality.mjs"]],
+    "--pessoas": [["pessoas-quality.mjs"], ["equipes-quality.mjs"], ["qualificacoes-quality.mjs"]],
     "--levantamentos": [["levantamentos-quality.mjs"]],
     "--estudos": [["estudos-quality.mjs"], ["acoes-vinculadas.mjs"]],
     "--almoxarifado": [["almoxarifado-quality.mjs"], ["anexos-canonicos-quality.mjs"]],
     "--pe-arquivos": [["pe-arquivos-quality.mjs"]],
+    "--pe-leitor": [["pe-leitor-quality.mjs"]],
   };
   const selected = Object.keys(features).find((flag) => process.argv.includes(flag));
   const checks = selected

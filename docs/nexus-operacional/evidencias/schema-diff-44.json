@@ -1,0 +1,82 @@
+{
+  "method": "Catalog hashes by kind:key; local disposable44 versus connected44, no operational records",
+  "missing": [],
+  "changed": [
+    {
+      "kind": "functions",
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)"
+    }
+  ],
+  "extraCounts": {
+    "function_grants": 126,
+    "table_grants": 415
+  },
+  "localSummary": {
+    "indexes": {
+      "md5": "a42a564cf44085f7d229be32b92006bd",
+      "count": 307
+    },
+    "policies": {
+      "md5": "37be7431f94cab2fad14f16ce8c5fa6d",
+      "count": 171
+    },
+    "triggers": {
+      "md5": "287bfc24101b9d72d2fc27288c90fac8",
+      "count": 116
+    },
+    "functions": {
+      "md5": "367a9d94402a4a0a9a67f0d6bc753b9b",
+      "count": 194
+    },
+    "relations": {
+      "md5": "d8f936cd513b68618187990f6071bc81",
+      "count": 108
+    },
+    "constraints": {
+      "md5": "39e7ee7ea907c097d419bb3c4a61f70e",
+      "count": 786
+    },
+    "table_grants": {
+      "md5": "f4815a94ddd0cd082bb22e61e7790417",
+      "count": 485
+    },
+    "function_grants": {
+      "md5": "8638b592e5e4a5b1b634c037c73c320a",
+      "count": 115
+    }
+  },
+  "remoteSummary": {
+    "constraints": {
+      "count": 786,
+      "md5": "39e7ee7ea907c097d419bb3c4a61f70e"
+    },
+    "function_grants": {
+      "count": 241,
+      "md5": "6095a83d0c7129c3b091364f6dbc473d"
+    },
+    "functions": {
+      "count": 194,
+      "md5": "c6df12241b53bdf16e583322f9e8165f"
+    },
+    "indexes": {
+      "count": 307,
+      "md5": "a42a564cf44085f7d229be32b92006bd"
+    },
+    "policies": {
+      "count": 171,
+      "md5": "37be7431f94cab2fad14f16ce8c5fa6d"
+    },
+    "relations": {
+      "count": 108,
+      "md5": "d8f936cd513b68618187990f6071bc81"
+    },
+    "table_grants": {
+      "count": 900,
+      "md5": "cf1dc49699d1e227397fae8af22c52d0"
+    },
+    "triggers": {
+      "count": 116,
+      "md5": "287bfc24101b9d72d2fc27288c90fac8"
+    }
+  }
+}

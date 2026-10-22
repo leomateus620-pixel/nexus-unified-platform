@@ -5107,6 +5107,46 @@ export type Database = {
           },
         ];
       };
+      pessoa_usuario_identidades: {
+        Row: {
+          organization_id: string;
+          origem: string;
+          pessoa_id: string;
+          registrado_em: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          organization_id: string;
+          origem: string;
+          pessoa_id: string;
+          registrado_em?: string;
+          user_id: string;
+        };
+        Update: {
+          organization_id?: string;
+          origem?: string;
+          pessoa_id?: string;
+          registrado_em?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pessoa_usuario_identidades_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pessoa_usuario_identidades_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
       pessoas: {
         Row: {
           ativa: boolean;
@@ -7253,6 +7293,10 @@ export type Database = {
         };
         Returns: Json;
       };
+      operacao_identidade_propria: {
+        Args: { _org: string; _pessoa: string };
+        Returns: boolean;
+      };
       operacao_ler_acao: {
         Args: { _id: string; _org: string };
         Returns: boolean;
@@ -7327,6 +7371,10 @@ export type Database = {
         Returns: string;
       };
       proximo_numero_proposta: { Args: { _org: string }; Returns: string };
+      qualificacao_validacao_permitida: {
+        Args: { _id: string; _org: string };
+        Returns: boolean;
+      };
       reclassificar_produto: {
         Args: {
           _familia: string;

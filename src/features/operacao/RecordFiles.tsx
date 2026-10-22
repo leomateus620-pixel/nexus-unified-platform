@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ActionButton, ErrorState } from "@/components/nexus/Page";
@@ -14,6 +14,8 @@ import { mimeDetectado, sha256 } from "./files";
 import type { z } from "zod";
 import { anexoPai, type Anexo, type uploadInput } from "./schemas";
 import { IntencoesAnexoOperacional } from "./upload-intents";
+import { captureOperationalContinuation } from "./continuation";
+import { useOrg } from "@/features/org/session";
 
 type Pai = z.infer<typeof anexoPai>;
 export function RecordFiles({
@@ -28,6 +30,22 @@ export function RecordFiles({
 }
 function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) {
   const qc = useQueryClient();
+  const org = useOrg();
+  const context =
+    org.isError || org.isPending || !org.data
+      ? ""
+      : JSON.stringify({
+          orgId: org.data.orgId,
+          userId: org.data.userId,
+          roles: org.data.roles,
+          capabilities: org.data.capabilities ?? [],
+        });
+  const currentContext = useRef(context);
+  currentContext.current = context;
+  const scope = useRef({ active: false, generation: 0 });
+  const downloads = useRef(
+    new Map<string, { controller: AbortController; valid: () => boolean }>(),
+  );
   const section = useRef<HTMLElement>(null);
   const motivoId = useId();
   const [erro, setErro] = useState<Error | null>(null);
@@ -46,6 +64,25 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
     retry: false,
     queryFn: ({ signal }) => listarAnexos({ data: pai, signal }),
   });
+  useEffect(() => {
+    const lifetime = scope.current;
+    lifetime.active = true;
+    lifetime.generation++;
+    const pending = downloads.current;
+    const unsubscribe = qc.getQueryCache().subscribe(() => {
+      for (const item of pending.values()) if (!item.valid()) item.controller.abort();
+    });
+    return () => {
+      lifetime.active = false;
+      lifetime.generation++;
+      unsubscribe();
+      for (const item of pending.values()) item.controller.abort();
+      pending.clear();
+    };
+  }, [qc]);
+  useEffect(() => {
+    for (const item of downloads.current.values()) if (!item.valid()) item.controller.abort();
+  }, [context]);
   const visiveis = q.isError ? undefined : q.data;
   const podeAdicionar = !readOnly && visiveis?.permissoes.adicionar === true;
   const payloadArquivo = (a: Pick<Anexo, "nome" | "mime" | "tamanho" | "sha256">) => ({
@@ -58,6 +95,9 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
   async function atualizar() {
     await Promise.all([
       qc.invalidateQueries({ queryKey: ["anexos", pai] }),
+      ...(pai.qualificacao_id
+        ? [qc.invalidateQueries({ queryKey: ["pessoas", pai.organization_id, "qualificacoes"] })]
+        : []),
       ...(pai.ferramenta_id || pai.calibracao_id
         ? [qc.invalidateQueries({ queryKey: ["almoxarifado", pai.organization_id] })]
         : []),
@@ -148,16 +188,44 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
     }
   }
   async function baixar(id: string) {
+    if (
+      downloads.current.has(id) ||
+      !context ||
+      org.data?.orgId !== pai.organization_id ||
+      q.isError ||
+      !q.data?.registros.some((a) => a.id === id && a.estado === "vinculado")
+    )
+      return;
+    const generation = scope.current.generation;
+    const controller = new AbortController();
+    const valid = captureOperationalContinuation(
+      qc,
+      ["anexos", pai],
+      () =>
+        scope.current.active &&
+        scope.current.generation === generation &&
+        currentContext.current === context &&
+        !controller.signal.aborted,
+    );
+    if (!valid()) return;
+    downloads.current.set(id, { controller, valid });
     setErro(null);
     try {
-      const { url } = await baixarAnexo({ data: { organization_id: pai.organization_id, id } });
+      const { url } = await baixarAnexo({
+        data: { organization_id: pai.organization_id, id },
+        signal: controller.signal,
+      });
+      if (!valid()) return;
       const a = document.createElement("a");
       a.href = url;
       a.rel = "noopener";
       a.target = "_blank";
       a.click();
     } catch (e) {
+      if (!valid()) return;
       setErro(e instanceof Error ? e : new Error("Download indisponível."));
+    } finally {
+      if (downloads.current.get(id)?.controller === controller) downloads.current.delete(id);
     }
   }
   async function cancelar() {

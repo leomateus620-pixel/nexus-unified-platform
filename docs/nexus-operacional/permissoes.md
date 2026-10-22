@@ -1,5 +1,21 @@
 # Permissões efetivamente implementadas
 
+## Equipes e qualificações — schema44 / UI45
+
+`gerir_equipe` administra equipes/vigências e qualificações; `revisar_operacao`
+configura competências e confere registros. A própria pessoa ativa pode enviar
+ou corrigir sua qualificação enviada, sem receber papel de sistema. RLS mantém
+não gestores no próprio contexto; seletores não enumeram detalhes de colegas.
+Arquivos usam o pai canônico `qualificacao_id` e suas flags atuais.
+
+Os sete comandos adquirem a trava de autorização antes de conferir papel e
+aguardar idempotência/entidade. Testes reais reproduziram/corrigiram gravação após
+revogação. Arquivar a pessoa não elimina a proibição de autovalidação, inclusive
+para admin. A0025 foi aplicada e os metadados conferidos; Auth/Storage HTTP remoto
+não foi exercitado. Query keys sob `['pessoas',org,...]` usam a limpeza existente;
+negação em lista/ficha/comando/comparação desmonta editor/arquivos, rede preserva
+preenchimento e respostas tardias não repovoam contexto removido.
+
 ## Controle físico — checkpoints 42/43
 
 Almoxarifado é concedido explicitamente a admin, engenharia, compras, campo e coordenação. Comercial/financeiro sem outra concessão não recebem o menu. O servidor compõe `ver_operacao`, gestão e recebimento; navegação não substitui autorização SQL. Campo lê reservas/custódias próprias e movimentos pertinentes, sem outras equipes ou custos. Ver ferramenta reservada não permite anexar condição antes da retirada; após devolução preserva leitura e perde envio. Conferências, inventários e estornos exigem gestão. Links de UI respeitam a rota autorizada; SQL continua a autoridade.
@@ -93,3 +109,16 @@ Campo pode abrir `/levantamentos`, consultar/coletar somente os registros de sua
 `lev_ler`/RLS e comandos aplicam o pai/tenant. Aprovação e publicação de modelo exigem capacidade de revisão e pessoa ativa vinculada ao ator com registro profissional declarado. Admin isoladamente não comprova esse requisito. Locks estabilizam membership, papéis, capacidades e pessoa antes de decisões/replays; testes locais exercitam revogação durante espera. Custos não integram esses DTOs.
 
 Matriz reaproveitada: `ver_operacao`, `gerir_operacao`, `revisar_operacao`; nenhum papel novo. Concessões de navegação em `ACESSO_POR_PAPEL`/capacidade são testadas junto do escopo SQL. Evidência de schema conectado e testes locais não substitui Auth/Storage HTTP remoto.
+# Conferência de qualificação — atualização45
+
+A conferência independente compara também vínculos históricos conhecidos entre
+pessoa e usuário. A tabela privada `pessoa_usuario_identidades` tem RLS, nenhuma
+política de aplicação e nenhum grant a anon/authenticated/service_role. O helper
+interno não tem EXECUTE público; somente a projeção booleana autorizada
+`qualificacao_validacao_permitida` informa à UI se a conferência é permitida.
+O comando de transição continua impondo a mesma regra no banco.
+
+O histórico não é membership: não concede leitura de pessoa, arquivo ou agenda,
+e não impede desligamento. Os testes locais incluem vínculo posterior, remoção
+de login, autoconferência negada, conferência por terceiro e acesso revogado.
+Metadados conectados foram verificados sem testar identidades fictícias ali.

@@ -25,6 +25,7 @@ jobs:
       - run: bun run test:estudos
       - run: bun run test:almoxarifado
       - run: bun run test:pe:arquivos
+      - run: bun run test:pe:leitor
       - run: sudo apt-get update && sudo apt-get install -y postgresql
       - run: PATH="$(ls -d /usr/lib/postgresql/*/bin | tail -1):$PATH" bun run test:db
       - run: bun run test:industrial
@@ -35,3 +36,4 @@ jobs:
       - run: bunx eslint src/trevisan src/routes/mapas-3d_.trevisan.tsx src/routes/mapas-3d_.unidades.tsx src/routes/__root.tsx tests/trevisan.test.mjs
       - run: bunx eslint src/features tests/calculo.test.ts tests/planilha.test.ts tests/autorizacao.test.ts
       - run: bun run build
+      - run: bun run test:pe:bundle

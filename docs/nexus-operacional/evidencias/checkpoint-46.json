@@ -1,0 +1,210 @@
+{
+  "checkpoint": "46",
+  "status": "CONSOLIDATION_PASS_AGENDA_NEXT",
+  "recordedAtUtc": "2026-10-22T17:29:30.885Z",
+  "source": {
+    "baseCommit": "347e3471ceaa191337736f0126fb1547cee587cf",
+    "workingTreeAndStagedChanges": true,
+    "immutableCommitProof": false
+  },
+  "reader": {
+    "newSql": false,
+    "databaseLedger": 44,
+    "unitTests": {
+      "domainAndLifetime": 10,
+      "adapter": 34,
+      "assets": 3,
+      "total": 47,
+      "provenance": "Execução observada pela raiz; não SQL nem Auth conectado"
+    },
+    "fileHandlerTests": {
+      "count": 28,
+      "provenance": "Handlers isolados, incluindo GET de metadados por ID/pai"
+    },
+    "focused": [
+      {
+        "name": "leitor",
+        "path": "docs/nexus-operacional/evidencias/ui-46-leitor-final/pe-leitor/results.json",
+        "sha256": "e635231f4e8126be2bb553fd0e0cfcbf514323be01ae6014f26997eb3c1c8e87",
+        "success": true,
+        "layouts": 6,
+        "checks": 8,
+        "errors": 0,
+        "widthFit": [
+          {
+            "viewport": 360,
+            "available": 328,
+            "canvasCss": 328
+          },
+          {
+            "viewport": 390,
+            "available": 358,
+            "canvasCss": 358
+          },
+          {
+            "viewport": 768,
+            "available": 702,
+            "canvasCss": 702
+          },
+          {
+            "viewport": 1024,
+            "available": 958,
+            "canvasCss": 958
+          },
+          {
+            "viewport": 1366,
+            "available": 1300,
+            "canvasCss": 1300
+          },
+          {
+            "viewport": 1440,
+            "available": 1374,
+            "canvasCss": 1374
+          }
+        ],
+        "method": "Real source reader and PDF.js canvas; synthetic two-page A4/A3 landscape PDF and local signed-URL fixture. No connected Auth, SQL/RLS, Storage HTTP or physical device proof."
+      },
+      {
+        "name": "anexos",
+        "path": "docs/nexus-operacional/evidencias/ui-46-anexos/anexos-canonicos/results.json",
+        "sha256": "9c63cff60f718c02be0c789f202360756881cdd52fdc47251a9732228d9d5b75",
+        "success": true,
+        "layouts": 6,
+        "checks": 8,
+        "errors": 0
+      },
+      {
+        "name": "equipes",
+        "path": "docs/nexus-operacional/evidencias/ui-46-equipes/estavel/equipes/results.json",
+        "sha256": "3d80cc744b8ca32368eb0e11cf174fa2f2c043b8ff255f6adf017dfa041d374c",
+        "success": true,
+        "layouts": 36,
+        "checks": 17,
+        "errors": 0
+      },
+      {
+        "name": "bundle",
+        "path": "docs/nexus-operacional/evidencias/pe-reader-bundle-46.json",
+        "sha256": "f487febd94248b6bdeb1ca306e27d7fd2c601f9b5c84ba1cd31d4d271f10cffd",
+        "success": true,
+        "layouts": null,
+        "checks": null,
+        "errors": null,
+        "gzipBytes": 541231,
+        "staticResources": {
+          "version": "6.4.299",
+          "files": 199,
+          "bytes": 3059136,
+          "checksumsMatch": true
+        }
+      }
+    ]
+  },
+  "otherChecks": {
+    "typecheckGlobal": "PASS observado pela raiz",
+    "eslint": {
+      "status": "PASS observado pela raiz",
+      "codeFiles": 67,
+      "documentationIncluded": false
+    },
+    "operacional": {
+      "domainTests": 49,
+      "manifestTests": 9,
+      "typeGenerationTests": 3,
+      "protectedFiles": 134,
+      "status": "PASS observado pela raiz"
+    },
+    "build": {
+      "status": "PASS observado pela raiz",
+      "durationSecondsObserved": 68,
+      "fieldPerformanceProof": false
+    },
+    "connected": {
+      "method": "SELECT de metadados pela raiz",
+      "ledger": 44,
+      "lastMigration": "0025",
+      "checksumUnchanged": true,
+      "authStorageHttpProven": false
+    }
+  },
+  "fullUi": {
+    "status": "FAILED_NETWORK_IO_SUSPENDED",
+    "directory": "docs/nexus-operacional/evidencias/ui-46-consolidacao",
+    "localLogName": "nexus-ui-46-consolidacao.log",
+    "logHashDeferredUntilCompletion": true,
+    "attempts": [
+      {
+        "directory": "docs/nexus-operacional/evidencias/ui-46-completa",
+        "localLogName": "nexus-ui-46-completa.log",
+        "status": "FAILED",
+        "observedError": "net::ERR_NETWORK_IO_SUSPENDED durante page.goto local em capture.mjs"
+      },
+      {
+        "directory": "docs/nexus-operacional/evidencias/ui-46-consolidacao",
+        "status": "FAILED",
+        "observedError": "net::ERR_NETWORK_IO_SUSPENDED durante page.goto local em dimension-checks.mjs"
+      }
+    ],
+    "recovery": {
+      "legacy": "dimension-checks +32 vistas workspace +16 autosave PASS; ui-46-retomada-legacy",
+      "operacional": "PASS exit0 npm run test:ui -- --operacional;11 relatórios,451 layouts e108 comportamentos; fixtureHTTP local, sem Auth/Storage conectado"
+    }
+  },
+  "readerAttempts": [
+    {
+      "directory": "docs/nexus-operacional/evidencias/ui-46-leitor",
+      "status": "INITIAL_6_LAYOUTS_8_CHECKS_PASS_WITH_LATER_VISUAL_FINDING",
+      "finding": "canvas300 em todas larguras; corrigido com referência do contêiner e asserção de ajuste à largura"
+    },
+    {
+      "directory": "docs/nexus-operacional/evidencias/ui-46-leitor-refinado",
+      "status": "INTERRUPTED_NOT_FINAL",
+      "observedError": "HMR/reload do laboratório; relatório contém ERR_CONNECTION_REFUSED e expectativa de integridade interrompida"
+    },
+    {
+      "directory": "docs/nexus-operacional/evidencias/ui-46-leitor-final",
+      "status": "PASS",
+      "exitCode": 0,
+      "provenance": "Processo EXIT0 confirmado pela raiz e relatório real conferido",
+      "lab": "127.0.0.1:4193",
+      "hmr": false
+    }
+  ],
+  "visuals": {
+    "accepted": [
+      {
+        "path": "docs/nexus-operacional/evidencias/pe-leitor/03-original-mobile-enquadrado.jpg",
+        "sha256": "2be6fea394d42d9410a766308ac4709e9871368dc6f03d4ceed892c06d5db438"
+      },
+      {
+        "path": "docs/nexus-operacional/evidencias/pe-leitor/04-prancha-desktop.jpg",
+        "sha256": "04acbf4acd2f41ab6c5a6094a6b9c3b9fb41ecabb31057445bc9c4ea6d112878"
+      }
+    ],
+    "desktopCssViewport": "1440x900",
+    "mobileCssViewport": "390x845",
+    "dpr": 1.14,
+    "method": "CUA emulação com original sintético; não hardware",
+    "excluded": [
+      "docs/nexus-operacional/evidencias/pe-leitor/01-original-mobile.jpg",
+      "docs/nexus-operacional/evidencias/pe-leitor/02-original-mobile-viewport.jpg"
+    ],
+    "exclusionReason": "01 recorta página em vez do diálogo;02 viewport reduzido/baixa resolução. Canvas300 é evidência dos PNGs da rodada inicial, não inferência de02."
+  },
+  "identityReview": {
+    "status": "REPRODUCED_AND_FIXED",
+    "candidateMigration": "0026",
+    "applied": true,
+    "ledger": 45,
+    "localFullSql": "PASS PostgreSQL16.15 descartável clean+upgrade44→45;11 testes identidade",
+    "remoteEvidence": "verificacao-remota-0026.json",
+    "notAReaderSqlChange": true
+  },
+  "limits": [
+    "Transporte UI sintético e PDF.js real local não comprovam SQL/RLS/Auth/Storage HTTP operacional.",
+    "CSP na borda implantada, memória física, leitor de tela, teclado virtual, hardware e métricas de campo não comprovados.",
+    "OCR/IA, extração estruturada, evidências persistidas por página, editor geométrico/3D próprio e PDF/dossiê pendentes.",
+    "As duas tentativas UI completas interrompidas não são declaradas PASS; recuperação operacional e cauda legado passaram separadamente."
+  ],
+  "stagingPerformed": true
+}

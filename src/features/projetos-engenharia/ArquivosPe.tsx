@@ -4,6 +4,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ActionButton, ErrorState, Section } from "@/components/nexus/Page";
 import { mimeDetectado, sha256 } from "@/features/operacao/files";
+import { useOrg, useSessionUser } from "@/features/org/session";
+import { LeitorArquivoPe } from "./LeitorArquivoPe";
 import {
   baixarArquivoPe,
   cancelarArquivoPe,
@@ -23,12 +25,31 @@ export function ArquivosPe({
   versaoId: string;
   editavel: boolean;
 }) {
+  const context = useOrg();
+  const user = useSessionUser();
+  const readerAllowed =
+    !context.isError &&
+    !!context.data &&
+    !!user &&
+    context.data.orgId === org &&
+    context.data.userId === user.id;
+  const readerContext = JSON.stringify({
+    org,
+    versaoId,
+    user: user?.id ?? null,
+    resolvedUser: context.data?.userId ?? null,
+    resolvedOrg: context.data?.orgId ?? null,
+    roles: [...(context.data?.roles ?? [])].sort(),
+    capabilities: [...(context.data?.capabilities ?? [])].sort(),
+  });
   return (
     <ArquivosDaVersao
       key={`${org}:${versaoId}`}
       org={org}
       versaoId={versaoId}
       editavel={editavel}
+      readerAllowed={readerAllowed}
+      readerContext={readerContext}
     />
   );
 }
@@ -37,10 +58,14 @@ function ArquivosDaVersao({
   org,
   versaoId,
   editavel,
+  readerAllowed,
+  readerContext,
 }: {
   org: string;
   versaoId: string;
   editavel: boolean;
+  readerAllowed: boolean;
+  readerContext: string;
 }) {
   const qc = useQueryClient();
   const section = useRef<HTMLDivElement>(null);
@@ -51,6 +76,7 @@ function ArquivosDaVersao({
   const [busy, setBusy] = useState(false);
   const [cancelar, setCancelar] = useState<string | null>(null);
   const [motivo, setMotivo] = useState("");
+  const [reading, setReading] = useState<{ arquivo: PeArquivo; context: string } | null>(null);
   const chaves = useRef(new Map<string, string>());
   const q = useQuery({
     queryKey: ["pe-files", org, versaoId],
@@ -64,6 +90,7 @@ function ArquivosDaVersao({
   });
   const visiveis = q.isError ? undefined : q.data;
   const podeEnviar = editavel && visiveis?.permissoes.adicionar === true;
+  const canReadOriginal = readerAllowed && visiveis?.permissoes.ler === true;
   const acesso = useRef({ ler: false, enviar: false });
   acesso.current = { ler: visiveis?.permissoes.ler === true, enviar: podeEnviar };
   useEffect(() => {
@@ -82,6 +109,11 @@ function ArquivosDaVersao({
       }
     }
   }, [q.isError, podeEnviar]);
+  useEffect(() => {
+    if (reading && (!canReadOriginal || reading.context !== readerContext)) {
+      setReading(null);
+    }
+  }, [reading, canReadOriginal, readerContext]);
   const identidade = (a: Pick<PeArquivo, "nome" | "sha256" | "tamanho" | "mime">) =>
     JSON.stringify({
       org,
@@ -273,7 +305,7 @@ function ArquivosDaVersao({
   return (
     <Section
       title="Originais e referências desta versão"
-      description="O PDF importado permanece separado do documento nativo. Leitura assistida/OCR ainda não foi executada."
+      description="O original permanece preservado. A prévia por página não executa OCR nem transforma o PDF em modelo editável."
     >
       <div ref={section} tabIndex={-1} className="grid min-w-0 gap-3">
         {podeEnviar && (
@@ -305,6 +337,15 @@ function ArquivosDaVersao({
           </p>
         )}
         {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
+        {reading && canReadOriginal && reading.context === readerContext && (
+          <LeitorArquivoPe
+            key={`${readerContext}:${reading.arquivo.id}:${reading.arquivo.sha256}`}
+            organizationId={org}
+            versaoId={versaoId}
+            arquivo={reading.arquivo}
+            onClose={() => setReading(null)}
+          />
+        )}
         {visiveis?.rows.length === 0 && (
           <p className="text-sm text-muted-foreground">Nenhum arquivo vinculado a esta versão.</p>
         )}
@@ -330,9 +371,18 @@ function ArquivosDaVersao({
                 </p>
               </div>
               {arquivo.estado === "vinculado" ? (
-                <ActionButton variant="ghost" disabled={busy} onClick={() => baixar(arquivo.id)}>
-                  Baixar original autorizado
-                </ActionButton>
+                <div className="flex flex-wrap gap-2">
+                  <ActionButton
+                    variant="ghost"
+                    disabled={busy || !canReadOriginal}
+                    onClick={() => setReading({ arquivo, context: readerContext })}
+                  >
+                    Ler original
+                  </ActionButton>
+                  <ActionButton variant="ghost" disabled={busy} onClick={() => baixar(arquivo.id)}>
+                    Baixar original autorizado
+                  </ActionButton>
+                </div>
               ) : podeEnviar ? (
                 <div className="grid gap-2">
                   {arquivo.meu_envio && (

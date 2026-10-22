@@ -495,3 +495,54 @@ três grants novos do trigger de0023 foram removidos. O typecheck global com tip
 passou sem mudança das consultas de embeds antigas. Não foram criadas fixtures operacionais
 no banco conectado. Auth/Storage binário remoto, frontend publicado, aparelho físico e desempenho
 continuam sem comprovação por estas evidências de metadados e banco isolado.
+
+## Pessoas: autorização atual — `0025` / schema44
+
+**APLICADA; CATÁLOGO REMOTO VERIFICADO.** A fonte append-only tem SHA-256
+`254504d1ca8335be6f12a57c7f216eadc8d09aaa1b93001f4078917189a6f44d`.
+Após oito reproduções locais do comportamento vulnerável43, ela corrige a
+revogação durante espera dos sete comandos de pessoas/equipes/qualificações e
+impede autovalidação da própria pessoa arquivada. Assinaturas, grants, payloads,
+idempotência e regras anteriores permanecem; o teste de instalação compara os
+corpos históricos permitindo apenas o lock de autor e a identidade estável da
+conferência. Não foram alteradas as migrações já aplicadas.
+
+O runner completo PostgreSQL16.15 passou instalação limpa44 e as regressões de
+orçamento, OC/OP, arquivo, agenda, levantamentos, estudos e estoque. O runner
+focado adicional passou upgrade explícito43→44, sete disputas observadas em
+`pg_stat_activity` e o caso de autovalidação, exigindo42501 e snapshot de dados,
+histórico e recibos do escritor sem efeito. Geração oficial44 e typecheck global
+passaram antes da integração da nova UI de equipes; o hash dos tipos públicos é
+idêntico ao43, pois o contrato das RPCs não mudou.
+
+A aplicação no projeto `91380c2d-559c-4527-b3a4-1a8bc1e19f69`, novamente identificado
+como Nexus Unified Platform/main7fbf58f, ocorreu em **22/10/2026 às15:06:58.253153 UTC**.
+O envelope une DDL e ledger em uma instrução transacional. A conferência às
+**15:07:25.869853 UTC** comprovou prefixo44 com todos os caminhos/checksums, sete
+funções security definer com search_path vazio, lock antes da permissão,
+EXECUTE authenticated e ausência de EXECUTE anon; o helper continua privado.
+
+`pessoas-autorizacao-44.json`, `geracao-tipos-44.json`, `verificacao-remota-0025.json`,
+`schema-local-44.json`, `schema-remoto-44.json` e `schema-diff-44.json` registram os
+métodos. Nenhum objeto local está ausente do conectado. Mantêm-se somente a
+diferença histórica de whitespace de `diferencas_comerciais` e541 grants legados
+da plataforma (415 tabela/126 função). RLS, constraints, índices, triggers e
+relações não mudaram:108 relações/786 constraints/307 índices/171 policies/
+116 triggers/194 funções. Nenhum dado operacional de demonstração foi criado.
+Auth/Storage HTTP conectado continua sem E2E, conforme a decisão do usuário.
+Qualquer correção posterior desta fonte aplicada será0026+.
+# Atualização45 — identidade independente de qualificação
+
+`0026_pessoas_identidade_conferencia.sql`, posição45, SHA-256
+`980e98d4036027aba1e0d54e16cc363abde4ae41f004938a8fabad3cd5efa41b`.
+Instalação limpa, upgrade44→45 com vínculo removido antes do upgrade e suíte
+SQL completa passaram em PostgreSQL16.15 descartável. A migração usa lock de
+escrita em pessoas durante backfill e instalação do trigger. Não muda contratos
+de comandos existentes nem reescreve aprovações.
+
+Aplicada ao projeto91380c2d-559c-4527-b3a4-1a8bc1e19f69 pelo envelope transacional
+DDL+ledger em22/10/2026 às17:41:22.74252UTC; verificação17:41:38.131934UTC.
+Metadados e privilégios em `evidencias/verificacao-remota-0026.json`.
+Não houve fixture nem reset no ambiente conectado. Recuperação usa migração
+compensatória posterior; não remover o histórico que protege independência.
+Associações antigas sem evidência verificável ficam desconhecidas.

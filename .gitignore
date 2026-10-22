@@ -38,3 +38,6 @@ dist-ssr
 *.blend1
 *.blend2
 __pycache__/
+
+# Generated from the exact locked pdfjs-dist dependency; prepared before build/dev/UI tests.
+/public/pdfjs/

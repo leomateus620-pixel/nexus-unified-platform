@@ -1,0 +1,39 @@
+{
+  "method": "UI source with isolated fixtures; not remote persistence, Auth, RLS or Storage HTTP E2E",
+  "checks": [
+    {
+      "name": "failed revalidation hides cached private metadata, upload and cancellation with focus",
+      "pass": true
+    },
+    {
+      "name": "network query failure hides stale metadata and safe recovery restores the existing pending upload",
+      "pass": true
+    },
+    {
+      "name": "current read permission keeps download while removing upload and pending mutations",
+      "pass": true
+    },
+    {
+      "name": "switching versions isolates original metadata, local cancellation state and permissions",
+      "pass": true
+    },
+    {
+      "name": "confirmation failure preserves one staged original and retries its identity",
+      "pass": true
+    },
+    {
+      "name": "cancelled staging gets a new upload intention without changing the cancelled original",
+      "pass": true
+    },
+    {
+      "name": "cancelled original clears every renamed intention deduplicated by the server",
+      "pass": true
+    },
+    {
+      "name": "a full response states its 100-original query limit without claiming the complete history",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

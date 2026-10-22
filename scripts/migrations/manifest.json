@@ -175,6 +175,14 @@
     {
       "path": "drizzle/migrations/0024_suprimentos_relacoes_univocas.sql",
       "sha256": "3186fcc00879dad91e02c0bf55bb6d856e69d77a12a8d1b546b7c80ae2fd5faa"
+    },
+    {
+      "path": "drizzle/migrations/0025_pessoas_autorizacao_atual.sql",
+      "sha256": "254504d1ca8335be6f12a57c7f216eadc8d09aaa1b93001f4078917189a6f44d"
+    },
+    {
+      "path": "drizzle/migrations/0026_pessoas_identidade_conferencia.sql",
+      "sha256": "980e98d4036027aba1e0d54e16cc363abde4ae41f004938a8fabad3cd5efa41b"
     }
   ]
 }

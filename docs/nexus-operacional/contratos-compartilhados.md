@@ -1,5 +1,57 @@
 # Contratos compartilhados do checkpoint
 
+## Leitor privado PE — UI46 / schema44
+
+`LeitorArquivoPe` integra a ação Ler original ao arquivo confirmado de uma versão
+PE. `obterArquivoPe({organization_id,id})` consulta metadados exatos sob RLS,
+exige vínculo confirmado e revalida `pe_ler_projeto`; resposta privada/no-store,
+sem URL. `reader-adapter` confere id/org/projeto/versão/hash/tamanho/MIME/caminho,
+aceita somente URL assinada do objeto exato no Storage configurado e revalida
+antes/depois da assinatura. A consulta por ID não depende da lista limitada100.
+
+Leitura20MiB confere tamanho e hash antes do PDF.js6.4.299 lazy/cliente. URL não
+entra no cache; foco/retorno/intervalo30s consultam metadados sem nova assinatura.
+Negação ou falha de revalidação remove canvas/texto; fechamento/troca de contexto
+cancela recursos e descarta resultado tardio. Autorização não recolhe bytes já
+baixados nem revoga instantaneamente bearer emitido. Sem novo SQL/entidade.
+
+PDF/imagem é original de referência; texto por página é simples, sem OCR e sem
+persistência de evidência. Editor geométrico/3D e PDF/dossiê permanecem separados.
+Contrato/evidências: `projetos-engenharia-leitor.md`; UI final local seis larguras/
+oito jornadas passou, incluindo ajuste do canvas à área real do contêiner.
+
+## Pessoas, equipes e qualificações — UI45 / schema44
+
+Proprietários: `operacao` conserva `pessoas`; `pessoas-competencias/equipes` usa
+`equipes/equipe_membros`; `pessoas-competencias/qualificacoes` usa
+`competencias/pessoa_qualificacoes`. Usuário continua opcional, membro de equipe
+não recebe papel, produto/ativo/OS não são recriados. Todas as FKs organizacionais
+e os comandos vêm da fundação0012, endurecidos pela0025 aplicada.
+
+Equipes: `listarEquipes`, `obterEquipe`, `buscarPessoasEquipe`, `salvarEquipe`,
+`vincularMembroEquipe`, `encerrarMembroEquipe`. Listas/seletores e filhos paginam25;
+detalhe retorna equipe, líder autorizado, membros/total e flags atuais. Vigências
+são datas inclusivas, sem edição de período encerrado. Escrita usa chave UUID e
+versão quando cabível; resposta relê o estado atual depois do recibo.
+
+Competências/qualificações: `listar/obter/salvarCompetencia`,
+`listar/obter/salvarQualificacao`, `transicionarQualificacao` e
+`buscarOpcoesQualificacao`. Flags dependem de acesso, pessoa e estado atuais.
+Política utilizada congela exigências de evidência/validade. Validação exige outro
+usuário identificado independentemente de a pessoa estar ativa; anexar não valida.
+
+Cache: `['pessoas',org,'equipes'|'competencias'|'qualificacoes',...]`, incluindo
+listas, fichas e opções. Query de acesso/sessão remove esse prefixo na revogação.
+Anexos continuam `['anexos',pai]`; confirmar/cancelar comprovante invalida também
+`['pessoas',org,'qualificacoes']`. Rascunho fixa versão, comparação/adoção é explícita,
+negação desmonta editor/arquivos e rede não apaga preenchimento. Nenhum custo
+individual/prontuário é incluído nesses DTOs. Não há outbox nova nesta fatia.
+
+Dependências ausentes: matriz por serviço, política técnica com fonte/vigência,
+liderança/papel temporal, indisponibilidade corrigível, OS e transferência futura.
+Evidência:57 testes isolados, SQL real descartável e UI sintética separados em
+`validacao.md`. Auth/Storage HTTP conectado permanece não comprovado.
+
 ## Estoque e ferramentas — checkpoint 42
 
 Proprietário: `src/features/almoxarifado`, migração `0023_almoxarifado.sql`, aplicada no projeto confirmado no checkpoint 42. Fontes: produto de catálogo; pessoa operacional; projeto e OP existentes; entrada física por recebimento de OC ou apontamento de produção. Inventário tem origem própria, sem produzir documento comercial fictício. Estoque possui ledger imutável por proveniência, local e posição; ferramenta é patrimônio individual com custódia, distinto de produto ou ativo de cliente.
@@ -104,3 +156,13 @@ Arquivos usam `levantamento_arquivos` com FKs explícitas a revisão/ponto e o p
 Query keys: `['levantamentos', org, 'lista'|'ficha', recorte]`, `['levantamento-arquivos', org, revisão, ponto, página]`, `['levantamento-opcoes', org, tipo, contexto, busca]`. Adoção invalida o prefixo canônico `['rev', revisãoDestino]`. Formulários congelam a versão ao abrir e não adotam versões de polling silenciosamente.
 
 Migração0021 aplicada no projeto confirmado, posição40; checksum e catálogo em `migracoes.md`. Ainda não há evento Agenda com FK de levantamento, emissão PDF/dossiê ou offline completo. Programar o período não reserva recursos nem gera notificação temporal. Engenharia de estudos (`0022`) consome a revisão aprovada por FK, sem duplicar coleta.
+# Atualização45 — identidade e qualificação
+
+`pessoa_usuario_identidades` pertence a Pessoas. PK organization_id+pessoa_id+
+user_id, FK composta para pessoas e FK Auth RESTRICT; não depende de membership.
+É evento imutável e privado, preenchido por trigger/backfill verificável.
+Não usar como fonte de autorização ou associação atual de login.
+`qualificacao_validacao_permitida(_org,_id)` retorna somente booleano, exige
+capacidade atual de revisão e independência, sem expor histórico ao cliente.
+Qualificações consulta essa projeção e revalida acesso antes de retornar DTO.
+Migração0026/posição45 aplicada e conferida; evidência remota específica disponível.

@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
+import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
@@ -72,6 +72,45 @@ async function prepararToken(db: SupabaseClient, arquivo: PeArquivo) {
     );
   return { arquivo, token: assinado.token };
 }
+
+/** Consulta por ID para revalidar um original, independente da página/lista aberta. */
+export const obterArquivoPe = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input) => idInput.parse(input))
+  .handler(async ({ context, data }) => {
+    setResponseHeader("Cache-Control", "private, no-store");
+    const db = dbClient(context.supabase);
+    const signal = getRequest().signal;
+    const response = await db
+      .from("pe_arquivos")
+      .select(
+        "id,organization_id,projeto_id,versao_id,nome,mime,tamanho,sha256,caminho,estado,created_by,created_at,confirmado_em",
+      )
+      .eq("organization_id", data.organization_id)
+      .eq("id", data.id)
+      .abortSignal(signal)
+      .maybeSingle();
+    if (
+      ["42501", "PGRST116"].includes(response.error?.code ?? "") ||
+      (!response.error && (response.data === null || response.data === undefined))
+    )
+      throw new Error("Arquivo indisponível para seu acesso atual.");
+    const arquivo = peArquivoSchema.parse(resultado(response));
+    if (
+      arquivo.organization_id !== data.organization_id ||
+      arquivo.id !== data.id ||
+      arquivo.estado !== "vinculado"
+    )
+      throw new Error("Arquivo indisponível para seu acesso atual.");
+    // Autoriza novamente o pai depois da leitura: a lista limitada não prova acesso atual.
+    const parent = await db
+      .rpc("pe_ler_projeto", { _org: data.organization_id, _id: arquivo.projeto_id })
+      .abortSignal(signal);
+    if (["42501", "PGRST116"].includes(parent.error?.code ?? ""))
+      throw new Error("Arquivo indisponível para seu acesso atual.");
+    if (resultado(parent) !== true) throw new Error("Arquivo indisponível para seu acesso atual.");
+    return arquivo;
+  });
 
 export const listarArquivosPe = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

@@ -28,12 +28,9 @@ const file = {
 };
 const files = page.getByRole("region", { name: "Arquivos privados", exact: true });
 async function go() {
-  await page.goto(`${base}/?page=equipe`, { waitUntil: "networkidle" });
-  await page
-    .getByRole("region", { name: "Pessoas operacionais", exact: true })
-    .getByRole("button", { name: "Abrir", exact: true })
-    .first()
-    .click();
+  await page.goto(`${base}/?page=equipe&pessoa=30000000-0000-4000-8000-000000000001`, {
+    waitUntil: "networkidle",
+  });
   await expect(files.getByText("Nenhum arquivo vinculado.", { exact: true })).toBeVisible();
 }
 async function check(name, work) {
@@ -54,6 +51,31 @@ async function pending() {
     .getByLabel("Adicionar PDF ou imagem (até 20 MB)", { exact: true })
     .setInputFiles(file);
   await expect(files.getByRole("button", { name: "Reverificar envio", exact: true })).toBeVisible();
+}
+async function confirmedDeferredDownload() {
+  await go();
+  await pending();
+  await page.evaluate(() => {
+    window.__anexoConfirmFailure = false;
+  });
+  await files.getByRole("button", { name: "Reverificar envio", exact: true }).click();
+  await expect(files.getByRole("button", { name: "Baixar", exact: true })).toBeVisible();
+  await page.evaluate(() => {
+    window.__anexoDownloadDeferred = true;
+    window.__anexoAnchorClicks = 0;
+    const nativeClick = HTMLAnchorElement.prototype.click;
+    HTMLAnchorElement.prototype.click = function () {
+      if (this.href.startsWith("data:text/plain,")) {
+        window.__anexoAnchorClicks++;
+        return;
+      }
+      return nativeClick.call(this);
+    };
+  });
+  await files.getByRole("button", { name: "Baixar", exact: true }).click();
+  await expect
+    .poll(() => page.evaluate(() => typeof window.__releaseAnexoDownload))
+    .toBe("function");
 }
 try {
   for (const width of [360, 390, 768, 1024, 1366, 1440]) {
@@ -170,6 +192,42 @@ try {
       files.getByLabel("Adicionar PDF ou imagem (até 20 MB)", { exact: true }),
     ).toBeVisible();
   });
+  await check(
+    "an authorized delayed response opens once while its parent context is unchanged",
+    async () => {
+      await confirmedDeferredDownload();
+      await page.evaluate(() => window.__releaseAnexoDownload());
+      await expect.poll(() => page.evaluate(() => window.__anexoAnchorClicks)).toBe(1);
+    },
+  );
+  await check(
+    "a response delivered after the parent unmounts is aborted and never opens its old URL",
+    async () => {
+      await confirmedDeferredDownload();
+      await page.getByRole("button", { name: "Voltar à lista de pessoas", exact: true }).click();
+      await expect(files).toHaveCount(0);
+      await expect.poll(() => page.evaluate(() => window.__anexoDownloadAborted)).toBe(true);
+      await page.evaluate(() => window.__releaseAnexoDownload());
+      await expect.poll(() => page.evaluate(() => window.__anexoDownloadReturned)).toBe(true);
+      expect(await page.evaluate(() => window.__anexoAnchorClicks)).toBe(0);
+      await expect(files).toHaveCount(0);
+    },
+  );
+  await check(
+    "a failed current parent revalidation blocks a late URL even if the transport ignores abort",
+    async () => {
+      await confirmedDeferredDownload();
+      await focusRefetch({ __anexosReadError: true });
+      await expect(files.getByRole("alert")).toContainText(
+        "Não foi possível atualizar os arquivos privados",
+      );
+      await expect.poll(() => page.evaluate(() => window.__anexoDownloadAborted)).toBe(true);
+      await page.evaluate(() => window.__releaseAnexoDownload());
+      await expect.poll(() => page.evaluate(() => window.__anexoDownloadReturned)).toBe(true);
+      expect(await page.evaluate(() => window.__anexoAnchorClicks)).toBe(0);
+      await expect(files.getByRole("button", { name: "Baixar", exact: true })).toHaveCount(0);
+    },
+  );
   expect(report.errors).toEqual([]);
   report.success = true;
 } catch (error) {

@@ -259,6 +259,25 @@ window.__operationalFail = scenario === "error";
 const operations = new Map();
 const peArquivos = [];
 window.__nexusPeArquivos = peArquivos;
+// Explicit local audit scenario only. No fixture is reachable from the production application.
+if (new URLSearchParams(location.search).get("reader") === "synthetic") {
+  window.__peReaderMode = true;
+  peArquivos.push({
+    id: "a5000000-0000-4000-8000-000000000001",
+    organization_id: org,
+    projeto_id: projeto,
+    versao_id: segunda.id,
+    nome: "original-sintetico-v2.pdf",
+    mime: "application/pdf",
+    tamanho: __NEXUS_PDF_FIXTURE__.tamanho,
+    sha256: __NEXUS_PDF_FIXTURE__.sha256,
+    caminho: "fixture-reader.pdf",
+    estado: "vinculado",
+    created_by: actor,
+    created_at: now,
+    confirmado_em: now,
+  });
+}
 export const listarArquivosPe = async ({ data }) => {
   await read("listarArquivosPe", { data });
   if (window.__peFileQueryError)
@@ -330,8 +349,36 @@ export const cancelarArquivoPe = async ({ data }) =>
     arquivo.estado = "cancelado";
     return arquivo;
   });
+export const obterArquivoPe = async ({ data }) => {
+  await read("obterArquivoPe", { data });
+  if (window.__peReaderDenied) throw new Error("Arquivo indisponível para seu acesso atual.");
+  if (window.__peReaderNetwork)
+    throw new Error("Não foi possível atualizar o original privado (fixture).");
+  const arquivo = peArquivos.find(
+    (a) =>
+      a.id === data.id && a.organization_id === data.organization_id && a.estado === "vinculado",
+  );
+  if (!arquivo) throw new Error("Arquivo indisponível para seu acesso atual.");
+  return copy(arquivo);
+};
 export const baixarArquivoPe = async ({ data }) => {
   await read("baixarArquivoPe", { data });
+  if (window.__peReaderMode) {
+    if (window.__peReaderDenied) throw new Error("Arquivo indisponível para seu acesso atual.");
+    const url = new URL(
+      "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+      location.origin,
+    );
+    const flags = ["isolated"];
+    if (window.__peReaderExpiredOnce) {
+      flags.push("expired");
+      window.__peReaderExpiredOnce = false;
+    }
+    if (window.__peReaderCorrupt) flags.push("corrupt");
+    if (window.__peReaderSlow) flags.push("slow");
+    url.searchParams.set("token", flags.join("."));
+    return { url: url.toString() };
+  }
   return { url: "data:text/plain,Original%20do%20ambiente%20isolado%20de%20teste" };
 };
 export const consultarAcessoOperacional = async () => ({
@@ -563,8 +610,25 @@ export const cancelarAnexo = async ({ data }) =>
     a.estado = "cancelado";
     return copy(a);
   });
-export const baixarAnexo = async ({ data }) => {
+export const baixarAnexo = async ({ data, signal }) => {
   await read("baixarAnexo", { data });
+  if (window.__anexoDownloadDeferred) {
+    window.__anexoDownloadAborted = signal?.aborted === true;
+    window.__anexoDownloadReturned = false;
+    const abort = () => {
+      window.__anexoDownloadAborted = true;
+    };
+    signal?.addEventListener("abort", abort, { once: true });
+    // Intentionally deliver the result despite abort to exercise the source UI continuation guard.
+    try {
+      await new Promise((resolve) => {
+        window.__releaseAnexoDownload = resolve;
+      });
+    } finally {
+      signal?.removeEventListener("abort", abort);
+    }
+    window.__anexoDownloadReturned = true;
+  }
   return { url: "data:text/plain,Arquivo%20do%20ambiente%20isolado%20de%20teste" };
 };
 

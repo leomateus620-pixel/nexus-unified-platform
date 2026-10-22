@@ -7,3 +7,4 @@ docs/nexus-operacional/evidencias/**/*.pdf binary linguist-generated=true
 public/models/3tentos/*.glb binary linguist-generated=true
 public/textures/3tentos/*.png binary linguist-generated=true
 assets/industrial/source/*.blend binary
+tests/ui/fixtures/*.pdf binary

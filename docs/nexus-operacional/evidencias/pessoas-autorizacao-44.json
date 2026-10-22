@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-10-22T15:04:45.352Z",
+  "postgres": "16.15",
+  "schemaCheckpoint": 44,
+  "migration": "drizzle/migrations/0025_pessoas_autorizacao_atual.sql",
+  "sha256": "254504d1ca8335be6f12a57c7f216eadc8d09aaa1b93001f4078917189a6f44d",
+  "method": "Real isolated PostgreSQL sessions; no connected users or operational fixtures",
+  "tests": [
+    {
+      "name": "published43",
+      "logSha256": "bb6a61dc91888652f29bbcddfac31b6e9b2669ec2db6ea1074c4d34bb6aa2fa0",
+      "exitCode": 0,
+      "results": [
+        "REPRODUCED baseline: salvar_pessoa persists after committed role revocation",
+        "REPRODUCED baseline: salvar_equipe persists after committed role revocation",
+        "REPRODUCED baseline: vincular_membro_equipe persists after committed role revocation",
+        "REPRODUCED baseline: encerrar_membro_equipe persists after committed role revocation",
+        "REPRODUCED baseline: salvar_competencia persists after committed role revocation",
+        "REPRODUCED baseline: salvar_qualificacao persists after committed role revocation",
+        "REPRODUCED baseline: transicionar_qualificacao persists after committed role revocation",
+        "REPRODUCED baseline: archived operational person can validate their own qualification"
+      ]
+    },
+    {
+      "name": "corrected44",
+      "logSha256": "95507db7cb13d0f358d48bfc09ac13bd79ebd5ff6995858449b8d07cf922177c",
+      "exitCode": 0,
+      "results": [
+        "PASS: salvar_pessoa rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: vincular_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: encerrar_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_competencia rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: transicionar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: archiving a person never removes the independent-review requirement"
+      ]
+    },
+    {
+      "name": "full44",
+      "logSha256": "a82f73076b8b29a82e8afde7e1963ea4b83eeb48f88128ebe2070f3e0dfc1eff",
+      "exitCode": 0,
+      "results": [
+        "PASS: salvar_pessoa rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: vincular_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: encerrar_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_competencia rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: transicionar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: archiving a person never removes the independent-review requirement"
+      ]
+    },
+    {
+      "name": "upgrade43to44",
+      "logSha256": "90cacd77ca79fed2b5d7136ca884d405abc5a648c1247d6cb121d57d957423b8",
+      "exitCode": 0,
+      "results": [
+        "PASS: checkpoint43 → 44 hardens current authorization without changing existing records or RPC signatures",
+        "PASS: salvar_pessoa rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: vincular_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: encerrar_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_competencia rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: salvar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: transicionar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect",
+        "PASS: archiving a person never removes the independent-review requirement"
+      ]
+    }
+  ],
+  "limits": [
+    "Production permission-revocation races not exercised",
+    "Auth/Storage HTTP and binary files not proved",
+    "Baseline evidence deliberately reproduces failures; it is not a passing security gate"
+  ]
+}

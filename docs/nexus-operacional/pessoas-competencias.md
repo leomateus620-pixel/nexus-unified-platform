@@ -1,5 +1,58 @@
 # Pessoas e Competências — qualidade da identidade operacional
 
+## Equipes e qualificações — checkpoint45
+
+`/equipe` agora reúne Pessoas, Equipes, Competências e Qualificações. A navegação
+desktop é compacta; mobile usa seletor de área e prioriza a ficha. Selecionar um
+registro troca a tabela comprimida por lista resumida ao lado do detalhe. Busca,
+página, filtros e seleção ficam na URL. Links abrem pessoa/competência canônicas,
+com retorno pelo histórico do navegador.
+
+Equipes permitem cadastro, edição, arquivo/reativação, líder atual, inclusão por
+vigência e encerramento com motivo. Primeiro/último dia são inclusivos; novo
+vínculo da mesma pessoa/equipe pode começar no dia seguinte. Encerrados mantêm
+histórico. A pessoa pode integrar equipes distintas.
+
+Competências exigem escolha explícita de comprovante e validade, sem prazos ou
+critérios normativos inventados. Requisitos já utilizados não podem mudar; outra
+política requer outro cadastro, sem representar versionamento técnico formal.
+Qualificações usam pessoa, competência, emissor, conclusão e validade civil:
+enviada → conferência → validada; devolução e revogação exigem motivo. Comprovante
+privado não renova validade nem conclui conferência. A comparação em uma data
+explícita não altera o estado histórico nem apresenta aptidão universal.
+
+Consultas paginam25, ordenam de forma estável e revalidam acesso após leitura.
+Ausência de contagem é erro recuperável. Escritas releem o estado autorizado após
+o recibo idempotente. Formulários congelam versão, permitem comparação/adoção
+explícitas e ligam erros por `aria-describedby`, fora do label. Rede preserva
+rascunho; negação desmonta editor/arquivos. Não gestores leem somente seus
+vínculos e qualificações autorizados; catálogo não abre prontuário dos colegas.
+Conferência documental exige outro autorizado e não substitui aprovação técnica.
+
+As oito falhas reproduzidas e a0025 aplicada estão em `pessoas-autorizacao.md` e
+`migracoes.md`. Passaram57 testes isolados,36 layouts/16 cenários de Equipes e30
+layouts/seis cenários de Qualificações. A suíte UI completa terminou EXIT0;
+os19 relatórios e hashes estão no [resumo da execução](evidencias/ui-45-completa-resumo.json),
+com alcance e ressalva de CSS zoom do catálogo em `validacao.md`. SQL real descartável, UI com transporte
+sintético e metadados conectados são métodos distintos. Não comprovam Auth/
+Storage HTTP operacional.
+
+Capturas CUA finais: [lista desktop](evidencias/pessoas-equipes/01-equipes-lista-desktop.jpg),
+[ficha mobile](evidencias/pessoas-equipes/03-ficha-mobile-refinada.jpg),
+[validação do formulário mobile](evidencias/pessoas-equipes/04-formulario-mobile-validacao.jpg),
+[qualificação desktop](evidencias/pessoas-equipes/09-qualificacao-desktop-topo.jpg) e
+[qualificação mobile](evidencias/pessoas-equipes/10-qualificacao-mobile-topo.jpg).
+São emulação desktop1440×900 e mobile390×845 CSS px. As capturas09/10 foram refeitas
+no topo: o recorte em página rolada das intermediárias05/07 deslocava elementos
+fixos artificialmente; não demonstra defeito de CSS. As intermediárias02/05–08
+não integram a seleção final. Não equivale a aparelho físico, teclado virtual ou
+auditoria completa de leitor de tela/contraste.
+
+Continuam pendentes matriz por serviço, jornada/indisponibilidade com correção
+auditável, liderança/papel temporal, política técnica versionada, transferência
+de trabalhos futuros e integração com OS ainda ausente. O menu integral não é
+declarado concluído por esta fatia. As seções abaixo preservam a evidência44.
+
 ## Alcance do checkpoint44
 
 Esta fatia corrige consulta, edição e navegação de pessoas. Reutiliza `pessoas`, `salvar_pessoa`, RLS e anexos canônicos; não cria cadastro de colaborador paralelo nem concede login/papel. Não acrescenta migração ou altera o banco conectado. Equipes, competências e qualificações permanecem com comandos SQL existentes e experiência completa ainda pendente.

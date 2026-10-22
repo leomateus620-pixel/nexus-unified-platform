@@ -1,0 +1,8 @@
+{
+  "baseline": "820c79d60055a25e2d56bf60a091f032c5e7a8bf",
+  "currentHead": "05f69c9f3b1d873ca6c2b627de94c1d45b3bb6d2",
+  "protectedFiles": 134,
+  "changed": [],
+  "unexpected": [],
+  "scope": "Git content comparison of existing engines, catalogue, transactional proposal commands, 30 historical migrations, scene code and public assets. Library presentation is the explicit exception. Does not certify runtime FPS or physical devices."
+}

@@ -1,0 +1,21 @@
+{
+  "rows": [
+    {
+      "jsonb_build_object": {
+        "confirmar_publico": false,
+        "confirmar_servico": true,
+        "helper_publico": false,
+        "migracao": {
+          "applied_at": "2026-10-22T09:23:13.760269+00:00",
+          "applied_by": "postgres",
+          "evidence_sha256": null,
+          "origin": "applied",
+          "path": "drizzle/migrations/0020_anexo_confirmacao_autorizada.sql",
+          "position": 39,
+          "sha256": "0f9e80d67f56addacbb7ef305a7e2a803c622b29286e888704111bc22c87bccc"
+        },
+        "total": 39
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "function": "public.diferencas_comerciais(uuid,jsonb,jsonb)",
+  "difference": "Only leading indentation differs on two SELECT predicate lines",
+  "bodyEqualAfterPerLineTrim": true,
+  "searchPathEqual": true,
+  "securityDefinerEqual": true,
+  "volatilityEqual": true,
+  "legacyFilesChanged": false
+}

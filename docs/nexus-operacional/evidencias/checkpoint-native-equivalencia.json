@@ -1,0 +1,9 @@
+{
+  "localPath": "supabase/migrations/20260928010000_proposta_checkpoints.sql",
+  "nativeVersion": "20260928034547",
+  "nativeName": "e46c9068-5882-42ae-bb5d-032c68da19aa",
+  "localLines": 195,
+  "remoteLines": 195,
+  "equivalentAfterLineEndingIndentationAndBlankLineNormalization": true,
+  "localSourceModified": false
+}

@@ -1,0 +1,3410 @@
+{
+  "format": "nexus-public-catalog-v1",
+  "summary": {
+    "local": {
+      "indexes": {
+        "md5": "d351117a13cc3e4744b1ac8b815d8c16",
+        "count": 81
+      },
+      "policies": {
+        "md5": "2342a09a346528fbff76eeb36b9630c0",
+        "count": 113
+      },
+      "triggers": {
+        "md5": "9354f851f6261f0352ddd97ea59d74ca",
+        "count": 38
+      },
+      "functions": {
+        "md5": "083f3cc28bc79104c2b09ff64210093a",
+        "count": 51
+      },
+      "relations": {
+        "md5": "76bebe2d1cbb41b6514df74f540bffab",
+        "count": 46
+      },
+      "constraints": {
+        "md5": "68ad96742663cefd2e86c4efb1db5390",
+        "count": 201
+      },
+      "table_grants": {
+        "md5": "9635c8427e6609bfd4da142ade5e1b39",
+        "count": 431
+      },
+      "function_grants": {
+        "md5": "a237c3419ed03442ff9e73743ae9c44e",
+        "count": 40
+      }
+    },
+    "remote": {
+      "constraints": {
+        "count": 201,
+        "md5": "68ad96742663cefd2e86c4efb1db5390"
+      },
+      "function_grants": {
+        "count": 114,
+        "md5": "5607386b9617cd30700c9b4b371bd70d"
+      },
+      "functions": {
+        "count": 51,
+        "md5": "a46ff3db2e04ad34b066f20f10fd2d49"
+      },
+      "indexes": {
+        "count": 81,
+        "md5": "d351117a13cc3e4744b1ac8b815d8c16"
+      },
+      "policies": {
+        "count": 113,
+        "md5": "2342a09a346528fbff76eeb36b9630c0"
+      },
+      "relations": {
+        "count": 46,
+        "md5": "76bebe2d1cbb41b6514df74f540bffab"
+      },
+      "table_grants": {
+        "count": 911,
+        "md5": "9d753075f0355c4e547c08ccc4b958c7"
+      },
+      "triggers": {
+        "count": 38,
+        "md5": "9354f851f6261f0352ddd97ea59d74ca"
+      }
+    }
+  },
+  "diffs": [
+    {
+      "kind": "functions",
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)",
+      "local": "76570abe3ddc04923a751cbe1e311c35",
+      "remote": "ff92341df9062907025a4dfb22027dca"
+    },
+    {
+      "kind": "function_grants",
+      "key": "_alvos_rascunho_op(_op uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "_plano_ordens(_rev uuid, _escopo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "aplicar_demanda(_rev uuid, _hash text, _linhas jsonb, _remover uuid[]).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "arvore_produto(_produto uuid, _nivel integer).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "arvore_produto(_produto uuid, _nivel integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "atualizar_componentes_revisao(_rev uuid, _ids uuid[], _patch jsonb, _esperados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "bloquear_alteracao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "bloquear_alteracao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "cadastrar_produto_codificado(_org uuid, _familia text, _tipo character, _chave uuid, _dados jsonb, _custo numeric).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "can_see_costs(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "capturar_revisao(_rev uuid, _operacao uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "concluir_revisao(_rev uuid, _versao bigint, _versao_salva bigint, _snapshot jsonb, _calculo jsonb, _operacao uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "criar_organizacao(_nome text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "custo_inclui_padrao().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "custo_inclui_padrao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "custo_inclui_padrao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "diferencas_rascunho(_a jsonb, _b jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "editar_produto(_produto uuid, _dados jsonb).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "editar_produto(_produto uuid, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "exigir_revisao_editavel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "formatar_codigo(_familia text, _tipo character, _seq integer).authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "formatar_codigo(_familia text, _tipo character, _seq integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "gerar_ordens(_rev uuid, _chave text, _escopo text, _plano_hash text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "has_org_role(_org uuid, _role app_role).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "hash_tecnico(_rev uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "importar_produto_oficial(_org uuid, _codigo text, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "incluir_produto_revisao(_rev uuid, _produto uuid, _quantidade numeric).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "incluir_produto_revisao(_rev uuid, _produto uuid, _quantidade numeric).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "is_member(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "objeto_rascunho(_t text, _r jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "op_exige_aprovacao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "op_exige_aprovacao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "ordem_cabecalho_imutavel().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "ordem_cabecalho_imutavel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "ordem_item_imutavel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "planejar_ordens(_rev uuid, _escopo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pode(_org uuid, _acao text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "previa_codigo(_org uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_codigo_produto().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_codigo_produto().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_codigo_produto().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proximo_numero(_org uuid, _prefixo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proximo_numero_proposta(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "rastrear_rascunho().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "reclassificar_produto(_produto uuid, _familia text, _tipo character, _motivo text).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "reclassificar_produto(_produto uuid, _familia text, _tipo character, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "recodificar_produto(_produto uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "registrar_aquisicao(_produto uuid, _chave text, _dados jsonb, _custo_sugerido numeric).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "registrar_movimento(_tipo text, _item uuid, _quantidade numeric, _chave text, _estorno_de uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "reservar_sequencia(_org uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_componente_custo_origem().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_componente_custo_origem().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_componente_custo_origem().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_editavel(_rev uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_transicao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_transicao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_version().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_version().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisar_rascunho_op(_op uuid, _chave text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_composicao(_produto uuid, _itens jsonb, _status text).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_composicao(_produto uuid, _itens jsonb, _status text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "snapshot_rascunho(_rev uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "trava_revisao_edicao().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "trava_revisao_edicao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "trava_revisao_edicao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "travar_revisao(_rev uuid).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_estrutura().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_estrutura().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_estrutura().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_indivisivel().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_indivisivel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_vinculos().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_vinculos().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.authenticated.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.authenticated.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.authenticated.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    }
+  ],
+  "counts": {
+    "functions": 1,
+    "function_grants": 74,
+    "table_grants": 480
+  }
+}

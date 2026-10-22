@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-22",
+  "environment": "Local disposable PostgreSQL 16.15 on Windows; three ephemeral databases for install/upgrade/connector-envelope checks",
+  "command": "tests/db/run.ps1 -PostgresBin <PostgreSQL16.15/bin> -Port 55450",
+  "exitCode": 0,
+  "migrations": {
+    "historical": 30,
+    "total": 39,
+    "upgrade": 9,
+    "cleanInstall": true,
+    "existingClientRetained": true,
+    "retryWithoutMigrationDDL": true,
+    "failedDDLAndLedgerRollback": true,
+    "connectorSingleStatementEnvelope": true,
+    "nativeMetadataFixturesIsolated": true
+  },
+  "assertions": {
+    "clients": 28,
+    "engineeringProjects": 19,
+    "engineeringFiles": 19,
+    "foundation": 45,
+    "agenda": 38,
+    "administration": 16,
+    "scheduler": 3,
+    "concurrencyOperational": 13,
+    "attachmentConfirmation": 12,
+    "concurrencyAttachmentConfirmation": 5
+  },
+  "scheduler": {
+    "extensionAvailableLocally": false,
+    "manualWorkerTested": true,
+    "automaticCronTestedLocally": false
+  },
+  "storageEvidence": "SQL metadata/policies only; binary HTTP and real connected persistence require separate validation",
+  "productionFixturesInserted": false,
+  "logSha256": "af7ba74c4f8db3239644aae7a00fa22d8563be069d86d42575f888bc59afbccb",
+  "correctiveMigration": {
+    "path": "drizzle/migrations/0020_anexo_confirmacao_autorizada.sql",
+    "sourceSha256LF": "0f9e80d67f56addacbb7ef305a7e2a803c622b29286e888704111bc22c87bccc",
+    "envelopeSha256": "d1988b4159ae4b50ef4788991e1d1952901df1b8b9310a6833622fe6b163d78e",
+    "evidence": "12 metadata SQL assertions; 5 real concurrent lock-wait and permission revocation scenarios"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "checkpoint": "38 migrations, after 0019 before corrective 0020",
+  "structuralParity": [
+    "relations:73",
+    "constraints:406",
+    "indexes:168",
+    "policies:136",
+    "triggers:63"
+  ],
+  "functions": {
+    "count": 106,
+    "differences": [
+      {
+        "kind": "functions",
+        "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)",
+        "local": "76570abe3ddc04923a751cbe1e311c35",
+        "remote": "ff92341df9062907025a4dfb22027dca"
+      }
+    ],
+    "classification": "Historical indentation-only divergence proved in drift-funcoes.json"
+  },
+  "grants": {
+    "differences": {
+      "functions": 1,
+      "function_grants": 125,
+      "table_grants": 415
+    },
+    "nonServiceDifferences": 224,
+    "newNonServiceGrantDifferences": [],
+    "browserMaintenanceDifferences": [],
+    "groups": {
+      "functions:diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)": 1,
+      "function_grants:service_role.EXECUTE": 101,
+      "function_grants:anon.EXECUTE": 11,
+      "function_grants:authenticated.EXECUTE": 13,
+      "table_grants:service_role.DELETE": 31,
+      "table_grants:service_role.INSERT": 31,
+      "table_grants:service_role.REFERENCES": 31,
+      "table_grants:service_role.SELECT": 29,
+      "table_grants:service_role.TRIGGER": 31,
+      "table_grants:service_role.TRUNCATE": 31,
+      "table_grants:service_role.UPDATE": 31,
+      "table_grants:anon.DELETE": 42,
+      "table_grants:anon.INSERT": 42,
+      "table_grants:anon.SELECT": 42,
+      "table_grants:anon.UPDATE": 42,
+      "table_grants:authenticated.DELETE": 14,
+      "table_grants:authenticated.UPDATE": 9,
+      "table_grants:authenticated.INSERT": 9
+    }
+  },
+  "limitations": [
+    "Catalog evidence only; authenticated remote RLS and binary Storage HTTP not exercised",
+    "Default platform service_role grants differ from isolated PostgreSQL; not asserted as least-privilege parity"
+  ]
+}

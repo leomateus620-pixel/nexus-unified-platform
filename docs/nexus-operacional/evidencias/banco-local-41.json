@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-22",
+  "status": "LOCAL_TESTED_REMOTE_SCHEMA_APPLIED_VERIFIED",
+  "postgres": "16.15 isolated disposable Windows cluster",
+  "command": "tests/db/run.ps1 -PostgresBin <verified PostgreSQL16.15/bin> -Port 55468 -CaptureFingerprint",
+  "exitCode": 0,
+  "migrations": {
+    "total": 41,
+    "baseline": 30,
+    "upgradeFromOperationalCheckpoint": 40,
+    "upgradeRetainsPersonAndAudit": true,
+    "cleanInstall": true,
+    "retry": true,
+    "ddlAndLedgerRollback": true,
+    "connectorSingleDo": true,
+    "legacyPeFrozenBeforeUpgradePreservedAndRejectedAsSource": true,
+    "newPeRevisionAfterContextReviewFreezesCanonicalIds": true,
+    "canonicalPeCommandUnchangedOutsideNewSnapshotContextIds": true,
+    "latest": {
+      "path": "drizzle/migrations/0022_estudos_tecnicos.sql",
+      "sha256": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b"
+    }
+  },
+  "assertions": {
+    "estudos": 56,
+    "estudoFiles": 32,
+    "realConcurrentScenarios": 12,
+    "finalSnapshotInvariant": true,
+    "fullHistoricalAndPriorOperationalSuites": true,
+    "manifestUnitTests": 9,
+    "scopedJavaScriptLintPassed": true,
+    "realLocalDtoParsersValidated": 5
+  },
+  "catalog": {
+    "indexes": {
+      "md5": "d1ebec176ed16ae7f81022a247eb92f0",
+      "count": 254
+    },
+    "policies": {
+      "md5": "1911098abde97985da425016a4d6f63d",
+      "count": 158
+    },
+    "triggers": {
+      "md5": "aad053745e960ef9cfbaad5401f03e9e",
+      "count": 87
+    },
+    "functions": {
+      "md5": "157e467b23d672d22544add105c3af76",
+      "count": 158
+    },
+    "relations": {
+      "md5": "31a918e23cc1e0a6c44da8294986131b",
+      "count": 95
+    },
+    "constraints": {
+      "md5": "a9098e3a7a448c6fb12189a867b82e06",
+      "count": 643
+    },
+    "table_grants": {
+      "md5": "39c94f3e09ebc67b79d6c7b1cc3e64c2",
+      "count": 472
+    },
+    "function_grants": {
+      "md5": "ee4f9d2300601f1e38eb3fa2ec2740f8",
+      "count": 104
+    }
+  },
+  "logSha256LF": "e9b4776c74ceaf74ae38e10b6b1b2a818385a723d08eaa78acc93997d2f84d86",
+  "limits": [
+    "No operational fixtures or mutations on connected project",
+    "Local Storage stub validates metadata/RLS only, not binary HTTP",
+    "No remote Auth/session/persistence E2E",
+    "Legacy PE without frozen context IDs remains unchanged and cannot become engineering source",
+    "Legacy issued documents without frozen canonical context are excluded; contextual document emission remains pending",
+    "No normative formulas, legal limits, automatic compliance or official responsibility registry generated",
+    "Assets, operational project delivery, documentation PDF/dossier and Agenda remain consumer integrations pending",
+    "Connected schema/ledger/privileges verified only; no claim of remote authenticated functional E2E"
+  ],
+  "remoteApplication": {
+    "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+    "applied_at": "2026-10-22T12:12:30.11955+00:00",
+    "verified_at": "2026-10-22T12:13:17.36794+00:00",
+    "migrationSha256": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b",
+    "ledgerCount": 41,
+    "metadataOnly": true,
+    "noOperationalFixtures": true
+  }
+}

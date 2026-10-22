@@ -1,5 +1,21 @@
 # Validação do checkpoint operacional
 
+## Checkpoint 41 — Estudos Técnicos
+
+| Método | Resultado e alcance |
+|---|---|
+| Banco real local PostgreSQL 16.15 | 56 cenários principais, 32 de arquivos, 12 concorrências; instalação limpa 41/upgrade 40→41, envelopes e regressões antigas, exit 0 |
+| Fonte e histórico | PE legado anterior ao upgrade mantém hash/snapshot e é recusado como fonte sem IDs; nova revisão congela IDs e é aceita. Documento legado não é reatribuído pelo pai mutável |
+| Metadados conectados | Aplicação 0022 em 12:12:30.11955 UTC, ledger 41 e schema/RLS/grants/Storage conferidos; sem dados de demonstração ou sessão Auth |
+| Testes isolados de domínio/handler | `npm run test:estudos`: 22 + 15, exit 0; transportes substituídos não comprovam RLS |
+| DTOs de banco | Cinco formatos reais do PostgreSQL local aceitos pelos schemas; evidência `evidencias/engenharia/dto-postgresql-local.json` |
+| UI isolada | 61 layouts em 360/390/768/1024/1366/1440, 12 comportamentos, zero erros JS/overflow; inclui rede vs revogação, versão fixa do formulário e ação canônica |
+| Ação por URL | Três cenários adicionais: seleção após recarga, conflito após refetch e recuperação explícita mantendo justificativa, cache oculto quando leitura falha |
+| Compilação e geração | Typecheck global/build exit 0; tipos oficiais de 95 tabelas/131 funções/quatro enums, AST preservada, sem credenciais operacionais |
+| Regressão | Operacional 49 + manifesto 9 + tipos 3 + contratos 134 passaram. Suíte UI completa posterior exit 0 em `evidencias/ui-41/`; repetição delimitada após remover título duplicado também exit 0 em `evidencias/ui-41-final/` |
+
+Evidências: `evidencias/banco-local-41.json`, `schema-diff-41.json`, `verificacao-remota-0022.json`, `geracao-tipos-41.json` e `ui-estudos/`. Capturas são de componentes reais com backend de laboratório; não comprovam dispositivo físico, teclado virtual real, leitor de tela, carga de produção ou Auth/Storage HTTP conectado. A interface não anuncia conformidade normativa automática, ART emitida ou PDF inexistente.
+
 Rodada local de regressão em 22/10/2026, Windows, Node 24.15.0. Branch `codex/nexus-operacao-integrada-agenda-equipe`, a partir de `820c79d60055a25e2d56bf60a091f032c5e7a8bf`, com as alterações da entrega no working tree. Os comandos abaixo usam dependências existentes; não houve atualização de lockfile para executar os checks.
 
 Esta rodada comprova compilação, testes de domínio/contratos e preservação de código conforme cada gate. Não declara a evolução inteira concluída, persistência no banco conectado, frontend publicado ou homologação em dispositivo físico. Escopo e pendências permanecem em `inventario.md` e `progresso.md`.

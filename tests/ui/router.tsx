@@ -12,6 +12,9 @@ const routeSearchKeys = [
   "situacao",
   "pagina",
   "levantamento",
+  "estudo",
+  "acao",
+  "perigo",
   "revisao",
   "ponto",
   "estado",
@@ -111,8 +114,16 @@ export function Link({
   className,
   ...props
 }) {
-  const href = to.replace(/\$([\w]+)/g, (_, key) => p[key] || key);
-  const active = pathForPage(useFixturePage()) === href;
+  const targetPath = to.replace(/\$([\w]+)/g, (_, key) => p[key] || key);
+  const targetSearch =
+    _search === true ? search : typeof _search === "function" ? _search(search) : _search || {};
+  const encoded = new URLSearchParams(
+    Object.entries(targetSearch)
+      .filter(([, value]) => value !== undefined && value !== "")
+      .map(([key, value]) => [key, String(value)]),
+  ).toString();
+  const href = targetPath + (encoded ? `?${encoded}` : "");
+  const active = pathForPage(useFixturePage()) === targetPath;
   const state = active ? activeProps : inactiveProps;
   return (
     <a
@@ -124,20 +135,30 @@ export function Link({
       onClick={(event) => {
         event.preventDefault();
         props.onClick?.(event);
-        window.__nexusNavigations.push({ to, params: p });
+        window.__nexusNavigations.push({
+          to,
+          params: p,
+          ...(encoded ? { search: targetSearch } : {}),
+        });
         if (href.includes("/revisoes/rev-fixture/")) {
           page = href.split("/").at(-1);
           const url = new URL(location.href);
           url.searchParams.set("page", page);
           history.pushState({}, "", url);
           pageListeners.forEach((listener) => listener());
-        } else if (Object.values(operationalPaths).includes(href)) {
+        } else if (Object.values(operationalPaths).includes(targetPath)) {
           page =
-            Object.entries(operationalPaths).find(([, target]) => target === href)?.[0] || page;
+            Object.entries(operationalPaths).find(([, target]) => target === targetPath)?.[0] ||
+            page;
           const url = new URL(location.href);
           url.searchParams.set("page", page);
-          url.searchParams.delete("projeto");
-          search = {};
+          for (const key of routeSearchKeys) url.searchParams.delete(key);
+          for (const [key, value] of Object.entries(targetSearch)) {
+            if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
+          }
+          search = Object.fromEntries(
+            [...url.searchParams].filter(([key]) => routeSearchKeys.includes(key)),
+          );
           history.pushState({}, "", url);
           pageListeners.forEach((listener) => listener());
           listeners.forEach((listener) => listener());

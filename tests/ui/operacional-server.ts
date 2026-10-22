@@ -461,6 +461,8 @@ export const transicionarAcao = async ({ data }) =>
   write("transicionarAcao", data, () => {
     const atual = state.acoes.find((p) => p.id === data.id);
     if (!atual) throw new Error("Ação indisponível.");
+    if (data.expected_version !== atual.version)
+      throw new Error("Outra pessoa alterou este registro. Recarregue e compare antes de salvar.");
     Object.assign(atual, { estado: data.estado, motivo: data.motivo, version: atual.version + 1 });
     return atual;
   });

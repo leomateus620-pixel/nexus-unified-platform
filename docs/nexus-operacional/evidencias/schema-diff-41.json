@@ -1,0 +1,2798 @@
+{
+  "scope": "Public PostgreSQL catalogs only; platform grants compared separately; no operational records",
+  "localSummary": {
+    "indexes": {
+      "md5": "d1ebec176ed16ae7f81022a247eb92f0",
+      "count": 254
+    },
+    "policies": {
+      "md5": "1911098abde97985da425016a4d6f63d",
+      "count": 158
+    },
+    "triggers": {
+      "md5": "aad053745e960ef9cfbaad5401f03e9e",
+      "count": 87
+    },
+    "functions": {
+      "md5": "157e467b23d672d22544add105c3af76",
+      "count": 158
+    },
+    "relations": {
+      "md5": "31a918e23cc1e0a6c44da8294986131b",
+      "count": 95
+    },
+    "constraints": {
+      "md5": "a9098e3a7a448c6fb12189a867b82e06",
+      "count": 643
+    },
+    "table_grants": {
+      "md5": "39c94f3e09ebc67b79d6c7b1cc3e64c2",
+      "count": 472
+    },
+    "function_grants": {
+      "md5": "ee4f9d2300601f1e38eb3fa2ec2740f8",
+      "count": 104
+    }
+  },
+  "remoteSummary": {
+    "constraints": {
+      "count": 643,
+      "md5": "a9098e3a7a448c6fb12189a867b82e06"
+    },
+    "function_grants": {
+      "count": 230,
+      "md5": "423c0392b5e180cb5843e4086c7d8a98"
+    },
+    "functions": {
+      "count": 158,
+      "md5": "99502aa22bf7e44db486e55d71c35b54"
+    },
+    "indexes": {
+      "count": 254,
+      "md5": "d1ebec176ed16ae7f81022a247eb92f0"
+    },
+    "policies": {
+      "count": 158,
+      "md5": "1911098abde97985da425016a4d6f63d"
+    },
+    "relations": {
+      "count": 95,
+      "md5": "31a918e23cc1e0a6c44da8294986131b"
+    },
+    "table_grants": {
+      "count": 887,
+      "md5": "36cc2c08144480ca21bb5dd3491ea913"
+    },
+    "triggers": {
+      "count": 87,
+      "md5": "aad053745e960ef9cfbaad5401f03e9e"
+    }
+  },
+  "onlyLocal": [],
+  "onlyRemote": [
+    {
+      "key": "_alvos_rascunho_op(_op uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "_plano_ordens(_rev uuid, _escopo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "administrar_vinculo_operacional(_org uuid, _chave uuid, _comando text, _dados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "agenda_ler_evento(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "agenda_registrar_revisao(_org uuid, _id uuid, _anterior text, _efeito text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "agenda_reservar(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "aplicar_demanda(_rev uuid, _hash text, _linhas jsonb, _remover uuid[]).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "arquivar_cadastro_cliente(_org uuid, _chave uuid, _entidade text, _id uuid, _expected_version integer, _arquivar boolean, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "arvore_produto(_produto uuid, _nivel integer).anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "arvore_produto(_produto uuid, _nivel integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "atualizar_componentes_revisao(_rev uuid, _ids uuid[], _patch jsonb, _esperados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "bloquear_alteracao().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "bloquear_alteracao().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "cadastrar_produto_codificado(_org uuid, _familia text, _tipo character, _chave uuid, _dados jsonb, _custo numeric).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "can_see_costs(_org uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "capturar_revisao(_rev uuid, _operacao uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "cliente_cadastro_audit().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "cliente_cadastro_guard().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "cliente_nova_referencia().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "concluir_revisao(_rev uuid, _versao bigint, _versao_salva bigint, _snapshot jsonb, _calculo jsonb, _operacao uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "confirmar_participacao_agenda(_org uuid, _chave uuid, _id uuid, _expected_version integer, _confirmacao text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "consultar_jobs_operacionais(_org uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "criar_organizacao(_nome text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "custo_inclui_padrao().anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "custo_inclui_padrao().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "custo_inclui_padrao().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "diferencas_rascunho(_a jsonb, _b jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "editar_produto(_produto uuid, _dados jsonb).anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "editar_produto(_produto uuid, _dados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "encerrar_membro_equipe(_org uuid, _chave uuid, _id uuid, _fim date, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "exigir_revisao_editavel().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "formatar_codigo(_familia text, _tipo character, _seq integer).authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "formatar_codigo(_familia text, _tipo character, _seq integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "gerar_ordens(_rev uuid, _chave text, _escopo text, _plano_hash text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "has_org_role(_org uuid, _role app_role).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "hash_tecnico(_rev uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "importar_produto_oficial(_org uuid, _codigo text, _dados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "incluir_produto_revisao(_rev uuid, _produto uuid, _quantidade numeric).anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "incluir_produto_revisao(_rev uuid, _produto uuid, _quantidade numeric).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "is_member(_org uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "lev_unidade_compativel(_grandeza text, _unidade text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "listar_cadastros_cliente(_org uuid, _grupo text, _cliente uuid, _busca text, _situacao text, _pagina integer, _limite integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "listar_eventos_agenda(_org uuid, _inicio timestamp with time zone, _fim timestamp with time zone, _pagina integer, _tamanho integer, _minha boolean).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "marcar_notificacao_lida(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "objeto_rascunho(_t text, _r jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "obter_cadastro_cliente(_org uuid, _entidade text, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "obter_cliente_operacional(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "op_exige_aprovacao().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "op_exige_aprovacao().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_audit().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_concluir(_org uuid, _chave uuid, _comando text, _payload jsonb, _resultado jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_guard().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_ler_acao(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_ler_anexo(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_minha_pessoa(_org uuid, _pessoa uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_pode(_org uuid, _acao text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "operacao_repetir(_org uuid, _chave uuid, _comando text, _payload jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "ordem_cabecalho_imutavel().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "ordem_cabecalho_imutavel().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "ordem_item_imutavel().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_arquivo_guard().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_autor_acessa(_org uuid, _projeto uuid, _autor uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_cancelar_arquivo(_org uuid, _id uuid, _chave uuid, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_executar(_org uuid, _chave uuid, _comando text, _dados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_guard().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_ler_arquivo(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_ler_projeto(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_pode_enviar_arquivo(_org uuid, _id uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_preparar_arquivo(_org uuid, _versao uuid, _chave uuid, _dados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_snapshot_arquivos().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pe_validar_modelo(_modelo jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "planejar_ordens(_rev uuid, _escopo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "pode(_org uuid, _acao text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "preparar_anexo_operacional(_org uuid, _chave uuid, _dados jsonb).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "previa_codigo(_org uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "proteger_codigo_produto().anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "proteger_codigo_produto().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "proteger_codigo_produto().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "proteger_ultimo_administrador().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "proximo_numero(_org uuid, _prefixo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "proximo_numero_proposta(_org uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "rastrear_rascunho().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "reclassificar_produto(_produto uuid, _familia text, _tipo character, _motivo text).anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "reclassificar_produto(_produto uuid, _familia text, _tipo character, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "recodificar_produto(_produto uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "registrar_aquisicao(_produto uuid, _chave text, _dados jsonb, _custo_sugerido numeric).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "registrar_indisponibilidade(_org uuid, _chave uuid, _pessoa uuid, _inicio timestamp with time zone, _fim timestamp with time zone, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "registrar_movimento(_tipo text, _item uuid, _quantidade numeric, _chave text, _estorno_de uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "reservar_sequencia(_org uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_componente_custo_origem().anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_componente_custo_origem().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_componente_custo_origem().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_editavel(_rev uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_transicao().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_transicao().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_version().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisao_version().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "revisar_rascunho_op(_op uuid, _chave text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_acao_operacional(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_cliente_operacional(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_competencia(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_composicao(_produto uuid, _itens jsonb, _status text).anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_composicao(_produto uuid, _itens jsonb, _status text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_contato_operacional(_org uuid, _chave uuid, _cliente uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_equipe(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_evento_agenda(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_pessoa(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_qualificacao(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "salvar_unidade_operacional(_org uuid, _chave uuid, _cliente uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "snapshot_rascunho(_rev uuid).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "transicionar_acao_operacional(_org uuid, _chave uuid, _id uuid, _expected_version integer, _estado text, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "transicionar_evento_agenda(_org uuid, _chave uuid, _id uuid, _expected_version integer, _estado text, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "transicionar_qualificacao(_org uuid, _chave uuid, _id uuid, _expected_version integer, _estado text, _motivo text).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "trava_revisao_edicao().anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "trava_revisao_edicao().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "trava_revisao_edicao().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "travar_revisao(_rev uuid).anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_estrutura().anon.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_estrutura().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_estrutura().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_indivisivel().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_indivisivel().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_vinculos().authenticated.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "validar_vinculos().service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "vincular_membro_equipe(_org uuid, _chave uuid, _equipe uuid, _pessoa uuid, _inicio date, _fim date).service_role.EXECUTE",
+      "kind": "function_grants",
+      "md5": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "key": "acao_colaboradores.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acao_colaboradores.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acao_colaboradores.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acao_colaboradores.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acao_colaboradores.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acao_colaboradores.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acao_colaboradores.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "acoes_operacionais.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_evento_revisoes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_eventos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_participantes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_requisitos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "agenda_reservas_pessoas.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "anexos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "apontamentos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "apontamentos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "apontamentos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "apontamentos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aprovacoes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aprovacoes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aprovacoes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aprovacoes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aprovacoes.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aprovacoes.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "aquisicoes.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "auditoria.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "auditoria.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "auditoria.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "auditoria.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "calculo_execucoes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "calculo_execucoes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "calculo_execucoes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "calculo_execucoes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "cliente_historico.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "clientes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "clientes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "clientes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "clientes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "codigo_equivalencias.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "competencias.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "config_orcamento.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "config_orcamento.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "config_orcamento.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "config_orcamento.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "contatos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "contatos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "contatos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "contatos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "demandas.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "demandas.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "demandas.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "demandas.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos_fiscais.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos_fiscais.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos_fiscais.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos_fiscais.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "documentos_fiscais.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipe_membros.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "equipes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fabricantes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fabricantes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fabricantes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fabricantes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "familias_codigo.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fornecedores.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fornecedores.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fornecedores.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "fornecedores.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "geracao_ordens.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "importacao_registros.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "importacao_registros.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "importacao_registros.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "importacao_registros.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "importacao_registros.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "importacao_registros.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "indisponibilidades.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "job_execucoes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "job_execucoes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "job_execucoes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "job_execucoes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "job_execucoes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "job_execucoes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "memberships.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "memberships.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "memberships.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "memberships.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "notificacoes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "numeracao.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacao_historico.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "operacoes_idempotentes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_compra_itens.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_compra_itens.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_compra_itens.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_compra_itens.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_producao_itens.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_producao_itens.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_producao_itens.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordem_producao_itens.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_compra.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_compra.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_compra.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_compra.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_producao.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_producao.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_producao.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "ordens_producao.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "organizations.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "organizations.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "organizations.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "organizations.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "outbox_eventos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_arquivos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_cenarios.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_eventos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_projetos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pe_versoes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoa_qualificacoes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "pessoas.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "politicas_custo.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "politicas_custo.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "politicas_custo.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "politicas_custo.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "politicas_custo.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_conversoes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_conversoes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_conversoes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_conversoes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_conversoes.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_custos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_custos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_custos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_custos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_estrutura.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_referencias.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_referencias.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_referencias.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_referencias.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produto_referencias.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produtos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produtos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produtos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "produtos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "projetos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "projetos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "projetos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "projetos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_checkpoints.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_operacoes.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_rascunho_autores.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_revisoes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_revisoes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_revisoes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_revisoes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "proposta_salvamentos.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "propostas.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "propostas.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "propostas.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "propostas.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "recebimentos.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "recebimentos.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "recebimentos.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "recebimentos.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "regras_versionadas.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "regras_versionadas.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "regras_versionadas.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "regras_versionadas.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "revisao_componentes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "revisao_componentes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "revisao_componentes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "revisao_componentes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "scheduler_configuracao.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "scheduler_configuracao.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "scheduler_configuracao.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "scheduler_configuracao.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "scheduler_configuracao.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "scheduler_configuracao.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_codigo.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.authenticated.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.authenticated.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "series_planilha.authenticated.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistema_componentes.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistema_componentes.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistema_componentes.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistema_componentes.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistemas_dimensionados.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistemas_dimensionados.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistemas_dimensionados.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "sistemas_dimensionados.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "unidades.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "unidades.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "unidades.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "unidades.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.REFERENCES",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.TRIGGER",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.TRUNCATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_capacidades.service_role.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_roles.anon.DELETE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_roles.anon.INSERT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_roles.anon.SELECT",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "key": "user_roles.anon.UPDATE",
+      "kind": "table_grants",
+      "md5": "e053b472d8c218cfc5d7343f16149bfe"
+    }
+  ],
+  "changed": [
+    {
+      "kind": "functions",
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)",
+      "local": "76570abe3ddc04923a751cbe1e311c35",
+      "remote": "ff92341df9062907025a4dfb22027dca"
+    }
+  ],
+  "interpretation": {
+    "publicSchemaObjectsMatchExceptKnownLegacyFunction": true,
+    "historicalPlatformGrantDifferences": true,
+    "newModuleGrantDifferences": [],
+    "prefixExact": true,
+    "tablesSafe": true,
+    "privilegedSafe": true,
+    "peContextIds": true,
+    "peSourceMd5Expected": "ac2f7932da43b22be8f1837edc40e71e",
+    "peSourceMatches": true
+  }
+}

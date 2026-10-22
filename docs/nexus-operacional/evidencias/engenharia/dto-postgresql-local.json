@@ -1,0 +1,26 @@
+{
+  "classification": "local PostgreSQL integration DTO parsing",
+  "base_commit": "b5a4bc4044cbbaa37c36d0f951382e77a7c26df1",
+  "source": "src/features/estudos/schemas.ts (working tree)",
+  "source_sha256": "7c8c9f36a012ec3bcb8e8838a93b84b7f3047ec4dd19d7ca4b81968278e6ae9c",
+  "method": "Actual Zod schemas parsed JSON returned by an isolated PostgreSQL test cluster with migration 0022 and test fixtures.",
+  "input_file": "nexus-estudos-real-dto.json (temporary local test output)",
+  "input_sha256": "2891f046a9447a91a4f67d9baae7ca0aac0d7ce6e18156695705c88ff6544418",
+  "harness_file": "nexus-estudos-parse-real-dto.ts (temporary local harness)",
+  "harness_sha256": "066b678fc9aa3b3d89981eaa69a3989bff192d61a25cddfef41373cbe49134fa",
+  "command": ".\\node_modules\\.bin\\tsx.cmd \"$env:TEMP\\nexus-estudos-parse-real-dto.ts\" \"$env:TEMP\\nexus-estudos-real-dto.json\"",
+  "reproduction": "Export the same RPC fixture results as keys detalhe, historico, lista, metodos and opcoes; parse detalhe/historico with estudoDetalheSchema and every registros item with estudoListaRow/metodoEstudoVersaoRow/opcaoEstudoRow respectively.",
+  "checks": [
+    { "key": "detalhe", "pass": true },
+    { "key": "historico", "pass": true },
+    { "key": "lista", "rows": 6, "pass": true },
+    { "key": "metodos", "rows": 1, "pass": true },
+    { "key": "opcoes", "rows": 3, "pass": true }
+  ],
+  "exit_code": 0,
+  "limits": [
+    "Only synthetic data in an isolated local PostgreSQL cluster was used.",
+    "This checks SQL-to-TypeScript DTO compatibility, not connected Supabase Auth, Storage HTTP, remote migration application or operational data.",
+    "Migration 0022 was still under review when this fixture export was produced; later SQL security changes require their own database checks."
+  ]
+}

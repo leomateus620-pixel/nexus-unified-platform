@@ -1,6 +1,10 @@
 # Regeneração oficial dos tipos Supabase
 
-`src/integrations/supabase/types.ts` foi regenerado a partir do catálogo PostgreSQL descartável do manifesto de 40 migrações. A saída oficial passa automaticamente pelo Prettier do repositório, com comparação da AST TypeScript antes/depois, sem edição manual. O processo não consulta dados do banco conectado, não usa credenciais do Lovable/Supabase e não aplica migrações remotas.
+`src/integrations/supabase/types.ts` foi regenerado a partir do catálogo PostgreSQL descartável do manifesto de 41 migrações. A saída oficial passa automaticamente pelo Prettier do repositório, com comparação da AST TypeScript antes/depois, sem edição manual. O processo não consulta dados do banco conectado, não usa credenciais do Lovable/Supabase e não aplica migrações remotas.
+
+## Checkpoint 41
+
+Nova execução pelo mesmo runner oficial: 95 tabelas, 131 funções não trigger e quatro enums; somente `public`. Saída formatada SHA-256 `3dfe812b6d0e464277e2b361869a3b0df8467f9f6b24cc19b91b6ca5a9778d82` (204.506 bytes), bruta `dab821316943394e49c7342dd0781fb839a4e1b780f7c1b95452a1dff6ac9ae6`. Compilação isolada sem diagnósticos e AST preservada. Registro em `evidencias/geracao-tipos-41.json`; o histórico abaixo preserva a prova anterior do checkpoint 40. A versão PostgREST 14.5 continua sendo o contrato do cliente, sem alegação de detecção remota.
 
 O gerador é o pacote oficial [`@supabase/postgres-meta`](https://github.com/supabase/postgres-meta), versão **0.100.0**, obtido exclusivamente de `registry.npmjs.org`, com dependências transitivas fixadas em um lockfile próprio em `scripts/supabase-types/`. O modo `PG_META_GENERATE_TYPES=typescript` executa a introspecção e termina, sem abrir o servidor HTTP. A documentação oficial também descreve [geração por introspecção do banco com a CLI](https://supabase.com/docs/guides/api/rest/generating-types).
 

@@ -1433,6 +1433,919 @@ export type Database = {
           },
         ];
       };
+      est_metodo_versoes: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          fontes: NonNullable<Json>;
+          id: string;
+          instrucoes: string;
+          metodo_id: string;
+          nome: string;
+          numero: number;
+          organization_id: string;
+          registro_profissional: string;
+          requisitos: NonNullable<Json>;
+          responsavel_id: string;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          fontes: NonNullable<Json>;
+          id?: string;
+          instrucoes: string;
+          metodo_id: string;
+          nome: string;
+          numero: number;
+          organization_id: string;
+          registro_profissional: string;
+          requisitos: NonNullable<Json>;
+          responsavel_id: string;
+          tipo: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          fontes?: NonNullable<Json>;
+          id?: string;
+          instrucoes?: string;
+          metodo_id?: string;
+          nome?: string;
+          numero?: number;
+          organization_id?: string;
+          registro_profissional?: string;
+          requisitos?: NonNullable<Json>;
+          responsavel_id?: string;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "est_metodo_versoes_organization_id_metodo_id_fkey";
+            columns: ["organization_id", "metodo_id"];
+            isOneToOne: false;
+            referencedRelation: "est_metodos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "est_metodo_versoes_organization_id_responsavel_id_fkey";
+            columns: ["organization_id", "responsavel_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      est_metodos: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          descricao: string;
+          id: string;
+          nome: string;
+          organization_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          id?: string;
+          nome: string;
+          organization_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          id?: string;
+          nome?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "est_metodos_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      estudo_arquivos: {
+        Row: {
+          caminho: string;
+          confirmado_em: string | null;
+          created_at: string;
+          created_by: string;
+          estado: string;
+          estudo_id: string;
+          id: string;
+          mime: string;
+          motivo: string | null;
+          nome: string;
+          organization_id: string;
+          perigo_id: string | null;
+          revisao_id: string;
+          sha256: string;
+          tamanho: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          caminho: string;
+          confirmado_em?: string | null;
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          estudo_id: string;
+          id?: string;
+          mime: string;
+          motivo?: string | null;
+          nome: string;
+          organization_id: string;
+          perigo_id?: string | null;
+          revisao_id: string;
+          sha256: string;
+          tamanho: number;
+        };
+        Update: {
+          caminho?: string;
+          confirmado_em?: string | null;
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          estudo_id?: string;
+          id?: string;
+          mime?: string;
+          motivo?: string | null;
+          nome?: string;
+          organization_id?: string;
+          perigo_id?: string | null;
+          revisao_id?: string;
+          sha256?: string;
+          tamanho?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_arquivos_organization_id_estudo_id_revisao_id_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_arquivos_organization_id_estudo_id_revisao_id_perig_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id", "perigo_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_perigos";
+            referencedColumns: ["organization_id", "estudo_id", "revisao_id", "id"];
+          },
+        ];
+      };
+      estudo_decisoes: {
+        Row: {
+          autor: string;
+          created_at: string;
+          decisao: string;
+          estudo_id: string;
+          id: number;
+          motivo: string;
+          organization_id: string;
+          pessoa_id: string | null;
+          registro_profissional: string | null;
+          responsabilidade_tecnica: string;
+          revisao_id: string;
+          submissao_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          autor?: string;
+          created_at?: string;
+          decisao: string;
+          estudo_id: string;
+          id?: never;
+          motivo: string;
+          organization_id: string;
+          pessoa_id?: string | null;
+          registro_profissional?: string | null;
+          responsabilidade_tecnica?: string;
+          revisao_id: string;
+          submissao_id?: string | null;
+        };
+        Update: {
+          autor?: string;
+          created_at?: string;
+          decisao?: string;
+          estudo_id?: string;
+          id?: never;
+          motivo?: string;
+          organization_id?: string;
+          pessoa_id?: string | null;
+          registro_profissional?: string | null;
+          responsabilidade_tecnica?: string;
+          revisao_id?: string;
+          submissao_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_decisoes_organization_id_estudo_id_revisao_id_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_decisoes_organization_id_estudo_id_revisao_id_submi_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id", "submissao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_submissoes";
+            referencedColumns: ["organization_id", "estudo_id", "revisao_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_decisoes_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estudo_eventos: {
+        Row: {
+          autor: string;
+          comando: string;
+          created_at: string;
+          estudo_id: string;
+          id: number;
+          motivo: string | null;
+          organization_id: string;
+          revisao_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          autor?: string;
+          comando: string;
+          created_at?: string;
+          estudo_id: string;
+          id?: never;
+          motivo?: string | null;
+          organization_id: string;
+          revisao_id?: string | null;
+        };
+        Update: {
+          autor?: string;
+          comando?: string;
+          created_at?: string;
+          estudo_id?: string;
+          id?: never;
+          motivo?: string | null;
+          organization_id?: string;
+          revisao_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_eventos_organization_id_estudo_id_fkey";
+            columns: ["organization_id", "estudo_id"];
+            isOneToOne: false;
+            referencedRelation: "estudos_tecnicos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_eventos_organization_id_estudo_id_revisao_id_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+        ];
+      };
+      estudo_fontes: {
+        Row: {
+          ativa: boolean;
+          created_at: string;
+          created_by: string;
+          desativada_motivo: string | null;
+          documento_id: string | null;
+          estudo_id: string;
+          id: string;
+          justificativa: string;
+          levantamento_id: string | null;
+          levantamento_revisao_id: string | null;
+          numero: number | null;
+          organization_id: string;
+          pe_projeto_id: string | null;
+          pe_versao_id: string | null;
+          revisao_id: string;
+          sha256: string | null;
+          tipo: string;
+          titulo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          ativa?: boolean;
+          created_at?: string;
+          created_by?: string;
+          desativada_motivo?: string | null;
+          documento_id?: string | null;
+          estudo_id: string;
+          id?: string;
+          justificativa: string;
+          levantamento_id?: string | null;
+          levantamento_revisao_id?: string | null;
+          numero?: number | null;
+          organization_id: string;
+          pe_projeto_id?: string | null;
+          pe_versao_id?: string | null;
+          revisao_id: string;
+          sha256?: string | null;
+          tipo: string;
+          titulo: string;
+        };
+        Update: {
+          ativa?: boolean;
+          created_at?: string;
+          created_by?: string;
+          desativada_motivo?: string | null;
+          documento_id?: string | null;
+          estudo_id?: string;
+          id?: string;
+          justificativa?: string;
+          levantamento_id?: string | null;
+          levantamento_revisao_id?: string | null;
+          numero?: number | null;
+          organization_id?: string;
+          pe_projeto_id?: string | null;
+          pe_versao_id?: string | null;
+          revisao_id?: string;
+          sha256?: string | null;
+          tipo?: string;
+          titulo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_fontes_organization_id_documento_id_fkey";
+            columns: ["organization_id", "documento_id"];
+            isOneToOne: false;
+            referencedRelation: "documentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_fontes_organization_id_estudo_id_revisao_id_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_fontes_organization_id_levantamento_id_levantamento_fkey";
+            columns: ["organization_id", "levantamento_id", "levantamento_revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "levantamento_revisoes";
+            referencedColumns: ["organization_id", "levantamento_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_fontes_organization_id_pe_projeto_id_pe_versao_id_fkey";
+            columns: ["organization_id", "pe_projeto_id", "pe_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "pe_versoes";
+            referencedColumns: ["organization_id", "projeto_id", "id"];
+          },
+        ];
+      };
+      estudo_medida_linhagens: {
+        Row: {
+          acao_id: string | null;
+          acao_request_hash: string | null;
+          created_at: string;
+          created_by: string;
+          estudo_id: string;
+          id: string;
+          organization_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          acao_id?: string | null;
+          acao_request_hash?: string | null;
+          created_at?: string;
+          created_by?: string;
+          estudo_id: string;
+          id?: string;
+          organization_id: string;
+        };
+        Update: {
+          acao_id?: string | null;
+          acao_request_hash?: string | null;
+          created_at?: string;
+          created_by?: string;
+          estudo_id?: string;
+          id?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_medida_linhagens_organization_id_acao_id_fkey";
+            columns: ["organization_id", "acao_id"];
+            isOneToOne: false;
+            referencedRelation: "acoes_operacionais";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_medida_linhagens_organization_id_estudo_id_fkey";
+            columns: ["organization_id", "estudo_id"];
+            isOneToOne: false;
+            referencedRelation: "estudos_tecnicos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estudo_medidas: {
+        Row: {
+          base_id: string | null;
+          created_at: string;
+          created_by: string;
+          descricao: string;
+          estudo_id: string;
+          exige_acao: boolean;
+          fundamento: string;
+          id: string;
+          linhagem_id: string;
+          organization_id: string;
+          perigo_id: string;
+          prazo: string | null;
+          prioridade: string;
+          responsavel_id: string | null;
+          revisao_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          base_id?: string | null;
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          estudo_id: string;
+          exige_acao?: boolean;
+          fundamento?: string;
+          id?: string;
+          linhagem_id: string;
+          organization_id: string;
+          perigo_id: string;
+          prazo?: string | null;
+          prioridade?: string;
+          responsavel_id?: string | null;
+          revisao_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          base_id?: string | null;
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          estudo_id?: string;
+          exige_acao?: boolean;
+          fundamento?: string;
+          id?: string;
+          linhagem_id?: string;
+          organization_id?: string;
+          perigo_id?: string;
+          prazo?: string | null;
+          prioridade?: string;
+          responsavel_id?: string | null;
+          revisao_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_medidas_organization_id_estudo_id_base_id_fkey";
+            columns: ["organization_id", "estudo_id", "base_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_medidas";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_medidas_organization_id_estudo_id_linhagem_id_fkey";
+            columns: ["organization_id", "estudo_id", "linhagem_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_medida_linhagens";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_medidas_organization_id_estudo_id_revisao_id_perigo_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id", "perigo_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_perigos";
+            referencedColumns: ["organization_id", "estudo_id", "revisao_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_medidas_organization_id_responsavel_id_fkey";
+            columns: ["organization_id", "responsavel_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estudo_perigos: {
+        Row: {
+          avaliacao: string;
+          base_id: string | null;
+          codigo: string;
+          created_at: string;
+          created_by: string;
+          critico: boolean;
+          descricao: string;
+          estudo_id: string;
+          exposicao: string;
+          id: string;
+          local: string;
+          organization_id: string;
+          revisao_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          avaliacao?: string;
+          base_id?: string | null;
+          codigo: string;
+          created_at?: string;
+          created_by?: string;
+          critico?: boolean;
+          descricao?: string;
+          estudo_id: string;
+          exposicao?: string;
+          id?: string;
+          local?: string;
+          organization_id: string;
+          revisao_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          avaliacao?: string;
+          base_id?: string | null;
+          codigo?: string;
+          created_at?: string;
+          created_by?: string;
+          critico?: boolean;
+          descricao?: string;
+          estudo_id?: string;
+          exposicao?: string;
+          id?: string;
+          local?: string;
+          organization_id?: string;
+          revisao_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_perigos_organization_id_estudo_id_base_id_fkey";
+            columns: ["organization_id", "estudo_id", "base_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_perigos";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_perigos_organization_id_estudo_id_revisao_id_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+        ];
+      };
+      estudo_revisoes: {
+        Row: {
+          analise: string;
+          aprovado_em: string | null;
+          aprovado_por: string | null;
+          art_referencia: string;
+          base_id: string | null;
+          conclusao: string;
+          created_at: string;
+          created_by: string;
+          escopo: string;
+          estado: string;
+          estudo_id: string;
+          id: string;
+          metodo_versao_id: string | null;
+          numero: number;
+          organization_id: string;
+          premissas: string;
+          responsabilidade_tecnica: string;
+          responsavel_tecnico_id: string;
+          revisor_id: string | null;
+          snapshot: Json | null;
+          snapshot_sha256: string | null;
+          submissao_atual_id: string | null;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          analise?: string;
+          aprovado_em?: string | null;
+          aprovado_por?: string | null;
+          art_referencia?: string;
+          base_id?: string | null;
+          conclusao?: string;
+          created_at?: string;
+          created_by?: string;
+          escopo?: string;
+          estado?: string;
+          estudo_id: string;
+          id?: string;
+          metodo_versao_id?: string | null;
+          numero: number;
+          organization_id: string;
+          premissas?: string;
+          responsabilidade_tecnica?: string;
+          responsavel_tecnico_id: string;
+          revisor_id?: string | null;
+          snapshot?: Json | null;
+          snapshot_sha256?: string | null;
+          submissao_atual_id?: string | null;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          analise?: string;
+          aprovado_em?: string | null;
+          aprovado_por?: string | null;
+          art_referencia?: string;
+          base_id?: string | null;
+          conclusao?: string;
+          created_at?: string;
+          created_by?: string;
+          escopo?: string;
+          estado?: string;
+          estudo_id?: string;
+          id?: string;
+          metodo_versao_id?: string | null;
+          numero?: number;
+          organization_id?: string;
+          premissas?: string;
+          responsabilidade_tecnica?: string;
+          responsavel_tecnico_id?: string;
+          revisor_id?: string | null;
+          snapshot?: Json | null;
+          snapshot_sha256?: string | null;
+          submissao_atual_id?: string | null;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "est_submissao_fk";
+            columns: ["organization_id", "estudo_id", "id", "submissao_atual_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_submissoes";
+            referencedColumns: ["organization_id", "estudo_id", "revisao_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_revisoes_organization_id_estudo_id_base_id_fkey";
+            columns: ["organization_id", "estudo_id", "base_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_revisoes_organization_id_estudo_id_fkey";
+            columns: ["organization_id", "estudo_id"];
+            isOneToOne: false;
+            referencedRelation: "estudos_tecnicos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_revisoes_organization_id_metodo_versao_id_fkey";
+            columns: ["organization_id", "metodo_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "est_metodo_versoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_revisoes_organization_id_responsavel_tecnico_id_fkey";
+            columns: ["organization_id", "responsavel_tecnico_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_revisoes_organization_id_revisor_id_fkey";
+            columns: ["organization_id", "revisor_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estudo_submissoes: {
+        Row: {
+          autor: string;
+          created_at: string;
+          estudo_id: string;
+          id: string;
+          numero: number;
+          organization_id: string;
+          pessoa_id: string;
+          registro_profissional: string;
+          revisao_id: string;
+          sha256: string;
+          snapshot: NonNullable<Json>;
+        };
+        ComputedFields: never;
+        Insert: {
+          autor?: string;
+          created_at?: string;
+          estudo_id: string;
+          id?: string;
+          numero: number;
+          organization_id: string;
+          pessoa_id: string;
+          registro_profissional: string;
+          revisao_id: string;
+          sha256: string;
+          snapshot: NonNullable<Json>;
+        };
+        Update: {
+          autor?: string;
+          created_at?: string;
+          estudo_id?: string;
+          id?: string;
+          numero?: number;
+          organization_id?: string;
+          pessoa_id?: string;
+          registro_profissional?: string;
+          revisao_id?: string;
+          sha256?: string;
+          snapshot?: NonNullable<Json>;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_submissoes_organization_id_estudo_id_revisao_id_fkey";
+            columns: ["organization_id", "estudo_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_submissoes_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estudo_substituicoes: {
+        Row: {
+          anterior_id: string;
+          atual_id: string;
+          autor: string;
+          created_at: string;
+          estudo_id: string;
+          organization_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          anterior_id: string;
+          atual_id: string;
+          autor?: string;
+          created_at?: string;
+          estudo_id: string;
+          organization_id: string;
+        };
+        Update: {
+          anterior_id?: string;
+          atual_id?: string;
+          autor?: string;
+          created_at?: string;
+          estudo_id?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estudo_substituicoes_organization_id_estudo_id_anterior_id_fkey";
+            columns: ["organization_id", "estudo_id", "anterior_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudo_substituicoes_organization_id_estudo_id_atual_id_fkey";
+            columns: ["organization_id", "estudo_id", "atual_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+        ];
+      };
+      estudos_tecnicos: {
+        Row: {
+          aprovada_id: string | null;
+          cliente_id: string;
+          codigo: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          organization_id: string;
+          projeto_id: string | null;
+          responsavel_id: string;
+          revisao_atual_id: string | null;
+          tipo: string;
+          titulo: string;
+          unidade_id: string;
+          updated_at: string;
+          version: number;
+          visibilidade: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          aprovada_id?: string | null;
+          cliente_id: string;
+          codigo: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          organization_id: string;
+          projeto_id?: string | null;
+          responsavel_id: string;
+          revisao_atual_id?: string | null;
+          tipo: string;
+          titulo: string;
+          unidade_id: string;
+          updated_at?: string;
+          version?: number;
+          visibilidade?: string;
+        };
+        Update: {
+          aprovada_id?: string | null;
+          cliente_id?: string;
+          codigo?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          organization_id?: string;
+          projeto_id?: string | null;
+          responsavel_id?: string;
+          revisao_atual_id?: string | null;
+          tipo?: string;
+          titulo?: string;
+          unidade_id?: string;
+          updated_at?: string;
+          version?: number;
+          visibilidade?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "est_aprovada_fk";
+            columns: ["organization_id", "id", "aprovada_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "est_atual_fk";
+            columns: ["organization_id", "id", "revisao_atual_id"];
+            isOneToOne: false;
+            referencedRelation: "estudo_revisoes";
+            referencedColumns: ["organization_id", "estudo_id", "id"];
+          },
+          {
+            foreignKeyName: "estudos_tecnicos_organization_id_cliente_id_projeto_id_fkey";
+            columns: ["organization_id", "cliente_id", "projeto_id"];
+            isOneToOne: false;
+            referencedRelation: "projetos";
+            referencedColumns: ["organization_id", "cliente_id", "id"];
+          },
+          {
+            foreignKeyName: "estudos_tecnicos_organization_id_cliente_id_unidade_id_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id"];
+            isOneToOne: false;
+            referencedRelation: "unidades";
+            referencedColumns: ["organization_id", "cliente_id", "id"];
+          },
+          {
+            foreignKeyName: "estudos_tecnicos_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "estudos_tecnicos_organization_id_responsavel_id_fkey";
+            columns: ["organization_id", "responsavel_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
       fabricantes: {
         Row: {
           id: string;
@@ -4882,6 +5795,187 @@ export type Database = {
           _motivo: string;
           _org: string;
         };
+        Returns: Json;
+      };
+      est_autor_base: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      est_autor_fonte: {
+        Args: {
+          _autor: string;
+          _doc: string;
+          _lev: string;
+          _org: string;
+          _pe: string;
+        };
+        Returns: boolean;
+      };
+      est_autor_ler: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      est_bloqueios: { Args: { _org: string; _revisao: string }; Returns: Json };
+      est_cancelar_arquivo: {
+        Args: { _chave: string; _id: string; _motivo: string; _org: string };
+        Returns: Json;
+      };
+      est_confirmar_arquivo: {
+        Args: { _autor: string; _id: string; _org: string; _sha256: string };
+        Returns: Json;
+      };
+      est_doc_fonte_valida: {
+        Args: {
+          _cliente: string;
+          _documento: string;
+          _org: string;
+          _unidade: string;
+        };
+        Returns: boolean;
+      };
+      est_executar: {
+        Args: { _chave: string; _comando: string; _dados: Json; _org: string };
+        Returns: Json;
+      };
+      est_gravar_fonte: {
+        Args: { _d: Json; _estudo: string; _org: string; _revisao: string };
+        Returns: string;
+      };
+      est_gravar_medida: {
+        Args: {
+          _d: Json;
+          _estudo: string;
+          _org: string;
+          _perigo: string;
+          _revisao: string;
+        };
+        Returns: string;
+      };
+      est_ler: { Args: { _id: string; _org: string }; Returns: boolean };
+      est_ler_arquivo: { Args: { _id: string; _org: string }; Returns: boolean };
+      est_listar: {
+        Args: {
+          _busca?: string;
+          _cliente?: string;
+          _estado?: string;
+          _limite?: number;
+          _org: string;
+          _pagina?: number;
+          _responsavel?: string;
+        };
+        Returns: Json;
+      };
+      est_metodos: {
+        Args: {
+          _busca?: string;
+          _limite?: number;
+          _org: string;
+          _pagina?: number;
+        };
+        Returns: Json;
+      };
+      est_obter: {
+        Args: { _id: string; _org: string; _revisao?: string };
+        Returns: Json;
+      };
+      est_opcoes: {
+        Args: {
+          _busca?: string;
+          _cliente?: string;
+          _org: string;
+          _pagina?: number;
+          _tipo: string;
+          _unidade?: string;
+        };
+        Returns: Json;
+      };
+      est_pe_fonte_valida: {
+        Args: {
+          _cliente: string;
+          _org: string;
+          _unidade: string;
+          _versao: string;
+        };
+        Returns: boolean;
+      };
+      est_pode_enviar_arquivo: {
+        Args: { _id: string; _org: string };
+        Returns: boolean;
+      };
+      est_preparar_arquivo: {
+        Args: {
+          _chave: string;
+          _dados: Json;
+          _org: string;
+          _perigo: string;
+          _revisao: string;
+        };
+        Returns: Json;
+      };
+      est_profissional: {
+        Args: { _autor: string; _org: string };
+        Returns: string;
+      };
+      est_proximo_codigo: { Args: { _org: string }; Returns: string };
+      est_publicar_metodo: {
+        Args: { _chave: string; _dados: Json; _metodo: string; _org: string };
+        Returns: Json;
+      };
+      est_snapshot: { Args: { _org: string; _revisao: string }; Returns: Json };
+      est_travar_autor: {
+        Args: { _autor: string; _org: string };
+        Returns: undefined;
+      };
+      est_travar_destino: {
+        Args: {
+          _autor: string;
+          _editavel?: boolean;
+          _org: string;
+          _revisao: string;
+        };
+        Returns: {
+          analise: string;
+          aprovado_em: string | null;
+          aprovado_por: string | null;
+          art_referencia: string;
+          base_id: string | null;
+          conclusao: string;
+          created_at: string;
+          created_by: string;
+          escopo: string;
+          estado: string;
+          estudo_id: string;
+          id: string;
+          metodo_versao_id: string | null;
+          numero: number;
+          organization_id: string;
+          premissas: string;
+          responsabilidade_tecnica: string;
+          responsavel_tecnico_id: string;
+          revisor_id: string | null;
+          snapshot: Json | null;
+          snapshot_sha256: string | null;
+          submissao_atual_id: string | null;
+          updated_at: string;
+          version: number;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "estudo_revisoes";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      est_travar_fontes: {
+        Args: { _estudo: string; _org: string };
+        Returns: undefined;
+      };
+      est_validar_textos: {
+        Args: { _campos: string[]; _d: Json };
+        Returns: undefined;
+      };
+      est_vincular_acao: {
+        Args: { _chave: string; _dados: Json; _medida: string; _org: string };
         Returns: Json;
       };
       executar_job_agenda_notificacoes: {

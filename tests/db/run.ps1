@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$PostgresBin, [int]$Port = 55440, [switch]$FingerprintBaseline, [switch]$FingerprintCurrent, [switch]$CaptureFingerprint, [switch]$OnlyLevantamentos)
+param([Parameter(Mandatory=$true)][string]$PostgresBin, [int]$Port = 55440, [switch]$FingerprintBaseline, [switch]$FingerprintCurrent, [switch]$CaptureFingerprint, [switch]$OnlyLevantamentos, [switch]$OnlyEstudos)
 $ErrorActionPreference = 'Stop'
 $testRoot = Join-Path $env:TEMP ('nexus-checkpoint-test-' + [guid]::NewGuid().ToString('N'))
 $absoluteRoot = [IO.Path]::GetFullPath($testRoot)
@@ -39,6 +39,14 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Clean installation / upgrade / ledger test failed' }
   if ($FingerprintCurrent -or $CaptureFingerprint) { Save-CatalogFingerprint 'schema-local-depois.json' }
   if ($FingerprintCurrent) { return }
+  if ($OnlyEstudos) {
+    Invoke-TestSql "$PSScriptRoot\estudos.sql"
+    Invoke-TestSql "$PSScriptRoot\estudo-arquivos.sql"
+    $env:PGTEST_HOST = '127.0.0.1'
+    node "$PSScriptRoot\estudos-concurrency.mjs"
+    if ($LASTEXITCODE -ne 0) { throw 'Engineering study concurrency test failed' }
+    return
+  }
   if ($OnlyLevantamentos) {
     Invoke-TestSql "$PSScriptRoot\levantamentos.sql"
     Invoke-TestSql "$PSScriptRoot\levantamento-arquivos.sql"
@@ -100,6 +108,10 @@ try {
   Invoke-TestSql "$PSScriptRoot\levantamento-arquivos.sql"
   node "$PSScriptRoot\levantamentos-concurrency.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Levantamento concurrency test failed' }
+  Invoke-TestSql "$PSScriptRoot\estudos.sql"
+  Invoke-TestSql "$PSScriptRoot\estudo-arquivos.sql"
+  node "$PSScriptRoot\estudos-concurrency.mjs"
+  if ($LASTEXITCODE -ne 0) { throw 'Engineering study concurrency test failed' }
 } finally {
   if (Test-Path -LiteralPath "$absoluteRoot\data\postmaster.pid") {
     Start-Process -FilePath (Join-Path $PostgresBin 'pg_ctl.exe') -ArgumentList @('-D', "$absoluteRoot\data", 'stop', '-m', 'fast', '-w') -WindowStyle Hidden -Wait

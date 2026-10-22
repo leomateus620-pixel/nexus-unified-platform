@@ -1,44 +1,52 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-
-import { NotConfigured, PageHeader, Section } from "@/components/nexus/Page";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
+import { EstudosWorkspace } from "@/features/estudos/EstudosWorkspace";
+import { estadoEstudoSchema } from "@/features/estudos/schemas";
 
 export const Route = createFileRoute("/_authenticated/engenharia/")({
+  validateSearch: z.object({
+    estudo: z.string().uuid().optional().catch(undefined),
+    revisao: z.string().uuid().optional().catch(undefined),
+    perigo: z.string().uuid().optional().catch(undefined),
+    busca: z.string().max(120).default(""),
+    estado: estadoEstudoSchema.optional().catch(undefined),
+    pagina: z.coerce.number().int().min(0).max(10000).default(0).catch(0),
+  }),
   head: () => ({
     meta: [
       { title: "Engenharia — Sistema Nexus" },
-      {
-        name: "description",
-        content: "Regras técnicas versionadas e dimensionamentos das propostas.",
-      },
+      { name: "description", content: "Estudos técnicos, métodos versionados e dimensionamentos." },
       { property: "og:title", content: "Engenharia — Sistema Nexus" },
-      { property: "og:description", content: "Regras técnicas e dimensionamentos." },
+      { property: "og:description", content: "Estudos técnicos e dimensionamentos." },
     ],
   }),
-  component: () => (
-    <div className="space-y-6">
-      <PageHeader
-        eyebrow="Engenharia"
-        title="Engenharia"
-        description="Regras técnicas versionadas e acesso aos mesmos dimensionamentos usados nas propostas."
-      />
-      <div className="grid gap-4 md:grid-cols-2">
-        <Section title="Regras de dimensionamento">
-          <Link
-            to="/engenharia/regras-dimensionamento"
-            className="text-sm text-primary hover:underline"
-          >
-            Gerenciar versões das regras →
-          </Link>
-        </Section>
-        <Section title="Dimensionamentos">
-          <Link to="/engenharia/dimensionamentos" className="text-sm text-primary hover:underline">
-            Ver sistemas dimensionados por revisão →
-          </Link>
-        </Section>
-      </div>
-      <Section title="Apreciações de risco e laudos">
-        <NotConfigured what="O cadastro de estudos técnicos (apreciação de risco, classificação de espaços confinados) ainda não foi implementado." />
-      </Section>
-    </div>
-  ),
+  component: Pagina,
 });
+
+function Pagina() {
+  const search = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
+  return (
+    <EstudosWorkspace
+      search={{
+        ...search,
+        estudo: search.estudo || "",
+        revisao: search.revisao || "",
+        perigo: search.perigo || "",
+        estado: search.estado || "",
+      }}
+      onSearch={(patch) =>
+        navigate({
+          search: (previous) => ({
+            ...previous,
+            ...patch,
+            estudo: (patch.estudo ?? previous.estudo) || undefined,
+            revisao: (patch.revisao ?? previous.revisao) || undefined,
+            perigo: (patch.perigo ?? previous.perigo) || undefined,
+            estado: (patch.estado ?? previous.estado) || undefined,
+          }),
+        })
+      }
+    />
+  );
+}

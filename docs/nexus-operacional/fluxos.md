@@ -1,5 +1,15 @@
 # Fluxos implementados e continuidade
 
+## Estudos técnicos
+
+Cliente/unidade → estudo em elaboração → método e fontes configuradas → conteúdo/perigos/medidas/evidências → submissão imutável → decisão do revisor. Devolução reabre a elaboração preservando a submissão anterior; novo envio produz outra. Aprovação mantém snapshot/hash e nova revisão parte da anterior sem reescrevê-la. Substituição é registrada separadamente.
+
+Uma medida da revisão aprovada vigente pode liberar ou vincular ação operacional, com chave por linhagem entre revisões. A equipe acessa a instrução liberada e o comando normal da ação, sem ganhar acesso ao estudo privado. `/seguranca?acao=<id>` abre o registro correto; transição fixa a versão ao abrir o formulário, e recarregar explicitamente mantém a justificativa.
+
+Levantamento de origem abre a revisão exata. O vínculo de PE abre seu acervo e identifica a versão/hash usada. Somente versões com IDs de contexto congelados verificáveis podem fundamentar o estudo; versões antigas continuam preservadas e podem dar origem a nova revisão conferida. Documento emitido sem contexto verificável não é atribuído pelo estado atual da proposta.
+
+PDF/dossiê, ativos e OS são consumidores posteriores ainda pendentes. Estudo aprovado é um registro profissional da aplicação, sem declaração automática de conformidade ou substituição de ART.
+
 Checkpoint de 22/10/2026. As jornadas abaixo distinguem função disponível, base de backend e dependência ainda ausente. Resultado executado e ambiente ficam em `validacao.md`; não se deduz validação conectada da presença de UI ou SQL.
 
 ## Cliente, unidade e contato

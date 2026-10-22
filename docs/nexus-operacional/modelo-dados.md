@@ -1,6 +1,14 @@
 # Modelo de dados do checkpoint operacional
 
-Descrição do schema local aditivo `0012`–`0020`, após as 30 migrações históricas. SQL e manifesto são a fonte executável; este dicionário registra decisões e limites. Status de aplicação por ambiente fica em `migracoes.md`.
+Descrição do schema aditivo `0012`–`0022`, após as 30 migrações históricas. SQL e manifesto são a fonte executável; este dicionário registra decisões e limites. Status de aplicação por ambiente fica em `migracoes.md`.
+
+## Estudos técnicos — migração 0022
+
+As 13 tabelas são `est_metodos`, `est_metodo_versoes`, `estudos_tecnicos`, `estudo_revisoes`, `estudo_perigos`, `estudo_medida_linhagens`, `estudo_medidas`, `estudo_fontes`, `estudo_arquivos`, `estudo_submissoes`, `estudo_decisoes`, `estudo_substituicoes` e `estudo_eventos`. Todas possuem organização e vínculos compostos. Métodos/fontes/requisitos são versionados; raízes têm código gerado no servidor e concorrência. Conteúdo e medidas pertencem à revisão, sem cadastro paralelo de pessoa ou ação.
+
+Submissões, decisões e substituições são eventos preservados; revisão aprovada não é atualizada para indicar substituição. Fontes têm FKs explícitas e guardam versão/hash, sem copiar o conteúdo privado de PE ou snapshots financeiros. Linha de medida liga uma única ação canônica entre revisões. Arquivos pertencem à revisão e, opcionalmente, a um perigo; staging/confirmar/cancelar incrementam a revisão, sem recontar retries.
+
+Os índices atendem organização, atualização da lista, responsável, estado/revisor, pai e origens únicas. Documentos e PE sem IDs congelados verificáveis não são atribuídos retroativamente pelo contexto mutável de seus pais. Novas congelações PE incluem IDs, preservando hashes anteriores. Detalhes e evidências em `engenharia-estudos.md`, `arquivos-estudos.md` e `engenharia/banco-validacao.md`.
 
 ## Fontes canônicas preservadas
 

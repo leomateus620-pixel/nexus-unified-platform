@@ -31,7 +31,10 @@ const estados: Record<AcaoOperacional["estado"], string> = {
   concluida: "Concluída",
   cancelada: "Cancelada",
 };
-export function AcoesWorkspace() {
+export function AcoesWorkspace({
+  selectedId = "",
+  onSelect,
+}: { selectedId?: string | undefined; onSelect?: ((id: string) => void) | undefined } = {}) {
   const org = useOrg();
   const access = useOperationalAccess(org.data?.orgId ?? "", org.data?.userId ?? "");
   if (access.isPending) return <LoadingState label="Conferindo acesso operacional…" />;
@@ -40,23 +43,55 @@ export function AcoesWorkspace() {
     <AcoesContent
       key={`${org.data?.userId}:${org.data?.orgId}:${org.data?.roles.slice().sort().join(",")}:${JSON.stringify(access.data)}`}
       access={access.data}
+      selectedId={selectedId}
+      onSelect={onSelect}
     />
   );
 }
-function AcoesContent({ access }: { access: OperationalAccess }) {
+function AcoesContent({
+  access,
+  selectedId,
+  onSelect,
+}: {
+  access: OperationalAccess;
+  selectedId: string;
+  onSelect?: ((id: string) => void) | undefined;
+}) {
   const orgId = useOrgId();
   const qc = useQueryClient();
   const [search, setSearch] = useState("");
   const [busca, setBusca] = useState("");
   const [pagina, setPagina] = useState(0);
   const [encerradas, setEncerradas] = useState(false);
-  const [sel, setSel] = useState<AcaoOperacional | null>(null);
+  const [localSel, setLocalSel] = useState<AcaoOperacional | null>(null);
+  const [transitionBase, setTransitionBase] = useState<AcaoOperacional | null>(null);
+  const [refreshed, setRefreshed] = useState<string | null>(null);
   const [nova, setNova] = useState(false);
   const [next, setNext] = useState<AcaoOperacional["estado"] | null>(null);
   const [motivo, setMotivo] = useState("");
   const [saving, setSaving] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
   const keyFor = useCommandKey();
+  const focused = useQuery({
+    queryKey: ["acoes-operacionais", orgId, "ficha", selectedId],
+    enabled: !!orgId && !!selectedId,
+    queryFn: ({ signal }) =>
+      obterAcao({ data: { organization_id: orgId, id: selectedId }, signal }),
+    retry: false,
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: "always",
+  });
+  const sel = selectedId ? (focused.isError ? null : (focused.data ?? null)) : localSel;
+  const setSel = (action: AcaoOperacional | null) => {
+    setLocalSel(action);
+    if (action) qc.setQueryData(["acoes-operacionais", orgId, "ficha", action.id], action);
+  };
+  const chooseNext = (state: AcaoOperacional["estado"]) => {
+    setRefreshed(null);
+    setTransitionBase(sel);
+    setNext(state);
+    setMotivo("");
+  };
   const canManage = access.gerirOperacao;
   const canExecute = !!sel && (canManage || access.pessoaId === sel.responsavel_id);
   const canReview =
@@ -67,6 +102,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
   const transitionId = useId();
   const select = (action: AcaoOperacional) => {
     setSel(action);
+    onSelect?.(action.id);
     setErro(null);
     setNext(null);
     requestAnimationFrame(() => {
@@ -98,7 +134,8 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
       }),
   });
   async function transicionar() {
-    if (!sel || !next) return;
+    const target = transitionBase ?? sel;
+    if (!target || !next) return;
     if (
       ["aguardando_verificacao", "concluida", "cancelada"].includes(next) &&
       motivo.trim().length < 5
@@ -111,8 +148,8 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
     setErro(null);
     const payload = {
       organization_id: orgId,
-      id: sel.id,
-      expected_version: sel.version,
+      id: target.id,
+      expected_version: target.version,
       estado: next,
       motivo: motivo || null,
     };
@@ -202,7 +239,11 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
           aria-label="Detalhe da ação selecionada"
         >
           <Section title={sel?.titulo ?? "Detalhe da ação"}>
-            {!sel ? (
+            {selectedId && focused.isPending ? (
+              <LoadingState label="Abrindo ação vinculada…" />
+            ) : selectedId && focused.isError ? (
+              <ErrorState error={focused.error} onRetry={() => focused.refetch()} />
+            ) : !sel ? (
               <p className="text-sm text-muted-foreground">
                 Selecione uma ação para ver o problema e o próximo passo.
               </p>
@@ -224,8 +265,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
                   {sel.estado === "aberta" && canExecute && (
                     <ActionButton
                       onClick={() => {
-                        setNext("em_execucao");
-                        setMotivo("");
+                        chooseNext("em_execucao");
                       }}
                     >
                       Iniciar ação
@@ -234,8 +274,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
                   {sel.estado === "em_execucao" && canExecute && (
                     <ActionButton
                       onClick={() => {
-                        setNext("aguardando_verificacao");
-                        setMotivo("");
+                        chooseNext("aguardando_verificacao");
                       }}
                     >
                       Enviar para verificação
@@ -245,8 +284,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
                     <>
                       <ActionButton
                         onClick={() => {
-                          setNext("concluida");
-                          setMotivo("");
+                          chooseNext("concluida");
                         }}
                       >
                         Verificar e concluir
@@ -254,8 +292,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
                       <ActionButton
                         variant="ghost"
                         onClick={() => {
-                          setNext("em_execucao");
-                          setMotivo("");
+                          chooseNext("em_execucao");
                         }}
                       >
                         Devolver para correção
@@ -266,8 +303,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
                     <ActionButton
                       variant="danger"
                       onClick={() => {
-                        setNext("cancelada");
-                        setMotivo("");
+                        chooseNext("cancelada");
                       }}
                     >
                       Cancelar ação
@@ -289,6 +325,7 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
           orgId={orgId}
           onSaved={async (a) => {
             setSel(a);
+            onSelect?.(a.id);
             setNova(false);
             await qc.invalidateQueries({ queryKey: ["acoes-operacionais", orgId] });
           }}
@@ -336,6 +373,11 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
               {erro}
             </p>
           )}
+          {refreshed && (
+            <p role="status" className="my-3 text-sm">
+              {refreshed}
+            </p>
+          )}
           <ActionButton type="submit" loading={saving} className="mt-4">
             Confirmar mudança
           </ActionButton>
@@ -345,7 +387,13 @@ function AcoesContent({ access }: { access: OperationalAccess }) {
               onClick={async () => {
                 if (!sel) return;
                 try {
-                  setSel(await obterAcao({ data: { organization_id: orgId, id: sel.id } }));
+                  const current = await obterAcao({ data: { organization_id: orgId, id: sel.id } });
+                  setSel(current);
+                  setTransitionBase(current);
+                  setErro(null);
+                  setRefreshed(
+                    `Registro recarregado: ${estados[current.estado]}, versão ${current.version}. Confira a situação antes de confirmar; sua justificativa foi mantida.`,
+                  );
                 } catch (error) {
                   setErro(error instanceof Error ? error.message : "Registro indisponível.");
                 }

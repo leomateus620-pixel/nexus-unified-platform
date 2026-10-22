@@ -1,5 +1,13 @@
 # Contratos compartilhados do checkpoint
 
+## Estudos técnicos — checkpoint 41
+
+Proprietário: `src/features/estudos`; tabelas `est_*`/`estudo_*` da migração0022. `est_executar` centraliza criar/contexto/conteúdo/perigo/medida/fonte/submeter/devolver/aprovar/cancelar/nova revisão; `est_publicar_metodo` publica versão e `est_vincular_acao` libera uma instrução ou vincula ação canônica por linhagem. Entradas Zod, chave idempotente e versões esperadas; excluir perigo também verifica a versão da revisão para preservar mudanças concorrentes em medidas/arquivos.
+
+Consulta `est_listar`/`est_obter`, métodos e seletores autorizados/paginados. Prefixos de cache `['estudos',org]`, `['estudo-opcoes',org]` e `['estudo-arquivos',org]`; atribuir ação invalida também `['acoes-operacionais',org]`. Editor fixa sua base de versão. Falha de rede preserva preenchimento; negação serializada de acesso remove o editor e suas cópias técnicas.
+
+Levantamento, PE e documento são fontes por FKs. Autorização atual de todas as fontes históricas restringe estudo, arquivos e histórico. Somente metadados/hash da fonte saem no payload; custos de proposta e modelos PE privados não são projetados. PE legado sem IDs e documento sem contexto congelado verificável ficam fora dos seletores/vínculos; não há backfill por nomes. Emissão PDF/dossiê e integração com OS/ativos continuam consumidores pendentes.
+
 Estado local em 22/10/2026. Este registro descreve objetos reais; nomes propostos no escopo sem implementação não são tabelas disponíveis. Migrações aplicadas/checksums e evidências executadas ficam em `migracoes.md`, manifesto e `validacao.md`.
 
 ## Propriedade das identidades

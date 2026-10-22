@@ -296,3 +296,65 @@ entrada40, rebaixar permissões ou alterar fonte/checksum para recuperar falha. 
 upgrade, conferir os 40 hashes e o catálogo esperado; usar nova migração aditiva, testar instalação
 limpa e upgrade40 → próximo checkpoint. As constraints novas são compatíveis com a aplicação atual,
 e não há backfill operacional, reset, truncamento ou modificação de revisão comercial emitida.
+
+## Estudos Técnicos — `0022` / checkpoint41
+
+**APLICADA + VERIFICADA SCHEMA** às **12:12:30.11955 UTC de 22/10/2026**, no projeto Lovable
+`91380c2d-559c-4527-b3a4-1a8bc1e19f69`. A inspeção posterior ocorreu às 12:13:17.36794 UTC.
+A fonte
+`drizzle/migrations/0022_estudos_tecnicos.sql` tem SHA-256 normalizado
+`0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b` e ocupa a posição41 do
+manifesto, depois das 40 migrações aplicadas. Não reaplicar as cadeias históricas por outro runner.
+
+A migração acrescenta 13 tabelas com RLS e leitura autenticada autorizada; escrita apenas pelos
+comandos de domínio. Métodos/fontes bibliográficas, submissões e decisões são versionados; snapshots
+aprovados são imutáveis. Revisões substituídas recebem uma relação posterior, sem UPDATE no original.
+Fontes operacionais têm FKs explícitas e interseção atual de acesso inclusive às fontes históricas
+desativadas. A confirmação de evidência é exclusivamente service_role, com revalidação de autor,
+papel/registro/atribuição e fontes depois dos locks. As duas novas policies Storage não permitem
+sobrescrita ou remoção do original; permanece o bucket privado existente de 20 MiB.
+
+Há uma evolução deliberada em função existente: o ramo `congelar` de `pe_executar` passa a incluir
+IDs de organização, cliente e unidade no snapshot **novo**. O teste compara a função completa com
+a fonte0014, retirando somente os três campos adicionados, para preservar seus demais ramos. Não
+existe backfill por nomes. PE congelado sem esses IDs continua intacto no acervo e é recusado como
+fonte de estudo; a recuperação consiste em conferir contexto, criar nova versão e congelar.
+
+Documentos legados sem contexto congelado também não são apresentados como fontes de unidade.
+O contrato aceito exige `snapshot.contexto` com IDs de organização/cliente/unidade e nexo comprovado
+documento → revisão → proposta. O emissor Comercial não foi alterado; a biblioteca técnica/emissão
+contextual continua como dependência explícita. As fixtures contextuais só exercitam esse contrato
+no banco descartável, sem representar uma emissão disponível em produção.
+
+Passaram PostgreSQL16.15 em instalação limpa41 e upgrade40 → 41, pessoa/auditoria preservadas,
+PE congelado antes do upgrade com snapshot/hash intactos, recusa de fonte legada e recuperação por
+nova versão, retries, rollback de DDL/ledger, envelopes atômicos, todas as regressões anteriores,
+56 cenários SQL de estudos, 32 de arquivos e 12 cenários concorrentes reais mais a invariante final
+dos snapshots. Revogações durante espera usam `pg_blocking_pids`, não apenas execução sequencial.
+Também passaram nove testes do manifesto e lint dos scripts alterados; cinco DTOs reais de fixtures
+locais foram conferidos nos schemas da aplicação. Comando e alcance: `evidencias/banco-local-41.json`.
+
+`schema-local-41.json` contém 95 relações, 643 constraints, 254 índices, 158 policies, 87 triggers e
+158 funções. `schema-diff-local-40-41.json` registra 284 objetos adicionados, nenhum removido e
+somente `pe_executar` alterada entre os objetos anteriores. A pós-verificação comparou esses objetos
+com `schema-remoto-41.json`: relações, constraints, índices, policies e triggers coincidem. A única
+diferença de definição permanece a indentação histórica de `diferencas_comerciais`; o novo corpo PE
+coincide, incluindo os IDs de contexto. As 541 diferenças de grants são as 126 de função e 415 de
+tabela já conhecidas na plataforma; **nenhuma diferença de grant do novo módulo**. Os 13 novos
+cadastros têm RLS e SELECT autenticado, sem escrita direta de aplicação ou SELECT de anon/service.
+Helpers internos continuam sem EXECUTE de aplicação; confirmação de arquivo é somente serviço.
+As duas policies Storage e o bucket privado20MiB foram conferidos separadamente.
+
+Storage local cobre metadados/RLS; Auth, sessão e upload/download de bytes pelo serviço conectado
+continuam como E2E separado. Não houve fixture operacional no projeto conectado. Evidências remotas:
+`preflight-remoto-0022.json`, `schema-remoto-pre-0022.json`, `verificacao-remota-0022.json`,
+`schema-remoto-41.json` e `schema-diff-41.json`.
+
+A aplicação usou o envelope único da posição41, SHA-256
+`f1350231f06bba47a21b9006abad9cba1fff2281ef4fe5c0a508d1199aae1a2a`, após conferir o ambiente,
+os 40 hashes, a ausência das novas tabelas e o catálogo inteiro sem drift desde checkpoint40.
+O ledger posterior tem 41 entradas exatas; DDL e recibo foram gravados na mesma transação.
+Não editar esta fonte nem apagar a posição41: qualquer correção recebe `0023+`. O código anterior
+continua compatível com as tabelas aditivas e os campos extras de novos snapshots PE. Uma falha
+posterior deve ser diagnosticada sem revogar proteção de arquivos/revisões ou inferir contexto por
+nomes; usar correção aditiva e repetir instalação limpa/upgrade41 → próximo checkpoint.

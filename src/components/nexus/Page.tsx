@@ -96,17 +96,31 @@ export function Section({
   description,
   children,
   className,
+  actions,
 }: {
   title: string;
   description?: string;
   children: ReactNode;
   className?: string;
+  actions?: ReactNode;
 }) {
+  const heading = (
+    <>
+      <h2 className="text-sm font-semibold text-foreground">{title}</h2>
+      {description && <p className="text-xs text-muted-foreground">{description}</p>}
+    </>
+  );
   return (
     <section className={cn("nx-section rounded-lg border border-border bg-card", className)}>
       <div className="nx-section-heading border-b border-border px-4 py-3">
-        <h2 className="text-sm font-semibold text-foreground">{title}</h2>
-        {description && <p className="text-xs text-muted-foreground">{description}</p>}
+        {actions ? (
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="min-w-0 flex-1 basis-48">{heading}</div>
+            <div className="flex min-w-0 flex-wrap gap-2">{actions}</div>
+          </div>
+        ) : (
+          heading
+        )}
       </div>
       <div className="nx-section-body p-4">{children}</div>
     </section>

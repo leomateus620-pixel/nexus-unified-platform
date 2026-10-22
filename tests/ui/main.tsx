@@ -24,7 +24,7 @@ import { useSave } from "@/features/propostas/hooks";
 import { OutletContext, useFixturePage } from "./router";
 import { query, scenario } from "./data";
 import { PessoasWorkspace } from "@/features/operacao/PessoasWorkspace";
-import { AcoesWorkspace } from "@/features/operacao/AcoesWorkspace";
+import { Route as SegurancaRoute } from "@/routes/_authenticated/seguranca";
 import { Route as PeRoute } from "@/routes/_authenticated/projetos-engenharia";
 import { Route as MapsLibraryRoute } from "@/routes/mapas-3d_.unidades";
 import { Route as ClientesRoute } from "@/routes/_authenticated/clientes";
@@ -70,6 +70,7 @@ const Clientes = ClientesRoute.options.component;
 const Configuracoes = ConfiguracoesRoute.options.component;
 const Levantamentos = LevantamentosRoute.options.component;
 const Engenharia = EngenhariaRoute.options.component;
+const Seguranca = SegurancaRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
@@ -82,7 +83,7 @@ function Harness() {
         ) : page === "equipe" ? (
           <PessoasWorkspace />
         ) : page === "seguranca" ? (
-          <AcoesWorkspace />
+          <Seguranca />
         ) : page === "projetos-engenharia" ? (
           <ProjetosEngenharia />
         ) : page === "mapas-library" ? (

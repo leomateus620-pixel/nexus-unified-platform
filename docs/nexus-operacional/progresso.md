@@ -1,5 +1,17 @@
 # Checkpoint de execução
 
+## Checkpoint 41 — Estudos Técnicos
+
+Último checkpoint publicado antes desta rodada: `b5a4bc4044cbbaa37c36d0f951382e77a7c26df1` (Levantamentos). Seus três checks remotos passaram; evidência em `evidencias/ci-40.json`. A branch continua em desenvolvimento e a PR13 permanece draft.
+
+Migração 0022 aplicada em 22/10/2026 às 12:12:30.11955 UTC e conferida às 12:13:17.36794 UTC: ledger 41, schema/RLS/grants/Storage compatíveis com o testado. Fonte congelada SHA-256 `0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b`; correções SQL posteriores usarão 0023+. Nenhuma fixture operacional foi criada.
+
+Estudos têm métodos publicados, conteúdo versionado, perigos/medidas, arquivos privados, submissões e decisões profissionais. Ações canônicas recebem instrução liberada e URL exata. Novas versões PE congelam IDs de contexto; PE/documentos antigos sem IDs verificáveis não são reatribuídos pelo estado atual dos pais. Originais e hashes permanecem intactos. Fonte revogada oculta editores; erro de rede preserva o texto.
+
+Passaram: 56 cenários SQL, 32 de arquivos e 12 concorrentes reais, instalação limpa/upgrade 40→41 e regressões de banco; 22 testes de estudo e 15 de arquivos; 61 layouts/seis larguras e 12 comportamentos UI; três cenários de URL/revalidação/conflito de ação; DTOs reais PostgreSQL 5/5. Typecheck global e build passaram após geração oficial de 95 tabelas/131 funções/quatro enums. Operacional 49 + manifesto 9 + tipos 3 + contratos 134 passaram. A regressão UI completa encerrou exit 0, com relatórios em `evidencias/ui-41/`: catálogo/propostas/autosave, shell, acervo PE, Clientes, Levantamentos, Estudos e ação vinculada. Após o refinamento do título de evidências, a suíte delimitada de Estudos também passou novamente; relatórios em `evidencias/ui-41-final/`.
+
+E2E Auth/Storage HTTP conectado continua não comprovado conforme decisão do usuário. Emissão documental/PDF, ativos/OS, rastreio de origem em dimensionamentos e desempenho com carga representativa continuam pendentes desta jornada; o menu Engenharia não é declarado integralmente concluído. Próximas frentes independentes em preparação: Almoxarifado/Ferramentas e leitor privado por página do acervo PE, com seus contratos reais antes da expansão de interface.
+
 Data: 22/10/2026 (America/Sao_Paulo). Branch de trabalho: `codex/nexus-operacao-integrada-agenda-equipe`. Base: `820c79d60055a25e2d56bf60a091f032c5e7a8bf`. Trabalho em andamento; este checkpoint não declara a plataforma operacional completa.
 
 ## Contrato preservado

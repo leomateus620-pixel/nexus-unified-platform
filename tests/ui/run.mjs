@@ -20,9 +20,12 @@ try {
     ["autosave-checks.mjs"],
   ];
   const onlyLevantamentos = process.argv.includes("--levantamentos");
-  const checks = process.argv.includes("--operacional") || onlyLevantamentos ? [] : legacyChecks;
-  if (!onlyLevantamentos) checks.push(["operational-quality.mjs"]);
-  checks.push(["levantamentos-quality.mjs"]);
+  const onlyEstudos = process.argv.includes("--estudos");
+  const checks =
+    process.argv.includes("--operacional") || onlyLevantamentos || onlyEstudos ? [] : legacyChecks;
+  if (!onlyLevantamentos && !onlyEstudos) checks.push(["operational-quality.mjs"]);
+  if (!onlyEstudos) checks.push(["levantamentos-quality.mjs"]);
+  if (!onlyLevantamentos) checks.push(["estudos-quality.mjs"], ["acoes-vinculadas.mjs"]);
   for (const [file, ...args] of checks) {
     await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [`tests/ui/${file}`, ...args], {

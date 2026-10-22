@@ -1,0 +1,28 @@
+{
+  "method": "GitHub checks queried by connector; does not certify production deployment or connected authenticated E2E",
+  "date": "2026-10-22",
+  "headRevision": "b5a4bc4044cbbaa37c36d0f951382e77a7c26df1",
+  "checks": [
+    {
+      "name": "presentation",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39772915088/job/119804638057",
+      "head": "b5a4bc4044cbbaa37c36d0f951382e77a7c26df1"
+    },
+    {
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39772915079/job/119804637977",
+      "head": "b5a4bc4044cbbaa37c36d0f951382e77a7c26df1"
+    },
+    {
+      "name": "circulation",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39772915078/job/119804637629",
+      "head": "b5a4bc4044cbbaa37c36d0f951382e77a7c26df1"
+    }
+  ]
+}

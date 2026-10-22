@@ -26,7 +26,32 @@ const cleanName = `nexus_migrations_clean_${process.pid}`;
 const connectorName = `nexus_connector_${process.pid}`;
 let clean;
 let connector;
+let legacyEngineeringVersion;
 try {
+  const legacyPeSource = await readFile(
+    path.join(root, "drizzle/migrations/0014_projetos_engenharia.sql"),
+    "utf8",
+  );
+  const studiesSource = migrations.find((item) =>
+    item.path.endsWith("0022_estudos_tecnicos.sql"),
+  )?.source;
+  if (studiesSource) {
+    const oldCommand = legacyPeSource.match(/create function public\.pe_executar[\s\S]*?\$\$;/)[0];
+    const newCommand = studiesSource.match(
+      /create or replace function public\.pe_executar[\s\S]*?\$\$;/,
+    )[0];
+    assert.equal(
+      newCommand
+        .replace("create or replace function", "create function")
+        .replace(
+          "'organization_id',p.organization_id,'cliente_id',p.cliente_id,'unidade_id',p.unidade_id,",
+          "",
+        )
+        .replace(/\r\n/g, "\n"),
+      oldCommand.replace(/\r\n/g, "\n"),
+      "PE command must preserve every branch except the explicit frozen context IDs",
+    );
+  }
   const appliedBaseline = await applyMigrations(sql, migrations.slice(0, 30));
   assert.equal(appliedBaseline.length, 30);
   await sql.unsafe(`
@@ -34,9 +59,9 @@ try {
     insert into public.clientes(id,organization_id,razao_social)
     values('58000000-0000-0000-0000-000000000002','58000000-0000-0000-0000-000000000001','Client retained across upgrade');
   `);
-  const operationalCheckpoint = Math.min(39, migrations.length);
+  const operationalCheckpoint = Math.min(40, migrations.length);
   const beforeLatest = await applyMigrations(sql, migrations.slice(0, operationalCheckpoint));
-  if (operationalCheckpoint === 39) {
+  if (operationalCheckpoint === 40) {
     // Prova adicional do upgrade do checkpoint operacional efetivamente publicado.
     await sql.begin(async (tx) => {
       await tx.unsafe(`insert into auth.users(id,email) values('58000000-0000-0000-0000-000000000003','upgrade-operational@test.invalid');
@@ -45,9 +70,50 @@ try {
         select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true);
         insert into public.pessoas(id,organization_id,nome,vinculo) values('58000000-0000-0000-0000-000000000004','58000000-0000-0000-0000-000000000001','Operational person retained across upgrade','prestador');`);
     });
+    legacyEngineeringVersion = await sql.begin(async (tx) => {
+      await tx.unsafe(`insert into public.unidades(id,organization_id,cliente_id,nome)
+        values('58000000-0000-0000-0000-000000000005','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000002','Unit retained from checkpoint40');
+        set local role authenticated;
+        select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true);`);
+      const org = "58000000-0000-0000-0000-000000000001";
+      const data = {
+        titulo: "Legacy frozen engineering archive",
+        cliente_id: "58000000-0000-0000-0000-000000000002",
+        unidade_id: "58000000-0000-0000-0000-000000000005",
+        responsavel_id: "58000000-0000-0000-0000-000000000004",
+        resumo: "Frozen before context IDs were recorded",
+        modelo: {
+          schema_version: 1,
+          familia: "documental",
+          finalidade: "estudo",
+          secoes: [
+            {
+              id: "58000000-0000-0000-0000-000000000006",
+              titulo: "Legacy content",
+              texto: "Preserved original archive",
+            },
+          ],
+          parametros: [],
+        },
+      };
+      let [row] =
+        await tx`select public.pe_executar(${org},'58000000-0000-0000-0000-000000000007','criar',${tx.json(data)}) as value`;
+      let payload = {
+        projeto_id: row.value.projeto.id,
+        versao_id: row.value.versao.id,
+        expected_version: row.value.versao.version,
+      };
+      [row] =
+        await tx`select public.pe_executar(${org},'58000000-0000-0000-0000-000000000008','submeter',${tx.json(payload)}) as value`;
+      payload.expected_version = row.value.versao.version;
+      [row] =
+        await tx`select public.pe_executar(${org},'58000000-0000-0000-0000-000000000009','congelar',${tx.json(payload)}) as value`;
+      assert.equal(row.value.versao.snapshot.projeto.cliente_id, undefined);
+      return row.value.versao;
+    });
   }
   const upgrade = [...beforeLatest, ...(await applyMigrations(sql, migrations))];
-  if (operationalCheckpoint === 39) {
+  if (operationalCheckpoint === 40) {
     const [{ retainedPerson }] =
       await sql`select count(*)::int as "retainedPerson" from public.pessoas where id='58000000-0000-0000-0000-000000000004' and nome='Operational person retained across upgrade'`;
     assert.equal(retainedPerson, 1);
@@ -55,8 +121,70 @@ try {
       await sql`select count(*)::int as "retainedAudit" from public.operacao_historico where entidade='pessoas' and entidade_id='58000000-0000-0000-0000-000000000004' and autor='58000000-0000-0000-0000-000000000003'`;
     assert.equal(retainedAudit, 1);
     console.log(
-      `PASS: operational checkpoint 39 → ${migrations.length}; canonical person and audit retained`,
+      `PASS: operational checkpoint 40 → ${migrations.length}; canonical person and audit retained`,
     );
+    if (studiesSource) {
+      const [legacy] =
+        await sql`select snapshot,snapshot_sha256,public.est_pe_fonte_valida(organization_id,id,'58000000-0000-0000-0000-000000000002','58000000-0000-0000-0000-000000000005') as valid_source from public.pe_versoes where id=${legacyEngineeringVersion.id}`;
+      assert.deepEqual(legacy.snapshot, legacyEngineeringVersion.snapshot);
+      assert.equal(legacy.snapshot_sha256, legacyEngineeringVersion.snapshot_sha256);
+      assert.equal(legacy.valid_source, false);
+      await sql.begin(async (tx) => {
+        await tx.unsafe("set local role authenticated");
+        await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+        const [options] =
+          await tx`select public.est_opcoes('58000000-0000-0000-0000-000000000001','projetos_engenharia') as value`;
+        assert.equal(
+          options.value.registros.some((item) => item.id === legacyEngineeringVersion.id),
+          false,
+        );
+      });
+      const draftStudy = await sql.begin(async (tx) => {
+        await tx.unsafe("set local role authenticated");
+        await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+        const [r] =
+          await tx`select public.est_executar('58000000-0000-0000-0000-000000000001',gen_random_uuid(),'criar',jsonb_build_object('titulo','Upgrade source verification','tipo','memorial','cliente_id','58000000-0000-0000-0000-000000000002','unidade_id','58000000-0000-0000-0000-000000000005','responsavel_id','58000000-0000-0000-0000-000000000004')) as value`;
+        return r.value;
+      });
+      await assert.rejects(
+        sql.begin(async (tx) => {
+          await tx.unsafe("set local role authenticated");
+          await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+          await tx`select public.est_executar('58000000-0000-0000-0000-000000000001',gen_random_uuid(),'vincular_fonte',${tx.json({ estudo_id: draftStudy.estudo.id, revisao_id: draftStudy.revisao.id, expected_version: draftStudy.revisao.version, tipo: "projeto_engenharia", pe_versao_id: legacyEngineeringVersion.id, justificativa: "A name match is not sufficient identity evidence" })})`;
+        }),
+        (error) => error.code === "23514" && /IDs congelados/.test(error.message),
+      );
+      const recovered = await sql.begin(async (tx) => {
+        await tx.unsafe("set local role authenticated");
+        await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+        const org = "58000000-0000-0000-0000-000000000001";
+        let [r] =
+          await tx`select public.pe_executar(${org},gen_random_uuid(),'nova_versao',${tx.json({ projeto_id: legacyEngineeringVersion.projeto_id, versao_id: legacyEngineeringVersion.id, resumo: "Context reviewed before new freeze" })}) as value`;
+        const payload = {
+          projeto_id: r.value.projeto.id,
+          versao_id: r.value.versao.id,
+          expected_version: r.value.versao.version,
+        };
+        [r] =
+          await tx`select public.pe_executar(${org},gen_random_uuid(),'submeter',${tx.json(payload)}) as value`;
+        payload.expected_version = r.value.versao.version;
+        [r] =
+          await tx`select public.pe_executar(${org},gen_random_uuid(),'congelar',${tx.json(payload)}) as value`;
+        return r.value.versao;
+      });
+      assert.equal(recovered.snapshot.projeto.cliente_id, "58000000-0000-0000-0000-000000000002");
+      assert.equal(recovered.snapshot.projeto.unidade_id, "58000000-0000-0000-0000-000000000005");
+      await sql.begin(async (tx) => {
+        await tx.unsafe("set local role authenticated");
+        await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+        const [r] =
+          await tx`select public.est_executar('58000000-0000-0000-0000-000000000001',gen_random_uuid(),'vincular_fonte',${tx.json({ estudo_id: draftStudy.estudo.id, revisao_id: draftStudy.revisao.id, expected_version: draftStudy.revisao.version, tipo: "projeto_engenharia", pe_versao_id: recovered.id, justificativa: "New frozen revision with verified canonical context IDs" })}) as value`;
+        assert.equal(r.value.fontes[0].pe_versao_id, recovered.id);
+      });
+      console.log(
+        "PASS: pre-0022 frozen PE snapshot/hash preserved; legacy source rejected by selector and command; reviewed new version freezes canonical IDs and links correctly",
+      );
+    }
   }
   assert.equal(upgrade.length, migrations.length - 30);
   const [{ retained }] =

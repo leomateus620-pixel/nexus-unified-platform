@@ -1,5 +1,15 @@
 # Permissões efetivamente implementadas
 
+## Estudos técnicos — checkpoint 41
+
+Leitura exige capacidade técnica e escopo da ficha, além da autorização atual de **todas** as fontes já vinculadas, inclusive históricas/desativadas. Coordenação operacional e Campo não recebem a análise profissional inteira. A ação liberada usa a entidade canônica e contém somente instrução explicitamente redigida para a execução.
+
+Publicação de método, submissão e aprovação conferem pessoa ativa e registro profissional declarado. Aprovar/devolver exige o revisor designado; a política pode exigir independência do responsável. Admin não substitui essa identidade profissional. Os comandos revalidam autorização após locks e antes de retornar retries, sem permitir DML direto do browser nas 13 tabelas novas.
+
+Revisões aprovadas, submissões/decisões, arquivos vinculados e relações de substituição são preservados. Downloads reautorizam o pai e expiram em 60 segundos; um link já emitido pode funcionar até expirar. Interface refaz consultas sensíveis no foco/intervalo e remove conteúdo técnico ao receber negação; falha de rede mantém o rascunho recuperável. Testes distinguem esses dois estados.
+
+As provas SQL são locais com tenants/perfis isolados; o conectado foi conferido por catálogo, RLS, grants e policies. Não há prova de sessão Auth/Storage HTTP remoto. A revisão futura de suprimentos identificou `aquisicoes` com SELECT por membership contendo custos; isso exige saneamento antes de afirmar proteção financeira global. A nova projeção operacional não é justificativa para manter um endpoint financeiro legado exposto.
+
 Checkpoint local de 22/10/2026. Este documento descreve o código e as migrações `0012`–`0020`; aplicação no projeto conectado e resultados executados pertencem a `migracoes.md` e `validacao.md`. Não certifica todos os módulos previstos no escopo.
 
 ## Identidade, navegação e comandos

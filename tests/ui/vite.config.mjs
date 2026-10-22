@@ -26,6 +26,8 @@ export default defineConfig({
       resolveId(id) {
         if (/\/(levantamentos|lev-arquivos)\.functions(?:\.ts)?$/.test(id))
           return path.join(root, "levantamentos-server.ts");
+        if (/\/(estudos|est-arquivos)\.functions(?:\.ts)?$/.test(id))
+          return path.join(root, "estudos-server.ts");
         if (
           /\/(operacao|files|clientes|projetos-engenharia|pe-arquivos|admin)\.functions(?:\.ts)?$/.test(
             id,

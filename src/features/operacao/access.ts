@@ -28,6 +28,9 @@ export function useOperationalAccess(org: string, user: string) {
               "levantamentos",
               "levantamento-arquivos",
               "levantamento-opcoes",
+              "estudos",
+              "estudo-opcoes",
+              "estudo-arquivos",
             ].includes(String(q.queryKey[0])),
         };
         await client.cancelQueries(sensitive);

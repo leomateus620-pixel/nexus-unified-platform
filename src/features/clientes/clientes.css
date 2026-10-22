@@ -1,0 +1,231 @@
+.nx-client-workspace {
+  min-width: 0;
+}
+.nx-client-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.nx-client-filters > div:first-child {
+  flex: 1 1 240px;
+}
+.nx-client-filters label,
+.nx-client-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.nx-client-filters :is(input, select),
+.nx-client-field :is(input, select, textarea) {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--input);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 8px 12px;
+  font-size: 16px;
+}
+.nx-client-field textarea {
+  resize: vertical;
+}
+.nx-client-field [aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+.nx-client-records {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nx-client-records > li {
+  border-bottom: 1px solid var(--border);
+}
+.nx-client-records > li:last-child {
+  border-bottom: 0;
+}
+.nx-client-records strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.nx-client-records span > span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.nx-client-open {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 84px;
+  padding: 14px 8px;
+  text-align: left;
+  border-radius: 6px;
+}
+.nx-client-open > svg {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+.nx-client-open > span:nth-child(2) {
+  flex: 1;
+}
+.nx-client-open:hover {
+  background: var(--accent);
+}
+.nx-client-situation {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.nx-client-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+}
+.nx-client-child > span {
+  flex: 1 1 230px;
+}
+.nx-client-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+}
+.nx-client-pagination > p {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.nx-client-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.nx-client-facts dt {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.nx-client-facts dd {
+  margin-top: 4px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.nx-client-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.nx-client-tabs button {
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+}
+.nx-client-tabs button[data-state="active"] {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.nx-prompt-dialog.nx-cadastro-dialog {
+  width: min(720px, calc(100% - 32px));
+  padding: 24px;
+}
+.nx-cadastro-dialog > p {
+  margin-top: 8px;
+}
+.nx-client-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.nx-client-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.nx-client-form > :is(.nx-feedback, section),
+.nx-client-field-wide,
+.nx-client-form-actions {
+  grid-column: 1/-1;
+}
+.nx-client-form .nx-feedback {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.nx-client-form .nx-feedback li {
+  margin-top: 4px;
+}
+.nx-client-form .nx-feedback a {
+  text-decoration: underline;
+}
+.nx-client-field {
+  min-width: 0;
+}
+.nx-client-field > p {
+  margin-top: 6px;
+}
+.nx-client-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.nx-prompt-dialog.nx-cadastro-confirm {
+  z-index: 74;
+}
+@media (max-width: 600px) {
+  .nx-client-facts,
+  .nx-client-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-prompt-dialog.nx-cadastro-dialog {
+    width: calc(100% - 16px);
+    max-height: calc(100dvh - 16px);
+    padding: 18px 16px;
+  }
+  .nx-client-open {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .nx-client-open > span:nth-child(2) {
+    flex-basis: calc(100% - 40px);
+  }
+  .nx-client-situation {
+    margin-left: 30px;
+  }
+  .nx-client-pagination {
+    align-items: flex-start;
+  }
+  .nx-client-pagination > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .nx-client-form-actions > span {
+    flex-basis: 100%;
+  }
+  .nx-client-tabs button {
+    padding-inline: 10px;
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "executedOn": "2026-10-22",
+  "classification": "Smoke unitário isolado; código real com browser/broker simulados",
+  "result": "passed",
+  "exitCode": 0,
+  "passed": 9,
+  "source": {
+    "commit": "7fbf58fc72cdcbb22db48206e541ff8a93387d3e",
+    "file": "src/integrations/supabase/previewAuthStorage.ts",
+    "sha256Utf8GitBlob": "5b00130146b77ecd8ed49f118c640d3e75aa7c5e76695f3b9e3f7f8833719f0a",
+    "comparedFrom": "820c79d60055a25e2d56bf60a091f032c5e7a8bf",
+    "readCommand": "git show 7fbf58fc72cdcbb22db48206e541ff8a93387d3e:src/integrations/supabase/previewAuthStorage.ts",
+    "generatedFileEdited": false
+  },
+  "harness": {
+    "location": "%TEMP%/nexus-preview-auth-smoke.mjs",
+    "sha256": "b8e34b14d42d865d79bc71ac39b33133e4906236c008b7b121f6f58da7d92e9f",
+    "runtime": "Node.js 24.15.0, Windows",
+    "method": "git show do commit fixado; TypeScript transpileModule para CommonJS/ES2022; execução em node:vm; assert/strict; fixtures de window, location, localStorage e broker em memória",
+    "commandPowerShellFromRepositoryRoot": "node \"$env:TEMP\\nexus-preview-auth-smoke.mjs\"",
+    "verifyHarnessPowerShell": "(Get-FileHash -LiteralPath \"$env:TEMP\\nexus-preview-auth-smoke.mjs\" -Algorithm SHA256).Hash",
+    "dependencies": "typescript resolvido a partir do package.json do checkout atual",
+    "timers": "Timeouts acelerados para no máximo 5 ms; respostas simuladas via queueMicrotask",
+    "addedToApplicationTestSuite": false,
+    "networkAccess": false
+  },
+  "cases": [
+    {
+      "id": "P01",
+      "description": "SSR retorna storage indefinido sem acessar window",
+      "result": "passed"
+    },
+    {
+      "id": "P02",
+      "description": "Host comum preserva localStorage direto e não envia mensagem ao broker",
+      "result": "passed"
+    },
+    {
+      "id": "P03",
+      "description": "Preview sem iframe preserva localStorage direto",
+      "result": "passed"
+    },
+    {
+      "id": "P04",
+      "description": "GET do broker confiável semeia origem vazia, usa targetOrigin exato e projeto extraído do host",
+      "result": "passed"
+    },
+    {
+      "id": "P05",
+      "description": "GET e REMOVE encaminham valor local anterior ao broker autorizado; REMOVE elimina a cópia local",
+      "result": "passed"
+    },
+    {
+      "id": "P06",
+      "description": "Tombstone de logout limpa cópia local que não mudou",
+      "result": "passed"
+    },
+    {
+      "id": "P07",
+      "description": "Tombstone atrasado preserva uma nova escrita local concorrente",
+      "result": "passed"
+    },
+    {
+      "id": "P08",
+      "description": "Resposta de origem não confiável é ignorada; fallback local e limpeza dos listeners ocorrem após timeout",
+      "result": "passed"
+    },
+    {
+      "id": "P09",
+      "description": "Com localStorage bloqueado, GET ainda recupera sessão do broker confiável",
+      "result": "passed"
+    }
+  ],
+  "observations": [
+    "GET/REMOVE agora incluem valor local anterior; GET pode semear localStorage a partir do editor autorizado.",
+    "setItem ainda rejeita quando localStorage é bloqueado; observação exercitada no harness e comportamento herdado.",
+    "Validação de resposta por origin e requestId, sem event.source, já existia na base; o smoke não comprova comportamento de outras janelas reais."
+  ],
+  "limits": [
+    "Nenhum login/logout Supabase ou broker Lovable real foi exercitado.",
+    "Sem chamada de rede, credencial real, dado operacional ou inserção em banco.",
+    "Não é E2E de iframe, política real de terceiro domínio, navegador físico ou teste de duração real dos timeouts.",
+    "Harness é um artefato TEMP local identificado por nome/hash; para repetir noutra máquina é necessário recuperar esse mesmo arquivo e verificar o hash.",
+    "Este smoke é separado dos 49 testes operacionais e dos gates de frozen install/typecheck/build pós-integração; não comprova esses comandos."
+  ]
+}

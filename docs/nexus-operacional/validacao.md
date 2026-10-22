@@ -65,6 +65,10 @@ Nenhuma fixture desta rodada foi inserida no banco operacional. Não houve merge
 
 ## Banco local e schema conectado
 
+Segunda rodada remota (`39757117641`, HEAD `dceb633`): banco, instalação/upgrade e concorrência passaram após corrigir o marcador do runner. O job parou adiante em 17 erros de Prettier de `src/features/importacao/mapeamento.ts` e `src/features/propostas/hooks.ts`. Correção limitada à formatação desses dois arquivos; hashes de árvores de sintaxe antes/depois são idênticos, ESLint dos dois passou e orçamento59+5 foi reexecutado com exit0. Evidência em [formatacao-ci.json](evidencias/formatacao-ci.json).
+
+O job `circulation` dessa rodada exercitou a cena, mas parou ao reentrar pela biblioteca, pois o link público da Escada dependia do menu antigo sem autorização. Foi incluído acesso explícito na biblioteca; nenhum código de cena, câmera ou controle foi alterado. A verificação visual operacional final passou novamente (36 layouts/nove comportamentos). O resultado final em CI deve ser lido no HEAD posterior a essas correções.
+
 Primeira execução remota de `verify` (run `39756851694`, HEAD `c18723b`) interrompida em `anexos-confirmacao-concurrency.mjs`: `Use o runner descartável`. A criação/migração e assertions anteriores passaram, mas o runner POSIX só fornecia `PGTEST_EPHEMERAL=1` ao processo de instalação. A correção exporta o marcador após criar o cluster temporário para os filhos seguintes, mantendo a proteção contra execução avulsa. Isso é uma falha real de portabilidade do runner; não foi ocultada como erro preexistente nem corrigida reduzindo a autorização.
 
 `tests/db/run.ps1 -PostgresBin <PostgreSQL16.15/bin> -Port 55450` encerrou exit 0 em cluster descartável: instalação de 39 migrações, upgrade de 30 para 39 com cliente histórico preservado, retry sem reexecutar SQL, rejeição de drift e rollback conjunto de DDL/ledger. Também foram executados os mesmos envelopes de uma instrução usados pelo conector. Relatório: [banco-local-final.json](evidencias/banco-local-final.json).
@@ -111,3 +115,11 @@ Comparação desktop do workspace preservado: [antes em 1440×900](evidencias/13
 | T34         | 134 arquivos protegidos, domínio silo/escada/industrial preservado            | Sem alteração de cenas; não é ensaio físico de GPU/gestos      |
 
 A PR deste checkpoint deve permanecer draft enquanto essas lacunas indispensáveis da evolução consolidada estiverem abertas. Aprovação dos gates descritos não altera essa situação.
+
+## Base atualizada pelo Lovable
+
+Mesmo em consulta de planejamento solicitada sem mudanças, a plataforma produziu três commits em `main`, atualizando seu pacote de configuração, lockfile e armazenamento gerado de autenticação do preview, além do plano auxiliar. Os quatro arquivos foram conferidos e a base incorporada à branch de trabalho por merge `5cb9de2`, sem reescrita de histórico e sem aprovar o plano. Apenas um pacote foi instalado pelo lockfile frozen. Typecheck, build e operacional49+manifest9 passaram depois da reconciliação.
+
+A revisão do broker e nove testes smoke em VM passaram: SSR/host comum, iframe de preview, seed/revogação da sessão, concorrência local e origem não autorizada. São respostas simuladas do editor, sem login real. [preview-auth-smoke.json](evidencias/preview-auth-smoke.json) registra fonte, método e limites.
+
+O agente Lovable informou presença das duas variáveis no sandbox/dev; isso não foi tratado como comprovação do runtime publicado. Informou também que `supabase--get_types` escreve o arquivo gerado na branch conectada. Nenhuma regeneração ou aprovação de execução desse plano foi solicitada; o Codex continua editor da branch da PR.

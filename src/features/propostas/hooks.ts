@@ -76,7 +76,12 @@ export type ResumoCalculo = {
     total_venda: number;
     total_custo: number;
   }[];
-  avulsos?: { componente_id: string; origem_id: string; caminho: string[]; quantidade_tecnica: number }[];
+  avulsos?: {
+    componente_id: string;
+    origem_id: string;
+    caminho: string[];
+    quantidade_tecnica: number;
+  }[];
 };
 
 export const revKeys = {

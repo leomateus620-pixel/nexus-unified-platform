@@ -12,6 +12,8 @@ Este guia cobre as jornadas disponíveis nesta branch e os limites verificados e
 
 `SUPABASE_URL` está cadastrada no `.env`, mas não estava exportada no processo PowerShell inspecionado. `SUPABASE_SERVICE_ROLE_KEY` não estava presente no arquivo nem no processo. Isso não prova ausência no runtime Lovable. Preparação/retomada de arquivos informa a dependência precisa de confirmação pelo servidor; edição documental e cadastros continuam disponíveis. Upload/download HTTP e confirmação de binário no ambiente conectado ainda requerem E2E autenticado.
 
+A consulta de capacidades ao agente Lovable informou presença das variáveis no sandbox/dev, sem inspecionar o runtime publicado. Seu mecanismo `supabase--get_types` altera o arquivo gerado na branch conectada; por isso não foi acionado em paralelo com o Codex. O modo de planejamento também gerou metadados/atualizações automáticas de plataforma em `main`; esse comportamento está reconciliado e documentado em `progresso.md`. Não aprovar o plano auxiliar como se fosse a implementação desta PR.
+
 ## Uso diário disponível
 
 Clientes permite buscar e paginar, abrir ficha, cadastrar/editar cliente, unidade e contato, arquivar/reativar e consultar histórico. Arquivamento conserva os registros anteriores e impede sua seleção ordinária em novos vínculos. Se outra sessão alterou o cadastro, compare e recarregue explicitamente antes de reenviar; não substitua a versão atual silenciosamente.

@@ -29,6 +29,14 @@ function Maps() {
         eyebrow="Engenharia · Biblioteca espacial"
         title="Mapas 3D das unidades"
         description="Explore cada unidade em uma visualização dedicada, com estruturas, setores e referências técnicas próprias."
+        actions={
+          <Link
+            to="/escada-lc02"
+            className="nx-button inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-accent"
+          >
+            Escada LC-02 <ArrowUpRight aria-hidden="true" size={18} />
+          </Link>
+        }
       />
       <label className="block max-w-md text-sm">
         Buscar visualização

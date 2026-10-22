@@ -11,6 +11,8 @@ else run() { bash -c "$*"; }; fi
 run "initdb -D $DIR/data -U postgres -A trust >/dev/null"
 run "pg_ctl -D $DIR/data -o '-p $PORT -k $DIR' -l $DIR/log start -w >/dev/null"
 trap 'run "pg_ctl -D $DIR/data stop -m fast >/dev/null" || true; rm -rf "$DIR"' EXIT
+# Every child scenario runs only after this runner has created the disposable cluster.
+export PGTEST_EPHEMERAL=1
 P="psql -X -q -v ON_ERROR_STOP=1 -h $DIR -p $PORT -U postgres -d postgres"
 $P -f "$ROOT/tests/db/bootstrap.sql"
 PGTEST_EPHEMERAL=1 PGTEST_PORT="$PORT" node "$ROOT/scripts/migrations/test-installation.mjs"

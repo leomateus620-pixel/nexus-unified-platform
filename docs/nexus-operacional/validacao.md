@@ -65,6 +65,8 @@ Nenhuma fixture desta rodada foi inserida no banco operacional. Não houve merge
 
 ## Banco local e schema conectado
 
+Primeira execução remota de `verify` (run `39756851694`, HEAD `c18723b`) interrompida em `anexos-confirmacao-concurrency.mjs`: `Use o runner descartável`. A criação/migração e assertions anteriores passaram, mas o runner POSIX só fornecia `PGTEST_EPHEMERAL=1` ao processo de instalação. A correção exporta o marcador após criar o cluster temporário para os filhos seguintes, mantendo a proteção contra execução avulsa. Isso é uma falha real de portabilidade do runner; não foi ocultada como erro preexistente nem corrigida reduzindo a autorização.
+
 `tests/db/run.ps1 -PostgresBin <PostgreSQL16.15/bin> -Port 55450` encerrou exit 0 em cluster descartável: instalação de 39 migrações, upgrade de 30 para 39 com cliente histórico preservado, retry sem reexecutar SQL, rejeição de drift e rollback conjunto de DDL/ledger. Também foram executados os mesmos envelopes de uma instrução usados pelo conector. Relatório: [banco-local-final.json](evidencias/banco-local-final.json).
 
 As suítes novas cobrem Clientes 28, Engenharia 19, arquivos de engenharia 19, fundação 45, Agenda 38, administração 16, scheduler 3 e confirmação de anexos 12 assertions, além dos cenários concorrentes reais de operações/confirmacão e das suítes históricas. Cinco disputas novas verificam revogação de papel/capacidade e reatribuição do pai enquanto a confirmação aguarda locks. Autorização também é reavaliada no retry de arquivo já vinculado.

@@ -1,5 +1,20 @@
 # Checkpoint de execução
 
+## Fechamento de CI — navegação dos módulos em off
+
+No commit `609f2d1`, os workflows Industrial map e Escada LC-02 passaram.
+Operational UI detectou uma expectativa antiga: o teste de busca ainda exigia
+o link de Projetos de Engenharia, desativado no recorte final. O teste agora
+confere Engenharia na busca, ausência dos cinco destinos incompletos,
+disponibilidade da Agenda Equipe e retorno do foco ao fechar o menu.
+
+A repetição local desse arquivo passou: 36 layouts, nove verificações, sete
+pares de contraste e nenhum erro JavaScript. Evidência em
+`evidencias/ui-50-navigation/qualidade-operacional/results.json`.
+A regressão local da Escada também passou nos 11 cenários de navegador,
+com renderização por software, sem certificar desempenho em GPU física.
+Os checks da revisão seguinte serão vinculados na PR antes de liberá-la.
+
 ## Consolidação48 — entrega focada e evidências locais
 
 Agenda e Equipe estão integradas às identidades, ações, levantamentos,

@@ -18,6 +18,8 @@ disponíveis têm provas abaixo. Não há fixture no banco operacional.
 | UI final de Agenda |30 layouts/17 jornadas incluindo pendências e versões; arquivos6larguras/6 jornadas | ui-49-agenda-final |
 | UI de pendências |6larguras/4 jornadas, incluindo redução30→1, retorno da página2 e cache atualizado | ui-47-agenda-serie-pendencias-final-encolhimento |
 | Inspeção visual | desktop1440×900 e móvel390×845; antes/depois, validação PT-BR, detalhe/origem/anexos | revisao-product-design-agenda.md |
+| Navegação final em off | 36 layouts, nove verificações e sete pares de contraste passaram; busca, cinco destinos ocultos, Agenda visível e retorno do foco | ui-50-navigation/qualidade-operacional/results.json |
+| Escada em navegador local | 11 cenários passaram, incluindo 1/5/10 pessoas, controles, duas recuperações WebGL e retorno pela biblioteca; renderização por software, sem prova de GPU física | escada-48-local/ui.json |
 | Catálogo conectado | prefixo48 aplicado, RLS/índices/constraints/triggers conciliados, cron ativo; fila vazia com jobs backend sem erro | verificacao-remota-0027-0028.json, verificacao-remota-0029.json, schema-diff-48.json, cron-pos-0028.json |
 | Build e tipos | build local e typecheck global passaram; tipos gerados oficialmente, sem edição manual | geracao-tipos-48.json |
 

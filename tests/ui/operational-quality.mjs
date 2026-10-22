@@ -127,24 +127,38 @@ try {
     await page.getByRole("button", { name: "Fechar formulário", exact: true }).click();
     await page.getByRole("button", { name: "Descartar alterações", exact: true }).click();
   });
-  await check("mobile navigation search and focus recovery", async () => {
-    await go("equipe");
-    const trigger = page.getByRole("button", { name: "Abrir menu", exact: true });
-    await trigger.click();
-    await page
-      .getByRole("searchbox", { name: "Buscar funcionalidade", exact: true })
-      .fill("engenharia");
-    await expect(
-      page
-        .locator(".nx-mobile-menu")
-        .getByRole("link", { name: "Projetos de Engenharia", exact: true }),
-    ).toBeVisible();
-    await expect(
-      page.locator(".nx-mobile-menu").getByRole("link", { name: "Clientes", exact: true }),
-    ).toHaveCount(0);
-    await page.keyboard.press("Escape");
-    await expect(trigger).toBeFocused();
-  });
+  await check(
+    "mobile navigation search excludes incomplete modules and restores focus",
+    async () => {
+      await go("equipe");
+      const trigger = page.getByRole("button", { name: "Abrir menu", exact: true });
+      await trigger.click();
+      await page
+        .getByRole("searchbox", { name: "Buscar funcionalidade", exact: true })
+        .fill("engenharia");
+      await expect(
+        page.locator(".nx-mobile-menu").getByRole("link", { name: "Engenharia", exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.locator(".nx-mobile-menu").getByRole("link", { name: "Clientes", exact: true }),
+      ).toHaveCount(0);
+      await page.getByRole("searchbox", { name: "Buscar funcionalidade", exact: true }).fill("");
+      for (const href of [
+        "/execucao",
+        "/inspecoes",
+        "/documentacao",
+        "/seguranca",
+        "/projetos-engenharia",
+      ]) {
+        await expect(page.locator(`.nx-mobile-menu a[href="${href}"]`)).toHaveCount(0);
+      }
+      await expect(
+        page.locator(".nx-mobile-menu").getByRole("link", { name: "Agenda Equipe", exact: true }),
+      ).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(trigger).toBeFocused();
+    },
+  );
   await check("empty and failed queries present different recoverable states", async () => {
     await go("equipe", "&scenario=empty");
     await expect(page.getByText("Nenhuma pessoa neste recorte", { exact: true })).toBeVisible();

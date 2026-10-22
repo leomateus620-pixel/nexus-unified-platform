@@ -1,0 +1,31 @@
+{
+  "method": "Official @supabase/postgres-meta generation mode; isolated PostgreSQL catalog introspection, no remote data",
+  "generator": {
+    "name": "@supabase/postgres-meta",
+    "version": "0.100.0"
+  },
+  "postgres": "16.15",
+  "migrationCount": 42,
+  "manifestHash": "75ea384a3a5aee137e15e37c33b0a52478cd283c658177efea12b91babdb35e3",
+  "schemas": [
+    "public"
+  ],
+  "postgrestContract": "14.5",
+  "postgrestVersionSource": "existing generated client contract; not detected from a remote service",
+  "detectOneToOneRelationships": true,
+  "formatter": {
+    "name": "prettier",
+    "version": "3.9.6",
+    "typescriptAstPreserved": true
+  },
+  "tables": 108,
+  "views": 0,
+  "functions": 161,
+  "enums": 4,
+  "sha256": "f740569f1f6f9e54cd20c88751feeacbaa76b959d14126836a5a66b0267aad1c",
+  "rawSha256": "4a7d4ab364116d0fda056d4073fd6de3d7caf9b0af89cc13d002878f0cd8a017",
+  "bytes": 241724,
+  "rawBytes": 236689,
+  "standaloneTypescriptDiagnostics": 0,
+  "warning": "(node:6996) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added to [BoundPool]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit\n(Use `node --trace-warnings ...` to show where the warning was created)"
+}

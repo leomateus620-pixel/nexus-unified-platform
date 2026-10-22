@@ -1,0 +1,112 @@
+{
+  "identity": "kind:key",
+  "added": [],
+  "removed": [
+    {
+      "key": "apontamentos.alm_apontamento_item_fk",
+      "md5": "ac0b1ea0754d2eac6c5fcfb5f73c76d5",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordem_compra_itens.alm_oci_ordem_fk",
+      "md5": "c0980d2af59d43061fc5b82c14b226f1",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordem_producao_itens.alm_opi_ordem_fk",
+      "md5": "52a7ff00377d0f5fe3a14fc59c43d37b",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordens_compra.alm_oc_fornecedor_fk",
+      "md5": "1a08d3358a5f50c8e054cf487aefa58a",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordens_compra.alm_oc_projeto_fk",
+      "md5": "a64e7ca5518950921b920419adb7e7eb",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordens_compra.alm_oc_revisao_fk",
+      "md5": "790e4a657ece998ddece917a0dc63df4",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordens_producao.alm_op_projeto_fk",
+      "md5": "a64e7ca5518950921b920419adb7e7eb",
+      "kind": "constraints"
+    },
+    {
+      "key": "ordens_producao.alm_op_revisao_fk",
+      "md5": "790e4a657ece998ddece917a0dc63df4",
+      "kind": "constraints"
+    },
+    {
+      "key": "recebimentos.alm_recebimento_item_fk",
+      "md5": "f320bad4f6aad659021e0f0b0c6b7084",
+      "kind": "constraints"
+    },
+    {
+      "key": "operacao_guard_anexo().PUBLIC.EXECUTE",
+      "md5": "68934a3e9455fa72420237eb05902327",
+      "kind": "function_grants"
+    }
+  ],
+  "changed": [
+    {
+      "kind": "constraints",
+      "key": "apontamentos.apontamentos_item_id_fkey",
+      "before": "93fc45c502fc104af011a8ae79340e1d",
+      "after": "fb49b1adfc8d682f8810e444b6d162b5"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordem_compra_itens.ordem_compra_itens_ordem_id_fkey",
+      "before": "b6cf202adfe2a424b845778789bffdaf",
+      "after": "20dc31e1a67eba5e4825fac12218cdf3"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordem_producao_itens.ordem_producao_itens_ordem_id_fkey",
+      "before": "2507ef62a117b421788672abf17a2ead",
+      "after": "0c2cb8246190a1ef2b87414032a2af1c"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordens_compra.ordens_compra_fornecedor_id_fkey",
+      "before": "25ce32a395bea20a9ff78554a698f62b",
+      "after": "1a08d3358a5f50c8e054cf487aefa58a"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordens_compra.ordens_compra_projeto_id_fkey",
+      "before": "9178fbbfd4e86a32af4b8ee08bbc23d8",
+      "after": "a64e7ca5518950921b920419adb7e7eb"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordens_compra.ordens_compra_revisao_id_fkey",
+      "before": "f72b1830fceaba10fa35460ba8f627ac",
+      "after": "790e4a657ece998ddece917a0dc63df4"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordens_producao.ordens_producao_projeto_id_fkey",
+      "before": "9178fbbfd4e86a32af4b8ee08bbc23d8",
+      "after": "a64e7ca5518950921b920419adb7e7eb"
+    },
+    {
+      "kind": "constraints",
+      "key": "ordens_producao.ordens_producao_revisao_id_fkey",
+      "before": "f72b1830fceaba10fa35460ba8f627ac",
+      "after": "790e4a657ece998ddece917a0dc63df4"
+    },
+    {
+      "kind": "constraints",
+      "key": "recebimentos.recebimentos_item_id_fkey",
+      "before": "603e5fe9ca568e73d2e7020028b7b7eb",
+      "after": "062cfd27a983994e6acd15b7f707a767"
+    }
+  ]
+}

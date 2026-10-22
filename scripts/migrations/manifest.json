@@ -167,6 +167,14 @@
     {
       "path": "drizzle/migrations/0022_estudos_tecnicos.sql",
       "sha256": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b"
+    },
+    {
+      "path": "drizzle/migrations/0023_almoxarifado.sql",
+      "sha256": "4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8"
+    },
+    {
+      "path": "drizzle/migrations/0024_suprimentos_relacoes_univocas.sql",
+      "sha256": "3186fcc00879dad91e02c0bf55bb6d856e69d77a12a8d1b546b7c80ae2fd5faa"
     }
   ]
 }

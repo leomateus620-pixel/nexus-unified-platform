@@ -1,0 +1,43 @@
+{
+  "project": {
+    "id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+    "name": "Nexus Unified Platform",
+    "repository": "https://github.com/leomateus620-pixel/nexus-unified-platform",
+    "latestCommit": "7fbf58fc72cdcbb22db48206e541ff8a93387d3e"
+  },
+  "method": "Read-only aggregate integrity checks; no operational identities, personal data or fixture writes.",
+  "candidate_absent": true,
+  "checked_at": "2026-10-22T13:03:03.074205+00:00",
+  "checks": {
+    "apontamento_item_tenant": 0,
+    "apontamento_tenant_unicidade": 0,
+    "demanda_tenant_revisao_unicidade": 0,
+    "fornecedor_tenant_unicidade": 0,
+    "oc_fornecedor_tenant": 0,
+    "oc_projeto_revisao": 0,
+    "oc_revisao_tenant": 0,
+    "oc_tenant_revisao_unicidade": 0,
+    "oci_demanda_revisao": 0,
+    "oci_ordem_tenant": 0,
+    "oci_tenant_unicidade": 0,
+    "op_projeto_revisao": 0,
+    "op_revisao_tenant": 0,
+    "op_tenant_revisao_unicidade": 0,
+    "opi_demanda_revisao": 0,
+    "opi_ordem_tenant": 0,
+    "opi_tenant_unicidade": 0,
+    "produto_tenant_unicidade": 0,
+    "projeto_proposta_cliente": 0,
+    "projeto_tenant_revisao_unicidade": 0,
+    "recebimento_item_tenant": 0,
+    "recebimento_tenant_unicidade": 0
+  },
+  "conflicts": 0,
+  "integrity_ready": true,
+  "ledger_count": 41,
+  "ledger_last": {
+    "path": "drizzle/migrations/0022_estudos_tecnicos.sql",
+    "position": 41,
+    "sha256": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b"
+  }
+}

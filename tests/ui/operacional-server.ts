@@ -258,16 +258,46 @@ window.__nexusOperational = state;
 window.__operationalFail = scenario === "error";
 const operations = new Map();
 const peArquivos = [];
+window.__nexusPeArquivos = peArquivos;
 export const listarArquivosPe = async ({ data }) => {
   await read("listarArquivosPe", { data });
-  return copy(
-    peArquivos
+  if (window.__peFileQueryError)
+    throw new Error(
+      window.__peFileQueryError === "denied"
+        ? "Arquivo indisponível para seu acesso atual."
+        : "Não foi possível atualizar os originais privados (fixture).",
+    );
+  const version = state.versoes.find((v) => v.id === data.versao_id);
+  const project = state.projetos.find((p) => p.id === version?.projeto_id);
+  if (!version || !project) throw new Error("Arquivo indisponível para seu acesso atual.");
+  return copy({
+    rows: peArquivos
       .filter((a) => a.versao_id === data.versao_id && a.estado !== "cancelado")
-      .map((a) => ({ ...a, meu_envio: true })),
-  );
+      .map((a) => ({ ...a, meu_envio: a.created_by === actor })),
+    permissoes: {
+      ler: true,
+      adicionar:
+        !window.__peFilesReadOnly &&
+        scenario !== "restricted" &&
+        version.estado === "rascunho" &&
+        !project.arquivado,
+    },
+  });
 };
 export const prepararArquivoPe = async ({ data }) =>
   write("prepararArquivoPe", data, () => {
+    const existing = peArquivos.find(
+      (a) =>
+        a.organization_id === org &&
+        a.versao_id === data.versao_id &&
+        a.sha256 === data.sha256 &&
+        a.estado !== "cancelado",
+    );
+    if (existing) {
+      if (existing.tamanho !== data.tamanho || existing.mime !== data.mime)
+        throw new Error("Hash já registrado com tamanho ou tipo diferente (fixture).");
+      return { arquivo: copy(existing), token: null };
+    }
     const arquivo = {
       ...data,
       id: crypto.randomUUID(),
@@ -287,6 +317,7 @@ export const retomarArquivoPe = async ({ data }) => ({
   token: null,
 });
 export const confirmarArquivoPe = async ({ data }) => {
+  if (window.__peFileConfirmError) throw new Error("Falha de confirmação do original na fixture.");
   const arquivo = peArquivos.find((a) => a.id === data.id);
   if (!arquivo) throw new Error("Arquivo de teste não encontrado.");
   arquivo.estado = "vinculado";
@@ -468,11 +499,28 @@ export const transicionarAcao = async ({ data }) =>
   });
 export const listarAnexos = async ({ data }) => {
   await read("listarAnexos", { data });
-  return copy(
-    state.anexos.filter((a) =>
-      ["pessoa_id", "acao_id", "qualificacao_id"].some((k) => data[k] && a[k] === data[k]),
-    ),
-  );
+  if (window.__anexosReadError)
+    throw new Error("Não foi possível atualizar os arquivos privados (fixture).");
+  const adicionar =
+    window.__anexoCanAdd ?? window.__operationalFilesAdd ?? scenario !== "restricted";
+  return copy({
+    registros: state.anexos
+      .filter(
+        (a) =>
+          a.estado !== "cancelado" &&
+          ["pessoa_id", "acao_id", "qualificacao_id", "ferramenta_id", "calibracao_id"].some(
+            (k) => data[k] && a[k] === data[k],
+          ),
+      )
+      .map((a) => ({
+        ...a,
+        ferramenta_id: a.ferramenta_id ?? null,
+        calibracao_id: a.calibracao_id ?? null,
+        pode_retomar: adicionar && a.estado === "pendente",
+        pode_cancelar: adicionar && a.estado === "pendente",
+      })),
+    permissoes: { adicionar },
+  });
 };
 export const prepararUpload = async ({ data }) =>
   write("prepararUpload", data, () => {
@@ -482,6 +530,8 @@ export const prepararUpload = async ({ data }) =>
       pessoa_id: null,
       acao_id: null,
       qualificacao_id: null,
+      ferramenta_id: null,
+      calibracao_id: null,
       ...data.pai,
       nome: data.nome,
       mime: data.mime,
@@ -494,11 +544,20 @@ export const prepararUpload = async ({ data }) =>
     return { anexo, token: null };
   });
 export const confirmarUpload = async ({ data }) => {
+  if (window.__anexoConfirmFailure)
+    throw new Error("Falha de confirmação de armazenamento na fixture.");
   const a = state.anexos.find((a) => a.id === data.id);
   if (!a) throw new Error("Arquivo não encontrado na fixture.");
   a.estado = "vinculado";
   return copy(a);
 };
+export const cancelarAnexo = async ({ data }) =>
+  write("cancelarAnexo", data, () => {
+    const a = state.anexos.find((a) => a.id === data.id);
+    if (!a || a.estado !== "pendente") throw new Error("Envio pendente indisponível na fixture.");
+    a.estado = "cancelado";
+    return copy(a);
+  });
 export const baixarAnexo = async ({ data }) => {
   await read("baixarAnexo", { data });
   return { url: "data:text/plain,Arquivo%20do%20ambiente%20isolado%20de%20teste" };

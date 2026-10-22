@@ -22,6 +22,8 @@ jobs:
       - run: bun run test:operacional
       - run: bun run test:levantamentos
       - run: bun run test:estudos
+      - run: bun run test:almoxarifado
+      - run: bun run test:pe:arquivos
       - run: sudo apt-get update && sudo apt-get install -y postgresql
       - run: PATH="$(ls -d /usr/lib/postgresql/*/bin | tail -1):$PATH" bun run test:db
       - run: bun run test:industrial

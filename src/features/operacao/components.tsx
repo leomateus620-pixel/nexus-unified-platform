@@ -55,7 +55,7 @@ export function OperationalDialog({
             opener.current =
               document.activeElement instanceof HTMLElement ? document.activeElement : null;
             const firstField = content.current?.querySelector<HTMLElement>(
-              'input:not([type="hidden"]),select,textarea',
+              'input:not([type="hidden"]):not(:disabled),select:not(:disabled),textarea:not(:disabled)',
             );
             if (firstField) {
               event.preventDefault();

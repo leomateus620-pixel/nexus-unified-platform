@@ -20,6 +20,7 @@ describe("navegação por papel", () => {
       "/escada-lc02",
       "/projetos",
       "/execucao",
+      "/almoxarifado",
       "/equipe",
       "/seguranca",
       "/documentacao",
@@ -72,11 +73,20 @@ describe("navegação por papel", () => {
 
   it.each([
     ["comercial", ["/", "/comercial", "/clientes", "/produtos"]],
-    ["compras", ["/", "/clientes", "/produtos", "/projetos", "/compras"]],
+    ["compras", ["/", "/clientes", "/produtos", "/projetos", "/compras", "/almoxarifado"]],
     ["financeiro", ["/", "/projetos", "/financeiro", "/relatorios"]],
     [
       "campo",
-      ["/", "/levantamentos", "/execucao", "/equipe", "/seguranca", "/documentacao", "/inspecoes"],
+      [
+        "/",
+        "/levantamentos",
+        "/execucao",
+        "/almoxarifado",
+        "/equipe",
+        "/seguranca",
+        "/documentacao",
+        "/inspecoes",
+      ],
     ],
   ])("o papel %s recebe somente seu contexto atual", (role, paths) => {
     const actual = menusVisiveis([role as string]).flatMap((g) => g.items.map((i) => i.to));
@@ -103,7 +113,14 @@ describe("navegação por papel", () => {
   it("concede coordenação explícita a um membro sem papel sem ampliar acesso técnico ou administrativo", () => {
     const caps = ["coordenar_operacao"];
     const paths = menusVisiveis([], caps).flatMap((g) => g.items.map((i) => i.to));
-    expect(paths).toEqual(["/", "/levantamentos", "/execucao", "/equipe", "/seguranca"]);
+    expect(paths).toEqual([
+      "/",
+      "/levantamentos",
+      "/execucao",
+      "/almoxarifado",
+      "/equipe",
+      "/seguranca",
+    ]);
     expect(destinoInicial([], caps)).toBe("/");
     for (const path of paths) expect(podeVerRota([], path, caps)).toBe(true);
     for (const path of ["/configuracoes", "/financeiro", "/projetos-engenharia", "/comercial"])

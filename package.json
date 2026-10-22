@@ -19,6 +19,8 @@
     "typecheck": "tsc --noEmit",
     "test:levantamentos": "vitest run --config tests/vitest.levantamentos.config.ts && vitest run tests/levantamento-arquivos.test.ts",
     "test:estudos": "vitest run --config tests/vitest.estudos.config.ts && vitest run --config tests/vitest.estudo-arquivos.config.ts",
+    "test:almoxarifado": "vitest run --config tests/vitest.almoxarifado.config.ts && vitest run --config tests/vitest.operacao-arquivos.config.ts && vitest run --config tests/vitest.aceite-projeto.config.ts && node --test scripts/nexus-operacional/acceptance-contract.test.mjs",
+    "test:pe:arquivos": "vitest run --config tests/vitest.pe-arquivos.config.ts",
     "test:operacional": "vitest run tests/operacao-files.test.ts tests/operacao-permissions.test.ts tests/session-access.test.ts tests/nexus-nav.test.ts tests/projetos-engenharia.test.ts tests/clientes-operacionais.test.ts && node --test scripts/migrations/manifest.test.mjs scripts/supabase-types/contract.test.mjs && node scripts/nexus-operacional/contracts.mjs",
     "test:escada": "tsx --test scripts/escada-lc02/layout.test.mts scripts/escada-lc02/circulation.test.mts",
     "test:escada:assets": "node scripts/escada-lc02/validate-assets.mjs",
@@ -39,6 +41,8 @@
     "test:ui:operacional": "node tests/ui/run.mjs --operacional",
     "test:ui:levantamentos": "node tests/ui/run.mjs --levantamentos",
     "test:ui:estudos": "node tests/ui/run.mjs --estudos",
+    "test:ui:almoxarifado": "node tests/ui/run.mjs --almoxarifado",
+    "test:ui:pe-arquivos": "node tests/ui/run.mjs --pe-arquivos",
     "test:ui:contracts": "node scripts/nexus-operacional/contracts.mjs",
     "test:ui:legacy-contracts": "node tests/ui/contracts.mjs",
     "test:db": "bash tests/db/run.sh"

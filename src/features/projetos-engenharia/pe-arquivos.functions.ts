@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
@@ -76,21 +77,78 @@ export const listarArquivosPe = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input) => versaoInput.parse(input))
   .handler(async ({ context, data }) => {
+    const db = dbClient(context.supabase);
+    const signal = getRequest().signal;
+    const versao = z
+      .object({ id: z.string().uuid(), projeto_id: z.string().uuid(), estado: z.string() })
+      .nullable()
+      .parse(
+        resultado(
+          await db
+            .from("pe_versoes")
+            .select("id,projeto_id,estado")
+            .eq("organization_id", data.organization_id)
+            .eq("id", data.versao_id)
+            .abortSignal(signal)
+            .maybeSingle(),
+        ),
+      );
+    if (!versao) throw new Error("Arquivo indisponível para seu acesso atual.");
+    const projeto = z
+      .object({ id: z.string().uuid(), arquivado: z.boolean() })
+      .nullable()
+      .parse(
+        resultado(
+          await db
+            .from("pe_projetos")
+            .select("id,arquivado")
+            .eq("organization_id", data.organization_id)
+            .eq("id", versao.projeto_id)
+            .abortSignal(signal)
+            .maybeSingle(),
+        ),
+      );
+    if (!projeto) throw new Error("Arquivo indisponível para seu acesso atual.");
     const arquivos = peArquivoSchema
       .array()
       .parse(
         resultado(
-          await dbClient(context.supabase)
+          await db
             .from("pe_arquivos")
-            .select("*")
+            .select(
+              "id,organization_id,projeto_id,versao_id,nome,mime,tamanho,sha256,caminho,estado,created_by,created_at,confirmado_em",
+            )
             .eq("organization_id", data.organization_id)
             .eq("versao_id", data.versao_id)
             .neq("estado", "cancelado")
             .order("created_at", { ascending: false })
+            .abortSignal(signal)
             .limit(100),
         ) ?? [],
       );
-    return arquivos.map((a) => ({ ...a, meu_envio: a.created_by === context.userId }));
+    // Um SELECT de arquivos vazio também pode ser uma recusa silenciosa do RLS.
+    // Revalidar o pai evita tratar revogação como lista autorizada sem originais.
+    const podeLer = resultado(
+      await db
+        .rpc("pe_ler_projeto", { _org: data.organization_id, _id: projeto.id })
+        .abortSignal(signal),
+    );
+    if (podeLer !== true) throw new Error("Arquivo indisponível para seu acesso atual.");
+    const podeGerir = resultado(
+      await db
+        .rpc("operacao_pode", {
+          _org: data.organization_id,
+          _acao: "gerir_projetos_engenharia",
+        })
+        .abortSignal(signal),
+    );
+    return {
+      rows: arquivos.map((a) => ({ ...a, meu_envio: a.created_by === context.userId })),
+      permissoes: {
+        ler: true as const,
+        adicionar: podeGerir === true && versao.estado === "rascunho" && !projeto.arquivado,
+      },
+    };
   });
 
 export const prepararArquivoPe = createServerFn({ method: "POST" })

@@ -1,0 +1,296 @@
+[
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260927192805_86439f42-e956-4a5a-b03e-b13076527dc5.sql",
+    "position": 1,
+    "sha256": "c58dce7df5e49fe047b1541726c3f1c7522881c5775e42d3e89a311ce5c93efa"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260927192823_20a4739a-e284-49c4-bc4e-1f93f7e5fef4.sql",
+    "position": 2,
+    "sha256": "b6c1c88579ede44f29b6f9874f3be4f2ad6bec4088d07b7c1f3b713a3d3580cc"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260927193124_665e6ca6-37a5-4adc-b802-5e465d4d651a.sql",
+    "position": 3,
+    "sha256": "3f3e6b846926ae8440af2061f7eb2e5110d60271371206cef0a61aaaaa1371b5"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260927212855_c5ec0858-1acc-4d63-8afc-6ae8797e3073.sql",
+    "position": 4,
+    "sha256": "38ba71f9b905ad3fd9f604a2fffbc9e55cc374740d6cd561d132d473612d29f6"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260927212914_d0117df7-66f1-4a34-9e75-51abd2850661.sql",
+    "position": 5,
+    "sha256": "8e3a2619dba79bd4b1105a8b68439669da0b550cee3c2854ea34fea1b6e1b648"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260927213227_c47c219d-3f42-4881-832f-4ed78b4f776c.sql",
+    "position": 6,
+    "sha256": "b6eca3976522a92c32dfe18839d3767adab31443b5fddd0b00aedbcae9afd60e"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928010000_proposta_checkpoints.sql",
+    "position": 7,
+    "sha256": "7fd3090276c7261e729e3bf491e6cf3512af24a49b12cd7a5110050b00544557"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034624_82f59063-c063-4b24-8d7d-8c5da6b72e8a.sql",
+    "position": 8,
+    "sha256": "9fde803c898e49365b301350c46ceab51e9c95db7e22971af4f8c496c90d2db1"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034654_4d48323c-488a-4ebb-8a93-175b74cd09ea.sql",
+    "position": 9,
+    "sha256": "81626668ed55c35454fac710d5d48536594b5d02bd1c40aeb9d953636fad23d0"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034747_e3f4b468-d68a-4c10-ae3c-a64d7fb70d63.sql",
+    "position": 10,
+    "sha256": "b5d346f33fdf0c6da8cfe3d1deffe541564c43bd1e7f204671407912673ada81"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034807_7a2ba155-5022-4a01-b6e3-bd8aad49eaa8.sql",
+    "position": 11,
+    "sha256": "1aa9e343fb9b4d1bfed95f6fb5d08e636bb07870ea080e70639e1745115d92d4"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034824_934a4c94-2c49-428a-a278-d2647d2f6169.sql",
+    "position": 12,
+    "sha256": "9924da547938070fce8110ca2f3f154b547a1e37d674eb25668532863dd973f8"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034852_ddc858f9-8930-4e1c-923b-257c3f8ff386.sql",
+    "position": 13,
+    "sha256": "64b117dec5f2351921f6d81c442dda3f77bfec9e7f0b4a459feba51d5632a157"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928034943_c32daa06-f656-425c-89fd-2a6a7e42b8af.sql",
+    "position": 14,
+    "sha256": "db7f6ca31e797a1820b195de5cea14b4e0570f84ed29c80e8b761c4a6b100ecc"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928035006_5d85a7e1-4c0b-4ccb-9224-6959f5fd97d9.sql",
+    "position": 15,
+    "sha256": "7eaab57033347e30b19e912eb07633735cc8c6eb94b2415c1db7706f86156245"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20260928035016_4db8ec1b-e59d-4488-8792-26fd85c0fc79.sql",
+    "position": 16,
+    "sha256": "9d4f2c61d94fa4e5bbf17b7a7a7ce4725dcc5cff6df098ce77d9006b49a5f763"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20261001140449_490da786-ee36-4270-9b51-835ff20f94c3.sql",
+    "position": 17,
+    "sha256": "a78341c7d347ad9cca6a2dd1e53206249b0fe891a28b874384d88aaadb84cbac"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "supabase/migrations/20261001140514_949b8f16-40fa-4569-8b86-341dacc205d3.sql",
+    "position": 18,
+    "sha256": "3e2f833ae330227e503c9ed5aa7e587d9e888fbfad41896b3dd56a0b7b14a6bf"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0000_estrutura_produtos_itens_avulsos.sql",
+    "position": 19,
+    "sha256": "a53b17c319973a794f82adb7ed10eb3f72cc6083be8caf2d05032e60f49a92ff"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0001_objeto_rascunho_campos_opcionais.sql",
+    "position": 20,
+    "sha256": "47acdfd4700921f7adfaa9072463be70e677af87bb9bc8474ee4b5a2c8d5dd72"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0002_cadastro_comercial_aquisicoes.sql",
+    "position": 21,
+    "sha256": "3b4696cb2c453ccf16debf96f7068a179a08fa84d1e9ab6b0721af744f281408"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0003_importacao_planilha_execucao.sql",
+    "position": 22,
+    "sha256": "28ed122ff6c3c2e05f40e3eea4c499c22a54ae01cfc6661835c9110e292a2a11"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0004_sequencia_permite_zero.sql",
+    "position": 23,
+    "sha256": "8c57009eaf56139e0db5ca14cc4ac3e8d58b136147070c7d3e951056b6101aa1"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0005_importacao_planilha_revogar.sql",
+    "position": 24,
+    "sha256": "cbf129dfeb08ff92140ba55ef17a8d0b3963adf2a5515cdc1de693743157a30f"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0006_custo_inclui_e_origem_demanda.sql",
+    "position": 25,
+    "sha256": "bca9bbd59db075dc2c7688afe3e5b222f0a4232ddc479bcad1b0ed186010e591"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0007_produto_custos_inclui_trigger.sql",
+    "position": 26,
+    "sha256": "5661e1348bfcb2120a534052e52f83c2fc012f02cac6b6b84200d34be45383f9"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0008_revisao_componente_custo_inclui.sql",
+    "position": 27,
+    "sha256": "7648c92c176ced914c6fe2f5942298cc69d634a333aeb76eb765d57a5708496c"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0009_engenharia_emite_recebe.sql",
+    "position": 28,
+    "sha256": "f892209f4743482f4396046d0822b9cc0e440a54c6819155ff560694c06a5d51"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0010_ordens_transacionais_hash_tecnico_v2.sql",
+    "position": 29,
+    "sha256": "d1081dbac9f4ddfc8284b4e516cfd556d3638e83122b51f979a68fa3bf438399"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:11.346019+00",
+    "origin": "baseline_reconciled",
+    "path": "drizzle/migrations/0011_ordens_idempotencia_contexto_trava_revisao.sql",
+    "position": 30,
+    "sha256": "5fd69c2daba98ef7f62af20887e3b9716ecacbcddf8b50134dc2966c89f23ea3"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:33.116535+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0012_operational_foundation.sql",
+    "position": 31,
+    "sha256": "cd87f979d6f988f31d0a6ed383c4dbd7fb3c6a51aa9f5c13eaa483e4f5ead76b"
+  },
+  {
+    "applied_at": "2026-10-22 09:03:58.195099+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0013_clientes_operacionais.sql",
+    "position": 32,
+    "sha256": "2f9c023911e72a9baadf38a7651af1917e28396cfd5e9d793f256fd45937c085"
+  },
+  {
+    "applied_at": "2026-10-22 09:04:03.667574+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0014_projetos_engenharia.sql",
+    "position": 33,
+    "sha256": "f7db27928134f450a65fb5d4d462547e40be83503e916d50eaa24a63edbcc6b4"
+  },
+  {
+    "applied_at": "2026-10-22 09:04:07.820932+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0015_operational_storage.sql",
+    "position": 34,
+    "sha256": "594d2f8307dd14737c750e3e27e3aa44de8a266de02670aa39db261a072fb93d"
+  },
+  {
+    "applied_at": "2026-10-22 09:04:12.568542+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0016_agenda_foundation.sql",
+    "position": 35,
+    "sha256": "62d6b22a6e144e366042a322adedb4ee4c7121597a17e76318caf5d822a628b2"
+  },
+  {
+    "applied_at": "2026-10-22 09:04:17.388975+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0017_pe_arquivos.sql",
+    "position": 36,
+    "sha256": "10567774f0a34a2d48a351ceb1fe533ff153e36e587c979aed29d21bf315885d"
+  },
+  {
+    "applied_at": "2026-10-22 09:04:22.916973+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0018_scheduler.sql",
+    "position": 37,
+    "sha256": "c1e8fa6d9766d1226f4d245691ebe4551fea6deb3ad5942775f81f0e8003f65c"
+  },
+  {
+    "applied_at": "2026-10-22 09:04:26.876351+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0019_admin_vinculos.sql",
+    "position": 38,
+    "sha256": "70744c8a8ba2780c8bca9ce349bc8bb8cd65066d2e94e5ac1d9657ffbc6d815c"
+  },
+  {
+    "applied_at": "2026-10-22 09:23:13.760269+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0020_anexo_confirmacao_autorizada.sql",
+    "position": 39,
+    "sha256": "0f9e80d67f56addacbb7ef305a7e2a803c622b29286e888704111bc22c87bccc"
+  },
+  {
+    "applied_at": "2026-10-22 11:19:38.549955+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0021_levantamentos_tecnicos.sql",
+    "position": 40,
+    "sha256": "c1d415564f7ff3974655d6076be5aa61ffb75d0a7270918f1a050fc90ef80027"
+  },
+  {
+    "applied_at": "2026-10-22 12:12:30.11955+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0022_estudos_tecnicos.sql",
+    "position": 41,
+    "sha256": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b"
+  },
+  {
+    "applied_at": "2026-10-22 13:16:47.507078+00",
+    "origin": "applied",
+    "path": "drizzle/migrations/0023_almoxarifado.sql",
+    "position": 42,
+    "sha256": "4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8"
+  }
+]

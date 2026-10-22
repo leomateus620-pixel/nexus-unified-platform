@@ -16,6 +16,7 @@ export PGTEST_EPHEMERAL=1
 P="psql -X -q -v ON_ERROR_STOP=1 -h $DIR -p $PORT -U postgres -d postgres"
 $P -f "$ROOT/tests/db/bootstrap.sql"
 PGTEST_EPHEMERAL=1 PGTEST_PORT="$PORT" node "$ROOT/scripts/migrations/test-installation.mjs"
+$P -f "$ROOT/tests/db/suprimentos-relacoes.sql"
 OUT="$($P -A -F ' | ' -f "$ROOT/tests/db/cenarios.sql")"
 $P -f "$ROOT/tests/db/clientes-operacionais.sql"
 $P -f "$ROOT/tests/db/projetos-engenharia.sql"
@@ -76,6 +77,9 @@ PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/levantamentos-concur
 $P -f "$ROOT/tests/db/estudos.sql"
 $P -f "$ROOT/tests/db/estudo-arquivos.sql"
 PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/estudos-concurrency.mjs"
+$P -f "$ROOT/tests/db/almoxarifado.sql"
+$P -f "$ROOT/tests/db/almoxarifado-arquivos.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/almoxarifado-concurrency.mjs"
 echo "$OUT"
 if echo "$OUT" | grep -q "FALHOU"; then echo "RESULTADO: FALHAS"; exit 1; fi
 echo "RESULTADO: TODOS PASSARAM"

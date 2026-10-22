@@ -25,7 +25,10 @@ const hazardId = "82000000-0000-4000-8000-000000000001";
 const personId = "30000000-0000-4000-8000-000000000001";
 const detail = `&estudo=${studyId}&revisao=${revisionId}&perigo=${hazardId}`;
 async function go(extra = "") {
-  await page.goto(`${base}/?page=engenharia${extra}`, { waitUntil: "networkidle" });
+  await page.goto(`${base}/?page=engenharia${extra}`, {
+    waitUntil: "domcontentloaded",
+    timeout: 30000,
+  });
   await page.getByRole("heading", { level: 1 }).waitFor();
   await page.evaluate(() => document.fonts.ready);
 }
@@ -347,6 +350,66 @@ try {
       });
       await expect(page.getByRole("dialog")).toHaveCount(0);
       await expect(page.getByRole("textbox", { name: "Análise técnica", exact: true })).toHaveCount(
+        0,
+      );
+      await expect(page.getByRole("alert").first()).toContainText(
+        "Estudo ou fonte indisponível para seu acesso atual.",
+      );
+    },
+  );
+  await check(
+    "write denial hides the cached study before the next permission poll and recovers by authorized read",
+    async () => {
+      await go(detail);
+      await page.getByRole("button", { name: "Editar conteúdo", exact: true }).click();
+      await page
+        .getByRole("textbox", { name: "Análise técnica", exact: true })
+        .fill("Rascunho do cenário de acesso revogado no comando.");
+      await page.evaluate(() => {
+        window.__estudoSourceUnavailable = true;
+      });
+      await page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Editar conteúdo e responsabilidade", exact: true })
+        .click();
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      await expect(page.getByRole("heading", { name: "EST-TESTE-0001", exact: true })).toHaveCount(
+        0,
+      );
+      await expect(page.getByRole("alert").first()).toContainText(
+        "Estudo ou fonte indisponível para seu acesso atual.",
+      );
+      await page.evaluate(() => {
+        window.__estudoSourceUnavailable = false;
+      });
+      await page.getByRole("button", { name: "Tentar novamente", exact: true }).first().click();
+      await expect(
+        page.getByRole("heading", { name: "EST-TESTE-0001", exact: true }),
+      ).toBeVisible();
+    },
+  );
+  await check(
+    "comparison denial removes the private editor while a network failure preserves it",
+    async () => {
+      await go(detail);
+      await page.getByRole("button", { name: "Editar conteúdo", exact: true }).click();
+      const analysis = page.getByRole("textbox", { name: "Análise técnica", exact: true });
+      const draft = "Texto preservado antes de consultar a nova base.";
+      await analysis.fill(draft);
+      await page.evaluate(() => {
+        window.__estudoFailWrite = true;
+      });
+      await page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Editar conteúdo e responsabilidade", exact: true })
+        .click();
+      await expect(analysis).toHaveValue(draft);
+      await page.evaluate(() => {
+        window.__estudoSourceUnavailable = true;
+      });
+      await page.getByRole("button", { name: "Comparar com a versão atual", exact: true }).click();
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      await expect(page.getByRole("heading", { name: "EST-TESTE-0001", exact: true })).toHaveCount(
         0,
       );
       await expect(page.getByRole("alert").first()).toContainText(

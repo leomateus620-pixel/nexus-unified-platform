@@ -544,41 +544,30 @@ export const transicionarRevisao = createServerFn({ method: "POST" })
           .eq("id", rev.id),
       );
     } else if (data.acao === "aceitar") {
-      if (rev.status !== "enviada" && rev.status !== "aceita")
-        throw new Error("A revisão precisa estar enviada para ser aceita.");
-      if (rev.status === "enviada")
-        ok(
-          await db
-            .from("proposta_revisoes")
-            .update({ status: "aceita", aceita_em: new Date().toISOString() })
-            .eq("id", rev.id),
+      // Aceite e vínculos precisam confirmar juntos. A revisão é a identidade estável
+      // desta decisão única; repetir com outro motivo não reutiliza seu recibo.
+      const result = z
+        .object({
+          status: z.literal("aceitar"),
+          revisao_id: z.string().uuid(),
+          proposta_id: z.string().uuid(),
+          projeto_id: z.string().uuid(),
+        })
+        .parse(
+          ok(
+            await db.rpc("aceitar_projeto_operacional", {
+              _org: org,
+              _revisao: rev.id,
+              _chave: rev.id,
+              _motivo: data.motivo ?? null,
+            }),
+          ),
         );
-      const prop = ok(
-        await db
-          .from("propostas")
-          .select("id,numero,cliente_id")
-          .eq("id", rev.proposta_id)
-          .single(),
-      ) as any;
-      const codigo = `PRJ-${String(prop.numero).replace("/", "-")}`;
-      ok(
-        await db.from("projetos").upsert(
-          {
-            organization_id: org,
-            codigo,
-            proposta_id: prop.id,
-            revisao_id: rev.id,
-            cliente_id: prop.cliente_id,
-          },
-          { onConflict: "revisao_id", ignoreDuplicates: true },
-        ),
-      );
-      const proj = ok(
-        await db.from("projetos").select("id").eq("revisao_id", rev.id).single(),
-      ) as any;
-      ok(await db.from("propostas").update({ projeto_id: proj.id }).eq("id", prop.id));
-      ok(await db.from("ordens_compra").update({ projeto_id: proj.id }).eq("revisao_id", rev.id));
-      ok(await db.from("ordens_producao").update({ projeto_id: proj.id }).eq("revisao_id", rev.id));
+      if (result.revisao_id !== rev.id || result.proposta_id !== rev.proposta_id)
+        throw new Error(
+          "A confirmação não corresponde à revisão selecionada. Recarregue antes de tentar novamente.",
+        );
+      return { status: result.status };
     } else {
       if (rev.status !== "enviada")
         throw new Error("Somente revisões enviadas podem ser recusadas.");

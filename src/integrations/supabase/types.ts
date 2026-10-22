@@ -409,14 +409,61 @@ export type Database = {
           },
         ];
       };
+      almoxarifados: {
+        Row: {
+          ativo: boolean;
+          created_at: string;
+          created_by: string;
+          descricao: string;
+          id: string;
+          nome: string;
+          organization_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          ativo?: boolean;
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          id?: string;
+          nome: string;
+          organization_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          ativo?: boolean;
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          id?: string;
+          nome?: string;
+          organization_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "almoxarifados_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       anexos: {
         Row: {
           acao_id: string | null;
+          calibracao_id: string | null;
           caminho: string;
           confirmado_em: string | null;
           created_at: string;
           created_by: string;
           estado: string;
+          ferramenta_id: string | null;
           id: string;
           mime: string;
           nome: string;
@@ -429,11 +476,13 @@ export type Database = {
         ComputedFields: never;
         Insert: {
           acao_id?: string | null;
+          calibracao_id?: string | null;
           caminho: string;
           confirmado_em?: string | null;
           created_at?: string;
           created_by?: string;
           estado?: string;
+          ferramenta_id?: string | null;
           id?: string;
           mime: string;
           nome: string;
@@ -445,11 +494,13 @@ export type Database = {
         };
         Update: {
           acao_id?: string | null;
+          calibracao_id?: string | null;
           caminho?: string;
           confirmado_em?: string | null;
           created_at?: string;
           created_by?: string;
           estado?: string;
+          ferramenta_id?: string | null;
           id?: string;
           mime?: string;
           nome?: string;
@@ -460,6 +511,20 @@ export type Database = {
           tamanho?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: "anexo_calibracao_tenant";
+            columns: ["organization_id", "calibracao_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramenta_calibracoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "anexo_ferramenta_tenant";
+            columns: ["organization_id", "ferramenta_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramentas";
+            referencedColumns: ["organization_id", "id"];
+          },
           {
             foreignKeyName: "anexos_organization_id_acao_id_fkey";
             columns: ["organization_id", "acao_id"];
@@ -538,10 +603,10 @@ export type Database = {
           },
           {
             foreignKeyName: "apontamentos_item_id_fkey";
-            columns: ["item_id"];
+            columns: ["organization_id", "item_id"];
             isOneToOne: false;
             referencedRelation: "ordem_producao_itens";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
           {
             foreignKeyName: "apontamentos_organization_id_fkey";
@@ -1533,6 +1598,571 @@ export type Database = {
           },
         ];
       };
+      estoque_conferencias: {
+        Row: {
+          aceita: number;
+          apontamento_id: string | null;
+          created_at: string;
+          created_by: string;
+          fator: number;
+          id: string;
+          inventario_id: string | null;
+          local_id: string;
+          lote: string | null;
+          motivo: string | null;
+          organization_id: string;
+          produto_id: string;
+          quantidade: number;
+          quarentena: number;
+          recebimento_id: string | null;
+          reconciliacao: string | null;
+          rejeitada: number;
+          serie: string | null;
+          unidade_origem: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          aceita: number;
+          apontamento_id?: string | null;
+          created_at?: string;
+          created_by?: string;
+          fator: number;
+          id?: string;
+          inventario_id?: string | null;
+          local_id: string;
+          lote?: string | null;
+          motivo?: string | null;
+          organization_id: string;
+          produto_id: string;
+          quantidade: number;
+          quarentena: number;
+          recebimento_id?: string | null;
+          reconciliacao?: string | null;
+          rejeitada: number;
+          serie?: string | null;
+          unidade_origem: string;
+        };
+        Update: {
+          aceita?: number;
+          apontamento_id?: string | null;
+          created_at?: string;
+          created_by?: string;
+          fator?: number;
+          id?: string;
+          inventario_id?: string | null;
+          local_id?: string;
+          lote?: string | null;
+          motivo?: string | null;
+          organization_id?: string;
+          produto_id?: string;
+          quantidade?: number;
+          quarentena?: number;
+          recebimento_id?: string | null;
+          reconciliacao?: string | null;
+          rejeitada?: number;
+          serie?: string | null;
+          unidade_origem?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_conferencias_organization_id_apontamento_id_fkey";
+            columns: ["organization_id", "apontamento_id"];
+            isOneToOne: false;
+            referencedRelation: "apontamentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_conferencias_organization_id_inventario_id_fkey";
+            columns: ["organization_id", "inventario_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_inventarios";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_conferencias_organization_id_local_id_fkey";
+            columns: ["organization_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "almoxarifados";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_conferencias_organization_id_produto_id_fkey";
+            columns: ["organization_id", "produto_id"];
+            isOneToOne: false;
+            referencedRelation: "produtos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_conferencias_organization_id_recebimento_id_fkey";
+            columns: ["organization_id", "recebimento_id"];
+            isOneToOne: false;
+            referencedRelation: "recebimentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estoque_estorno_alocacoes: {
+        Row: {
+          conferencia_id: string;
+          id: string;
+          operacao_id: string;
+          organization_id: string;
+          quantidade: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          conferencia_id: string;
+          id?: string;
+          operacao_id: string;
+          organization_id: string;
+          quantidade: number;
+        };
+        Update: {
+          conferencia_id?: string;
+          id?: string;
+          operacao_id?: string;
+          organization_id?: string;
+          quantidade?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_estorno_alocacoes_organization_id_conferencia_id_fkey";
+            columns: ["organization_id", "conferencia_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_conferencias";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_estorno_alocacoes_organization_id_operacao_id_fkey";
+            columns: ["organization_id", "operacao_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_operacoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estoque_inventarios: {
+        Row: {
+          aprovado_em: string | null;
+          aprovado_por: string | null;
+          baseline: number;
+          contada: number;
+          created_at: string;
+          created_by: string;
+          estado: string;
+          id: string;
+          ledger_id: number;
+          local_id: string;
+          lote: string | null;
+          motivo: string;
+          organization_id: string;
+          produto_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          aprovado_em?: string | null;
+          aprovado_por?: string | null;
+          baseline: number;
+          contada: number;
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          id?: string;
+          ledger_id: number;
+          local_id: string;
+          lote?: string | null;
+          motivo: string;
+          organization_id: string;
+          produto_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          aprovado_em?: string | null;
+          aprovado_por?: string | null;
+          baseline?: number;
+          contada?: number;
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          id?: string;
+          ledger_id?: number;
+          local_id?: string;
+          lote?: string | null;
+          motivo?: string;
+          organization_id?: string;
+          produto_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_inventarios_organization_id_local_id_fkey";
+            columns: ["organization_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "almoxarifados";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_inventarios_organization_id_produto_id_fkey";
+            columns: ["organization_id", "produto_id"];
+            isOneToOne: false;
+            referencedRelation: "produtos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estoque_movimentos: {
+        Row: {
+          conferencia_id: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          local_id: string | null;
+          operacao_id: string;
+          organization_id: string;
+          pessoa_id: string | null;
+          posicao: string;
+          produto_id: string;
+          quantidade: number;
+          reserva_id: string | null;
+          seq: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          conferencia_id: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          local_id?: string | null;
+          operacao_id: string;
+          organization_id: string;
+          pessoa_id?: string | null;
+          posicao: string;
+          produto_id: string;
+          quantidade: number;
+          reserva_id?: string | null;
+          seq?: never;
+        };
+        Update: {
+          conferencia_id?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          local_id?: string | null;
+          operacao_id?: string;
+          organization_id?: string;
+          pessoa_id?: string | null;
+          posicao?: string;
+          produto_id?: string;
+          quantidade?: number;
+          reserva_id?: string | null;
+          seq?: never;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_movimentos_organization_id_local_id_fkey";
+            columns: ["organization_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "almoxarifados";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_movimentos_organization_id_operacao_id_fkey";
+            columns: ["organization_id", "operacao_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_operacoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_movimentos_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_movimentos_organization_id_produto_id_conferencia__fkey";
+            columns: ["organization_id", "produto_id", "conferencia_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_conferencias";
+            referencedColumns: ["organization_id", "produto_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_movimentos_organization_id_produto_id_reserva_id_fkey";
+            columns: ["organization_id", "produto_id", "reserva_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_reservas";
+            referencedColumns: ["organization_id", "produto_id", "id"];
+          },
+        ];
+      };
+      estoque_operacoes: {
+        Row: {
+          apontamento_estorno_id: string | null;
+          conferencia_id: string | null;
+          created_at: string;
+          created_by: string;
+          id: string;
+          inventario_id: string | null;
+          motivo: string | null;
+          organization_id: string;
+          recebimento_estorno_id: string | null;
+          reserva_id: string | null;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          apontamento_estorno_id?: string | null;
+          conferencia_id?: string | null;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          inventario_id?: string | null;
+          motivo?: string | null;
+          organization_id: string;
+          recebimento_estorno_id?: string | null;
+          reserva_id?: string | null;
+          tipo: string;
+        };
+        Update: {
+          apontamento_estorno_id?: string | null;
+          conferencia_id?: string | null;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          inventario_id?: string | null;
+          motivo?: string | null;
+          organization_id?: string;
+          recebimento_estorno_id?: string | null;
+          reserva_id?: string | null;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_operacoes_organization_id_apontamento_estorno_id_fkey";
+            columns: ["organization_id", "apontamento_estorno_id"];
+            isOneToOne: false;
+            referencedRelation: "apontamentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_operacoes_organization_id_conferencia_id_fkey";
+            columns: ["organization_id", "conferencia_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_conferencias";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_operacoes_organization_id_inventario_id_fkey";
+            columns: ["organization_id", "inventario_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_inventarios";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_operacoes_organization_id_recebimento_estorno_id_fkey";
+            columns: ["organization_id", "recebimento_estorno_id"];
+            isOneToOne: false;
+            referencedRelation: "recebimentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_operacoes_organization_id_reserva_id_fkey";
+            columns: ["organization_id", "reserva_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_reservas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estoque_produto_politicas: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          estoque_minimo: number;
+          exige_lote: boolean;
+          exige_serie: boolean;
+          id: string;
+          organization_id: string;
+          produto_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          estoque_minimo?: number;
+          exige_lote?: boolean;
+          exige_serie?: boolean;
+          id?: string;
+          organization_id: string;
+          produto_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          estoque_minimo?: number;
+          exige_lote?: boolean;
+          exige_serie?: boolean;
+          id?: string;
+          organization_id?: string;
+          produto_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_produto_politicas_organization_id_produto_id_fkey";
+            columns: ["organization_id", "produto_id"];
+            isOneToOne: true;
+            referencedRelation: "produtos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      estoque_reserva_itens: {
+        Row: {
+          conferencia_id: string;
+          id: string;
+          organization_id: string;
+          produto_id: string;
+          quantidade: number;
+          reserva_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          conferencia_id: string;
+          id?: string;
+          organization_id: string;
+          produto_id: string;
+          quantidade: number;
+          reserva_id: string;
+        };
+        Update: {
+          conferencia_id?: string;
+          id?: string;
+          organization_id?: string;
+          produto_id?: string;
+          quantidade?: number;
+          reserva_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_reserva_itens_organization_id_produto_id_conferenc_fkey";
+            columns: ["organization_id", "produto_id", "conferencia_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_conferencias";
+            referencedColumns: ["organization_id", "produto_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_reserva_itens_organization_id_produto_id_reserva_i_fkey";
+            columns: ["organization_id", "produto_id", "reserva_id"];
+            isOneToOne: false;
+            referencedRelation: "estoque_reservas";
+            referencedColumns: ["organization_id", "produto_id", "id"];
+          },
+        ];
+      };
+      estoque_reservas: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          estado: string;
+          id: string;
+          local_id: string;
+          lote: string | null;
+          motivo: string | null;
+          op_id: string | null;
+          organization_id: string;
+          pessoa_id: string;
+          produto_id: string;
+          projeto_id: string | null;
+          quantidade: number;
+          updated_at: string;
+          validade: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          id?: string;
+          local_id: string;
+          lote?: string | null;
+          motivo?: string | null;
+          op_id?: string | null;
+          organization_id: string;
+          pessoa_id: string;
+          produto_id: string;
+          projeto_id?: string | null;
+          quantidade: number;
+          updated_at?: string;
+          validade: string;
+          version?: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          id?: string;
+          local_id?: string;
+          lote?: string | null;
+          motivo?: string | null;
+          op_id?: string | null;
+          organization_id?: string;
+          pessoa_id?: string;
+          produto_id?: string;
+          projeto_id?: string | null;
+          quantidade?: number;
+          updated_at?: string;
+          validade?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "estoque_reservas_organization_id_local_id_fkey";
+            columns: ["organization_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "almoxarifados";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_reservas_organization_id_op_id_fkey";
+            columns: ["organization_id", "op_id"];
+            isOneToOne: false;
+            referencedRelation: "ordens_producao";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_reservas_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_reservas_organization_id_produto_id_fkey";
+            columns: ["organization_id", "produto_id"];
+            isOneToOne: false;
+            referencedRelation: "produtos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "estoque_reservas_organization_id_projeto_id_fkey";
+            columns: ["organization_id", "projeto_id"];
+            isOneToOne: false;
+            referencedRelation: "projetos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
       estudo_arquivos: {
         Row: {
           caminho: string;
@@ -2400,6 +3030,301 @@ export type Database = {
           situacao?: string;
         };
         Relationships: [];
+      };
+      ferramenta_calibracao_politicas: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          exige_validade: boolean;
+          fonte: string;
+          id: string;
+          metodo: string;
+          nome: string;
+          numero: number;
+          organization_id: string;
+          profissional_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          exige_validade: boolean;
+          fonte: string;
+          id?: string;
+          metodo: string;
+          nome: string;
+          numero: number;
+          organization_id: string;
+          profissional_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          exige_validade?: boolean;
+          fonte?: string;
+          id?: string;
+          metodo?: string;
+          nome?: string;
+          numero?: number;
+          organization_id?: string;
+          profissional_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ferramenta_calibracao_politic_organization_id_profissional_fkey";
+            columns: ["organization_id", "profissional_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "ferramenta_calibracao_politicas_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      ferramenta_calibracoes: {
+        Row: {
+          conferido_em: string | null;
+          conferido_por: string | null;
+          created_at: string;
+          created_by: string;
+          emissor: string;
+          estado: string;
+          execucao: string;
+          ferramenta_id: string;
+          id: string;
+          motivo: string | null;
+          organization_id: string;
+          politica_id: string;
+          referencia: string | null;
+          updated_at: string;
+          validade: string | null;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          conferido_em?: string | null;
+          conferido_por?: string | null;
+          created_at?: string;
+          created_by?: string;
+          emissor: string;
+          estado?: string;
+          execucao: string;
+          ferramenta_id: string;
+          id?: string;
+          motivo?: string | null;
+          organization_id: string;
+          politica_id: string;
+          referencia?: string | null;
+          updated_at?: string;
+          validade?: string | null;
+          version?: number;
+        };
+        Update: {
+          conferido_em?: string | null;
+          conferido_por?: string | null;
+          created_at?: string;
+          created_by?: string;
+          emissor?: string;
+          estado?: string;
+          execucao?: string;
+          ferramenta_id?: string;
+          id?: string;
+          motivo?: string | null;
+          organization_id?: string;
+          politica_id?: string;
+          referencia?: string | null;
+          updated_at?: string;
+          validade?: string | null;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ferramenta_calibracoes_organization_id_ferramenta_id_fkey";
+            columns: ["organization_id", "ferramenta_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramentas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "ferramenta_calibracoes_organization_id_politica_id_fkey";
+            columns: ["organization_id", "politica_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramenta_calibracao_politicas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      ferramenta_custodias: {
+        Row: {
+          agenda_evento_id: string | null;
+          condicao_devolucao: string | null;
+          created_at: string;
+          created_by: string;
+          devolvida_em: string | null;
+          estado: string;
+          ferramenta_id: string;
+          fim: string;
+          id: string;
+          inicio: string;
+          motivo: string | null;
+          organization_id: string;
+          pessoa_id: string;
+          retirada_em: string | null;
+          timezone: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          agenda_evento_id?: string | null;
+          condicao_devolucao?: string | null;
+          created_at?: string;
+          created_by?: string;
+          devolvida_em?: string | null;
+          estado?: string;
+          ferramenta_id: string;
+          fim: string;
+          id?: string;
+          inicio: string;
+          motivo?: string | null;
+          organization_id: string;
+          pessoa_id: string;
+          retirada_em?: string | null;
+          timezone?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          agenda_evento_id?: string | null;
+          condicao_devolucao?: string | null;
+          created_at?: string;
+          created_by?: string;
+          devolvida_em?: string | null;
+          estado?: string;
+          ferramenta_id?: string;
+          fim?: string;
+          id?: string;
+          inicio?: string;
+          motivo?: string | null;
+          organization_id?: string;
+          pessoa_id?: string;
+          retirada_em?: string | null;
+          timezone?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ferramenta_custodias_organization_id_agenda_evento_id_fkey";
+            columns: ["organization_id", "agenda_evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "ferramenta_custodias_organization_id_ferramenta_id_fkey";
+            columns: ["organization_id", "ferramenta_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramentas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "ferramenta_custodias_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      ferramentas: {
+        Row: {
+          condicao: string;
+          created_at: string;
+          created_by: string;
+          descricao: string;
+          exige_calibracao: boolean;
+          id: string;
+          local_id: string;
+          organization_id: string;
+          patrimonio: string;
+          politica_calibracao_id: string | null;
+          produto_id: string | null;
+          proprietario: string;
+          proprietario_nome: string | null;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          condicao?: string;
+          created_at?: string;
+          created_by?: string;
+          descricao: string;
+          exige_calibracao?: boolean;
+          id?: string;
+          local_id: string;
+          organization_id: string;
+          patrimonio: string;
+          politica_calibracao_id?: string | null;
+          produto_id?: string | null;
+          proprietario: string;
+          proprietario_nome?: string | null;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          condicao?: string;
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          exige_calibracao?: boolean;
+          id?: string;
+          local_id?: string;
+          organization_id?: string;
+          patrimonio?: string;
+          politica_calibracao_id?: string | null;
+          produto_id?: string | null;
+          proprietario?: string;
+          proprietario_nome?: string | null;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ferramentas_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ferramentas_organization_id_local_id_fkey";
+            columns: ["organization_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "almoxarifados";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "ferramentas_organization_id_politica_calibracao_id_fkey";
+            columns: ["organization_id", "politica_calibracao_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramenta_calibracao_politicas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "ferramentas_organization_id_produto_id_fkey";
+            columns: ["organization_id", "produto_id"];
+            isOneToOne: false;
+            referencedRelation: "produtos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
       };
       fornecedores: {
         Row: {
@@ -3482,10 +4407,10 @@ export type Database = {
           },
           {
             foreignKeyName: "ordem_compra_itens_ordem_id_fkey";
-            columns: ["ordem_id"];
+            columns: ["organization_id", "ordem_id"];
             isOneToOne: false;
             referencedRelation: "ordens_compra";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
           {
             foreignKeyName: "ordem_compra_itens_organization_id_fkey";
@@ -3535,10 +4460,10 @@ export type Database = {
           },
           {
             foreignKeyName: "ordem_producao_itens_ordem_id_fkey";
-            columns: ["ordem_id"];
+            columns: ["organization_id", "ordem_id"];
             isOneToOne: false;
             referencedRelation: "ordens_producao";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
           {
             foreignKeyName: "ordem_producao_itens_organization_id_fkey";
@@ -3599,10 +4524,10 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "ordens_compra_fornecedor_id_fkey";
-            columns: ["fornecedor_id"];
+            columns: ["organization_id", "fornecedor_id"];
             isOneToOne: false;
             referencedRelation: "fornecedores";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
           {
             foreignKeyName: "ordens_compra_organization_id_fkey";
@@ -3613,17 +4538,17 @@ export type Database = {
           },
           {
             foreignKeyName: "ordens_compra_projeto_id_fkey";
-            columns: ["projeto_id"];
+            columns: ["organization_id", "revisao_id", "projeto_id"];
             isOneToOne: false;
             referencedRelation: "projetos";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "revisao_id", "id"];
           },
           {
             foreignKeyName: "ordens_compra_revisao_id_fkey";
-            columns: ["revisao_id"];
+            columns: ["organization_id", "revisao_id"];
             isOneToOne: false;
             referencedRelation: "proposta_revisoes";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
         ];
       };
@@ -3678,17 +4603,17 @@ export type Database = {
           },
           {
             foreignKeyName: "ordens_producao_projeto_id_fkey";
-            columns: ["projeto_id"];
+            columns: ["organization_id", "revisao_id", "projeto_id"];
             isOneToOne: false;
             referencedRelation: "projetos";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "revisao_id", "id"];
           },
           {
             foreignKeyName: "ordens_producao_revisao_id_fkey";
-            columns: ["revisao_id"];
+            columns: ["organization_id", "revisao_id"];
             isOneToOne: false;
             referencedRelation: "proposta_revisoes";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
         ];
       };
@@ -5120,10 +6045,10 @@ export type Database = {
           },
           {
             foreignKeyName: "recebimentos_item_id_fkey";
-            columns: ["item_id"];
+            columns: ["organization_id", "item_id"];
             isOneToOne: false;
             referencedRelation: "ordem_compra_itens";
-            referencedColumns: ["id"];
+            referencedColumns: ["organization_id", "id"];
           },
           {
             foreignKeyName: "recebimentos_organization_id_fkey";
@@ -5678,6 +6603,15 @@ export type Database = {
         }[];
       };
       _plano_ordens: { Args: { _escopo: string; _rev: string }; Returns: Json };
+      aceitar_projeto_operacional: {
+        Args: {
+          _chave: string;
+          _motivo?: string;
+          _org: string;
+          _revisao: string;
+        };
+        Returns: Json;
+      };
       administrar_vinculo_operacional: {
         Args: { _chave: string; _comando: string; _dados: Json; _org: string };
         Returns: Json;
@@ -5692,6 +6626,120 @@ export type Database = {
       };
       agenda_reservar: {
         Args: { _id: string; _org: string };
+        Returns: undefined;
+      };
+      alm_autor_gerir: {
+        Args: { _autor: string; _org: string };
+        Returns: boolean;
+      };
+      alm_autor_ler_ferramenta: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      alm_decimal: {
+        Args: { _positivo?: boolean; _valor: Json };
+        Returns: number;
+      };
+      alm_executar: {
+        Args: { _chave: string; _comando: string; _dados: Json; _org: string };
+        Returns: Json;
+      };
+      alm_executar_ferramenta: {
+        Args: { _comando: string; _dados: Json; _org: string };
+        Returns: Json;
+      };
+      alm_ferramenta_liberada: {
+        Args: {
+          _fim: string;
+          _id: string;
+          _inicio: string;
+          _org: string;
+          _timezone: string;
+        };
+        Returns: undefined;
+      };
+      alm_gerir: { Args: { _org: string }; Returns: boolean };
+      alm_ler_ferramenta: {
+        Args: { _id: string; _org: string };
+        Returns: boolean;
+      };
+      alm_ler_produto: { Args: { _id: string; _org: string }; Returns: boolean };
+      alm_ler_reserva: { Args: { _id: string; _org: string }; Returns: boolean };
+      alm_listar: {
+        Args: {
+          _busca?: string;
+          _estado?: string;
+          _limite?: number;
+          _local?: string;
+          _org: string;
+          _pagina?: number;
+          _tipo: string;
+        };
+        Returns: Json;
+      };
+      alm_livre_lote: {
+        Args: { _conferencia: string; _local: string; _org: string };
+        Returns: number;
+      };
+      alm_movimento: {
+        Args: {
+          _conferencia: string;
+          _local: string;
+          _op: string;
+          _org: string;
+          _pessoa: string;
+          _posicao: string;
+          _produto: string;
+          _quantidade: number;
+          _reserva: string;
+        };
+        Returns: undefined;
+      };
+      alm_obter: {
+        Args: { _id: string; _org: string; _tipo: string };
+        Returns: Json;
+      };
+      alm_opcoes: {
+        Args: {
+          _busca?: string;
+          _limite?: number;
+          _local?: string;
+          _org: string;
+          _pagina?: number;
+          _tipo: string;
+        };
+        Returns: Json;
+      };
+      alm_permissoes: { Args: { _org: string }; Returns: Json };
+      alm_produto_fracao: {
+        Args: { _id: string; _org: string; _quantidade: number };
+        Returns: undefined;
+      };
+      alm_produto_json: { Args: { _id: string; _org: string }; Returns: Json };
+      alm_reserva_quantidades: {
+        Args: { _id: string; _org: string };
+        Returns: Json;
+      };
+      alm_row: {
+        Args: { _id: string; _org: string; _tipo: string };
+        Returns: Json;
+      };
+      alm_saldo: {
+        Args: {
+          _conferencia?: string;
+          _local?: string;
+          _org: string;
+          _produto: string;
+        };
+        Returns: Json;
+      };
+      alm_texto: {
+        Args: { _campo: string; _dados: Json; _max: number; _min?: number };
+        Returns: string;
+      };
+      alm_travar: { Args: { _org: string }; Returns: undefined };
+      alm_validar_payload: {
+        Args: { _campos: string[]; _dados: Json };
         Returns: undefined;
       };
       aplicar_demanda: {
@@ -5730,6 +6778,10 @@ export type Database = {
         Returns: Json;
       };
       can_see_costs: { Args: { _org: string }; Returns: boolean };
+      cancelar_anexo_operacional: {
+        Args: { _chave: string; _id: string; _motivo: string; _org: string };
+        Returns: Json;
+      };
       capturar_revisao: {
         Args: { _operacao?: string; _rev: string };
         Returns: Json;
@@ -6139,6 +7191,10 @@ export type Database = {
         Args: { _org: string; _revisao: string };
         Returns: undefined;
       };
+      listar_anexos_operacionais: {
+        Args: { _org: string; _pai: Json };
+        Returns: Json;
+      };
       listar_cadastros_cliente: {
         Args: {
           _busca?: string;
@@ -6175,6 +7231,10 @@ export type Database = {
         Args: { _id: string; _org: string };
         Returns: Json;
       };
+      operacao_autor_destino_anexo: {
+        Args: { _autor: string; _escrever?: boolean; _org: string; _pai: Json };
+        Returns: boolean;
+      };
       operacao_autor_ler_anexo: {
         Args: { _autor: string; _id: string; _org: string };
         Returns: boolean;
@@ -6206,9 +7266,17 @@ export type Database = {
         Returns: boolean;
       };
       operacao_pode: { Args: { _acao: string; _org: string }; Returns: boolean };
+      operacao_pode_enviar_anexo: {
+        Args: { _id: string; _org: string };
+        Returns: boolean;
+      };
       operacao_repetir: {
         Args: { _chave: string; _comando: string; _org: string; _payload: Json };
         Returns: Json;
+      };
+      operacao_travar_pai_anexo: {
+        Args: { _org: string; _pai: Json };
+        Returns: undefined;
       };
       pe_autor_acessa: {
         Args: { _autor: string; _org: string; _projeto: string };

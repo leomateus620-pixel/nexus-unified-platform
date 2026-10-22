@@ -1,0 +1,13 @@
+{
+  "method": "Public catalog metadata; composite identity kind + key",
+  "previousObjects": 2512,
+  "currentObjects": 2512,
+  "uniquePrevious": 2512,
+  "uniqueCurrent": 2512,
+  "summaryIdentical": true,
+  "diff": {
+    "added": [],
+    "removed": [],
+    "changed": []
+  }
+}

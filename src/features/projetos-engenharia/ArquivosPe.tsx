@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -23,7 +23,29 @@ export function ArquivosPe({
   versaoId: string;
   editavel: boolean;
 }) {
+  return (
+    <ArquivosDaVersao
+      key={`${org}:${versaoId}`}
+      org={org}
+      versaoId={versaoId}
+      editavel={editavel}
+    />
+  );
+}
+
+function ArquivosDaVersao({
+  org,
+  versaoId,
+  editavel,
+}: {
+  org: string;
+  versaoId: string;
+  editavel: boolean;
+}) {
   const qc = useQueryClient();
+  const section = useRef<HTMLDivElement>(null);
+  const ativo = useRef(true);
+  const ocupado = useRef(false);
   const [erro, setErro] = useState<string | null>(null);
   const [etapa, setEtapa] = useState("");
   const [busy, setBusy] = useState(false);
@@ -32,12 +54,68 @@ export function ArquivosPe({
   const chaves = useRef(new Map<string, string>());
   const q = useQuery({
     queryKey: ["pe-files", org, versaoId],
-    queryFn: () => listarArquivosPe({ data: { organization_id: org, versao_id: versaoId } }),
+    enabled: !!org && !!versaoId,
+    staleTime: 30_000,
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: "always",
+    retry: false,
+    queryFn: ({ signal }) =>
+      listarArquivosPe({ data: { organization_id: org, versao_id: versaoId }, signal }),
   });
+  const visiveis = q.isError ? undefined : q.data;
+  const podeEnviar = editavel && visiveis?.permissoes.adicionar === true;
+  const acesso = useRef({ ler: false, enviar: false });
+  acesso.current = { ler: visiveis?.permissoes.ler === true, enviar: podeEnviar };
+  useEffect(() => {
+    ativo.current = true;
+    return () => {
+      ativo.current = false;
+    };
+  }, []);
+  useEffect(() => {
+    if (q.isError || !podeEnviar) {
+      setCancelar(null);
+      setMotivo("");
+      if (q.isError) {
+        setEtapa("");
+        section.current?.focus();
+      }
+    }
+  }, [q.isError, podeEnviar]);
+  const identidade = (a: Pick<PeArquivo, "nome" | "sha256" | "tamanho" | "mime">) =>
+    JSON.stringify({
+      org,
+      versaoId,
+      nome: a.nome,
+      hash: a.sha256,
+      tamanho: a.tamanho,
+      mime: a.mime,
+    });
   function chave(payload: string) {
     const atual = chaves.current.get(payload) ?? crypto.randomUUID();
     chaves.current.set(payload, atual);
     return atual;
+  }
+  function encerrarIntencoes(original: PeArquivo) {
+    // O banco deduplica bytes da mesma versão e preserva o nome canônico.
+    // Todos os nomes locais que apontaram a esse original encerram juntos.
+    for (const payload of chaves.current.keys()) {
+      try {
+        const dados: unknown = JSON.parse(payload);
+        if (!dados || typeof dados !== "object" || Array.isArray(dados)) continue;
+        const intencao = dados as Record<string, unknown>;
+        if (
+          intencao["org"] === org &&
+          intencao["versaoId"] === versaoId &&
+          intencao["hash"] === original.sha256 &&
+          intencao["tamanho"] === original.tamanho &&
+          intencao["mime"] === original.mime
+        )
+          chaves.current.delete(payload);
+      } catch {
+        // Chaves de cancelamento não são intenções de upload.
+      }
+    }
   }
   async function atualizar() {
     await Promise.all([
@@ -46,11 +124,14 @@ export function ArquivosPe({
     ]);
   }
   async function concluir(id: string) {
+    if (!ativo.current || !acesso.current.enviar) return;
     await confirmarArquivoPe({ data: { organization_id: org, id } });
+    if (!ativo.current) return;
     setEtapa("Original confirmado no armazenamento privado.");
-    await atualizar();
   }
   async function enviar(file: File, pendente?: PeArquivo) {
+    if (ocupado.current || !podeEnviar) return;
+    ocupado.current = true;
     setBusy(true);
     setErro(null);
     setEtapa("Verificando conteúdo e integridade…");
@@ -64,6 +145,7 @@ export function ArquivosPe({
       if (!mime || !["application/pdf", "image/png", "image/jpeg", "image/webp"].includes(mime))
         throw new Error("Formato não suportado. Use PDF, PNG, JPEG ou WebP.");
       const hash = await sha256(bytes);
+      if (!ativo.current || !acesso.current.enviar) return;
       if (
         pendente &&
         (pendente.tamanho !== file.size || pendente.mime !== mime || pendente.sha256 !== hash)
@@ -77,13 +159,21 @@ export function ArquivosPe({
             data: {
               organization_id: org,
               versao_id: versaoId,
-              chave: chave(`${hash}:${file.size}:${mime}`),
+              chave: chave(
+                identidade({
+                  nome: file.name,
+                  sha256: hash,
+                  tamanho: file.size,
+                  mime: mime as PeArquivo["mime"],
+                }),
+              ),
               nome: file.name,
               tamanho: file.size,
               sha256: hash,
               mime: mime as PeArquivo["mime"],
             },
           });
+      if (!ativo.current || !acesso.current.enviar) return;
       if (staged.token) {
         setEtapa("Enviando original…");
         const upload = await supabase.storage
@@ -104,42 +194,55 @@ export function ArquivosPe({
       setEtapa("Conferindo tamanho, tipo e SHA-256 no servidor…");
       await concluir(staged.arquivo.id);
     } catch (error) {
+      if (!ativo.current) return;
       setErro(error instanceof Error ? error.message : "Não foi possível confirmar o arquivo.");
       setEtapa("");
     } finally {
-      setBusy(false);
       await atualizar();
+      ocupado.current = false;
+      if (ativo.current) setBusy(false);
     }
   }
   async function verificar(id: string) {
+    if (ocupado.current || !podeEnviar) return;
+    ocupado.current = true;
     setBusy(true);
     setErro(null);
     setEtapa("Reverificando o armazenamento…");
     try {
       await concluir(id);
     } catch (error) {
+      if (!ativo.current) return;
       setErro(error instanceof Error ? error.message : "Original ainda não disponível.");
       setEtapa("");
     } finally {
-      setBusy(false);
+      await atualizar();
+      ocupado.current = false;
+      if (ativo.current) setBusy(false);
     }
   }
   async function baixar(id: string) {
+    if (!acesso.current.ler || ocupado.current) return;
     setErro(null);
     try {
       const { url } = await baixarArquivoPe({ data: { organization_id: org, id } });
+      if (!ativo.current || !acesso.current.ler) return;
       const a = document.createElement("a");
       a.href = url;
       a.target = "_blank";
       a.rel = "noopener";
       a.click();
     } catch (error) {
+      if (!ativo.current) return;
       setErro(error instanceof Error ? error.message : "Download indisponível.");
+      await q.refetch();
     }
   }
   async function cancelarPendente() {
-    if (!cancelar) return;
-    const original = q.data?.find((arquivo) => arquivo.id === cancelar);
+    if (!cancelar || ocupado.current || !podeEnviar) return;
+    const original = visiveis?.rows.find((arquivo) => arquivo.id === cancelar);
+    if (!original) return;
+    ocupado.current = true;
     setBusy(true);
     setErro(null);
     try {
@@ -151,18 +254,20 @@ export function ArquivosPe({
           motivo,
         },
       });
+      if (!ativo.current) return;
       // Cancelar encerra esta intenção. Reenviar os mesmos bytes é uma nova operação;
       // recibos anteriores continuam intactos no servidor para retries da operação encerrada.
-      if (original)
-        chaves.current.delete(`${original.sha256}:${original.tamanho}:${original.mime}`);
+      encerrarIntencoes(original);
       setCancelar(null);
       setMotivo("");
       setEtapa("Envio pendente cancelado; o histórico foi preservado.");
-      await atualizar();
     } catch (error) {
+      if (!ativo.current) return;
       setErro(error instanceof Error ? error.message : "Não foi possível cancelar o envio.");
     } finally {
-      setBusy(false);
+      await atualizar();
+      ocupado.current = false;
+      if (ativo.current) setBusy(false);
     }
   }
   return (
@@ -170,8 +275,8 @@ export function ArquivosPe({
       title="Originais e referências desta versão"
       description="O PDF importado permanece separado do documento nativo. Leitura assistida/OCR ainda não foi executada."
     >
-      <div className="grid min-w-0 gap-3">
-        {editavel && (
+      <div ref={section} tabIndex={-1} className="grid min-w-0 gap-3">
+        {podeEnviar && (
           <label className="nx-upload-label">
             Adicionar original ou referência (PDF/imagem, até 20 MiB)
             <input
@@ -200,11 +305,17 @@ export function ArquivosPe({
           </p>
         )}
         {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
-        {q.data?.length === 0 && (
+        {visiveis?.rows.length === 0 && (
           <p className="text-sm text-muted-foreground">Nenhum arquivo vinculado a esta versão.</p>
         )}
+        {visiveis?.rows.length === 100 && (
+          <p className="text-sm text-muted-foreground">
+            Esta consulta exibe os 100 originais mais recentes desta versão. Os arquivos anteriores
+            permanecem preservados.
+          </p>
+        )}
         <ul className="grid min-w-0 gap-3">
-          {q.data?.map((arquivo) => (
+          {visiveis?.rows.map((arquivo) => (
             <li key={arquivo.id} className="grid min-w-0 gap-3 rounded-md border border-border p-3">
               <div className="min-w-0">
                 <p className="break-words text-sm font-medium">{arquivo.nome}</p>
@@ -222,7 +333,7 @@ export function ArquivosPe({
                 <ActionButton variant="ghost" disabled={busy} onClick={() => baixar(arquivo.id)}>
                   Baixar original autorizado
                 </ActionButton>
-              ) : editavel ? (
+              ) : podeEnviar ? (
                 <div className="grid gap-2">
                   {arquivo.meu_envio && (
                     <>
@@ -267,32 +378,34 @@ export function ArquivosPe({
             </li>
           ))}
         </ul>
-        {cancelar && (
-          <div className="grid gap-3 rounded-md border border-border p-3">
-            <label className="grid gap-1 text-sm">
-              Motivo do cancelamento
-              <input
-                className="min-h-11 rounded border border-input bg-background px-3"
-                value={motivo}
-                onChange={(e) => setMotivo(e.target.value)}
-                minLength={5}
-                maxLength={2000}
-              />
-            </label>
-            <div className="flex flex-wrap gap-2">
-              <ActionButton
-                variant="ghost"
-                disabled={busy || motivo.trim().length < 5}
-                onClick={cancelarPendente}
-              >
-                Confirmar cancelamento
-              </ActionButton>
-              <ActionButton variant="ghost" disabled={busy} onClick={() => setCancelar(null)}>
-                Manter envio
-              </ActionButton>
+        {podeEnviar &&
+          cancelar &&
+          visiveis?.rows.some((a) => a.id === cancelar && a.estado !== "vinculado") && (
+            <div className="grid gap-3 rounded-md border border-border p-3">
+              <label className="grid gap-1 text-sm">
+                Motivo do cancelamento
+                <input
+                  className="min-h-11 rounded border border-input bg-background px-3"
+                  value={motivo}
+                  onChange={(e) => setMotivo(e.target.value)}
+                  minLength={5}
+                  maxLength={2000}
+                />
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <ActionButton
+                  variant="ghost"
+                  disabled={busy || motivo.trim().length < 5}
+                  onClick={cancelarPendente}
+                >
+                  Confirmar cancelamento
+                </ActionButton>
+                <ActionButton variant="ghost" disabled={busy} onClick={() => setCancelar(null)}>
+                  Manter envio
+                </ActionButton>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </Section>
   );

@@ -19,13 +19,20 @@ try {
     ["workspace-visual.mjs", "after"],
     ["autosave-checks.mjs"],
   ];
-  const onlyLevantamentos = process.argv.includes("--levantamentos");
-  const onlyEstudos = process.argv.includes("--estudos");
-  const checks =
-    process.argv.includes("--operacional") || onlyLevantamentos || onlyEstudos ? [] : legacyChecks;
-  if (!onlyLevantamentos && !onlyEstudos) checks.push(["operational-quality.mjs"]);
-  if (!onlyEstudos) checks.push(["levantamentos-quality.mjs"]);
-  if (!onlyLevantamentos) checks.push(["estudos-quality.mjs"], ["acoes-vinculadas.mjs"]);
+  const features = {
+    "--levantamentos": [["levantamentos-quality.mjs"]],
+    "--estudos": [["estudos-quality.mjs"], ["acoes-vinculadas.mjs"]],
+    "--almoxarifado": [["almoxarifado-quality.mjs"], ["anexos-canonicos-quality.mjs"]],
+    "--pe-arquivos": [["pe-arquivos-quality.mjs"]],
+  };
+  const selected = Object.keys(features).find((flag) => process.argv.includes(flag));
+  const checks = selected
+    ? features[selected]
+    : [
+        ...(process.argv.includes("--operacional") ? [] : legacyChecks),
+        ["operational-quality.mjs"],
+        ...Object.values(features).flat(),
+      ];
   for (const [file, ...args] of checks) {
     await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [`tests/ui/${file}`, ...args], {

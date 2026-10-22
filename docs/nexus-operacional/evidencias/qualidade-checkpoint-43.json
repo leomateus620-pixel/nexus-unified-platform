@@ -1,0 +1,124 @@
+{
+  "checkpoint": 43,
+  "date": "2026-10-22T14:21:42.119Z",
+  "basedOn": "07d91f8e666ad6aa9d882dc2155c863d57af99b4",
+  "scope": "Local domain/handler, database and source-UI gates. Connected catalog evidence is separate; no Auth/Storage HTTP end-to-end claim.",
+  "commands": {
+    "typecheck": {
+      "exitCode": 0,
+      "logSha256LF": "8fa1cf5506304e8abac55868e7f1a136c9b1dde57a3981a382da4c21ea129a6f"
+    },
+    "build": {
+      "exitCode": 0,
+      "logSha256LF": "ac8b3614ee51e353cefecb9134a9d8da49c82c3abc871901a2fa509d4abb972d",
+      "warnings": "Existing deprecated inputValidator and bundle chunk warnings"
+    },
+    "stock": {
+      "exitCode": 0,
+      "domainAndHandlers": 28,
+      "canonicalFiles": 26,
+      "acceptanceHandler": 6,
+      "acceptanceASTGuard": 3
+    },
+    "peFiles": {
+      "exitCode": 0,
+      "handlerTests": 9
+    },
+    "lint": {
+      "exitCode": 0,
+      "files": [
+        "scripts/migrations/test-installation.mjs",
+        "scripts/nexus-operacional/acceptance-contract.mjs",
+        "scripts/nexus-operacional/acceptance-contract.test.mjs",
+        "scripts/nexus-operacional/contracts.mjs",
+        "src/features/almoxarifado/almoxarifado.functions.ts",
+        "src/features/almoxarifado/AlmoxarifadoForms.tsx",
+        "src/features/almoxarifado/AlmoxarifadoWorkspace.tsx",
+        "src/features/almoxarifado/continuation.ts",
+        "src/features/almoxarifado/domain.ts",
+        "src/features/almoxarifado/queries.ts",
+        "src/features/almoxarifado/schemas.ts",
+        "src/features/almoxarifado/types.ts",
+        "src/features/estudos/EstudosWorkspace.tsx",
+        "src/features/operacao/access.ts",
+        "src/features/operacao/components.tsx",
+        "src/features/operacao/files.functions.ts",
+        "src/features/operacao/RecordFiles.tsx",
+        "src/features/operacao/schemas.ts",
+        "src/features/operacao/upload-intents.ts",
+        "src/features/projetos-engenharia/ArquivosPe.tsx",
+        "src/features/projetos-engenharia/pe-arquivos.functions.ts",
+        "src/features/propostas/propostas.functions.ts",
+        "src/lib/nexus-nav.ts",
+        "src/routes/_authenticated/almoxarifado.tsx",
+        "tests/aceite-projeto-functions.test.ts",
+        "tests/almoxarifado-continuation.test.ts",
+        "tests/almoxarifado-functions.test.ts",
+        "tests/almoxarifado.test.ts",
+        "tests/db/almoxarifado-concurrency.mjs",
+        "tests/nexus-nav.test.ts",
+        "tests/operacao-arquivos-contract.test.ts",
+        "tests/operacao-arquivos-functions.test.ts",
+        "tests/pe-arquivos-functions.test.ts",
+        "tests/ui/almoxarifado-quality.mjs",
+        "tests/ui/almoxarifado-server.ts",
+        "tests/ui/anexos-canonicos-quality.mjs",
+        "tests/ui/estudos-quality.mjs",
+        "tests/ui/main.tsx",
+        "tests/ui/operacional-server.ts",
+        "tests/ui/pe-arquivos-quality.mjs",
+        "tests/ui/router.tsx",
+        "tests/ui/run.mjs",
+        "tests/ui/session.ts",
+        "tests/ui/vite.config.mjs",
+        "tests/vitest.aceite-projeto.config.ts",
+        "tests/vitest.almoxarifado.config.ts",
+        "tests/vitest.operacao-arquivos.config.ts",
+        "tests/vitest.pe-arquivos.config.ts"
+      ],
+      "errors": 0,
+      "warnings": 1,
+      "warning": "Preexisting Fast Refresh export in src/features/operacao/components.tsx"
+    }
+  },
+  "ui": {
+    "warehouse": {
+      "layouts": 228,
+      "behaviors": 17,
+      "success": true
+    },
+    "canonicalFiles": {
+      "layouts": 6,
+      "behaviors": 5,
+      "success": true
+    },
+    "peFiles": {
+      "behaviors": 8,
+      "success": true
+    },
+    "attempts": [
+      {
+        "name": "Full42",
+        "passed": false,
+        "reason": "Source HMR interrupted the autosave check; no completion claim"
+      },
+      {
+        "name": "Full43",
+        "passed": false,
+        "reason": "New warehouse assertion expected outdated conflict wording. Version and payload behavior retained; corrected warehouse/canonical-files and PE slices passed separately."
+      }
+    ]
+  },
+  "migration": {
+    "count": 43,
+    "source0023": "4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8",
+    "source0024": "3186fcc00879dad91e02c0bf55bb6d856e69d77a12a8d1b546b7c80ae2fd5faa"
+  },
+  "limits": [
+    "No operational fixtures in connected project",
+    "No connected Auth/Storage binary HTTP end-to-end",
+    "No production deployment or merge",
+    "No physical device, full accessibility certification or representative load performance",
+    "Full CI for the new commit pending observation"
+  ]
+}

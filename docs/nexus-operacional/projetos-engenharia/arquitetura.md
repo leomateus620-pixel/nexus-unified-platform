@@ -42,6 +42,12 @@ Listagem pagina 25 projetos no servidor. Seletores limitam 25 resultados e unida
 
 Query keys começam com `['pe', organization_id]` e o comando invalida o domínio dessa organização. Seletores usam `pe-opcoes` com organização/tipo/busca/cliente. O ciclo geral de sessão deve limpar todos os caches sensíveis ao revogar, trocar organização ou sair.
 
+No checkpoint 42, a consulta de arquivos usa `['pe-files', organização, versão]` e retorna `{rows,permissoes:{ler:true,adicionar}}`. O servidor consulta somente contexto mínimo da versão/projeto por RLS, revalida `pe_ler_projeto` e determina envio pela capacidade atual, rascunho e projeto ativo. Uma resposta vazia de arquivos não substitui autorização pelo pai. Arquivo de projeto arquivado ou versão congelada permanece legível quando autorizado, sem permitir novo envio.
+
+`ArquivosPe` revalida em 30 segundos e ao recuperar foco, sem repetir automaticamente falhas; o sinal de cancelamento da requisição alcança as consultas Supabase. Em erro de consulta, metadados anteriormente em cache, upload e cancelamento deixam de aparecer. O foco retorna à região de arquivos para apresentar o erro recuperável. Organização + versão identifica a instância do componente, suas mensagens, cancelamento e intenções; mudar versão não reapresenta estado local do arquivo anterior.
+
+A consulta traz até 100 originais recentes e apresenta aviso quando alcança esse limite. Não informa esse número como total histórico; originais anteriores permanecem preservados. Paginação completa ainda é requisito aberto.
+
 ## Recuperação de edição
 
 Conteúdo alterado mostra estado local não salvo. Trocar versão/cenário ou voltar ao acervo pede confirmação de descarte quando necessário; fechar/recarregar a aba sinaliza alterações. A operação mantém a mesma chave quando uma tentativa com o mesmo payload falha.
@@ -60,7 +66,11 @@ O fluxo mantém limite inicial de **20 MiB** no bucket e no verificador existent
 
 Falha antes do upload mantém registro pendente. Retomada exige que o usuário selecione os mesmos bytes; assinatura de MIME/tamanho/hash é conferida antes de enviar ao mesmo destino. Se o upload já terminou, reverificação confirma o objeto existente, sem sobrescrever. Cancelar o pendente registra motivo e impede vinculá-lo; limpeza física de órfãos após janela segura ainda depende do job de retenção e não é declarada concluída. Um token de upload antigo eventualmente usado após cancelamento não autoriza vincular o objeto nem altera snapshot congelado.
 
+A interface conserva a chave da mesma intenção durante falha de transporte e reencontra o pendente consultado. A identidade local inclui organização, versão, nome, hash, tamanho e MIME. O servidor pode deduplicar os mesmos bytes de nomes locais distintos no original canônico; cancelar encerra todos esses aliases da mesma versão e um novo envio recebe outra chave, preservando as intenções de outros arquivos/versões. A perda da capacidade de enviar fecha os controles de alteração, mantendo a leitura histórica autorizada. Conclusões assíncronas de uma instância desmontada não abrem o download nem alteram mensagens da versão seguinte.
+
 Os testes SQL usam apenas metadados de Storage em PostgreSQL isolado. Teste unitário do validador cobre bytes/tipo/hash. Nenhum desses testes comprova upload HTTP no Storage conectado, que exige E2E no ambiente confirmado.
+
+Validação específica da correção de privacidade: `npx vitest run --config tests/vitest.pe-arquivos.config.ts` passou **9 testes unitários de endpoint**, cobrindo pai ausente/negado, lista vazia por RLS, leitura histórica, capacidade de envio, consultas mínimas e cancelamento HTTP. `node tests/ui/pe-arquivos-quality.mjs` passou **8 cenários com transporte isolado**, cobrindo cache/foco em revogação, falha de rede/retomada, leitura distinta de envio, troca de versão, confirmação repetida na mesma identidade, nova intenção após cancelar, aliases de nome deduplicados e aviso de limite 100. Resultado: `../evidencias/ui-pe-arquivos/pe-arquivos/results.json`. Typecheck escopado e lint dos arquivos alterados também passaram. Esses resultados não demonstram uma jornada real de Auth/Storage HTTP no projeto conectado; a aplicação SQL do checkpoint 42 e sua verificação de catálogo são evidências separadas, registradas em `../migracoes.md`.
 
 ## Limites ainda abertos do prompt 24
 

@@ -79,6 +79,9 @@ export const anexoRow = z.object({
   pessoa_id: z.string().uuid().nullable(),
   acao_id: z.string().uuid().nullable(),
   qualificacao_id: z.string().uuid().nullable(),
+  // Read defaults also accept an older idempotent receipt without these additive columns.
+  ferramenta_id: z.string().uuid().nullable().default(null),
+  calibracao_id: z.string().uuid().nullable().default(null),
 });
 export type Anexo = z.infer<typeof anexoRow>;
 export const anexoPai = orgInput
@@ -86,9 +89,14 @@ export const anexoPai = orgInput
     pessoa_id: z.string().uuid().nullable().default(null),
     acao_id: z.string().uuid().nullable().default(null),
     qualificacao_id: z.string().uuid().nullable().default(null),
+    // Do not default new input keys: changing legacy JSON changes its stored request hash.
+    ferramenta_id: z.string().uuid().nullable().optional(),
+    calibracao_id: z.string().uuid().nullable().optional(),
   })
   .refine(
-    (x) => [x.pessoa_id, x.acao_id, x.qualificacao_id].filter(Boolean).length === 1,
+    (x) =>
+      [x.pessoa_id, x.acao_id, x.qualificacao_id, x.ferramenta_id, x.calibracao_id].filter(Boolean)
+        .length === 1,
     "Escolha uma origem.",
   );
 export const uploadInput = z.object({
@@ -104,3 +112,15 @@ export const uploadInput = z.object({
   sha256: z.string().regex(/^[0-9a-f]{64}$/),
 });
 export const fileInput = orgInput.extend({ id: z.string().uuid() });
+export const anexoListagemRow = anexoRow.extend({
+  pode_retomar: z.boolean(),
+  pode_cancelar: z.boolean(),
+});
+export const anexosListaSchema = z.object({
+  registros: anexoListagemRow.array().max(50),
+  permissoes: z.object({ adicionar: z.boolean() }),
+});
+export const cancelarAnexoInput = fileInput.extend({
+  chave: z.string().uuid(),
+  motivo: z.string().trim().min(5, "Explique o motivo com ao menos cinco caracteres.").max(2000),
+});

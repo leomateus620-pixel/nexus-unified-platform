@@ -1,0 +1,129 @@
+{
+  "checkpoint": 42,
+  "source": "PostgreSQL16.15 descartavel local, cadeia limpa do manifesto42, somente fixtures isoladas",
+  "schemaMigration": "drizzle/migrations/0023_almoxarifado.sql",
+  "schemaSha256": "4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8",
+  "scope": "Paridade entre respostas SQL reais e schemas Zod; sem prova de UI, Auth/Storage HTTP ou persistencia remota",
+  "generatedAt": "2026-10-22T13:19:04.591Z",
+  "privateFixturesIncluded": false,
+  "checks": 25,
+  "success": true,
+  "results": [
+    {
+      "tipo": "lista:materiais",
+      "success": true,
+      "rows": 2
+    },
+    {
+      "tipo": "lista:ferramentas",
+      "success": true,
+      "rows": 2
+    },
+    {
+      "tipo": "lista:movimentos",
+      "success": true,
+      "rows": 25
+    },
+    {
+      "tipo": "lista:conferencias",
+      "success": true,
+      "rows": 10
+    },
+    {
+      "tipo": "lista:reservas",
+      "success": true,
+      "rows": 4
+    },
+    {
+      "tipo": "lista:inventarios",
+      "success": true,
+      "rows": 4
+    },
+    {
+      "tipo": "lista:locais",
+      "success": true,
+      "rows": 2
+    },
+    {
+      "tipo": "detalhe:materiais",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:ferramentas",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:movimentos",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:conferencias",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:reservas",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:inventarios",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:locais",
+      "success": true
+    },
+    {
+      "tipo": "detalhe:politicas_calibracao",
+      "success": true
+    },
+    {
+      "tipo": "opcoes:produtos",
+      "success": true,
+      "rows": 2
+    },
+    {
+      "tipo": "opcoes:pessoas",
+      "success": true,
+      "rows": 3
+    },
+    {
+      "tipo": "opcoes:projetos",
+      "success": true,
+      "rows": 1
+    },
+    {
+      "tipo": "opcoes:ordens_producao",
+      "success": true,
+      "rows": 1
+    },
+    {
+      "tipo": "opcoes:recebimentos",
+      "success": true,
+      "rows": 3
+    },
+    {
+      "tipo": "opcoes:apontamentos",
+      "success": true,
+      "rows": 1
+    },
+    {
+      "tipo": "opcoes:locais",
+      "success": true,
+      "rows": 2
+    },
+    {
+      "tipo": "opcoes:ferramentas",
+      "success": true,
+      "rows": 2
+    },
+    {
+      "tipo": "opcoes:politicas_calibracao",
+      "success": true,
+      "rows": 1
+    },
+    {
+      "tipo": "comando:publicar_politica_calibracao",
+      "success": true
+    }
+  ]
+}

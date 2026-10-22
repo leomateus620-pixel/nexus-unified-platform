@@ -5,6 +5,10 @@ export const OutletContext = createContext(null);
 export const Outlet = () => useContext(OutletContext);
 const listeners = new Set<() => void>();
 const routeSearchKeys = [
+  "aba",
+  "detalhe",
+  "registro",
+  "local",
   "projeto",
   "q",
   "cliente",
@@ -31,6 +35,17 @@ const params = {
 };
 let page = new URLSearchParams(location.search).get("page") || "dimensionamento";
 const pageListeners = new Set<() => void>();
+// Match the browser history behavior of the real router so Back exercises the
+// application's URL state rather than only changing the address bar.
+window.addEventListener("popstate", () => {
+  const url = new URL(location.href);
+  search = Object.fromEntries(
+    [...url.searchParams].filter(([key]) => routeSearchKeys.includes(key)),
+  );
+  page = url.searchParams.get("page") || "dimensionamento";
+  pageListeners.forEach((listener) => listener());
+  listeners.forEach((listener) => listener());
+});
 export function useFixturePage() {
   return useSyncExternalStore(
     (listener) => {
@@ -41,6 +56,7 @@ export function useFixturePage() {
   );
 }
 const operationalPaths = {
+  almoxarifado: "/almoxarifado",
   engenharia: "/engenharia",
   levantamentos: "/levantamentos",
   equipe: "/equipe",
@@ -69,7 +85,8 @@ export function useNavigate() {
           url.searchParams.set(key, String(search[key]));
         else url.searchParams.delete(key);
       }
-      history.replaceState({}, "", url);
+      if (opts.replace) history.replaceState({}, "", url);
+      else history.pushState({}, "", url);
       listeners.forEach((l) => l());
     }
     window.__nexusNavigations.push(opts);

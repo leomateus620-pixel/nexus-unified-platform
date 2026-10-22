@@ -24,6 +24,7 @@ import {
   tiposEstudo as studyTypes,
   prioridadesMedida,
   acessoEstudoNegado,
+  ESTUDO_ACESSO_INDISPONIVEL,
 } from "./domain";
 import type { EstadoEstudo, EstudoDetalhe, EstudoPerigo, EstudoMedida } from "./types";
 import type { EstudoMetodo } from "./types";
@@ -108,7 +109,8 @@ function EstudosContent({
     [notice, setNotice] = useState("");
   const [showMethods, setShowMethods] = useState(false);
   const [methodEditor, setMethodEditor] = useState<EstudoMetodo | "novo" | null>(null);
-  const accessDenied = !!search.estudo && detail.isError && acessoEstudoNegado(detail.error);
+  const accessDenied =
+    !!search.estudo && (acessoEstudoNegado(detail.error) || acessoEstudoNegado(error));
   const detailError = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!accessDenied) return;
@@ -141,7 +143,16 @@ function EstudosContent({
       setNotice("Operação confirmada no servidor.");
       return true;
     } catch (e) {
-      setError(e instanceof Error ? e : new Error("Não foi possível confirmar a operação."));
+      const failure =
+        e instanceof Error
+          ? e
+          : new Error(
+              acessoEstudoNegado(e)
+                ? ESTUDO_ACESSO_INDISPONIVEL
+                : "Não foi possível confirmar a operação.",
+            );
+      setError(failure);
+      if (acessoEstudoNegado(failure)) await invalidarEstudos(client, org);
       return false;
     } finally {
       guard.current = false;
@@ -154,7 +165,7 @@ function EstudosContent({
         eyebrow="Engenharia · Estudos técnicos"
         title={
           search.estudo
-            ? (!detail.isError && detail.data?.estudo.codigo) || "Estudo técnico"
+            ? (!detail.isError && !accessDenied && detail.data?.estudo.codigo) || "Estudo técnico"
             : "Engenharia"
         }
         description={
@@ -316,7 +327,17 @@ function EstudosContent({
             <ArrowLeft size={16} aria-hidden />
             Voltar aos estudos
           </ActionButton>
-          {detail.isPending ? (
+          {accessDenied ? (
+            <div ref={detailError} tabIndex={-1}>
+              <ErrorState
+                error={error || detail.error || new Error("Acesso indisponível.")}
+                onRetry={async () => {
+                  const result = await detail.refetch();
+                  if (!result.isError) setError(null);
+                }}
+              />
+            </div>
+          ) : detail.isPending ? (
             <LoadingState label="Abrindo revisão e fontes autorizadas…" />
           ) : detail.isError ? (
             <div ref={detailError} tabIndex={-1}>
@@ -345,17 +366,24 @@ function EstudosContent({
           error={error}
           execute={execute}
           onClose={() => setEditor(null)}
-          onCompare={async () =>
-            search.estudo
-              ? read({
-                  data: {
-                    organization_id: org,
-                    estudo_id: search.estudo,
-                    revisao_id: search.revisao || null,
-                  },
-                })
-              : undefined
-          }
+          onCompare={async () => {
+            if (!search.estudo) return undefined;
+            try {
+              return await read({
+                data: {
+                  organization_id: org,
+                  estudo_id: search.estudo,
+                  revisao_id: search.revisao || null,
+                },
+              });
+            } catch (failure) {
+              if (acessoEstudoNegado(failure))
+                setError(
+                  failure instanceof Error ? failure : new Error(ESTUDO_ACESSO_INDISPONIVEL),
+                );
+              throw failure;
+            }
+          }}
         />
       )}
       {methodEditor && !accessDenied && (

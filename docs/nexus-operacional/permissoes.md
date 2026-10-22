@@ -1,5 +1,13 @@
 # Permissões efetivamente implementadas
 
+## Controle físico — checkpoints 42/43
+
+Almoxarifado é concedido explicitamente a admin, engenharia, compras, campo e coordenação. Comercial/financeiro sem outra concessão não recebem o menu. O servidor compõe `ver_operacao`, gestão e recebimento; navegação não substitui autorização SQL. Campo lê reservas/custódias próprias e movimentos pertinentes, sem outras equipes ou custos. Ver ferramenta reservada não permite anexar condição antes da retirada; após devolução preserva leitura e perde envio. Conferências, inventários e estornos exigem gestão. Links de UI respeitam a rota autorizada; SQL continua a autoridade.
+
+Replays retornam projeção pelo acesso atual, sem recuperar alcance antigo de gestor. `anexos` distingue adicionar/retomar/cancelar e confirmação privilegiada revalida o autor. Alterar acesso purga prefixes do estoque; erro de consulta oculta cache. Negação no comando ou comparação também fecha editores; rede preserva preenchimento. Calibração exige conferência profissional, distinta de administração.
+
+A policy histórica de `aquisicoes` foi reproduzida permitindo SELECT monetário por Campo. A migração0023 aplicada substitui essa leitura por `pode(organization_id,'ver_custos')`; fixtures locais cobrem acesso direto e revogação. O catálogo conectado confirma a expressão da policy e os grants. Isso não comprova E2E Auth/Storage HTTP conectado nem isolamento financeiro integral dos outros domínios.
+
 ## Estudos técnicos — checkpoint 41
 
 Leitura exige capacidade técnica e escopo da ficha, além da autorização atual de **todas** as fontes já vinculadas, inclusive históricas/desativadas. Coordenação operacional e Campo não recebem a análise profissional inteira. A ação liberada usa a entidade canônica e contém somente instrução explicitamente redigida para a execução.
@@ -8,7 +16,7 @@ Publicação de método, submissão e aprovação conferem pessoa ativa e regist
 
 Revisões aprovadas, submissões/decisões, arquivos vinculados e relações de substituição são preservados. Downloads reautorizam o pai e expiram em 60 segundos; um link já emitido pode funcionar até expirar. Interface refaz consultas sensíveis no foco/intervalo e remove conteúdo técnico ao receber negação; falha de rede mantém o rascunho recuperável. Testes distinguem esses dois estados.
 
-As provas SQL são locais com tenants/perfis isolados; o conectado foi conferido por catálogo, RLS, grants e policies. Não há prova de sessão Auth/Storage HTTP remoto. A revisão futura de suprimentos identificou `aquisicoes` com SELECT por membership contendo custos; isso exige saneamento antes de afirmar proteção financeira global. A nova projeção operacional não é justificativa para manter um endpoint financeiro legado exposto.
+As provas SQL são locais com tenants/perfis isolados; o conectado foi conferido por catálogo, RLS, grants e policies. Não há prova de sessão Auth/Storage HTTP remoto. A revisão de suprimentos identificou `aquisicoes` com SELECT por membership contendo custos; o saneamento dessa policy foi aplicado na0023, conforme a seção de controle físico. A revisão dos demais payloads financeiros continua necessária antes de afirmar proteção financeira global.
 
 Checkpoint local de 22/10/2026. Este documento descreve o código e as migrações `0012`–`0020`; aplicação no projeto conectado e resultados executados pertencem a `migracoes.md` e `validacao.md`. Não certifica todos os módulos previstos no escopo.
 

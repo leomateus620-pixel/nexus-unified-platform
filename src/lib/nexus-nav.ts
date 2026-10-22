@@ -17,6 +17,7 @@ import {
   Users,
   ShieldAlert,
   DraftingCompass,
+  Warehouse,
   type LucideIcon,
 } from "lucide-react";
 import type { Papel } from "@/features/auth/autorizacao";
@@ -104,6 +105,12 @@ export const navGroups: NavGroup[] = [
   {
     label: "Recursos",
     items: [
+      {
+        to: "/almoxarifado",
+        label: "Almoxarifado e Ferramentas",
+        icon: Warehouse,
+        hint: "Saldo físico, reservas e custódia",
+      },
       {
         to: "/equipe",
         label: "Pessoas e Competências",
@@ -196,15 +203,17 @@ const MENUS_EXISTENTES = [
   "/equipe",
   "/seguranca",
   "/projetos-engenharia",
+  "/almoxarifado",
 ] as const;
 export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
   admin: { menus: MENUS_EXISTENTES },
   comercial: { menus: ["/", "/clientes", "/comercial", "/produtos"] },
-  compras: { menus: ["/", "/clientes", "/produtos", "/compras", "/projetos"] },
+  compras: { menus: ["/", "/clientes", "/produtos", "/compras", "/projetos", "/almoxarifado"] },
   financeiro: { menus: ["/", "/financeiro", "/relatorios", "/projetos"] },
   campo: {
     menus: [
       "/",
+      "/almoxarifado",
       "/levantamentos",
       "/execucao",
       "/documentacao",
@@ -216,6 +225,7 @@ export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
   engenharia: {
     menus: [
       "/",
+      "/almoxarifado",
       "/clientes",
       "/comercial",
       "/produtos",
@@ -244,7 +254,9 @@ function acessos(roles: string[], capabilities: string[] = []): Acesso[] {
     Object.hasOwn(ACESSO_POR_PAPEL, role) ? [ACESSO_POR_PAPEL[role as Papel]] : [],
   );
   if (capabilities.includes("coordenar_operacao"))
-    a.push({ menus: ["/", "/levantamentos", "/equipe", "/seguranca", "/execucao"] });
+    a.push({
+      menus: ["/", "/levantamentos", "/equipe", "/seguranca", "/execucao", "/almoxarifado"],
+    });
   return a;
 }
 

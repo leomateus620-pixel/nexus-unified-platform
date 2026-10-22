@@ -1,0 +1,64 @@
+{
+  "method": "Actual source UI with isolated transport fixtures, not real Auth, SQL/RLS, concurrent reservations, Storage HTTP, operational persistence or physical-device proof",
+  "layouts": [],
+  "checks": [
+    {
+      "name": "required errors focus fields and dirty close offers explicit discard with focus return",
+      "pass": true
+    },
+    {
+      "name": "save failure preserves values and repeats the same operation key",
+      "pass": true
+    },
+    {
+      "name": "focus polling keeps opened version until explicit comparison adoption",
+      "pass": true
+    },
+    {
+      "name": "material workflow presents ten received, eight reserved/withdrawn, six consumed and two returned",
+      "pass": true
+    },
+    {
+      "name": "receipt classification is explicit and rejected material stays outside availability",
+      "pass": true
+    },
+    {
+      "name": "serialized tool detects overlap, records custody and prevents allocation after damaged return",
+      "pass": true
+    },
+    {
+      "name": "calibration validation requires confirmed certificate rather than a reference string",
+      "pass": true
+    },
+    {
+      "name": "URL keeps list filters across detail, reload and return",
+      "pass": true
+    },
+    {
+      "name": "clearing a debounced search does not restore the previous URL recut",
+      "pass": true
+    },
+    {
+      "name": "reservation with fixed product focuses an enabled field and Escape restores its trigger",
+      "pass": true
+    },
+    {
+      "name": "read-only permissions hide commands and access revocation closes private draft",
+      "pass": true
+    },
+    {
+      "name": "denial returned only by mutation or comparison hides the cached private record",
+      "pass": true
+    },
+    {
+      "name": "server pagination preserves the recut and stock fixture omits internal costs",
+      "pass": true
+    },
+    {
+      "name": "zero quantity, no records and query error have distinct recoverable representations",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

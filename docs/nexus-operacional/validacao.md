@@ -1,5 +1,24 @@
 # Validação do checkpoint operacional
 
+## Checkpoint43 — Almoxarifado e qualidade de arquivos
+
+| Método | Resultado e alcance |
+|---|---|
+| PostgreSQL16.15 descartável | Instalação limpa43, upgrade42→43, prefixo/checksums preservados, regressões antigas;49 cenários de estoque,38 arquivos e10 concorrências/transações passaram |
+| Compatibilidade relacional | Nove pares FK únicos, nomes/colunas/ações históricas preservados, seis DMLs diretos entre tenants rejeitados; trigger interno sem EXECUTE público |
+| Metadados conectados |0023 aplicada13:16:47.507078 UTC;0024 aplicada13:29:30.366847 UTC. Ledger43, catálogo, RLS, grants, Storage e relações conferidos às13:30:19.277589 UTC, sem fixtures operacionais |
+| DTOs reais locais |25 respostas SQL de listas/detalhes/opções/comando aceitas pelos schemas; resumo sem fixtures em `almoxarifado-dto-zod.json` |
+| Domínio e handlers isolados | Estoque28, anexos26, aceite6 e guard AST3 passaram; PE arquivos9 passaram. Quatro dos28 testes de estoque exercitam respostas tardias/purge/mudança de acesso, sem provar logout real conectado |
+| UI final isolada | Almoxarifado228 layouts/17 comportamentos; anexos seis layouts/cinco comportamentos; arquivos PE oito comportamentos; zero erros JS/overflow nas verificações executadas |
+| Regressão preservada | Orçamento59+catálogo5 passaram. A tentativa UI completa passou Comercial/Catálogo/autosave,36 layouts/nove comportamentos operacionais, Levantamentos30/10, Estudos61/14 e ação vinculada3; parou na expectativa textual antiga do novo teste de estoque. A fatia corrigida passou em `ui-43-final/`; não se declara exit0 da tentativa completa |
+| Compilação | Tipos oficiais43:108 tabelas/161 funções RPC/quatro enums, AST preservada. Typecheck global e build passaram. ESLint dos48 arquivos de código alterados/novos: zero erros, um aviso preexistente em `operacao/components.tsx` |
+
+Evidências de banco: `banco-local-43.json`, `schema-diff-43.json`, `verificacao-remota-0024.json`; catálogo42 e preflight permanecem como histórico discriminado. UI: `ui-43/` para as etapas gerais e `ui-43-final/` para a fatia final. A primeira tentativa42 foi interrompida por HMR enquanto arquivos de laboratório mudavam e não conta como aprovação. A falha43 da nova expectativa textual foi corrigida preservando as verificações de versão/payload/retomada. O CI do novo commit deve ser acompanhado separadamente; o CI41 aprovado não comprova o head seguinte.
+
+Product Design: inspeção e capturas reais dos componentes no navegador integrado em390×845/1440×900, incluindo lista, ficha, reserva e consulta de política. As capturas usam transporte de laboratório e não comprovam backend operacional. Arquivos privados canônicos agora distinguem ler/adicionar/retomar/cancelar e PE preserva a identidade original quando nomes locais diferentes são deduplicados.
+
+Conforme decisão do usuário, não foram criadas fixtures no banco operacional e não foi executado E2E conectado de Auth/Storage HTTP. Dispositivo físico, teclado virtual real, leitor de tela, p95 sob carga e todas as jornadas integradas da plataforma continuam sem comprovação. Compra independente, OS/custo, paginação das coleções de detalhe e consumidores da Agenda permanecem pendentes.
+
 ## Checkpoint 41 — Estudos Técnicos
 
 | Método | Resultado e alcance |

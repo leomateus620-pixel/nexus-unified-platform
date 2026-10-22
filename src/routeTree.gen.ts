@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAlmoxarifadoRouteImport } from './routes/_authenticated/almoxarifado'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
 import { Route as AuthenticatedComprasRouteImport } from './routes/_authenticated/compras'
@@ -88,6 +89,12 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAlmoxarifadoRoute =
+  AuthenticatedAlmoxarifadoRouteImport.update({
+    id: '/almoxarifado',
+    path: '/almoxarifado',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
   id: '/clientes',
   path: '/clientes',
@@ -400,6 +407,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/compras': typeof AuthenticatedComprasRouteWithChildren
@@ -454,6 +462,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/equipe': typeof AuthenticatedEquipeRoute
@@ -504,6 +513,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/_authenticated/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/_authenticated/compras': typeof AuthenticatedComprasRouteWithChildren
@@ -562,6 +572,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/almoxarifado'
     | '/clientes'
     | '/comercial'
     | '/compras'
@@ -616,6 +627,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/almoxarifado'
     | '/clientes'
     | '/documentacao'
     | '/equipe'
@@ -665,6 +677,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/_authenticated/almoxarifado'
     | '/_authenticated/clientes'
     | '/_authenticated/comercial'
     | '/_authenticated/compras'
@@ -762,6 +775,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/almoxarifado': {
+      id: '/_authenticated/almoxarifado'
+      path: '/almoxarifado'
+      fullPath: '/almoxarifado'
+      preLoaderRoute: typeof AuthenticatedAlmoxarifadoRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/clientes': {
@@ -1270,6 +1290,7 @@ const AuthenticatedProjetosRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAlmoxarifadoRoute: typeof AuthenticatedAlmoxarifadoRoute
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
   AuthenticatedComprasRoute: typeof AuthenticatedComprasRouteWithChildren
@@ -1290,6 +1311,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAlmoxarifadoRoute: AuthenticatedAlmoxarifadoRoute,
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,
   AuthenticatedComprasRoute: AuthenticatedComprasRouteWithChildren,

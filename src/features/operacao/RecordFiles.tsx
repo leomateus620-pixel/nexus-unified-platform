@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ActionButton, ErrorState } from "@/components/nexus/Page";
 import {
   baixarAnexo,
+  cancelarAnexo,
   confirmarUpload,
   listarAnexos,
   prepararUpload,
@@ -11,9 +12,10 @@ import {
 } from "./files.functions";
 import { mimeDetectado, sha256 } from "./files";
 import type { z } from "zod";
-import type { Anexo, anexoPai, uploadInput } from "./schemas";
-import { useCommandKey } from "./components";
+import { anexoPai, type Anexo, type uploadInput } from "./schemas";
+import { IntencoesAnexoOperacional } from "./upload-intents";
 
+type Pai = z.infer<typeof anexoPai>;
 export function RecordFiles({
   pai,
   readOnly = false,
@@ -21,20 +23,54 @@ export function RecordFiles({
   pai: z.input<typeof anexoPai>;
   readOnly?: boolean;
 }) {
+  const destino = anexoPai.parse(pai);
+  return <ArquivosDoRegistro key={JSON.stringify(destino)} pai={destino} readOnly={readOnly} />;
+}
+function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) {
   const qc = useQueryClient();
+  const section = useRef<HTMLElement>(null);
+  const motivoId = useId();
   const [erro, setErro] = useState<Error | null>(null);
   const [progresso, setProgresso] = useState("");
   const [busy, setBusy] = useState(false);
-  const keyFor = useCommandKey();
+  const busyLock = useRef(false);
+  const intencoes = useRef(new IntencoesAnexoOperacional());
+  const [cancelamento, setCancelamento] = useState<Anexo | null>(null);
+  const [motivo, setMotivo] = useState("");
+  const [erroMotivo, setErroMotivo] = useState("");
   const q = useQuery({
     queryKey: ["anexos", pai],
+    staleTime: 30_000,
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: "always",
+    retry: false,
     queryFn: ({ signal }) => listarAnexos({ data: pai, signal }),
   });
+  const visiveis = q.isError ? undefined : q.data;
+  const podeAdicionar = !readOnly && visiveis?.permissoes.adicionar === true;
+  const payloadArquivo = (a: Pick<Anexo, "nome" | "mime" | "tamanho" | "sha256">) => ({
+    pai,
+    nome: a.nome,
+    tamanho: a.tamanho,
+    mime: a.mime,
+    sha256: a.sha256,
+  });
+  async function atualizar() {
+    await Promise.all([
+      qc.invalidateQueries({ queryKey: ["anexos", pai] }),
+      ...(pai.ferramenta_id || pai.calibracao_id
+        ? [qc.invalidateQueries({ queryKey: ["almoxarifado", pai.organization_id] })]
+        : []),
+    ]);
+  }
   async function enviar(file: File, pending?: Anexo) {
+    if (busyLock.current || !podeAdicionar) return;
+    busyLock.current = true;
     setErro(null);
     setBusy(true);
     try {
-      if (file.size > 20 * 1024 * 1024) throw new Error("Limite de 20 MB por arquivo.");
+      if (!file.size || file.size > 20 * 1024 * 1024)
+        throw new Error("Envie um arquivo de até 20 MiB.");
       setProgresso("Verificando arquivo…");
       const bytes = new Uint8Array(await file.arrayBuffer());
       const mime = mimeDetectado(bytes) as z.infer<typeof uploadInput>["mime"] | null;
@@ -45,30 +81,36 @@ export function RecordFiles({
         (pending.sha256 !== hash || pending.tamanho !== file.size || pending.mime !== mime)
       )
         throw new Error(
-          "Selecione o mesmo arquivo do envio pendente. Nome, tipo e conteúdo não podem substituir a evidência original.",
+          "Selecione o mesmo conteúdo do envio pendente. Nome e metadados originais serão preservados.",
         );
-      const payload = { pai, nome: file.name, tamanho: file.size, mime, sha256: hash };
+      const payload = payloadArquivo({
+        nome: pending?.nome ?? file.name,
+        tamanho: file.size,
+        mime,
+        sha256: hash,
+      });
+      const fingerprint = JSON.stringify(payload);
       const staged = pending
         ? await retomarUpload({ data: { organization_id: pai.organization_id, id: pending.id } })
-        : await prepararUpload({ data: { ...payload, chave: keyFor(payload) } });
+        : await prepararUpload({
+            data: { ...payload, mime, chave: intencoes.current.chave(fingerprint) },
+          });
+      intencoes.current.identificar(fingerprint, staged.anexo.id);
       setProgresso("Enviando arquivo…");
       if (staged.token) {
         const upload = await supabase.storage
           .from("nexus-operacional")
           .uploadToSignedUrl(staged.anexo.caminho, staged.token, file, { contentType: mime });
         if (upload.error) {
-          // Uma resposta de rede perdida pode ter ocorrido após o Storage concluir o upload.
-          // A confirmação verifica bytes/hash; nunca sobrescreve o objeto existente.
           try {
             await confirmarUpload({
               data: { organization_id: pai.organization_id, id: staged.anexo.id },
             });
-            await qc.invalidateQueries({ queryKey: ["anexos", pai] });
             setProgresso("Arquivo confirmado.");
             return;
           } catch {
             throw new Error(
-              `${upload.error.message}. O envio permanece pendente; use Reverificar ou Retomar com o mesmo arquivo.`,
+              "O envio permanece pendente. Use Reverificar envio ou retome com o mesmo arquivo.",
             );
           }
         }
@@ -77,28 +119,36 @@ export function RecordFiles({
       await confirmarUpload({
         data: { organization_id: pai.organization_id, id: staged.anexo.id },
       });
-      await qc.invalidateQueries({ queryKey: ["anexos", pai] });
       setProgresso("Arquivo confirmado.");
     } catch (e) {
       setErro(
         e instanceof Error ? e : new Error("Não foi possível enviar o arquivo. Tente novamente."),
       );
       setProgresso("");
-      await qc.invalidateQueries({ queryKey: ["anexos", pai] });
     } finally {
+      await atualizar();
       setBusy(false);
+      busyLock.current = false;
     }
   }
   async function confirmar(id: string) {
+    if (busyLock.current) return;
+    busyLock.current = true;
+    setBusy(true);
     setErro(null);
     try {
       await confirmarUpload({ data: { organization_id: pai.organization_id, id } });
-      await qc.invalidateQueries({ queryKey: ["anexos", pai] });
+      setProgresso("Arquivo confirmado.");
+      await atualizar();
     } catch (e) {
       setErro(e instanceof Error ? e : new Error("Arquivo ainda não disponível."));
+    } finally {
+      busyLock.current = false;
+      setBusy(false);
     }
   }
   async function baixar(id: string) {
+    setErro(null);
     try {
       const { url } = await baixarAnexo({ data: { organization_id: pai.organization_id, id } });
       const a = document.createElement("a");
@@ -110,10 +160,47 @@ export function RecordFiles({
       setErro(e instanceof Error ? e : new Error("Download indisponível."));
     }
   }
+  async function cancelar() {
+    if (!cancelamento || busyLock.current) return;
+    if (motivo.trim().length < 5) {
+      setErroMotivo("Explique o motivo com ao menos cinco caracteres.");
+      document.getElementById(motivoId)?.focus();
+      return;
+    }
+    busyLock.current = true;
+    setBusy(true);
+    setErro(null);
+    setErroMotivo("");
+    try {
+      const payload = {
+        organization_id: pai.organization_id,
+        id: cancelamento.id,
+        motivo: motivo.trim(),
+      };
+      await cancelarAnexo({
+        data: { ...payload, chave: intencoes.current.chave(JSON.stringify(payload)) },
+      });
+      intencoes.current.cancelar(cancelamento.id, JSON.stringify(payloadArquivo(cancelamento)));
+      setCancelamento(null);
+      setMotivo("");
+      setProgresso("Envio pendente cancelado; uma nova seleção iniciará outro envio.");
+      await atualizar();
+      requestAnimationFrame(() => section.current?.focus());
+    } catch (e) {
+      setErro(
+        e instanceof Error
+          ? e
+          : new Error("Não foi possível cancelar o envio. Motivo preservado para repetir."),
+      );
+    } finally {
+      busyLock.current = false;
+      setBusy(false);
+    }
+  }
   return (
-    <section className="space-y-3" aria-label="Arquivos privados">
+    <section ref={section} tabIndex={-1} className="space-y-3" aria-label="Arquivos privados">
       <h3 className="font-medium">Arquivos e evidências</h3>
-      {!readOnly && (
+      {podeAdicionar && (
         <label className="nx-upload-label">
           Adicionar PDF ou imagem (até 20 MB)
           <input
@@ -128,21 +215,21 @@ export function RecordFiles({
           />
         </label>
       )}
-      <p role="status" className="text-sm text-muted-foreground">
-        {progresso}
+      <p role="status" aria-live="polite" className="text-sm text-muted-foreground">
+        {q.isError ? "" : progresso}
       </p>
-      {erro && (
+      {erro && !q.isError && (
         <p role="alert" className="text-sm text-destructive">
           {erro.message}
         </p>
       )}
       {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
-      {q.isPending && <p>Consultando arquivos…</p>}
-      {!q.isPending && !q.isError && !q.data?.length && (
+      {q.isPending && <p role="status">Consultando arquivos…</p>}
+      {visiveis?.registros.length === 0 && (
         <p className="text-sm text-muted-foreground">Nenhum arquivo vinculado.</p>
       )}
       <ul className="space-y-2">
-        {q.data?.map((a) => (
+        {visiveis?.registros.map((a) => (
           <li
             key={a.id}
             className="flex flex-wrap items-center justify-between gap-2 rounded border border-border p-3"
@@ -160,25 +247,42 @@ export function RecordFiles({
               <ActionButton variant="ghost" onClick={() => baixar(a.id)}>
                 Baixar
               </ActionButton>
-            ) : a.pode_retomar && !readOnly ? (
+            ) : !readOnly && (a.pode_retomar || a.pode_cancelar) ? (
               <div className="space-y-2">
-                <ActionButton variant="ghost" disabled={busy} onClick={() => confirmar(a.id)}>
-                  Reverificar envio
-                </ActionButton>
-                <label className="nx-upload-label text-xs">
-                  Retomar envio do mesmo arquivo
-                  <input
-                    aria-label={`Retomar envio de ${a.nome}`}
-                    type="file"
-                    accept="application/pdf,image/png,image/jpeg,image/webp"
+                {a.pode_retomar && (
+                  <>
+                    <ActionButton variant="ghost" disabled={busy} onClick={() => confirmar(a.id)}>
+                      Reverificar envio
+                    </ActionButton>
+                    <label className="nx-upload-label text-xs">
+                      Retomar envio do mesmo arquivo
+                      <input
+                        aria-label={`Retomar envio de ${a.nome}`}
+                        type="file"
+                        accept="application/pdf,image/png,image/jpeg,image/webp"
+                        disabled={busy}
+                        onChange={(event) => {
+                          const file = event.target.files?.[0];
+                          if (file) void enviar(file, a);
+                          event.target.value = "";
+                        }}
+                      />
+                    </label>
+                  </>
+                )}
+                {a.pode_cancelar && (
+                  <ActionButton
+                    variant="ghost"
                     disabled={busy}
-                    onChange={(event) => {
-                      const file = event.target.files?.[0];
-                      if (file) void enviar(file, a);
-                      event.target.value = "";
+                    onClick={() => {
+                      setCancelamento(a);
+                      setMotivo("");
+                      setErroMotivo("");
                     }}
-                  />
-                </label>
+                  >
+                    Cancelar envio pendente
+                  </ActionButton>
+                )}
               </div>
             ) : (
               <span className="text-xs text-muted-foreground">
@@ -188,10 +292,40 @@ export function RecordFiles({
           </li>
         ))}
       </ul>
-      {q.data?.length === 50 && (
+      {visiveis?.registros.length === 50 && (
         <p className="text-xs text-muted-foreground">
           Exibindo os 50 arquivos mais recentes deste registro.
         </p>
+      )}
+      {podeAdicionar && cancelamento && (
+        <div className="grid gap-3 rounded-md border border-border p-3">
+          <label htmlFor={motivoId} className="text-sm">
+            Motivo do cancelamento
+          </label>
+          <input
+            id={motivoId}
+            className="min-h-11 rounded border border-input bg-background px-3"
+            value={motivo}
+            aria-invalid={!!erroMotivo}
+            aria-describedby={erroMotivo ? `${motivoId}-error` : undefined}
+            onChange={(e) => setMotivo(e.target.value)}
+            maxLength={2000}
+            disabled={busy}
+          />
+          {erroMotivo && (
+            <p role="alert" id={`${motivoId}-error`} className="text-sm text-destructive">
+              {erroMotivo}
+            </p>
+          )}
+          <div className="flex flex-wrap gap-2">
+            <ActionButton variant="danger" disabled={busy} onClick={cancelar}>
+              Confirmar cancelamento
+            </ActionButton>
+            <ActionButton variant="ghost" disabled={busy} onClick={() => setCancelamento(null)}>
+              Manter envio
+            </ActionButton>
+          </div>
+        </div>
       )}
     </section>
   );

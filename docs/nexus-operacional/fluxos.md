@@ -1,5 +1,15 @@
 # Fluxos implementados e continuidade
 
+## Controle físico de materiais e ferramentas
+
+Recebimento de OC/apontamento de OP → conferência com unidade e fator → posições aceito/quarentena/rejeitado. Apenas o aceito pode ser reservado para projeto/OP. Reserva → retirada para a pessoa → consumo e devolução da sobra usam o mesmo ledger e proveniência. Transferência entre locais é atômica. Estorno do evento original não pode retirar material já consumido como se estivesse disponível; a correção mantém autor/motivo e fonte. Inventário fixa contagem e versão do saldo antes da aprovação.
+
+Ferramenta individual → reserva temporal → retirada → devolução conferida. Indisponibilidade e custódias conflitantes são avaliadas no banco. Política de calibração tem versão publicada; evidência passa por conferência profissional e não renova a validade apenas por trocar o arquivo. Datas civis e timezone da custódia são preservados.
+
+Configurar material consulta primeiro sua política vigente e fixa a versão aberta. Conflito permite consultar/comparar e adotar a versão atual mantendo o preenchimento. Revogação da lista, ficha, comando ou comparação fecha o editor; falha de rede mantém o rascunho. Um recibo tardio não pode recriar o cache de um contexto removido.
+
+Compras independentes, OS, custo realizado e Agenda integrada continuam consumidores posteriores. Saldo, obrigação financeira e pagamento são fatos distintos; nenhum desses últimos é inferido da conferência física.
+
 ## Estudos técnicos
 
 Cliente/unidade → estudo em elaboração → método e fontes configuradas → conteúdo/perigos/medidas/evidências → submissão imutável → decisão do revisor. Devolução reabre a elaboração preservando a submissão anterior; novo envio produz outra. Aprovação mantém snapshot/hash e nova revisão parte da anterior sem reescrevê-la. Substituição é registrada separadamente.

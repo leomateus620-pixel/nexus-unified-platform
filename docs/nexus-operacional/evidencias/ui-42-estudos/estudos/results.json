@@ -1,0 +1,71 @@
+{
+  "profile": "behaviors-only",
+  "method": "Source UI with synthetic transport only; no real Auth, SQL, Storage HTTP, operational persistence or physical device proof",
+  "layouts": [
+    {
+      "name": "historico-versionado",
+      "width": 390,
+      "scrollWidth": 390
+    }
+  ],
+  "checks": [
+    {
+      "name": "creation validates fields, focuses the first error and restores the trigger",
+      "pass": true
+    },
+    {
+      "name": "dirty creation keeps local data until explicit discard",
+      "pass": true
+    },
+    {
+      "name": "failed save keeps the completed form and the error is recoverable",
+      "pass": true
+    },
+    {
+      "name": "creation preserves the declared initial scope in the returned revision",
+      "pass": true
+    },
+    {
+      "name": "focus refetch cannot advance the form expected_version",
+      "pass": true
+    },
+    {
+      "name": "return, resubmit, approve and new revision preserve the submitted history",
+      "pass": true
+    },
+    {
+      "name": "method publication keeps the study fixed to its original version",
+      "pass": true
+    },
+    {
+      "name": "action starts blank and opens the canonical task with only released instructions",
+      "pass": true
+    },
+    {
+      "name": "file query revocation hides cached original and upload controls",
+      "pass": true
+    },
+    {
+      "name": "an open draft survives a network error and is removed when source access is denied",
+      "pass": true
+    },
+    {
+      "name": "write denial hides the cached study before the next permission poll and recovers by authorized read",
+      "pass": true
+    },
+    {
+      "name": "comparison denial removes the private editor while a network failure preserves it",
+      "pass": true
+    },
+    {
+      "name": "pending upload can fail, be cancelled and retried as a fresh intent",
+      "pass": true
+    },
+    {
+      "name": "empty, query failure and revoked source are distinct states",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

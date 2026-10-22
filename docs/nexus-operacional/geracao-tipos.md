@@ -23,6 +23,12 @@ O runner cria um diretório e cluster novos em TEMP, escolhe uma porta livre em 
 
 O processo rejeita ausência da flag de ambiente, host diferente de loopback, porta inválida e saída intermediária fora de TEMP. O subprocesso do gerador recebe uma lista restrita de variáveis; URLs de produção, chaves de serviço e outras credenciais globais não são repassadas. Ao terminar, o runner encerra o cluster, mantém os artefatos locais para inspeção e informa seu caminho. Nenhum comando de remoção recursiva é executado.
 
+## Checkpoint43
+
+Geração oficial concluída sobre43 migrações:108 tabelas,161 funções não trigger, quatro enums,239.637bytes formatados. SHA-256 final `60ace1c4b951e3dcfb052bd35c31613937cf9605b1359c9a3a5001f27bd9617d`, sem diagnóstico TypeScript isolado e com AST preservada. Proveniência em `evidencias/geracao-tipos-43.json`.
+
+A geração42 expôs29 erros nas consultas existentes por nove FKs de suprimentos duplicadas. A migração append-only0024 substitui representações redundantes por uma FK composta por relação, preservando nomes históricos e ações NO ACTION/CASCADE. A análise global de tipos voltou a passar com as consultas anteriores intactas. Os pares também têm testes de catálogo e DML entre tenants; isso não substitui HTTP PostgREST no ambiente conectado.
+
 ## Contrato e conferência
 
 - Schema incluído: somente `public`.

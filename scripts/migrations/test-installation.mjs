@@ -27,6 +27,7 @@ const connectorName = `nexus_connector_${process.pid}`;
 let clean;
 let connector;
 let legacyEngineeringVersion;
+let legacyWarehouseReceipt;
 try {
   const legacyPeSource = await readFile(
     path.join(root, "drizzle/migrations/0014_projetos_engenharia.sql"),
@@ -112,7 +113,126 @@ try {
       return row.value.versao;
     });
   }
-  const upgrade = [...beforeLatest, ...(await applyMigrations(sql, migrations))];
+  // The currently published checkpoint41 must upgrade without inventing physical balances.
+  const warehouseCheckpoint = migrations.some((entry) =>
+    entry.path.endsWith("0023_almoxarifado.sql"),
+  )
+    ? await applyMigrations(sql, migrations.slice(0, 41))
+    : [];
+  if (warehouseCheckpoint.length) {
+    legacyWarehouseReceipt = await sql.begin(async (tx) => {
+      await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+      await tx.unsafe(`
+        set local session_replication_role=replica;
+        insert into public.produtos(id,organization_id,codigo,descricao,unidade,indivisivel)
+        values('58000000-0000-0000-0000-000000000020','58000000-0000-0000-0000-000000000001','UPGRADE-PHYSICAL','Legacy received product','PÇ',true);
+        set local session_replication_role=origin;
+        insert into public.fornecedores(id,organization_id,nome) values('58000000-0000-0000-0000-000000000021','58000000-0000-0000-0000-000000000001','Legacy receiving supplier');
+        insert into public.propostas(id,organization_id,numero,cliente_id) values('58000000-0000-0000-0000-000000000022','58000000-0000-0000-0000-000000000001','UPGRADE-PHYSICAL/26','58000000-0000-0000-0000-000000000002');
+        insert into public.proposta_revisoes(id,organization_id,proposta_id,numero,totais,desatualizada) values('58000000-0000-0000-0000-000000000023','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000022',1,'{}',false);
+        insert into public.revisao_componentes(id,organization_id,revisao_id,produto_id,codigo,descricao,unidade,modalidade,custo_adotado,indivisivel,multiplo_compra) values('58000000-0000-0000-0000-000000000024','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000023','58000000-0000-0000-0000-000000000020','UPGRADE-PHYSICAL','Legacy received product','PÇ','comprar',100,true,1);
+        insert into public.demandas(id,organization_id,revisao_id,revisao_componente_id,modalidade,quantidade_necessaria,quantidade_planejada) values('58000000-0000-0000-0000-000000000025','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000023','58000000-0000-0000-0000-000000000024','comprar',10,10);
+        insert into public.ordens_compra(id,organization_id,numero,revisao_id,fornecedor_id) values('58000000-0000-0000-0000-000000000026','58000000-0000-0000-0000-000000000001','OC-UPGRADE-PHYSICAL','58000000-0000-0000-0000-000000000023','58000000-0000-0000-0000-000000000021');
+        insert into public.ordem_compra_itens(id,organization_id,ordem_id,demanda_id,quantidade) values('58000000-0000-0000-0000-000000000027','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000026','58000000-0000-0000-0000-000000000025',10);
+        update public.ordens_compra set status='emitida' where id='58000000-0000-0000-0000-000000000026';
+        set local role authenticated;`);
+      const [received] =
+        await tx`select public.registrar_movimento('recebimento','58000000-0000-0000-0000-000000000027',10,'upgrade-checkpoint41-receipt') value`;
+      return (
+        await tx`select to_jsonb(r) value from public.recebimentos r where id=${received.value.id}`
+      )[0].value;
+    });
+  }
+  let warehouseRelationsCheckpoint = [];
+  if (migrations.some((entry) => entry.path.endsWith("0024_suprimentos_relacoes_univocas.sql"))) {
+    warehouseRelationsCheckpoint = await applyMigrations(sql, migrations.slice(0, 42));
+    const [before] =
+      await sql`select count(*)::int count from pg_constraint where contype='f' and conrelid='public.ordem_compra_itens'::regclass and confrelid='public.ordens_compra'::regclass`;
+    assert.equal(
+      before.count,
+      2,
+      "checkpoint42 must reproduce the ambiguous PostgREST relationship before the corrective upgrade",
+    );
+  }
+  const upgrade = [
+    ...beforeLatest,
+    ...warehouseCheckpoint,
+    ...warehouseRelationsCheckpoint,
+    ...(await applyMigrations(sql, migrations)),
+  ];
+  if (warehouseRelationsCheckpoint.length) {
+    const [after] =
+      await sql`select count(*)::int count from pg_constraint where contype='f' and conrelid='public.ordem_compra_itens'::regclass and confrelid='public.ordens_compra'::regclass`;
+    assert.equal(after.count, 1);
+    await sql.begin(async (tx) => {
+      // DML direto no cluster descartável: isolar as FKs dos guards de autoria/imutabilidade.
+      // DISABLE TRIGGER USER mantém todos os triggers internos de integridade referencial ativos.
+      await tx.unsafe(`
+        insert into public.organizations(id,nome) values('58000000-0000-0000-0000-000000000090','Cross tenant FK test');
+        alter table public.ordens_compra disable trigger user;
+        alter table public.ordens_producao disable trigger user;
+        alter table public.ordem_compra_itens disable trigger user;
+        alter table public.ordem_producao_itens disable trigger user;
+        alter table public.recebimentos disable trigger user;
+        alter table public.apontamentos disable trigger user;
+        insert into public.ordens_producao(id,organization_id,numero,revisao_id)
+        values('58000000-0000-0000-0000-000000000091','58000000-0000-0000-0000-000000000001','FK-UPGRADE-OP','58000000-0000-0000-0000-000000000023');
+        insert into public.ordem_producao_itens(id,organization_id,ordem_id,demanda_id,quantidade)
+        values('58000000-0000-0000-0000-000000000092','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000091','58000000-0000-0000-0000-000000000025',1);
+        insert into public.apontamentos(id,organization_id,item_id,quantidade)
+        values('58000000-0000-0000-0000-000000000093','58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000092',1);
+      `);
+      for (const [table, id] of [
+        ["ordens_compra", "58000000-0000-0000-0000-000000000026"],
+        ["ordem_compra_itens", "58000000-0000-0000-0000-000000000027"],
+        ["recebimentos", legacyWarehouseReceipt.id],
+        ["ordens_producao", "58000000-0000-0000-0000-000000000091"],
+        ["ordem_producao_itens", "58000000-0000-0000-0000-000000000092"],
+        ["apontamentos", "58000000-0000-0000-0000-000000000093"],
+      ]) {
+        await assert.rejects(
+          tx.savepoint((sp) =>
+            sp.unsafe(
+              `update public.${table} set organization_id='58000000-0000-0000-0000-000000000090' where id=$1`,
+              [id],
+            ),
+          ),
+          (error) => error.code === "23503",
+        );
+      }
+      // Esvaziar apenas estas três fixtures novas antes de reativar os guards.
+      await tx.unsafe(`delete from public.apontamentos where id='58000000-0000-0000-0000-000000000093';
+        delete from public.ordem_producao_itens where id='58000000-0000-0000-0000-000000000092';
+        delete from public.ordens_producao where id='58000000-0000-0000-0000-000000000091';
+        delete from public.organizations where id='58000000-0000-0000-0000-000000000090';
+        alter table public.ordens_compra enable trigger user;
+        alter table public.ordens_producao enable trigger user;
+        alter table public.ordem_compra_itens enable trigger user;
+        alter table public.ordem_producao_itens enable trigger user;
+        alter table public.recebimentos enable trigger user;
+        alter table public.apontamentos enable trigger user;`);
+    });
+    console.log(
+      "PASS: six direct cross-tenant supply writes remain rejected by real composite FKs after removing redundant relationships",
+    );
+    console.log(
+      "PASS: checkpoint42 → 43 reproduces duplicate relationships before correction and retains one composite relationship afterwards",
+    );
+  }
+  if (legacyWarehouseReceipt) {
+    const [preserved] =
+      await sql`select to_jsonb(r) value from public.recebimentos r where id=${legacyWarehouseReceipt.id}`;
+    assert.deepEqual(preserved.value, legacyWarehouseReceipt);
+    const [physical] =
+      await sql`select count(*)::int count from public.estoque_movimentos where organization_id='58000000-0000-0000-0000-000000000001'`;
+    assert.equal(physical.count, 0);
+    const [received] =
+      await sql`select quantidade_recebida::text quantity from public.ordem_compra_itens where id='58000000-0000-0000-0000-000000000027'`;
+    assert.equal(Number(received.quantity), 10);
+    console.log(
+      "PASS: checkpoint41 receipt and accumulator preserved on upgrade; no stock balance or conference inferred",
+    );
+  }
   if (operationalCheckpoint === 40) {
     const [{ retainedPerson }] =
       await sql`select count(*)::int as "retainedPerson" from public.pessoas where id='58000000-0000-0000-0000-000000000004' and nome='Operational person retained across upgrade'`;

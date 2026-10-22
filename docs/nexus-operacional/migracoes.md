@@ -32,14 +32,23 @@ históricas. Isso mantém disponíveis os objetos criados em Drizzle quando a fu
 Nenhum DDL novo é duplicado em Supabase. Não editar uma migração já aplicada; uma correção posterior
 ganha outro arquivo.
 
+Antes das próximas aplicações conectadas: congelar o SQL, validar instalação/upgrade, gerar tipos pelo
+processo oficial e executar o typecheck das consultas existentes. FKs compostas podem duplicar relações
+históricas para o PostgREST mesmo quando a integridade SQL está correta. Preservar o nome e as ações
+de exclusão/atualização quando a FK composta substituir uma representação redundante. A geração42
+identificou essa falha após a aplicação0023; a correção0024 foi acrescentada sem editar o histórico.
+
 Ordem desta entrega: `0012` fundação/pessoas/ações/autorização; `0013` clientes;
 `0014` projetos de engenharia; `0015` anexos privados; `0016` fundação temporal;
 `0017` arquivos de engenharia; `0018` worker/scheduler; `0019` administração de vínculos.
 `0020` corrige a revalidação do autor na confirmação privilegiada de anexos operacionais e originais
 de engenharia. `0021` acrescenta Levantamentos Técnicos, coleta/revisão, arquivos privados e adoção
-explícita de medidas no dimensionamento existente. O manifesto contém 40 arquivos; seus hashes
-finais ficam no próprio manifesto. Até `0021` estão aplicadas no ambiente confirmado; novos arquivos
-começam em `0022` e não podem alterar os checksums publicados.
+explícita de medidas no dimensionamento existente. `0022` entrega estudos técnicos versionados.
+O banco confirmado e o manifesto contêm **43 arquivos até `0024`**, aplicados e com schema
+verificado. `0024` corrige relações PostgREST duplicadas identificadas pela geração oficial de
+tipos após `0023`; os tipos43 e o typecheck global passaram sem alterar as consultas históricas.
+Os checksums das43 entradas são imutáveis; alterações futuras usam novos arquivos. A verificação
+de schema/tipos não equivale a E2E remoto de Auth/Storage ou implantação do frontend.
 
 `scripts/migrations/manifest.json` define ordem e SHA-256 do SQL UTF-8 com CRLF normalizado para LF.
 A normalização permite comparar checkouts Windows/Linux sem mascarar mudança de conteúdo SQL.
@@ -358,3 +367,131 @@ Não editar esta fonte nem apagar a posição41: qualquer correção recebe `002
 continua compatível com as tabelas aditivas e os campos extras de novos snapshots PE. Uma falha
 posterior deve ser diagnosticada sem revogar proteção de arquivos/revisões ou inferir contexto por
 nomes; usar correção aditiva e repetir instalação limpa/upgrade41 → próximo checkpoint.
+
+## Almoxarifado e ferramentas — `0023` / checkpoint42
+
+**APLICADA; SCHEMA REMOTO VERIFICADO.** A trilha append-only acrescentou
+`drizzle/migrations/0023_almoxarifado.sql` após as 41 entradas publicadas, sem modificar fontes
+anteriores. Seu hash atual fica no manifesto. O contrato funcional está em
+`almoxarifado/contrato-banco.md`; os testes novos são `tests/db/almoxarifado.sql`,
+`almoxarifado-arquivos.sql` e `almoxarifado-concurrency.mjs`.
+
+A migração cria 13 tabelas operacionais com RLS, conferência física explícita, proveniência e
+movimentos imutáveis, reservas, retirada/consumo/devolução, inventário e ferramentas individuais
+com custódia temporal e calibração configurada. Reutiliza produtos, conversões, recebimentos,
+apontamentos, pessoas, projetos, OPs e o bucket privado existente. Nenhum saldo histórico é presumido.
+Arquivos reutilizam `anexos` por FKs ferramenta/calibração e XOR de pais; não há novo bucket.
+
+Duas correções de integração existentes foram reproduzidas antes de mudar o comportamento:
+Campo conseguia ler preços/parcelas diretamente em `aquisicoes`; uma OC emitida recusava o vínculo
+do projeto no aceite. O SELECT passa a exigir `ver_custos`. O novo aceite atômico mantém a regra
+de códigos e estados, restringe a evolução do cabeçalho ao vínculo inicial do projeto exato e
+transaciona revisão/projeto/proposta/OC/OP/auditoria/recibo. Os motores, composição, geração de ordens,
+prévia/hash, travas e documentos comerciais emitidos permanecem preservados.
+
+Antes da aplicação, executar `scripts/migrations/preflight-0023.sql` no ambiente confirmado e
+conferir o prefixo completo41 e catálogo esperado. O preflight retorna somente 22 contagens de
+integridade, unicidade e metadados do ledger. **Qualquer conflito impede a migração**, sem inferir
+saneamento, regravar histórico, excluir registros ou preencher um depósito fictício.
+O root executou esse preflight às **13:03:03.074205 UTC de 22/10/2026**: as 22 contagens foram zero,
+ledger41/último checksum0022 coincidiram e a candidata estava ausente. Evidência:
+`evidencias/preflight-integridade-0023.json`. O preflight final às **13:16:39 UTC** repetiu as
+22 contagens zeradas e o prefixo41/catálogo anterior sem divergência.
+
+O plano de recuperação é diagnóstico e correção aditiva. Uma falha de DDL reverte objeto e ledger
+na mesma transação do envelope. Após aplicação confirmada, não editar `0023` nem remover sua entrada:
+qualquer correção será `0024+`. Não estornar evento físico consumido/reservado para facilitar uma
+reconciliação; devolver/liberar a origem ou realizar correção operacional autorizada e rastreável.
+Os detalhes ainda possuem coleções integrais (histórico/lotes/custódias/políticas); não foi declarada
+homologação de desempenho para grandes históricos. Compra operacional sem proposta, OS, financeiro
+realizado e experiência completa de Agenda continuam etapas posteriores, sem entidades fictícias.
+
+**Validação local final:** fonte congelada para revisão com SHA-256
+`4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8`.
+PostgreSQL16.15 passou instalação limpa42, upgrades30/40/41 → 42, preservação integral de recebimento
+e acumulador anteriores sem saldo inferido, retry e rollback de DDL/ledger, envelopes DO e todas as
+suítes históricas/operacionais. Passaram **49 cenários SQL de estoque**, **38 de arquivos** e
+**10 verificações concorrentes/transacionais**, incluindo falhas forçadas no aceite em proposta,
+OC e OP, dois aceites simultâneos, último material/ferramenta, revogação durante espera observada
+e replay após redução de papel. Fuso civil NZ/SP, fim exclusivo à meia-noite, conversão não
+representável, soma organizacional acima do limite de um evento e estorno fragmentado com fator3
+possuem casos reais. Nove testes do manifesto e lint dos scripts alterados passaram.
+
+`evidencias/banco-local-42.json` registra comando, alcance e hash do log.
+`schema-local-42.json` contém **108 relações, 795 constraints, 307 índices, 171 policies,
+116 triggers e 194 funções**. `schema-diff-local-41-42.json` registra 323 objetos adicionados,
+dois removidos (check de três pais e policy antiga de aquisições) e cinco alterados (anexos e
+quatro funções explicitamente evoluídas). Os corpos de geração/planejamento e motores existentes
+não foram alterados. O primeiro prefixo41 do manifesto coincide integralmente com o HEAD publicado.
+O envelope42 aplicado tem SHA-256
+`0a43c01f3b567e222406a641362ae30e49381e6c4849b82a38c385b6f2012601`.
+O root executou-o no projeto confirmado em **22/10/2026 às13:16:47.507078 UTC**, sem fixtures
+operacionais. A consulta somente de metadados às **13:18:07.996240 UTC** confirmou ledger42,
+ordem/checksums exatos, RLS das13 tabelas, grants dasRPCs/helper privados e bucket/policies Storage
+iguais à instalação local (`verificacao-remota-0023.json`). `schema-diff-42.json` compara cada
+identidade `kind:key`: nenhum objeto local ausente; somente a divergência legada de whitespace
+em `diferencas_comerciais`, já diagnosticada nas etapas anteriores. Os544 grants adicionais são
+415 grants históricos de tabelas e129 de funções da plataforma; destes, três pertencem ao novo
+trigger invoker `operacao_guard_anexo`, endurecido em `0024`.
+
+A geração oficial de tipos42 revelou nove relações de FK duplicadas: os embeds existentes sem
+hints tornaram-se ambíguos. Esta é uma incompatibilidade concreta descoberta após a aplicação;
+o schema42 não é declarado compatível com a interface antes da correção append-only `0024`.
+Não editar/apagar `0023` para resolver o erro. Auth, upload binário conectado, deployment frontend,
+dispositivo físico e desempenho continuam fora destas evidências de catálogo/SQL.
+
+## Compatibilidade de relações — `0024` / checkpoint43
+
+`0024_suprimentos_relacoes_univocas.sql` conserva uma única FK composta por cada um dos nove
+pares já existentes: OC→revisão/fornecedor/projeto; OP→revisão/projeto; OCI→OC; OPI→OP;
+recebimento→OCI; apontamento→OPI. As FKs simples redundantes saem, permanecendo a integridade
+por organização e, nos vínculos com projeto, pela mesma revisão. Os nomes históricos das FKs
+são preservados para compatibilidade com hints; os cinco cabeçalhos mantêm NO ACTION e os
+quatro vínculos de filhos mantêm ON DELETE CASCADE/ON UPDATE NO ACTION. Não altera registros,
+RLS, comandos de negócio, motores ou consultas. Também revoga EXECUTE do trigger interno
+`operacao_guard_anexo` e notifica o PostgREST para recarregar o schema após o commit.
+
+**APLICADA; SCHEMA REMOTO VERIFICADO.** O mesmo executor une a troca de constraints e o
+ledger em uma transação; falha reverte integralmente. Após aplicação, qualquer correção será
+`0025+`, sem reescrever o checksum43. Testes de catálogo conferem cardinalidade das nove
+relações, todas as colunas/ações/validação e os privilégios do trigger. Instalação limpa43,
+upgrade42→43, DML direto entre tenants e regressões são registrados no relatório local43.
+
+**Validação local43:** `tests/db/run.ps1` com PostgreSQL16.15 descartável em55476 terminou
+exit0, incluindo todas as suítes históricas e operacionais, 49 cenários de estoque, 38 de arquivos,
+dez verificações concorrentes/transacionais e os nove pares de relações unívocas. A rodada
+adicional em55477 também terminou exit0 e reproduziu o checkpoint42 com duas FKs antes do
+upgrade; após43 restou uma FK composta e seis tentativas de DML direto entre organizações
+foram rejeitadas pela integridade referencial. Somente nesse teste descartável os triggers USER
+foram suspensos para isolar as FKs; os triggers internos de RI permaneceram ativos e as fixtures
+foram removidas antes de reativar os guards. Os registros anteriores de recebimento/acumulador
+continuaram idênticos. Retry, rollback DDL+ledger e o envelope de instrução única passaram.
+Os nove testes do manifesto passaram. Revisão independente das nove relações não encontrou
+redução de integridade ou mudança de motores/comandos/conteúdo binário.
+
+Fonte43 SHA-256 `3186fcc00879dad91e02c0bf55bb6d856e69d77a12a8d1b546b7c80ae2fd5faa`;
+envelope `c412de7c254286a30ee3694b67bfad2dfb6df5982e6295bd00cb9809fa199c7c`.
+`banco-local-43.json`, `schema-local-43.json` e `schema-diff-local-42-43.json` registram o alcance:
+108 relações, 786 constraints, 307 índices, 171 policies, 116 triggers e194 funções. Em relação
+ao42, saem nove constraints redundantes e o grant PUBLIC do trigger; as nove constraints de
+nomes históricos passam a conter o escopo composto. Nenhuma definição de função/tabela/policy/
+trigger muda. A geração oficial de tipos e o typecheck global são evidências separadas sob
+responsabilidade da raiz; teste de catálogo não equivale a uma requisição HTTP do PostgREST.
+
+O root aplicou o envelope43 em **22/10/2026 às13:29:30.366847 UTC**, após conferir o prefixo42
+e os tipos oficiais. A verificação somente de metadados às **13:30:19.277589 UTC** confirmou
+as43 posições/checksums, nove relações únicas com nomes históricos, colunas compostas, ações
+de exclusão/atualização preservadas, constraints validadas e trigger interno sem EXECUTE para
+anon/authenticated/service_role. O trigger permanece invoker com search_path vazio. As13 tabelas
+operacionais mantêm RLS/SELECT autorizado e ausência de DML direto; bucket e oito policies
+Storage coincidem com a instalação local, sem UPDATE/DELETE de objetos.
+
+`verificacao-remota-0024.json`, `schema-remoto-43.json`, `ledger-remoto-43.json` e
+`schema-diff-43.json` registram a comprovação. A comparação `kind:key` não encontrou objeto local
+ausente ou diferença nas relações/constraints/índices/policies/triggers. A única diferença de
+função permanece o whitespace legado de `diferencas_comerciais`. Os541 grants adicionais
+(415 de tabelas e126 de funções) são os defaults históricos da plataforma já auditados; os
+três grants novos do trigger de0023 foram removidos. O typecheck global com tipos oficiais43
+passou sem mudança das consultas de embeds antigas. Não foram criadas fixtures operacionais
+no banco conectado. Auth/Storage binário remoto, frontend publicado, aparelho físico e desempenho
+continuam sem comprovação por estas evidências de metadados e banco isolado.

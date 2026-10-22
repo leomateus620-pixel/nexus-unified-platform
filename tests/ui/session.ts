@@ -1,5 +1,6 @@
 import { scenario } from "./data";
 const operational = [
+  "almoxarifado",
   "engenharia",
   "levantamentos",
   "equipe",

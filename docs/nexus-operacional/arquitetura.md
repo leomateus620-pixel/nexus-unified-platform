@@ -12,12 +12,17 @@ A aplicação continua como monólito modular React/TanStack Start com um Postgr
 | Pessoas                | Pessoa operacional com login opcional; equipes, vigências, competências e qualificações têm comandos SQL próprios; a UI completa dessas últimas entidades continua pendente |
 | Clientes               | Cadastro canônico de clientes, unidades e contatos; edição, arquivamento/reativação, histórico, busca paginada e conflitos                                                  |
 | Ações                  | `acoes_operacionais` é a tarefa atribuível; conclusão, devolução e verificação seguem o comando do domínio; ainda não há módulo completo de ocorrências/investigações       |
-| Arquivos               | `anexos` para pessoa/ação/qualificação e `pe_arquivos` para versão de engenharia; FKs explícitas e o mesmo bucket privado                                                   |
+| Arquivos               | `anexos` para pessoa/ação/qualificação/ferramenta/calibração; arquivos especializados de PE, levantamentos e estudos; FKs explícitas e bucket privado |
 | Projetos de Engenharia | `pe_projetos`, versões e cenários documentais independentes de proposta e projeto operacional                                                                               |
+| Levantamentos | Coleta por pontos/medidas, evidências, revisão profissional e adoção explícita em revisão comercial editável |
+| Estudos técnicos | Método publicado, fontes autorizadas, perigos/medidas, submissões e decisão profissional; instruções liberadas usam ações canônicas |
+| Almoxarifado | Conferência física, ledger por proveniência, reservas, transferências, consumo/devolução, inventário e ferramentas com custódia/calibração |
 | Tempo                  | Eventos, participantes, reservas de pessoas, indisponibilidades, qualificação e outbox têm fundação SQL; a Agenda Equipe ainda não possui sua experiência final             |
 | Administração          | Vínculo de conta Auth existente, papéis, coordenação e desligamento; proteção concorrente do último administrador; não simula convite por e-mail                            |
 
 Produtos, composição, `sistema_componentes`, motores de orçamento/custo, geração de códigos, revisões/documentos comerciais emitidos e geração idempotente de OC/OP permanecem canônicos. O novo acervo não calcula orçamento, não gera obra e não altera o catálogo ou dimensões dos mapas.
+
+A integração de aceite agora usa `aceitar_projeto_operacional` para confirmar revisão, projeto e vínculos de OC/OP na mesma transação. O adaptador altera somente o ramo de aceite; todo o restante do arquivo de comandos comerciais é comparado com a baseline por um guard de AST/hash. As quantidades físicas vêm de conferências de recebimento/produção ou inventário aprovado; aquisição fiscal não gera saldo automaticamente. O estoque não calcula custo realizado ou modifica custo adotado em proposta.
 
 ## Escritas, concorrência e autorização
 
@@ -47,6 +52,6 @@ No projeto confirmado foram aplicadas `0012`–`0020` (39 entradas no ledger), b
 
 ## Tipos e próximos contratos
 
-Não foi executada regeneração de `src/integrations/supabase/types.ts` nesta etapa, nem alteração manual do arquivo. As funções novas usam contratos Zod e adaptadores tipados de domínio sobre o cliente Supabase; os casts do cliente não comprovam paridade do schema gerado. A regeneração pelo mecanismo do projeto/conector e nova verificação de tipos são pendências explícitas após reconciliar o schema. Não foi localizado script dedicado de regeneração em `package.json`.
+Os tipos Supabase são gerados pelo processo oficial `@supabase/postgres-meta`, fixado em0.100.0, via `scripts/supabase-types/run.ps1`. O processo exige PostgreSQL descartável de loopback e opt-in explícito; não recebe credenciais operacionais nem introspecta dados remotos. No checkpoint43 gerou108 tabelas,161 funções RPC e quatro enums; normalização por Prettier preserva a AST. O arquivo gerado não é editado manualmente. Schemas Zod continuam validando os DTOs em execução. Proveniência e limites estão em `evidencias/geracao-tipos-43.json`.
 
-Continuam abertos: OCR/extração por página/imagem, provedor de IA do aplicativo, sugestões com evidência, PDF/dossiê emitido, editor geométrico/paramétrico e 3D próprio de engenharia, Agenda UI/recorrência/todas as origens e as jornadas de Levantamentos, estudos técnicos, OS/RDO, ativos, inspeções, ocorrências, manutenção, estoque/ferramentas, logística e financeiro operacional. Os contratos compartilhados e a matriz de aceite orientam a continuação sem cadastros paralelos.
+Continuam abertos: leitor por página, OCR/extração por imagem, provedor de IA, sugestões com evidência, PDF/dossiê emitido, editor geométrico/paramétrico e 3D próprio de engenharia; Agenda UI/recorrência/todas as origens; OS/horas/RDO, ativos, inspeções/ocorrências, manutenção, logística e financeiro operacional. As fatias de Levantamentos, Estudos e Almoxarifado estão implementadas no alcance documentado, com consumidores posteriores ainda pendentes. Compras independentes, custos realizados, administração completa de competências e paginação de coleções de detalhe continuam necessárias. Contratos e matriz de aceite orientam a continuação sem cadastros paralelos.

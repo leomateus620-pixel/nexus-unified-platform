@@ -1,0 +1,55 @@
+{
+  "headRevision": "07d91f8e666ad6aa9d882dc2155c863d57af99b4",
+  "checks": [
+    {
+      "id": 119824348023,
+      "name": "verify",
+      "head_sha": "07d91f8e666ad6aa9d882dc2155c863d57af99b4",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39778763628/job/119824348023",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 11
+      }
+    },
+    {
+      "id": 119824347795,
+      "name": "circulation",
+      "head_sha": "07d91f8e666ad6aa9d882dc2155c863d57af99b4",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39778763596/job/119824347795",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 2
+      }
+    },
+    {
+      "id": 119824347293,
+      "name": "presentation",
+      "head_sha": "07d91f8e666ad6aa9d882dc2155c863d57af99b4",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39778763439/job/119824347293",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 2
+      }
+    }
+  ],
+  "statuses": [],
+  "annotations": [],
+  "hasMore": false,
+  "job": null,
+  "jobs": [],
+  "log": null,
+  "logTruncated": false,
+  "providerGuidance": "GitHub guidance for this response only: use checkRunId for output and annotations, runId from a GitHub Actions /runs/<id> link to list jobs, or jobId from a /jobs/<id> link for logs. page paginates checks, jobs or annotations. Keep the supplied account and returned headRevision on follow-up reads. Third-party CI exposes only the output reported to GitHub."
+}

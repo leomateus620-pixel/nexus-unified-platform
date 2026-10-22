@@ -24,6 +24,8 @@ export default defineConfig({
           : html;
       },
       resolveId(id) {
+        if (/\/almoxarifado\.functions(?:\.ts)?$/.test(id))
+          return path.join(root, "almoxarifado-server.ts");
         if (/\/(levantamentos|lev-arquivos)\.functions(?:\.ts)?$/.test(id))
           return path.join(root, "levantamentos-server.ts");
         if (/\/(estudos|est-arquivos)\.functions(?:\.ts)?$/.test(id))

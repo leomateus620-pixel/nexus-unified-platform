@@ -1,6 +1,20 @@
 # Modelo de dados do checkpoint operacional
 
-Descrição do schema aditivo `0012`–`0022`, após as 30 migrações históricas. SQL e manifesto são a fonte executável; este dicionário registra decisões e limites. Status de aplicação por ambiente fica em `migracoes.md`.
+## Controle físico — migrações 0023/0024, checkpoint 43
+
+Treze tabelas: `almoxarifados`, `estoque_produto_politicas`, `estoque_inventarios`, `estoque_conferencias`, `estoque_reservas`, `estoque_reserva_itens`, `estoque_operacoes`, `estoque_movimentos`, `estoque_estorno_alocacoes`, `ferramentas`, `ferramenta_custodias`, `ferramenta_calibracoes` e `ferramenta_calibracao_politicas`. Todas têm organização e FKs compostas. As duas migrações foram aplicadas ao projeto confirmado e verificadas por metadados; o E2E conectado de Auth/Storage não foi executado.
+
+A0024 mantém uma única FK em nove relações existentes de suprimentos, com nomes históricos e ações de exclusão preservadas. As colunas de organização/revisão continuam obrigatórias na integridade composta; foram removidas somente representações redundantes das mesmas relações. Isso permite os embeds existentes do PostgREST sem modificar as consultas antigas.
+
+Conferência possui exatamente uma origem: recebimento, apontamento de produção ou inventário aprovado. Registra unidade/fator de origem e classificações em unidade canônica. Movimento imutável pertence a operação e conferência, com produto, posição, local/reserva/pessoa conforme a natureza. Transferência e estorno mantêm proveniência; saldo não é coluna editável. Reservas alocam quantidades por conferência para projeto ou OP, com pessoa, validade e versão. Não há saldo presumido de aquisição.
+
+Cadastros/reservas têm concorrência e auditoria; eventos, classificações e políticas publicadas preservam histórico. Eventos usam `numeric(18,6)`; comandos respeitam essa precisão, sem arredondamento de conversão. Saldos agregados são texto decimal e podem exceder um evento. Dinheiro não pertence às projeções deste domínio. Índices atendem produto/local/proveniência, reserva, responsável/estado/prazo e custódia. O lock conservador do estoque por organização serializa comandos; desempenho com carga representativa ainda precisa de medição.
+
+Custódia guarda pessoa, intervalo semiaberto, timezone IANA e estado; devolução registra condição sem apagar retirada. Calibração guarda política, emissor, execução/validade civil, certificado e conferência. Cobertura usa o fuso preservado da custódia. Evento opcional exige origem autorizada, participante, janela contida e fuso coerente; reagendamento conjunto pertence à entrega posterior da Agenda.
+
+`anexos` recebe pais FK de ferramenta/calibração; XOR entre cinco pais. Ler difere de enviar e o vínculo atual é revalidado. Requests legados mantêm ausentes os novos campos opcionais, preservando seus hashes idempotentes.
+
+Descrição do schema aditivo `0012`–`0024`, após as 30 migrações históricas. SQL e manifesto são a fonte executável; este dicionário registra decisões e limites. Status de aplicação por ambiente fica em `migracoes.md`.
 
 ## Estudos técnicos — migração 0022
 

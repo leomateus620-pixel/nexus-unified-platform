@@ -51,8 +51,19 @@ Arquivos confirmados não são substituídos. Correções exigem nova versão/re
 
 Cancelamento e falhas podem deixar objetos pendentes/órfãos, sem acesso público ou vínculo falso. A limpeza automática com retenção ainda não está implementada; não apagar em massa objetos do bucket para resolver esse estado. A correção `0020` da revalidação privilegiada de anexos operacionais e arquivos PE, inclusive retries após esperas concorrentes, deve ser acompanhada em `migracoes.md`; não editar `0015`/`0017` já aplicadas.
 
+## Almoxarifado e Ferramentas
+
+1. Cadastrar o local de estoque. Configurar rastreabilidade seleciona o produto canônico e consulta sua política/versão antes de permitir alterações.
+2. Conferir o recebimento de OC ou apontamento de produção existente, informando a unidade/fator de origem e classificando aceita, quarentena e rejeitada. Eventos antigos não viram saldo retroativo.
+3. Reservar material para projeto ou OP, com responsável e validade. Retirar transfere para em poder; registrar consumo e devolver somente a sobra. A origem física permanece rastreável.
+4. Transferir entre locais em um comando. Ajuste por inventário exige contagem, motivo e aprovação; se o saldo mudou após a contagem, refazer a conferência.
+5. Ferramenta tem patrimônio próprio, reserva temporal, retirada e devolução com condição. Calibração depende de política técnica publicada e evidência privada conferida.
+6. Conflito preserva o preenchimento. Consultar a versão atual, comparar e adotá-la explicitamente antes de confirmar outra tentativa. Negação de acesso fecha o editor e oculta dados antigos; erro de rede permite retentar.
+
+Saldo e disponibilidade são calculados pelo banco; não corrigir por edição direta. Um material consumido não pode ser estornado como se ainda estivesse disponível. Compras independentes, OS, custo realizado e a Agenda consolidada ainda não estão conectados nesta fatia. Anexos pendentes podem ser retomados ou cancelados com motivo; novo envio após cancelamento recebe outra identidade.
+
 ## Jobs e integrações ainda abertas
 
 O backend temporal possui worker/outbox e notificações internas, com deduplicação e estados de processamento. O projeto conectado registrou `pg_cron` ativo e uma execução com fila vazia. A UI Agenda Equipe, a criação/visualização completa de eventos e a jornada real de notificação permanecem pendentes. E-mail/WhatsApp/push, IA/OCR, integrações bancárias/fiscais e RDO externo não são anunciados como entregues.
 
-Ainda faltam as jornadas operacionais completas de levantamentos/estudos, OS/horas/RDO, estoque/ferramentas, ativos, inspeções/ocorrências, manutenção, frota e financeiro; PDF/dossiê, editor geométrico de engenharia e recorrência também não foram concluídos. Consultar o quadro de aceite antes de usar uma fundação SQL como comprovação de módulo pronto.
+Levantamentos, Estudos e Almoxarifado possuem fatias locais verificadas descritas em seus documentos; suas conexões posteriores e o E2E Auth/Storage HTTP conectado continuam pendentes. Faltam OS/horas/RDO, ativos, inspeções/ocorrências, manutenção, frota, financeiro, PDF/dossiê, editor geométrico de engenharia e recorrência. Consultar o quadro de aceite antes de usar uma fundação SQL como comprovação de módulo completo.

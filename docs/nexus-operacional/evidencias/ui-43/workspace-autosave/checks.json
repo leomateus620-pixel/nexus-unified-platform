@@ -1,0 +1,1309 @@
+{
+  "environment": "Actual application components with isolated in-memory persistence boundary. No production writes, database, deployment or physical-device claim.",
+  "browser": "153.0.8010.12",
+  "checks": [
+    {
+      "name": "Rapid typing and stage change retain both text fields, one grouped checkpoint and actual history",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Escopo confirmado por autosave",
+              "validade": "45 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "e547ce00-cdf6-4742-a253-c7ede972e178"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "e547ce00-cdf6-4742-a253-c7ede972e178",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:28.468Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 2,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Escopo confirmado por autosave",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            },
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "validade",
+              "antes": "30 dias",
+              "depois": "45 dias",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Older checkpoint confirmation cannot overwrite newer typing; the next group confirms automatically",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Primeiro grupo de edição",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "8a2d440d-e825-43a2-8569-396d59e19ca2"
+            }
+          }
+        },
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Edição nova enquanto cálculo aguarda",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              2
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "abb43e30-c808-4619-8dca-12dac8c7caae"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "8a2d440d-e825-43a2-8569-396d59e19ca2",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:32.086Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Primeiro grupo de edição",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "abb43e30-c808-4619-8dca-12dac8c7caae",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:34.108Z",
+          "versao_origem": 1,
+          "versao_destino": 3,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Primeiro grupo de edição",
+              "depois": "Edição nova enquanto cálculo aguarda",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Restoring the original value during a pending write survives navigation and is compared in FIFO order",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Primeira alteração ainda aguardando a gravação",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "05cb820f-bbaf-40e0-a073-d26c03b6b30f"
+            }
+          }
+        },
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              2
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "3d927c1c-376b-46c6-8599-618b51517ead"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "05cb820f-bbaf-40e0-a073-d26c03b6b30f",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:38.040Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Primeira alteração ainda aguardando a gravação",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3d927c1c-376b-46c6-8599-618b51517ead",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:39.763Z",
+          "versao_origem": 1,
+          "versao_destino": 3,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Primeira alteração ainda aguardando a gravação",
+              "depois": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Queued full-form edits preserve an untouched field changed by another editor",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Escopo local com condição concorrente",
+              "validade": "45 dias de outro editor",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              2
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "104f255a-1387-422a-82d2-7f5a73e584b2"
+            }
+          }
+        },
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Escopo local com condição concorrente",
+              "validade": "45 dias de outro editor",
+              "garantia": "5 anos",
+              "condicoes": "Condições novas durante a primeira gravação",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              3
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "27db8d3d-ebe7-44d7-b63d-8ec198b6daa0"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "104f255a-1387-422a-82d2-7f5a73e584b2",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:43.299Z",
+          "versao_origem": 1,
+          "versao_destino": 3,
+          "objetos": 1,
+          "campos": 2,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Escopo local com condição concorrente",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            },
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "validade",
+              "antes": "30 dias",
+              "depois": "45 dias de outro editor",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "27db8d3d-ebe7-44d7-b63d-8ec198b6daa0",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:45.325Z",
+          "versao_origem": 1,
+          "versao_destino": 4,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "condicoes",
+              "antes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "depois": "Condições novas durante a primeira gravação",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lost checkpoint response retries the same operation UUID without a second history event",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Confirmado apesar da resposta perdida",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "d1ec695f-8b78-4629-b743-c623f4d00085"
+            }
+          }
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "d1ec695f-8b78-4629-b743-c623f4d00085"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "d1ec695f-8b78-4629-b743-c623f4d00085",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:47.856Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Confirmado apesar da resposta perdida",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lost revision write response is confirmed by reading identical persisted fields",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Entrada persistida com resposta perdida",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "8090b039-aa49-4f3d-ab68-d0e5758e5856"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "8090b039-aa49-4f3d-ab68-d0e5758e5856",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:50.962Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Entrada persistida com resposta perdida",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Failed persistence preserves the input, blocks calculation and recovers with explicit retry",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Entrada recuperada após falha",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "textos": {
+              "objeto": "Entrada recuperada após falha",
+              "validade": "30 dias",
+              "garantia": "5 anos",
+              "condicoes": "Frete incluso. Condições comerciais sujeitas à emissão da proposta.",
+              "responsavel_tecnico": "Responsável de teste"
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "ad17e26c-e275-4d45-9ba9-ae8fb3ca5fd0"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "ad17e26c-e275-4d45-9ba9-ae8fb3ca5fd0",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:54.625Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "textos",
+              "campo": "objeto",
+              "antes": "Instalação de sistemas de proteção para manutenção e acesso industrial.",
+              "depois": "Entrada recuperada após falha",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Successful edits to another field cannot clear a failed field; global retry confirms both after navigation",
+      "passed": true,
+      "calls": [
+        {
+          "table": "sistemas_dimensionados",
+          "mutation": "update",
+          "payload": {
+            "metragem": 145
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "system-0"
+            ],
+            [
+              "eq",
+              "metragem",
+              120
+            ]
+          ]
+        },
+        {
+          "table": "sistemas_dimensionados",
+          "mutation": "update",
+          "payload": {
+            "metragem": 145
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "system-0"
+            ],
+            [
+              "eq",
+              "metragem",
+              120
+            ]
+          ]
+        },
+        {
+          "table": "sistemas_dimensionados",
+          "mutation": "update",
+          "payload": {
+            "identificacao": "Identificação confirmada sem perder metragem pendente"
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "system-0"
+            ],
+            [
+              "eq",
+              "identificacao",
+              "Pavilhão de recebimento • passarela norte"
+            ]
+          ]
+        },
+        {
+          "table": "sistemas_dimensionados",
+          "mutation": "update",
+          "payload": {
+            "metragem": 145
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "system-0"
+            ],
+            [
+              "eq",
+              "metragem",
+              120
+            ]
+          ]
+        },
+        {
+          "table": "sistemas_dimensionados",
+          "mutation": "update",
+          "payload": {
+            "metragem": 145
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "system-0"
+            ],
+            [
+              "eq",
+              "metragem",
+              120
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "271dfa43-0325-40af-9926-a1e791027243"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "271dfa43-0325-40af-9926-a1e791027243",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:34:58.748Z",
+          "versao_origem": 1,
+          "versao_destino": 3,
+          "objetos": 1,
+          "campos": 2,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "sistemas:system-0",
+              "nome": "Identificação confirmada sem perder metragem pendente",
+              "campo": "identificacao",
+              "antes": "Pavilhão de recebimento • passarela norte",
+              "depois": "Identificação confirmada sem perder metragem pendente",
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            },
+            {
+              "objeto": "sistemas:system-0",
+              "nome": "Identificação confirmada sem perder metragem pendente",
+              "campo": "metragem",
+              "antes": 120,
+              "depois": 145,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Invalid parameter survives stage round-trip and never reports saved; valid correction confirms",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "parametros": {
+              "aliquota_precificacao": 0.18,
+              "aliquota_interestadual": 0.12,
+              "aliquota_interna_destino": 0.17,
+              "difal_ativo": false,
+              "markup": 0.45,
+              "frete_materiais": 0,
+              "desconto": 0,
+              "montagem_percentual": 0.4,
+              "preco_item_tecnico": 19750,
+              "custo_hora_tecnico": 48,
+              "custo_hora_engenheiro": 180,
+              "alimentacao_dia": 75,
+              "hospedagem_dia": 140,
+              "preco_combustivel": 6.76,
+              "km_por_litro": 9,
+              "tecnicos_por_equipe": 3,
+              "produtividade_telhado_m_dia": 40,
+              "produtividade_overhead_m_dia": 25,
+              "horas_por_dia": 8.8,
+              "horas_engenharia": 24,
+              "distancia_ida_volta_km": 236,
+              "dias_por_viagem": 5
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "8bb5790b-ef5b-4eb9-9107-0806e895f286"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "8bb5790b-ef5b-4eb9-9107-0806e895f286",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:35:02.640Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "parametros",
+              "campo": "markup",
+              "antes": 0.4,
+              "depois": 0.45,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sparse parameters preserve an untouched concurrent value while a newer local edit awaits checkpoint",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "parametros": {
+              "desconto": 0.02,
+              "produtividade_telhado_m_dia": 45
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              2
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "6052f81c-7804-4598-ac0b-e07dfed44c1e"
+            }
+          }
+        },
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "parametros": {
+              "desconto": 0.02,
+              "produtividade_telhado_m_dia": 45,
+              "markup": 0.45
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              3
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "f54808ec-41f9-44ce-b4c1-f1986cf374a0"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "6052f81c-7804-4598-ac0b-e07dfed44c1e",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:35:06.998Z",
+          "versao_origem": 1,
+          "versao_destino": 3,
+          "objetos": 1,
+          "campos": 2,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "parametros",
+              "campo": "desconto",
+              "antes": 0,
+              "depois": 0.02,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            },
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "parametros",
+              "campo": "produtividade_telhado_m_dia",
+              "antes": null,
+              "depois": 45,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f54808ec-41f9-44ce-b4c1-f1986cf374a0",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:35:09.732Z",
+          "versao_origem": 1,
+          "versao_destino": 4,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "parametros",
+              "campo": "markup",
+              "antes": null,
+              "depois": 0.45,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Restoring an implicit default before persistence remains a sparse no-op",
+      "passed": true,
+      "calls": [
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "a0c0a4ab-67f3-446a-94d0-1950cfe19061"
+            }
+          }
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "Restoring an implicit parameter default during a pending write survives navigation in FIFO order",
+      "passed": true,
+      "calls": [
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "parametros": {
+              "desconto": 0,
+              "markup": 0.45
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "162382de-d20a-43a5-b534-074af29595ec"
+            }
+          }
+        },
+        {
+          "table": "proposta_revisoes",
+          "mutation": "update",
+          "payload": {
+            "parametros": {
+              "desconto": 0,
+              "markup": 0.4
+            }
+          },
+          "filters": [
+            [
+              "eq",
+              "id",
+              "rev-fixture"
+            ],
+            [
+              "eq",
+              "version",
+              2
+            ]
+          ]
+        },
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "2da4fbf6-5ecc-47a3-a83e-5b9eaf6f742e"
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "162382de-d20a-43a5-b534-074af29595ec",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:35:16.650Z",
+          "versao_origem": 1,
+          "versao_destino": 2,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "parametros",
+              "campo": "markup",
+              "antes": null,
+              "depois": 0.45,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "2da4fbf6-5ecc-47a3-a83e-5b9eaf6f742e",
+          "revisao_id": "rev-fixture",
+          "autor": "user-fixture",
+          "autor_nome": "Autor do ambiente isolado",
+          "created_at": "2026-10-22T13:35:18.369Z",
+          "versao_origem": 1,
+          "versao_destino": 3,
+          "objetos": 1,
+          "campos": 1,
+          "calculo_id": "calc-fixture",
+          "impacto": null,
+          "diferencas": [
+            {
+              "objeto": "revisao:rev-fixture",
+              "nome": "parametros",
+              "campo": "markup",
+              "antes": 0.45,
+              "depois": 0.4,
+              "autores": [
+                {
+                  "autor": "user-fixture",
+                  "autor_nome": "Autor do ambiente isolado"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Correcting an invalid draft back to its implicit default clears pending without a write",
+      "passed": true,
+      "calls": [
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "c28500b3-778d-450c-8dca-7925f8d07a6e"
+            }
+          }
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "Concurrent edit of the same field is rejected with local input preserved",
+      "passed": true,
+      "calls": [],
+      "events": []
+    },
+    {
+      "name": "Reverted draft is a confirmed no-op and does not pollute history",
+      "passed": true,
+      "calls": [
+        {
+          "name": "consolidarProposta",
+          "payload": {
+            "data": {
+              "revisao_id": "rev-fixture",
+              "operacao_id": "c37194f8-fbf0-4005-b268-18debae0a568"
+            }
+          }
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "Issued revision has no editable text inputs and schedules no persistence/calculation",
+      "passed": true,
+      "calls": [],
+      "events": []
+    }
+  ],
+  "errors": []
+}

@@ -19,8 +19,10 @@ try {
     ["workspace-visual.mjs", "after"],
     ["autosave-checks.mjs"],
   ];
-  const checks = process.argv.includes("--operacional") ? [] : legacyChecks;
-  checks.push(["operational-quality.mjs"]);
+  const onlyLevantamentos = process.argv.includes("--levantamentos");
+  const checks = process.argv.includes("--operacional") || onlyLevantamentos ? [] : legacyChecks;
+  if (!onlyLevantamentos) checks.push(["operational-quality.mjs"]);
+  checks.push(["levantamentos-quality.mjs"]);
   for (const [file, ...args] of checks) {
     await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [`tests/ui/${file}`, ...args], {

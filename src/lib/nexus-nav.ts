@@ -202,7 +202,17 @@ export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
   comercial: { menus: ["/", "/clientes", "/comercial", "/produtos"] },
   compras: { menus: ["/", "/clientes", "/produtos", "/compras", "/projetos"] },
   financeiro: { menus: ["/", "/financeiro", "/relatorios", "/projetos"] },
-  campo: { menus: ["/", "/execucao", "/documentacao", "/inspecoes", "/equipe", "/seguranca"] },
+  campo: {
+    menus: [
+      "/",
+      "/levantamentos",
+      "/execucao",
+      "/documentacao",
+      "/inspecoes",
+      "/equipe",
+      "/seguranca",
+    ],
+  },
   engenharia: {
     menus: [
       "/",
@@ -234,7 +244,7 @@ function acessos(roles: string[], capabilities: string[] = []): Acesso[] {
     Object.hasOwn(ACESSO_POR_PAPEL, role) ? [ACESSO_POR_PAPEL[role as Papel]] : [],
   );
   if (capabilities.includes("coordenar_operacao"))
-    a.push({ menus: ["/", "/equipe", "/seguranca", "/execucao"] });
+    a.push({ menus: ["/", "/levantamentos", "/equipe", "/seguranca", "/execucao"] });
   return a;
 }
 

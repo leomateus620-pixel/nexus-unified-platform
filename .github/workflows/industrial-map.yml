@@ -20,6 +20,7 @@ jobs:
       - run: bun run typecheck
       - run: bun run test:orcamento
       - run: bun run test:operacional
+      - run: bun run test:levantamentos
       - run: sudo apt-get update && sudo apt-get install -y postgresql
       - run: PATH="$(ls -d /usr/lib/postgresql/*/bin | tail -1):$PATH" bun run test:db
       - run: bun run test:industrial

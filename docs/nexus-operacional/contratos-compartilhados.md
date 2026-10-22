@@ -64,3 +64,13 @@ Uma transação grava alteração, versão e outbox. Consumidor atual cria notif
 Ordem append-only: `0012` fundação/permissões, `0013` clientes, `0014` acervo PE, `0015` Storage operacional, `0016` Agenda, `0017` arquivos PE, `0018` scheduler, `0019` administração e `0020` reautorização transacional na confirmação de arquivos. A matriz operacional vigente está em `operacao_autor_pode` da `0020`; o wrapper `operacao_pode` usa o mesmo predicado com o usuário autenticado. Testes de paridade leem essa definição vigente. Aplicar depois das 18 Supabase e 12 Drizzle históricas pelo manifesto único, sem duplicar DDL. Checksum, ledger, ambiente e estado efetivo pertencem a `migracoes.md` e `scripts/migrations/manifest.json`.
 
 Ainda não há contrato executável de OS/horas/RDO, ativos, inspeções/achados, ocorrências, manutenção, estoque/ferramentas, frota/viagens, títulos/baixas/apropriações, recorrência ou documentação técnica/PDF. Os próximos módulos devem acrescentar FKs explícitas e testes de integração com essas identidades, sem transformar um campo `tipo + id` em substituto de integridade. A aprovação técnica exige desenvolvimento próprio; a revisão editorial do acervo não a supre.
+
+## Levantamentos — contrato0021
+
+Proprietário `src/features/levantamentos`; tabelas reais, estados, FKs e comandos em `levantamentos-tecnicos/arquitetura.md`. Pessoa/cliente/unidade/proposta/projeto continuam canônicos. `lev_listar` pagina25/50; `lev_obter` retorna revisão, filhos, histórico e permissões pelo pai. `lev_executar` verifica versões e autor; `excluir_ponto` exige também `expected_revision_version`. `lev_publicar_modelo` fixa requisitos/fonte por versão.
+
+Arquivos usam `levantamento_arquivos` com FKs explícitas a revisão/ponto e o protocolo privado `lev_preparar_arquivo`/`lev_confirmar_arquivo`/cancelamento. Aprovação congela contexto e evidências; atualização posterior não reescreve V1. `lev_prever_adocao`/`lev_adotar_medicao` comparam hash e alteram sistema em revisão comercial editável, sem novo motor, com recálculo canônico pendente explícito.
+
+Query keys: `['levantamentos', org, 'lista'|'ficha', recorte]`, `['levantamento-arquivos', org, revisão, ponto, página]`, `['levantamento-opcoes', org, tipo, contexto, busca]`. Adoção invalida o prefixo canônico `['rev', revisãoDestino]`. Formulários congelam a versão ao abrir e não adotam versões de polling silenciosamente.
+
+Migração0021 aplicada no projeto confirmado, posição40; checksum e catálogo em `migracoes.md`. Ainda não há evento Agenda com FK de levantamento, emissão PDF/dossiê ou offline completo. Programar o período não reserva recursos nem gera notificação temporal. Engenharia de estudos consumirá a revisão aprovada por FK, sem duplicar coleta.

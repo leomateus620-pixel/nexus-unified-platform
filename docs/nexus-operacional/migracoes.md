@@ -36,7 +36,10 @@ Ordem desta entrega: `0012` fundação/pessoas/ações/autorização; `0013` cli
 `0014` projetos de engenharia; `0015` anexos privados; `0016` fundação temporal;
 `0017` arquivos de engenharia; `0018` worker/scheduler; `0019` administração de vínculos.
 `0020` corrige a revalidação do autor na confirmação privilegiada de anexos operacionais e originais
-de engenharia. O manifesto contém 39 arquivos; seus hashes finais ficam no próprio manifesto.
+de engenharia. `0021` acrescenta Levantamentos Técnicos, coleta/revisão, arquivos privados e adoção
+explícita de medidas no dimensionamento existente. O manifesto contém 40 arquivos; seus hashes
+finais ficam no próprio manifesto. Até `0021` estão aplicadas no ambiente confirmado; novos arquivos
+começam em `0022` e não podem alterar os checksums publicados.
 
 `scripts/migrations/manifest.json` define ordem e SHA-256 do SQL UTF-8 com CRLF normalizado para LF.
 A normalização permite comparar checkouts Windows/Linux sem mascarar mudança de conteúdo SQL.
@@ -232,7 +235,7 @@ no ambiente confirmado. O ledger tem 39 entradas e o checksum da fonte é
 `0f9e80d67f56addacbb7ef305a7e2a803c622b29286e888704111bc22c87bccc`.
 `verificacao-remota-0020.json` confirma que a função de confirmação não é executável por
 authenticated e é executável por service_role, e que o helper de autor explícito é privado.
-Correções daqui em diante usam **`0021+`**, sem alterar as nove migrações já aplicadas nesta entrega.
+Nesse checkpoint, a sequência corretiva iniciou em **`0021+`**, sem alterar as nove migrações então aplicadas nesta entrega.
 
 O diff final `schema-diff-final39.json` compara os snapshots local e remoto após `0020`:
 73 relações, 406 constraints, 168 índices, 136 policies e 63 triggers coincidem por objeto.
@@ -248,3 +251,48 @@ Qualquer mudança no contrato ou incompatibilidade deve receber migração corre
 tanto em instalação limpa quanto no upgrade39 → próximo checkpoint. Revogações confirmadas não
 podem ser desfeitas para permitir reprocessamento; o usuário precisa recuperar acesso por comando
 administrativo autorizado ou outro responsável deve preparar seu próprio envio permitido.
+
+## Levantamentos Técnicos — `0021`
+
+**APLICADA + VERIFICADA SCHEMA** às **11:19:38.549955 UTC de 22/10/2026**, no projeto Lovable
+`91380c2d-559c-4527-b3a4-1a8bc1e19f69` confirmado pelo responsável antes da aplicação. Foi usado o
+envelope atômico `0040_0021_levantamentos_tecnicos.sql`, após conferir ledger39 e ausência dos novos
+objetos. O SHA-256 normalizado da fonte é
+`c1d415564f7ff3974655d6076be5aa61ffb75d0a7270918f1a050fc90ef80027`.
+O envelope revisado tem SHA-256 `1474f0936acd2d66e9b1e93d87294729dfc5f07e54765fba4b3bcf0ee1c2c95e`.
+
+A verificação posterior foi somente leitura de catálogos, configuração do bucket e ledger. As 40
+entradas coincidem com o manifesto por nome, posição e checksum. As nove novas tabelas têm RLS,
+SELECT autenticado sujeito a RLS e nenhuma escrita direta de aplicação. Helpers internos
+privilegiados não têm EXECUTE para anon, authenticated ou service_role; a confirmação de arquivo
+permanece somente service_role. Upload e download usam duas policies específicas no bucket privado
+`nexus-operacional`, cujo limite continua em 20 MiB. Não foram consultados registros pessoais nem
+inseridas fixtures no ambiente conectado.
+
+`schema-diff-40.json` confere os snapshots local/remoto por objeto: **82 relações, 503 constraints,
+204 índices, 145 policies públicas e 74 triggers coincidem**. Das 129 funções, só permanece a
+indentação histórica já comprovada de `diferencas_comerciais`. Há 126 diferenças de grants de função
+e 415 de tabela. A única diferença nova de grant é EXECUTE de service_role no predicado dimensional
+puro e imutável `lev_unidade_compativel`, sem SECURITY DEFINER e sem leitura de dados. Os defaults
+legados de plataforma permanecem documentados; não há grant novo inesperado de anon/authenticated
+nem exposição de helper privilegiado. As duas policies Storage foram verificadas separadamente,
+pois o fingerprint público não inclui o schema Storage.
+
+Evidências: `evidencias/verificacao-remota-0021.json`, `schema-local-40.json`,
+`schema-remoto-40.json`, `schema-diff-40.json` e `banco-local-40.json`. Localmente passaram a
+instalação limpa40, upgrades30 → 40 e **39 → 40 preservando pessoa e auditoria**, retries,
+rollback de DDL/ledger, envelopes DO, regressão anterior, 47 cenários de levantamento, 28 de arquivos
+e 12 interleavings com sessões concorrentes. Os testes de banco usam PostgreSQL16.15 descartável;
+Storage local comprova metadados/policies, sem simular bytes HTTP.
+
+O schema compartilhado está verificado. E2E remoto com Auth, perfis, Storage HTTP e binários continua
+separado e não foi comprovado por esta inspeção. Vínculo de visita à Agenda, fila offline e emissão
+PDF permanecem dependências explicitadas no alcance desta etapa. Nenhuma norma ou certificação
+foi embarcada; registro profissional no cadastro é informação declarada e não substitui habilitação
+ou responsabilidade técnica aplicável.
+
+**Novas migrações usam `0022+`.** `0021` e seu envelope agora são histórico aplicado. Não remover
+entrada40, rebaixar permissões ou alterar fonte/checksum para recuperar falha. Antes do próximo
+upgrade, conferir os 40 hashes e o catálogo esperado; usar nova migração aditiva, testar instalação
+limpa e upgrade40 → próximo checkpoint. As constraints novas são compatíveis com a aplicação atual,
+e não há backfill operacional, reset, truncamento ou modificação de revisão comercial emitida.

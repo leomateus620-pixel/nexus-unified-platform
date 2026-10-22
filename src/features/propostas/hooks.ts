@@ -234,7 +234,11 @@ export function usePatchRevisao(id: string) {
           write: async (expectedVersion, next) => {
             const { data, error } = await supabase
               .from("proposta_revisoes")
-              .update(key === "textos" ? { textos: next as Json } : { parametros: next as Json })
+              .update(
+                key === "textos"
+                  ? { textos: next as NonNullable<Json> }
+                  : { parametros: next as NonNullable<Json> },
+              )
               .eq("id", id)
               .eq("version", expectedVersion)
               .select("version");

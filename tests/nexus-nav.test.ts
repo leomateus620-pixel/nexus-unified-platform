@@ -74,7 +74,10 @@ describe("navegação por papel", () => {
     ["comercial", ["/", "/comercial", "/clientes", "/produtos"]],
     ["compras", ["/", "/clientes", "/produtos", "/projetos", "/compras"]],
     ["financeiro", ["/", "/projetos", "/financeiro", "/relatorios"]],
-    ["campo", ["/", "/execucao", "/equipe", "/seguranca", "/documentacao", "/inspecoes"]],
+    [
+      "campo",
+      ["/", "/levantamentos", "/execucao", "/equipe", "/seguranca", "/documentacao", "/inspecoes"],
+    ],
   ])("o papel %s recebe somente seu contexto atual", (role, paths) => {
     const actual = menusVisiveis([role as string]).flatMap((g) => g.items.map((i) => i.to));
     expect(actual).toEqual(paths);
@@ -100,7 +103,7 @@ describe("navegação por papel", () => {
   it("concede coordenação explícita a um membro sem papel sem ampliar acesso técnico ou administrativo", () => {
     const caps = ["coordenar_operacao"];
     const paths = menusVisiveis([], caps).flatMap((g) => g.items.map((i) => i.to));
-    expect(paths).toEqual(["/", "/execucao", "/equipe", "/seguranca"]);
+    expect(paths).toEqual(["/", "/levantamentos", "/execucao", "/equipe", "/seguranca"]);
     expect(destinoInicial([], caps)).toBe("/");
     for (const path of paths) expect(podeVerRota([], path, caps)).toBe(true);
     for (const path of ["/configuracoes", "/financeiro", "/projetos-engenharia", "/comercial"])

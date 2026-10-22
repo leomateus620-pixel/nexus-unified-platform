@@ -2,6 +2,7 @@
 docs/industrial/evidence/*.json linguist-generated=true
 docs/nexus-operacional/evidencias/**/*.json linguist-generated=true
 docs/nexus-operacional/evidencias/**/*.png binary linguist-generated=true
+docs/nexus-operacional/evidencias/**/*.jpg binary linguist-generated=true
 docs/nexus-operacional/evidencias/**/*.pdf binary linguist-generated=true
 public/models/3tentos/*.glb binary linguist-generated=true
 public/textures/3tentos/*.png binary linguist-generated=true

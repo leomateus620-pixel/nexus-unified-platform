@@ -4,7 +4,18 @@ import { createContext, useContext, useSyncExternalStore } from "react";
 export const OutletContext = createContext(null);
 export const Outlet = () => useContext(OutletContext);
 const listeners = new Set<() => void>();
-const routeSearchKeys = ["projeto", "q", "cliente", "busca", "situacao", "pagina"];
+const routeSearchKeys = [
+  "projeto",
+  "q",
+  "cliente",
+  "busca",
+  "situacao",
+  "pagina",
+  "levantamento",
+  "revisao",
+  "ponto",
+  "estado",
+];
 let search = Object.fromEntries(
   [...new URLSearchParams(location.search)].filter(([key]) => routeSearchKeys.includes(key)),
 );
@@ -27,6 +38,8 @@ export function useFixturePage() {
   );
 }
 const operationalPaths = {
+  engenharia: "/engenharia",
+  levantamentos: "/levantamentos",
   equipe: "/equipe",
   seguranca: "/seguranca",
   clientes: "/clientes",

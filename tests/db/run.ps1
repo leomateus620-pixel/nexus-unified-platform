@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$PostgresBin, [int]$Port = 55440, [switch]$FingerprintBaseline, [switch]$FingerprintCurrent)
+param([Parameter(Mandatory=$true)][string]$PostgresBin, [int]$Port = 55440, [switch]$FingerprintBaseline, [switch]$FingerprintCurrent, [switch]$CaptureFingerprint, [switch]$OnlyLevantamentos)
 $ErrorActionPreference = 'Stop'
 $testRoot = Join-Path $env:TEMP ('nexus-checkpoint-test-' + [guid]::NewGuid().ToString('N'))
 $absoluteRoot = [IO.Path]::GetFullPath($testRoot)
@@ -37,7 +37,16 @@ try {
   $env:PGTEST_EPHEMERAL = '1'; $env:PGTEST_PORT = "$Port"
   node "$PSScriptRoot\..\..\scripts\migrations\test-installation.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Clean installation / upgrade / ledger test failed' }
-  if ($FingerprintCurrent) { Save-CatalogFingerprint 'schema-local-depois.json'; return }
+  if ($FingerprintCurrent -or $CaptureFingerprint) { Save-CatalogFingerprint 'schema-local-depois.json' }
+  if ($FingerprintCurrent) { return }
+  if ($OnlyLevantamentos) {
+    Invoke-TestSql "$PSScriptRoot\levantamentos.sql"
+    Invoke-TestSql "$PSScriptRoot\levantamento-arquivos.sql"
+    $env:PGTEST_HOST = '127.0.0.1'
+    node "$PSScriptRoot\levantamentos-concurrency.mjs"
+    if ($LASTEXITCODE -ne 0) { throw 'Levantamento concurrency test failed' }
+    return
+  }
   Invoke-TestSql "$PSScriptRoot\cenarios.sql"
   Invoke-TestSql "$PSScriptRoot\clientes-operacionais.sql"
   Invoke-TestSql "$PSScriptRoot\projetos-engenharia.sql"
@@ -87,6 +96,10 @@ try {
   node "$PSScriptRoot\agenda-concurrency.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Agenda / last-admin concurrency test failed' }
   Invoke-TestSql "$PSScriptRoot\scheduler.sql"
+  Invoke-TestSql "$PSScriptRoot\levantamentos.sql"
+  Invoke-TestSql "$PSScriptRoot\levantamento-arquivos.sql"
+  node "$PSScriptRoot\levantamentos-concurrency.mjs"
+  if ($LASTEXITCODE -ne 0) { throw 'Levantamento concurrency test failed' }
 } finally {
   if (Test-Path -LiteralPath "$absoluteRoot\data\postmaster.pid") {
     Start-Process -FilePath (Join-Path $PostgresBin 'pg_ctl.exe') -ArgumentList @('-D', "$absoluteRoot\data", 'stop', '-m', 'fast', '-w') -WindowStyle Hidden -Wait

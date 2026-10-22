@@ -29,6 +29,8 @@ import { Route as PeRoute } from "@/routes/_authenticated/projetos-engenharia";
 import { Route as MapsLibraryRoute } from "@/routes/mapas-3d_.unidades";
 import { Route as ClientesRoute } from "@/routes/_authenticated/clientes";
 import { Route as ConfiguracoesRoute } from "@/routes/_authenticated/configuracoes.index";
+import { Route as LevantamentosRoute } from "@/routes/_authenticated/levantamentos";
+import { Route as EngenhariaRoute } from "@/routes/_authenticated/engenharia.index";
 import "@/styles.css";
 
 const client = new QueryClient({
@@ -66,12 +68,18 @@ const ProjetosEngenharia = PeRoute.options.component;
 const MapsLibrary = MapsLibraryRoute.options.component;
 const Clientes = ClientesRoute.options.component;
 const Configuracoes = ConfiguracoesRoute.options.component;
+const Levantamentos = LevantamentosRoute.options.component;
+const Engenharia = EngenhariaRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
     <QueryClientProvider client={client}>
       <AppShell>
-        {page === "equipe" ? (
+        {page === "engenharia" ? (
+          <Engenharia />
+        ) : page === "levantamentos" ? (
+          <Levantamentos />
+        ) : page === "equipe" ? (
           <PessoasWorkspace />
         ) : page === "seguranca" ? (
           <AcoesWorkspace />

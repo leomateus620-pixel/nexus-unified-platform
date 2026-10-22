@@ -4,6 +4,12 @@ Rodada local de regressão em 22/10/2026, Windows, Node 24.15.0. Branch `codex/n
 
 Esta rodada comprova compilação, testes de domínio/contratos e preservação de código conforme cada gate. Não declara a evolução inteira concluída, persistência no banco conectado, frontend publicado ou homologação em dispositivo físico. Escopo e pendências permanecem em `inventario.md` e `progresso.md`.
 
+## Checkpoint 40 — Levantamentos Técnicos
+
+Coleta, modelos, revisão, arquivos e adoção agora têm implementação e evidência local própria em [levantamentos-tecnicos/validacao.md](levantamentos-tecnicos/validacao.md). Passaram typecheck/build, vinte testes da feature, 47 cenários SQL, 28 de arquivos e 12 concorrências; UI isolada com 30 layouts e dez comportamentos. O schema da migração `0021` foi aplicado e conferido com ledger40. Isso não comprova E2E autenticado conectado, Storage HTTP ou frontend publicado. A decisão de validar localmente está registrada abaixo; nenhuma fixture operacional foi usada.
+
+A regressão UI completa do checkpoint 40 encerrou exit 0, com relatórios em `evidencias/ui-40/`. Tipos foram regenerados oficialmente em cluster local somente com schema; [geracao-tipos.md](geracao-tipos.md) documenta a reprodução, comparação de catálogo e hashes. Depois da regeneração passaram typecheck, lint delimitado, orçamento 59+5 e build. Três testes do executor validam loopback, isolamento de credenciais e equivalência AST da formatação. A geração oficial não comprova o comportamento de Auth, RPC ou Storage HTTP conectados.
+
 ## Reexecução após os ajustes de QA
 
 Rodada posterior às mudanças de identidade do frame, biblioteca com busca na URL, retorno da ficha de pessoa e retomada de arquivo PE. Nenhum teste full UI foi executado por esta rodada; sua execução permanece separada.
@@ -91,6 +97,10 @@ Texto a 200% foi simulado com viewport 390×480, com formulário rolável e bot�
 
 Comparação desktop do workspace preservado: [antes em 1440×900](evidencias/13-workspace-before-1440.png) / [depois em 1440×900](evidencias/14-workspace-after-1440.png), com mesma fixture, fonte e navegador. Os controles e valores comerciais permanecem; a identidade do frame fica constante.
 
+## Limite de validação acordado
+
+Em 22/10/2026, o usuário definiu: “Validar localmente e registrar o limite do E2E conectado”. As próximas jornadas serão verificadas com PostgreSQL descartável, testes de domínio e componentes reais no laboratório isolado. Não serão inseridas fixtures no banco operacional para produzir evidência. O E2E autenticado conectado (Auth, dois tenants/perfis e Storage HTTP) permanece **não comprovado**; validação local não demonstra esse comportamento remoto. Esta decisão não encerra as pendências funcionais dos módulos nem altera as permissões exigidas.
+
 ## Situação dos cenários do escopo integral
 
 | Cenário     | Evidência deste checkpoint                                                    | Limite / próxima prova                                         |
@@ -100,7 +110,7 @@ Comparação desktop do workspace preservado: [antes em 1440×900](evidencias/13
 | T06         | 28 assertions SQL e formulários reais no laboratório                          | Jornada autenticada remota pendente                            |
 | T07         | Comercial direto preservado                                                   | Oportunidades ampliadas adiadas pelo recorte                   |
 | T08/T11     | Motores, catálogo e geração OC/OP históricos preservados/testados             | Sem alteração dos motores ou cena                              |
-| T09–T10     | Sem implementação nova                                                        | Levantamentos e estudos técnicos pendentes                     |
+| T09–T10     | Coleta/revisão/adoção local implementada em T09; T10 segue pendente           | E2E conectado de Levantamentos e estudos técnicos pendentes    |
 | T12         | Recebimento/estorno histórico testado                                         | Novo vínculo com estoque/qualidade ainda pendente              |
 | T13–T19     | Agenda reserva pessoas sob concorrência; sem OS/estoque novos                 | Compra operacional, materiais, horas, RDO e execução pendentes |
 | T20         | Versões/snapshot/hash do acervo PE em SQL                                     | PDF técnico/dossiê emitido ainda ausente                       |

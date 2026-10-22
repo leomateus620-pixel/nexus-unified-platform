@@ -1,0 +1,233 @@
+.nx-lev-workspace {
+  min-width: 0;
+}
+.nx-lev-input {
+  min-height: 2.75rem;
+  width: 100%;
+  border: 1px solid var(--input);
+  border-radius: var(--nx-radius-control);
+  background: var(--background);
+  padding: 0.65rem 0.75rem;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+}
+.nx-lev-label {
+  display: grid;
+  min-width: 0;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+}
+.nx-lev-label textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+.nx-lev-filters {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(10rem, 14rem) auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+.nx-lev-list {
+  display: grid;
+  gap: 0.75rem;
+}
+.nx-lev-list button {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: var(--nx-radius-control);
+  background: var(--background);
+  padding: 1rem;
+}
+.nx-lev-list button:hover {
+  background: var(--accent);
+}
+.nx-lev-list :is(strong, small) {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.nx-lev-list small {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+.nx-lev-status {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.nx-lev-status[data-status="aprovado"] {
+  color: var(--primary);
+  background: var(--nx-success-surface);
+}
+.nx-lev-status[data-status="em_revisao"] {
+  color: var(--warning);
+  background: var(--nx-warning-surface);
+}
+.nx-lev-status[data-status="cancelado"] {
+  color: var(--destructive);
+  background: var(--nx-error-surface);
+}
+.nx-lev-context {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.nx-lev-context dt {
+  margin-bottom: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.nx-lev-context dd {
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+}
+.nx-lev-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+}
+.nx-lev-tabs button {
+  min-height: 2.75rem;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+.nx-lev-tabs button[data-state="active"] {
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 600;
+}
+.nx-lev-collection {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(13rem, 1fr) minmax(0, 2.5fr);
+  gap: 1rem;
+  align-items: start;
+}
+.nx-lev-points {
+  display: grid;
+  gap: 0.5rem;
+}
+.nx-lev-point {
+  width: 100%;
+  min-height: 4rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  text-align: left;
+}
+.nx-lev-point[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--accent);
+}
+.nx-lev-point :is(strong, small) {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.nx-lev-point small {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.nx-lev-measures {
+  display: grid;
+  gap: 0.75rem;
+}
+.nx-lev-measure {
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+}
+.nx-lev-measure strong {
+  font-variant-numeric: tabular-nums;
+}
+.nx-lev-measure :is(p, small) {
+  overflow-wrap: anywhere;
+}
+.nx-lev-forms {
+  display: grid;
+  gap: 1rem;
+}
+.nx-lev-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.nx-lev-timeline {
+  display: grid;
+  gap: 1rem;
+}
+.nx-lev-timeline li {
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+.nx-lev-comparison {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.nx-lev-comparison :is(th, td) {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 767px) {
+  .nx-lev-filters,
+  .nx-lev-form-grid,
+  .nx-lev-context {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-lev-filters {
+    grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.7fr);
+  }
+  .nx-lev-filters > :first-child {
+    grid-column: 1 / -1;
+  }
+  .nx-lev-list button {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+  }
+  .nx-lev-list button > :nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .nx-lev-list button > :last-child {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .nx-lev-context {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nx-lev-collection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nx-lev-points {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-lev-workspace * {
+    scroll-behavior: auto;
+  }
+}

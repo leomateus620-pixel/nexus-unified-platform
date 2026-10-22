@@ -21,7 +21,14 @@ export function useOperationalAccess(org: string, user: string) {
       if (previous && JSON.stringify(previous) !== JSON.stringify(access)) {
         const sensitive = {
           predicate: (q: { queryKey: readonly unknown[] }) =>
-            ["pessoas", "acoes-operacionais", "anexos"].includes(String(q.queryKey[0])),
+            [
+              "pessoas",
+              "acoes-operacionais",
+              "anexos",
+              "levantamentos",
+              "levantamento-arquivos",
+              "levantamento-opcoes",
+            ].includes(String(q.queryKey[0])),
         };
         await client.cancelQueries(sensitive);
         client.removeQueries(sensitive);

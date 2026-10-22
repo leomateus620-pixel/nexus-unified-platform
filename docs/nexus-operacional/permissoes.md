@@ -67,3 +67,11 @@ Triggers impedem remover o último administrador ativo, inclusive por escrita di
 ## Evidência e alcance
 
 Testes relevantes: `tests/nexus-nav.test.ts`, `tests/autorizacao.test.ts`, `tests/session-access.test.ts`, `tests/operacao-permissions.test.ts`, `tests/db/operacional.sql`, `tests/db/clientes-operacionais.sql` e cenários SQL de Agenda, arquivos, engenharia e administração inscritos nos runners. Testes incluem ausência/papel desconhecido, fronteiras de rota, conflito de payload, dois tenants, escrita por perfil sem capacidade e revogação. `validacao.md` registra quais foram efetivamente executados e em qual ambiente. UI com fixtures não comprova RLS ou Storage conectado.
+
+## Levantamentos — checkpoint 40
+
+Campo pode abrir `/levantamentos`, consultar/coletar somente os registros de sua responsabilidade e operar seus arquivos autorizados. Coordenação possui concessão explícita de navegação e gerencia contexto/programação. Busca de opções para cadastro exige gestão; não permite a um coletor enumerar toda a clientela ou pessoas.
+
+`lev_ler`/RLS e comandos aplicam o pai/tenant. Aprovação e publicação de modelo exigem capacidade de revisão e pessoa ativa vinculada ao ator com registro profissional declarado. Admin isoladamente não comprova esse requisito. Locks estabilizam membership, papéis, capacidades e pessoa antes de decisões/replays; testes locais exercitam revogação durante espera. Custos não integram esses DTOs.
+
+Matriz reaproveitada: `ver_operacao`, `gerir_operacao`, `revisar_operacao`; nenhum papel novo. Concessões de navegação em `ACESSO_POR_PAPEL`/capacidade são testadas junto do escopo SQL. Evidência de schema conectado e testes locais não substitui Auth/Storage HTTP remoto.

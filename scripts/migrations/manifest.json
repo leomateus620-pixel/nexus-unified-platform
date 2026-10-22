@@ -159,6 +159,10 @@
     {
       "path": "drizzle/migrations/0020_anexo_confirmacao_autorizada.sql",
       "sha256": "0f9e80d67f56addacbb7ef305a7e2a803c622b29286e888704111bc22c87bccc"
+    },
+    {
+      "path": "drizzle/migrations/0021_levantamentos_tecnicos.sql",
+      "sha256": "c1d415564f7ff3974655d6076be5aa61ffb75d0a7270918f1a050fc90ef80027"
     }
   ]
 }

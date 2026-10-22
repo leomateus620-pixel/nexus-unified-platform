@@ -34,7 +34,30 @@ try {
     insert into public.clientes(id,organization_id,razao_social)
     values('58000000-0000-0000-0000-000000000002','58000000-0000-0000-0000-000000000001','Client retained across upgrade');
   `);
-  const upgrade = await applyMigrations(sql, migrations);
+  const operationalCheckpoint = Math.min(39, migrations.length);
+  const beforeLatest = await applyMigrations(sql, migrations.slice(0, operationalCheckpoint));
+  if (operationalCheckpoint === 39) {
+    // Prova adicional do upgrade do checkpoint operacional efetivamente publicado.
+    await sql.begin(async (tx) => {
+      await tx.unsafe(`insert into auth.users(id,email) values('58000000-0000-0000-0000-000000000003','upgrade-operational@test.invalid');
+        insert into public.memberships(organization_id,user_id) values('58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000003');
+        insert into public.user_roles(organization_id,user_id,role) values('58000000-0000-0000-0000-000000000001','58000000-0000-0000-0000-000000000003','engenharia');
+        select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true);
+        insert into public.pessoas(id,organization_id,nome,vinculo) values('58000000-0000-0000-0000-000000000004','58000000-0000-0000-0000-000000000001','Operational person retained across upgrade','prestador');`);
+    });
+  }
+  const upgrade = [...beforeLatest, ...(await applyMigrations(sql, migrations))];
+  if (operationalCheckpoint === 39) {
+    const [{ retainedPerson }] =
+      await sql`select count(*)::int as "retainedPerson" from public.pessoas where id='58000000-0000-0000-0000-000000000004' and nome='Operational person retained across upgrade'`;
+    assert.equal(retainedPerson, 1);
+    const [{ retainedAudit }] =
+      await sql`select count(*)::int as "retainedAudit" from public.operacao_historico where entidade='pessoas' and entidade_id='58000000-0000-0000-0000-000000000004' and autor='58000000-0000-0000-0000-000000000003'`;
+    assert.equal(retainedAudit, 1);
+    console.log(
+      `PASS: operational checkpoint 39 → ${migrations.length}; canonical person and audit retained`,
+    );
+  }
   assert.equal(upgrade.length, migrations.length - 30);
   const [{ retained }] =
     await sql`select count(*)::int as retained from public.clientes where id='58000000-0000-0000-0000-000000000002' and razao_social='Client retained across upgrade'`;

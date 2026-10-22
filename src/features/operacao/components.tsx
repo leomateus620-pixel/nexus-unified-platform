@@ -124,7 +124,7 @@ export function Pagination({
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 pt-4 text-sm">
       <span role="status">
-        {total} registros · página {page + 1}
+        {total} {total === 1 ? "registro" : "registros"} · página {page + 1}
       </span>
       <div className="flex gap-2">
         <ActionButton variant="ghost" disabled={page === 0} onClick={() => onChange(page - 1)}>

@@ -67,3 +67,11 @@ Desligamento preserva pessoa, histórico e autoria, retira papéis/capacidade e 
 ## Jornadas que continuam pendentes
 
 Levantamento aprovado e adoção no dimensionamento; estudo técnico profissional; planejamento/encerramento operacional de projeto; estoque/reservas físicas; OS, horas e RDO; ativos instalados; checklist/inspeção/achado; investigação de ocorrência; manutenção; logística; títulos/baixas/apropriação; documentação técnica/PDF/dossiê; relatórios e dashboard operacionais; Agenda completa. Seus contratos não devem ser simulados com registros genéricos ou um cadastro paralelo.
+
+## Levantamento aprovado → dimensionamento editável
+
+Criar com cliente/unidade/responsável → programar → iniciar coleta por ponto → salvar medidas e confirmar fotos privadas → enviar à revisão → devolver com pendências ou aprovar com snapshot profissional. Nova revisão preserva a anterior e exige nova conferência.
+
+Na revisão aprovada, escolher medida e sistema em proposta rascunho do mesmo cliente/unidade → comparar valor/origem/componentes no servidor → adotar com hash/versionamento → abrir dimensionamento de destino e recalcular no motor existente. Retry não duplica adoção; estimativa/3D e revisão comercial emitida são rejeitados. Aprovação do levantamento não faz aceite comercial nem modifica orçamento automaticamente.
+
+O período previsto ainda não gera visita/reserva na Agenda; PDF/dossiê e integração com estudo técnico serão conectados nas respectivas etapas. Esses efeitos não são simulados.

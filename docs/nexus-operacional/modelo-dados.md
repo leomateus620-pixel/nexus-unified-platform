@@ -79,3 +79,9 @@ Tabelas editáveis usam versão; eventos oficiais e versões congeladas são pre
 Não foi definida uma política universal de retenção, descarte legal ou limpeza automática de uploads órfãos. Cancelamento preserva metadados; não significa remoção imediata do binário. Essa rotina permanece pendente e deve considerar uploads em andamento e arquivos presentes em versões congeladas. Nenhuma migração insere dados de demonstração. Não há novas tabelas de dinheiro, estoque ou horas neste checkpoint; fórmulas e precisão financeiras existentes permanecem em seus motores canônicos.
 
 A `0020` não cria outra identidade ou tabela de anexos. Endurece a confirmação existente de anexos operacionais e originais PE: locks estabilizam acesso/atribuição/estado do pai até o commit; o autor é reautorizado pelo predicado vigente antes de confirmar ou retornar retry. Isso preserva o modelo e evita que uma verificação anterior do handler sobreviva indevidamente à revogação durante o envio.
+
+## Levantamentos — checkpoint 40
+
+As nove tabelas de coleta/modelos/revisões/pontos/medidas/avaliações/arquivos/adoções foram acrescentadas por `0021`. Dicionário, precisão, FKs, índices e histórico estão em [levantamentos-tecnicos/arquitetura.md](levantamentos-tecnicos/arquitetura.md). Numeric da coleta é `numeric(18,6)`; DTO decimal é texto. Snapshots aprovados, modelos publicados, avaliações e adoções são imutáveis; contexto histórico é lido do snapshot.
+
+Mudança concorrente não é resolvida por último salvamento: versões de raiz/revisão/filho e hash de adoção são conferidos. Excluir ponto exige versões do ponto e da revisão. O código LEV usa série do servidor sem alterar os procedimentos existentes de produtos/OC/OP. Não há cadastro duplicado de cliente/pessoa/sistema.

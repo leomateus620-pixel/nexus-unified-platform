@@ -28,6 +28,12 @@ try {
     "--almoxarifado": [["almoxarifado-quality.mjs"], ["anexos-canonicos-quality.mjs"]],
     "--pe-arquivos": [["pe-arquivos-quality.mjs"]],
     "--pe-leitor": [["pe-leitor-quality.mjs"]],
+    "--disponibilidade": [["disponibilidade-quality.mjs"]],
+    "--agenda": [
+      ["agenda-quality.mjs"],
+      ["agenda-anexos-quality.mjs"],
+      ["agenda-serie-pendencias-quality.mjs"],
+    ],
   };
   const selected = Object.keys(features).find((flag) => process.argv.includes(flag));
   const checks = selected

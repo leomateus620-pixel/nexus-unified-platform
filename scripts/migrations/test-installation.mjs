@@ -8,7 +8,12 @@ import { loadManifest, sqlChecksum } from "./manifest.mjs";
 import { baselineEnvelope, migrationEnvelope } from "./connector-batch.mjs";
 
 // This harness never reads a production URL. Only the dedicated local test cluster is accepted.
-if (process.env.PGTEST_EPHEMERAL !== "1" || !/^\d{4,5}$/.test(process.env.PGTEST_PORT || "")) {
+if (
+  process.env.PGTEST_EPHEMERAL !== "1" ||
+  !/^\d{4,5}$/.test(process.env.PGTEST_PORT || "") ||
+  Number(process.env.PGTEST_PORT) === 5432 ||
+  (process.env.PGTEST_HOST && process.env.PGTEST_HOST !== "127.0.0.1")
+) {
   throw new Error("Execute apenas pelo runner de PostgreSQL descartável");
 }
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
@@ -21,13 +26,18 @@ const options = {
   prepare: false,
   onnotice: () => {},
 };
-const sql = postgres({ ...options, database: "postgres" });
+const upgradeDatabase = process.env.PGTEST_DATABASE || "postgres";
+if (!/^(postgres|agenda47_upgrade_[0-9]+)$/.test(upgradeDatabase))
+  throw new Error("Banco de upgrade descartável não reconhecido");
+const sql = postgres({ ...options, database: upgradeDatabase });
 const cleanName = `nexus_migrations_clean_${process.pid}`;
 const connectorName = `nexus_connector_${process.pid}`;
 let clean;
 let connector;
 let legacyEngineeringVersion;
 let legacyWarehouseReceipt;
+let legacyAgenda;
+let legacyAttachment;
 try {
   const legacyPeSource = await readFile(
     path.join(root, "drizzle/migrations/0014_projetos_engenharia.sql"),
@@ -223,12 +233,139 @@ try {
       return created.value.id;
     });
   }
+  let agendaCheckpoint = [];
+  let agendaAttachmentsCheckpoint = [];
+  const agendaMigration = migrations.find((item) => item.path.endsWith("0027_agenda_equipe.sql"));
+  const agendaAttachmentsMigration = migrations.find((item) =>
+    item.path.endsWith("0028_agenda_anexos.sql"),
+  );
+  if (agendaMigration) {
+    agendaCheckpoint = await applyMigrations(sql, migrations.slice(0, 45));
+    // Exercise the actual pre-0027 RPC, receipt, reservation and immutable history.
+    // Factory was accepted by 0016/PostgreSQL: an upgrade must preserve it even
+    // when a browser needs an explicit unsupported-timezone presentation guard.
+    legacyAgenda = await sql.begin(async (tx) => {
+      await tx.unsafe("set local role authenticated");
+      await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+      const payload = {
+        titulo: "Published agenda retained from checkpoint45",
+        descricao: "Existing planning, people and source receipts remain unchanged",
+        tipo: "visita_tecnica",
+        inicio: "2030-05-10T10:00:00Z",
+        fim: "2030-05-10T11:00:00Z",
+        timezone: "Factory",
+        dia_inteiro: false,
+        local: "Isolated migration fixture",
+        responsavel_id: "58000000-0000-0000-0000-000000000004",
+        bloqueia_recursos: true,
+        participantes: [{ pessoa_id: historicalIdentity, funcao: "participante" }],
+        competencias: [],
+      };
+      const org = "58000000-0000-0000-0000-000000000001";
+      const createKey = "58000000-0000-0000-0000-000000000201";
+      const publishKey = "58000000-0000-0000-0000-000000000202";
+      const [created] =
+        await tx`select public.salvar_evento_agenda(${org},${createKey},${tx.json(payload)}) value`;
+      await tx`select public.transicionar_evento_agenda(${org},${publishKey},${created.value.id},${created.value.version},'publicado')`;
+      const [local] =
+        await tx`select public.alm_executar(${org},gen_random_uuid(),'salvar_local','{"nome":"Legacy calendar resource location","descricao":"Upgrade fixture","ativo":true}') value`;
+      const [tool] =
+        await tx`select public.alm_executar(${org},gen_random_uuid(),'salvar_ferramenta',${tx.json({ patrimonio: "UPGRADE-AGENDA", descricao: "Existing exact calendar reservation", local_id: local.value.id, proprietario: "nexus", exige_calibracao: false })}) value`;
+      await tx`select public.alm_executar(${org},gen_random_uuid(),'reservar_ferramenta',${tx.json({ ferramenta_id: tool.value.id, expected_version: 1, pessoa_id: payload.responsavel_id, inicio: payload.inicio, fim: payload.fim, timezone: payload.timezone, agenda_evento_id: created.value.id })})`;
+      await tx.unsafe("reset role");
+      const [snapshot] = await tx`select
+        (select to_jsonb(e) from public.agenda_eventos e where id=${created.value.id}) evento,
+        (select jsonb_agg(to_jsonb(p) order by id) from public.agenda_participantes p where evento_id=${created.value.id}) participantes,
+        (select jsonb_agg(to_jsonb(r) order by id) from public.agenda_reservas_pessoas r where evento_id=${created.value.id}) reservas,
+        (select jsonb_agg(to_jsonb(r) order by versao) from public.agenda_evento_revisoes r where evento_id=${created.value.id}) revisoes,
+        (select jsonb_agg(to_jsonb(c) order by id) from public.ferramenta_custodias c where agenda_evento_id=${created.value.id}) custodias,
+        (select jsonb_agg(to_jsonb(r) order by chave) from public.operacoes_idempotentes r where organization_id=${org} and chave in(${createKey},${publishKey})) recibos`;
+      return { ...snapshot, payload, createKey, publishKey };
+    });
+    agendaCheckpoint.push(...(await applyMigrations(sql, migrations.slice(0, 46))));
+    const [preserved] = await sql`select
+      (select to_jsonb(e)-array['levantamento_id','cliente_id','unidade_id','projeto_id','visibilidade','serie_id','serie_versao_id','ocorrencia_data','excecao','gerado_automaticamente','geracao_job_id'] from public.agenda_eventos e where id=${legacyAgenda.evento.id}) evento,
+      (select jsonb_agg(to_jsonb(p)-array['equipe_origem_id','equipe_inicio'] order by id) from public.agenda_participantes p where evento_id=${legacyAgenda.evento.id}) participantes,
+      (select jsonb_agg(to_jsonb(r) order by id) from public.agenda_reservas_pessoas r where evento_id=${legacyAgenda.evento.id}) reservas,
+      (select jsonb_agg(to_jsonb(r) order by versao) from public.agenda_evento_revisoes r where evento_id=${legacyAgenda.evento.id}) revisoes,
+      (select jsonb_agg(to_jsonb(c) order by id) from public.ferramenta_custodias c where agenda_evento_id=${legacyAgenda.evento.id}) custodias,
+      (select jsonb_agg(to_jsonb(r) order by chave) from public.operacoes_idempotentes r where organization_id='58000000-0000-0000-0000-000000000001' and chave in(${legacyAgenda.createKey},${legacyAgenda.publishKey})) recibos`;
+    for (const key of ["evento", "participantes", "reservas", "revisoes", "custodias", "recibos"])
+      assert.deepEqual(preserved[key], legacyAgenda[key], `checkpoint45 agenda ${key} retained`);
+    const [projected] =
+      await sql`select custodia_id from public.agenda_ferramentas where evento_id=${legacyAgenda.evento.id} and vigente`;
+    assert.equal(projected.custodia_id, legacyAgenda.custodias[0].id);
+    await sql.begin(async (tx) => {
+      await tx.unsafe("set local role authenticated");
+      await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+      const [replayed] =
+        await tx`select public.salvar_evento_agenda('58000000-0000-0000-0000-000000000001',${legacyAgenda.createKey},${tx.json(legacyAgenda.payload)}) value`;
+      assert.equal(replayed.value.id, legacyAgenda.evento.id);
+      assert.equal(replayed.value.version, legacyAgenda.evento.version);
+      assert.equal(replayed.value.estado, "publicado");
+    });
+    console.log("PASS: checkpoint45 → 46 preserves published agenda, participants, reservations, immutable revisions and old request keys without inferring new origins");
+  }
+  if (agendaAttachmentsMigration) {
+    // Metadata-only Storage fixture: this proves migration/authorization contracts,
+    // never upload bytes, Storage HTTP availability or a remote signed download.
+    legacyAttachment = await sql.begin(async (tx) => {
+      const org = "58000000-0000-0000-0000-000000000001";
+      const actor = "58000000-0000-0000-0000-000000000003";
+      const key = "58000000-0000-0000-0000-000000000203";
+      const payload = {
+        pessoa_id: "58000000-0000-0000-0000-000000000004",
+        acao_id: null,
+        qualificacao_id: null,
+        nome: "Existing private certificate metadata.pdf",
+        mime: "application/pdf",
+        tamanho: 24,
+        sha256: "4".repeat(64),
+      };
+      await tx.unsafe("set local role authenticated");
+      await tx`select set_config('request.jwt.claim.sub',${actor},true)`;
+      const [prepared] =
+        await tx`select public.preparar_anexo_operacional(${org},${key},${tx.json(payload)}) value`;
+      await tx.unsafe("reset role");
+      await tx`insert into storage.objects(bucket_id,name,metadata,owner) values('nexus-operacional',${prepared.value.caminho},${tx.json({ size: 24, mimetype: "application/pdf" })},${actor})`;
+      await tx.unsafe("set local role service_role");
+      await tx`select public.confirmar_anexo_operacional(${org},${prepared.value.id},${actor},${payload.sha256})`;
+      await tx.unsafe("reset role");
+      const [snapshot] = await tx`select
+        (select to_jsonb(a) from public.anexos a where id=${prepared.value.id}) arquivo,
+        (select to_jsonb(o) from storage.objects o where bucket_id='nexus-operacional' and name=${prepared.value.caminho}) objeto,
+        (select to_jsonb(r) from public.operacoes_idempotentes r where organization_id=${org} and chave=${key}) recibo`;
+      return { ...snapshot, key, payload };
+    });
+    agendaAttachmentsCheckpoint = await applyMigrations(sql, migrations.slice(0, 47));
+    const [preserved] = await sql`select
+      (select to_jsonb(a)-'agenda_evento_id' from public.anexos a where id=${legacyAttachment.arquivo.id}) arquivo,
+      (select to_jsonb(o) from storage.objects o where bucket_id='nexus-operacional' and name=${legacyAttachment.arquivo.caminho}) objeto,
+      (select to_jsonb(r) from public.operacoes_idempotentes r where organization_id='58000000-0000-0000-0000-000000000001' and chave=${legacyAttachment.key}) recibo`;
+    for (const key of ["arquivo", "objeto", "recibo"])
+      assert.deepEqual(preserved[key], legacyAttachment[key], `checkpoint46 attachment ${key} retained`);
+    await sql.begin(async (tx) => {
+      await tx.unsafe("set local role authenticated");
+      await tx`select set_config('request.jwt.claim.sub','58000000-0000-0000-0000-000000000003',true)`;
+      const [retry] =
+        await tx`select public.preparar_anexo_operacional('58000000-0000-0000-0000-000000000001',${legacyAttachment.key},${tx.json(legacyAttachment.payload)}) value`;
+      assert.equal(retry.value.id, legacyAttachment.arquivo.id);
+      const [current] =
+        await tx`select estado,sha256,caminho from public.anexos where id=${legacyAttachment.arquivo.id}`;
+      assert.equal(current.estado, "vinculado");
+      assert.equal(current.sha256, legacyAttachment.payload.sha256);
+      assert.equal(current.caminho, legacyAttachment.arquivo.caminho);
+    });
+    console.log("PASS: checkpoint46 → 47 preserves confirmed legacy attachment, Storage metadata and exact request hash without rewriting its parent");
+  }
   const upgrade = [
     ...beforeLatest,
     ...warehouseCheckpoint,
     ...warehouseRelationsCheckpoint,
     ...peopleAuthorizationCheckpoint,
     ...identityCheckpoint,
+    ...agendaCheckpoint,
+    ...agendaAttachmentsCheckpoint,
     ...(await applyMigrations(sql, migrations)),
   ];
   if (historicalIdentity) {

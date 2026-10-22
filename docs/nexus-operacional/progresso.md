@@ -1,13 +1,45 @@
 # Checkpoint de execução
 
+## Consolidação48 — entrega focada e evidências locais
+
+Agenda e Equipe estão integradas às identidades, ações, levantamentos,
+qualificações, indisponibilidades e ferramentas existentes. Cadastro, edição,
+presença, execução do compromisso, arquivos, recorrência, conflitos e lembretes
+usam backend canônico. Pendências por versão informam data/código/tentativas;
+a paginação se recupera quando o worker reduz o total.
+
+Migrações0027/0028/0029 aplicadas e verificadas no projeto confirmado; prefixo48.
+Tipos oficiais48, instalação limpa/upgrade48 e regressão SQL completa passaram.
+Agenda66 e Pessoas66 testes; paridade23 e leitura medida30payloads idênticos.
+UI consolidada493layouts/138verificações exit0; Agenda30/17 e anexos6/6 final,
+complemento de pendências6/4 após correção do retorno de página/cache.
+Build e typecheck passaram; lint dos arquivos alterados passou. Baseline CRLF
+do lint amplo permanece declarada. CI final será conferido no SHA publicado
+da PR13, sem tomar o sucesso do commit35f7ffd como prova da nova revisão.
+
+Cinco destinos incompletos estão em off no mapa de disponibilidade e na URL:
+Execução/OS, Inspeções, Documentação, Segurança e Projetos de Engenharia. O
+acervo/leitor PE e a fundação de ações ficam preservados no código; ações
+continuam utilizáveis pela Agenda. Módulos anteriores utilizáveis permanecem.
+Não há expansão do funil/catalogo, alteração de motor ou modificação de cena3D.
+
+Checkpoint publicado anterior:35f7ffd; branch desta entrega:
+`codex/nexus-operacao-integrada-agenda-equipe`. O SHA final está na PR e nas
+execuções CI vinculadas, evitando uma referência circular no próprio commit.
+Validação de usuário conectado/hardware/StorageHTTP não foi exercitada, conforme
+decisão do usuário. Sem merge, forcepush ou publicação de frontend.
+
+O escopo integral original continua como backlog. As notas seguintes são
+históricas e não substituem o recorte e as evidências desta consolidação.
+
 ## Recorte vigente — Agenda Equipe e Pessoas/Equipes
 
 O pedido mais recente concentra a entrega na Agenda Equipe completa e integrada
 às pessoas, equipes, qualificações, ações, levantamentos e recursos canônicos
 que já funcionam. Ampliações dos outros módulos ficam adiadas. Execução/OS,
-Inspeções e Documentação ainda sem jornada própria ficam fora da navegação,
-com rotas e fontes preservadas. A disponibilidade será centralizada no mapa
-de acesso, inclusive para URL direta; isso ainda aguarda integração da Agenda.
+Inspeções, Documentação e os novos menus parciais Segurança/Projetos de Engenharia
+ficam fora da navegação, com rotas e fontes preservadas. A disponibilidade é
+centralizada no mapa de acesso, inclusive para URL direta.
 
 A candidata de OS está preservada somente em TEMP e não integra esta entrega.
 Não se promete agendamento de OS, manutenção, inspeção ou viagem inexistentes.

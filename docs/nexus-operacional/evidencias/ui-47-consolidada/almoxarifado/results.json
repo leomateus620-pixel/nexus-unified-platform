@@ -1,0 +1,1217 @@
+{
+  "method": "Actual source UI with isolated transport fixtures, not real Auth, SQL/RLS, concurrent reservations, Storage HTTP, operational persistence or physical-device proof",
+  "layouts": [
+    {
+      "name": "lista-materiais",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-ferramentas",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-movimentos",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-conferencias",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-conferir_evento",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-reservas",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-inventarios",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-locais",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-materiais",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-configurar_produto",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-reservar",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-transferir",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-criar_inventario",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-conferencias",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-reclassificar_quarentena",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-estornar_evento",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-reservas",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-retirar",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-consumir",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-devolver",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-cancelar_reserva",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-ferramentas",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-salvar_ferramenta",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-alterar_condicao",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-reservar_ferramenta",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-registrar_calibracao",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-publicar_politica_calibracao",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-conferir_calibracao",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-retirar_ferramenta",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-devolver_ferramenta",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-cancelar_custodia",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-inventarios",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-aprovar_inventario",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-cancelar_inventario",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-locais",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "form-salvar_local",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-movimentos",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha-politicas_calibracao",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-materiais",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-ferramentas",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-movimentos",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-conferencias",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-conferir_evento",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-reservas",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-inventarios",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-locais",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-materiais",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-configurar_produto",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-reservar",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-transferir",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-criar_inventario",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-conferencias",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-reclassificar_quarentena",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-estornar_evento",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-reservas",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-retirar",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-consumir",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-devolver",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-cancelar_reserva",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-ferramentas",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-salvar_ferramenta",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-alterar_condicao",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-reservar_ferramenta",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-registrar_calibracao",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-publicar_politica_calibracao",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-conferir_calibracao",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-retirar_ferramenta",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-devolver_ferramenta",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-cancelar_custodia",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-inventarios",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-aprovar_inventario",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-cancelar_inventario",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-locais",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "form-salvar_local",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-movimentos",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha-politicas_calibracao",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-materiais",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-ferramentas",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-movimentos",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-conferencias",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-conferir_evento",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-reservas",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-inventarios",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-locais",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-materiais",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-configurar_produto",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-reservar",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-transferir",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-criar_inventario",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-conferencias",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-reclassificar_quarentena",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-estornar_evento",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-reservas",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-retirar",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-consumir",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-devolver",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-cancelar_reserva",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-ferramentas",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-salvar_ferramenta",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-alterar_condicao",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-reservar_ferramenta",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-registrar_calibracao",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-publicar_politica_calibracao",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-conferir_calibracao",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-retirar_ferramenta",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-devolver_ferramenta",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-cancelar_custodia",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-inventarios",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-aprovar_inventario",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-cancelar_inventario",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-locais",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "form-salvar_local",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-movimentos",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha-politicas_calibracao",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-materiais",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-ferramentas",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-movimentos",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-conferencias",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-conferir_evento",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-reservas",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-inventarios",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-locais",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-materiais",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-configurar_produto",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-reservar",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-transferir",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-criar_inventario",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-conferencias",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-reclassificar_quarentena",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-estornar_evento",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-reservas",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-retirar",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-consumir",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-devolver",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-cancelar_reserva",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-ferramentas",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-salvar_ferramenta",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-alterar_condicao",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-reservar_ferramenta",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-registrar_calibracao",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-publicar_politica_calibracao",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-conferir_calibracao",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-retirar_ferramenta",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-devolver_ferramenta",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-cancelar_custodia",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-inventarios",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-aprovar_inventario",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-cancelar_inventario",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-locais",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "form-salvar_local",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-movimentos",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha-politicas_calibracao",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista-materiais",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-ferramentas",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-movimentos",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-conferencias",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-conferir_evento",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-reservas",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-inventarios",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-locais",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-materiais",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-configurar_produto",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-reservar",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-transferir",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-criar_inventario",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-conferencias",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-reclassificar_quarentena",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-estornar_evento",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-reservas",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-retirar",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-consumir",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-devolver",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-cancelar_reserva",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-ferramentas",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-salvar_ferramenta",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-alterar_condicao",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-reservar_ferramenta",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-registrar_calibracao",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-publicar_politica_calibracao",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-conferir_calibracao",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-retirar_ferramenta",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-devolver_ferramenta",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-cancelar_custodia",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-inventarios",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-aprovar_inventario",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-cancelar_inventario",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-locais",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "form-salvar_local",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-movimentos",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha-politicas_calibracao",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-materiais",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "lista-ferramentas",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "lista-movimentos",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "lista-conferencias",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-conferir_evento",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "lista-reservas",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "lista-inventarios",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "lista-locais",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-materiais",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-configurar_produto",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-reservar",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-transferir",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-criar_inventario",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-conferencias",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-reclassificar_quarentena",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-estornar_evento",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-reservas",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-retirar",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-consumir",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-devolver",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-cancelar_reserva",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-ferramentas",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-salvar_ferramenta",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-alterar_condicao",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-reservar_ferramenta",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-registrar_calibracao",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-publicar_politica_calibracao",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-conferir_calibracao",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-retirar_ferramenta",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-devolver_ferramenta",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-cancelar_custodia",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-inventarios",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-aprovar_inventario",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-cancelar_inventario",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-locais",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "form-salvar_local",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-movimentos",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha-politicas_calibracao",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "required errors focus fields and dirty close offers explicit discard with focus return",
+      "pass": true
+    },
+    {
+      "name": "save failure preserves values and repeats the same operation key",
+      "pass": true
+    },
+    {
+      "name": "focus polling keeps opened version until explicit comparison adoption",
+      "pass": true
+    },
+    {
+      "name": "material workflow presents ten received, eight reserved/withdrawn, six consumed and two returned",
+      "pass": true
+    },
+    {
+      "name": "receipt classification is explicit and rejected material stays outside availability",
+      "pass": true
+    },
+    {
+      "name": "serialized tool detects overlap, records custody and prevents allocation after damaged return",
+      "pass": true
+    },
+    {
+      "name": "calibration validation requires confirmed certificate rather than a reference string",
+      "pass": true
+    },
+    {
+      "name": "URL keeps list filters across detail, reload and return",
+      "pass": true
+    },
+    {
+      "name": "clearing a debounced search does not restore the previous URL recut",
+      "pass": true
+    },
+    {
+      "name": "reservation with fixed product focuses an enabled field and Escape restores its trigger",
+      "pass": true
+    },
+    {
+      "name": "read-only permissions hide commands and access revocation closes private draft",
+      "pass": true
+    },
+    {
+      "name": "new local draft survives network failure but closes and focuses an explicit list denial",
+      "pass": true
+    },
+    {
+      "name": "catalog policy selected without a detail loads and freezes its current version before editing",
+      "pass": true
+    },
+    {
+      "name": "policy lookup failure preserves the selected product and explicit access denial closes the draft",
+      "pass": true
+    },
+    {
+      "name": "denial returned only by mutation or comparison hides the cached private record",
+      "pass": true
+    },
+    {
+      "name": "server pagination preserves the recut and stock fixture omits internal costs",
+      "pass": true
+    },
+    {
+      "name": "zero quantity, no records and query error have distinct recoverable representations",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

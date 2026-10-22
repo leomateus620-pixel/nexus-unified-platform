@@ -183,6 +183,18 @@
     {
       "path": "drizzle/migrations/0026_pessoas_identidade_conferencia.sql",
       "sha256": "980e98d4036027aba1e0d54e16cc363abde4ae41f004938a8fabad3cd5efa41b"
+    },
+    {
+      "path": "drizzle/migrations/0027_agenda_equipe.sql",
+      "sha256": "21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b"
+    },
+    {
+      "path": "drizzle/migrations/0028_agenda_anexos.sql",
+      "sha256": "793ed8fa0a682a6143cc9b9d35f10fab66a0107981efca777785f17398a60acb"
+    },
+    {
+      "path": "drizzle/migrations/0029_agenda_listagem_performance.sql",
+      "sha256": "d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70"
     }
   ]
 }

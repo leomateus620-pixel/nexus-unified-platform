@@ -1,5 +1,27 @@
 # Permissões efetivamente implementadas
 
+## Agenda integrada — autorização atual
+
+Navegação e rota direta seguem `ACESSO_POR_PAPEL` e disponibilidade central.
+Agenda é acessível a admin/engenharia/compras/campo e coordenação operacional
+explícita; usuário sem papel/capacidade e papel desconhecido não ganham acesso
+por omissão. Coordenação não concede admin global nem aprovação profissional.
+
+Gestão de planejamento, execução atribuída e confirmação de presença têm
+capacidades distintas. Observador não bloqueia recurso nem ganha upload.
+Participação intersecta o acesso atual da ação/levantamento; convite não
+contorna privacidade da origem. A leitura de notificações, comentários, arquivos
+e exportações preserva essa mesma interseção. A Agenda não recebe custos internos.
+
+SQL/RLS, RPCs e Storage revalidam tenant, vínculo, papel e estado. Helpers
+privilegiados têm search_path fixo e EXECUTE privado. O scheduler identifica a
+automação e seu solicitante atual, sem forjar `auth.uid()`. Bloqueios de pessoa,
+qualificação revogada e custódia têm testes concorrentes de duas sessões.
+
+O backend e a UI limpam acesso revogado; URL assinada já emitida permanece um
+bearer até expirar. Nenhum controle promete recolher bytes já baixados.
+Provas locais e limites de Auth/Storage conectado constam em `validacao.md`.
+
 ## Equipes e qualificações — schema44 / UI45
 
 `gerir_equipe` administra equipes/vigências e qualificações; `revisar_operacao`

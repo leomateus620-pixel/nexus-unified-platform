@@ -1,5 +1,14 @@
 # Escopo e critérios de conclusão da evolução operacional
 
+## Ajuste de prioridade final
+
+O usuário determinou terminar Agenda Equipe e Equipe e deixar os demais módulos
+incompletos em off por enquanto. O aceite desta PR é o recorte descrito em
+`inventario.md` e `agenda-equipe.md`, com preservação dos recursos existentes.
+OS/inspeção/manutenção/viagem ainda inexistentes não são origens prometidas pela
+Agenda. O plano original abaixo continua como backlog, sem representar compromisso
+de conclusão nesta PR. A validação é local, com limite do E2E conectado explícito.
+
 Data de reconciliação: 22/10/2026. Este documento registra requisitos; não comprova implementação, aplicação de migração ou homologação. A situação executada pertence a `inventario.md`, `progresso.md` e `validacao.md`.
 
 ## Fontes e precedência

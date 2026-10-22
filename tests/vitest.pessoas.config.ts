@@ -8,6 +8,7 @@ export default defineConfig({
       "tests/almoxarifado-continuation.test.ts",
       "tests/equipes*.test.ts",
       "tests/qualificacoes*.test.ts",
+      "tests/disponibilidade*.test.ts",
     ],
   },
 });

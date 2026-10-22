@@ -1,5 +1,6 @@
 import {
   LayoutDashboard,
+  CalendarDays,
   Handshake,
   Building2,
   Package,
@@ -22,6 +23,32 @@ import {
 } from "lucide-react";
 import type { Papel } from "@/features/auth/autorizacao";
 
+/** Disponibilidade de módulos. Menus e gate de URL usam a mesma concessão explícita. */
+const DISPONIBILIDADE_MODULOS: Readonly<Record<string, boolean>> = {
+  "/": true,
+  "/agenda-equipe": true,
+  "/comercial": true,
+  "/clientes": true,
+  "/produtos": true,
+  "/levantamentos": true,
+  "/engenharia": true,
+  "/projetos-engenharia": false,
+  "/mapas-3d": true,
+  "/mapas-3d/unidades": true,
+  "/escada-lc02": true,
+  "/projetos": true,
+  "/compras": true,
+  "/execucao": false,
+  "/almoxarifado": true,
+  "/equipe": true,
+  "/seguranca": false,
+  "/documentacao": false,
+  "/inspecoes": false,
+  "/financeiro": true,
+  "/relatorios": true,
+  "/configuracoes": true,
+};
+
 export type NavItem = {
   to: string;
   label: string;
@@ -43,6 +70,12 @@ export const navGroups: NavGroup[] = [
         label: "Dashboard",
         icon: LayoutDashboard,
         hint: "Indicadores e pendências",
+      },
+      {
+        to: "/agenda-equipe",
+        label: "Agenda Equipe",
+        icon: CalendarDays,
+        hint: "Compromissos, pessoas e disponibilidade",
       },
     ],
   },
@@ -184,6 +217,7 @@ type Acesso = {
 // Concessões explícitas aos módulos existentes; novos domínios entram quando implementados.
 const MENUS_EXISTENTES = [
   "/",
+  "/agenda-equipe",
   "/comercial",
   "/clientes",
   "/produtos",
@@ -208,11 +242,22 @@ const MENUS_EXISTENTES = [
 export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
   admin: { menus: MENUS_EXISTENTES },
   comercial: { menus: ["/", "/clientes", "/comercial", "/produtos"] },
-  compras: { menus: ["/", "/clientes", "/produtos", "/compras", "/projetos", "/almoxarifado"] },
+  compras: {
+    menus: [
+      "/",
+      "/agenda-equipe",
+      "/clientes",
+      "/produtos",
+      "/compras",
+      "/projetos",
+      "/almoxarifado",
+    ],
+  },
   financeiro: { menus: ["/", "/financeiro", "/relatorios", "/projetos"] },
   campo: {
     menus: [
       "/",
+      "/agenda-equipe",
       "/almoxarifado",
       "/levantamentos",
       "/execucao",
@@ -225,6 +270,7 @@ export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
   engenharia: {
     menus: [
       "/",
+      "/agenda-equipe",
       "/almoxarifado",
       "/clientes",
       "/comercial",
@@ -255,7 +301,15 @@ function acessos(roles: string[], capabilities: string[] = []): Acesso[] {
   );
   if (capabilities.includes("coordenar_operacao"))
     a.push({
-      menus: ["/", "/levantamentos", "/equipe", "/seguranca", "/execucao", "/almoxarifado"],
+      menus: [
+        "/",
+        "/agenda-equipe",
+        "/levantamentos",
+        "/equipe",
+        "/seguranca",
+        "/execucao",
+        "/almoxarifado",
+      ],
     });
   return a;
 }
@@ -263,7 +317,17 @@ function acessos(roles: string[], capabilities: string[] = []): Acesso[] {
 const casa = (p: string, base: string) =>
   base === "/" ? p === "/" : p === base || p.startsWith(base + "/");
 
+function rotaDisponivel(pathname: string) {
+  // A fronteira mais específica vence; módulos ausentes permanecem indisponíveis.
+  return (
+    Object.entries(DISPONIBILIDADE_MODULOS)
+      .sort(([a], [b]) => b.length - a.length)
+      .find(([base]) => casa(pathname, base))?.[1] === true
+  );
+}
+
 export function podeVerRota(roles: string[], pathname: string, capabilities: string[] = []) {
+  if (!rotaDisponivel(pathname)) return false;
   const a = acessos(roles, capabilities);
   return a.some((x) => {
     const etapa = pathname.match(/\/revisoes\/[^/]+\/([^/]+)/)?.[1];
@@ -280,7 +344,10 @@ export function podeVerEtapa(roles: string[], etapa: string) {
 export function menusVisiveis(roles: string[], capabilities: string[] = []) {
   const a = acessos(roles, capabilities);
   return navGroups
-    .map((g) => ({ ...g, items: g.items.filter((i) => a.some((x) => x.menus.includes(i.to))) }))
+    .map((g) => ({
+      ...g,
+      items: g.items.filter((i) => rotaDisponivel(i.to) && a.some((x) => x.menus.includes(i.to))),
+    }))
     .filter((g) => g.items.length);
 }
 

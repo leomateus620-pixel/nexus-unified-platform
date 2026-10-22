@@ -1,5 +1,38 @@
 # Contratos compartilhados do checkpoint
 
+## Recorte final autorizado — Agenda e Equipe
+
+Esta seção prevalece sobre checkpoints históricos abaixo. A Agenda usa
+`agenda_eventos`, participantes/reservas existentes e `acoes_operacionais`.
+Origens principais reais: ação, levantamento ou independente; cliente/unidade/
+projeto são contexto com FKs compostas. Não há cópia de tarefa nem origem OS
+fictícia. `ag_executar` é o comando transacional; consultas `ag_listar`,
+`ag_obter`, `ag_obter_acao`, `ag_opcoes`, `ag_pendentes`, `ag_historico`,
+`ag_notificacoes` e `ag_configuracao` são autorizadas e paginadas.
+
+Entrada de comando: organização validada pela sessão, chave UUID, comando e
+payload estrito. Edição/transição exige `expected_version`; mesmo UUID com
+payload diferente conflita. O banco trava autor, origem, ferramentas, evento
+e pessoas antes de validar e confirmar efeitos. Respostas de retries consultam
+o acesso atual; recibo não concede acesso histórico.
+
+Query keys começam por `agenda-equipe`, organização e usuário. Salvamento
+invalida os recortes relacionados; alteração de indisponibilidade invalida a
+Agenda da organização. Logout, troca de contexto e revogação removem conteúdo
+sensível; continuação tardia não repõe detalhe, editor ou arquivo.
+
+`eq_listar_indisponibilidades`/`eq_executar_indisponibilidade` reutilizam pessoas
+e bloqueios existentes. Cancelamento versionado com motivo não apaga o original.
+Competência, identidade profissional e papel de sistema continuam separados.
+Os anexos de eventos reutilizam `anexos`, bucket privado e confirmação canônica;
+o pai Agenda tem FK, autorização e flags de ação próprias. Novos metadados usam
+`iniciar_anexo_agenda`, preservando o hash de requests legados.
+
+Séries têm versões e ocorrências finitas; jobs materializam e notificam no
+backend com contexto privado e deduplicação. Progresso de job não altera versão
+humana do plano. Contratos temporais e recuperação: `agenda-equipe.md`.
+Migrações e estados efetivos de aplicação: `migracoes.md`.
+
 ## Leitor privado PE — UI46 / schema44
 
 `LeitorArquivoPe` integra a ação Ler original ao arquivo confirmado de uma versão

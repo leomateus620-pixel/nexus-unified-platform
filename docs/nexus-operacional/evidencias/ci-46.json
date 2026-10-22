@@ -1,0 +1,61 @@
+{
+  "headRevision": "35f7ffd1916945e3be45af1cd0a4c7c63e44199f",
+  "checks": [
+    {
+      "id": 119988624371,
+      "name": "verify",
+      "head_sha": "35f7ffd1916945e3be45af1cd0a4c7c63e44199f",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39825795472/job/119988624371",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 11
+      }
+    },
+    {
+      "id": 119988624339,
+      "name": "presentation",
+      "head_sha": "35f7ffd1916945e3be45af1cd0a4c7c63e44199f",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39825795438/job/119988624339",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 2
+      }
+    },
+    {
+      "id": 119988622460,
+      "name": "circulation",
+      "head_sha": "35f7ffd1916945e3be45af1cd0a4c7c63e44199f",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "details_url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39825794946/job/119988622460",
+      "output": {
+        "title": null,
+        "summary": null,
+        "text": null,
+        "annotations_count": 4
+      }
+    }
+  ],
+  "method": "Codex Code Review backend diagnostics",
+  "circulation": {
+    "conclusion": "cancelled",
+    "setupEnd": "2026-10-22T18:02:21Z",
+    "browserCommandStart": "2026-10-22T18:02:25Z",
+    "jobStart": "2026-10-22T17:47:54Z",
+    "cancellation": "2026-10-22T18:08:09Z",
+    "observed": [
+      "2026-10-22T18:08:07.5594840Z page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5183/mapas-3d/unidades",
+      "2026-10-22T18:08:09.8951935Z ##[error]The operation was canceled."
+    ],
+    "inference": "Job reached its 20 minute budget after dependency setup consumed about14minutes; cancellation is not an approved scene regression check.",
+    "next": "Workflow budget increased to35minutes, same browser assertions; Vite log added to diagnostics. A new revision must be observed."
+  }
+}

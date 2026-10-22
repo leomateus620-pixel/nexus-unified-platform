@@ -1,5 +1,20 @@
 # Regeneração oficial dos tipos Supabase
 
+## Geração47 — Agenda integrada
+
+Geração48 repetida oficialmente após0029: mesmos117 tabelas/208 funções/4 enums
+e mesmo hash público abaixo, pois somente corpo SQL de leitura foi alterado.
+Manifesto e warning capturados em `evidencias/geracao-tipos-48.json`.
+
+`scripts/supabase-types/run.ps1 -Write` executado sobre PostgreSQL16.15 local
+descartável com as47 migrações, pelo gerador oficial postgres-meta0.100.0.
+Saída117 tabelas/208 funções não trigger/4 enums,266868bytes; SHA-256
+`17b0786861370e4022a9e2e86693e2a8d171009b6e72bab7939af3a3a940c26a`.
+Diagnóstico TypeScript isolado zero; formatação com AST preservada. O warning
+upstream de11listeners ficou registrado, sem ocultação. Nenhum tipo gerado foi
+editado manualmente. Catálogo local e conectado conciliados em `schema-diff-47.json`.
+Esta geração não usa credenciais nem dados operacionais e não é E2E do runtime.
+
 ## Atualização45
 
 Geração oficial repetida sobre45 migrações:109 tabelas/163 funções não trigger/

@@ -1,5 +1,57 @@
 # Migrações e reconciliação
 
+## Última aplicação — posição48, leitura medida
+
+`0029_agenda_listagem_performance.sql`, SHA-256
+`d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70`,
+aplicada pelo mesmo envelope transacional ao projeto confirmado em22/10/2026
+às18:49:32.296862UTC, verificada18:49:52.913809UTC. Ledger48 e SELECT anon
+negado. Nenhuma linha operacional é alterada: somente o predicado de leitura
+evita repetir a consulta de ACL em eventos independentes quando a capacidade
+atual de gestor já foi comprovada. Fontes vinculadas e demais perfis continuam
+pela autorização canônica. A verificação inicial de tenant/ver_operacao permanece.
+
+Paridade de23 casos e30 payloads completos antes/depois; instalação limpa48,
+upgrade e regressão SQL completa passaram. A geração oficial48 manteve o hash
+público dos tipos. `schema-diff-48.json` confirma a mesma diferença histórica
+comercial e grants legados já documentados, sem objeto local ausente.
+Recuperação desta otimização é nova migração com o corpo de leitura anterior;
+não editar0029 aplicada. Benchmark e limites em `validacao.md`.
+
+## Agenda e arquivos — prefixo47 efetivamente aplicado
+
+Projeto reconfirmado Nexus Unified Platform,
+`91380c2d-559c-4527-b3a4-1a8bc1e19f69`, repositório desta PR, main7fbf58f.
+Nenhuma chamada de agente Lovable para edição de código foi usada nesta fase.
+As fontes abaixo foram testadas em instalação limpa e upgrade45→46→47 e enviadas
+pelos mesmos envelopes DDL+ledger em uma instrução transacional.
+
+| Posição | Fonte | SHA-256 normalizado LF | Aplicação UTC em22/10/2026 |
+| --- | --- | --- | --- |
+| 46 | drizzle/migrations/0027_agenda_equipe.sql | 21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b | 18:34:59.068602 |
+| 47 | drizzle/migrations/0028_agenda_anexos.sql | 793ed8fa0a682a6143cc9b9d35f10fab66a0107981efca777785f17398a60acb | 18:35:03.300806 |
+
+Verificação18:35:23UTC: ledger47, RLS nas oito tabelas novas, comando público
+negado a anon, helpers de automação/arquivos sem EXECUTE authenticated.
+`pg_cron` existente segue a cada minuto; execuções18:36 e18:37 terminaram sem
+falhas e fila vazia. Não foram criadas fixtures no banco operacional. A geração
+e entrega real de lembrete foi exercitada no PostgreSQL local, separadamente.
+
+O diff de catálogo47 não encontrou objeto local ausente. Relações117,
+constraints858, índices331, policies178 e triggers126 coincidem. Permanece a
+diferença histórica de whitespace de `diferencas_comerciais` e531 grants extras
+legados da plataforma (415 tabela/116 função). Nenhuma política permissiva foi
+acrescentada para contornar diferenças. Evidências: `schema-diff-47.json`,
+`schema-remoto-47.json`, `verificacao-remota-0027-0028.json`, `cron-pos-0028.json`.
+
+Expansão compatível: identidades e fatos anteriores são mantidos; projeção de
+custódia só adota reserva real exatamente compatível. Parciais/retiradas exigem
+conferência e não têm período reescrito. Novos anexos têm pai opcional, sem mudar
+hash ou assinatura do fluxo antigo. Recursos novos são ativados na branch da PR;
+o frontend não foi publicado. Recuperação usa migração compensatória posterior,
+pausa administrativa da série e reprocessamento rastreável; não remover eventos,
+documentos ou histórico para desfazer aplicação. Fontes aplicadas são imutáveis.
+
 ## Base examinada
 
 Auditoria local em 22/10/2026 a partir de `820c79d60055a25e2d56bf60a091f032c5e7a8bf`.

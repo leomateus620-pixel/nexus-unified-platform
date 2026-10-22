@@ -560,22 +560,28 @@ export const listarAnexos = async ({ data }) => {
       .filter(
         (a) =>
           a.estado !== "cancelado" &&
-          ["pessoa_id", "acao_id", "qualificacao_id", "ferramenta_id", "calibracao_id"].some(
-            (k) => data[k] && a[k] === data[k],
-          ),
+          [
+            "pessoa_id",
+            "acao_id",
+            "qualificacao_id",
+            "ferramenta_id",
+            "calibracao_id",
+            "agenda_evento_id",
+          ].some((k) => data[k] && a[k] === data[k]),
       )
       .map((a) => ({
         ...a,
         ferramenta_id: a.ferramenta_id ?? null,
         calibracao_id: a.calibracao_id ?? null,
+        agenda_evento_id: a.agenda_evento_id ?? null,
         pode_retomar: adicionar && a.estado === "pendente",
-        pode_cancelar: adicionar && a.estado === "pendente",
+        pode_cancelar: (window.__anexoCanCancel ?? adicionar) && a.estado === "pendente",
       })),
     permissoes: { adicionar },
   });
 };
-export const prepararUpload = async ({ data }) =>
-  write("prepararUpload", data, () => {
+export const prepararUpload = async ({ data }) => {
+  const result = write("prepararUpload", data, () => {
     const anexo = {
       id: crypto.randomUUID(),
       organization_id: org,
@@ -584,6 +590,7 @@ export const prepararUpload = async ({ data }) =>
       qualificacao_id: null,
       ferramenta_id: null,
       calibracao_id: null,
+      agenda_evento_id: null,
       ...data.pai,
       nome: data.nome,
       mime: data.mime,
@@ -595,21 +602,49 @@ export const prepararUpload = async ({ data }) =>
     state.anexos.push(anexo);
     return { anexo, token: null };
   });
+  if (window.__anexoPrepareDeferred) {
+    window.__anexoPrepareReturned = false;
+    // Deliberately deliver after parent unmount/revocation, exercising UI continuation.
+    await new Promise((resolve) => {
+      window.__releaseAnexoPrepare = resolve;
+    });
+    window.__anexoPrepareReturned = true;
+  }
+  return result;
+};
 export const confirmarUpload = async ({ data }) => {
+  window.__nexusCalls.push({ name: "confirmarUpload", payload: { data } });
   if (window.__anexoConfirmFailure)
     throw new Error("Falha de confirmação de armazenamento na fixture.");
   const a = state.anexos.find((a) => a.id === data.id);
   if (!a) throw new Error("Arquivo não encontrado na fixture.");
   a.estado = "vinculado";
-  return copy(a);
+  const result = copy(a);
+  if (window.__anexoConfirmDeferred) {
+    window.__anexoConfirmReturned = false;
+    await new Promise((resolve) => {
+      window.__releaseAnexoConfirm = resolve;
+    });
+    window.__anexoConfirmReturned = true;
+  }
+  return result;
 };
-export const cancelarAnexo = async ({ data }) =>
-  write("cancelarAnexo", data, () => {
+export const cancelarAnexo = async ({ data }) => {
+  const result = write("cancelarAnexo", data, () => {
     const a = state.anexos.find((a) => a.id === data.id);
     if (!a || a.estado !== "pendente") throw new Error("Envio pendente indisponível na fixture.");
     a.estado = "cancelado";
     return copy(a);
   });
+  if (window.__anexoCancelDeferred) {
+    window.__anexoCancelReturned = false;
+    await new Promise((resolve) => {
+      window.__releaseAnexoCancel = resolve;
+    });
+    window.__anexoCancelReturned = true;
+  }
+  return result;
+};
 export const baixarAnexo = async ({ data, signal }) => {
   await read("baixarAnexo", { data });
   if (window.__anexoDownloadDeferred) {

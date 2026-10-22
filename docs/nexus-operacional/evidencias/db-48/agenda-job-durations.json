@@ -1,0 +1,8 @@
+{
+  "database": "postgres",
+  "workerDurations": [
+    12011,
+    2236
+  ],
+  "classification": "Local disposable backend batches, not production latency or field metrics"
+}

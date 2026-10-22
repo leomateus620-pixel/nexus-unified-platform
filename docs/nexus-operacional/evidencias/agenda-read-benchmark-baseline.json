@@ -1,0 +1,426 @@
+{
+  "method": "Real public.ag_listar and public.ag_obter as authenticated organization admin; loopback client roundtrip, sequential warm workload. Direct synthetic read-model fixture only, transaction rolled back. No scheduling algorithm model, production traffic, network deployment, concurrent-user load or production latency claim.",
+  "database": "agenda47_1792693775173",
+  "host": "127.0.0.1",
+  "port": 55480,
+  "captured_at": "2026-10-22T18:34:37.937Z",
+  "source_sql_sha256": "21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b",
+  "environment": {
+    "os": "win32 10.0.26200 x64",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logical_cpus": 4,
+    "memory_gib": 7.8,
+    "node": "v24.15.0",
+    "postgres": "16.15"
+  },
+  "fixture": {
+    "events": 10000,
+    "civil_days": 90,
+    "people": 40,
+    "participant_rows": 10000,
+    "revision_rows": 10000,
+    "type": "reuniao",
+    "state": "publicado",
+    "blocks_resources": false,
+    "origin": "independent",
+    "visibility": "participantes",
+    "measured_role": "authenticated/admin",
+    "resources": 0,
+    "recurring_series": 0,
+    "comments": 0,
+    "attachments": 0,
+    "setup_only_trigger_bypass": "SET LOCAL session_replication_role=replica during direct bulk fixture loading only; restored to origin before measured reads. CHECK constraints remain enabled; parent references verified after load. This benchmark does not measure canonical writes or their guards."
+  },
+  "warmups": 3,
+  "samples": [
+    {
+      "index": 1,
+      "inicio": "2026-10-22",
+      "fim": "2026-10-29",
+      "total": 784,
+      "returned": 50,
+      "list_ms": 1465.647,
+      "detail_ms": 21.49
+    },
+    {
+      "index": 2,
+      "inicio": "2026-10-25",
+      "fim": "2026-11-01",
+      "total": 784,
+      "returned": 50,
+      "list_ms": 1433.806,
+      "detail_ms": 15.904
+    },
+    {
+      "index": 3,
+      "inicio": "2026-10-28",
+      "fim": "2026-11-04",
+      "total": 781,
+      "returned": 50,
+      "list_ms": 1746.389,
+      "detail_ms": 20.879
+    },
+    {
+      "index": 4,
+      "inicio": "2026-10-31",
+      "fim": "2026-11-07",
+      "total": 778,
+      "returned": 50,
+      "list_ms": 1743.363,
+      "detail_ms": 20.328
+    },
+    {
+      "index": 5,
+      "inicio": "2026-11-03",
+      "fim": "2026-11-10",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1334.27,
+      "detail_ms": 13.741
+    },
+    {
+      "index": 6,
+      "inicio": "2026-11-06",
+      "fim": "2026-11-13",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1591.802,
+      "detail_ms": 25.304
+    },
+    {
+      "index": 7,
+      "inicio": "2026-11-09",
+      "fim": "2026-11-16",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1326.177,
+      "detail_ms": 14.722
+    },
+    {
+      "index": 8,
+      "inicio": "2026-11-12",
+      "fim": "2026-11-19",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1308.952,
+      "detail_ms": 14.179
+    },
+    {
+      "index": 9,
+      "inicio": "2026-11-15",
+      "fim": "2026-11-22",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1513.078,
+      "detail_ms": 20.543
+    },
+    {
+      "index": 10,
+      "inicio": "2026-11-18",
+      "fim": "2026-11-25",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1786.085,
+      "detail_ms": 20.666
+    },
+    {
+      "index": 11,
+      "inicio": "2026-11-21",
+      "fim": "2026-11-28",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1635.329,
+      "detail_ms": 16.847
+    },
+    {
+      "index": 12,
+      "inicio": "2026-11-24",
+      "fim": "2026-12-01",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 860.949,
+      "detail_ms": 25.128
+    },
+    {
+      "index": 13,
+      "inicio": "2026-11-27",
+      "fim": "2026-12-04",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2431.439,
+      "detail_ms": 19.098
+    },
+    {
+      "index": 14,
+      "inicio": "2026-11-30",
+      "fim": "2026-12-07",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1137.036,
+      "detail_ms": 18.862
+    },
+    {
+      "index": 15,
+      "inicio": "2026-12-03",
+      "fim": "2026-12-10",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2639.643,
+      "detail_ms": 20.714
+    },
+    {
+      "index": 16,
+      "inicio": "2026-12-06",
+      "fim": "2026-12-13",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2237.853,
+      "detail_ms": 21.286
+    },
+    {
+      "index": 17,
+      "inicio": "2026-12-09",
+      "fim": "2026-12-16",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2215.361,
+      "detail_ms": 22.473
+    },
+    {
+      "index": 18,
+      "inicio": "2026-12-12",
+      "fim": "2026-12-19",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 3453.285,
+      "detail_ms": 23.548
+    },
+    {
+      "index": 19,
+      "inicio": "2026-12-15",
+      "fim": "2026-12-22",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2983.755,
+      "detail_ms": 20.574
+    },
+    {
+      "index": 20,
+      "inicio": "2026-12-18",
+      "fim": "2026-12-25",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1985.355,
+      "detail_ms": 17.328
+    },
+    {
+      "index": 21,
+      "inicio": "2026-12-21",
+      "fim": "2026-12-28",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1654.002,
+      "detail_ms": 15.097
+    },
+    {
+      "index": 22,
+      "inicio": "2026-12-24",
+      "fim": "2026-12-31",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1343.882,
+      "detail_ms": 29.648
+    },
+    {
+      "index": 23,
+      "inicio": "2026-12-27",
+      "fim": "2027-01-03",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2079.541,
+      "detail_ms": 31.282
+    },
+    {
+      "index": 24,
+      "inicio": "2026-12-30",
+      "fim": "2027-01-06",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1784.628,
+      "detail_ms": 23.448
+    },
+    {
+      "index": 25,
+      "inicio": "2027-01-02",
+      "fim": "2027-01-09",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2536.416,
+      "detail_ms": 29.845
+    },
+    {
+      "index": 26,
+      "inicio": "2027-01-05",
+      "fim": "2027-01-12",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 2128.258,
+      "detail_ms": 19.752
+    },
+    {
+      "index": 27,
+      "inicio": "2027-01-08",
+      "fim": "2027-01-15",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1458.162,
+      "detail_ms": 17.895
+    },
+    {
+      "index": 28,
+      "inicio": "2027-01-11",
+      "fim": "2027-01-18",
+      "total": 777,
+      "returned": 50,
+      "list_ms": 1351.122,
+      "detail_ms": 15.959
+    },
+    {
+      "index": 29,
+      "inicio": "2026-10-23",
+      "fim": "2026-10-30",
+      "total": 784,
+      "returned": 50,
+      "list_ms": 1464.879,
+      "detail_ms": 14.967
+    },
+    {
+      "index": 30,
+      "inicio": "2026-10-26",
+      "fim": "2026-11-02",
+      "total": 783,
+      "returned": 50,
+      "list_ms": 1370.809,
+      "detail_ms": 17.755
+    }
+  ],
+  "explains": [
+    {
+      "scope": "Outer public API plan; PL/pgSQL nested plans are not expanded by this EXPLAIN",
+      "list": [
+        {
+          "QUERY PLAN": [
+            {
+              "Plan": {
+                "Node Type": "Result",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 0,
+                "Total Cost": 0.26,
+                "Plan Rows": 1,
+                "Plan Width": 32,
+                "Actual Startup Time": 2102.926,
+                "Actual Total Time": 2103.049,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Output": [
+                  "ag_listar('110be8ad-f602-4419-a158-137ca386bed6'::uuid, '2026-10-22'::date, '2026-10-29'::date, 'America/Sao_Paulo'::text, false, ''::text, NULL::text, NULL::text, NULL::uuid, 0, 50)"
+                ],
+                "Shared Hit Blocks": 30925,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.013,
+              "Triggers": [],
+              "Execution Time": 2103.059
+            }
+          ]
+        }
+      ],
+      "detail": [
+        {
+          "QUERY PLAN": [
+            {
+              "Plan": {
+                "Node Type": "Result",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 0,
+                "Total Cost": 0.26,
+                "Plan Rows": 1,
+                "Plan Width": 32,
+                "Actual Startup Time": 22.707,
+                "Actual Total Time": 22.707,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Output": [
+                  "ag_obter('110be8ad-f602-4419-a158-137ca386bed6'::uuid, '23fa777d-1cf4-4e55-84b8-a08a588aab33'::uuid)"
+                ],
+                "Shared Hit Blocks": 233,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.018,
+              "Triggers": [],
+              "Execution Time": 22.722
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rollback_confirmed": true,
+  "catalog_functions_sha256": "87e237ea27cc1a5323f08cf3f487d864ae32eea3f46182eda0e01a3868ab2bd0",
+  "list": {
+    "count": 30,
+    "p50_ms": 1635.33,
+    "p95_ms": 2983.76,
+    "min_ms": 860.95,
+    "max_ms": 3453.28
+  },
+  "detail": {
+    "count": 30,
+    "p50_ms": 20.33,
+    "p95_ms": 29.84,
+    "min_ms": 13.74,
+    "max_ms": 31.28
+  }
+}

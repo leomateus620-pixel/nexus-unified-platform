@@ -1,0 +1,199 @@
+{
+  "method": "UI components with synthetic network adapter; no Auth/SQL/Storage HTTP or production persistence proof",
+  "layouts": [
+    {
+      "name": "lista",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "cadastro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "coleta",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ponto",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "medida",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "cadastro",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "coleta",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ponto",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "medida",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "cadastro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "coleta",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ponto",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "medida",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "cadastro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "coleta",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ponto",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "medida",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "cadastro",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "coleta",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ponto",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "medida",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "cadastro",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "coleta",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ponto",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "medida",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "invalid creation focuses the first field and Escape restores the trigger",
+      "pass": true
+    },
+    {
+      "name": "dirty creation preserves edits until explicit discard",
+      "pass": true
+    },
+    {
+      "name": "write failure preserves completed fields and reports that the server did not confirm",
+      "pass": true
+    },
+    {
+      "name": "a point edit conflict keeps input and allows comparing the current server version",
+      "pass": true
+    },
+    {
+      "name": "server-saved fixture point and measurement stay in the same selected context",
+      "pass": true
+    },
+    {
+      "name": "list filters survive URL reload and return from detail",
+      "pass": true
+    },
+    {
+      "name": "a focus refetch cannot silently advance the editing base version",
+      "pass": true
+    },
+    {
+      "name": "pending file failure can be rechecked, cancelled and retried as a new intent",
+      "pass": true
+    },
+    {
+      "name": "empty query and failed query have different recoverable states",
+      "pass": true
+    },
+    {
+      "name": "approved measurement requires a comparison before adoption and opens its destination",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

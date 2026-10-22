@@ -1,0 +1,123 @@
+{
+  "method": "Actual source with test-only transport; no connected Auth/SQL/Storage E2E.",
+  "command": "node tests/ui/run.mjs --operacional",
+  "exitCode": 0,
+  "reports": [
+    {
+      "suite": "acoes-vinculadas",
+      "file": "results.json",
+      "layouts": 0,
+      "checks": 3,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "agenda-anexos",
+      "file": "results.json",
+      "layouts": 6,
+      "checks": 6,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "agenda-equipe",
+      "file": "results.json",
+      "layouts": 30,
+      "checks": 17,
+      "errors": [],
+      "success": null
+    },
+    {
+      "suite": "almoxarifado",
+      "file": "results.json",
+      "layouts": 228,
+      "checks": 17,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "anexos-canonicos",
+      "file": "results.json",
+      "layouts": 6,
+      "checks": 8,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "disponibilidade",
+      "file": "results.json",
+      "layouts": 6,
+      "checks": 7,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "equipes",
+      "file": "results.json",
+      "layouts": 36,
+      "checks": 17,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "estudos",
+      "file": "results.json",
+      "layouts": 61,
+      "checks": 14,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "levantamentos",
+      "file": "results.json",
+      "layouts": 30,
+      "checks": 10,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "pe-arquivos",
+      "file": "results.json",
+      "layouts": 0,
+      "checks": 8,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "pe-leitor",
+      "file": "results.json",
+      "layouts": 6,
+      "checks": 8,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "pessoas",
+      "file": "results.json",
+      "layouts": 18,
+      "checks": 8,
+      "errors": [],
+      "success": true
+    },
+    {
+      "suite": "qualidade-operacional",
+      "file": "results.json",
+      "layouts": 36,
+      "checks": 9,
+      "errors": [],
+      "success": null
+    },
+    {
+      "suite": "qualificacoes",
+      "file": "results.json",
+      "layouts": 30,
+      "checks": 6,
+      "errors": [],
+      "success": true
+    }
+  ],
+  "totals": {
+    "layouts": 493,
+    "checks": 138
+  }
+}

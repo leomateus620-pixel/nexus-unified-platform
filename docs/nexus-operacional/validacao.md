@@ -1,5 +1,55 @@
 # Validação do checkpoint operacional
 
+## Entrega focada — Agenda e Equipe, manifesto48
+
+O recorte vigente substitui a exigência de concluir os24 menus nesta PR. A
+evolução integral permanece backlog; Agenda, Pessoas/Equipes e suas integrações
+disponíveis têm provas abaixo. Não há fixture no banco operacional.
+
+| Método | Execução e resultado | Evidência |
+| --- | --- | --- |
+| Integração PostgreSQL16.15 | run.ps1, instalação limpa48, upgrade histórico/45→46→47 e aplicação48, rollback/checksums/ledger; suíte inteira exit0 | db-48; resumo de migração no log e scripts reproduzíveis |
+| SQL de Agenda | 28 básicos,18 segurança,20 jobs,24 temporais/série/concorrência,17 disponibilidade; todos passaram | db-48, equipe-disponibilidade.mjs |
+| Arquivos SQL/RLS | 28 verificações e3 disputas reais de revogação, além das regressões canônicas | agenda-anexos-sql-local-48.json, agenda-anexos-concurrency-local-48.json |
+| Paridade de leitura | 23 casos reais antes/depois, incluindo permissões atuais, origem reatribuída, filtros e recortes | db-48-parity/agenda-list-performance.json |
+| Unitários/handlers/DTOs | Agenda66; Pessoas/Equipes/Qualificações/Disponibilidade66; arquivos compartilhados26 passaram | test:agenda, test:pessoas, test:almoxarifado |
+| Regressão protegida | orçamento59+5; operacional53, manifesto9 e tipos3;134 arquivos protegidos passaram | comandos package.json, contratos-preservados.json |
+| UI de fonte | suíte operacional consolidada exit0:493 layouts/138 verificações, erros JS vazios | ui-47-consolidada/*/results.json |
+| UI final de Agenda |30 layouts/17 jornadas incluindo pendências e versões; arquivos6larguras/6 jornadas | ui-49-agenda-final |
+| UI de pendências |6larguras/4 jornadas, incluindo redução30→1, retorno da página2 e cache atualizado | ui-47-agenda-serie-pendencias-final-encolhimento |
+| Inspeção visual | desktop1440×900 e móvel390×845; antes/depois, validação PT-BR, detalhe/origem/anexos | revisao-product-design-agenda.md |
+| Catálogo conectado | prefixo48 aplicado, RLS/índices/constraints/triggers conciliados, cron ativo; fila vazia com jobs backend sem erro | verificacao-remota-0027-0028.json, verificacao-remota-0029.json, schema-diff-48.json, cron-pos-0028.json |
+| Build e tipos | build local e typecheck global passaram; tipos gerados oficialmente, sem edição manual | geracao-tipos-48.json |
+
+O lint dos arquivos alterados de Agenda/Equipe/arquivos/rotas/testes passou.
+Uma varredura local mais ampla de `src/features` encontrou5247 erros e10 avisos
+preexistentes, predominantemente CRLF em fontes protegidas que não foram
+reformatadas; o lint global histórico também não fica declarado aprovado.
+O CI Linux tem gates próprios; o resultado do commit publicado é vinculado
+diretamente na PR, sem inferência a partir desta bancada Windows.
+
+### Latência medida
+
+10mil eventos sintéticos independentes,90dias/40pessoas, página50/semana; três
+aquecimentos e30 pares, authenticated/admin, PostgreSQL16.15 no i5-1035G1,
+4CPUs lógicas/7,8GiB, host compartilhado. Na mesma carga/transação, lista
+p50/p95 passou1638,01/2582,78ms→535,81/1011,54ms. Os30 JSONs permaneceram
+idênticos. Ficha não alterada variou18,36/35,70→19,58/58,76ms. O alvo1s p95
+fica no limite dessa bancada; não está certificado em produção. A carga usa
+bypass de triggers somente no seed sintético, restaurado antes das leituras,
+com constraints/referências conferidas, ANALYZE e rollback integral. Não há
+benchmark de rede, produção, concorrência de usuários ou anexos nessa amostra.
+Relatórios: agenda-read-benchmark-{baseline,paired}.json.
+
+### Limites aceitos
+
+Conforme decisão do usuário, validação local e limite de E2E conectado registrado.
+Metadados de banco/cron não provam Auth/Storage HTTP de usuário real, upload
+binário em produção, lembrete entregue no ambiente operacional, hardware móvel,
+WCAG integral ou métricas de campo. E-mail/WhatsApp/push/ICS e domínios ainda
+ausentes não são apresentados como integração concluída. Nenhum frontend foi
+publicado e a PR não foi mesclada. Notas de checkpoints abaixo são históricas.
+
 ## Checkpoint46 — leitor PE e continuidade de respostas
 
 Sem SQL nova; ledger44 até0025 permanece a referência de banco.47 testes
@@ -270,3 +320,5 @@ Qualificações, anexos e leitor PE permanecem identificadas por relatório/hash
 A execução operacional separada terminou exit0, com11 relatórios,451 layouts
 e108 comportamentos, sem erros JS. O CI Linux da próxima revisão será registrado
 por commit; estas fatias não equivalem a PASS de um comando completo interrompido.
+O p95 medido de1011,54ms está ligeiramente acima do alvo inicial de1s; a
+otimização não é apresentada como atendimento desse SLA em produção.

@@ -1,94 +1,111 @@
-# Fundação temporal da Agenda Equipe
+# Agenda Equipe
 
-## Entrega desta etapa
+## Escopo desta entrega
 
-`0016_agenda_foundation.sql` prepara o backend temporal para eventos independentes e visitas ligadas
-à mesma `acoes_operacionais`. A experiência completa do menu continua na etapa final do plano;
-esta fundação não entrega recorrência, vínculos com OS/inspeção/manutenção, frota, ferramentas,
-exportação ICS ou calendário desktop/mobile.
+`/agenda-equipe` usa pessoas e equipes de `/equipe`, ações operacionais,
+levantamentos autorizados e ferramentas do almoxarifado. Um evento pode ser
+independente ou agendar uma visita de ação/levantamento. Ações sem horário
+permanecem na fila Pendentes. Não se cria uma segunda tarefa para agendá-las.
+OS, inspeção, manutenção e viagem não são origens selecionáveis enquanto seus
+fluxos próprios estiverem adiados. Os tipos de atividade não criam tais registros.
 
-Fontes canônicas:
+Comercial, Produtos e cenas 3D mantêm seus contratos. A navegação usa uma
+disponibilidade central por rota; Execução/OS, Inspeções, Documentação e os
+novos menus parciais Segurança/Projetos de Engenharia ficam desativados,
+inclusive no gate de URL autenticada. Ações canônicas continuam pela Agenda.
+As fontes e URLs permanecem no repositório para evolução posterior.
 
-| Entidade                  | Contrato                                                                                 |
-| ------------------------- | ---------------------------------------------------------------------------------------- |
-| `agenda_eventos`          | Título, tipo, período, timezone, responsável, estado, versão e FK opcional da ação       |
-| `agenda_participantes`    | Pessoa real, função, confirmação e vigência; substituição encerra a linha anterior       |
-| `agenda_requisitos`       | FKs às competências configuradas; não adiciona exigências normativas automáticas         |
-| `agenda_reservas_pessoas` | Intervalos exclusivos confirmados, com FK ao mesmo evento/participante/pessoa            |
-| `agenda_evento_revisoes`  | Snapshot histórico de cada versão, com participantes e competências daquele planejamento |
-| `outbox_eventos`          | Efeito por evento/versão/tipo, produzido na transação do comando                         |
-| `notificacoes`            | Destinatário Auth e link ao evento; sem cópia de relato ou título sensível               |
+## Uso diário
 
-O responsável é sempre incluído entre os participantes. Observador não ocupa recurso exclusivo.
-Somente reunião pode ser explicitamente informativa, sem reserva de recursos. Não existe exceção
-que permita sobreposição operacional exclusiva silenciosa.
+1. Em Pessoas e Competências, cadastre a pessoa operacional. Ela pode existir
+   sem login. Organize equipes com vigência e confira qualificações conforme
+   a política cadastrada. Cadastro de pessoa e treinamento não concedem papel.
+2. Na ficha da pessoa, registre indisponibilidades com período e motivo
+   operacional. Se já houver visita confirmada, reprograme-a antes do bloqueio.
+   Cancelar o bloqueio exige motivo e preserva o registro original.
+3. Na Agenda, escolha Minha agenda ou Equipe e o período. Semana é a vista
+   de planejamento desktop; celular usa leitura cronológica. Mês e lista
+   compartilham os mesmos filtros e dados paginados.
+4. Novo evento cria rascunho com título, período, fuso, responsável e pessoas.
+   Equipe expande membros com vigência, sem duplicar pessoas. Observador não
+   bloqueia a jornada. Contexto, requisitos e ferramentas são progressivos.
+5. Nova ação aceita prazo sem horário. Agendar registro existente reutiliza a
+   ação ou levantamento; Abrir origem leva ao registro autorizado.
+6. Publicar valida pessoas, qualificação durante a janela, indisponibilidade e
+   reservas. Iniciar revalida os requisitos atuais. Presença não conclui a tarefa.
+7. Concluir evento não muda diretamente o estado da ação ou levantamento.
+   A ação usa o comando canônico de execução, evidência e verificação.
 
-## Comandos
+## Estados e responsabilidade
 
-- `salvar_evento_agenda(org,chave,dados,id?,expected_version?)`: representação completa do
-  planejamento, incluindo `participantes`; cria rascunho ou edita rascunho/publicado. Editar
-  publicado revalida e troca as reservas atomicamente. As confirmações do novo planejamento
-  começam pendentes, enquanto as linhas anteriores permanecem históricas.
-- `transicionar_evento_agenda(org,chave,id,expected_version,estado,motivo?)`:
-  rascunho → publicado → em andamento → concluído; rascunho/publicado podem ser cancelados com motivo.
-- `confirmar_participacao_agenda(org,chave,participante_id,expected_version,confirmacao)`:
-  confirma/recusa a própria participação vigente; não muda o estado do evento ou da ação.
-- `registrar_indisponibilidade(org,chave,pessoa,inicio,fim,motivo_operacional)`: registra um
-  impedimento por pessoa. Uma indisponibilidade posterior ao planejamento impede iniciar;
-  não apaga reservas nem cancela compromissos automaticamente.
-- `listar_eventos_agenda(org,inicio,fim,pagina,tamanho,minha)`: período máximo de 93 dias,
-  página de 1–100 registros, contagem e itens com a mesma autorização.
+Evento: rascunho → publicado → em andamento → concluído. Cancelamento exige
+motivo e libera reservas futuras. Uma ferramenta retirada exige devolução
+física no almoxarifado; o calendário não simula esse retorno.
 
-Os campos de `dados` são `titulo`, `descricao`, `tipo`, `inicio`, `fim`, `timezone`,
-`responsavel_id`, `local`, `participantes` (`pessoa_id`,`funcao`), `competencias` (IDs),
-`bloqueia_recursos`, `acao_id` e `origem_ocorrencia`. Eventos de dia inteiro usam
-`dia_inteiro=true`, `data_inicio` e `data_fim` exclusiva. Instantes de evento com horário exigem
-offset explícito. A origem não pode ser trocada depois da criação.
+Responsável, participante e observador são distintos. A confirmação de presença
+é registrada por pessoa e não representa execução. Trocar participante futuro
+encerra o vínculo anterior, preservando revisões e confirmações históricas.
 
-Uma ação permite várias visitas com chaves de ocorrência distintas. A chave
-organização+ação+ocorrência impede repetir a mesma visita. Concluir uma visita nunca conclui a ação:
-execução, evidência e verificação continuam nos comandos canônicos de ações.
+Cada edição usa `expected_version`. Um conflito mantém o preenchimento e exige
+comparação com a versão atual. A mesma chave com outro payload é rejeitada.
+Falha de rede não confirma salvamento; tentar novamente reutiliza a intenção.
+As consultas e arquivos revalidam a autorização atual da organização e origem.
 
-## Concorrência, qualificação e privacidade
+## Tempo, recorrência e reservas
 
-Publicação, reagendamento e início adquirem locks por organização+pessoa em ordem estável.
-A consulta de sobreposição e a reserva ocorrem na mesma transação, com intervalos `[início,fim)`.
-Um evento pode terminar às 11h e outro começar às 11h. A reserva rejeitada reverte estado, versão,
-participantes, outbox e recursos, preservando o planejamento anterior.
+Datas civis e instantes são distintos. Eventos de dia inteiro usam início e fim
+civis com fim exclusivo. O formulário resolve horários locais no PostgreSQL
+usando IANA; não usa o fuso do computador como autoridade. Uma edição somente
+de texto preserva o instante original, inclusive em dobra de horário de verão.
 
-Competências são verificadas para o período completo na publicação e novamente ao iniciar.
-Qualificação revogada, vencida antes do serviço ou pessoa inativa bloqueiam a etapa pertinente.
-Sem requisito configurado não há declaração de aptidão ou conformidade legal universal.
+Recorrência diária, semanal ou mensal tem intervalo e término por data ou
+quantidade. A expansão tem horizonte limitado. Mensal no dia31 pula meses sem
+esse dia; não vira dia28. Horário inexistente gera pendência/exceção observável;
+hora ambígua segue a política posterior explicitada no formulário.
 
-Coordenação/engenharia administram pelo mesmo mapa de capacidades da fundação. Campo lê somente
-eventos atribuídos. Uma ação de origem inacessível também oculta seu evento e notificações.
-Revogar papel ou membership remove acesso atual; os recibos idempotentes não são cache público.
-Trocar participantes futuros preserva o histórico e não concede ao substituído acesso ao novo plano.
+Somente esta ocorrência preserva exceção. Esta e futuras ou toda a série futura
+criam nova versão e preservam realizadas, passadas e exceções. Reprocessamento
+é idempotente. O backend recupera pendências e ocorrências atrasadas sem depender
+de uma aba aberta. A materialização não representa um plano legal de manutenção.
 
-## Notificações e scheduler
+Reservas usam intervalos semiabertos `[início,fim)`. Publicação concorrente usa
+locks no banco para pessoas e ferramentas. A disponibilidade de ferramenta vem
+da custódia canônica, com calibração/condição aplicáveis. Não há saldo paralelo
+na Agenda, reserva de veículo fictício ou cálculo automático de rota.
 
-`processar_notificacoes_agenda(limite)` é service-only, processa efeitos internos com row locks,
-deduplicação por destinatário/evento/versão/tipo, tentativas e backoff. Não faz chamada a provedor
-externo. Como seleção e efeito são PostgreSQL na mesma transação, não mantém lease externo.
-Adicionar envio externo exige outbox/lease e confirmação próprios, sem presumir entrega única.
+Compatibilidade de custódia: a migração projeta somente reservas antigas cuja
+janela, fuso e pessoa já correspondem exatamente ao evento, sem alterar o fato
+físico. Custódias externas parciais ou retiradas impedem alteração/cancelamento
+até conferência no almoxarifado. Omitir ferramentas em request legado preserva
+as já vinculadas; lista vazia explícita é uma intenção diferente. Uma reserva
+externa só pode ser adotada quando comprovadamente compatível; não há alargamento
+automático do período nem devolução presumida.
 
-`0018_scheduler.sql` prepara o job privado `nexus-agenda-notificacoes` a cada minuto quando
-`pg_cron` está disponível. A ativação falha se já existir job divergente ou se a extensão disponível
-não puder ser habilitada. Em PostgreSQL sem a extensão, registra `indisponivel` e não cria cron fictício.
-`job_execucoes` contém somente metadados mínimos e não é consultável por usuários autenticados.
-`consultar_jobs_operacionais(org)` oferece capacidade/última execução e contagens da própria organização.
+## Notificações, operação e diagnóstico
 
-O teste local prova worker manual, autorização e deduplicação. Ele não prova disparo automático:
-a instalação conectada foi verificada separadamente, com `pg_cron` 1.6.4 e disparo real às 09:05:00 UTC
-em 22/10/2026, sucesso com fila vazia (zero processados/falhas). Isso não prova entrega a uma pessoa
-real. Lembretes temporais, recorrência e regras de notificação corporativa
-ainda precisam da etapa integrada; o job atual processa atribuições e mudanças já persistidas.
+Notificações internas têm persistência, deduplicação e leitura por destinatário,
+sempre cruzada com o acesso atual ao evento/origem. Os payloads da fila guardam
+identificadores e versão, sem títulos privados desnecessários. Preferências
+individuais definem antecedência e atraso; não mudam política corporativa.
 
-## Evidências locais
+A configuração e o histórico de jobs mostram capacidade real, última execução,
+estado e falhas para coordenação autorizada. Reprocessar uma falha não cria um
+segundo compromisso ou notificação. E-mail, WhatsApp e push não são marcados
+entregues sem provedor real. A execução é backend, pelo scheduler existente.
 
-`tests/db/agenda-foundation.sql` cobre 38 cenários, incluindo data de dia inteiro em mudança de
-horário de verão, vencimento/revogação de competência, cancelamento e separação ação/evento.
-`tests/db/agenda-concurrency.mjs` usa sessões PostgreSQL reais para publicação exclusiva,
-reagendamento concorrente e dez retries da mesma publicação. Não usa mocks de reserva.
-Os mesmos runners executam instalação limpa e upgrade com ledger, isolamento entre tenants e
-revogação de acesso. A evidência é PostgreSQL isolado; não equivale a homologação do menu ou produção.
+Em erro recuperável, tente novamente e mantenha o preenchimento. Em conflito de
+recurso, escolha outra pessoa, ferramenta ou janela; em qualificação pendente,
+abra Pessoas e Competências e resolva a conferência. Em acesso revogado, o
+detalhe, editor e cache privado são removidos. Não contorne a permissão por URL.
+
+## Evidência e limites
+
+Os testes de SQL, concorrência e calendário usam PostgreSQL descartável. O
+laboratório de UI usa componentes e rotas reais com transporte sintético. Os
+DTOs são confrontados com respostas SQL e schemas de fronteira. Cada relatório
+identifica seu método; captura visual não prova persistência ou RLS.
+
+O usuário autorizou validação local, sem fixtures no banco operacional. A
+aplicação de migração e leitura de metadados conectados são registradas em
+migracoes.md; não equivalem a E2E Auth/Storage HTTP conectado, hardware físico,
+leitor de tela ou desempenho de campo. Resultados finais ficam em validacao.md.

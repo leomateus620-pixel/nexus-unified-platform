@@ -1,5 +1,32 @@
 # Operação do checkpoint
 
+## Entrega focada em Agenda e Equipe
+
+Esta atualização substitui as pendências históricas de interface da Agenda e
+de jobs descritas abaixo. Use `agenda-equipe.md` para planejamento, séries,
+presença, ações, arquivos e recuperação. Pessoas e Competências reúne pessoa
+sem login, equipes com vigência, qualificações/conferência independente e
+indisponibilidades. Treinamento não concede papel de sistema.
+
+Antes de publicar, confira responsável, participantes, período, origem,
+requisitos e ferramentas. Publicação reserva recursos; início revalida as
+condições atuais. Reagende visitas antes de criar bloqueio conflitante de pessoa.
+Devolva ferramenta retirada no almoxarifado: concluir evento não devolve
+fisicamente um patrimônio. Finalizar calendário não aprova a ação/levantamento.
+
+Para série, escolha alcance da alteração e forneça motivo; realizadas e exceções
+ficam preservadas. Pendência de materialização informa causa e reprocessamento.
+Na seção de jobs, coordenação confere capacidade, última execução, fila e falhas.
+Lembretes internos rodam no backend, com deduplicação; canais externos não estão
+configurados. Não há timer de navegador como scheduler.
+
+Execução/OS, Inspeções, Documentação, Segurança e Projetos de Engenharia ainda incompletos ficam fora da navegação
+e do acesso ordinário direto. Recursos existentes são preservados. O novo editor
+geométrico/OCR/IA de Projetos de Engenharia continua adiado; seu acervo já
+implementado permanece preservado no código. Ações continuam disponíveis na Agenda. O usuário autorizou validação local sem
+fixtures operacionais. Migrações, tipos gerados, checks e limites atuais estão
+em `migracoes.md` e `validacao.md`; não usar notas antigas como estado final.
+
 Este guia cobre as jornadas disponíveis nesta branch e os limites verificados em 22/10/2026. Não representa homologação integral da plataforma. Migrações, ambientes e comandos executados são registrados em `migracoes.md` e `validacao.md`; escopo pendente permanece em `escopo.md` e `progresso.md`.
 
 ## Configuração inicial

@@ -1,0 +1,70 @@
+{
+  "metodo": "Integração de DTO PostgreSQL descartável → validação Zod; fixtures isoladas em transação revertida. Não comprova Auth/Storage HTTP conectado.",
+  "resultado": true,
+  "checks": [
+    {
+      "nome": "configuracao",
+      "ok": true
+    },
+    {
+      "nome": "lista",
+      "ok": true
+    },
+    {
+      "nome": "detalhe",
+      "ok": true
+    },
+    {
+      "nome": "acao",
+      "ok": true
+    },
+    {
+      "nome": "pendentes",
+      "ok": true
+    },
+    {
+      "nome": "notificacoes",
+      "ok": true
+    },
+    {
+      "nome": "opcoes",
+      "ok": true
+    },
+    {
+      "nome": "historico_revisoes",
+      "ok": true
+    },
+    {
+      "nome": "historico_comentarios",
+      "ok": true
+    },
+    {
+      "nome": "recibo-0",
+      "ok": true
+    },
+    {
+      "nome": "recibo-1",
+      "ok": true
+    },
+    {
+      "nome": "recibo-2",
+      "ok": true
+    },
+    {
+      "nome": "recibo-3",
+      "ok": true
+    },
+    {
+      "nome": "recibo-4",
+      "ok": true
+    },
+    {
+      "nome": "recibo-5",
+      "ok": true
+    },
+    {
+      "nome": "recibo-6",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,719 @@
+PASS: checkpoint45 → 46 preserves published agenda, participants, reservations, immutable revisions and old request keys without inferring new origins
+PASS: checkpoint46 → 47 preserves confirmed legacy attachment, Storage metadata and exact request hash without rewriting its parent
+PASS: checkpoint44 → 45 preserves known identity from private receipts without rebinding the operational person
+PASS: checkpoint43 → 44 hardens current authorization without changing existing records or RPC signatures
+PASS: six direct cross-tenant supply writes remain rejected by real composite FKs after removing redundant relationships
+PASS: checkpoint42 → 43 reproduces duplicate relationships before correction and retains one composite relationship afterwards
+PASS: checkpoint41 receipt and accumulator preserved on upgrade; no stock balance or conference inferred
+PASS: operational checkpoint 40 → 48; canonical person and audit retained
+PASS: pre-0022 frozen PE snapshot/hash preserved; legacy source rejected by selector and command; reviewed new version freezes canonical IDs and links correctly
+PASS: historical baseline (30) → upgrade (18); existing client preserved; retry executes no migration SQL
+PASS: failed DDL rolls back objects and ledger; altered historical checksum blocks execution
+PASS: clean installation (48) and private ledger; preexisting schema without reconciliation rejected
+PASS: connector single-DO envelopes validate native ledgers/schema, register provenance, apply once and roll back failed DDL with ledger
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordens_compra → proposta_revisoes: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordens_compra → fornecedores: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordens_compra → projetos: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordens_producao → proposta_revisoes: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordens_producao → projetos: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordem_compra_itens → ordens_compra: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK ordem_producao_itens → ordens_producao: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK recebimentos → ordem_compra_itens: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  FK apontamentos → ordem_producao_itens: única, tenant/revisão preservados, ação histórica e nome compatíveis | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/suprimentos-relacoes.sql:31: NOTICE:  Trigger interno operacao_guard_anexo sem EXECUTE público; invoker preservado | PASSOU
+ S02 campo cria cliente                | negado:                     | PASSOU | negado: Razão social deve ter de 2 a 200 caracteres.
+ S04 campo lê custos (linhas)          | 0                           | PASSOU | 0
+ S04 campo lê revisões/totais (linhas) | 0                           | PASSOU | 0
+ S04 campo lê OC com preço (linhas)    | 0                           | PASSOU | 0
+ S02 campo registra recebimento        | negado:Acesso negado        | PASSOU | negado: Acesso negado
+ S03 admin B lê clientes de A          | 0                           | PASSOU | 0
+ S03 admin B cria proposta em A        | negado:                     | PASSOU | negado: new row violates row-level security policy for table "propostas"
+ S03 proposta A com cliente de B       | negado:                     | PASSOU | negado: Cliente arquivado ou indisponível para nova proposta.
+ S05 enviada→rascunho                  | negado:Transição            | PASSOU | negado: Transição de enviada para rascunho não permitida
+ S05 alterar totais da enviada         | negado:                     | PASSOU | negado: Revisão emitida é imutável. Crie nova revisão.
+ S05 excluir sistema da enviada        | negado:                     | PASSOU | negado: Revisão emitida é imutável. Crie nova revisão.
+ S05 alterar preço de OC emitida       | negado:                     | PASSOU | negado: Item de ordem emitida/liberada é imutável
+ S05 alterar saldo recebido direto     | negado:movimento registrado | PASSOU | negado: Saldos só mudam por movimento registrado
+ S05 incluir item em OC emitida        | negado:                     | PASSOU | negado: Itens de ordem emitida/liberada não podem ser incluídos ou excluídos
+ C06 receber 1,5 peça                  | negado:fração               | PASSOU | negado: Peça indivisível não aceita fração
+ T08 receber 4                         | ok                          | PASSOU | ok
+ T08 repetir chave k-1                 | ok                          | PASSOU | ok
+ T05 chave k-1 com dados diferentes    | negado:dados diferentes     | PASSOU | negado: Chave já usada com dados diferentes
+ T08 receber 6                         | ok                          | PASSOU | ok
+ T08 excesso após saldo zero           | negado:saldo                | PASSOU | negado: Quantidade acima do saldo (0.000000)
+ T08 total recebido                    | 10                          | PASSOU | 10
+ T08 estornar 2                        | ok                          | PASSOU | ok
+ T08 saldo após estorno                | 2                           | PASSOU | 2
+ T08 movimentos preservados            | 3                           | PASSOU | 3
+ T06 números distintos                 | OC-…-001,002                | PASSOU | OC-2026-001,OC-2026-002
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/clientes-operacionais.sql:125: NOTICE:  Clientes operacionais C01-C28 | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:29: NOTICE:  PE PASSOU: PE01 primeira versão sem proposta/obra
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:30: NOTICE:  PE PASSOU: PE03 retry retorna a mesma operação
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:31: NOTICE:  PE PASSOU: mesma chave com outro conteúdo gera conflito
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:32: NOTICE:  PE PASSOU: PE29 unidade cruzada rejeitada
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:33: NOTICE:  PE PASSOU: expected_version rejeita sobrescrita
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:36: NOTICE:  PE PASSOU: devolução preserva versão e retorna rascunho
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:39: NOTICE:  PE PASSOU: snapshot congelado com SHA256
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:40: NOTICE:  PE PASSOU: PE23 versão congelada não editável
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:42: NOTICE:  PE PASSOU: PE02 V2 com lineage de V1
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:45: NOTICE:  PE PASSOU: PE24 promoção produz nova versão e vincula cenário
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:46: NOTICE:  PE PASSOU: PE27 V1 e hash preservados após V2 e cenário
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:49: NOTICE:  PE PASSOU: PE23 descarte persiste sem promover ou apagar baseline
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:50: NOTICE:  PE PASSOU: cenário descartado preserva história e não aceita escrita
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:55: NOTICE:  PE PASSOU: snapshot preserva identificação histórica após alteração de cadastro
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:56: NOTICE:  PE PASSOU: unidade arquivada não entra em novo projeto
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:58: NOTICE:  PE PASSOU: PE29 campo não recebe dados técnicos privados
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:59: NOTICE:  PE PASSOU: PE29 campo não escreve por RPC
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:61: NOTICE:  PE PASSOU: PE29 admin de outro tenant não vê projeto/histórico
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/projetos-engenharia.sql:62: NOTICE:  PE PASSOU: PE29 admin externo não comanda tenant A
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:25: NOTICE:  PE FILES PASSOU: staging autorizado mantém estado pendente
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:26: NOTICE:  PE FILES PASSOU: retry de staging preserva mesma identidade
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:27: NOTICE:  PE FILES PASSOU: mesma chave com outro payload conflita
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:28: NOTICE:  PE FILES PASSOU: usuário não pode forjar confirmação do serviço
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:29: NOTICE:  PE FILES PASSOU: envio pendente bloqueia revisão e falso fechamento
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:31: NOTICE:  PE FILES PASSOU: arquivo ausente não é confirmado por metadado de aplicação
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:38: NOTICE:  PE FILES PASSOU: confirmação repetida não duplica efeito oficial
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:39: NOTICE:  PE FILES PASSOU: download por policy disponível somente após confirmação
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:41: NOTICE:  PE FILES PASSOU: objeto confirmado não permite overwrite por usuário
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:42: NOTICE:  PE FILES PASSOU: mesmo original na mesma versão reutiliza identidade
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:45: NOTICE:  PE FILES PASSOU: congelamento fixa manifesto e hash do original confirmado
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:46: NOTICE:  PE FILES PASSOU: hash do snapshot inclui manifesto de arquivos
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:47: NOTICE:  PE FILES PASSOU: versão congelada não recebe novos originais
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:49: NOTICE:  PE FILES PASSOU: metadados do original confirmado são imutáveis no banco
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:52: NOTICE:  PE FILES PASSOU: campo não acessa metadados ou arquivo privado PE
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:59: NOTICE:  PE FILES PASSOU: engenharia do mesmo tenant não herda projeto restrito de outra pessoa
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:60: NOTICE:  PE FILES PASSOU: mesmo tenant sem escopo não conhece estado da revisão privada
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:62: NOTICE:  PE FILES PASSOU: admin externo não acessa original de outro tenant
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/pe-arquivos.sql:66: NOTICE:  PE FILES PASSOU: serviço revalida papel revogado até em confirmação repetida
+G01 gera OC e OP do saldo (múltiplo 5) | PASSOU
+G02 mesma chave não duplica | PASSOU
+G03 chave nova sem saldo não cria nada | PASSOU
+G04 aumento complementa rascunho | PASSOU
+G05 OC emitida intacta; saldo vai a OC complementar | PASSOU
+G06 redução abaixo do comprometido: sem cancelamento | PASSOU
+A01 mudança comercial preserva fingerprint | PASSOU
+A02 avulso altera fingerprint | PASSOU
+G07 demanda desatualizada recusa geração | PASSOU
+A03 OP antiga não libera após mudança técnica | PASSOU
+A04 OP libera com aprovação do conteúdo de origem | PASSOU
+I01 mesma chave em outra revisão não reaproveita resposta | PASSOU
+I02 retry legítimo devolve a resposta registrada | PASSOU
+I03 mesma chave com escopo diferente é recusada | PASSOU
+I04 outra organização não lê resposta alheia | PASSOU
+I05 mesma chave na organização B é operação nova | PASSOU
+E01 prévia = execução | PASSOU
+E02 prévia antiga é recusada | PASSOU
+R00 prévia sinaliza rascunho antigo e geração recusa | PASSOU
+R01 revisar rascunho ajusta ao saldo e grava fingerprint | PASSOU
+R02 OP liberada intacta, sem compromisso duplicado | PASSOU
+R03 rascunho revisado só libera com aprovação nova | PASSOU
+G08 duas sessões, chaves diferentes | PASSOU
+C01 edição técnica durante geração | PASSOU
+C02 atualização de demanda durante geração | PASSOU
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:22: NOTICE:  PASS: derived composition removal does not inflate manual differences
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:25: NOTICE:  PASS: manual override remains a commercial difference
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:32: NOTICE:  PASS: no changes: no event
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:34: NOTICE:  PASS: input changes mark the previous calculation stale
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:37: NOTICE:  PASS: autosaves do not create commercial events
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:39: NOTICE:  PASS: five fields in three objects = one save
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:40: NOTICE:  PASS: repeated field becomes initial/final diff
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:41: NOTICE:  PASS: lost response/retry returns identical operation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:42: NOTICE:  PASS: retry does not duplicate
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:43: NOTICE:  PASS: repeated save with no changes stays empty
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:46: NOTICE:  PASS: reverting exactly to initial makes no event
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:49: NOTICE:  PASS: recalculation is technical, not commercial
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:54: NOTICE:  PASS: conflict does not increment history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:58: NOTICE:  PASS: impact compares confirmed checkpoint, not intervening calculation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:59: NOTICE:  PASS: actual author B preserved when A consolidates
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:62: NOTICE:  PASS: calculation failure has no event
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:67: NOTICE:  PASS: audit failure rolls back calculation atomically
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:68: NOTICE:  PASS: failed consolidation preserves synchronized draft
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:69: NOTICE:  PASS: audit failure does not increment history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:72: NOTICE:  PASS: restricted user cannot see diffs OR counts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:75: NOTICE:  PASS: other organization cannot see history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:77: NOTICE:  PASS: second authorized user sees same persistent history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:79: NOTICE:  PASS: save does not issue or create a formal revision
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/save-checkpoints.sql:82: NOTICE:  PASS: issued revision remains unchanged
+PASS: ten PostgreSQL sessions, one operation/event/calculation, identical persistent response
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:45: NOTICE:  PASS: author comes from authenticated server context
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:46: NOTICE:  PASS: retry returns identical result independent of JSON key order
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:47: NOTICE:  PASS: same idempotency key with different payload conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:49: NOTICE:  PASS: operational person exists before login
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:51: NOTICE:  PASS: cross-tenant membership rejected by composite FK
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:53: NOTICE:  PASS: person edit increments version
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:54: NOTICE:  PASS: stale expected_version rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:55: NOTICE:  PASS: direct writes cannot bypass command audit
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:56: NOTICE:  PASS: sensitive idempotency receipts are private
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:57: NOTICE:  PASS: unknown capability is denied
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:62: NOTICE:  PASS: overlapping team memberships rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:65: NOTICE:  PASS: replacement preserves past team membership
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:66: NOTICE:  PASS: closed team membership cannot be rewritten
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:70: NOTICE:  PASS: field reads only own person
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:71: NOTICE:  PASS: field cannot administer people
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:73: NOTICE:  PASS: member with no role reads no operational people
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:75: NOTICE:  PASS: tenant B reads no tenant A people
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:76: NOTICE:  PASS: tenant B cannot command tenant A
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:78: NOTICE:  PASS: coordination capability does not grant technical review or admin
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:85: NOTICE:  PASS: field cannot validate qualification
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:88: NOTICE:  PASS: configured validity required for qualification approval
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:94: NOTICE:  PASS: qualification evidence required before approval
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:99: NOTICE:  PASS: browser cannot forge upload confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:101: NOTICE:  PASS: unconfirmed file cannot be downloaded
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:106: NOTICE:  PASS: confirmed own file can be read
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:110: NOTICE:  PASS: cross-tenant attachment metadata hidden
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:111: NOTICE:  PASS: cross-tenant object hidden by parent authorization
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:114: NOTICE:  PASS: approved qualification cannot receive a new evidence upload
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:116: NOTICE:  PASS: qualification approval blocks late upload confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:119: NOTICE:  PASS: approved qualification cannot silently renew
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:120: NOTICE:  PASS: used qualification policy cannot change historical criteria
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:125: NOTICE:  PASS: action cannot skip execution and review
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:128: NOTICE:  PASS: action requires linked evidence for review
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:135: NOTICE:  PASS: field cannot approve own action
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:142: NOTICE:  PASS: closed action cannot receive a new evidence upload
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:144: NOTICE:  PASS: action closure blocks late upload confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:146: NOTICE:  PASS: action completion records independent reviewer
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:147: NOTICE:  PASS: action timeline preserves submission, return, resubmission and review
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:148: NOTICE:  PASS: closed action is immutable
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:155: NOTICE:  PASS: orphan role cannot retain historical permissions after membership removal
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:160: NOTICE:  PASS: role revocation removes own person detail
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:161: NOTICE:  PASS: role revocation removes attachment parent access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:162: NOTICE:  PASS: role revocation removes private object access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:163: NOTICE:  PASS: revoked permission checked before idempotent replay
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/operacional.sql:165: NOTICE:  PASS: logout context reads no operational people
+ {"id": "d3e11702-dc25-4735-9ef9-de067bf2b100", "prazo": null, "estado": "concluida", "motivo": "Resultado verificado pela engenharia", "titulo": "Corrigir condição registrada", "version": 6, "conclusao": "Complemento conferido na origem", "descricao": "", "created_at": "2026-10-22T15:44:17.410049-03:00", "created_by": "50000000-0000-0000-0000-000000000002", "prioridade": "alta", "updated_at": "2026-10-22T15:44:17.490912-03:00", "responsavel_id": "c7e0143a-fa00-498a-85f7-a9141763a607", "verificado_por": "50000000-0000-0000-0000-000000000002", "organization_id": "51000000-0000-0000-0000-000000000001", "exige_verificacao": true}
+Operational SQL: all assertions passed (isolated PostgreSQL; Storage metadata only).
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:31: NOTICE:  PASS: explicit-author reader is not an authenticated RPC
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:36: NOTICE:  PASS: membership without current role cannot confirm staged file
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:37: NOTICE:  PASS: explicit-author permission helper is private even to service role
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:39: NOTICE:  PASS: denied confirmation leaves pending state unchanged
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:45: NOTICE:  PASS: authorized service confirmation and retry still work
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:48: NOTICE:  PASS: already-linked retry also revalidates revoked author role
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:58: NOTICE:  PASS: reassigning action revokes former responsible upload confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:63: NOTICE:  PASS: current collaborator retains canonical attachment read scope
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:67: NOTICE:  PASS: removing collaborator revokes upload confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:74: NOTICE:  PASS: revoking coordination capability prevents privileged confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:80: NOTICE:  PASS: offboarding prevents privileged confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/anexos-confirmacao.sql:88: NOTICE:  PASS: inactive person loses self attachment confirmation scope
+Attachment confirmation authorization: all assertions passed (isolated metadata SQL).
+PASS: role revoked while service confirmation is in flight; concurrent confirmation waits, rechecks and preserves state
+PASS: action reassigned while service confirmation is in flight; concurrent confirmation waits, rechecks and preserves state
+PASS: coordination capability revoked while service confirmation is in flight; concurrent confirmation waits, rechecks and preserves state
+PASS: restricted PE reassignment during pending confirmation; concurrent confirmation waits, rechecks and preserves state
+PASS: restricted PE reassignment during already-linked retry; concurrent confirmation waits, rechecks and preserves state
+PASS: ten PostgreSQL sessions create one person, one receipt and one audit event
+PASS: concurrent expected_version edits preserve one winner and reject the stale writer
+PASS: simultaneous overlapping team memberships confirm a single temporal link
+PASS: simultaneous same-key requests with different payloads conflict without returning another result
+PASS: salvar_pessoa rejects revoked permission after a concurrent wait, without persisted effect
+PASS: salvar_equipe rejects revoked permission after a concurrent wait, without persisted effect
+PASS: vincular_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect
+PASS: encerrar_membro_equipe rejects revoked permission after a concurrent wait, without persisted effect
+PASS: salvar_competencia rejects revoked permission after a concurrent wait, without persisted effect
+PASS: salvar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect
+PASS: transicionar_qualificacao rejects revoked permission after a concurrent wait, without persisted effect
+PASS: archiving a person never removes the independent-review requirement
+PASS known association is preserved without a current link
+PASS permission projection retains independent review after unlink
+PASS former association cannot approve its own qualification
+PASS another authorized reviewer remains available
+PASS independent reviewer approves a record registered by another administrator
+PASS association history is not directly readable to application roles
+PASS internal identity helper has no public execution privilege
+PASS recorded associations remain immutable
+PASS later association and removal preserve the same operational person
+PASS historical association does not prevent authorized offboarding
+PASS history does not grant review access after offboarding
+{"results":[{"name":"known association is preserved without a current link","pass":true},{"name":"permission projection retains independent review after unlink","pass":true},{"name":"former association cannot approve its own qualification","pass":true},{"name":"another authorized reviewer remains available","pass":true},{"name":"independent reviewer approves a record registered by another administrator","pass":true},{"name":"association history is not directly readable to application roles","pass":true},{"name":"internal identity helper has no public execution privilege","pass":true},{"name":"recorded associations remain immutable","pass":true},{"name":"later association and removal preserve the same operational person","pass":true},{"name":"historical association does not prevent authorized offboarding","pass":true},{"name":"history does not grant review access after offboarding","pass":true}],"success":true}
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:36: NOTICE:  AGENDA PASS: create retry returns same event
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:37: NOTICE:  AGENDA PASS: same key with different event payload conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:38: NOTICE:  AGENDA PASS: principal plus two participants share canonical people
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:39: NOTICE:  AGENDA PASS: draft has no confirmed resource reservation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:41: NOTICE:  AGENDA PASS: publication reserves principal and participant, observer does not block
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:42: NOTICE:  AGENDA PASS: direct calendar writes cannot bypass command
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:45: NOTICE:  AGENDA PASS: semi-open intervals permit adjacent visits
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:47: NOTICE:  AGENDA PASS: exclusive overlapping person reservation rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:48: NOTICE:  AGENDA PASS: failed publication rolls back status and version
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:50: NOTICE:  AGENDA PASS: cancellation releases current resources
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:51: NOTICE:  AGENDA PASS: cancellation retains resource history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:55: NOTICE:  AGENDA PASS: participation confirmation does not complete activity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:56: NOTICE:  AGENDA PASS: field participant cannot change planning state
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:59: NOTICE:  AGENDA PASS: replanning preserves previous participant rows
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:60: NOTICE:  AGENDA PASS: replanning preserves historical period snapshot
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:61: NOTICE:  AGENDA PASS: replacement releases removed people without deleting past participation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:62: NOTICE:  AGENDA PASS: stale calendar edit rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:64: NOTICE:  AGENDA PASS: removed future participant loses event detail
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:65: NOTICE:  AGENDA PASS: old participation cannot confirm a new plan
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:67: NOTICE:  AGENDA PASS: other tenant cannot read events
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:68: NOTICE:  AGENDA PASS: other tenant cannot invoke period query
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:73: NOTICE:  AGENDA PASS: whole-day date survives timezone conversion and DST
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:74: NOTICE:  AGENDA PASS: ambiguous instant without offset rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:75: NOTICE:  AGENDA PASS: period query bounded to visible horizon
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:76: NOTICE:  AGENDA PASS: period list paginates before returning records
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:84: NOTICE:  AGENDA PASS: calendar completion never updates action execution state
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:85: NOTICE:  AGENDA PASS: stable visit key cannot duplicate action occurrence
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:87: NOTICE:  AGENDA PASS: multiple distinct visits reuse same action identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:95: NOTICE:  AGENDA PASS: qualification expiring before service blocks publication
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:99: NOTICE:  AGENDA PASS: qualification is revalidated when activity starts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:102: NOTICE:  AGENDA PASS: availability change cannot silently invalidate a confirmed reservation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:106: NOTICE:  AGENDA PASS: registered unavailability prevents a new publication
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:109: NOTICE:  AGENDA PASS: notification worker restricted to service role
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:112: NOTICE:  AGENDA PASS: repeating worker creates no duplicate effect
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:115: NOTICE:  AGENDA PASS: assigned person receives persisted notifications
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:116: NOTICE:  AGENDA PASS: notification key deduplicates each version and effect
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:119: NOTICE:  AGENDA PASS: notification read acknowledgement persists
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:123: NOTICE:  AGENDA PASS: role revocation removes calendar detail
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/agenda-foundation.sql:124: NOTICE:  AGENDA PASS: role revocation removes notification context
+Agenda foundation SQL passed; recurrence, final UI and automatic scheduler remain separate.
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:36: NOTICE:  ADMIN PASS: engineering cannot administer membership
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:38: NOTICE:  ADMIN PASS: other tenant admin cannot administer membership
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:41: NOTICE:  ADMIN PASS: administrative link retry is idempotent
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:42: NOTICE:  ADMIN PASS: existing Auth account linked once
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:43: NOTICE:  ADMIN PASS: later user link preserves canonical person identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:44: NOTICE:  ADMIN PASS: same administrative key cannot switch command or payload
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:45: NOTICE:  ADMIN PASS: nonexistent Auth account does not create membership
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:48: NOTICE:  ADMIN PASS: coordination is a capability without global admin
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:51: NOTICE:  ADMIN PASS: offboarding preserves historical author and person while removing login link
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:52: NOTICE:  ADMIN PASS: offboarding does not rewrite previous audit author
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:54: NOTICE:  ADMIN PASS: offboarded admin immediately loses membership and admin permission
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:56: NOTICE:  ADMIN PASS: last admin cannot offboard self
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:57: NOTICE:  ADMIN PASS: direct last-admin role deletion blocked
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:58: NOTICE:  ADMIN PASS: direct last-admin membership deletion blocked
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:59: NOTICE:  ADMIN PASS: membership identity UPDATE cannot bypass last-admin protection
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/admin-vinculos.sql:61: NOTICE:  ADMIN PASS: last admin can still edit membership metadata
+Administrative membership SQL passed.
+PASS: concurrent exclusive publication confirms one event and one person reservation
+PASS: concurrent rescheduling rejects the conflict and retains the losing event's original reservation
+PASS: ten publication retries produce one reservation, one version effect and identical responses
+PASS: simultaneous removals preserve one active administrator
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/scheduler.sql:11: NOTICE:  SCHEDULER PASS: worker manual registra execução; pg_cron disponível=f, configuração=indisponivel (sem simular disparo automático)
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/scheduler.sql:18: NOTICE:  SCHEDULER PASS: job owner não exposto ao usuário autenticado
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/scheduler.sql:18: NOTICE:  SCHEDULER PASS: execuções globais não expõem contagens de outros tenants
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L35 NaN model range rejected by SQL
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L36 model decimal policy must remain text
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L44 model key longer than DTO contract rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L45 model range exceeding DTO precision rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L47 optional decimal policy accepts null or omission, never unparsable empty text
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L01 repeated create returns one persisted identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L02 reused key with different payload rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L03 foreign tenant unit rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L04 initial draft has server-issued code
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L05 publishing model V2 does not alter started V1
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L06 assigned field person finds own survey
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L07 field cannot create unassigned survey
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L37 SQL rejects silent precision loss beyond six decimal places
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L38 SQL rejects non-finite measurement
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L08 incomplete measurement persists as draft
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L09 failed nested measure rolls back point write
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L10 failed bulk write leaves versions/data/history unchanged
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L11 submission rejects incomplete measure
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L12 decimal measurement returns exact text
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L46 point deletion cannot remove measurements changed since the reviewed revision version
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L13 stale point edit rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L14 two completed points enter technical review
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L15 assigned field person cannot approve
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L16 return requires actionable reason
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L17 returned review retains structured findings and author
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L18 approval fixes consistent snapshot and SHA256
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L19 approved point cannot be edited
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L42 privileged cross-tenant child insert rejected by parent guard
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L20 later catalog change preserves approved snapshot
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L21 database trigger protects approved revision even from direct privileged update
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L22 adoption preview compares old/new/unit/provenance without rounding
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L39 adoption rejects a value not representable at destination precision
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L43 approved 3D estimate still cannot be adopted as a measured input
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L23 stale adoption preview rejected after target edit
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L24 adoption retry has one immutable source record
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L25 adoption changes canonical input and requires existing calculation engine
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L26 issued revision remains unchanged
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L27 adoption same key/different payload conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L28 new revision preserves source links without copying approvals/files
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L29 V1 remains recoverable after V2
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L40 historical detail uses frozen context with current revision pointers
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L30 unassigned field user cannot list survey
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L31 unassigned user direct detail denied
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L41 direct cross-tenant root/child reads are filtered by RLS
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L32 other tenant cannot fetch root or child payload
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L33 search treats percent literally
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamentos.sql:115: NOTICE:  LEV PASS: L34 browser cannot bypass command audit with direct write
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:65: NOTICE:  LEV FILES PASS: PDF reference does not satisfy mandatory point photo
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:69: NOTICE:  LEV FILES PASS: staging preserves exact parent and remains pending
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:70: NOTICE:  LEV FILES PASS: retry after response loss preserves staging identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:71: NOTICE:  LEV FILES PASS: same staging key with other payload is rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:72: NOTICE:  LEV FILES PASS: browser cannot forge service confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:73: NOTICE:  LEV FILES PASS: pending evidence blocks review submission
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:75: NOTICE:  LEV FILES PASS: missing Storage object cannot become confirmed
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:78: NOTICE:  LEV FILES PASS: pending object is not downloadable through Storage select
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:83: NOTICE:  LEV FILES PASS: repeated service confirmation records one official effect
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:84: NOTICE:  LEV FILES PASS: photo upload does not overwrite or increment point edit version
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:85: NOTICE:  LEV FILES PASS: confirmed original is authorized through its real parent
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:87: NOTICE:  LEV FILES PASS: confirmed object is not overwritten by authenticated user
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:89: NOTICE:  LEV FILES PASS: same bytes on another point retain separate explicit association
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:91: NOTICE:  LEV FILES PASS: cancel retry preserves prior result
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:93: NOTICE:  LEV FILES PASS: new intent after cancellation creates another staging identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:97: NOTICE:  LEV FILES PASS: unassigned field member cannot read metadata or original
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:98: NOTICE:  LEV FILES PASS: unassigned member cannot create evidence by direct RPC
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:100: NOTICE:  LEV FILES PASS: other tenant admin cannot read evidence by URL identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:104: NOTICE:  LEV FILES PASS: role revoked with membership retained denies linked confirmation retry
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:109: NOTICE:  LEV FILES PASS: responsibility reassigned denies linked confirmation retry
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:115: NOTICE:  LEV FILES PASS: revision in review does not accept new evidence
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:118: NOTICE:  LEV FILES PASS: approved snapshot fixes confirmed manifest and excludes cancelled attempts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:119: NOTICE:  LEV FILES PASS: approved snapshot hash includes evidence manifest
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:120: NOTICE:  LEV FILES PASS: approved original cannot be cancelled or replaced
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:122: NOTICE:  LEV FILES PASS: database preserves approved evidence metadata even through direct maintenance write
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:127: NOTICE:  LEV FILES PASS: point from prior revision cannot be attached to new revision
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:128: NOTICE:  LEV FILES PASS: new revision does not copy photos or reuse point identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/levantamento-arquivos.sql:129: NOTICE:  LEV FILES PASS: new revision preserves previous evidence snapshot exactly
+Levantamento evidence SQL passed.
+LEV CONCURRENCY PASS: ten create retries use one identity, one official number and one receipt
+LEV CONCURRENCY PASS: ten atomic point+measurement retries create one of each
+LEV CONCURRENCY PASS: competing same-point edits reject stale version without overwriting data
+LEV CONCURRENCY PASS: edits to separate points retain independent expected versions
+LEV CONCURRENCY PASS: stale point deletion preserves a measurement edited by the other session
+LEV CONCURRENCY PASS: concurrent same key with different payloads rejects the conflicting intent
+LEV CONCURRENCY PASS: role revoked during pending confirmation; real lock wait and no false confirmation
+LEV CONCURRENCY PASS: survey reassigned during pending confirmation; real lock wait and no false confirmation
+LEV CONCURRENCY PASS: professional registration revoked during approval; authorization rechecked after real lock wait
+LEV CONCURRENCY PASS: review role revoked during approval; authorization rechecked after real lock wait
+LEV CONCURRENCY PASS: coordination capability revoked during context write; authorization rechecked after real lock wait
+LEV CONCURRENCY PASS: role revoked during adoption receipt replay; authorization rechecked after real lock wait
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E01 unsafe bibliographic URL rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E02 missing URL authority rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E03 method policy must be boolean
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E04 method publication is retry safe
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E05 same key different method conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E06 one study identity on repeated create
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E07 same key different study conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E08 foreign tenant unit rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E09 incomplete draft is real and readiness is explicit
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E10 revision expected version rejects stale edit
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E11 bulk child conflict rolls back entire parent write
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E12 failed bulk leaves content, versions and history intact
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E13 parent delete cannot erase a new measure edit
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E14 submission rejects missing technical scope/reviewer
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E15 submission has immutable content and hash
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E16 submitted content cannot be edited
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E17 admin alone cannot approve technical study
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E18 return preserves original submission and professional decision
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E19 revised submission does not overwrite first one
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E20 approval is atomic, hashed and retry safe
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E21 approved revision protected by database trigger
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E22 prior submission immutable even under privileged direct write
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E23 canonical action retry reuses one identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E24 same action key with different payload conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E25 new revision keeps measure lineage, not approvals/files
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E26 V1 reader uses frozen context after root/source changes
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E27 supersession is a relation; old approved row/hash remain intact
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E28 same measure across revisions never creates second action
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E29 approved study does not claim PDF emission
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E30 field payload cannot read technical assessment
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E31 assigned field person receives only explicitly released canonical task
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E32 direct technical detail denied to field
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E33 member without role has no default access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E34 coordination capability is not technical permission
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E35 other tenant sees neither root nor children
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E36 foreign tenant direct detail denied
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E37 search wildcard is literal
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E38 selectors expose paginated canonical metadata
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E39 browser cannot forge official history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E40 unapproved survey is not a technical source
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E41 approved source has FK/hash metadata, without uncontrolled raw snapshot copy
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E42 editable PE version cannot become fixed technical source
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E55 legacy document without canonical frozen IDs is not a technical source
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E56 legacy document excluded from source selector while original remains intact
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E43 sources whitelist excludes raw private PE content and financial snapshot
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E44 same-tenant engineer can read study while all source ACLs allow
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E45 source access revocation hides study and source list through RLS
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E46 source access revocation denies direct study endpoint
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E47 deactivating private source cannot bypass historical inheritance
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E48 duplicate source is explicit conflict, not a second identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E49 cancellation preserves source history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E50 cancelled revision cannot be edited
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E51 publishing procedure V2 never reclassifies existing V1 study
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E52 published method immutable at database boundary
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E53 privileged cross-tenant child write rejected by parent guard
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudos.sql:159: NOTICE:  EST PASS: E54 privileged functions have minimum explicit grants
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:62: NOTICE:  EST FILES PASS: staging retains exact study/revision/danger identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:63: NOTICE:  EST FILES PASS: new staging increments revision once
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:64: NOTICE:  EST FILES PASS: lost staging response retries the same file identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:65: NOTICE:  EST FILES PASS: staging retry does not touch revision again
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:66: NOTICE:  EST FILES PASS: same staging key rejects different payload
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:67: NOTICE:  EST FILES PASS: browser cannot invoke privileged confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:68: NOTICE:  EST FILES PASS: unconfirmed pending original blocks submission
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:70: NOTICE:  EST FILES PASS: missing private object never becomes confirmed
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:73: NOTICE:  EST FILES PASS: pending Storage object is not downloadable
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:76: NOTICE:  EST FILES PASS: service confirmation cannot change declared hash
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:80: NOTICE:  EST FILES PASS: confirmation effect increments revision once across retries
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:81: NOTICE:  EST FILES PASS: file workflow preserves danger edit version
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:82: NOTICE:  EST FILES PASS: confirmed original uses current parent authorization
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:84: NOTICE:  EST FILES PASS: authenticated user cannot overwrite confirmed original
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:86: NOTICE:  EST FILES PASS: same bytes at another danger keep explicit association
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:90: NOTICE:  EST FILES PASS: cancellation touches revision once, preserving its retry receipt
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:92: NOTICE:  EST FILES PASS: new intention after cancellation creates another staging record
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:110: NOTICE:  EST FILES PASS: revoked historical source removes file metadata and Storage access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:112: NOTICE:  EST FILES PASS: historical source revocation rejects linked confirmation retry
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:113: NOTICE:  EST FILES PASS: historical source revocation rejects pending confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:116: NOTICE:  EST FILES PASS: another authorized source holder retains access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:121: NOTICE:  EST FILES PASS: role revoked with membership retained rejects linked retry
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:126: NOTICE:  EST FILES PASS: field role receives no technical evidence
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:128: NOTICE:  EST FILES PASS: other tenant admin cannot read file identity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:132: NOTICE:  EST FILES PASS: submission snapshot fixes only confirmed file manifest
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:133: NOTICE:  EST FILES PASS: reviewed revision rejects new files
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:137: NOTICE:  EST FILES PASS: approved snapshot hash includes original manifest
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:138: NOTICE:  EST FILES PASS: approved original cannot be cancelled
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:140: NOTICE:  EST FILES PASS: database prevents direct metadata replacement after approval
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:144: NOTICE:  EST FILES PASS: new revision references lineage without copying private originals
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:145: NOTICE:  EST FILES PASS: danger from prior revision cannot be attached to the new revision
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/estudo-arquivos.sql:146: NOTICE:  EST FILES PASS: new revision leaves original snapshot byte-for-byte unchanged
+Study evidence SQL passed.
+EST CONCURRENCY PASS: ten retries create one study, official number and receipt; initial scope persists
+EST CONCURRENCY PASS: ten bulk retries create one danger and one measure lineage
+EST CONCURRENCY PASS: competing measure edits cannot silently overwrite each other
+EST CONCURRENCY PASS: concurrent approvals create exactly one decision and one approved snapshot
+EST CONCURRENCY PASS: competing approval and return cannot produce divergent decisions
+EST CONCURRENCY PASS: ten independent action requests converge on one canonical task per measure lineage
+EST CONCURRENCY PASS: approval waits while reviewer role is revoked; real lock wait + current authorization
+EST CONCURRENCY PASS: approval waits while professional registration is revoked; real lock wait + current authorization
+EST CONCURRENCY PASS: approval receipt replay revalidates professional registration; real lock wait + current authorization
+EST CONCURRENCY PASS: file pending waits while historical PE source access is revoked; real lock wait + current authorization
+EST CONCURRENCY PASS: file linked retry waits while historical PE source access is revoked; real lock wait + current authorization
+EST CONCURRENCY PASS: file confirmation waits while restricted study reviewer assignment is replaced; real lock wait + current authorization
+EST CONCURRENCY PASS: all rejected races preserve approved snapshots and pending/linked states
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A01 location create persists and retries once
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A02 payload difference cannot reuse a key
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A03 stale location edit rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A04 receipt is not retroactively assumed to be stock
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A05 acceptance conference retries without another physical entry
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A06 accepted physical balance is derived from events
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A07 same physical event cannot be conferred twice above its quantity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A08 direct RPC rejects NaN
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A09 indivisible catalog product rejects fraction server-side
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A10 reserve eight leaves only two available
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A11 reservation above available is atomically rejected
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A12 other field worker cannot read reservation by URL/RPC
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A13 Campo direct acquisition query returns no sensitive money
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A14 Campo list contains the assigned reservation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A15 withdrawal changes custody, not consumption or physical total
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A16 approved execution consumption is represented once
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A17 leftover return restores only two and completes custody
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A18 stock movements never create another acquisition
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A19 legacy reversal cannot remove consumed source
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A20 partial legacy reversal removes corresponding physical stock atomically
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A21 quarantine/rejected never become available
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A22 quality and transfer preserve organizational physical total
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A23 failed transfer does not leave one side applied
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A24 physical count is approved as explicit traced opening/adjustment
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A25 stock changed after count rejects stale approval
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A26 exclusive serialized tool rejects overlap
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A27 own field custody records return condition
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A28 damaged tool cannot be allocated
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A29 roleless membership is denied
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A30 another organization cannot read tool
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A31 issued OC and released OP gain only exact accepted project
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A32 acceptance retries preserve one project and response
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A33 same acceptance key different reason conflicts
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A34 issued header financial content remains immutable
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A35 receipt options expose exact unconferred quantity and unit without money
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A36 accepted production uses original OP event without duplicate production/acquisition
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A37 production ID cannot impersonate a receipt origin
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A38 direct RPC rejects lost decimal precision before persistence
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A39 catalog unit cannot silently reinterpret physical history
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A41 confirmed canonical conversion stores source unit, factor and exact base quantity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A42 unrepresentable conversion cannot silently round a positive physical quantity to zero
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A43 changing catalog conversion does not rewrite earlier physical snapshot
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A44 organizational aggregate remains exact beyond one event numeric18,6 capacity
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A45 linked resource cannot contradict the canonical event timezone
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A46 calendar cannot silently move a linked active tool reservation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A47 cancelled resource preserves history and permits explicit new planning
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A48 fragmented reversal sums canonical base before division, without a ghost fractional receipt option
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:155: NOTICE:  ALM PASS: A49 original remaining quantity consumed across fragments cannot be reversed
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado.sql:157: NOTICE:  ALM PASS: A40 immutable movement cannot be rewritten even by a privileged direct update
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:42: NOTICE:  ALM FILES PASS: F01 legacy payload retry preserves old identity without new optional keys
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:43: NOTICE:  ALM FILES PASS: F02 optional null changes payload and cannot reuse legacy key
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:45: NOTICE:  ALM FILES PASS: F03 legacy request hash remains exact JSONB payload hash
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:46: NOTICE:  ALM FILES PASS: F04 direct SQL cannot link two canonical parents
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:47: NOTICE:  ALM FILES PASS: F05 composite FK prevents cross-organization attachment
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:52: NOTICE:  ALM FILES PASS: F06 manager receives explicit parent upload capability
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:53: NOTICE:  ALM FILES PASS: F07 authenticated client cannot confirm privileged storage
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:57: NOTICE:  ALM FILES PASS: F08 reserved custody permits reading without condition uploads
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:58: NOTICE:  ALM FILES PASS: F09 field cannot upload before actual withdrawal
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:62: NOTICE:  ALM FILES PASS: F10 withdrawn custody permits own condition evidence
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:64: NOTICE:  ALM FILES PASS: F11 unconfirmed object is not downloadable
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:69: NOTICE:  ALM FILES PASS: F12 confirmed own original is private and retry-safe
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:73: NOTICE:  ALM FILES PASS: F13 returned custody preserves history while revoking upload capability
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:74: NOTICE:  ALM FILES PASS: F14 current upload policy rejects object after custody ended
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:75: NOTICE:  ALM FILES PASS: F15 cancellation rechecks current write access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:77: NOTICE:  ALM FILES PASS: F16 pending confirmation refuses ended write context
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:81: NOTICE:  ALM FILES PASS: F17 unrelated field worker cannot enumerate tool files
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:82: NOTICE:  ALM FILES PASS: F18 direct metadata and object reads also enforce parent access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:84: NOTICE:  ALM FILES PASS: F19 another organization cannot read by parent ID
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:91: NOTICE:  ALM FILES PASS: F20 textual reference cannot replace confirmed private certificate
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:96: NOTICE:  ALM FILES PASS: F21 missing object never becomes a confirmed certificate
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:100: NOTICE:  ALM FILES PASS: F22 storage size mismatch prevents confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:106: NOTICE:  ALM FILES PASS: F23 calibration validates only after private certificate confirmation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:107: NOTICE:  ALM FILES PASS: F24 validated calibration exposes no upload action
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:108: NOTICE:  ALM FILES PASS: F25 validated calibration cannot receive another original
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:112: NOTICE:  ALM FILES PASS: F26 linked filename is immutable at database boundary
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:113: NOTICE:  ALM FILES PASS: F27 parent origin cannot be reassigned after staging
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:121: NOTICE:  ALM FILES PASS: F28 replay reauthorizes the actor before returning old receipt
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:123: NOTICE:  ALM FILES PASS: F29 service confirmation checks current actor role
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:126: NOTICE:  ALM FILES PASS: F30 cancellation requires an operational reason
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:127: NOTICE:  ALM FILES PASS: F31 pending upload cancellation is explicit
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:128: NOTICE:  ALM FILES PASS: F32 cancellation retry is idempotent
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:129: NOTICE:  ALM FILES PASS: F33 same cancel key cannot carry another reason
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:130: NOTICE:  ALM FILES PASS: F34 cancelled staging is omitted and cannot receive uploads
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:134: NOTICE:  ALM FILES PASS: F35 linked confirmation retry still revalidates revoked actor access
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:150: NOTICE:  ALM FILES PASS: F36 calibration expired on the declared New Zealand civil service date blocks reservation
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:151: NOTICE:  ALM FILES PASS: F37 same instants still within valid Sao Paulo civil date are reservable
+psql:C:/Users/Leonardo/Documents/Nexus-Dev/tests/db/almoxarifado-arquivos.sql:152: NOTICE:  ALM FILES PASS: F38 end exactly at next civil midnight remains valid under half-open interval
+PASS: S01 concurrent reservation of last unit: one confirmation, no negative balance
+PASS: S02 legacy receipt reversal versus reserve serializes against canonical provenance
+PASS: S03 two sessions cannot reserve one serialized tool for overlapping periods
+PASS: S04 half-open adjacent resource reservations are accepted
+PASS: S05 buyer role revoked during observed lock wait is revalidated before writing
+PASS: S06 role downgrade filters replay and direct custody SELECT to current own scope
+PASS: S07 propostas failure rolls back status, project, links, receipt and acceptance audit
+PASS: S07 ordens_compra failure rolls back status, project, links, receipt and acceptance audit
+PASS: S07 ordens_producao failure rolls back status, project, links, receipt and acceptance audit
+PASS: S08 concurrent same acceptance creates one project, decision and consistent OC/OP links
+PASS local IANA period persists exact instants
+PASS retry creates one canonical availability record
+PASS same key with changed payload is rejected
+PASS field reads only own availability without management privilege
+PASS field cannot enumerate another person's availability
+PASS cross-tenant person rejected before any write
+PASS another tenant cannot write availability
+PASS nonexistent DST clock time is rejected without a false reservation
+PASS field cannot cancel managed availability
+PASS stale cancellation preserves current record
+PASS cancellation requires an operational reason
+PASS cancel preserves original period and reason with traceable version
+PASS cancel retry does not append another adjustment
+PASS cancel retry with changed content is rejected
+PASS application cannot bypass commands with direct update
+PASS creation and cancellation are audited once each
+PASS revocation rejects replay despite a prior valid receipt
+{"method":"Disposable PostgreSQL integration with real SQL/RLS, not connected Auth/Storage HTTP","results":[{"name":"local IANA period persists exact instants","pass":true},{"name":"retry creates one canonical availability record","pass":true},{"name":"same key with changed payload is rejected","pass":true},{"name":"field reads only own availability without management privilege","pass":true},{"name":"field cannot enumerate another person's availability","pass":true},{"name":"cross-tenant person rejected before any write","pass":true},{"name":"another tenant cannot write availability","pass":true},{"name":"nonexistent DST clock time is rejected without a false reservation","pass":true},{"name":"field cannot cancel managed availability","pass":true},{"name":"stale cancellation preserves current record","pass":true},{"name":"cancellation requires an operational reason","pass":true},{"name":"cancel preserves original period and reason with traceable version","pass":true},{"name":"cancel retry does not append another adjustment","pass":true},{"name":"cancel retry with changed content is rejected","pass":true},{"name":"application cannot bypass commands with direct update","pass":true},{"name":"creation and cancellation are audited once each","pass":true},{"name":"revocation rejects replay despite a prior valid receipt","pass":true}],"success":true}
+PASS 1: draft persists with canonical people
+PASS 2: retry does not duplicate event
+PASS 3: same key different payload conflicts: 23505
+PASS 4: principal automatically participates
+PASS 5: publication reserves canonical tool
+PASS 6: publication reserves exactly two people
+PASS 7: stale version cannot overwrite plan: 40001
+PASS 8: reschedule replaces reservation atomically
+PASS 9: prior canonical custody is retained
+PASS 10: field principal receives exact commands
+PASS 11: attendance does not complete work
+PASS 12: field cannot edit plan: 42501
+PASS 13: comment persists with canonical event
+PASS 14: roleless member denied: 42501
+PASS 15: cross tenant read denied: 42501
+PASS 16: action without time has no fake event
+PASS 17: canonical action appears unscheduled
+PASS 18: calendar completion never completes action
+PASS 19: source ACL intersects invitation (other participant): 42501
+PASS 20: cancellation releases people and preserves history
+PASS 21: canceled event cannot be edited: 23514
+PASS 22: whole-day preserves 25-hour DST civil day
+PASS 23: nonexistent civil time rejected: 23514
+PASS 24: organization timezone is canonical
+PASS 25: calendar page and complete daily counts remain distinct
+PASS 26: operational DTO contains no financial fields
+PASS 27: direct event writes denied: 42501
+PASS 28: private materializer is not authenticated RPC: 42501
+{"suite":"agenda-basic","passed":28,"allPassed":true}
+PASS 1: calendar refuses unbounded civil-date query: 23514
+PASS 2: legacy save cannot silently cancel or expand an externally managed partial custody: 23514
+PASS 3: rejected planning change leaves exact original external custody intact
+PASS 4: explicit Agenda edit cannot adopt a mismatched partial period: 23514
+PASS 5: explicit warehouse release enables legacy calendar replanning
+PASS 6: explicit Agenda adopts only the matching canonical reservation and retains its cancelled predecessor
+PASS 7: replacement custody has the exact explicit new event interval
+PASS 8: legacy omission preserves a canonical planned tool while explicit empty arrays remain removal intent
+PASS 9: late published visit shows qualification expired between planned day and actual start
+PASS 10: actual start revalidates qualification civil date without shifting original window: 23514
+PASS 11: rejected late start preserves planned instants and concurrency version
+PASS 12: current validation flag refuses future completion in organization timezone
+PASS 13: server rejects future completion before qualification validation: 23514
+PASS 14: assigned participant reads current canonical action context
+PASS 15: revoked source assignment removes event detail despite retained participation: 42501
+PASS 16: source revocation also removes immutable history access: 42501
+PASS 17: direct event RLS respects current source assignment
+PASS 18: manager receipt replay is reauthorized after reduction of role and assignment: 42501
+{"suite":"agenda-safety","passed":18,"allPassed":true}
+PASS 1: initial horizon materializes only 60 occurrences including anchor
+PASS 2: backend extends finite horizon without browser or fake Auth uid
+PASS 3: automatic reservation uses canonical custody and explicit requester/job audit
+PASS 4: repeated backend generation creates no duplicate event or custody
+PASS 5: worker no-op and generation do not change human series expected_version
+PASS 6: completed job context cannot be reused: 42501
+PASS 7: interactive user cannot execute backend job: 42501
+PASS 8: owner job also refuses non-null session uid: 42501
+PASS 9: bounded worker batches preserve and drain explicit downtime backlog
+PASS 10: job catches up missed dates older than 60 days without silently discarding backlog
+PASS 11: past conflict remains an observable pending occurrence
+PASS 12: backend reports blocked occurrence as failure rather than false success
+PASS 13: past blocked occurrence remains visible in series diagnostics
+PASS 14: future cancellation preserves earlier pending occurrence and its recovery command
+PASS 15: backend retries and recovers the same past occurrence identity after conflict removal
+PASS 16: published notification and reminder persist for the actual participant
+PASS 17: repeated backend job does not duplicate notification effects
+PASS 18: participant reads current authorized backend notifications independently of first-page position
+PASS 19: automation context is never exposed to authenticated roles: 42501
+PASS 20: service RPC role cannot trigger private scheduler owner function: 42501
+{"suite":"agenda-jobs","passed":20,"allPassed":true}
+PASS: monthly day31 skips February rather than moving it to February28; ordinal includes earlier windows
+PASS: monthly leap day29 is present in2028 and absent in non-leap2027
+PASS: daily recurrence crosses leap February28→29→March1 without duplicate or missing date
+PASS: weekly ISO weekdays and interval retain calendar alignment
+PASS: NewYork missing02:30 is an observable ignored occurrence and later civil hours do not drift
+PASS: NewYork ambiguous01:30 selects posterior06:30Z exactly once
+PASS: LordHowe half-hour DST gap is handled without assuming every transition is one hour
+PASS: quarter-hour IANA offset preserves an overnight civil duration
+PASS: whole-day recurrence preserves civil dates across a25-hour DST day
+PASS: an event ending exactly at midnight does not occupy the next civil day
+PASS: overnight events occupy both local days and explicit timezone is independent of sessionTimeZone
+PASS: whole-day dates stay civil when the calendar is viewed in a distant IANA timezone
+PASS: editing all future occurrences preserves a completed past visit and an individual future exception exactly
+PASS: this and future scope preserves earlier future occurrences and versions
+PASS: one conflicting future reservation rolls back the whole series revision and all prior reservations
+PASS: last person reservation is revalidated after a real concurrent wait
+PASS: last tool reservation cannot be won by two events with different people
+PASS: cancel wins against stale reschedule without ghost person or tool reservation
+PASS: reschedule wins against stale cancel and keeps the new canonical reservation
+PASS: qualification revoked before publication commit blocks the waiting publication atomically
+PASS: qualification revoked before start commit blocks start and preserves the published plan
+PASS: withdrawn tool blocks cancel and reschedule; completing the event never fabricates physical return
+PASS: unavailability wins against waiting publication for the same person and interval
+PASS: publication wins against waiting unavailability and leaves exactly one confirmed person reservation
+PASS 1: A01 staging usa FK exclusiva do evento no cadastro canônico
+PASS 2: A02 repetição mantém a mesma intenção
+PASS 3: A03 mesma chave com outro conteúdo conflita (23505)
+PASS 4: A04 autoria não entra pelo payload (23514)
+PASS 5: A05 leitor atual recebe capacidades reais de envio
+PASS 6: A06 cliente autenticado não confirma armazenamento privilegiado (42501)
+PASS 7: A07 pai negado produz erro e não lista vazia (42501)
+PASS 8: A08 consulta direta aplica ACL do pai
+PASS 9: A09 staging cruzado é negado (42501)
+PASS 10: A10 FK composta nega tenant cruzado direto (23503)
+PASS 11: A11 dois pais canônicos são rejeitados (23514)
+PASS 12: A12 observador lê sem ganhar envio
+PASS 13: A13 observador não envia em nome da equipe (42501)
+PASS 14: A14 arquivo ausente não é vinculado (23514)
+PASS 15: A15 tamanho divergente não confirma (23514)
+PASS 16: A16 hash divergente não confirma (42501)
+PASS 17: A17 confirmação/retry preservam um objeto privado
+PASS 18: A18 metadados vinculados são imutáveis (23514)
+PASS 19: A19 conclusão preserva leitura histórica sem novos envios
+PASS 20: A20 staging fechado pode ser limpo sem reabrir upload
+PASS 21: A21 evento concluído recusa nova intenção (42501)
+PASS 22: A22 cancelamento pendente é auditável e repetível após conclusão
+PASS 23: A23 retry já vinculado preserva leitura histórica autorizada
+PASS 24: A24 retry vinculado revalida atribuição atual (42501)
+PASS 25: A25 objeto privado desaparece após revogação
+PASS 26: A26 assinatura e retry legados permanecem válidos
+PASS 27: A27 hash idempotente legado não recebe chave Agenda
+PASS 28: A28 helper legado delegado não vira bypass público (42501)
+PASS participação removida durante confirmação pendente
+PASS fonte histórica revogada durante retry vinculado
+PASS papel revogado enquanto confirmação espera

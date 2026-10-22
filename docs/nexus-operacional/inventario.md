@@ -1,5 +1,24 @@
 # Inventário executável da evolução operacional Nexus
 
+## Recorte final desta PR — Agenda e Equipe
+
+O último pedido reduz a entrega obrigatória aos dois menus e às integrações
+canônicas já disponíveis. Esta matriz prevalece sobre pendências dos checkpoints
+anteriores registrados abaixo; o escopo original integral foi adiado.
+
+| Destino | Implementação no recorte | Limite |
+| --- | --- | --- |
+| Agenda Equipe `/agenda-equipe` | Semana/mês/lista, recortes, eventos, ação sem horário, origem real, pessoas/equipes, requisitos, ferramentas, presença, histórico, recorrência, conflitos, notificações, jobs e anexos privados | Sem origens OS/inspeção/manutenção/viagem ainda inexistentes; sem ICS/canais externos |
+| Pessoas e Competências `/equipe` | Pessoas com/sem login, equipes/vigências, competências, qualificações, conferência independente, anexos e indisponibilidade versionada | Sem folha/prontuário; cadastro não concede acesso nem habilitação legal universal |
+| Execução, Inspeções, Documentação, Segurança e Projetos de Engenharia | Desativados na navegação e no acesso ordinário direto | Fontes, acervo e rotas preservados; ações canônicas continuam pela Agenda |
+| Comercial e Produtos | Fluxos, motores, códigos e revisões preservados | Ampliação do funil e catálogo adiada |
+| Mapas/Escada | Biblioteca e acesso preservados | Cenas, geometria, materiais, câmeras e controles intactos |
+| Demais recursos já implementados | Preservados, incluindo clientes, levantamentos, estudos e almoxarifado | Ampliações originais permanecem adiadas; acervo/leitor PE preservado no código para retomada |
+
+Testes locais, aplicação efetiva de SQL e E2E conectado são evidências distintas.
+O usuário escolheu validar localmente, sem dados fictícios no banco operacional.
+Ver `validacao.md`, `migracoes.md` e `revisao-product-design-agenda.md`.
+
 Data da inspeção: 22/10/2026. Base auditada: `820c79d60055a25e2d56bf60a091f032c5e7a8bf`, checkout inicialmente em `codex/silo-lvhf-upgrade`, remoto `leomateus620-pixel/nexus-unified-platform`. O diretório não rastreado `docs/casos-comerciais/` já existia e não integra esta auditoria.
 
 Este documento distingue o inventário estático da base e o checkpoint parcial implementado na branch `codex/nexus-operacao-integrada-agenda-equipe`. Existência de uma tela, comando ou política não comprova persistência, RLS no ambiente conectado, implantação ou funcionamento em dispositivo físico. Resultados de execução pertencem a `validacao.md`, com comando, ambiente e evidência. A plataforma operacional completa permanece em desenvolvimento.

@@ -51,7 +51,10 @@
     "test:ui:pe-arquivos": "node tests/ui/run.mjs --pe-arquivos",
     "test:ui:contracts": "node scripts/nexus-operacional/contracts.mjs",
     "test:ui:legacy-contracts": "node tests/ui/contracts.mjs",
-    "test:db": "bash tests/db/run.sh"
+    "test:db": "bash tests/db/run.sh",
+    "test:agenda": "vitest run --config tests/vitest.agenda.config.ts",
+    "test:ui:agenda": "node tests/ui/run.mjs --agenda",
+    "test:ui:disponibilidade": "node tests/ui/run.mjs --disponibilidade"
   },
   "overrides": {
     "rolldown": "1.2.1"

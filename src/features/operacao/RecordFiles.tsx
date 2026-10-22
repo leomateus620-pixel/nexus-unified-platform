@@ -12,7 +12,7 @@ import {
 } from "./files.functions";
 import { mimeDetectado, sha256 } from "./files";
 import type { z } from "zod";
-import { anexoPai, type Anexo, type uploadInput } from "./schemas";
+import { anexoPai, type Anexo, type anexosListaSchema, type uploadInput } from "./schemas";
 import { IntencoesAnexoOperacional } from "./upload-intents";
 import { captureOperationalContinuation } from "./continuation";
 import { useOrg } from "@/features/org/session";
@@ -42,6 +42,8 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
         });
   const currentContext = useRef(context);
   currentContext.current = context;
+  const currentReadOnly = useRef(readOnly);
+  currentReadOnly.current = readOnly;
   const scope = useRef({ active: false, generation: 0 });
   const downloads = useRef(
     new Map<string, { controller: AbortController; valid: () => boolean }>(),
@@ -92,6 +94,32 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
     mime: a.mime,
     sha256: a.sha256,
   });
+  function mutationScope(kind: "adicionar" | "retomar" | "cancelar", id?: string) {
+    if (!context || org.data?.orgId !== pai.organization_id || q.isError || !q.data) return null;
+    const generation = scope.current.generation,
+      key = ["anexos", pai],
+      cache = qc.getQueryCache(),
+      query = cache.find({ queryKey: key, exact: true });
+    const active = () =>
+      scope.current.active &&
+      scope.current.generation === generation &&
+      currentContext.current === context;
+    const visible = () =>
+      active() &&
+      !!query &&
+      cache.find({ queryKey: key, exact: true }) === query &&
+      query.state.status === "success";
+    const canWrite = () => {
+      if (!visible() || currentReadOnly.current) return false;
+      const data = query?.state.data as z.infer<typeof anexosListaSchema> | undefined;
+      return kind === "adicionar"
+        ? data?.permissoes.adicionar === true
+        : data?.registros.some(
+            (row) => row.id === id && (kind === "cancelar" ? row.pode_cancelar : row.pode_retomar),
+          ) === true;
+    };
+    return { active, visible, canWrite };
+  }
   async function atualizar() {
     await Promise.all([
       qc.invalidateQueries({ queryKey: ["anexos", pai] }),
@@ -101,10 +129,15 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
       ...(pai.ferramenta_id || pai.calibracao_id
         ? [qc.invalidateQueries({ queryKey: ["almoxarifado", pai.organization_id] })]
         : []),
+      ...(pai.agenda_evento_id
+        ? [qc.invalidateQueries({ queryKey: ["agenda-equipe", pai.organization_id] })]
+        : []),
     ]);
   }
   async function enviar(file: File, pending?: Anexo) {
     if (busyLock.current || !podeAdicionar) return;
+    const continuation = mutationScope(pending ? "retomar" : "adicionar", pending?.id);
+    if (!continuation?.canWrite()) return;
     busyLock.current = true;
     setErro(null);
     setBusy(true);
@@ -113,9 +146,11 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
         throw new Error("Envie um arquivo de até 20 MiB.");
       setProgresso("Verificando arquivo…");
       const bytes = new Uint8Array(await file.arrayBuffer());
+      if (!continuation.canWrite()) return;
       const mime = mimeDetectado(bytes) as z.infer<typeof uploadInput>["mime"] | null;
       if (!mime) throw new Error("Envie PDF, PNG, JPEG ou WebP.");
       const hash = await sha256(bytes);
+      if (!continuation.canWrite()) return;
       if (
         pending &&
         (pending.sha256 !== hash || pending.tamanho !== file.size || pending.mime !== mime)
@@ -135,17 +170,21 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
         : await prepararUpload({
             data: { ...payload, mime, chave: intencoes.current.chave(fingerprint) },
           });
+      if (!continuation.active()) return;
       intencoes.current.identificar(fingerprint, staged.anexo.id);
+      if (!continuation.canWrite()) return;
       setProgresso("Enviando arquivo…");
       if (staged.token) {
         const upload = await supabase.storage
           .from("nexus-operacional")
           .uploadToSignedUrl(staged.anexo.caminho, staged.token, file, { contentType: mime });
+        if (!continuation.canWrite()) return;
         if (upload.error) {
           try {
             await confirmarUpload({
               data: { organization_id: pai.organization_id, id: staged.anexo.id },
             });
+            if (!continuation.visible()) return;
             setProgresso("Arquivo confirmado.");
             return;
           } catch {
@@ -159,32 +198,42 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
       await confirmarUpload({
         data: { organization_id: pai.organization_id, id: staged.anexo.id },
       });
+      if (!continuation.visible()) return;
       setProgresso("Arquivo confirmado.");
     } catch (e) {
+      if (!continuation.visible()) return;
       setErro(
         e instanceof Error ? e : new Error("Não foi possível enviar o arquivo. Tente novamente."),
       );
       setProgresso("");
     } finally {
-      await atualizar();
-      setBusy(false);
-      busyLock.current = false;
+      if (continuation.visible()) await atualizar();
+      if (continuation.active()) {
+        setBusy(false);
+        busyLock.current = false;
+      }
     }
   }
   async function confirmar(id: string) {
     if (busyLock.current) return;
+    const continuation = mutationScope("retomar", id);
+    if (!continuation?.canWrite()) return;
     busyLock.current = true;
     setBusy(true);
     setErro(null);
     try {
       await confirmarUpload({ data: { organization_id: pai.organization_id, id } });
+      if (!continuation.visible()) return;
       setProgresso("Arquivo confirmado.");
       await atualizar();
     } catch (e) {
+      if (!continuation.visible()) return;
       setErro(e instanceof Error ? e : new Error("Arquivo ainda não disponível."));
     } finally {
-      busyLock.current = false;
-      setBusy(false);
+      if (continuation.active()) {
+        busyLock.current = false;
+        setBusy(false);
+      }
     }
   }
   async function baixar(id: string) {
@@ -230,6 +279,8 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
   }
   async function cancelar() {
     if (!cancelamento || busyLock.current) return;
+    const continuation = mutationScope("cancelar", cancelamento.id);
+    if (!continuation?.canWrite()) return;
     if (motivo.trim().length < 5) {
       setErroMotivo("Explique o motivo com ao menos cinco caracteres.");
       document.getElementById(motivoId)?.focus();
@@ -248,6 +299,7 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
       await cancelarAnexo({
         data: { ...payload, chave: intencoes.current.chave(JSON.stringify(payload)) },
       });
+      if (!continuation.visible()) return;
       intencoes.current.cancelar(cancelamento.id, JSON.stringify(payloadArquivo(cancelamento)));
       setCancelamento(null);
       setMotivo("");
@@ -255,14 +307,17 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
       await atualizar();
       requestAnimationFrame(() => section.current?.focus());
     } catch (e) {
+      if (!continuation.visible()) return;
       setErro(
         e instanceof Error
           ? e
           : new Error("Não foi possível cancelar o envio. Motivo preservado para repetir."),
       );
     } finally {
-      busyLock.current = false;
-      setBusy(false);
+      if (continuation.active()) {
+        busyLock.current = false;
+        setBusy(false);
+      }
     }
   }
   return (
@@ -365,36 +420,38 @@ function ArquivosDoRegistro({ pai, readOnly }: { pai: Pai; readOnly: boolean }) 
           Exibindo os 50 arquivos mais recentes deste registro.
         </p>
       )}
-      {podeAdicionar && cancelamento && (
-        <div className="grid gap-3 rounded-md border border-border p-3">
-          <label htmlFor={motivoId} className="text-sm">
-            Motivo do cancelamento
-          </label>
-          <input
-            id={motivoId}
-            className="min-h-11 rounded border border-input bg-background px-3"
-            value={motivo}
-            aria-invalid={!!erroMotivo}
-            aria-describedby={erroMotivo ? `${motivoId}-error` : undefined}
-            onChange={(e) => setMotivo(e.target.value)}
-            maxLength={2000}
-            disabled={busy}
-          />
-          {erroMotivo && (
-            <p role="alert" id={`${motivoId}-error`} className="text-sm text-destructive">
-              {erroMotivo}
-            </p>
-          )}
-          <div className="flex flex-wrap gap-2">
-            <ActionButton variant="danger" disabled={busy} onClick={cancelar}>
-              Confirmar cancelamento
-            </ActionButton>
-            <ActionButton variant="ghost" disabled={busy} onClick={() => setCancelamento(null)}>
-              Manter envio
-            </ActionButton>
+      {!readOnly &&
+        cancelamento &&
+        visiveis?.registros.some((a) => a.id === cancelamento.id && a.pode_cancelar) && (
+          <div className="grid gap-3 rounded-md border border-border p-3">
+            <label htmlFor={motivoId} className="text-sm">
+              Motivo do cancelamento
+            </label>
+            <input
+              id={motivoId}
+              className="min-h-11 rounded border border-input bg-background px-3"
+              value={motivo}
+              aria-invalid={!!erroMotivo}
+              aria-describedby={erroMotivo ? `${motivoId}-error` : undefined}
+              onChange={(e) => setMotivo(e.target.value)}
+              maxLength={2000}
+              disabled={busy}
+            />
+            {erroMotivo && (
+              <p role="alert" id={`${motivoId}-error`} className="text-sm text-destructive">
+                {erroMotivo}
+              </p>
+            )}
+            <div className="flex flex-wrap gap-2">
+              <ActionButton variant="danger" disabled={busy} onClick={cancelar}>
+                Confirmar cancelamento
+              </ActionButton>
+              <ActionButton variant="ghost" disabled={busy} onClick={() => setCancelamento(null)}>
+                Manter envio
+              </ActionButton>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </section>
   );
 }

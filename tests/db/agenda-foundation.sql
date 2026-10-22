@@ -99,8 +99,11 @@ select public.transicionar_qualificacao('61000000-0000-0000-0000-000000000001',g
 select pg_temp.ag_reject(format($q$select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),%L,2,'em_andamento')$q$,:'qualified_id'),'23514','qualification is revalidated when activity starts');
 select (public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'event_data'::jsonb||'{"inicio":"2026-11-07T10:00:00Z","fim":"2026-11-07T11:00:00Z","participantes":[]}')->>'id') as unavailable_id \gset
 select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'unavailable_id',1,'publicado');
+select pg_temp.ag_reject(format($q$select public.registrar_indisponibilidade('61000000-0000-0000-0000-000000000001',gen_random_uuid(),%L,'2026-11-07T09:00:00Z','2026-11-07T12:00:00Z','Indisponibilidade operacional')$q$,:'principal'),'23P01','availability change cannot silently invalidate a confirmed reservation');
+select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'unavailable_id',2,'cancelado','Visita será reprogramada antes do bloqueio');
 select public.registrar_indisponibilidade('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'principal','2026-11-07T09:00:00Z','2026-11-07T12:00:00Z','Indisponibilidade operacional');
-select pg_temp.ag_reject(format($q$select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),%L,2,'em_andamento')$q$,:'unavailable_id'),'23P01','unavailability after planning prevents activity start');
+select (public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'event_data'::jsonb||'{"inicio":"2026-11-07T10:00:00Z","fim":"2026-11-07T11:00:00Z","participantes":[]}')->>'id') as blocked_id \gset
+select pg_temp.ag_reject(format($q$select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),%L,1,'publicado')$q$,:'blocked_id'),'23P01','registered unavailability prevents a new publication');
 
 -- Persisted outbox is processed server-side; no browser timer or external channel involved.
 select pg_temp.ag_reject($q$select public.processar_notificacoes_agenda()$q$,'42501','notification worker restricted to service role');

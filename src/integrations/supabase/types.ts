@@ -115,6 +115,117 @@ export type Database = {
           },
         ];
       };
+      agenda_automacoes: {
+        Row: {
+          backend_pid: number;
+          created_at: string;
+          custodia_id: string;
+          evento_id: string;
+          id: string;
+          job_execucao_id: string;
+          operacao: string;
+          organization_id: string;
+          serie_id: string;
+          serie_versao_id: string;
+          solicitante_id: string;
+          transaction_id: unknown;
+        };
+        ComputedFields: never;
+        Insert: {
+          backend_pid: number;
+          created_at?: string;
+          custodia_id: string;
+          evento_id: string;
+          id?: string;
+          job_execucao_id: string;
+          operacao: string;
+          organization_id: string;
+          serie_id: string;
+          serie_versao_id: string;
+          solicitante_id: string;
+          transaction_id: unknown;
+        };
+        Update: {
+          backend_pid?: number;
+          created_at?: string;
+          custodia_id?: string;
+          evento_id?: string;
+          id?: string;
+          job_execucao_id?: string;
+          operacao?: string;
+          organization_id?: string;
+          serie_id?: string;
+          serie_versao_id?: string;
+          solicitante_id?: string;
+          transaction_id?: unknown;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_automacoes_job_execucao_id_fkey";
+            columns: ["job_execucao_id"];
+            isOneToOne: false;
+            referencedRelation: "job_execucoes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "agenda_automacoes_organization_id_custodia_id_fkey";
+            columns: ["organization_id", "custodia_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramenta_custodias";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_automacoes_organization_id_evento_id_fkey";
+            columns: ["organization_id", "evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_automacoes_organization_id_serie_id_serie_versao_id_fkey";
+            columns: ["organization_id", "serie_id", "serie_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_serie_versoes";
+            referencedColumns: ["organization_id", "serie_id", "id"];
+          },
+        ];
+      };
+      agenda_comentarios: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          evento_id: string;
+          id: string;
+          organization_id: string;
+          texto: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          evento_id: string;
+          id?: string;
+          organization_id: string;
+          texto: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          evento_id?: string;
+          id?: string;
+          organization_id?: string;
+          texto?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_comentarios_organization_id_evento_id_fkey";
+            columns: ["organization_id", "evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
       agenda_evento_revisoes: {
         Row: {
           autor: string;
@@ -155,6 +266,7 @@ export type Database = {
         Row: {
           acao_id: string | null;
           bloqueia_recursos: boolean;
+          cliente_id: string | null;
           created_at: string;
           created_by: string;
           data_fim: string | null;
@@ -162,24 +274,35 @@ export type Database = {
           descricao: string;
           dia_inteiro: boolean;
           estado: string;
+          excecao: boolean;
           fim: string;
+          geracao_job_id: string | null;
+          gerado_automaticamente: boolean;
           id: string;
           inicio: string;
+          levantamento_id: string | null;
           local: string;
           motivo: string | null;
+          ocorrencia_data: string | null;
           organization_id: string;
           origem_ocorrencia: string | null;
+          projeto_id: string | null;
           responsavel_id: string;
+          serie_id: string | null;
+          serie_versao_id: string | null;
           timezone: string;
           tipo: string;
           titulo: string;
+          unidade_id: string | null;
           updated_at: string;
           version: number;
+          visibilidade: string;
         };
         ComputedFields: never;
         Insert: {
           acao_id?: string | null;
           bloqueia_recursos?: boolean;
+          cliente_id?: string | null;
           created_at?: string;
           created_by?: string;
           data_fim?: string | null;
@@ -187,23 +310,34 @@ export type Database = {
           descricao?: string;
           dia_inteiro?: boolean;
           estado?: string;
+          excecao?: boolean;
           fim: string;
+          geracao_job_id?: string | null;
+          gerado_automaticamente?: boolean;
           id?: string;
           inicio: string;
+          levantamento_id?: string | null;
           local?: string;
           motivo?: string | null;
+          ocorrencia_data?: string | null;
           organization_id: string;
           origem_ocorrencia?: string | null;
+          projeto_id?: string | null;
           responsavel_id: string;
+          serie_id?: string | null;
+          serie_versao_id?: string | null;
           timezone?: string;
           tipo: string;
           titulo: string;
+          unidade_id?: string | null;
           updated_at?: string;
           version?: number;
+          visibilidade?: string;
         };
         Update: {
           acao_id?: string | null;
           bloqueia_recursos?: boolean;
+          cliente_id?: string | null;
           created_at?: string;
           created_by?: string;
           data_fim?: string | null;
@@ -211,21 +345,52 @@ export type Database = {
           descricao?: string;
           dia_inteiro?: boolean;
           estado?: string;
+          excecao?: boolean;
           fim?: string;
+          geracao_job_id?: string | null;
+          gerado_automaticamente?: boolean;
           id?: string;
           inicio?: string;
+          levantamento_id?: string | null;
           local?: string;
           motivo?: string | null;
+          ocorrencia_data?: string | null;
           organization_id?: string;
           origem_ocorrencia?: string | null;
+          projeto_id?: string | null;
           responsavel_id?: string;
+          serie_id?: string | null;
+          serie_versao_id?: string | null;
           timezone?: string;
           tipo?: string;
           titulo?: string;
+          unidade_id?: string | null;
           updated_at?: string;
           version?: number;
+          visibilidade?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "agenda_cliente";
+            columns: ["organization_id", "cliente_id"];
+            isOneToOne: false;
+            referencedRelation: "clientes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_evento_serie";
+            columns: ["organization_id", "serie_id", "serie_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_serie_versoes";
+            referencedColumns: ["organization_id", "serie_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_eventos_geracao_job_id_fkey";
+            columns: ["geracao_job_id"];
+            isOneToOne: false;
+            referencedRelation: "job_execucoes";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "agenda_eventos_organization_id_acao_id_fkey";
             columns: ["organization_id", "acao_id"];
@@ -247,6 +412,151 @@ export type Database = {
             referencedRelation: "pessoas";
             referencedColumns: ["organization_id", "id"];
           },
+          {
+            foreignKeyName: "agenda_levantamento";
+            columns: ["organization_id", "cliente_id", "unidade_id", "levantamento_id"];
+            isOneToOne: false;
+            referencedRelation: "levantamentos";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_projeto";
+            columns: ["organization_id", "cliente_id", "projeto_id"];
+            isOneToOne: false;
+            referencedRelation: "projetos";
+            referencedColumns: ["organization_id", "cliente_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_unidade";
+            columns: ["organization_id", "cliente_id", "unidade_id"];
+            isOneToOne: false;
+            referencedRelation: "unidades";
+            referencedColumns: ["organization_id", "cliente_id", "id"];
+          },
+        ];
+      };
+      agenda_excecoes: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          data_original: string;
+          evento_id: string;
+          id: string;
+          motivo: string;
+          organization_id: string;
+          serie_id: string;
+          serie_versao_id: string;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          data_original: string;
+          evento_id: string;
+          id?: string;
+          motivo: string;
+          organization_id: string;
+          serie_id: string;
+          serie_versao_id: string;
+          tipo: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          data_original?: string;
+          evento_id?: string;
+          id?: string;
+          motivo?: string;
+          organization_id?: string;
+          serie_id?: string;
+          serie_versao_id?: string;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_excecoes_organization_id_evento_id_fkey";
+            columns: ["organization_id", "evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_excecoes_organization_id_serie_id_serie_versao_id_fkey";
+            columns: ["organization_id", "serie_id", "serie_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_serie_versoes";
+            referencedColumns: ["organization_id", "serie_id", "id"];
+          },
+        ];
+      };
+      agenda_ferramentas: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          custodia_id: string | null;
+          evento_id: string;
+          ferramenta_id: string;
+          id: string;
+          organization_id: string;
+          pessoa_id: string;
+          version: number;
+          vigente: boolean;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by: string;
+          custodia_id?: string | null;
+          evento_id: string;
+          ferramenta_id: string;
+          id?: string;
+          organization_id: string;
+          pessoa_id: string;
+          version?: number;
+          vigente?: boolean;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          custodia_id?: string | null;
+          evento_id?: string;
+          ferramenta_id?: string;
+          id?: string;
+          organization_id?: string;
+          pessoa_id?: string;
+          version?: number;
+          vigente?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_ferramentas_organization_id_custodia_id_fkey";
+            columns: ["organization_id", "custodia_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramenta_custodias";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_ferramentas_organization_id_evento_id_fkey";
+            columns: ["organization_id", "evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_ferramentas_organization_id_ferramenta_id_fkey";
+            columns: ["organization_id", "ferramenta_id"];
+            isOneToOne: false;
+            referencedRelation: "ferramentas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_ferramentas_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
         ];
       };
       agenda_participantes: {
@@ -255,6 +565,8 @@ export type Database = {
           confirmacao: string;
           created_at: string;
           created_by: string;
+          equipe_inicio: string | null;
+          equipe_origem_id: string | null;
           evento_id: string;
           funcao: string;
           id: string;
@@ -270,6 +582,8 @@ export type Database = {
           confirmacao?: string;
           created_at?: string;
           created_by?: string;
+          equipe_inicio?: string | null;
+          equipe_origem_id?: string | null;
           evento_id: string;
           funcao: string;
           id?: string;
@@ -284,6 +598,8 @@ export type Database = {
           confirmacao?: string;
           created_at?: string;
           created_by?: string;
+          equipe_inicio?: string | null;
+          equipe_origem_id?: string | null;
           evento_id?: string;
           funcao?: string;
           id?: string;
@@ -294,6 +610,13 @@ export type Database = {
           vigente?: boolean;
         };
         Relationships: [
+          {
+            foreignKeyName: "agenda_equipe_temporal";
+            columns: ["organization_id", "equipe_origem_id", "pessoa_id", "equipe_inicio"];
+            isOneToOne: false;
+            referencedRelation: "equipe_membros";
+            referencedColumns: ["organization_id", "equipe_id", "pessoa_id", "inicio"];
+          },
           {
             foreignKeyName: "agenda_participantes_organization_id_evento_id_fkey";
             columns: ["organization_id", "evento_id"];
@@ -310,21 +633,66 @@ export type Database = {
           },
         ];
       };
+      agenda_preferencias: {
+        Row: {
+          antecedencia_minutos: number;
+          notificar: boolean;
+          notificar_atrasos: boolean;
+          organization_id: string;
+          updated_at: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          antecedencia_minutos?: number;
+          notificar?: boolean;
+          notificar_atrasos?: boolean;
+          organization_id: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          antecedencia_minutos?: number;
+          notificar?: boolean;
+          notificar_atrasos?: boolean;
+          organization_id?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_preferencias_organization_id_user_id_fkey";
+            columns: ["organization_id", "user_id"];
+            isOneToOne: true;
+            referencedRelation: "memberships";
+            referencedColumns: ["organization_id", "user_id"];
+          },
+        ];
+      };
       agenda_requisitos: {
         Row: {
           competencia_id: string;
           evento_id: string;
+          exige_evidencia: boolean;
+          exige_validade: boolean;
+          nome: string;
           organization_id: string;
         };
         ComputedFields: never;
         Insert: {
           competencia_id: string;
           evento_id: string;
+          exige_evidencia: boolean;
+          exige_validade: boolean;
+          nome: string;
           organization_id: string;
         };
         Update: {
           competencia_id?: string;
           evento_id?: string;
+          exige_evidencia?: boolean;
+          exige_validade?: boolean;
+          nome?: string;
           organization_id?: string;
         };
         Relationships: [
@@ -409,6 +777,176 @@ export type Database = {
           },
         ];
       };
+      agenda_serie_ocorrencias: {
+        Row: {
+          codigo: string | null;
+          data: string;
+          estado: string;
+          evento_id: string | null;
+          organization_id: string;
+          proxima_tentativa: string;
+          serie_versao_id: string;
+          tentativas: number;
+          updated_at: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          codigo?: string | null;
+          data: string;
+          estado: string;
+          evento_id?: string | null;
+          organization_id: string;
+          proxima_tentativa?: string;
+          serie_versao_id: string;
+          tentativas?: number;
+          updated_at?: string;
+        };
+        Update: {
+          codigo?: string | null;
+          data?: string;
+          estado?: string;
+          evento_id?: string | null;
+          organization_id?: string;
+          proxima_tentativa?: string;
+          serie_versao_id?: string;
+          tentativas?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_serie_ocorrencias_organization_id_evento_id_fkey";
+            columns: ["organization_id", "evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_serie_ocorrencias_organization_id_serie_versao_id_fkey";
+            columns: ["organization_id", "serie_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_serie_versoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      agenda_serie_versoes: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          evento_modelo: NonNullable<Json>;
+          id: string;
+          inicio_aplicacao: string;
+          motivo: string | null;
+          numero: number;
+          organization_id: string;
+          publicar: boolean;
+          regra: NonNullable<Json>;
+          serie_id: string;
+          timezone: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          evento_modelo: NonNullable<Json>;
+          id?: string;
+          inicio_aplicacao: string;
+          motivo?: string | null;
+          numero: number;
+          organization_id: string;
+          publicar: boolean;
+          regra: NonNullable<Json>;
+          serie_id: string;
+          timezone: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          evento_modelo?: NonNullable<Json>;
+          id?: string;
+          inicio_aplicacao?: string;
+          motivo?: string | null;
+          numero?: number;
+          organization_id?: string;
+          publicar?: boolean;
+          regra?: NonNullable<Json>;
+          serie_id?: string;
+          timezone?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_serie_versoes_organization_id_serie_id_fkey";
+            columns: ["organization_id", "serie_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_series";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      agenda_series: {
+        Row: {
+          cancelamento_corte: string | null;
+          created_at: string;
+          created_by: string;
+          estado: string;
+          id: string;
+          materializacao_pendente: boolean;
+          materializado_ate: string | null;
+          organization_id: string;
+          ultima_falha_codigo: string | null;
+          ultima_tentativa: string | null;
+          updated_at: string;
+          versao_atual_id: string | null;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          cancelamento_corte?: string | null;
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          id?: string;
+          materializacao_pendente?: boolean;
+          materializado_ate?: string | null;
+          organization_id: string;
+          ultima_falha_codigo?: string | null;
+          ultima_tentativa?: string | null;
+          updated_at?: string;
+          versao_atual_id?: string | null;
+          version?: number;
+        };
+        Update: {
+          cancelamento_corte?: string | null;
+          created_at?: string;
+          created_by?: string;
+          estado?: string;
+          id?: string;
+          materializacao_pendente?: boolean;
+          materializado_ate?: string | null;
+          organization_id?: string;
+          ultima_falha_codigo?: string | null;
+          ultima_tentativa?: string | null;
+          updated_at?: string;
+          versao_atual_id?: string | null;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agenda_serie_atual";
+            columns: ["organization_id", "id", "versao_atual_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_serie_versoes";
+            referencedColumns: ["organization_id", "serie_id", "id"];
+          },
+          {
+            foreignKeyName: "agenda_series_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       almoxarifados: {
         Row: {
           ativo: boolean;
@@ -457,6 +995,7 @@ export type Database = {
       anexos: {
         Row: {
           acao_id: string | null;
+          agenda_evento_id: string | null;
           calibracao_id: string | null;
           caminho: string;
           confirmado_em: string | null;
@@ -476,6 +1015,7 @@ export type Database = {
         ComputedFields: never;
         Insert: {
           acao_id?: string | null;
+          agenda_evento_id?: string | null;
           calibracao_id?: string | null;
           caminho: string;
           confirmado_em?: string | null;
@@ -494,6 +1034,7 @@ export type Database = {
         };
         Update: {
           acao_id?: string | null;
+          agenda_evento_id?: string | null;
           calibracao_id?: string | null;
           caminho?: string;
           confirmado_em?: string | null;
@@ -511,6 +1052,13 @@ export type Database = {
           tamanho?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: "anexo_agenda_tenant";
+            columns: ["organization_id", "agenda_evento_id"];
+            isOneToOne: false;
+            referencedRelation: "agenda_eventos";
+            referencedColumns: ["organization_id", "id"];
+          },
           {
             foreignKeyName: "anexo_calibracao_tenant";
             columns: ["organization_id", "calibracao_id"];
@@ -3477,35 +4025,47 @@ export type Database = {
       };
       indisponibilidades: {
         Row: {
+          cancelada_em: string | null;
+          cancelada_por: string | null;
           created_at: string;
           created_by: string;
           fim: string;
           id: string;
           inicio: string;
+          motivo_cancelamento: string | null;
           motivo_operacional: string;
           organization_id: string;
           pessoa_id: string;
+          version: number;
         };
         ComputedFields: never;
         Insert: {
+          cancelada_em?: string | null;
+          cancelada_por?: string | null;
           created_at?: string;
           created_by?: string;
           fim: string;
           id?: string;
           inicio: string;
+          motivo_cancelamento?: string | null;
           motivo_operacional: string;
           organization_id: string;
           pessoa_id: string;
+          version?: number;
         };
         Update: {
+          cancelada_em?: string | null;
+          cancelada_por?: string | null;
           created_at?: string;
           created_by?: string;
           fim?: string;
           id?: string;
           inicio?: string;
+          motivo_cancelamento?: string | null;
           motivo_operacional?: string;
           organization_id?: string;
           pessoa_id?: string;
+          version?: number;
         };
         Relationships: [
           {
@@ -4622,17 +5182,20 @@ export type Database = {
           created_at: string;
           id: string;
           nome: string;
+          timezone: string;
         };
         ComputedFields: never;
         Insert: {
           created_at?: string;
           id?: string;
           nome: string;
+          timezone?: string;
         };
         Update: {
           created_at?: string;
           id?: string;
           nome?: string;
+          timezone?: string;
         };
         Relationships: [];
       };
@@ -6656,6 +7219,212 @@ export type Database = {
         Args: { _chave: string; _comando: string; _dados: Json; _org: string };
         Returns: Json;
       };
+      ag_anexo_autor_destino: {
+        Args: {
+          _autor: string;
+          _escrever?: boolean;
+          _evento: string;
+          _org: string;
+        };
+        Returns: boolean;
+      };
+      ag_anexo_cancelavel: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      ag_autor_acao: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      ag_autor_ler: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      ag_bloqueios: { Args: { _id: string; _org: string }; Returns: Json };
+      ag_configuracao: { Args: { _org: string }; Returns: Json };
+      ag_evento_json: {
+        Args: {
+          _ate?: string;
+          _de?: string;
+          _id: string;
+          _org: string;
+          _tz?: string;
+        };
+        Returns: Json;
+      };
+      ag_executar: {
+        Args: { _chave: string; _comando: string; _dados: Json; _org: string };
+        Returns: Json;
+      };
+      ag_expandir_datas: {
+        Args: { _ate: string; _de: string; _evento: Json; _regra: Json };
+        Returns: {
+          data: string;
+          fim: string;
+          ignorada: boolean;
+          inicio: string;
+          ordinal: number;
+        }[];
+      };
+      ag_fuso: { Args: { _tz: string }; Returns: string };
+      ag_gravar: {
+        Args: {
+          _autor: string;
+          _dados: Json;
+          _data?: string;
+          _expected?: number;
+          _id?: string;
+          _job?: string;
+          _org: string;
+          _serie?: string;
+          _serie_versao?: string;
+        };
+        Returns: string;
+      };
+      ag_historico: {
+        Args: {
+          _id: string;
+          _limite?: number;
+          _org: string;
+          _pagina?: number;
+          _tipo: string;
+        };
+        Returns: Json;
+      };
+      ag_lembretes: { Args: { _limite?: number }; Returns: Json };
+      ag_liberar_ferramentas: {
+        Args: {
+          _id: string;
+          _motivo: string;
+          _org: string;
+          _preservar_retiradas?: boolean;
+        };
+        Returns: undefined;
+      };
+      ag_listar: {
+        Args: {
+          _busca?: string;
+          _equipe?: string;
+          _estado?: string;
+          _fim: string;
+          _inicio: string;
+          _limite?: number;
+          _minha?: boolean;
+          _org: string;
+          _pagina?: number;
+          _timezone: string;
+          _tipo?: string;
+        };
+        Returns: Json;
+      };
+      ag_materializar: {
+        Args: {
+          _ate: string;
+          _estrito?: boolean;
+          _job?: string;
+          _org: string;
+          _serie: string;
+        };
+        Returns: Json;
+      };
+      ag_modelo: { Args: { _id: string; _org: string }; Returns: Json };
+      ag_notificacoes: {
+        Args: { _limite?: number; _org: string; _pagina?: number };
+        Returns: Json;
+      };
+      ag_obter: { Args: { _id: string; _org: string }; Returns: Json };
+      ag_obter_acao: { Args: { _id: string; _org: string }; Returns: Json };
+      ag_opcoes: {
+        Args: {
+          _busca?: string;
+          _cliente?: string;
+          _limite?: number;
+          _org: string;
+          _pagina?: number;
+          _tipo: string;
+        };
+        Returns: Json;
+      };
+      ag_payload: { Args: { _d: Json; _keys: string[] }; Returns: undefined };
+      ag_pendentes: {
+        Args: {
+          _busca?: string;
+          _limite?: number;
+          _minhas?: boolean;
+          _org: string;
+          _pagina?: number;
+        };
+        Returns: Json;
+      };
+      ag_permissoes: { Args: { _id: string; _org: string }; Returns: Json };
+      ag_pessoa: { Args: { _autor: string; _org: string }; Returns: string };
+      ag_registrar: {
+        Args: {
+          _anterior: string;
+          _autor: string;
+          _efeito: string;
+          _id: string;
+          _org: string;
+        };
+        Returns: undefined;
+      };
+      ag_reservar_ferramentas: {
+        Args: { _autor: string; _id: string; _job?: string; _org: string };
+        Returns: undefined;
+      };
+      ag_resolver_periodo: { Args: { _d: Json }; Returns: Json };
+      ag_resultado: { Args: { _org: string; _r: Json }; Returns: Json };
+      ag_salvar_acao_base: {
+        Args: {
+          _chave: string;
+          _dados: Json;
+          _expected_version?: number;
+          _id?: string;
+          _org: string;
+        };
+        Returns: Json;
+      };
+      ag_serie_comando: {
+        Args: { _autor: string; _comando: string; _dados: Json; _org: string };
+        Returns: Json;
+      };
+      ag_serie_json: { Args: { _id: string; _org: string }; Returns: Json };
+      ag_texto: {
+        Args: { _d: Json; _key: string; _max: number; _min: number };
+        Returns: string;
+      };
+      ag_transicionar: {
+        Args: {
+          _autor: string;
+          _estado: string;
+          _excecao?: boolean;
+          _expected: number;
+          _id: string;
+          _motivo?: string;
+          _org: string;
+        };
+        Returns: string;
+      };
+      ag_transicionar_acao_base: {
+        Args: {
+          _chave: string;
+          _estado: string;
+          _expected_version: number;
+          _id: string;
+          _motivo?: string;
+          _org: string;
+        };
+        Returns: Json;
+      };
+      ag_travar_ferramentas: {
+        Args: { _dados?: Json; _id: string; _org: string };
+        Returns: undefined;
+      };
+      ag_travar_origem: {
+        Args: { _acao: string; _lev: string; _org: string };
+        Returns: undefined;
+      };
+      ag_validar_regra: { Args: { _evento: Json; _regra: Json }; Returns: Json };
       agenda_ler_evento: {
         Args: { _id: string; _org: string };
         Returns: boolean;
@@ -6822,6 +7591,10 @@ export type Database = {
         Args: { _chave: string; _id: string; _motivo: string; _org: string };
         Returns: Json;
       };
+      cancelar_anexo_operacional_ate27: {
+        Args: { _chave: string; _id: string; _motivo: string; _org: string };
+        Returns: Json;
+      };
       capturar_revisao: {
         Args: { _operacao?: string; _rev: string };
         Returns: Json;
@@ -6886,6 +7659,19 @@ export type Database = {
           _id: string;
           _motivo: string;
           _org: string;
+        };
+        Returns: Json;
+      };
+      eq_executar_indisponibilidade: {
+        Args: { _chave: string; _comando: string; _dados: Json; _org: string };
+        Returns: Json;
+      };
+      eq_listar_indisponibilidades: {
+        Args: {
+          _limite?: number;
+          _org: string;
+          _pagina?: number;
+          _pessoa: string;
         };
         Returns: Json;
       };
@@ -7100,6 +7886,10 @@ export type Database = {
         Args: { _produto: string; _quantidade: number; _rev: string };
         Returns: Json;
       };
+      iniciar_anexo_agenda: {
+        Args: { _chave: string; _dados: Json; _evento: string; _org: string };
+        Returns: Json;
+      };
       is_member: { Args: { _org: string }; Returns: boolean };
       lev_adotar_medicao: {
         Args: {
@@ -7235,6 +8025,10 @@ export type Database = {
         Args: { _org: string; _pai: Json };
         Returns: Json;
       };
+      listar_anexos_operacionais_ate27: {
+        Args: { _org: string; _pai: Json };
+        Returns: Json;
+      };
       listar_cadastros_cliente: {
         Args: {
           _busca?: string;
@@ -7272,6 +8066,10 @@ export type Database = {
         Returns: Json;
       };
       operacao_autor_destino_anexo: {
+        Args: { _autor: string; _escrever?: boolean; _org: string; _pai: Json };
+        Returns: boolean;
+      };
+      operacao_autor_destino_anexo_ate27: {
         Args: { _autor: string; _escrever?: boolean; _org: string; _pai: Json };
         Returns: boolean;
       };
@@ -7319,6 +8117,10 @@ export type Database = {
         Returns: Json;
       };
       operacao_travar_pai_anexo: {
+        Args: { _org: string; _pai: Json };
+        Returns: undefined;
+      };
+      operacao_travar_pai_anexo_ate27: {
         Args: { _org: string; _pai: Json };
         Returns: undefined;
       };

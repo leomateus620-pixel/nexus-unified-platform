@@ -1,5 +1,31 @@
 # Arquitetura do checkpoint operacional
 
+## Consolidação da Agenda e Equipe
+
+O último recorte está em `escopo.md`: a entrega desta PR concentra-se na Agenda
+e nos seus recursos canônicos disponíveis. `src/features/agenda-equipe` reúne
+schemas de fronteira, funções autenticadas, query keys por tenant/usuário,
+calendário e formulários. A rota fica sob `_authenticated`; a disponibilidade
+central da navegação desativa módulos ainda sem jornada, inclusive URL direta.
+
+O PostgreSQL é dono de períodos, conflitos, transições, recorrência e
+idempotência. Helpers de calendário no browser servem somente à apresentação e
+ao recorte visível. A UI não expande recorrência operacional nem calcula saldo
+paralelo de recurso. Ações e levantamentos são origens por FK; concluir evento
+não conclui a origem. Consulta, reserva, outbox e auditoria de uma mudança são
+coerentes na mesma transação.
+
+O worker existente materializa séries e processa lembretes/outbox, com lotes e
+backoff. Ferramenta continua sendo patrimônio/custódia do almoxarifado; pessoa
+continua sendo o registro operacional independente de login. Anexos usam o
+fluxo privado canônico, staging/confirmar/recuperar, sem outro bucket ou cadastro.
+
+O laboratório substitui apenas transportes, em configuração exclusiva de testes.
+A aplicação não importa fixtures. DTOs reais do PostgreSQL têm teste próprio
+contra schemas de fronteira; prova visual e persistência permanecem separadas.
+As notas de checkpoints abaixo preservam decisões anteriores, e não definem
+o estado final desta entrega.
+
 Estado em 22/10/2026. Este documento descreve a fundação e as primeiras jornadas implementadas. O escopo integral dos 24 menus está em `escopo.md`; tabelas ou contratos iniciais não equivalem à conclusão dos módulos dependentes.
 
 ## Aplicação e limites de domínio

@@ -82,6 +82,7 @@ export const anexoRow = z.object({
   // Read defaults also accept an older idempotent receipt without these additive columns.
   ferramenta_id: z.string().uuid().nullable().default(null),
   calibracao_id: z.string().uuid().nullable().default(null),
+  agenda_evento_id: z.string().uuid().nullable().default(null),
 });
 export type Anexo = z.infer<typeof anexoRow>;
 export const anexoPai = orgInput
@@ -92,11 +93,18 @@ export const anexoPai = orgInput
     // Do not default new input keys: changing legacy JSON changes its stored request hash.
     ferramenta_id: z.string().uuid().nullable().optional(),
     calibracao_id: z.string().uuid().nullable().optional(),
+    agenda_evento_id: z.string().uuid().nullable().optional(),
   })
   .refine(
     (x) =>
-      [x.pessoa_id, x.acao_id, x.qualificacao_id, x.ferramenta_id, x.calibracao_id].filter(Boolean)
-        .length === 1,
+      [
+        x.pessoa_id,
+        x.acao_id,
+        x.qualificacao_id,
+        x.ferramenta_id,
+        x.calibracao_id,
+        x.agenda_evento_id,
+      ].filter(Boolean).length === 1,
     "Escolha uma origem.",
   );
 export const uploadInput = z.object({

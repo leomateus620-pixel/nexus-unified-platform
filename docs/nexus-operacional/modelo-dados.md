@@ -1,5 +1,31 @@
 # Modelo de dados do checkpoint operacional
 
+## Agenda e disponibilidade — atualização do recorte
+
+`0027` estende eventos, vínculos temporais e organizações (timezone IANA padrão
+America/Sao_Paulo). Acrescenta `agenda_series`, `agenda_serie_versoes`,
+`agenda_serie_ocorrencias`, `agenda_excecoes`, `agenda_ferramentas`,
+`agenda_comentarios`, `agenda_preferencias` e `agenda_automacoes`. Não cria
+outras identidades de pessoa, ação ou ferramenta.
+
+Todos os vínculos centrais preservam organização por FK composta. Responsável
+é participante; no máximo uma origem principal, ação ou levantamento. Eventos
+legítimos distintos de uma origem têm identidade própria. Intervalos são
+semiabertos e instantes timestamptz; dia inteiro mantém datas civis e fim
+exclusivo. Reservas de pessoa e custódia de ferramenta são canônicas.
+
+Série e versão fixam regra/template/fuso; ocorrência tem chave estável por
+versão/data, estado de materialização e falha recuperável. Exceções e realizadas
+não são reescritas. Histórico oficial e auditoria são gerados no banco.
+Automação guarda job, solicitante, transação e backend, sem simular Auth.
+
+Indisponibilidade recebe cancelamento com autor, data, motivo e versão; o índice
+organização+pessoa+início atende sua lista paginada. Cancelar libera bloqueio
+futuro sem apagar a causa original. `0028` acrescenta pai de anexo de evento
+à tabela canônica, com XOR, FK composta e política pelo registro de origem.
+Consultas e migrações reproduzíveis estão na PR; histórico abaixo é anterior
+a essa integração.
+
 ## Controle físico — migrações 0023/0024, checkpoint 43
 
 Treze tabelas: `almoxarifados`, `estoque_produto_politicas`, `estoque_inventarios`, `estoque_conferencias`, `estoque_reservas`, `estoque_reserva_itens`, `estoque_operacoes`, `estoque_movimentos`, `estoque_estorno_alocacoes`, `ferramentas`, `ferramenta_custodias`, `ferramenta_calibracoes` e `ferramenta_calibracao_politicas`. Todas têm organização e FKs compostas. As duas migrações foram aplicadas ao projeto confirmado e verificadas por metadados; o E2E conectado de Auth/Storage não foi executado.

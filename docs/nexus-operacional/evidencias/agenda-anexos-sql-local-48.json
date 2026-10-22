@@ -1,0 +1,118 @@
+{
+  "metodo": "Integração SQL/RLS/metadata Storage, PostgreSQL descartável e transação revertida. Não é upload de bytes ou Auth/Storage HTTP conectado.",
+  "resultado": true,
+  "checks": [
+    {
+      "label": "A01 staging usa FK exclusiva do evento no cadastro canônico",
+      "resultado": "passou"
+    },
+    {
+      "label": "A02 repetição mantém a mesma intenção",
+      "resultado": "passou"
+    },
+    {
+      "label": "A03 mesma chave com outro conteúdo conflita (23505)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A04 autoria não entra pelo payload (23514)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A05 leitor atual recebe capacidades reais de envio",
+      "resultado": "passou"
+    },
+    {
+      "label": "A06 cliente autenticado não confirma armazenamento privilegiado (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A07 pai negado produz erro e não lista vazia (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A08 consulta direta aplica ACL do pai",
+      "resultado": "passou"
+    },
+    {
+      "label": "A09 staging cruzado é negado (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A10 FK composta nega tenant cruzado direto (23503)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A11 dois pais canônicos são rejeitados (23514)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A12 observador lê sem ganhar envio",
+      "resultado": "passou"
+    },
+    {
+      "label": "A13 observador não envia em nome da equipe (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A14 arquivo ausente não é vinculado (23514)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A15 tamanho divergente não confirma (23514)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A16 hash divergente não confirma (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A17 confirmação/retry preservam um objeto privado",
+      "resultado": "passou"
+    },
+    {
+      "label": "A18 metadados vinculados são imutáveis (23514)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A19 conclusão preserva leitura histórica sem novos envios",
+      "resultado": "passou"
+    },
+    {
+      "label": "A20 staging fechado pode ser limpo sem reabrir upload",
+      "resultado": "passou"
+    },
+    {
+      "label": "A21 evento concluído recusa nova intenção (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A22 cancelamento pendente é auditável e repetível após conclusão",
+      "resultado": "passou"
+    },
+    {
+      "label": "A23 retry já vinculado preserva leitura histórica autorizada",
+      "resultado": "passou"
+    },
+    {
+      "label": "A24 retry vinculado revalida atribuição atual (42501)",
+      "resultado": "passou"
+    },
+    {
+      "label": "A25 objeto privado desaparece após revogação",
+      "resultado": "passou"
+    },
+    {
+      "label": "A26 assinatura e retry legados permanecem válidos",
+      "resultado": "passou"
+    },
+    {
+      "label": "A27 hash idempotente legado não recebe chave Agenda",
+      "resultado": "passou"
+    },
+    {
+      "label": "A28 helper legado delegado não vira bypass público (42501)",
+      "resultado": "passou"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "metodo": "Disputas reais PostgreSQL descartável loopback; fixtures só neste banco. Não Auth/Storage HTTP conectado.",
+  "resultado": true,
+  "checks": [
+    {
+      "caso": "lock real: participação removida durante confirmação pendente",
+      "resultado": "passou"
+    },
+    {
+      "caso": "negação pós-lock: participação removida durante confirmação pendente",
+      "resultado": "passou"
+    },
+    {
+      "caso": "lock real: fonte histórica revogada durante retry vinculado",
+      "resultado": "passou"
+    },
+    {
+      "caso": "negação pós-lock: fonte histórica revogada durante retry vinculado",
+      "resultado": "passou"
+    },
+    {
+      "caso": "lock real: papel revogado enquanto confirmação espera",
+      "resultado": "passou"
+    },
+    {
+      "caso": "negação pós-lock: papel revogado enquanto confirmação espera",
+      "resultado": "passou"
+    }
+  ]
+}

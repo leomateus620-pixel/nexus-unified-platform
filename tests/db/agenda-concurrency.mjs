@@ -60,7 +60,7 @@ const attempts = await Promise.allSettled(
 assert.equal(attempts.filter((value) => value.status === "fulfilled").length, 1);
 assert.match(
   attempts.find((value) => value.status === "rejected").reason.message,
-  /Conflito de reserva/,
+  /Conflito de disponibilidade:.*conflito_pessoa/,
 );
 assert.equal(
   await sql(
@@ -99,7 +99,7 @@ const reschedules = await Promise.allSettled(
 assert.equal(reschedules.filter((value) => value.status === "fulfilled").length, 1);
 assert.match(
   reschedules.find((value) => value.status === "rejected").reason.message,
-  /Conflito de reserva/,
+  /Conflito de disponibilidade:.*conflito_pessoa/,
 );
 assert.equal(
   await sql(

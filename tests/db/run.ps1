@@ -34,7 +34,7 @@ try {
     Save-CatalogFingerprint 'schema-baseline.json'
     return
   }
-  $env:PGTEST_EPHEMERAL = '1'; $env:PGTEST_PORT = "$Port"
+  $env:PGTEST_EPHEMERAL = '1'; $env:PGTEST_PORT = "$Port"; $env:PGTEST_HOST = '127.0.0.1'; $env:PGTEST_DATABASE = 'postgres'
   node "$PSScriptRoot\..\..\scripts\migrations\test-installation.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Clean installation / upgrade / ledger test failed' }
   if ($FingerprintCurrent -or $CaptureFingerprint) { Save-CatalogFingerprint 'schema-local-depois.json' }
@@ -45,6 +45,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'People authorization concurrency test failed' }
     node "$PSScriptRoot\pessoas-identidade.mjs"
     if ($LASTEXITCODE -ne 0) { throw 'People identity review test failed' }
+    node "$PSScriptRoot\equipe-disponibilidade.mjs"
+    if ($LASTEXITCODE -ne 0) { throw 'People availability test failed' }
     return
   }
   Invoke-TestSql "$PSScriptRoot\suprimentos-relacoes.sql"
@@ -137,6 +139,10 @@ try {
   Invoke-TestSql "$PSScriptRoot\almoxarifado-arquivos.sql"
   node "$PSScriptRoot\almoxarifado-concurrency.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Warehouse / acceptance concurrency test failed' }
+  foreach ($scenario in @('equipe-disponibilidade.mjs', 'agenda-basic.mjs', 'agenda-safety.mjs', 'agenda-jobs.mjs', 'agenda-temporal-edge.mjs', 'agenda-series-edge.mjs', 'agenda-edge-concurrency.mjs', 'agenda-anexos.mjs', 'agenda-anexos-concurrency.mjs', 'agenda-list-performance.mjs')) {
+    node (Join-Path $PSScriptRoot $scenario)
+    if ($LASTEXITCODE -ne 0) { throw "Agenda / team test failed: $scenario" }
+  }
 } finally {
   if (Test-Path -LiteralPath "$absoluteRoot\data\postmaster.pid") {
     Start-Process -FilePath (Join-Path $PostgresBin 'pg_ctl.exe') -ArgumentList @('-D', "$absoluteRoot\data", 'stop', '-m', 'fast', '-w') -WindowStyle Hidden -Wait

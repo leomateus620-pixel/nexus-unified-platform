@@ -82,6 +82,9 @@ PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/estudos-concurrency.
 $P -f "$ROOT/tests/db/almoxarifado.sql"
 $P -f "$ROOT/tests/db/almoxarifado-arquivos.sql"
 PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/almoxarifado-concurrency.mjs"
+for SCENARIO in equipe-disponibilidade agenda-basic agenda-safety agenda-jobs agenda-temporal-edge agenda-series-edge agenda-edge-concurrency agenda-anexos agenda-anexos-concurrency agenda-list-performance; do
+  PGTEST_HOST=127.0.0.1 PGTEST_DATABASE=postgres PGTEST_PORT="$PORT" node "$ROOT/tests/db/$SCENARIO.mjs"
+done
 echo "$OUT"
 if echo "$OUT" | grep -q "FALHOU"; then echo "RESULTADO: FALHAS"; exit 1; fi
 echo "RESULTADO: TODOS PASSARAM"

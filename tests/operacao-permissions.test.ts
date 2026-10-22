@@ -39,6 +39,24 @@ describe("paridade das capacidades operacionais", () => {
       "select public.operacao_autor_pode(_org,auth.uid(),_acao);",
     );
   });
+  it("Agenda concede navegação somente aos leitores da matriz operacional vigente", () => {
+    for (const role of [
+      "admin",
+      "comercial",
+      "engenharia",
+      "compras",
+      "financeiro",
+      "campo",
+      "desconhecido",
+      "constructor",
+      "__proto__",
+    ]) {
+      expect(podeVerRota([role], "/agenda-equipe")).toBe(papelAutoriza([role], "ver_operacao"));
+    }
+    expect(podeVerRota([], "/agenda-equipe", ["coordenar_operacao"])).toBe(true);
+    expect(podeVerRota(["campo"], "/agenda-equipe")).toBe(true);
+    expect(papelAutoriza(["campo"], "gerir_operacao")).toBe(false);
+  });
   it("navegação dos novos módulos não concede edição por omissão", () => {
     expect(podeVerRota(["campo"], "/equipe")).toBe(true);
     expect(papelAutoriza(["campo"], "gerir_equipe")).toBe(false);

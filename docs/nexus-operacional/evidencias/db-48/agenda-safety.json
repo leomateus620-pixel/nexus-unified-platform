@@ -1,0 +1,80 @@
+{
+  "database": "postgres",
+  "checks": [
+    {
+      "label": "calendar refuses unbounded civil-date query: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "legacy save cannot silently cancel or expand an externally managed partial custody: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "rejected planning change leaves exact original external custody intact",
+      "result": "passed"
+    },
+    {
+      "label": "explicit Agenda edit cannot adopt a mismatched partial period: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "explicit warehouse release enables legacy calendar replanning",
+      "result": "passed"
+    },
+    {
+      "label": "explicit Agenda adopts only the matching canonical reservation and retains its cancelled predecessor",
+      "result": "passed"
+    },
+    {
+      "label": "replacement custody has the exact explicit new event interval",
+      "result": "passed"
+    },
+    {
+      "label": "legacy omission preserves a canonical planned tool while explicit empty arrays remain removal intent",
+      "result": "passed"
+    },
+    {
+      "label": "late published visit shows qualification expired between planned day and actual start",
+      "result": "passed"
+    },
+    {
+      "label": "actual start revalidates qualification civil date without shifting original window: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "rejected late start preserves planned instants and concurrency version",
+      "result": "passed"
+    },
+    {
+      "label": "current validation flag refuses future completion in organization timezone",
+      "result": "passed"
+    },
+    {
+      "label": "server rejects future completion before qualification validation: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "assigned participant reads current canonical action context",
+      "result": "passed"
+    },
+    {
+      "label": "revoked source assignment removes event detail despite retained participation: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "source revocation also removes immutable history access: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "direct event RLS respects current source assignment",
+      "result": "passed"
+    },
+    {
+      "label": "manager receipt replay is reauthorized after reduction of role and assignment: 42501",
+      "result": "passed"
+    }
+  ],
+  "passed": 18,
+  "allPassed": true,
+  "classification": "PostgreSQL integration in disposable loopback cluster; not connected Auth/Storage/browser E2E"
+}

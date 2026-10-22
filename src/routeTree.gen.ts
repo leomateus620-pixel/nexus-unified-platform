@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAgendaEquipeRouteImport } from './routes/_authenticated/agenda-equipe'
 import { Route as AuthenticatedAlmoxarifadoRouteImport } from './routes/_authenticated/almoxarifado'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
@@ -89,6 +90,12 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAgendaEquipeRoute =
+  AuthenticatedAgendaEquipeRouteImport.update({
+    id: '/agenda-equipe',
+    path: '/agenda-equipe',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAlmoxarifadoRoute =
   AuthenticatedAlmoxarifadoRouteImport.update({
     id: '/almoxarifado',
@@ -407,6 +414,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comercial': typeof AuthenticatedComercialRouteWithChildren
@@ -462,6 +470,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
@@ -513,6 +522,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/_authenticated/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/_authenticated/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
@@ -572,6 +582,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/agenda-equipe'
     | '/almoxarifado'
     | '/clientes'
     | '/comercial'
@@ -627,6 +638,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/agenda-equipe'
     | '/almoxarifado'
     | '/clientes'
     | '/documentacao'
@@ -677,6 +689,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/_authenticated/agenda-equipe'
     | '/_authenticated/almoxarifado'
     | '/_authenticated/clientes'
     | '/_authenticated/comercial'
@@ -775,6 +788,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/agenda-equipe': {
+      id: '/_authenticated/agenda-equipe'
+      path: '/agenda-equipe'
+      fullPath: '/agenda-equipe'
+      preLoaderRoute: typeof AuthenticatedAgendaEquipeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/almoxarifado': {
@@ -1290,6 +1310,7 @@ const AuthenticatedProjetosRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAgendaEquipeRoute: typeof AuthenticatedAgendaEquipeRoute
   AuthenticatedAlmoxarifadoRoute: typeof AuthenticatedAlmoxarifadoRoute
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
@@ -1311,6 +1332,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAgendaEquipeRoute: AuthenticatedAgendaEquipeRoute,
   AuthenticatedAlmoxarifadoRoute: AuthenticatedAlmoxarifadoRoute,
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,

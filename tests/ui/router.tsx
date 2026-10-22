@@ -30,6 +30,14 @@ const routeSearchKeys = [
   "competencia",
   "qualificacao",
   "pessoaFiltro",
+  "data",
+  "vista",
+  "foco",
+  "tipo",
+  "evento",
+  "dia",
+  "fuso",
+  "pendentesEquipe",
 ];
 let search = Object.fromEntries(
   [...new URLSearchParams(location.search)].filter(([key]) => routeSearchKeys.includes(key)),
@@ -64,6 +72,7 @@ export function useFixturePage() {
   );
 }
 const operationalPaths = {
+  "agenda-equipe": "/agenda-equipe",
   almoxarifado: "/almoxarifado",
   engenharia: "/engenharia",
   levantamentos: "/levantamentos",

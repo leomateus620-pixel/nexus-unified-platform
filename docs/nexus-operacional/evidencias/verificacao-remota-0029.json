@@ -1,0 +1,19 @@
+{
+  "method": "Connected catalog and private ledger metadata only; no operational fixtures or user E2E.",
+  "rows": [
+    {
+      "anonymous_list": false,
+      "applied": [
+        {
+          "applied_at": "2026-10-22T18:49:32.296862+00:00",
+          "path": "drizzle/migrations/0029_agenda_listagem_performance.sql",
+          "position": 48,
+          "sha256": "d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70"
+        }
+      ],
+      "checked_at": "2026-10-22 18:49:52.913809+00",
+      "independent_manager_fast_path": true,
+      "ledger_count": 48
+    }
+  ]
+}

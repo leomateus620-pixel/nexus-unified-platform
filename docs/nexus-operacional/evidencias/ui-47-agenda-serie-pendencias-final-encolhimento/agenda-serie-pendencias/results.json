@@ -1,0 +1,50 @@
+{
+  "method": "Actual source and synthetic DTO-only transport. Not SQL materialization, connected Auth/RLS, jobs, production persistence or physical-device evidence.",
+  "layouts": [
+    {
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "blocked date/code/reason differs from skipped DST occurrence and series backlog",
+      "pass": true
+    },
+    {
+      "name": "existing authorized reprocess command sends series version and refreshes observability",
+      "pass": true
+    },
+    {
+      "name": "current denial of series observability removes cached rows and private detail",
+      "pass": true
+    },
+    {
+      "name": "a reduced pending total on page two keeps a usable return to page one",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "success": true
+}

@@ -20,6 +20,7 @@ import { RecordFiles } from "./RecordFiles";
 import { useOperationalAccess, type OperationalAccess } from "./access";
 import { captureOperationalContinuation } from "./continuation";
 import { acessoPessoaNegado, PESSOA_ACESSO_INDISPONIVEL } from "./pessoas-domain";
+import { IndisponibilidadesPessoa } from "@/features/pessoas-competencias/disponibilidade/IndisponibilidadesPessoa";
 
 export type PessoasSearch = { busca: string; pagina: number; arquivadas: boolean; pessoa: string };
 const personKey = (org: string, id: string) => ["pessoas", org, "ficha", id] as const;
@@ -416,6 +417,14 @@ function PessoasContent({
                           <RecordFiles
                             key={selected.id}
                             pai={{ organization_id: orgId, pessoa_id: selected.id }}
+                          />
+                          <IndisponibilidadesPessoa
+                            key={`disponibilidade:${selected.id}`}
+                            orgId={orgId}
+                            userId={userId}
+                            pessoaId={selected.id}
+                            nome={selected.nome}
+                            ativa={selected.ativa}
                           />
                         </div>
                       </Section>

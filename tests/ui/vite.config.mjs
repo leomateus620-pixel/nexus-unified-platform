@@ -64,6 +64,17 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
+          /\/agenda-equipe\/(?:agenda|serie-pendencias)\.functions(?:\.ts)?$/.test(id) ||
+          (["./agenda.functions", "./serie-pendencias.functions"].includes(id) &&
+            /\/agenda-equipe\//.test(importer || ""))
+        )
+          return path.join(root, "agenda-server.ts");
+        if (
+          /\/pessoas-competencias\/disponibilidade\/functions(?:\.ts)?$/.test(id) ||
+          (id === "./functions" && /\/pessoas-competencias\/disponibilidade\//.test(importer || ""))
+        )
+          return path.join(root, "disponibilidade-server.ts");
+        if (
           /\/pessoas-competencias\/(equipes|qualificacoes)\/functions(?:\.ts)?$/.test(id) ||
           (id === "./functions" &&
             /\/pessoas-competencias\/(equipes|qualificacoes)\//.test(importer || ""))

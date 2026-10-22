@@ -1,0 +1,825 @@
+{
+  "method": "Real public.ag_listar and public.ag_obter as authenticated organization admin; loopback client roundtrip, sequential warm workload. Direct synthetic read-model fixture only, transaction rolled back. No scheduling algorithm model, production traffic, network deployment, concurrent-user load or production latency claim.",
+  "database": "agenda47_1792693775173",
+  "host": "127.0.0.1",
+  "port": 55480,
+  "captured_at": "2026-10-22T18:40:55.382Z",
+  "source_sql_sha256": "21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b",
+  "environment": {
+    "os": "win32 10.0.26200 x64",
+    "cpu": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logical_cpus": 4,
+    "memory_gib": 7.8,
+    "node": "v24.15.0",
+    "postgres": "16.15"
+  },
+  "fixture": {
+    "events": 10000,
+    "civil_days": 90,
+    "people": 40,
+    "participant_rows": 10000,
+    "revision_rows": 10000,
+    "type": "reuniao",
+    "state": "publicado",
+    "blocks_resources": false,
+    "origin": "independent",
+    "visibility": "participantes",
+    "measured_role": "authenticated/admin",
+    "resources": 0,
+    "recurring_series": 0,
+    "comments": 0,
+    "attachments": 0,
+    "setup_only_trigger_bypass": "SET LOCAL session_replication_role=replica during direct bulk fixture loading only; restored to origin before measured reads. CHECK constraints remain enabled; parent references verified after load. This benchmark does not measure canonical writes or their guards."
+  },
+  "optimization_sql_sha256": "d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70",
+  "warmups_per_phase": 3,
+  "phases": {
+    "before": {
+      "samples": [
+        {
+          "index": 1,
+          "inicio": "2026-10-22",
+          "fim": "2026-10-29",
+          "total": 784,
+          "returned": 50,
+          "list_ms": 2387.355,
+          "detail_ms": 25.526
+        },
+        {
+          "index": 2,
+          "inicio": "2026-10-25",
+          "fim": "2026-11-01",
+          "total": 784,
+          "returned": 50,
+          "list_ms": 2254.109,
+          "detail_ms": 23.98
+        },
+        {
+          "index": 3,
+          "inicio": "2026-10-28",
+          "fim": "2026-11-04",
+          "total": 781,
+          "returned": 50,
+          "list_ms": 2314.971,
+          "detail_ms": 18.364
+        },
+        {
+          "index": 4,
+          "inicio": "2026-10-31",
+          "fim": "2026-11-07",
+          "total": 778,
+          "returned": 50,
+          "list_ms": 1576.495,
+          "detail_ms": 21.583
+        },
+        {
+          "index": 5,
+          "inicio": "2026-11-03",
+          "fim": "2026-11-10",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2321.639,
+          "detail_ms": 20.046
+        },
+        {
+          "index": 6,
+          "inicio": "2026-11-06",
+          "fim": "2026-11-13",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2404.121,
+          "detail_ms": 35.704
+        },
+        {
+          "index": 7,
+          "inicio": "2026-11-09",
+          "fim": "2026-11-16",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2344.556,
+          "detail_ms": 24.4
+        },
+        {
+          "index": 8,
+          "inicio": "2026-11-12",
+          "fim": "2026-11-19",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2296.823,
+          "detail_ms": 23.091
+        },
+        {
+          "index": 9,
+          "inicio": "2026-11-15",
+          "fim": "2026-11-22",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2714.27,
+          "detail_ms": 84.211
+        },
+        {
+          "index": 10,
+          "inicio": "2026-11-18",
+          "fim": "2026-11-25",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2428.302,
+          "detail_ms": 20.771
+        },
+        {
+          "index": 11,
+          "inicio": "2026-11-21",
+          "fim": "2026-11-28",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2582.785,
+          "detail_ms": 19.219
+        },
+        {
+          "index": 12,
+          "inicio": "2026-11-24",
+          "fim": "2026-12-01",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2424.999,
+          "detail_ms": 19.565
+        },
+        {
+          "index": 13,
+          "inicio": "2026-11-27",
+          "fim": "2026-12-04",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1079.596,
+          "detail_ms": 16.824
+        },
+        {
+          "index": 14,
+          "inicio": "2026-11-30",
+          "fim": "2026-12-07",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2503.252,
+          "detail_ms": 20.088
+        },
+        {
+          "index": 15,
+          "inicio": "2026-12-03",
+          "fim": "2026-12-10",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 2433.228,
+          "detail_ms": 20.835
+        },
+        {
+          "index": 16,
+          "inicio": "2026-12-06",
+          "fim": "2026-12-13",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1241.314,
+          "detail_ms": 13.684
+        },
+        {
+          "index": 17,
+          "inicio": "2026-12-09",
+          "fim": "2026-12-16",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1089.243,
+          "detail_ms": 16.667
+        },
+        {
+          "index": 18,
+          "inicio": "2026-12-12",
+          "fim": "2026-12-19",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1684.118,
+          "detail_ms": 14.853
+        },
+        {
+          "index": 19,
+          "inicio": "2026-12-15",
+          "fim": "2026-12-22",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1344.817,
+          "detail_ms": 15.669
+        },
+        {
+          "index": 20,
+          "inicio": "2026-12-18",
+          "fim": "2026-12-25",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1557.657,
+          "detail_ms": 14.939
+        },
+        {
+          "index": 21,
+          "inicio": "2026-12-21",
+          "fim": "2026-12-28",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 980.643,
+          "detail_ms": 16.447
+        },
+        {
+          "index": 22,
+          "inicio": "2026-12-24",
+          "fim": "2026-12-31",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 945.945,
+          "detail_ms": 13.271
+        },
+        {
+          "index": 23,
+          "inicio": "2026-12-27",
+          "fim": "2027-01-03",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1638.01,
+          "detail_ms": 20.298
+        },
+        {
+          "index": 24,
+          "inicio": "2026-12-30",
+          "fim": "2027-01-06",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1413.729,
+          "detail_ms": 12.818
+        },
+        {
+          "index": 25,
+          "inicio": "2027-01-02",
+          "fim": "2027-01-09",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 922.811,
+          "detail_ms": 13.349
+        },
+        {
+          "index": 26,
+          "inicio": "2027-01-05",
+          "fim": "2027-01-12",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1535.868,
+          "detail_ms": 15.196
+        },
+        {
+          "index": 27,
+          "inicio": "2027-01-08",
+          "fim": "2027-01-15",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1088.832,
+          "detail_ms": 15.891
+        },
+        {
+          "index": 28,
+          "inicio": "2027-01-11",
+          "fim": "2027-01-18",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1929.554,
+          "detail_ms": 14.742
+        },
+        {
+          "index": 29,
+          "inicio": "2026-10-23",
+          "fim": "2026-10-30",
+          "total": 784,
+          "returned": 50,
+          "list_ms": 1337.793,
+          "detail_ms": 13.378
+        },
+        {
+          "index": 30,
+          "inicio": "2026-10-26",
+          "fim": "2026-11-02",
+          "total": 783,
+          "returned": 50,
+          "list_ms": 1131.683,
+          "detail_ms": 18.595
+        }
+      ],
+      "explains": [
+        {
+          "scope": "Outer public API plan; PL/pgSQL nested plans are not expanded by this EXPLAIN",
+          "list": [
+            {
+              "QUERY PLAN": [
+                {
+                  "Plan": {
+                    "Node Type": "Result",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.26,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Actual Startup Time": 1905.199,
+                    "Actual Total Time": 1905.318,
+                    "Actual Rows": 1,
+                    "Actual Loops": 1,
+                    "Output": [
+                      "ag_listar('1fa95fd8-fb60-4639-8b32-0d1e78c79403'::uuid, '2026-10-22'::date, '2026-10-29'::date, 'America/Sao_Paulo'::text, false, ''::text, NULL::text, NULL::text, NULL::uuid, 0, 50)"
+                    ],
+                    "Shared Hit Blocks": 31052,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning": {
+                    "Shared Hit Blocks": 0,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning Time": 0.019,
+                  "Triggers": [],
+                  "Execution Time": 1905.334
+                }
+              ]
+            }
+          ],
+          "detail": [
+            {
+              "QUERY PLAN": [
+                {
+                  "Plan": {
+                    "Node Type": "Result",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.26,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Actual Startup Time": 23.297,
+                    "Actual Total Time": 23.297,
+                    "Actual Rows": 1,
+                    "Actual Loops": 1,
+                    "Output": [
+                      "ag_obter('1fa95fd8-fb60-4639-8b32-0d1e78c79403'::uuid, '0168b3ad-abaa-4760-82ed-326c1a737d51'::uuid)"
+                    ],
+                    "Shared Hit Blocks": 240,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning": {
+                    "Shared Hit Blocks": 0,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning Time": 0.019,
+                  "Triggers": [],
+                  "Execution Time": 23.311
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "list": {
+        "count": 30,
+        "p50_ms": 1638.01,
+        "p95_ms": 2582.78,
+        "min_ms": 922.81,
+        "max_ms": 2714.27
+      },
+      "detail": {
+        "count": 30,
+        "p50_ms": 18.36,
+        "p95_ms": 35.7,
+        "min_ms": 12.82,
+        "max_ms": 84.21
+      }
+    },
+    "after": {
+      "samples": [
+        {
+          "index": 1,
+          "inicio": "2026-10-22",
+          "fim": "2026-10-29",
+          "total": 784,
+          "returned": 50,
+          "list_ms": 369.093,
+          "detail_ms": 16.924
+        },
+        {
+          "index": 2,
+          "inicio": "2026-10-25",
+          "fim": "2026-11-01",
+          "total": 784,
+          "returned": 50,
+          "list_ms": 427.196,
+          "detail_ms": 15.721
+        },
+        {
+          "index": 3,
+          "inicio": "2026-10-28",
+          "fim": "2026-11-04",
+          "total": 781,
+          "returned": 50,
+          "list_ms": 318.405,
+          "detail_ms": 13.472
+        },
+        {
+          "index": 4,
+          "inicio": "2026-10-31",
+          "fim": "2026-11-07",
+          "total": 778,
+          "returned": 50,
+          "list_ms": 398.951,
+          "detail_ms": 14.112
+        },
+        {
+          "index": 5,
+          "inicio": "2026-11-03",
+          "fim": "2026-11-10",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 323.807,
+          "detail_ms": 15.434
+        },
+        {
+          "index": 6,
+          "inicio": "2026-11-06",
+          "fim": "2026-11-13",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 413.429,
+          "detail_ms": 19.269
+        },
+        {
+          "index": 7,
+          "inicio": "2026-11-09",
+          "fim": "2026-11-16",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 940.586,
+          "detail_ms": 35.292
+        },
+        {
+          "index": 8,
+          "inicio": "2026-11-12",
+          "fim": "2026-11-19",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 749.538,
+          "detail_ms": 20.248
+        },
+        {
+          "index": 9,
+          "inicio": "2026-11-15",
+          "fim": "2026-11-22",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 490.107,
+          "detail_ms": 20.006
+        },
+        {
+          "index": 10,
+          "inicio": "2026-11-18",
+          "fim": "2026-11-25",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 738.418,
+          "detail_ms": 28.621
+        },
+        {
+          "index": 11,
+          "inicio": "2026-11-21",
+          "fim": "2026-11-28",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 828.764,
+          "detail_ms": 18.924
+        },
+        {
+          "index": 12,
+          "inicio": "2026-11-24",
+          "fim": "2026-12-01",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 488.811,
+          "detail_ms": 126.48
+        },
+        {
+          "index": 13,
+          "inicio": "2026-11-27",
+          "fim": "2026-12-04",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 736.574,
+          "detail_ms": 15.5
+        },
+        {
+          "index": 14,
+          "inicio": "2026-11-30",
+          "fim": "2026-12-07",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 436.408,
+          "detail_ms": 21.104
+        },
+        {
+          "index": 15,
+          "inicio": "2026-12-03",
+          "fim": "2026-12-10",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 888.955,
+          "detail_ms": 22.355
+        },
+        {
+          "index": 16,
+          "inicio": "2026-12-06",
+          "fim": "2026-12-13",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 535.808,
+          "detail_ms": 20.035
+        },
+        {
+          "index": 17,
+          "inicio": "2026-12-09",
+          "fim": "2026-12-16",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 867.623,
+          "detail_ms": 20.289
+        },
+        {
+          "index": 18,
+          "inicio": "2026-12-12",
+          "fim": "2026-12-19",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 410.053,
+          "detail_ms": 15.51
+        },
+        {
+          "index": 19,
+          "inicio": "2026-12-15",
+          "fim": "2026-12-22",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 459.423,
+          "detail_ms": 58.757
+        },
+        {
+          "index": 20,
+          "inicio": "2026-12-18",
+          "fim": "2026-12-25",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 614.738,
+          "detail_ms": 14.723
+        },
+        {
+          "index": 21,
+          "inicio": "2026-12-21",
+          "fim": "2026-12-28",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 424.174,
+          "detail_ms": 17.755
+        },
+        {
+          "index": 22,
+          "inicio": "2026-12-24",
+          "fim": "2026-12-31",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1011.536,
+          "detail_ms": 25.214
+        },
+        {
+          "index": 23,
+          "inicio": "2026-12-27",
+          "fim": "2027-01-03",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 689.464,
+          "detail_ms": 21.452
+        },
+        {
+          "index": 24,
+          "inicio": "2026-12-30",
+          "fim": "2027-01-06",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 1307.905,
+          "detail_ms": 23.121
+        },
+        {
+          "index": 25,
+          "inicio": "2027-01-02",
+          "fim": "2027-01-09",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 653.587,
+          "detail_ms": 19.576
+        },
+        {
+          "index": 26,
+          "inicio": "2027-01-05",
+          "fim": "2027-01-12",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 886.356,
+          "detail_ms": 21.276
+        },
+        {
+          "index": 27,
+          "inicio": "2027-01-08",
+          "fim": "2027-01-15",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 717.025,
+          "detail_ms": 20.105
+        },
+        {
+          "index": 28,
+          "inicio": "2027-01-11",
+          "fim": "2027-01-18",
+          "total": 777,
+          "returned": 50,
+          "list_ms": 342.361,
+          "detail_ms": 16.216
+        },
+        {
+          "index": 29,
+          "inicio": "2026-10-23",
+          "fim": "2026-10-30",
+          "total": 784,
+          "returned": 50,
+          "list_ms": 665.781,
+          "detail_ms": 14.862
+        },
+        {
+          "index": 30,
+          "inicio": "2026-10-26",
+          "fim": "2026-11-02",
+          "total": 783,
+          "returned": 50,
+          "list_ms": 277.63,
+          "detail_ms": 13.615
+        }
+      ],
+      "explains": [
+        {
+          "scope": "Outer public API plan; PL/pgSQL nested plans are not expanded by this EXPLAIN",
+          "list": [
+            {
+              "QUERY PLAN": [
+                {
+                  "Plan": {
+                    "Node Type": "Result",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.26,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Actual Startup Time": 782.941,
+                    "Actual Total Time": 782.946,
+                    "Actual Rows": 1,
+                    "Actual Loops": 1,
+                    "Output": [
+                      "ag_listar('1fa95fd8-fb60-4639-8b32-0d1e78c79403'::uuid, '2026-10-22'::date, '2026-10-29'::date, 'America/Sao_Paulo'::text, false, ''::text, NULL::text, NULL::text, NULL::uuid, 0, 50)"
+                    ],
+                    "Shared Hit Blocks": 20860,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning": {
+                    "Shared Hit Blocks": 0,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning Time": 0.021,
+                  "Triggers": [],
+                  "Execution Time": 782.961
+                }
+              ]
+            }
+          ],
+          "detail": [
+            {
+              "QUERY PLAN": [
+                {
+                  "Plan": {
+                    "Node Type": "Result",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.26,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Actual Startup Time": 24.407,
+                    "Actual Total Time": 24.407,
+                    "Actual Rows": 1,
+                    "Actual Loops": 1,
+                    "Output": [
+                      "ag_obter('1fa95fd8-fb60-4639-8b32-0d1e78c79403'::uuid, '0168b3ad-abaa-4760-82ed-326c1a737d51'::uuid)"
+                    ],
+                    "Shared Hit Blocks": 226,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning": {
+                    "Shared Hit Blocks": 0,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  },
+                  "Planning Time": 0.019,
+                  "Triggers": [],
+                  "Execution Time": 24.419
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "list": {
+        "count": 30,
+        "p50_ms": 535.81,
+        "p95_ms": 1011.54,
+        "min_ms": 277.63,
+        "max_ms": 1307.9
+      },
+      "detail": {
+        "count": 30,
+        "p50_ms": 19.58,
+        "p95_ms": 58.76,
+        "min_ms": 13.47,
+        "max_ms": 126.48
+      }
+    }
+  },
+  "rollback_confirmed": true,
+  "catalog_functions_sha256": "87e237ea27cc1a5323f08cf3f487d864ae32eea3f46182eda0e01a3868ab2bd0",
+  "optimized_catalog_functions_sha256": "8ec02770979a7cef7fcd2f809638a8985eb3bbb715482fdb2edfc76d35c20a56",
+  "list_output_parity": true,
+  "restored_catalog_functions_sha256": "87e237ea27cc1a5323f08cf3f487d864ae32eea3f46182eda0e01a3868ab2bd0"
+}

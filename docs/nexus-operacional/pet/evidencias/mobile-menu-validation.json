@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-23",
+  "method": "CUA, interface real com fronteiras de teste do laboratório existente",
+  "url": "http://127.0.0.1:4197/?page=equipe",
+  "viewport_css": { "width": 390, "height": 844 },
+  "steps": [
+    "Abrir menu",
+    "Buscar engenharia e conferir o resultado",
+    "Limpar a busca",
+    "Abrir explicitamente o grupo Operação",
+    "Conferir Execução / OS visível",
+    "Conferir módulos indisponíveis ausentes",
+    "Escape e foco devolvido a Abrir menu"
+  ],
+  "observed": {
+    "operacao_expanded": true,
+    "execucao_visible": true,
+    "incomplete_links": [],
+    "horizontal_overflow": false,
+    "escape_restores_trigger_focus": true
+  },
+  "scope": "Corrige a precondição do teste de navegação após habilitação de Execução. Não altera a interface da aplicação nem substitui a suíte CI completa.",
+  "screenshot": "mobile-menu-operacao.png"
+}

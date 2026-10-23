@@ -1,0 +1,205 @@
+{
+  "context": "Disposable PostgreSQL local catalogue only; no remote DML",
+  "tables": [
+    {
+      "relname": "ordens_servico",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "os_apontamentos",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "os_participantes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_assinatura_callbacks",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_assinatura_integracoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_assinaturas",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_avaliacoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_documentos",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_espacos",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_eventos_operacionais",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_eventos_presenca",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_intervalos",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_leituras",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_modelo_versoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_modelos",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_participantes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_permissoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_prorrogacoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_relatorio_jobs",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_responsaveis_tecnicos",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_respostas",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_retificacao_decisoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_retificacoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    },
+    {
+      "relname": "pet_revisoes",
+      "relrowsecurity": true,
+      "inserir": false,
+      "alterar": false,
+      "excluir": false
+    }
+  ],
+  "restrictedFunctions": [
+    {
+      "assinatura": "pet_executar_ate31(uuid,jsonb)",
+      "anon": false,
+      "authenticated": false,
+      "service_role": false
+    },
+    {
+      "assinatura": "pet_intervalos_efetivos(uuid,uuid)",
+      "anon": false,
+      "authenticated": false,
+      "service_role": false
+    },
+    {
+      "assinatura": "pet_obter_ate31(uuid,uuid)",
+      "anon": false,
+      "authenticated": false,
+      "service_role": false
+    },
+    {
+      "assinatura": "pet_retificacao_validar(uuid,uuid,uuid,timestamp with time zone)",
+      "anon": false,
+      "authenticated": false,
+      "service_role": false
+    },
+    {
+      "assinatura": "pet_validar_assinatura(uuid,uuid,text,text,jsonb)",
+      "anon": false,
+      "authenticated": false,
+      "service_role": true
+    }
+  ]
+}

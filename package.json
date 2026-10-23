@@ -54,7 +54,9 @@
     "test:db": "bash tests/db/run.sh",
     "test:agenda": "vitest run --config tests/vitest.agenda.config.ts",
     "test:ui:agenda": "node tests/ui/run.mjs --agenda",
-    "test:ui:disponibilidade": "node tests/ui/run.mjs --disponibilidade"
+    "test:ui:disponibilidade": "node tests/ui/run.mjs --disponibilidade",
+    "test:pet": "vitest run --config tests/vitest.pet.config.ts",
+    "dev:pet-lab": "vite --config tests/pet-ui/vite.config.mjs"
   },
   "overrides": {
     "rolldown": "1.2.1"
@@ -103,6 +105,7 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.575.0",
+    "pdf-lib": "1.17.1",
     "pdfjs-dist": "6.4.299",
     "react": "19.2.8",
     "react-day-picker": "^9.14.0",

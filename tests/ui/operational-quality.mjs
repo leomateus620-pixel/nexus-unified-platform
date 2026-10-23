@@ -128,7 +128,7 @@ try {
     await page.getByRole("button", { name: "Descartar alterações", exact: true }).click();
   });
   await check(
-    "mobile navigation search excludes incomplete modules and restores focus",
+    "mobile navigation search preserves available modules, excludes incomplete ones and restores focus",
     async () => {
       await go("equipe");
       const trigger = page.getByRole("button", { name: "Abrir menu", exact: true });
@@ -143,13 +143,15 @@ try {
         page.locator(".nx-mobile-menu").getByRole("link", { name: "Clientes", exact: true }),
       ).toHaveCount(0);
       await page.getByRole("searchbox", { name: "Buscar funcionalidade", exact: true }).fill("");
-      for (const href of [
-        "/execucao",
-        "/inspecoes",
-        "/documentacao",
-        "/seguranca",
-        "/projetos-engenharia",
-      ]) {
+      const operationGroup = page
+        .locator(".nx-mobile-menu")
+        .getByRole("button", { name: "Operação", exact: true });
+      await expect(operationGroup).toBeVisible();
+      if ((await operationGroup.getAttribute("aria-expanded")) !== "true")
+        await operationGroup.click();
+      await expect(operationGroup).toHaveAttribute("aria-expanded", "true");
+      await expect(page.locator('.nx-mobile-menu a[href="/execucao"]')).toBeVisible();
+      for (const href of ["/inspecoes", "/documentacao", "/seguranca", "/projetos-engenharia"]) {
         await expect(page.locator(`.nx-mobile-menu a[href="${href}"]`)).toHaveCount(0);
       }
       await expect(

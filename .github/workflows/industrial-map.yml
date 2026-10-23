@@ -22,6 +22,7 @@ jobs:
       - run: bun run test:operacional
       - run: bun run test:pessoas
       - run: bun run test:agenda
+      - run: bun run test:pet
       - run: bun run test:levantamentos
       - run: bun run test:estudos
       - run: bun run test:almoxarifado

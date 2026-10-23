@@ -1,0 +1,21 @@
+PET CORRECTION PASS endpoint sem capacidade operacional é recusado
+PET CORRECTION PASS tolerância máxima do procedimento é reavaliada
+PET CORRECTION PASS saída não pode preceder entrada corrigida
+PET CORRECTION PASS sobreposição com outro intervalo individual é recusada
+PET CORRECTION PASS evidência deve estar confirmada na mesma PET
+PET CORRECTION PASS solicitar correção não altera tempo oficial
+PET CORRECTION PASS retry da proposta não duplica registro
+PET CORRECTION PASS DML direto não fabrica correção
+PET CORRECTION PASS solicitante não aprova sua própria correção
+PET CORRECTION PASS registrante original não aprova correção do próprio evento
+PET CORRECTION PASS decisão independente vincula revisão formal por FK
+PET CORRECTION PASS tempo oficial aplica overlay aprovado em segundos
+PET CORRECTION PASS consulta distingue horário original do efetivo
+PET CORRECTION PASS retry decisão mantém um efeito
+PET CORRECTION PASS decisão sobre base alterada exige nova proposta
+PET CORRECTION PASS evento original permanece intocado
+PET CORRECTION PASS decisão aprovada é imutável até para serviço
+PET CORRECTION PASS correção não simula assinatura ou conclusão documental
+PET CORRECTION PASS snapshot final a assinar inclui correção e intervalos efetivos
+PET CORRECTION PASS depois do snapshot final exige aditamento certificado próprio
+PET CORRECTION DB 20 assertions passed; provider/certificates not exercised.

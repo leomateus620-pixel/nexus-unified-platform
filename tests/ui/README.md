@@ -46,8 +46,11 @@ Os perfis simulam respostas autorizadas e restritas, não exercitam autenticaç�
 A carga count=17 tem 21 componentes e 17 sistemas; 100/500 preservam a quantidade indicada. capture.mjs aceita catalog-before e catalog-after. NEXUS_UI_PHASE=visual preserva a medição anterior; performance mede novamente. catalog-checks.mjs verifica a fila, edições durante gravação, retry, seleção filtrada e a prévia de colagem.
 
 O comparador de contratos usa a base 5286881c e enumera a exceção de coordenação de salvamento. Fórmulas, rotas, guards, migrations anteriores e transições comerciais/operacionais continuam protegidos. Os testes SQL de checkpoint estão em tests/db; no Windows, executar run.ps1 com -PostgresBin apontando para um runtime PostgreSQL isolado.
+
 # Qualidade operacional
 
 `npm run test:ui:operacional` inicia um servidor isolado e executa seis larguras, formulários, foco, recuperação de falhas, busca persistida na biblioteca, paridade do shell e contraste selecionado. A mesma suíte integra `npm run test:ui`. Use `NEXUS_UI_PORT` para outra porta e `NEXUS_UI_EVIDENCE_DIR` para salvar uma rodada sem sobrescrever evidências anteriores.
 
 Os adapters aplicam contratos `validateSearch` reais (função ou schema) e substituem somente fronteiras externas. Fixtures continuam exclusivas do laboratório; screenshots não comprovam banco/Auth/Storage conectados.
+
+O histórico de PETs incorporado à ficha da unidade usa `pet-server.ts` neste laboratório: consulta vazia no contexto autorizado de teste, sem PETs, assinaturas ou documentos inventados. Mutações e documentos falham explicitamente como operações não cobertas. O resolver substitui somente as funções de `src/features/pet/`; o código de aplicação permanece intacto. A navegação móvel verifica que Execução / OS está disponível ao papel do cenário, preservando a ausência dos demais módulos incompletos. A execução PET com banco controlado possui laboratório próprio em `tests/pet-ui`, separado da validação de Auth/Storage e assinatura reais.

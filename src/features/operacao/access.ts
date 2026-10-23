@@ -34,6 +34,8 @@ export function useOperationalAccess(org: string, user: string) {
               "almoxarifado",
               "almoxarifado-opcoes",
               "agenda-equipe",
+              "pet",
+              "pet-opcoes",
             ].includes(String(q.queryKey[0])),
         };
         await client.cancelQueries(sensitive);

@@ -1,0 +1,32 @@
+{
+  "scope": "Correção da fronteira PET no laboratório operacional de interface",
+  "production_application_changed": false,
+  "build": {
+    "command": "vite build --config tests/ui/vite.config.mjs --outDir /tmp/nexus-ui-pet-build --emptyOutDir",
+    "exit_code": 0,
+    "modules_transformed": 2010
+  },
+  "lint": {
+    "command": "eslint tests/ui/pet-server.ts tests/ui/vite.config.mjs tests/ui/operational-quality.mjs",
+    "exit_code": 0
+  },
+  "startup": {
+    "command": "vite --config tests/ui/vite.config.mjs --host 127.0.0.1 --port 4197",
+    "ready": true,
+    "http_smoke_exit_code": 0,
+    "http_200": [
+      "/?page=clientes",
+      "/main.tsx",
+      "src/features/pet/ExecucaoWorkspace.tsx (módulo transformado)",
+      "/pet-server.ts"
+    ],
+    "pet_import_resolves_to_test_boundary": true,
+    "server_stopped_by_operator": true
+  },
+  "navigation_assertion": "O teste agora exige /execucao visível para o papel autorizado e preserva os demais módulos incompletos ocultos.",
+  "limits": [
+    "A suíte completa de interações em navegador não foi executada nesta verificação; o CI deve executá-la.",
+    "Lista/opções PET vazias pertencem ao contexto sintético autorizado do laboratório.",
+    "Mutações e documentos PET falham explicitamente como não cobertos; esta evidência não valida Auth, SQL, Storage ou assinatura reais."
+  ]
+}

@@ -195,6 +195,22 @@
     {
       "path": "drizzle/migrations/0029_agenda_listagem_performance.sql",
       "sha256": "d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70"
+    },
+    {
+      "path": "drizzle/migrations/0030_pet_digital.sql",
+      "sha256": "d2e8365cc1d32cc55456e29ae5b8eec769919239a86e7d6aaac43fa783e15317"
+    },
+    {
+      "path": "drizzle/migrations/0031_pet_anexos.sql",
+      "sha256": "99fa268411a31fc25fde9a57a18893fa96c2ee39574e4d44e863e7442525c8ea"
+    },
+    {
+      "path": "drizzle/migrations/0032_pet_retificacoes.sql",
+      "sha256": "28d3704be2b57dcbf082433c1bcf10cbea972505239bf3abc3c8d7411b3ecba8"
+    },
+    {
+      "path": "drizzle/migrations/0033_pet_relatorios.sql",
+      "sha256": "4d9164d3f1766488ee8d13fc981adc0e7edb497898851abb259bdddb19eb8a2f"
     }
   ]
 }

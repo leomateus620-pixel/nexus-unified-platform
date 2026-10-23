@@ -64,6 +64,12 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
+          /\/features\/pet\/(?:pet|documentos|retificacoes)\.functions(?:\.ts)?$/.test(id) ||
+          (/^\.\/(?:pet|documentos|retificacoes)\.functions(?:\.ts)?$/.test(id) &&
+            /\/features\/pet\//.test(importer || ""))
+        )
+          return path.join(root, "pet-server.ts");
+        if (
           /\/agenda-equipe\/(?:agenda|serie-pendencias)\.functions(?:\.ts)?$/.test(id) ||
           (["./agenda.functions", "./serie-pendencias.functions"].includes(id) &&
             /\/agenda-equipe\//.test(importer || ""))

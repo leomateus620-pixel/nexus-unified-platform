@@ -1,0 +1,202 @@
+{
+  "head_sha": "fd09531b4f71277efe351a30d768a4fb18e97287",
+  "run_id": 39955292589,
+  "url": "https://github.com/leomateus620-pixel/nexus-unified-platform/actions/runs/39955292589",
+  "job": {
+    "id": 120419519738,
+    "name": "verify",
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 39955292589,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Run actions/checkout@v7.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Run actions/setup-node@v7.0.0",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Run oven-sh/setup-bun@v2",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Run bun install --frozen-lockfile",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Run bun run typecheck",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Run bun run test:orcamento",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Run bun run test:operacional",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Run bun run test:pessoas",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Run bun run test:agenda",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Run bun run test:pet",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Run bun run test:levantamentos",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Run bun run test:estudos",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13
+      },
+      {
+        "name": "Run bun run test:almoxarifado",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14
+      },
+      {
+        "name": "Run bun run test:pe:arquivos",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Run bun run test:pe:leitor",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16
+      },
+      {
+        "name": "Run sudo apt-get update && sudo apt-get install -y postgresql",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17
+      },
+      {
+        "name": "Run PATH=\"$(ls -d /usr/lib/postgresql/*/bin | tail -1):$PATH\" bun run test:db",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 18
+      },
+      {
+        "name": "Run bun run test:industrial",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19
+      },
+      {
+        "name": "Run bun run test:trevisan",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 20
+      },
+      {
+        "name": "Run node scripts/audit-industrial-geometry.mjs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 21
+      },
+      {
+        "name": "Run bun run test:industrial:cad",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 22
+      },
+      {
+        "name": "Run bunx eslint src/industrial src/routes/mapas-3d.tsx tests/industrial playwright.industrial.config.ts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 23
+      },
+      {
+        "name": "Run bunx eslint src/trevisan src/routes/mapas-3d_.trevisan.tsx src/routes/mapas-3d_.unidades.tsx src/routes/__root.tsx tests/trevisan.test.mjs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24
+      },
+      {
+        "name": "Run bunx eslint src/features tests/calculo.test.ts tests/planilha.test.ts tests/autorizacao.test.ts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25
+      },
+      {
+        "name": "Run bun run build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 26
+      },
+      {
+        "name": "Run bun run test:pe:bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27
+      },
+      {
+        "name": "Post Run oven-sh/setup-bun@v2",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 52
+      },
+      {
+        "name": "Post Run actions/setup-node@v7.0.0",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 53
+      },
+      {
+        "name": "Post Run actions/checkout@v7.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 54
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 55
+      }
+    ]
+  },
+  "scope_note": "Primeiro commit da implementação. Inclui suite DB completa dos módulos existentes/PET, typecheck, módulos unitários, lint e build. Correções posteriores restritas aos laboratórios são validadas em novo run."
+}

@@ -1,0 +1,75 @@
+{
+  "executed_at": "2026-10-23T09:44:58-03:00",
+  "scope": "Fresh isolated loopback PostgreSQL cluster; real bootstrap/migrations and seed, no connected project data.",
+  "postgres_version": "18.4",
+  "node_version": "24.19.0",
+  "host": "127.0.0.1",
+  "port": 55439,
+  "database": "pet_demo",
+  "isolated_guard": "PGTEST_EPHEMERAL=1",
+  "guard_missing": {
+    "exit_code": 1,
+    "message": "PGTEST_EPHEMERAL=1 obrigatório"
+  },
+  "syntax_check": {
+    "command": "node --check tests/pet-ui/seed.mjs",
+    "exit_code": 0
+  },
+  "fresh_cluster": {
+    "initdb_exit_code": 0,
+    "encoding": "UTF8",
+    "locale": "C (--no-locale)",
+    "authentication": "trust",
+    "listen_addresses": "127.0.0.1",
+    "seed_exit_code": 0
+  },
+  "global_roles": [
+    {
+      "rolname": "anon",
+      "rolcanlogin": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "authenticated",
+      "rolcanlogin": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "service_role",
+      "rolcanlogin": false,
+      "rolbypassrls": true
+    }
+  ],
+  "before_duplicate": {
+    "ordens": 1,
+    "pets": 1,
+    "pessoas": 3,
+    "pet_ids": ["422acf41-bab1-479a-8042-507fa51773fc"]
+  },
+  "duplicate_seed": {
+    "exit_code": 1,
+    "sqlstate": "42P04",
+    "message": "database \"pet_demo\" already exists"
+  },
+  "after_duplicate": {
+    "ordens": 1,
+    "pets": 1,
+    "pessoas": 3,
+    "pet_ids": ["422acf41-bab1-479a-8042-507fa51773fc"]
+  },
+  "data_unchanged": true,
+  "shutdown": {
+    "exit_code": 0,
+    "preserved_directory": "/tmp/nexus-pet-seed-repro.rJkP5d",
+    "data_removed": false
+  },
+  "original_demo": {
+    "directory": "/tmp/nexus-pet-sql/data",
+    "modified_by_this_test": false
+  },
+  "limitations": [
+    "This test validates PostgreSQL seed reproducibility, not browser interaction.",
+    "Laboratory Auth transport is fixed and does not validate Supabase Auth.",
+    "Private Storage HTTP and real ICP-Brasil provider remain unconfigured and unvalidated."
+  ]
+}

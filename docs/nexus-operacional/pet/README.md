@@ -46,6 +46,7 @@ As capturas [desktop](evidencias/pet-desktop-contexto.png), [mobile/contexto](ev
 - [Matriz campo/regra → origem → tela → armazenamento → validação → PDF](matriz-requisitos.md).
 - [Arquitetura, segurança e fronteiras](arquitetura.md).
 - [Operação e configuração](operacao.md).
+- [Reproduzir e parar o laboratório local sem apagar os registros](laboratorio.md).
 - [Relatórios, snapshots e arquivamento](relatorios.md).
 
 Antes do uso em campo, o responsável de segurança deve aprovar espaços, modelos/versionamentos, critérios, qualificações, monitoramento contínuo, dispositivos e procedimentos de resgate/contingência. A organização precisa comprovar retenção/recuperação por cinco anos, identidade individual e integração certificada real. A guarda normativa não se comprova apenas pela presença de tabelas e hashes.

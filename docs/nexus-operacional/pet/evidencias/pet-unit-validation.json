@@ -1,0 +1,28 @@
+{
+  "executed_at": "2026-10-23T09:34:31-03:00",
+  "command": "vitest run --config tests/vitest.pet.config.ts",
+  "exit_code": 0,
+  "test_files_passed": 8,
+  "tests_passed": 36,
+  "files": {
+    "tests/pet-ui-time.test.ts": 3,
+    "tests/pet-ui-resilience.test.ts": 3,
+    "tests/pet-documentos-functions.test.ts": 5,
+    "tests/pet-relatorios.test.ts": 7,
+    "tests/pet-domain.test.ts": 4,
+    "tests/pet-pdf.test.ts": 5,
+    "tests/pet-offline-viewer.test.ts": 4,
+    "tests/pet-offline-ledger.test.ts": 5
+  },
+  "limits": [
+    "Transportes de Auth/Storage simulados nas unidades do serviço e do endpoint.",
+    "HTML de contingência executado em VM com DOM isolado, sem comprovar file:// em navegador de campo.",
+    "Não valida provedor de assinatura ICP-Brasil real nem fluxo certificado ponta a ponta."
+  ],
+  "regressions": [
+    "Falha de armazenamento no visualizador não anuncia persistência; envelope em memória pode ser exportado.",
+    "Reimportação de pacote antigo após confirmação local não recria pendência; pedido original/versão permanecem cifrados.",
+    "Confirmações trazidas somente de arquivo são reenviadas para confirmação autenticada, sem prova local inventada.",
+    "Pacote original nega bytes quando o acesso é revogado durante a leitura do Storage."
+  ]
+}

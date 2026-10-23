@@ -1,0 +1,419 @@
+{
+  "natureza": "Vídeo demonstrativo editado a partir de capturas reais da aplicação; estados mantidos para narração e leitura.",
+  "scope": "PostgreSQL em homologação local e registros identificados como demonstração; autenticação de laboratório. Não comprova operação em produção.",
+  "limitations": [
+    "ICP-Brasil não configurado; emissão e entradas bloqueadas no vídeo.",
+    "Nenhuma presença ou permanência de trabalhador simulada.",
+    "Download de PDF é relatório derivado; não equivale ao original certificado.",
+    "Arquivamento privado/HTTP Storage depende da configuração real; não foi apresentado como concluído.",
+    "Pacote offline requer documento emitido e original assinado; abertura física ainda depende de homologação no dispositivo."
+  ],
+  "edit": {
+    "method": "Cortes entre capturas reais, reenquadramentos e estados mantidos para narração. Não desenha nem inventa telas.",
+    "source_timeline": "/tmp/nexus-pet-capture-20261023/pet-video/final-timeline.json",
+    "supplementary_proof_shots": "/tmp/nexus-pet-capture-20261023/pet-video/proof-shots.json",
+    "source_frames_available": 91,
+    "source_proof_screens": 12,
+    "voice": "macOS Luciana, português brasileiro; fala sintética baseada no roteiro fornecido.",
+    "audio_tempo_multiplier": 1.2,
+    "app_clock_manipulated": false,
+    "presence_timing_simulated": false,
+    "mobile": "Recortes das capturas reais; conteúdo centralizado e ampliado, sem miniatura de tela inteira.",
+    "raw_capture_archive": "/tmp/nexus-pet-capture-20261023"
+  },
+  "planned_seconds": 227.36258333333333,
+  "dimensions": [1920, 1080],
+  "frame_rate": 24,
+  "subtitle_cues": 34,
+  "subtitles_burned": true,
+  "chapters": [
+    {
+      "id": "abertura",
+      "title": "PET Digital Nexus · implementação real",
+      "start_seconds": 0,
+      "duration_seconds": 21.104270833333334
+    },
+    {
+      "id": "os",
+      "title": "OS organiza o serviço · PET autoriza a entrada",
+      "start_seconds": 21.104270833333334,
+      "duration_seconds": 20.5858125
+    },
+    {
+      "id": "contexto",
+      "title": "Contexto cadastral e jornada explícita",
+      "start_seconds": 41.690083333333334,
+      "duration_seconds": 20.027708333333333
+    },
+    {
+      "id": "equipe",
+      "title": "Pessoas, funções e responsabilidades",
+      "start_seconds": 61.71779166666667,
+      "duration_seconds": 20.571666666666665
+    },
+    {
+      "id": "perigos",
+      "title": "Perigos, controles e evidências por item",
+      "start_seconds": 82.28945833333333,
+      "duration_seconds": 22.4134375
+    },
+    {
+      "id": "avaliacao",
+      "title": "Atmosfera: leitura estruturada não substitui monitoramento contínuo",
+      "start_seconds": 104.70289583333333,
+      "duration_seconds": 26.1263125
+    },
+    {
+      "id": "conferencia",
+      "title": "Bloqueio real: emissão exige condições e assinatura válida",
+      "start_seconds": 130.82920833333333,
+      "duration_seconds": 21.9638125
+    },
+    {
+      "id": "acompanhamento",
+      "title": "Presença e tempo: fatos persistidos no servidor",
+      "start_seconds": 152.79302083333334,
+      "duration_seconds": 23.738229166666667
+    },
+    {
+      "id": "mobile",
+      "title": "Mobile por tarefa · contingência protegida",
+      "start_seconds": 176.53125,
+      "duration_seconds": 24.905895833333332
+    },
+    {
+      "id": "documentos",
+      "title": "PDF, integridade e histórico autorizado",
+      "start_seconds": 201.43714583333332,
+      "duration_seconds": 25.9254375
+    }
+  ],
+  "scenes": [
+    {
+      "image": "/tmp/nexus-pet-render/scene-000.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-12-os.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "abertura",
+      "start_seconds": 0,
+      "duration_seconds": 8.441708333333334
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-001.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-01-contexto.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "abertura",
+      "start_seconds": 8.441708333333334,
+      "duration_seconds": 12.6625625
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-002.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-12-os.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "os",
+      "start_seconds": 21.104270833333334,
+      "duration_seconds": 6.9991762500000005
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-003.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-12-os.jpg",
+      "source_crop": [270, 340, 1900, 1010],
+      "mode": "detail",
+      "chapter": "os",
+      "start_seconds": 28.103447083333336,
+      "duration_seconds": 13.58663625
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-004.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-01-contexto.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "contexto",
+      "start_seconds": 41.690083333333334,
+      "duration_seconds": 6.0083125
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-005.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-01-contexto.jpg",
+      "source_crop": [275, 350, 1600, 1010],
+      "mode": "detail",
+      "chapter": "contexto",
+      "start_seconds": 47.698395833333336,
+      "duration_seconds": 14.019395833333332
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-006.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-02-equipe.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "equipe",
+      "start_seconds": 61.71779166666667,
+      "duration_seconds": 6.171499999999999
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-007.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-02-equipe.jpg",
+      "source_crop": [275, 350, 1585, 1020],
+      "mode": "detail",
+      "chapter": "equipe",
+      "start_seconds": 67.88929166666667,
+      "duration_seconds": 14.400166666666665
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-008.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-03-perigos.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "perigos",
+      "start_seconds": 82.28945833333333,
+      "duration_seconds": 6.72403125
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-009.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-03-perigos.jpg",
+      "source_crop": [275, 350, 1585, 1050],
+      "mode": "detail",
+      "chapter": "perigos",
+      "start_seconds": 89.01348958333332,
+      "duration_seconds": 15.68940625
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-010.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-04-atmosfera.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "avaliacao",
+      "start_seconds": 104.70289583333333,
+      "duration_seconds": 7.315367500000001
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-011.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00019.jpg",
+      "source_crop": [520, 78, 1920, 1080],
+      "mode": "detail",
+      "chapter": "avaliacao",
+      "start_seconds": 112.01826333333332,
+      "duration_seconds": 5.747788750000001
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-012.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00022.jpg",
+      "source_crop": [520, 78, 1920, 1080],
+      "mode": "detail",
+      "chapter": "avaliacao",
+      "start_seconds": 117.76605208333334,
+      "duration_seconds": 8.360420000000001
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-013.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-06-conferencia.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "avaliacao",
+      "start_seconds": 126.12647208333334,
+      "duration_seconds": 4.70273625
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-014.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-06-conferencia.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "conferencia",
+      "start_seconds": 130.82920833333333,
+      "duration_seconds": 6.58914375
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-015.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-06-conferencia.jpg",
+      "source_crop": [275, 360, 1580, 1030],
+      "mode": "detail",
+      "chapter": "conferencia",
+      "start_seconds": 137.41835208333333,
+      "duration_seconds": 7.687334374999999
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-016.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-07-bloqueio.jpg",
+      "source_crop": [275, 225, 1910, 540],
+      "mode": "detail",
+      "chapter": "conferencia",
+      "start_seconds": 145.10568645833334,
+      "duration_seconds": 7.687334374999999
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-017.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-08-acompanhamento.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "acompanhamento",
+      "start_seconds": 152.79302083333332,
+      "duration_seconds": 8.308380208333332
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-018.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-08-acompanhamento.jpg",
+      "source_crop": [275, 460, 1590, 1020],
+      "mode": "detail",
+      "chapter": "acompanhamento",
+      "start_seconds": 161.10140104166663,
+      "duration_seconds": 9.495291666666667
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-019.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00080.jpg",
+      "source_crop": [0, 490, 627, 1080],
+      "mode": "mobile-detail",
+      "chapter": "acompanhamento",
+      "start_seconds": 170.5966927083333,
+      "duration_seconds": 5.934557291666667
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-020.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00064.jpg",
+      "source_crop": [0, 0, 627, 1080],
+      "mode": "mobile",
+      "chapter": "mobile",
+      "start_seconds": 176.53124999999997,
+      "duration_seconds": 6.475532916666666
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-021.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00068.jpg",
+      "source_crop": [0, 100, 627, 1080],
+      "mode": "mobile",
+      "chapter": "mobile",
+      "start_seconds": 183.00678291666665,
+      "duration_seconds": 5.977415
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-022.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00074.jpg",
+      "source_crop": [0, 210, 314, 720],
+      "mode": "mobile-zoom",
+      "chapter": "mobile",
+      "start_seconds": 188.98419791666663,
+      "duration_seconds": 5.977415
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-023.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00080.jpg",
+      "source_crop": [0, 460, 627, 1080],
+      "mode": "mobile-detail",
+      "chapter": "mobile",
+      "start_seconds": 194.96161291666664,
+      "duration_seconds": 6.475532916666666
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-024.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/final-00053.jpg",
+      "source_crop": [700, 300, 1920, 1020],
+      "mode": "detail",
+      "chapter": "documentos",
+      "start_seconds": 201.43714583333332,
+      "duration_seconds": 4.66657875
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-025.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pdfs/pet-video-page1.png",
+      "source_crop": [0, 0, 910, 770],
+      "mode": "pdf",
+      "chapter": "documentos",
+      "start_seconds": 206.10372458333333,
+      "duration_seconds": 8.814648750000002
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-026.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-11-historico.jpg",
+      "source_crop": null,
+      "mode": "full",
+      "chapter": "documentos",
+      "start_seconds": 214.9183733333333,
+      "duration_seconds": 5.70359625
+    },
+    {
+      "image": "/tmp/nexus-pet-render/scene-027.png",
+      "source": "/tmp/nexus-pet-capture-20261023/pet-video/proof-11-historico.jpg",
+      "source_crop": [275, 150, 1900, 820],
+      "mode": "detail",
+      "chapter": "documentos",
+      "start_seconds": 220.6219695833333,
+      "duration_seconds": 6.7406137500000005
+    }
+  ],
+  "sources_sha256": {
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-12-os.jpg": "615cd571cbaa4cc4e2df1c50a26ef834b81cffa53ef33393eda6ade6f29701df",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-01-contexto.jpg": "e622519175478c5af2fb6b0d1865ac9eed9580ff39f1323b09b33740079f20c4",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-02-equipe.jpg": "4dac0f13b99f1137f5cb1eea70e5ea94e2c2746db458348ac7c57764fb4c48ad",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-03-perigos.jpg": "6977b665382b04663e2668b2d20719c9a4fce8df34b81e3ca7366e6752b3d231",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-04-atmosfera.jpg": "ed4f0f211abcb7a6e3d30a8874b7b566cffb39fd35e898aae54ec39b79d753c4",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00019.jpg": "d901bedff69a00db26f68a2b5c35163ab2cfe8dc40c769c35a2bf2853f3925d7",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00022.jpg": "d901bedff69a00db26f68a2b5c35163ab2cfe8dc40c769c35a2bf2853f3925d7",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-06-conferencia.jpg": "f5f3018494b9bcb61082f41b5fba3424eb84ff7700f754090e7d2e786ea0d9fd",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-07-bloqueio.jpg": "06e6a5e50825d6ca2052b5afcfdf7e38bdd44e3988116ec3c710a4581a203a90",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-08-acompanhamento.jpg": "e5e5b1c1e60dcec8549df5e079930c1337c0ddbea9a47b5f6aafc04746f339fc",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00080.jpg": "83bfbf420a39153f8f10c14cea9017accbffde8be0d705da82bba3db82cfbb62",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00064.jpg": "afb175a4a5e709110a4c04bafbe39f9a89904fc6aa9dadf7d08325d998af852c",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00068.jpg": "19aaf23e3b6d1fa43f276793179bb83020fcf2f7ec243775271aaee30f484866",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00074.jpg": "16f09e032b26557e8880eb4802cc67758cdc4e28fa64e48d6d461891386bb21b",
+    "/tmp/nexus-pet-capture-20261023/pet-video/final-00053.jpg": "6bbe2fd8085c76ed65b030f7712c434474539e82e806444d989e9264bf9022d3",
+    "/tmp/nexus-pet-capture-20261023/pdfs/pet-video-page1.png": "128c796a85b2212a60f3933bf00b93fe4920d1b40420347c5f148aae1edb744a",
+    "/tmp/nexus-pet-capture-20261023/pet-video/proof-11-historico.jpg": "bbd3bfb09b2339f6faabca92a398cdacb44dc8d6bc7e541555e025169d44dca0"
+  },
+  "pdf_source": "/Users/leonardo/Downloads/PET-000001-relatorio.pdf",
+  "pdf_sha256": "90b36b0b9f6207197b8ee1d2db38fb5cea756120f124817138391babd14427cb",
+  "artifact": {
+    "path": "/Users/leonardo/Documents/GitHub/nexus-unified-platform/docs/nexus-operacional/pet/evidencias/pet-digital-nexus-demonstracao.mp4",
+    "bytes": 10918729,
+    "sha256": "a0d5b42fd535d6169135a12b9123952027a3abf680080e1b5ed78b81d90f1631",
+    "duration_seconds": 227.38,
+    "video_codec": "H.264 / avc1",
+    "pixel_format": "yuv420p",
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "audio_codec": "AAC-LC",
+    "audio_sample_rate": 48000,
+    "audio_channels": 1,
+    "chapters": 10
+  },
+  "validation": {
+    "full_decode_errors": 0,
+    "full_decode_log_empty": true,
+    "audio_mean_db": -17.2,
+    "audio_peak_db": -4.2,
+    "subtitle_language": "pt-BR",
+    "subtitle_cues": 34,
+    "subtitle_max_lines": 2,
+    "fonts": "Arial; chapter 34px, subtitles 34px, environment 24px, edit note 22px",
+    "visual_samples_checked": [
+      "video-frame-contexto.png",
+      "video-frame-bloqueio.png",
+      "video-frame-mobile.png",
+      "video-frame-pdf.png"
+    ],
+    "checked_items": [
+      "Audio stream present and non-silent; no clipping.",
+      "All media decoded without error.",
+      "Captions burned into image; separate SRT provided.",
+      "Mobile crop centered and enlarged; source pixels preserved.",
+      "Environment/ICP-Brasil caveat and editing note visible.",
+      "PDF clearly identified as derived report; no certified original claimed."
+    ],
+    "encoding": "ffmpeg6/libx264 CRF21 presetfast tunestillimage; audioAAC128kbps; faststart"
+  },
+  "subtitle_sha256": "a88b83828418acace16b9e99f82ef91c4b2aca0f37819a68eb6f3de604958835",
+  "narration_sources_sha256": {
+    "/tmp/nexus-pet-audio/00.aiff": "f68d4beb86bb394d11540cc9fede457e4d7b9e3ffdd9f18076285307c1cf5387",
+    "/tmp/nexus-pet-audio/01.aiff": "842c50c06017588b7b24205811b42338597f0b5947016b32d965be1cd42c1af2",
+    "/tmp/nexus-pet-audio/02.aiff": "b666c93f10931f4a534503b6a73785f86302a98ceaefffc6e3ee834165ac1c13",
+    "/tmp/nexus-pet-audio/03.aiff": "76cd4df70168f7a8528013bccb5c570338dad1bbf4e50f7f5c2052f5298eade6",
+    "/tmp/nexus-pet-audio/04.aiff": "9e0c2f13b4b8914506d42d5b78e7fa232da7a6007f3d76a48456751a8de3c72c",
+    "/tmp/nexus-pet-audio/05.aiff": "2a95b729d759e908d28eba42e1b4cdded6f5709ef1bfabf15af8ec2b89c77b6c",
+    "/tmp/nexus-pet-audio/06.aiff": "3deffc5f2e00ce157a1eabf5741ed26be59b53c80d467cbb50e20b8e94792319",
+    "/tmp/nexus-pet-audio/07.aiff": "38175345a816ab590325e7cab055a33a7601fc022d1a038af77cbddc06d6b3e3",
+    "/tmp/nexus-pet-audio/08.aiff": "0e3168ed594215e39b769f02f8545efa10b25eeca1899b3a2dfb93625be4923e",
+    "/tmp/nexus-pet-audio/09.aiff": "d4f4d8e11787aac240540f7c2d224b4874117284d1f39b358f4e568f54f68d80"
+  }
+}

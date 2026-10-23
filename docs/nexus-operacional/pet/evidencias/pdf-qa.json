@@ -1,0 +1,11 @@
+{
+  "ambiente": "fixture automatizada de documento, sem validade operacional",
+  "paginas": 7,
+  "formato": "A4",
+  "sha256": "01e66b5690febb2abd957d7d26e86991b4e021187827e8e955edd7a6a4d65295",
+  "bytes": 19385,
+  "ocorrencias_fora_limites": 0,
+  "caracteres_fora_limites": [],
+  "texto": "extraido com pdfplumber; todas páginas renderizadas Poppler e inspecionadas",
+  "natureza": "relatorio_derivado; não substitui originais certificados"
+}

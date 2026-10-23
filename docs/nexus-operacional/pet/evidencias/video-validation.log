@@ -1,0 +1,166 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/leonardo/Documents/GitHub/nexus-unified-platform/docs/nexus-operacional/pet/evidencias/pet-digital-nexus-demonstracao.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : PET Digital Nexus — demonstração real de homologação
+    encoder         : Lavf60.3.100
+    comment         : Captura real editada; sem emissão ou presença simulada; ICP-Brasil não configurado.
+  Duration: 00:03:47.38, start: 0.000000, bitrate: 384 kb/s
+  Chapters:
+    Chapter #0:0: start 0.000000, end 21.104000
+      Metadata:
+        title           : PET Digital Nexus · implementação real
+    Chapter #0:1: start 21.104000, end 41.690000
+      Metadata:
+        title           : OS organiza o serviço · PET autoriza a entrada
+    Chapter #0:2: start 41.690000, end 61.718000
+      Metadata:
+        title           : Contexto cadastral e jornada explícita
+    Chapter #0:3: start 61.718000, end 82.289000
+      Metadata:
+        title           : Pessoas, funções e responsabilidades
+    Chapter #0:4: start 82.289000, end 104.703000
+      Metadata:
+        title           : Perigos, controles e evidências por item
+    Chapter #0:5: start 104.703000, end 130.829000
+      Metadata:
+        title           : Atmosfera: leitura estruturada não substitui monitoramento contínuo
+    Chapter #0:6: start 130.829000, end 152.793000
+      Metadata:
+        title           : Bloqueio real: emissão exige condições e assinatura válida
+    Chapter #0:7: start 152.793000, end 176.531000
+      Metadata:
+        title           : Presença e tempo: fatos persistidos no servidor
+    Chapter #0:8: start 176.531000, end 201.437000
+      Metadata:
+        title           : Mobile por tarefa · contingência protegida
+    Chapter #0:9: start 201.437000, end 227.363000
+      Metadata:
+        title           : PDF, integridade e histórico autorizado
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 245 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, mono, fltp, 132 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:2[0x3](eng): Data: bin_data (text / 0x74786574), 0 kb/s
+    Metadata:
+      handler_name    : SubtitleHandler
+At least one output file must be specified
+
+AUDIO ANALYSIS
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/leonardo/Documents/GitHub/nexus-unified-platform/docs/nexus-operacional/pet/evidencias/pet-digital-nexus-demonstracao.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : PET Digital Nexus — demonstração real de homologação
+    encoder         : Lavf60.3.100
+    comment         : Captura real editada; sem emissão ou presença simulada; ICP-Brasil não configurado.
+  Duration: 00:03:47.38, start: 0.000000, bitrate: 384 kb/s
+  Chapters:
+    Chapter #0:0: start 0.000000, end 21.104000
+      Metadata:
+        title           : PET Digital Nexus · implementação real
+    Chapter #0:1: start 21.104000, end 41.690000
+      Metadata:
+        title           : OS organiza o serviço · PET autoriza a entrada
+    Chapter #0:2: start 41.690000, end 61.718000
+      Metadata:
+        title           : Contexto cadastral e jornada explícita
+    Chapter #0:3: start 61.718000, end 82.289000
+      Metadata:
+        title           : Pessoas, funções e responsabilidades
+    Chapter #0:4: start 82.289000, end 104.703000
+      Metadata:
+        title           : Perigos, controles e evidências por item
+    Chapter #0:5: start 104.703000, end 130.829000
+      Metadata:
+        title           : Atmosfera: leitura estruturada não substitui monitoramento contínuo
+    Chapter #0:6: start 130.829000, end 152.793000
+      Metadata:
+        title           : Bloqueio real: emissão exige condições e assinatura válida
+    Chapter #0:7: start 152.793000, end 176.531000
+      Metadata:
+        title           : Presença e tempo: fatos persistidos no servidor
+    Chapter #0:8: start 176.531000, end 201.437000
+      Metadata:
+        title           : Mobile por tarefa · contingência protegida
+    Chapter #0:9: start 201.437000, end 227.363000
+      Metadata:
+        title           : PDF, integridade e histórico autorizado
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 245 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, mono, fltp, 132 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:2[0x3](eng): Data: bin_data (text / 0x74786574), 0 kb/s
+    Metadata:
+      handler_name    : SubtitleHandler
+Stream mapping:
+  Stream #0:1 -> #0:0 (aac (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    title           : PET Digital Nexus — demonstração real de homologação
+    comment         : Captura real editada; sem emissão ou presença simulada; ICP-Brasil não configurado.
+    encoder         : Lavf60.3.100
+  Chapters:
+    Chapter #0:0: start 0.000000, end 21.104000
+      Metadata:
+        title           : PET Digital Nexus · implementação real
+    Chapter #0:1: start 21.104000, end 41.690000
+      Metadata:
+        title           : OS organiza o serviço · PET autoriza a entrada
+    Chapter #0:2: start 41.690000, end 61.718000
+      Metadata:
+        title           : Contexto cadastral e jornada explícita
+    Chapter #0:3: start 61.718000, end 82.289000
+      Metadata:
+        title           : Pessoas, funções e responsabilidades
+    Chapter #0:4: start 82.289000, end 104.703000
+      Metadata:
+        title           : Perigos, controles e evidências por item
+    Chapter #0:5: start 104.703000, end 130.829000
+      Metadata:
+        title           : Atmosfera: leitura estruturada não substitui monitoramento contínuo
+    Chapter #0:6: start 130.829000, end 152.793000
+      Metadata:
+        title           : Bloqueio real: emissão exige condições e assinatura válida
+    Chapter #0:7: start 152.793000, end 176.531000
+      Metadata:
+        title           : Presença e tempo: fatos persistidos no servidor
+    Chapter #0:8: start 176.531000, end 201.437000
+      Metadata:
+        title           : Mobile por tarefa · contingência protegida
+    Chapter #0:9: start 201.437000, end 227.363000
+      Metadata:
+        title           : PDF, integridade e histórico autorizado
+  Stream #0:0(und): Audio: pcm_s16le, 48000 Hz, mono, s16, 768 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 pcm_s16le
+size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x
+size=N/A time=00:03:47.34 bitrate=N/A speed=2.2e+03x
+video:0kB audio:21316kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[Parsed_volumedetect_0 @ 0x12f804230] n_samples: 10913792
+[Parsed_volumedetect_0 @ 0x12f804230] mean_volume: -17.2 dB
+[Parsed_volumedetect_0 @ 0x12f804230] max_volume: -4.2 dB
+[Parsed_volumedetect_0 @ 0x12f804230] histogram_4db: 93
+[Parsed_volumedetect_0 @ 0x12f804230] histogram_5db: 2207
+[Parsed_volumedetect_0 @ 0x12f804230] histogram_6db: 10116
+
+FULL DECODE
+Completed with zero error output.

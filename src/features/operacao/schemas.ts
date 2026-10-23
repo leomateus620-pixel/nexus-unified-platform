@@ -83,6 +83,8 @@ export const anexoRow = z.object({
   ferramenta_id: z.string().uuid().nullable().default(null),
   calibracao_id: z.string().uuid().nullable().default(null),
   agenda_evento_id: z.string().uuid().nullable().default(null),
+  pet_id: z.string().uuid().nullable().default(null),
+  pet_item: z.string().nullable().default(null),
 });
 export type Anexo = z.infer<typeof anexoRow>;
 export const anexoPai = orgInput
@@ -94,6 +96,8 @@ export const anexoPai = orgInput
     ferramenta_id: z.string().uuid().nullable().optional(),
     calibracao_id: z.string().uuid().nullable().optional(),
     agenda_evento_id: z.string().uuid().nullable().optional(),
+    pet_id: z.string().uuid().nullable().optional(),
+    pet_item: z.string().trim().min(1).max(120).nullable().optional(),
   })
   .refine(
     (x) =>
@@ -104,9 +108,11 @@ export const anexoPai = orgInput
         x.ferramenta_id,
         x.calibracao_id,
         x.agenda_evento_id,
+        x.pet_id,
       ].filter(Boolean).length === 1,
     "Escolha uma origem.",
-  );
+  )
+  .refine((x) => !x.pet_item || !!x.pet_id, "O item de evidência deve pertencer a uma PET.");
 export const uploadInput = z.object({
   pai: anexoPai,
   chave: z.string().uuid(),

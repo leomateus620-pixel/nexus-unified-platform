@@ -17,6 +17,7 @@ import { CadastroEditor } from "./CadastroEditor";
 import type { Cadastro, CadastroGrupo, Cliente, SituacaoFiltro } from "./schemas";
 import "@/components/nexus/stages.css";
 import "./clientes.css";
+import { PetHistoricoUnidade } from "@/features/pet/ExecucaoWorkspace";
 
 export type ClientesSearch = {
   cliente: string;
@@ -441,6 +442,14 @@ function VinculosCliente({
                         {row.arquivado_em ? "Reativar" : "Arquivar"}
                       </ActionButton>
                     </div>
+                  )}
+                  {grupo === "unidades" && (
+                    <details className="w-full mt-3">
+                      <summary className="cursor-pointer min-h-11 py-2">
+                        Histórico de PETs desta unidade
+                      </summary>
+                      <PetHistoricoUnidade unidadeId={row.id} />
+                    </details>
                   )}
                 </li>
               ))}

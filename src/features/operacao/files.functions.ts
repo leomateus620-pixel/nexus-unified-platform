@@ -55,7 +55,7 @@ export const prepararUpload = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     exigirConfirmacaoConfigurada();
     const db = operationalDb(context.supabase);
-    const { organization_id, agenda_evento_id, ...pai } = data.pai;
+    const { organization_id, agenda_evento_id, pet_id, pet_item, ...pai } = data.pai;
     const metadata = {
       nome: data.nome,
       mime: data.mime,
@@ -64,21 +64,28 @@ export const prepararUpload = createServerFn({ method: "POST" })
     };
     const prepared = anexoRow.parse(
       result(
-        agenda_evento_id
-          ? await db.rpc("iniciar_anexo_agenda", {
+        pet_id
+          ? await db.rpc("iniciar_anexo_pet", {
               _org: organization_id,
-              _evento: agenda_evento_id,
+              _pet: pet_id,
               _chave: data.chave,
-              _dados: metadata,
+              _dados: { ...metadata, ...(pet_item !== undefined ? { pet_item } : {}) },
             })
-          : await db.rpc("preparar_anexo_operacional", {
-              _org: organization_id,
-              _chave: data.chave,
-              _dados: {
-                ...pai,
-                ...metadata,
-              },
-            }),
+          : agenda_evento_id
+            ? await db.rpc("iniciar_anexo_agenda", {
+                _org: organization_id,
+                _evento: agenda_evento_id,
+                _chave: data.chave,
+                _dados: metadata,
+              })
+            : await db.rpc("preparar_anexo_operacional", {
+                _org: organization_id,
+                _chave: data.chave,
+                _dados: {
+                  ...pai,
+                  ...metadata,
+                },
+              }),
       ),
     );
     // O resultado idempotente guarda o estado da criação; consulta o estado atual antes de retomar.

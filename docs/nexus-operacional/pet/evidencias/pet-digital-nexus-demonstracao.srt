@@ -1,0 +1,165 @@
+1
+00:00:00,120 --> 00:00:09,426
+Esta é a PET Digital Nexus, integrada à Execução e às Ordens de
+Serviço. A gravação mostra a aplicação real com
+
+2
+00:00:09,426 --> 00:00:16,073
+PostgreSQL em homologação local e registros identificados como
+demonstração. A autenticação deste ambiente é de
+
+3
+00:00:16,073 --> 00:00:20,504
+laboratório. A assinatura certificada ICP Brasil ainda não está
+configurada.
+
+4
+00:00:21,224 --> 00:00:28,832
+A Ordem de Serviço organiza escopo, unidade e responsável. Seu
+card reúne as Permissões de Entrada e Trabalho
+
+5
+00:00:28,832 --> 00:00:35,595
+relacionadas. Cada PET tem espaço, equipe, validade e histórico
+próprios. Encerrar uma permissão não conclui a
+
+6
+00:00:35,595 --> 00:00:41,090
+OS, e concluir a OS exige tratar as permissões e as presenças
+pendentes.
+
+7
+00:00:41,810 --> 00:00:49,709
+Na ficha, cliente, unidade e espaço vêm dos cadastros
+existentes, com indicação da origem. A atividade e o
+
+8
+00:00:49,709 --> 00:00:56,291
+término da jornada são conferidos nesta ocorrência, com fuso
+explícito. Não existe preenchimento automático de
+
+9
+00:00:56,291 --> 00:01:01,118
+vinte e quatro horas. O rascunho não representa autorização para
+entrar.
+
+10
+00:01:01,838 --> 00:01:07,880
+Na equipe, supervisor, vigia, trabalhadores e resgate são
+pessoas operacionais, com funções e vigências
+
+11
+00:01:07,880 --> 00:01:16,079
+próprias. Uma pessoa pode não ter login Nexus. Isso não autoriza
+o supervisor a assinar em seu lugar. A
+
+12
+00:01:16,079 --> 00:01:21,689
+identificação e a assinatura individual externa dependem da
+integração real com o provedor.
+
+13
+00:01:22,409 --> 00:01:30,123
+Os perigos estão organizados nos grupos da referência Cotrirosa.
+Cada perigo pode receber medida preventiva e
+
+14
+00:01:30,123 --> 00:01:37,836
+evidência. Equipamentos coletivos e individuais usam respostas
+explícitas: sim, não, não se aplica ou ainda não
+
+15
+00:01:37,836 --> 00:01:44,103
+verificado. A aplicabilidade e as justificativas seguem o
+procedimento versionado aprovado pela segurança.
+
+16
+00:01:44,823 --> 00:01:52,003
+A avaliação registra etapa, horário, responsável, detector,
+número de série, calibração, agentes, valores,
+
+17
+00:01:52,003 --> 00:02:00,288
+unidades e origem. Os campos aceitam vírgula decimal. Não foram
+lançadas medições fictícias nesta demonstração.
+
+18
+00:02:00,288 --> 00:02:08,020
+Leituras manuais esporádicas e fotos do detector não comprovam
+monitoramento atmosférico contínuo. Os limites
+
+19
+00:02:08,020 --> 00:02:10,229
+precisam de validação técnica.
+
+20
+00:02:10,949 --> 00:02:18,473
+A conferência reúne pendências clicáveis e reavalia as regras no
+servidor. Aqui faltam condições verificadas e o
+
+21
+00:02:18,473 --> 00:02:25,554
+provedor certificado; por isso a emissão permanece bloqueada.
+Uma imagem de assinatura ou um aceite autenticado
+
+22
+00:02:25,554 --> 00:02:32,193
+não aparece como certificado validado. O fluxo completo de
+certificação não está homologado nesta entrega.
+
+23
+00:02:32,913 --> 00:02:41,200
+O acompanhamento prioriza pessoas sem saída, validade e
+ocorrências. A emissão não inicia o tempo da equipe. O
+
+24
+00:02:41,200 --> 00:02:49,026
+servidor calcula intervalos individuais e horas pessoa; o
+apontamento da OS tem fonte separada. Saídas são fatos
+
+25
+00:02:49,026 --> 00:02:55,471
+imediatos e podem manter assinatura pendente. Aqui não simulamos
+entradas liberadas nem permanência de
+
+26
+00:02:55,471 --> 00:02:55,931
+trabalhadores.
+
+27
+00:02:56,651 --> 00:03:04,857
+No celular, a jornada continua por tarefa, com campos legíveis e
+ações de toque. O pacote de contingência só
+
+28
+00:03:04,857 --> 00:03:12,199
+pode nascer de documento emitido e original assinado disponível.
+Ele é cifrado com senha local e permite
+
+29
+00:03:12,199 --> 00:03:18,678
+preservar fatos pendentes. Novas emissões e liberações offline
+continuam impedidas. A abertura física do pacote
+
+30
+00:03:18,678 --> 00:03:20,837
+ainda exige homologação no dispositivo.
+
+31
+00:03:21,557 --> 00:03:29,166
+O relatório PDF de consulta é derivado dos registros, sem
+substituir o original certificado. A implementação
+
+32
+00:03:29,166 --> 00:03:37,251
+preserva versões e hashes; o histórico da unidade abre a mesma
+permissão com autorização. O arquivamento privado
+
+33
+00:03:37,251 --> 00:03:43,434
+depende do transporte de arquivos configurado. Prorrogação
+operacional requer aditamento certificado, e continua
+
+34
+00:03:43,434 --> 00:03:46,763
+bloqueada enquanto esse procedimento não estiver integrado.

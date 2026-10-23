@@ -44,6 +44,7 @@ import { Route as AuthenticatedConfiguracoesOrcamentosRouteImport } from './rout
 import { Route as AuthenticatedEngenhariaIndexRouteImport } from './routes/_authenticated/engenharia.index'
 import { Route as AuthenticatedEngenhariaDimensionamentosRouteImport } from './routes/_authenticated/engenharia.dimensionamentos'
 import { Route as AuthenticatedEngenhariaRegrasDimensionamentoRouteImport } from './routes/_authenticated/engenharia.regras-dimensionamento'
+import { Route as AuthenticatedExecucaoIndexRouteImport } from './routes/_authenticated/execucao.index'
 import { Route as AuthenticatedProdutosIndexRouteImport } from './routes/_authenticated/produtos.index'
 import { Route as AuthenticatedProdutosProdutoIdRouteImport } from './routes/_authenticated/produtos.$produtoId'
 import { Route as AuthenticatedProjetosIndexRouteImport } from './routes/_authenticated/projetos.index'
@@ -54,6 +55,8 @@ import { Route as AuthenticatedComprasOrdensCompraIndexRouteImport } from './rou
 import { Route as AuthenticatedComprasOrdensCompraOrdemIdRouteImport } from './routes/_authenticated/compras.ordens-compra.$ordemId'
 import { Route as AuthenticatedComprasOrdensProducaoIndexRouteImport } from './routes/_authenticated/compras.ordens-producao.index'
 import { Route as AuthenticatedComprasOrdensProducaoOrdemIdRouteImport } from './routes/_authenticated/compras.ordens-producao.$ordemId'
+import { Route as AuthenticatedExecucaoOrdensOrdemIdRouteImport } from './routes/_authenticated/execucao.ordens.$ordemId'
+import { Route as AuthenticatedExecucaoPetsPetIdRouteImport } from './routes/_authenticated/execucao.pets.$petId'
 import { Route as AuthenticatedComercialPropostasPropostaIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.index'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.index'
@@ -255,6 +258,12 @@ const AuthenticatedEngenhariaRegrasDimensionamentoRoute =
     path: '/regras-dimensionamento',
     getParentRoute: () => AuthenticatedEngenhariaRoute,
   } as any)
+const AuthenticatedExecucaoIndexRoute =
+  AuthenticatedExecucaoIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedExecucaoRoute,
+  } as any)
 const AuthenticatedProdutosIndexRoute =
   AuthenticatedProdutosIndexRouteImport.update({
     id: '/',
@@ -314,6 +323,18 @@ const AuthenticatedComprasOrdensProducaoOrdemIdRoute =
     id: '/ordens-producao/$ordemId',
     path: '/ordens-producao/$ordemId',
     getParentRoute: () => AuthenticatedComprasRoute,
+  } as any)
+const AuthenticatedExecucaoOrdensOrdemIdRoute =
+  AuthenticatedExecucaoOrdensOrdemIdRouteImport.update({
+    id: '/ordens/$ordemId',
+    path: '/ordens/$ordemId',
+    getParentRoute: () => AuthenticatedExecucaoRoute,
+  } as any)
+const AuthenticatedExecucaoPetsPetIdRoute =
+  AuthenticatedExecucaoPetsPetIdRouteImport.update({
+    id: '/pets/$petId',
+    path: '/pets/$petId',
+    getParentRoute: () => AuthenticatedExecucaoRoute,
   } as any)
 const AuthenticatedComercialPropostasPropostaIdIndexRoute =
   AuthenticatedComercialPropostasPropostaIdIndexRouteImport.update({
@@ -423,7 +444,7 @@ export interface FileRoutesByFullPath {
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
   '/equipe': typeof AuthenticatedEquipeRoute
-  '/execucao': typeof AuthenticatedExecucaoRoute
+  '/execucao': typeof AuthenticatedExecucaoRouteWithChildren
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/inspecoes': typeof AuthenticatedInspecoesRoute
   '/levantamentos': typeof AuthenticatedLevantamentosRoute
@@ -446,11 +467,14 @@ export interface FileRoutesByFullPath {
   '/compras/': typeof AuthenticatedComprasIndexRoute
   '/configuracoes/': typeof AuthenticatedConfiguracoesIndexRoute
   '/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
+  '/execucao/': typeof AuthenticatedExecucaoIndexRoute
   '/produtos/': typeof AuthenticatedProdutosIndexRoute
   '/projetos/': typeof AuthenticatedProjetosIndexRoute
   '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
   '/compras/ordens-compra/$ordemId': typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
   '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  '/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
+  '/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
   '/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
   '/compras/ordens-producao/': typeof AuthenticatedComprasOrdensProducaoIndexRoute
@@ -475,7 +499,6 @@ export interface FileRoutesByTo {
   '/clientes': typeof AuthenticatedClientesRoute
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/equipe': typeof AuthenticatedEquipeRoute
-  '/execucao': typeof AuthenticatedExecucaoRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/inspecoes': typeof AuthenticatedInspecoesRoute
   '/levantamentos': typeof AuthenticatedLevantamentosRoute
@@ -497,11 +520,14 @@ export interface FileRoutesByTo {
   '/compras': typeof AuthenticatedComprasIndexRoute
   '/configuracoes': typeof AuthenticatedConfiguracoesIndexRoute
   '/engenharia': typeof AuthenticatedEngenhariaIndexRoute
+  '/execucao': typeof AuthenticatedExecucaoIndexRoute
   '/produtos': typeof AuthenticatedProdutosIndexRoute
   '/projetos': typeof AuthenticatedProjetosIndexRoute
   '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
   '/compras/ordens-compra/$ordemId': typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
   '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  '/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
+  '/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
   '/comercial/propostas': typeof AuthenticatedComercialPropostasIndexRoute
   '/compras/ordens-compra': typeof AuthenticatedComprasOrdensCompraIndexRoute
   '/compras/ordens-producao': typeof AuthenticatedComprasOrdensProducaoIndexRoute
@@ -531,7 +557,7 @@ export interface FileRoutesById {
   '/_authenticated/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/_authenticated/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
   '/_authenticated/equipe': typeof AuthenticatedEquipeRoute
-  '/_authenticated/execucao': typeof AuthenticatedExecucaoRoute
+  '/_authenticated/execucao': typeof AuthenticatedExecucaoRouteWithChildren
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/inspecoes': typeof AuthenticatedInspecoesRoute
   '/_authenticated/levantamentos': typeof AuthenticatedLevantamentosRoute
@@ -555,11 +581,14 @@ export interface FileRoutesById {
   '/_authenticated/compras/': typeof AuthenticatedComprasIndexRoute
   '/_authenticated/configuracoes/': typeof AuthenticatedConfiguracoesIndexRoute
   '/_authenticated/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
+  '/_authenticated/execucao/': typeof AuthenticatedExecucaoIndexRoute
   '/_authenticated/produtos/': typeof AuthenticatedProdutosIndexRoute
   '/_authenticated/projetos/': typeof AuthenticatedProjetosIndexRoute
   '/_authenticated/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
   '/_authenticated/compras/ordens-compra/$ordemId': typeof AuthenticatedComprasOrdensCompraOrdemIdRoute
   '/_authenticated/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
+  '/_authenticated/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
+  '/_authenticated/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
   '/_authenticated/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/_authenticated/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
   '/_authenticated/compras/ordens-producao/': typeof AuthenticatedComprasOrdensProducaoIndexRoute
@@ -614,11 +643,14 @@ export interface FileRouteTypes {
     | '/compras/'
     | '/configuracoes/'
     | '/engenharia/'
+    | '/execucao/'
     | '/produtos/'
     | '/projetos/'
     | '/comercial/propostas/nova'
     | '/compras/ordens-compra/$ordemId'
     | '/compras/ordens-producao/$ordemId'
+    | '/execucao/ordens/$ordemId'
+    | '/execucao/pets/$petId'
     | '/comercial/propostas/'
     | '/compras/ordens-compra/'
     | '/compras/ordens-producao/'
@@ -643,7 +675,6 @@ export interface FileRouteTypes {
     | '/clientes'
     | '/documentacao'
     | '/equipe'
-    | '/execucao'
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
@@ -665,11 +696,14 @@ export interface FileRouteTypes {
     | '/compras'
     | '/configuracoes'
     | '/engenharia'
+    | '/execucao'
     | '/produtos'
     | '/projetos'
     | '/comercial/propostas/nova'
     | '/compras/ordens-compra/$ordemId'
     | '/compras/ordens-producao/$ordemId'
+    | '/execucao/ordens/$ordemId'
+    | '/execucao/pets/$petId'
     | '/comercial/propostas'
     | '/compras/ordens-compra'
     | '/compras/ordens-producao'
@@ -722,11 +756,14 @@ export interface FileRouteTypes {
     | '/_authenticated/compras/'
     | '/_authenticated/configuracoes/'
     | '/_authenticated/engenharia/'
+    | '/_authenticated/execucao/'
     | '/_authenticated/produtos/'
     | '/_authenticated/projetos/'
     | '/_authenticated/comercial/propostas/nova'
     | '/_authenticated/compras/ordens-compra/$ordemId'
     | '/_authenticated/compras/ordens-producao/$ordemId'
+    | '/_authenticated/execucao/ordens/$ordemId'
+    | '/_authenticated/execucao/pets/$petId'
     | '/_authenticated/comercial/propostas/'
     | '/_authenticated/compras/ordens-compra/'
     | '/_authenticated/compras/ordens-producao/'
@@ -1000,6 +1037,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEngenhariaRegrasDimensionamentoRouteImport
       parentRoute: typeof AuthenticatedEngenhariaRoute
     }
+    '/_authenticated/execucao/': {
+      id: '/_authenticated/execucao/'
+      path: '/'
+      fullPath: '/execucao/'
+      preLoaderRoute: typeof AuthenticatedExecucaoIndexRouteImport
+      parentRoute: typeof AuthenticatedExecucaoRoute
+    }
     '/_authenticated/produtos/': {
       id: '/_authenticated/produtos/'
       path: '/'
@@ -1069,6 +1113,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/compras/ordens-producao/$ordemId'
       preLoaderRoute: typeof AuthenticatedComprasOrdensProducaoOrdemIdRouteImport
       parentRoute: typeof AuthenticatedComprasRoute
+    }
+    '/_authenticated/execucao/ordens/$ordemId': {
+      id: '/_authenticated/execucao/ordens/$ordemId'
+      path: '/ordens/$ordemId'
+      fullPath: '/execucao/ordens/$ordemId'
+      preLoaderRoute: typeof AuthenticatedExecucaoOrdensOrdemIdRouteImport
+      parentRoute: typeof AuthenticatedExecucaoRoute
+    }
+    '/_authenticated/execucao/pets/$petId': {
+      id: '/_authenticated/execucao/pets/$petId'
+      path: '/pets/$petId'
+      fullPath: '/execucao/pets/$petId'
+      preLoaderRoute: typeof AuthenticatedExecucaoPetsPetIdRouteImport
+      parentRoute: typeof AuthenticatedExecucaoRoute
     }
     '/_authenticated/comercial/propostas/$propostaId/': {
       id: '/_authenticated/comercial/propostas/$propostaId/'
@@ -1279,6 +1337,24 @@ const AuthenticatedEngenhariaRouteWithChildren =
     AuthenticatedEngenhariaRouteChildren,
   )
 
+interface AuthenticatedExecucaoRouteChildren {
+  AuthenticatedExecucaoIndexRoute: typeof AuthenticatedExecucaoIndexRoute
+  AuthenticatedExecucaoOrdensOrdemIdRoute: typeof AuthenticatedExecucaoOrdensOrdemIdRoute
+  AuthenticatedExecucaoPetsPetIdRoute: typeof AuthenticatedExecucaoPetsPetIdRoute
+}
+
+const AuthenticatedExecucaoRouteChildren: AuthenticatedExecucaoRouteChildren = {
+  AuthenticatedExecucaoIndexRoute: AuthenticatedExecucaoIndexRoute,
+  AuthenticatedExecucaoOrdensOrdemIdRoute:
+    AuthenticatedExecucaoOrdensOrdemIdRoute,
+  AuthenticatedExecucaoPetsPetIdRoute: AuthenticatedExecucaoPetsPetIdRoute,
+}
+
+const AuthenticatedExecucaoRouteWithChildren =
+  AuthenticatedExecucaoRoute._addFileChildren(
+    AuthenticatedExecucaoRouteChildren,
+  )
+
 interface AuthenticatedProdutosRouteChildren {
   AuthenticatedProdutosProdutoIdRoute: typeof AuthenticatedProdutosProdutoIdRoute
   AuthenticatedProdutosIndexRoute: typeof AuthenticatedProdutosIndexRoute
@@ -1319,7 +1395,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDocumentacaoRoute: typeof AuthenticatedDocumentacaoRoute
   AuthenticatedEngenhariaRoute: typeof AuthenticatedEngenhariaRouteWithChildren
   AuthenticatedEquipeRoute: typeof AuthenticatedEquipeRoute
-  AuthenticatedExecucaoRoute: typeof AuthenticatedExecucaoRoute
+  AuthenticatedExecucaoRoute: typeof AuthenticatedExecucaoRouteWithChildren
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedInspecoesRoute: typeof AuthenticatedInspecoesRoute
   AuthenticatedLevantamentosRoute: typeof AuthenticatedLevantamentosRoute
@@ -1341,7 +1417,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDocumentacaoRoute: AuthenticatedDocumentacaoRoute,
   AuthenticatedEngenhariaRoute: AuthenticatedEngenhariaRouteWithChildren,
   AuthenticatedEquipeRoute: AuthenticatedEquipeRoute,
-  AuthenticatedExecucaoRoute: AuthenticatedExecucaoRoute,
+  AuthenticatedExecucaoRoute: AuthenticatedExecucaoRouteWithChildren,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedInspecoesRoute: AuthenticatedInspecoesRoute,
   AuthenticatedLevantamentosRoute: AuthenticatedLevantamentosRoute,

@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-23",
+  "branch": "codex/pet-digital-nexus",
+  "base_commit": "2f62fd752276df8eb42d325e389faff118da0650",
+  "typecheck": { "command": "tsc --noEmit", "exit_code": 0 },
+  "build": { "command": "bun run build", "exit_code": 0 },
+  "pet": {
+    "command": "vitest run --config tests/vitest.pet.config.ts",
+    "exit_code": 0,
+    "files": 8,
+    "tests": 36
+  },
+  "existing_flows": {
+    "exit_code": 0,
+    "files": 12,
+    "tests": 107,
+    "scope": [
+      "calculo",
+      "estrutura",
+      "custos",
+      "planilha",
+      "autorizacao",
+      "proposta-save-queue",
+      "importacao",
+      "operacao-files",
+      "operacao-permissions",
+      "session-access",
+      "nexus-nav",
+      "clientes-operacionais"
+    ]
+  },
+  "canonical_files": {
+    "command": "vitest run --config tests/vitest.operacao-arquivos.config.ts",
+    "exit_code": 0,
+    "files": 3,
+    "tests": 27
+  },
+  "manifest_and_typegen_contracts": {
+    "command": "node --test scripts/migrations/manifest.test.mjs scripts/supabase-types/contract.test.mjs",
+    "exit_code": 0,
+    "tests": 12
+  },
+  "lint": {
+    "scope": "PET, rotas e arquivos compartilhados alterados",
+    "exit_code": 0,
+    "errors": 0,
+    "warnings": 4,
+    "warning_rule": "react-refresh/only-export-components"
+  },
+  "protected_contracts": {
+    "command": "node scripts/nexus-operacional/contracts.mjs",
+    "exit_code": 0,
+    "protected_files": 134,
+    "changed": [],
+    "unexpected": []
+  },
+  "database": {
+    "migrations": 52,
+    "pet_assertions": 45,
+    "rectification_assertions": 20,
+    "report_assertions": 19,
+    "clean_install": "passed",
+    "upgrade": "passed",
+    "remote_ledger": "verified"
+  },
+  "limits": [
+    "As contagens de comandos distintos podem incluir testes compartilhados; não representam total único de regressões.",
+    "Assinatura nos testes SQL usa provedor simulado explícito; integração ICP-Brasil real não implementada/configurada.",
+    "Auth/Storage HTTP e jornada emitida/encerrada com provedor não validadas ponta a ponta.",
+    "Contingência HTML validada em VM isolada; abertura file:// e equipamento de campo não verificados.",
+    "Regressões selecionadas não comprovam toda interação 3D, teclado virtual, câmera ou leitor de tela."
+  ]
+}

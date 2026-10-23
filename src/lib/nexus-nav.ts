@@ -38,7 +38,7 @@ const DISPONIBILIDADE_MODULOS: Readonly<Record<string, boolean>> = {
   "/escada-lc02": true,
   "/projetos": true,
   "/compras": true,
-  "/execucao": false,
+  "/execucao": true,
   "/almoxarifado": true,
   "/equipe": true,
   "/seguranca": false,

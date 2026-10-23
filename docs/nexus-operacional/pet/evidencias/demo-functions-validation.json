@@ -1,0 +1,13 @@
+{
+  "database": "pet_demo",
+  "port": 55439,
+  "functionsUpdated": 19,
+  "signatureCount": 0,
+  "petRecordsPreserved": 1,
+  "petVersionsAndStatesPreserved": true,
+  "conference": {
+    "accepted": false,
+    "code": "23514",
+    "message": "[{\"campo\": \"modelo_versao_id\", \"codigo\": \"modelo\", \"mensagem\": \"Selecione um procedimento versionado aprovado pelo responsável técnico.\"}, {\"campo\": \"participantes\", \"codigo\": \"equipe\", \"mensagem\": \"Relacione participante na função resgate.\"}, {\"campo\": \"procedimentos\", \"codigo\": \"procedimentos\", \"mensagem\": \"Descreva os procedimentos operacionais de comunicação e resgate.\"}, {\"campo\": \"monitoramento_continuo\", \"codigo\": \"monitoramento\", \"mensagem\": \"Confirme o monitoramento atmosférico contínuo, equipamento e registro. Leituras manuais não o substituem.\"}, {\"campo\": \"procedimentos.dispositivo_adequado\", \"codigo\": \"dispositivo\", \"mensagem\": \"Confira a adequação do dispositivo e dos equipamentos ao ambiente de uso.\"}, {\"campo\": \"contatos_emergencia\", \"codigo\": \"emergencia\", \"mensagem\": \"Informe os contatos operacionais de emergência e resgate.\"}, {\"campo\": \"avaliacoes\", \"codigo\": \"avaliacao\", \"mensagem\": \"Registre avaliação atmosférica com instrumento, responsável e leituras.\"}, {\"campo\": \"assinaturas\", \"codigo\": \"integracao\", \"mensagem\": \"Integração não configurada: assinatura certificada ICP-Brasil. A liberação permanece bloqueada.\"}]"
+  }
+}

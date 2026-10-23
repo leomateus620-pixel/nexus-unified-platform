@@ -1,0 +1,46 @@
+PET PASS vínculos OS/unidade/espaço canônicos
+PET PASS retry idempotente não duplica PET
+PET PASS chave divergente recusada
+PET PASS concluir OS não encerra PET pendente
+PET PASS unidade entre organizações recusada
+PET PASS endpoint direto sem permissão recusado
+PET PASS comercial não cria OS operacional
+PET PASS RLS não revela PET a papel insuficiente
+PET PASS conferência incompleta bloqueada
+PET PASS entrada sem liberação bloqueada
+PET PASS browser não forja emissão por UPDATE
+PET PASS admin sem designação técnica não aprova modelo
+PET PASS expected_version impede sobrescrita
+PET PASS não se aplica sem justificativa bloqueado
+PET PASS avaliação sem leitura bloqueada
+PET PASS evidência exigida não pode ser forjada em JSON de formulário
+PET PASS retomada de foto mantém intenção idempotente
+PET PASS foto não confirmada não finge upload concluído
+PET PASS manifesto confirmado satisfaz somente o item vinculado
+PET PASS emissão bloqueada sem integração certificada
+PET PASS supervisor não assina pela equipe
+PET PASS callback não autenticado como serviço recusado
+PET PASS callback com identidade divergente recusado
+PET PASS hash de assinatura cobre identidade finalidade e declaração do ato
+PET PASS callback com identidade divergente recusado
+PET PASS documento deve existir antes da liberação
+PET PASS emissão com provedor explicitamente simulado em teste
+PET PASS callback com identidade divergente recusado
+PET PASS duplo toque entrada mantém um intervalo
+PET PASS segunda entrada incompatível rejeitada
+PET PASS interrupção não inventa saída nem pausa permanência
+PET PASS expiração mantém presença visível
+PET PASS saída offline idempotente independente de assinatura ou versão antiga
+PET PASS última saída exige encerramento e preserva assinatura pendente
+PET PASS última saída e expiração bloqueiam reentrada
+PET PASS prorrogação incompatível recusada
+PET PASS pendência documental preserva término operacional
+PET PASS retificação não sobrescreve evidência original
+PET PASS horas PET nunca duplicam apontamento OS
+PET PASS histórico autorizado da unidade abre a mesma PET
+PET PASS trigger preserva eventos anteriores
+PET PASS procedimento aprovado não pode ser reescrito
+PET PASS servidor soma intervalos em segundos após meia-noite
+PET PASS reconexão mantém tempo vindo dos eventos persistidos
+PET PASS papel insuficiente não recupera snapshots pelo detalhe
+PET DB 45 assertions passed. Provider: TEST DOUBLE ONLY; real integration not validated.

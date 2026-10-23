@@ -27,13 +27,7 @@ describe("navegação por papel", () => {
         const itens = menusVisiveis(roles, caps).flatMap((group) =>
           group.items.map((item) => item.to),
         );
-        for (const off of [
-          "/execucao",
-          "/documentacao",
-          "/inspecoes",
-          "/projetos-engenharia",
-          "/seguranca",
-        ]) {
+        for (const off of ["/documentacao", "/inspecoes", "/projetos-engenharia", "/seguranca"]) {
           expect(itens).not.toContain(off);
           expect(podeVerRota(roles, off, caps)).toBe(false);
           expect(podeVerRota(roles, off + "/registro", caps)).toBe(false);
@@ -80,6 +74,7 @@ describe("navegação por papel", () => {
       "/mapas-3d/unidades",
       "/escada-lc02",
       "/projetos",
+      "/execucao",
       "/almoxarifado",
       "/equipe",
     ]);
@@ -135,7 +130,7 @@ describe("navegação por papel", () => {
       ["/", "/agenda-equipe", "/clientes", "/produtos", "/projetos", "/compras", "/almoxarifado"],
     ],
     ["financeiro", ["/", "/projetos", "/financeiro", "/relatorios"]],
-    ["campo", ["/", "/agenda-equipe", "/levantamentos", "/almoxarifado", "/equipe"]],
+    ["campo", ["/", "/agenda-equipe", "/levantamentos", "/execucao", "/almoxarifado", "/equipe"]],
   ])("o papel %s recebe somente seu contexto atual", (role, paths) => {
     const actual = menusVisiveis([role as string]).flatMap((g) => g.items.map((i) => i.to));
     expect(actual).toEqual(paths);
@@ -161,7 +156,14 @@ describe("navegação por papel", () => {
   it("concede coordenação explícita a um membro sem papel sem ampliar acesso técnico ou administrativo", () => {
     const caps = ["coordenar_operacao"];
     const paths = menusVisiveis([], caps).flatMap((g) => g.items.map((i) => i.to));
-    expect(paths).toEqual(["/", "/agenda-equipe", "/levantamentos", "/almoxarifado", "/equipe"]);
+    expect(paths).toEqual([
+      "/",
+      "/agenda-equipe",
+      "/levantamentos",
+      "/execucao",
+      "/almoxarifado",
+      "/equipe",
+    ]);
     expect(destinoInicial([], caps)).toBe("/");
     for (const path of paths) expect(podeVerRota([], path, caps)).toBe(true);
     for (const path of ["/configuracoes", "/financeiro", "/projetos-engenharia", "/comercial"])
@@ -175,5 +177,15 @@ describe("navegação por papel", () => {
     expect(podeVerRota(["comercial"], "/equipe", ["coordenar_operacao"])).toBe(true);
     expect(podeVerRota(["comercial"], "/equipe", [])).toBe(false);
     expect(podeVerRota([], "/execucao-extra", ["coordenar_operacao"])).toBe(false);
+  });
+
+  it("disponibiliza OS e PET com a mesma matriz no menu e no acesso direto", () => {
+    for (const role of ["admin", "engenharia", "campo"]) {
+      expect(podeVerRota([role], "/execucao/pets/pet-autorizada")).toBe(true);
+      expect(menusVisiveis([role]).flatMap((g) => g.items.map((i) => i.to))).toContain("/execucao");
+    }
+    for (const role of ["comercial", "financeiro", "compras", "desconhecido"])
+      expect(podeVerRota([role], "/execucao/pets/pet-autorizada")).toBe(false);
+    expect(podeVerRota([], "/execucao/ordens/os", ["coordenar_operacao"])).toBe(true);
   });
 });

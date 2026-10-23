@@ -14,6 +14,8 @@ describe("Anexos canônicos: pais e identidade de envio", () => {
     });
     expect(Object.hasOwn(pai, "ferramenta_id")).toBe(false);
     expect(Object.hasOwn(pai, "calibracao_id")).toBe(false);
+    expect(Object.hasOwn(pai, "pet_id")).toBe(false);
+    expect(Object.hasOwn(pai, "pet_item")).toBe(false);
   });
   it("aceita cada um dos cinco pais e rejeita ausência, mistura e UUID inválido", () => {
     const keys = ["pessoa_id", "acao_id", "qualificacao_id", "ferramenta_id", "calibracao_id"];
@@ -28,6 +30,20 @@ describe("Anexos canônicos: pais e identidade de envio", () => {
         ).toBe(false);
     }
     expect(anexoPai.safeParse({ organization_id: id(1) }).success).toBe(false);
+  });
+  it("vincula evidência à PET e ao item sem misturar pais ou mudar requests antigos", () => {
+    expect(
+      anexoPai.safeParse({ organization_id: id(1), pet_id: id(2), pet_item: "epc_isolamento" })
+        .success,
+    ).toBe(true);
+    expect(
+      anexoPai.safeParse({ organization_id: id(1), pet_id: id(2), agenda_evento_id: id(3) })
+        .success,
+    ).toBe(false);
+    expect(
+      anexoPai.safeParse({ organization_id: id(1), pessoa_id: id(2), pet_item: "epc_isolamento" })
+        .success,
+    ).toBe(false);
   });
   it("normaliza apenas a leitura de um recibo legado, sem tocar o request", () => {
     const row = anexoRow.parse({

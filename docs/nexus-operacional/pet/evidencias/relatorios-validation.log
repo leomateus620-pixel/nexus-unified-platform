@@ -1,0 +1,20 @@
+PET REPORT PASS job cria documento derivado em geração, sem fingir arquivo disponível
+PET REPORT PASS gerar relatório não emite PET nem muda revisão operacional
+PET REPORT PASS retry preserva documento e snapshot exatos
+PET REPORT PASS mesma chave com outra versão é recusada
+PET REPORT PASS versão desatualizada não gera novo job
+PET REPORT PASS endpoint direto sem acesso não expõe snapshot
+PET REPORT PASS prefixo documento não abre upload sem job próprio
+PET REPORT PASS job de relatório não recebe fotografia disfarçada
+PET REPORT PASS intenção de arquivo única por job, inclusive com outra chave
+PET REPORT PASS browser não pode promover documento a disponível
+PET REPORT PASS snapshot do relatório é imutável
+PET REPORT PASS arquivo pendente não é documento disponível
+PET REPORT PASS hash divergente não promove documento
+PET REPORT PASS finalização validada é idempotente e preserva arquivo/hash
+PET REPORT PASS arquivo disponível do relatório não é sobrescrito
+PET REPORT PASS PET encerrada continua recusando novos anexos comuns
+PET REPORT PASS exceção após encerramento aceita somente PDF do job autorizado
+PET REPORT PASS falta de configuração permanece falha explícita, sem arquivo disponível
+PET REPORT PASS retry revalida acesso atual após revogação
+PET REPORT DB 19 assertions passed. Storage metadata only; no HTTP or certificate validated.

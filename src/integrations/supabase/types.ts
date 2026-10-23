@@ -1008,6 +1008,8 @@ export type Database = {
           nome: string;
           organization_id: string;
           pessoa_id: string | null;
+          pet_id: string | null;
+          pet_item: string | null;
           qualificacao_id: string | null;
           sha256: string;
           tamanho: number;
@@ -1028,6 +1030,8 @@ export type Database = {
           nome: string;
           organization_id: string;
           pessoa_id?: string | null;
+          pet_id?: string | null;
+          pet_item?: string | null;
           qualificacao_id?: string | null;
           sha256: string;
           tamanho: number;
@@ -1047,6 +1051,8 @@ export type Database = {
           nome?: string;
           organization_id?: string;
           pessoa_id?: string | null;
+          pet_id?: string | null;
+          pet_item?: string | null;
           qualificacao_id?: string | null;
           sha256?: string;
           tamanho?: number;
@@ -1071,6 +1077,13 @@ export type Database = {
             columns: ["organization_id", "ferramenta_id"];
             isOneToOne: false;
             referencedRelation: "ferramentas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "anexo_pet_tenant";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
             referencedColumns: ["organization_id", "id"];
           },
           {
@@ -5177,6 +5190,77 @@ export type Database = {
           },
         ];
       };
+      ordens_servico: {
+        Row: {
+          cliente_id: string;
+          created_at: string;
+          created_by: string;
+          escopo: string;
+          estado: string;
+          id: string;
+          numero: number;
+          organization_id: string;
+          responsavel_id: string | null;
+          titulo: string;
+          unidade_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          cliente_id: string;
+          created_at?: string;
+          created_by?: string;
+          escopo?: string;
+          estado?: string;
+          id?: string;
+          numero?: never;
+          organization_id: string;
+          responsavel_id?: string | null;
+          titulo: string;
+          unidade_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          cliente_id?: string;
+          created_at?: string;
+          created_by?: string;
+          escopo?: string;
+          estado?: string;
+          id?: string;
+          numero?: never;
+          organization_id?: string;
+          responsavel_id?: string | null;
+          titulo?: string;
+          unidade_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ordens_servico_organization_id_cliente_id_unidade_id_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id"];
+            isOneToOne: false;
+            referencedRelation: "unidades";
+            referencedColumns: ["organization_id", "cliente_id", "id"];
+          },
+          {
+            foreignKeyName: "ordens_servico_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ordens_servico_organization_id_responsavel_id_fkey";
+            columns: ["organization_id", "responsavel_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
       organizations: {
         Row: {
           created_at: string;
@@ -5198,6 +5282,101 @@ export type Database = {
           timezone?: string;
         };
         Relationships: [];
+      };
+      os_apontamentos: {
+        Row: {
+          chave: string;
+          created_at: string;
+          created_by: string;
+          descricao: string;
+          fim: string;
+          fonte: string;
+          id: string;
+          inicio: string;
+          organization_id: string;
+          os_id: string;
+          pessoa_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          chave: string;
+          created_at?: string;
+          created_by?: string;
+          descricao: string;
+          fim: string;
+          fonte?: string;
+          id?: string;
+          inicio: string;
+          organization_id: string;
+          os_id: string;
+          pessoa_id: string;
+        };
+        Update: {
+          chave?: string;
+          created_at?: string;
+          created_by?: string;
+          descricao?: string;
+          fim?: string;
+          fonte?: string;
+          id?: string;
+          inicio?: string;
+          organization_id?: string;
+          os_id?: string;
+          pessoa_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "os_apontamentos_organization_id_os_id_fkey";
+            columns: ["organization_id", "os_id"];
+            isOneToOne: false;
+            referencedRelation: "ordens_servico";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "os_apontamentos_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      os_participantes: {
+        Row: {
+          funcao: string;
+          organization_id: string;
+          os_id: string;
+          pessoa_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          funcao?: string;
+          organization_id: string;
+          os_id: string;
+          pessoa_id: string;
+        };
+        Update: {
+          funcao?: string;
+          organization_id?: string;
+          os_id?: string;
+          pessoa_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "os_participantes_organization_id_os_id_fkey";
+            columns: ["organization_id", "os_id"];
+            isOneToOne: false;
+            referencedRelation: "ordens_servico";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "os_participantes_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
       };
       outbox_eventos: {
         Row: {
@@ -5774,6 +5953,1339 @@ export type Database = {
             isOneToOne: true;
             referencedRelation: "memberships";
             referencedColumns: ["organization_id", "user_id"];
+          },
+        ];
+      };
+      pet_assinatura_callbacks: {
+        Row: {
+          assinatura_id: string;
+          evento_id: string;
+          organization_id: string;
+          payload_sha256: string;
+          provedor: string;
+          recebido_em: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          assinatura_id: string;
+          evento_id: string;
+          organization_id: string;
+          payload_sha256: string;
+          provedor: string;
+          recebido_em?: string;
+        };
+        Update: {
+          assinatura_id?: string;
+          evento_id?: string;
+          organization_id?: string;
+          payload_sha256?: string;
+          provedor?: string;
+          recebido_em?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_assinatura_callbacks_organization_id_assinatura_id_fkey";
+            columns: ["organization_id", "assinatura_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_assinaturas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_assinatura_integracoes: {
+        Row: {
+          ambiente: string;
+          configuracao_referencia: string;
+          configurada: boolean;
+          icp_brasil: boolean;
+          organization_id: string;
+          provedor: string;
+          verificado_em: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          ambiente: string;
+          configuracao_referencia: string;
+          configurada?: boolean;
+          icp_brasil?: boolean;
+          organization_id: string;
+          provedor: string;
+          verificado_em?: string | null;
+        };
+        Update: {
+          ambiente?: string;
+          configuracao_referencia?: string;
+          configurada?: boolean;
+          icp_brasil?: boolean;
+          organization_id?: string;
+          provedor?: string;
+          verificado_em?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_assinatura_integracoes_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      pet_assinaturas: {
+        Row: {
+          assinada_em: string | null;
+          conteudo_assinado: NonNullable<Json>;
+          conteudo_sha256: string;
+          created_at: string;
+          created_by: string | null;
+          declaracao: string;
+          estado: string;
+          evento_em: string;
+          finalidade: string;
+          id: string;
+          identidade_verificada: Json | null;
+          metodo: string;
+          organization_id: string;
+          participante_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          provedor: string | null;
+          provedor_id: string | null;
+          revisao_id: string;
+          validacao: Json | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          assinada_em?: string | null;
+          conteudo_assinado: NonNullable<Json>;
+          conteudo_sha256: string;
+          created_at?: string;
+          created_by?: string | null;
+          declaracao: string;
+          estado?: string;
+          evento_em: string;
+          finalidade: string;
+          id?: string;
+          identidade_verificada?: Json | null;
+          metodo: string;
+          organization_id: string;
+          participante_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          provedor?: string | null;
+          provedor_id?: string | null;
+          revisao_id: string;
+          validacao?: Json | null;
+        };
+        Update: {
+          assinada_em?: string | null;
+          conteudo_assinado?: NonNullable<Json>;
+          conteudo_sha256?: string;
+          created_at?: string;
+          created_by?: string | null;
+          declaracao?: string;
+          estado?: string;
+          evento_em?: string;
+          finalidade?: string;
+          id?: string;
+          identidade_verificada?: Json | null;
+          metodo?: string;
+          organization_id?: string;
+          participante_id?: string;
+          pessoa_id?: string;
+          pet_id?: string;
+          provedor?: string | null;
+          provedor_id?: string | null;
+          revisao_id?: string;
+          validacao?: Json | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_assinatura_participante_pessoa";
+            columns: ["organization_id", "pet_id", "participante_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_participantes";
+            referencedColumns: ["organization_id", "pet_id", "id", "pessoa_id"];
+          },
+          {
+            foreignKeyName: "pet_assinaturas_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_assinaturas_organization_id_pet_id_participante_id_fkey";
+            columns: ["organization_id", "pet_id", "participante_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_participantes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_assinaturas_organization_id_pet_id_revisao_id_fkey";
+            columns: ["organization_id", "pet_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_revisoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_avaliacoes: {
+        Row: {
+          calibracao: string;
+          contexto: string | null;
+          created_by: string;
+          etapa: string;
+          id: string;
+          instrumento: string;
+          momento: string;
+          numero_serie: string;
+          organization_id: string;
+          pet_id: string;
+          recebido_em: string;
+          responsavel_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          calibracao: string;
+          contexto?: string | null;
+          created_by?: string;
+          etapa: string;
+          id?: string;
+          instrumento: string;
+          momento: string;
+          numero_serie: string;
+          organization_id: string;
+          pet_id: string;
+          recebido_em?: string;
+          responsavel_id: string;
+        };
+        Update: {
+          calibracao?: string;
+          contexto?: string | null;
+          created_by?: string;
+          etapa?: string;
+          id?: string;
+          instrumento?: string;
+          momento?: string;
+          numero_serie?: string;
+          organization_id?: string;
+          pet_id?: string;
+          recebido_em?: string;
+          responsavel_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_avaliacoes_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_avaliacoes_organization_id_responsavel_id_fkey";
+            columns: ["organization_id", "responsavel_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_documentos: {
+        Row: {
+          anexo_id: string | null;
+          created_at: string;
+          created_by: string | null;
+          erro: string | null;
+          estado: string;
+          id: string;
+          organization_id: string;
+          original_documento_id: string | null;
+          pet_id: string;
+          revisao_id: string;
+          sha256: string | null;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          anexo_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          erro?: string | null;
+          estado?: string;
+          id?: string;
+          organization_id: string;
+          original_documento_id?: string | null;
+          pet_id: string;
+          revisao_id: string;
+          sha256?: string | null;
+          tipo: string;
+        };
+        Update: {
+          anexo_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          erro?: string | null;
+          estado?: string;
+          id?: string;
+          organization_id?: string;
+          original_documento_id?: string | null;
+          pet_id?: string;
+          revisao_id?: string;
+          sha256?: string | null;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_documento_anexo_contexto";
+            columns: ["organization_id", "pet_id", "anexo_id"];
+            isOneToOne: false;
+            referencedRelation: "anexos";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_documentos_organization_id_anexo_id_fkey";
+            columns: ["organization_id", "anexo_id"];
+            isOneToOne: false;
+            referencedRelation: "anexos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_documentos_organization_id_original_documento_id_fkey";
+            columns: ["organization_id", "original_documento_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_documentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_documentos_organization_id_pet_id_revisao_id_fkey";
+            columns: ["organization_id", "pet_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_revisoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_espacos: {
+        Row: {
+          ativo: boolean;
+          caracteristicas: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          identificacao: string;
+          localizacao: string;
+          organization_id: string;
+          referencias_tecnicas: NonNullable<Json>;
+          unidade_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          ativo?: boolean;
+          caracteristicas?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          identificacao: string;
+          localizacao: string;
+          organization_id: string;
+          referencias_tecnicas?: NonNullable<Json>;
+          unidade_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          ativo?: boolean;
+          caracteristicas?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          identificacao?: string;
+          localizacao?: string;
+          organization_id?: string;
+          referencias_tecnicas?: NonNullable<Json>;
+          unidade_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_espacos_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pet_espacos_organization_id_unidade_id_fkey";
+            columns: ["organization_id", "unidade_id"];
+            isOneToOne: false;
+            referencedRelation: "unidades";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_eventos_operacionais: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          dados: NonNullable<Json>;
+          id: string;
+          momento: string;
+          motivo: string;
+          organization_id: string;
+          pet_id: string;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          dados?: NonNullable<Json>;
+          id?: string;
+          momento?: string;
+          motivo: string;
+          organization_id: string;
+          pet_id: string;
+          tipo: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          dados?: NonNullable<Json>;
+          id?: string;
+          momento?: string;
+          motivo?: string;
+          organization_id?: string;
+          pet_id?: string;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_eventos_operacionais_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_eventos_presenca: {
+        Row: {
+          assinatura_id: string | null;
+          assinatura_pendente: boolean;
+          created_by: string;
+          exige_conferencia: boolean;
+          id: string;
+          momento_declarado: string;
+          motivo: string | null;
+          organization_id: string;
+          origem: string;
+          participante_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          recebido_em: string;
+          retifica_id: string | null;
+          revisao_id: string;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          assinatura_id?: string | null;
+          assinatura_pendente?: boolean;
+          created_by?: string;
+          exige_conferencia?: boolean;
+          id?: string;
+          momento_declarado: string;
+          motivo?: string | null;
+          organization_id: string;
+          origem: string;
+          participante_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          recebido_em?: string;
+          retifica_id?: string | null;
+          revisao_id: string;
+          tipo: string;
+        };
+        Update: {
+          assinatura_id?: string | null;
+          assinatura_pendente?: boolean;
+          created_by?: string;
+          exige_conferencia?: boolean;
+          id?: string;
+          momento_declarado?: string;
+          motivo?: string | null;
+          organization_id?: string;
+          origem?: string;
+          participante_id?: string;
+          pessoa_id?: string;
+          pet_id?: string;
+          recebido_em?: string;
+          retifica_id?: string | null;
+          revisao_id?: string;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_evento_participante_pessoa";
+            columns: ["organization_id", "pet_id", "participante_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_participantes";
+            referencedColumns: ["organization_id", "pet_id", "id", "pessoa_id"];
+          },
+          {
+            foreignKeyName: "pet_eventos_presenca_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_eventos_presenca_organization_id_pet_id_assinatura_id_fkey";
+            columns: ["organization_id", "pet_id", "assinatura_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_assinaturas";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_eventos_presenca_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_eventos_presenca_organization_id_pet_id_participante_i_fkey";
+            columns: ["organization_id", "pet_id", "participante_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_participantes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_eventos_presenca_organization_id_pet_id_retifica_id_fkey";
+            columns: ["organization_id", "pet_id", "retifica_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_eventos_presenca";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_eventos_presenca_organization_id_pet_id_revisao_id_fkey";
+            columns: ["organization_id", "pet_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_revisoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_intervalos: {
+        Row: {
+          entrada_em: string;
+          entrada_id: string;
+          id: string;
+          organization_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          saida_em: string | null;
+          saida_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          entrada_em: string;
+          entrada_id: string;
+          id?: string;
+          organization_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          saida_em?: string | null;
+          saida_id?: string | null;
+        };
+        Update: {
+          entrada_em?: string;
+          entrada_id?: string;
+          id?: string;
+          organization_id?: string;
+          pessoa_id?: string;
+          pet_id?: string;
+          saida_em?: string | null;
+          saida_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_intervalos_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_intervalos_organization_id_pet_id_entrada_id_fkey";
+            columns: ["organization_id", "pet_id", "entrada_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_eventos_presenca";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_intervalos_organization_id_pet_id_saida_id_fkey";
+            columns: ["organization_id", "pet_id", "saida_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_eventos_presenca";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_leituras: {
+        Row: {
+          agente: string;
+          avaliacao_id: string;
+          id: string;
+          organization_id: string;
+          origem: string;
+          pet_id: string;
+          unidade: string;
+          valor: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          agente: string;
+          avaliacao_id: string;
+          id?: string;
+          organization_id: string;
+          origem: string;
+          pet_id: string;
+          unidade: string;
+          valor: number;
+        };
+        Update: {
+          agente?: string;
+          avaliacao_id?: string;
+          id?: string;
+          organization_id?: string;
+          origem?: string;
+          pet_id?: string;
+          unidade?: string;
+          valor?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_leituras_organization_id_pet_id_avaliacao_id_fkey";
+            columns: ["organization_id", "pet_id", "avaliacao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_avaliacoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_modelo_versoes: {
+        Row: {
+          aprovado_em: string | null;
+          aprovado_por: string | null;
+          created_at: string;
+          created_by: string;
+          declaracao_aprovacao: string | null;
+          estado: string;
+          id: string;
+          modelo_id: string;
+          organization_id: string;
+          procedimento: NonNullable<Json>;
+          sha256: string;
+          versao: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          aprovado_em?: string | null;
+          aprovado_por?: string | null;
+          created_at?: string;
+          created_by?: string;
+          declaracao_aprovacao?: string | null;
+          estado?: string;
+          id?: string;
+          modelo_id: string;
+          organization_id: string;
+          procedimento: NonNullable<Json>;
+          sha256: string;
+          versao: number;
+        };
+        Update: {
+          aprovado_em?: string | null;
+          aprovado_por?: string | null;
+          created_at?: string;
+          created_by?: string;
+          declaracao_aprovacao?: string | null;
+          estado?: string;
+          id?: string;
+          modelo_id?: string;
+          organization_id?: string;
+          procedimento?: NonNullable<Json>;
+          sha256?: string;
+          versao?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_modelo_versoes_organization_id_aprovado_por_fkey";
+            columns: ["organization_id", "aprovado_por"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_modelo_versoes_organization_id_modelo_id_fkey";
+            columns: ["organization_id", "modelo_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_modelos";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_modelos: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          id: string;
+          nome: string;
+          organization_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          nome: string;
+          organization_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          nome?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_modelos_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      pet_participantes: {
+        Row: {
+          classificacao: string;
+          contato: string | null;
+          created_at: string;
+          created_by: string;
+          empresa: string | null;
+          fim: string | null;
+          funcao: string;
+          id: string;
+          inicio: string;
+          nome_snapshot: string;
+          organization_id: string;
+          pessoa_id: string;
+          pet_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          classificacao: string;
+          contato?: string | null;
+          created_at?: string;
+          created_by?: string;
+          empresa?: string | null;
+          fim?: string | null;
+          funcao: string;
+          id?: string;
+          inicio?: string;
+          nome_snapshot: string;
+          organization_id: string;
+          pessoa_id: string;
+          pet_id: string;
+        };
+        Update: {
+          classificacao?: string;
+          contato?: string | null;
+          created_at?: string;
+          created_by?: string;
+          empresa?: string | null;
+          fim?: string | null;
+          funcao?: string;
+          id?: string;
+          inicio?: string;
+          nome_snapshot?: string;
+          organization_id?: string;
+          pessoa_id?: string;
+          pet_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_participantes_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_participantes_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_permissoes: {
+        Row: {
+          atividade: string;
+          cliente_id: string;
+          condicao_operacional: string;
+          conteudo: NonNullable<Json>;
+          created_at: string;
+          created_by: string;
+          emitida_em: string | null;
+          encerrada_em: string | null;
+          espaco_id: string;
+          estado_documental: string;
+          id: string;
+          modelo_versao_id: string | null;
+          numero: string | null;
+          organization_id: string;
+          os_id: string;
+          retencao_ate: string | null;
+          revisao_atual_id: string | null;
+          sequencia: number;
+          snapshot_identificacao: NonNullable<Json>;
+          termino_operacional_em: string | null;
+          termino_previsto: string;
+          timezone: string;
+          unidade_id: string;
+          updated_at: string;
+          version: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          atividade: string;
+          cliente_id: string;
+          condicao_operacional?: string;
+          conteudo?: NonNullable<Json>;
+          created_at?: string;
+          created_by?: string;
+          emitida_em?: string | null;
+          encerrada_em?: string | null;
+          espaco_id: string;
+          estado_documental?: string;
+          id?: string;
+          modelo_versao_id?: string | null;
+          numero?: never;
+          organization_id: string;
+          os_id: string;
+          retencao_ate?: string | null;
+          revisao_atual_id?: string | null;
+          sequencia?: never;
+          snapshot_identificacao: NonNullable<Json>;
+          termino_operacional_em?: string | null;
+          termino_previsto: string;
+          timezone: string;
+          unidade_id: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          atividade?: string;
+          cliente_id?: string;
+          condicao_operacional?: string;
+          conteudo?: NonNullable<Json>;
+          created_at?: string;
+          created_by?: string;
+          emitida_em?: string | null;
+          encerrada_em?: string | null;
+          espaco_id?: string;
+          estado_documental?: string;
+          id?: string;
+          modelo_versao_id?: string | null;
+          numero?: never;
+          organization_id?: string;
+          os_id?: string;
+          retencao_ate?: string | null;
+          revisao_atual_id?: string | null;
+          sequencia?: never;
+          snapshot_identificacao?: NonNullable<Json>;
+          termino_operacional_em?: string | null;
+          termino_previsto?: string;
+          timezone?: string;
+          unidade_id?: string;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_permissoes_organization_id_cliente_id_unidade_id_os_id_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "os_id"];
+            isOneToOne: false;
+            referencedRelation: "ordens_servico";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_permissoes_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pet_permissoes_organization_id_modelo_versao_id_fkey";
+            columns: ["organization_id", "modelo_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_modelo_versoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_permissoes_organization_id_unidade_id_espaco_id_fkey";
+            columns: ["organization_id", "unidade_id", "espaco_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_espacos";
+            referencedColumns: ["organization_id", "unidade_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_revisao_tenant";
+            columns: ["organization_id", "id", "revisao_atual_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_revisoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_prorrogacoes: {
+        Row: {
+          condicoes: NonNullable<Json>;
+          created_at: string;
+          created_by: string;
+          decisao: string;
+          id: string;
+          motivo: string;
+          organization_id: string;
+          pet_id: string;
+          supervisor_id: string;
+          termino_anterior: string;
+          termino_novo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          condicoes: NonNullable<Json>;
+          created_at?: string;
+          created_by?: string;
+          decisao: string;
+          id?: string;
+          motivo: string;
+          organization_id: string;
+          pet_id: string;
+          supervisor_id: string;
+          termino_anterior: string;
+          termino_novo: string;
+        };
+        Update: {
+          condicoes?: NonNullable<Json>;
+          created_at?: string;
+          created_by?: string;
+          decisao?: string;
+          id?: string;
+          motivo?: string;
+          organization_id?: string;
+          pet_id?: string;
+          supervisor_id?: string;
+          termino_anterior?: string;
+          termino_novo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_prorrogacoes_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_prorrogacoes_organization_id_supervisor_id_fkey";
+            columns: ["organization_id", "supervisor_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_relatorio_jobs: {
+        Row: {
+          anexo_id: string | null;
+          arquivo_sha256: string | null;
+          autor: string;
+          chave: string;
+          created_at: string;
+          documento_id: string;
+          finalizado_em: string | null;
+          organization_id: string;
+          pet_id: string;
+          pet_version: number;
+          revisao_id: string;
+          snapshot: NonNullable<Json>;
+          snapshot_sha256: string;
+          tamanho: number | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          anexo_id?: string | null;
+          arquivo_sha256?: string | null;
+          autor: string;
+          chave: string;
+          created_at?: string;
+          documento_id: string;
+          finalizado_em?: string | null;
+          organization_id: string;
+          pet_id: string;
+          pet_version: number;
+          revisao_id: string;
+          snapshot: NonNullable<Json>;
+          snapshot_sha256: string;
+          tamanho?: number | null;
+        };
+        Update: {
+          anexo_id?: string | null;
+          arquivo_sha256?: string | null;
+          autor?: string;
+          chave?: string;
+          created_at?: string;
+          documento_id?: string;
+          finalizado_em?: string | null;
+          organization_id?: string;
+          pet_id?: string;
+          pet_version?: number;
+          revisao_id?: string;
+          snapshot?: NonNullable<Json>;
+          snapshot_sha256?: string;
+          tamanho?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_relatorio_jobs_organization_id_anexo_id_fkey";
+            columns: ["organization_id", "anexo_id"];
+            isOneToOne: false;
+            referencedRelation: "anexos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_relatorio_jobs_organization_id_documento_id_fkey";
+            columns: ["organization_id", "documento_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_documentos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_relatorio_jobs_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_relatorio_jobs_organization_id_pet_id_revisao_id_fkey";
+            columns: ["organization_id", "pet_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_revisoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_responsaveis_tecnicos: {
+        Row: {
+          designacao: string;
+          fim: string | null;
+          inicio: string;
+          organization_id: string;
+          pessoa_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          designacao: string;
+          fim?: string | null;
+          inicio: string;
+          organization_id: string;
+          pessoa_id: string;
+        };
+        Update: {
+          designacao?: string;
+          fim?: string | null;
+          inicio?: string;
+          organization_id?: string;
+          pessoa_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_responsaveis_tecnicos_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_respostas: {
+        Row: {
+          conferido_em: string;
+          conferido_por: string;
+          id: string;
+          item: string;
+          justificativa: string | null;
+          organization_id: string;
+          pet_id: string;
+          resposta: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          conferido_em?: string;
+          conferido_por?: string;
+          id?: string;
+          item: string;
+          justificativa?: string | null;
+          organization_id: string;
+          pet_id: string;
+          resposta: string;
+        };
+        Update: {
+          conferido_em?: string;
+          conferido_por?: string;
+          id?: string;
+          item?: string;
+          justificativa?: string | null;
+          organization_id?: string;
+          pet_id?: string;
+          resposta?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_respostas_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_retificacao_decisoes: {
+        Row: {
+          decidido_em: string;
+          decidido_por: string;
+          decisao: string;
+          id: string;
+          motivo: string;
+          organization_id: string;
+          pet_id: string;
+          responsavel_id: string;
+          retificacao_id: string;
+          revisao_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          decidido_em?: string;
+          decidido_por?: string;
+          decisao: string;
+          id?: string;
+          motivo: string;
+          organization_id: string;
+          pet_id: string;
+          responsavel_id: string;
+          retificacao_id: string;
+          revisao_id?: string | null;
+        };
+        Update: {
+          decidido_em?: string;
+          decidido_por?: string;
+          decisao?: string;
+          id?: string;
+          motivo?: string;
+          organization_id?: string;
+          pet_id?: string;
+          responsavel_id?: string;
+          retificacao_id?: string;
+          revisao_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_retificacao_decisoes_organization_id_pet_id_retificaca_fkey";
+            columns: ["organization_id", "pet_id", "retificacao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_retificacoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacao_decisoes_organization_id_pet_id_revisao_id_fkey";
+            columns: ["organization_id", "pet_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_revisoes";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacao_decisoes_organization_id_responsavel_id_fkey";
+            columns: ["organization_id", "responsavel_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      pet_retificacoes: {
+        Row: {
+          evento_id: string;
+          evidencia_id: string;
+          id: string;
+          intervalo_base_sha256: string;
+          intervalo_id: string;
+          modelo_versao_id: string;
+          momento_corrigido: string;
+          momento_original: string;
+          motivo: string;
+          organization_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          procedimento_sha256: string;
+          registrante_original: string;
+          solicitado_em: string;
+          solicitado_por: string;
+          version_pet: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          evento_id: string;
+          evidencia_id: string;
+          id?: string;
+          intervalo_base_sha256: string;
+          intervalo_id: string;
+          modelo_versao_id: string;
+          momento_corrigido: string;
+          momento_original: string;
+          motivo: string;
+          organization_id: string;
+          pessoa_id: string;
+          pet_id: string;
+          procedimento_sha256: string;
+          registrante_original: string;
+          solicitado_em?: string;
+          solicitado_por?: string;
+          version_pet: number;
+        };
+        Update: {
+          evento_id?: string;
+          evidencia_id?: string;
+          id?: string;
+          intervalo_base_sha256?: string;
+          intervalo_id?: string;
+          modelo_versao_id?: string;
+          momento_corrigido?: string;
+          momento_original?: string;
+          motivo?: string;
+          organization_id?: string;
+          pessoa_id?: string;
+          pet_id?: string;
+          procedimento_sha256?: string;
+          registrante_original?: string;
+          solicitado_em?: string;
+          solicitado_por?: string;
+          version_pet?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_retificacao_evidencia_contexto";
+            columns: ["organization_id", "pet_id", "evidencia_id"];
+            isOneToOne: false;
+            referencedRelation: "anexos";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacao_intervalo_contexto";
+            columns: ["organization_id", "pet_id", "intervalo_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_intervalos";
+            referencedColumns: ["organization_id", "pet_id", "id", "pessoa_id"];
+          },
+          {
+            foreignKeyName: "pet_retificacoes_organization_id_evidencia_id_fkey";
+            columns: ["organization_id", "evidencia_id"];
+            isOneToOne: false;
+            referencedRelation: "anexos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacoes_organization_id_intervalo_id_fkey";
+            columns: ["organization_id", "intervalo_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_intervalos";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacoes_organization_id_modelo_versao_id_fkey";
+            columns: ["organization_id", "modelo_versao_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_modelo_versoes";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacoes_organization_id_pessoa_id_fkey";
+            columns: ["organization_id", "pessoa_id"];
+            isOneToOne: false;
+            referencedRelation: "pessoas";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "pet_retificacoes_organization_id_pet_id_evento_id_fkey";
+            columns: ["organization_id", "pet_id", "evento_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_eventos_presenca";
+            referencedColumns: ["organization_id", "pet_id", "id"];
+          },
+        ];
+      };
+      pet_revisoes: {
+        Row: {
+          conteudo: NonNullable<Json>;
+          created_at: string;
+          created_by: string;
+          finalidade: string;
+          id: string;
+          organization_id: string;
+          pet_id: string;
+          sha256: string;
+          versao: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          conteudo: NonNullable<Json>;
+          created_at?: string;
+          created_by?: string;
+          finalidade: string;
+          id?: string;
+          organization_id: string;
+          pet_id: string;
+          sha256: string;
+          versao: number;
+        };
+        Update: {
+          conteudo?: NonNullable<Json>;
+          created_at?: string;
+          created_by?: string;
+          finalidade?: string;
+          id?: string;
+          organization_id?: string;
+          pet_id?: string;
+          sha256?: string;
+          versao?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pet_revisoes_organization_id_pet_id_fkey";
+            columns: ["organization_id", "pet_id"];
+            isOneToOne: false;
+            referencedRelation: "pet_permissoes";
+            referencedColumns: ["organization_id", "id"];
           },
         ];
       };
@@ -7595,6 +9107,10 @@ export type Database = {
         Args: { _chave: string; _id: string; _motivo: string; _org: string };
         Returns: Json;
       };
+      cancelar_anexo_operacional_ate30: {
+        Args: { _chave: string; _id: string; _motivo: string; _org: string };
+        Returns: Json;
+      };
       capturar_revisao: {
         Args: { _operacao?: string; _rev: string };
         Returns: Json;
@@ -7890,6 +9406,14 @@ export type Database = {
         Args: { _chave: string; _dados: Json; _evento: string; _org: string };
         Returns: Json;
       };
+      iniciar_anexo_pet: {
+        Args: { _chave: string; _dados: Json; _org: string; _pet: string };
+        Returns: Json;
+      };
+      iniciar_anexo_pet_ate32: {
+        Args: { _chave: string; _dados: Json; _org: string; _pet: string };
+        Returns: Json;
+      };
       is_member: { Args: { _org: string }; Returns: boolean };
       lev_adotar_medicao: {
         Args: {
@@ -8029,6 +9553,10 @@ export type Database = {
         Args: { _org: string; _pai: Json };
         Returns: Json;
       };
+      listar_anexos_operacionais_ate30: {
+        Args: { _org: string; _pai: Json };
+        Returns: Json;
+      };
       listar_cadastros_cliente: {
         Args: {
           _busca?: string;
@@ -8070,6 +9598,14 @@ export type Database = {
         Returns: boolean;
       };
       operacao_autor_destino_anexo_ate27: {
+        Args: { _autor: string; _escrever?: boolean; _org: string; _pai: Json };
+        Returns: boolean;
+      };
+      operacao_autor_destino_anexo_ate30: {
+        Args: { _autor: string; _escrever?: boolean; _org: string; _pai: Json };
+        Returns: boolean;
+      };
+      operacao_autor_destino_anexo_ate32: {
         Args: { _autor: string; _escrever?: boolean; _org: string; _pai: Json };
         Returns: boolean;
       };
@@ -8124,6 +9660,11 @@ export type Database = {
         Args: { _org: string; _pai: Json };
         Returns: undefined;
       };
+      operacao_travar_pai_anexo_ate30: {
+        Args: { _org: string; _pai: Json };
+        Returns: undefined;
+      };
+      os_ler: { Args: { p_id: string; p_org: string }; Returns: boolean };
       pe_autor_acessa: {
         Args: { _autor: string; _org: string; _projeto: string };
         Returns: boolean;
@@ -8151,6 +9692,99 @@ export type Database = {
         Returns: Json;
       };
       pe_validar_modelo: { Args: { _modelo: Json }; Returns: undefined };
+      pet_anexo_autor_destino: {
+        Args: {
+          _autor: string;
+          _escrever?: boolean;
+          _org: string;
+          _pet: string;
+        };
+        Returns: boolean;
+      };
+      pet_anexo_cancelavel: {
+        Args: { _autor: string; _id: string; _org: string };
+        Returns: boolean;
+      };
+      pet_autor_ler: {
+        Args: { p_autor: string; p_id: string; p_org: string };
+        Returns: boolean;
+      };
+      pet_executar: { Args: { p_comando: Json; p_org: string }; Returns: Json };
+      pet_executar_ate31: {
+        Args: { p_comando: Json; p_org: string };
+        Returns: Json;
+      };
+      pet_finalizar_relatorio: {
+        Args: {
+          p_anexo: string;
+          p_autor: string;
+          p_documento: string;
+          p_org: string;
+          p_sha256: string;
+        };
+        Returns: Json;
+      };
+      pet_intervalos_efetivos: {
+        Args: { p_org: string; p_pet?: string };
+        Returns: {
+          entrada_em: string;
+          entrada_id: string;
+          entrada_original_em: string;
+          id: string;
+          pessoa_id: string;
+          pet_id: string;
+          retificacao_entrada_id: string;
+          retificacao_saida_id: string;
+          saida_em: string;
+          saida_id: string;
+          saida_original_em: string;
+        }[];
+      };
+      pet_ler: { Args: { p_id: string; p_org: string }; Returns: boolean };
+      pet_listar: { Args: { p_filtros?: Json; p_org: string }; Returns: Json };
+      pet_obter: { Args: { p_id: string; p_org: string }; Returns: Json };
+      pet_obter_ate31: { Args: { p_id: string; p_org: string }; Returns: Json };
+      pet_opcoes: { Args: { p_org: string }; Returns: Json };
+      pet_operar: { Args: { p_id: string; p_org: string }; Returns: boolean };
+      pet_pendencias: { Args: { p_id: string; p_org: string }; Returns: Json };
+      pet_preparar_relatorio: {
+        Args: {
+          p_chave: string;
+          p_expected_version: number;
+          p_org: string;
+          p_pet: string;
+        };
+        Returns: Json;
+      };
+      pet_relatorio_anexo_autorizado: {
+        Args: { p_autor: string; p_item: string; p_org: string; p_pet: string };
+        Returns: boolean;
+      };
+      pet_relatorio_falhar: {
+        Args: { p_documento: string; p_motivo: string; p_org: string };
+        Returns: undefined;
+      };
+      pet_retificacao_validar: {
+        Args: {
+          p_corrigido: string;
+          p_evento: string;
+          p_org: string;
+          p_pet: string;
+        };
+        Returns: Json;
+      };
+      pet_retificar: { Args: { p_comando: Json; p_org: string }; Returns: Json };
+      pet_sha256: { Args: { p_valor: Json }; Returns: string };
+      pet_validar_assinatura: {
+        Args: {
+          p_assinatura: string;
+          p_evento: string;
+          p_org: string;
+          p_provedor: string;
+          p_validacao: Json;
+        };
+        Returns: undefined;
+      };
       planejar_ordens: {
         Args: { _escopo?: string; _rev: string };
         Returns: Json;

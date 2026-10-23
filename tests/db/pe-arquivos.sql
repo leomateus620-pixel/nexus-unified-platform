@@ -1,0 +1,68 @@
+-- Somente metadados/RLS/estados no Postgres isolado. Bytes reais são verificados no servidor;
+-- este teste não comprova upload, download HTTP ou Storage do projeto conectado.
+\set ON_ERROR_STOP on
+begin;
+reset role;
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-00000000000f',true);
+insert into public.pessoas(id,organization_id,nome,vinculo) values('7f000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','Responsável arquivos PE','colaborador');
+create temp table pe_files_estado(chave text primary key,valor jsonb not null);
+grant all on pe_files_estado to authenticated,service_role;
+create function pg_temp.pfa(ok boolean,rotulo text) returns void language plpgsql as $$ begin
+  if ok is distinct from true then raise exception 'PE FILES FALHOU: %',rotulo; end if;
+  raise notice 'PE FILES PASSOU: %',rotulo;
+end $$;
+create function pg_temp.pfe(q text,codigo text,rotulo text) returns void language plpgsql as $$ begin
+  begin execute q; exception when others then
+    if sqlstate=codigo then raise notice 'PE FILES PASSOU: %',rotulo; return; end if;
+    raise exception 'PE FILES FALHOU: %, código recebido %, esperado %, erro %',rotulo,sqlstate,codigo,sqlerrm;
+  end;
+  raise exception 'PE FILES FALHOU: %, operação indevidamente permitida',rotulo;
+end $$;
+set local role authenticated;
+insert into pe_files_estado select 'projeto',public.pe_executar('10000000-0000-0000-0000-000000000001','7f100000-0000-0000-0000-000000000001','criar',jsonb_build_object('titulo','Acervo privado de teste','cliente_id','20000000-0000-0000-0000-000000000001','responsavel_id','7f000000-0000-0000-0000-000000000001','local_descritivo','Local do teste isolado','resumo','Primeira referência documental','modelo','{"schema_version":1,"familia":"documental","finalidade":"estudo","secoes":[{"id":"7f200000-0000-0000-0000-000000000001","titulo":"Escopo","texto":"Documento de referência isolado"}],"parametros":[]}'::jsonb));
+insert into pe_files_estado values('meta',jsonb_build_object('nome','original-tecnico.pdf','mime','application/pdf','tamanho',12,'sha256',repeat('a',64)));
+insert into pe_files_estado select 'arquivo',public.pe_preparar_arquivo('10000000-0000-0000-0000-000000000001',(p.valor->'versao'->>'id')::uuid,'7f100000-0000-0000-0000-000000000002',m.valor) from pe_files_estado p,pe_files_estado m where p.chave='projeto' and m.chave='meta';
+select pg_temp.pfa(valor->>'estado'='pendente' and public.pe_pode_enviar_arquivo('10000000-0000-0000-0000-000000000001',(valor->>'id')::uuid),'staging autorizado mantém estado pendente') from pe_files_estado where chave='arquivo';
+select pg_temp.pfa(public.pe_preparar_arquivo('10000000-0000-0000-0000-000000000001',(p.valor->'versao'->>'id')::uuid,'7f100000-0000-0000-0000-000000000002',m.valor)->>'id'=a.valor->>'id','retry de staging preserva mesma identidade') from pe_files_estado p,pe_files_estado m,pe_files_estado a where p.chave='projeto' and m.chave='meta' and a.chave='arquivo';
+select pg_temp.pfe(format('select public.pe_preparar_arquivo(%L,%L,%L,%L::jsonb)','10000000-0000-0000-0000-000000000001',p.valor->'versao'->>'id','7f100000-0000-0000-0000-000000000002',m.valor||'{"nome":"outro.pdf"}'),'23505','mesma chave com outro payload conflita') from pe_files_estado p,pe_files_estado m where p.chave='projeto' and m.chave='meta';
+select pg_temp.pfe(format('select public.pe_confirmar_arquivo(%L,%L,%L,%L)','10000000-0000-0000-0000-000000000001',valor->>'id','00000000-0000-0000-0000-00000000000f',repeat('a',64)),'42501','usuário não pode forjar confirmação do serviço') from pe_files_estado where chave='arquivo';
+select pg_temp.pfe(format('select public.pe_executar(%L,%L,%L,%L::jsonb)','10000000-0000-0000-0000-000000000001','7f100000-0000-0000-0000-000000000003','submeter',jsonb_build_object('projeto_id',valor->'projeto'->>'id','versao_id',valor->'versao'->>'id','expected_version',1)),'23514','envio pendente bloqueia revisão e falso fechamento') from pe_files_estado where chave='projeto';
+set local role service_role;
+select pg_temp.pfe(format('select public.pe_confirmar_arquivo(%L,%L,%L,%L)','10000000-0000-0000-0000-000000000001',valor->>'id','00000000-0000-0000-0000-00000000000f',repeat('a',64)),'23514','arquivo ausente não é confirmado por metadado de aplicação') from pe_files_estado where chave='arquivo';
+set local role authenticated;
+insert into storage.objects(bucket_id,name,metadata) select 'nexus-operacional',valor->>'caminho','{"size":12,"mimetype":"application/pdf"}'::jsonb from pe_files_estado where chave='arquivo';
+set local role service_role;
+select public.pe_confirmar_arquivo('10000000-0000-0000-0000-000000000001',(valor->>'id')::uuid,'00000000-0000-0000-0000-00000000000f',repeat('a',64)) from pe_files_estado where chave='arquivo';
+select public.pe_confirmar_arquivo('10000000-0000-0000-0000-000000000001',(valor->>'id')::uuid,'00000000-0000-0000-0000-00000000000f',repeat('a',64)) from pe_files_estado where chave='arquivo';
+set local role authenticated;
+select pg_temp.pfa((select count(*) from public.pe_eventos where projeto_id=(p.valor->'projeto'->>'id')::uuid and comando='arquivo_confirmado')=1,'confirmação repetida não duplica efeito oficial') from pe_files_estado p where p.chave='projeto';
+select pg_temp.pfa((select count(*) from storage.objects where name=a.valor->>'caminho')=1,'download por policy disponível somente após confirmação') from pe_files_estado a where a.chave='arquivo';
+update storage.objects set metadata='{"size":99}' where name=(select valor->>'caminho' from pe_files_estado where chave='arquivo');
+select pg_temp.pfa((select metadata->>'size' from storage.objects where name=a.valor->>'caminho')='12','objeto confirmado não permite overwrite por usuário') from pe_files_estado a where a.chave='arquivo';
+select pg_temp.pfa(public.pe_preparar_arquivo('10000000-0000-0000-0000-000000000001',(p.valor->'versao'->>'id')::uuid,'7f100000-0000-0000-0000-000000000004',m.valor)->>'id'=a.valor->>'id','mesmo original na mesma versão reutiliza identidade') from pe_files_estado p,pe_files_estado m,pe_files_estado a where p.chave='projeto' and m.chave='meta' and a.chave='arquivo';
+insert into pe_files_estado select 'revisao',public.pe_executar('10000000-0000-0000-0000-000000000001','7f100000-0000-0000-0000-000000000005','submeter',jsonb_build_object('projeto_id',valor->'projeto'->>'id','versao_id',valor->'versao'->>'id','expected_version',1)) from pe_files_estado where chave='projeto';
+insert into pe_files_estado select 'congelada',public.pe_executar('10000000-0000-0000-0000-000000000001','7f100000-0000-0000-0000-000000000006','congelar',jsonb_build_object('projeto_id',valor->'projeto'->>'id','versao_id',valor->'versao'->>'id','expected_version',2)) from pe_files_estado where chave='projeto';
+select pg_temp.pfa(jsonb_array_length(valor->'versao'->'snapshot'->'arquivos')=1 and valor->'versao'->'snapshot'->'arquivos'->0->>'sha256'=repeat('a',64),'congelamento fixa manifesto e hash do original confirmado') from pe_files_estado where chave='congelada';
+select pg_temp.pfa(valor->'versao'->>'snapshot_sha256'=encode(sha256(convert_to((valor->'versao'->'snapshot')::text,'UTF8')),'hex'),'hash do snapshot inclui manifesto de arquivos') from pe_files_estado where chave='congelada';
+select pg_temp.pfe(format('select public.pe_preparar_arquivo(%L,%L,%L,%L::jsonb)','10000000-0000-0000-0000-000000000001',p.valor->'versao'->>'id','7f100000-0000-0000-0000-000000000007',m.valor||jsonb_build_object('sha256',repeat('b',64))),'23514','versão congelada não recebe novos originais') from pe_files_estado p,pe_files_estado m where p.chave='projeto' and m.chave='meta';
+reset role;
+select pg_temp.pfe(format('update public.pe_arquivos set nome=%L where id=%L','alterado.pdf',valor->>'id'),'23514','metadados do original confirmado são imutáveis no banco') from pe_files_estado where chave='arquivo';
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-00000000000c',true);
+select pg_temp.pfa((select count(*) from public.pe_arquivos where id=(a.valor->>'id')::uuid)=0 and (select count(*) from storage.objects where name=a.valor->>'caminho')=0,'campo não acessa metadados ou arquivo privado PE') from pe_files_estado a where a.chave='arquivo';
+reset role;
+insert into auth.users(id,email) values('00000000-0000-0000-0000-000000007f02','eng-restrito@example.invalid');
+insert into public.memberships(organization_id,user_id) values('10000000-0000-0000-0000-000000000001','00000000-0000-0000-0000-000000007f02');
+insert into public.user_roles(organization_id,user_id,role) values('10000000-0000-0000-0000-000000000001','00000000-0000-0000-0000-000000007f02','engenharia');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000007f02',true);
+select pg_temp.pfa((select count(*) from public.pe_arquivos where id=(a.valor->>'id')::uuid)=0 and (select count(*) from storage.objects where name=a.valor->>'caminho')=0,'engenharia do mesmo tenant não herda projeto restrito de outra pessoa') from pe_files_estado a where a.chave='arquivo';
+select pg_temp.pfe(format('select public.pe_preparar_arquivo(%L,%L,%L,%L::jsonb)','10000000-0000-0000-0000-000000000001',p.valor->'versao'->>'id','7f100000-0000-0000-0000-000000000008',m.valor),'42501','mesmo tenant sem escopo não conhece estado da revisão privada') from pe_files_estado p,pe_files_estado m where p.chave='projeto' and m.chave='meta';
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-0000000000b0',true);
+select pg_temp.pfa((select count(*) from public.pe_arquivos where id=(a.valor->>'id')::uuid)=0 and (select count(*) from storage.objects where name=a.valor->>'caminho')=0,'admin externo não acessa original de outro tenant') from pe_files_estado a where a.chave='arquivo';
+reset role;
+delete from public.user_roles where organization_id='10000000-0000-0000-0000-000000000001' and user_id='00000000-0000-0000-0000-00000000000f' and role='engenharia';
+set local role service_role;
+select pg_temp.pfe(format('select public.pe_confirmar_arquivo(%L,%L,%L,%L)','10000000-0000-0000-0000-000000000001',valor->>'id','00000000-0000-0000-0000-00000000000f',repeat('a',64)),'42501','serviço revalida papel revogado até em confirmação repetida') from pe_files_estado where chave='arquivo';
+reset role;
+rollback;

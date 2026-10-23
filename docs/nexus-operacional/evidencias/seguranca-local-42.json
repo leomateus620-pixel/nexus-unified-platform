@@ -1,0 +1,627 @@
+{
+  "tables": [
+    {
+      "rls": true,
+      "name": "almoxarifados",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_conferencias",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_estorno_alocacoes",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_inventarios",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_movimentos",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_operacoes",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_produto_politicas",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_reserva_itens",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "estoque_reservas",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "ferramenta_calibracao_politicas",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "ferramenta_calibracoes",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "ferramenta_custodias",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    },
+    {
+      "rls": true,
+      "name": "ferramentas",
+      "anon_select": false,
+      "service_select": false,
+      "authenticated_delete": false,
+      "authenticated_insert": false,
+      "authenticated_select": true,
+      "authenticated_update": false
+    }
+  ],
+  "storage": {
+    "bucket": {
+      "id": "nexus-operacional",
+      "public": false,
+      "file_size_limit": 20971520,
+      "allowed_mime_types": [
+        "application/pdf",
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+      ]
+    },
+    "policies": [
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "estudos arquivos privados enviar",
+        "with_check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM estudo_arquivos a\n  WHERE ((a.caminho = objects.name) AND est_pode_enviar_arquivo(a.organization_id, a.id)))))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM estudo_arquivos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND est_ler_arquivo(a.organization_id, a.id)))))",
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "estudos arquivos privados ler",
+        "with_check": null
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM levantamento_arquivos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND lev_ler(a.organization_id, a.levantamento_id)))))",
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "nexus_levantamento_download",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "nexus_levantamento_upload",
+        "with_check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM levantamento_arquivos a\n  WHERE ((a.caminho = objects.name) AND lev_pode_enviar_arquivo(a.organization_id, a.id)))))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM anexos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND operacao_ler_anexo(a.organization_id, a.id)))))",
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "nexus_operacional_download",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "nexus_operacional_upload",
+        "with_check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM anexos a\n  WHERE ((a.caminho = objects.name) AND operacao_pode_enviar_anexo(a.organization_id, a.id)))))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM pe_arquivos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND pe_ler_arquivo(a.organization_id, a.id)))))",
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "nexus_pe_download",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "permissive": "PERMISSIVE",
+        "policyname": "nexus_pe_upload",
+        "with_check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM pe_arquivos a\n  WHERE ((a.caminho = objects.name) AND pe_pode_enviar_arquivo(a.organization_id, a.id)))))"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "name": "aceitar_projeto_operacional",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _revisao uuid, _chave uuid, _motivo text",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_agenda_reserva_guard",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_autor_gerir",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _autor uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_autor_ler_ferramenta",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid, _autor uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_contexto_ordem",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_decimal",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_valor jsonb, _positivo boolean",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_executar",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _chave uuid, _comando text, _dados jsonb",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_executar_ferramenta",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _comando text, _dados jsonb",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_ferramenta_liberada",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid, _inicio timestamp with time zone, _fim timestamp with time zone, _timezone text",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_gerir",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_imutavel",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_integrar_estorno",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_ler_ferramenta",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_ler_produto",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_ler_reserva",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_listar",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _tipo text, _busca text, _estado text, _local uuid, _pagina integer, _limite integer",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_livre_lote",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _conferencia uuid, _local uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_movimento",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _op uuid, _produto uuid, _conferencia uuid, _local uuid, _reserva uuid, _pessoa uuid, _posicao text, _quantidade numeric",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_obter",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _tipo text, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_opcoes",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _tipo text, _busca text, _local uuid, _pagina integer, _limite integer",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "alm_permissoes",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_produto_fracao",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid, _quantidade numeric",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_produto_json",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_reserva_quantidades",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_row",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _tipo text, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_saldo",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _produto uuid, _local uuid, _conferencia uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_texto",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_dados jsonb, _campo text, _max integer, _min integer",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_travar",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_unidade_catalogo_guard",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "alm_validar_payload",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_dados jsonb, _campos text[]",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "cancelar_anexo_operacional",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid, _chave uuid, _motivo text",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "confirmar_anexo_operacional",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid, _autor uuid, _sha256 text",
+      "anon_execute": false,
+      "service_execute": true,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "listar_anexos_operacionais",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _pai jsonb",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "operacao_autor_destino_anexo",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _pai jsonb, _autor uuid, _escrever boolean",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "operacao_pode_enviar_anexo",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _id uuid",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "operacao_travar_pai_anexo",
+      "config": [
+        "search_path=\"\""
+      ],
+      "signature": "_org uuid, _pai jsonb",
+      "anon_execute": false,
+      "service_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    }
+  ]
+}

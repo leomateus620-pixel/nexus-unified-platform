@@ -1,0 +1,67 @@
+{
+  "method": "Source UI with local synthetic transport; not connected Auth/SQL/Storage or physical device evidence",
+  "layouts": [
+    {
+      "width": 360,
+      "state": "formulario",
+      "fits": true
+    },
+    {
+      "width": 390,
+      "state": "formulario",
+      "fits": true
+    },
+    {
+      "width": 768,
+      "state": "formulario",
+      "fits": true
+    },
+    {
+      "width": 1024,
+      "state": "formulario",
+      "fits": true
+    },
+    {
+      "width": 1366,
+      "state": "formulario",
+      "fits": true
+    },
+    {
+      "width": 1440,
+      "state": "formulario",
+      "fits": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "network failure preserves civil dates/reason and retries one operation",
+      "pass": true
+    },
+    {
+      "name": "cancellation requires a reason and preserves original record and history",
+      "pass": true
+    },
+    {
+      "name": "confirmed reservation conflict keeps draft without announcing success",
+      "pass": true
+    },
+    {
+      "name": "Escape guards dirty fields and returns focus to the opener",
+      "pass": true
+    },
+    {
+      "name": "permission denial closes private editor and removes availability content",
+      "pass": true
+    },
+    {
+      "name": "availability read failure is recoverable and leaves person details visible",
+      "pass": true
+    },
+    {
+      "name": "unsupported legacy timezone preserves original instants and disables civil creation",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

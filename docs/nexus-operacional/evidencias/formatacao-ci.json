@@ -1,0 +1,17 @@
+{
+  "reason": "17 preexisting CI formatting errors; no global formatting or rule suppression",
+  "files": [
+    {
+      "file": "src/features/importacao/mapeamento.ts",
+      "before": "4b93e82a5713d23f0c084ee86ad6177b96b0c99aa150b2fa95a574686e1938e6",
+      "after": "4b93e82a5713d23f0c084ee86ad6177b96b0c99aa150b2fa95a574686e1938e6",
+      "semanticAstEqual": true
+    },
+    {
+      "file": "src/features/propostas/hooks.ts",
+      "before": "756c4b71a0316fbc0add3cbdf03a6adbdbd58463aa91f9d2c3c2e685cd499d3f",
+      "after": "756c4b71a0316fbc0add3cbdf03a6adbdbd58463aa91f9d2c3c2e685cd499d3f",
+      "semanticAstEqual": true
+    }
+  ]
+}

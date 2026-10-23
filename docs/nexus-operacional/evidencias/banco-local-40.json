@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-22",
+  "status": "LOCAL_TESTED_REMOTE_SCHEMA_APPLIED_VERIFIED",
+  "postgres": "16.15 isolated disposable Windows cluster",
+  "command": "tests/db/run.ps1 -PostgresBin <verified PostgreSQL16.15/bin> -Port 55461 -CaptureFingerprint",
+  "exitCode": 0,
+  "migrations": {
+    "total": 40,
+    "baseline": 30,
+    "upgradeFromOperationalCheckpoint": 39,
+    "upgradeRetainsPersonAndAudit": true,
+    "cleanInstall": true,
+    "retry": true,
+    "ddlAndLedgerRollback": true,
+    "connectorSingleDo": true,
+    "latest": {
+      "path": "drizzle/migrations/0021_levantamentos_tecnicos.sql",
+      "sha256": "c1d415564f7ff3974655d6076be5aa61ffb75d0a7270918f1a050fc90ef80027"
+    }
+  },
+  "assertions": {
+    "levantamentos": 47,
+    "levantamentoFiles": 28,
+    "realConcurrency": 12,
+    "fullHistoricalAndPriorOperationalSuites": true
+  },
+  "catalog": {
+    "indexes": {
+      "md5": "dce9253c82dc7ae177fd3c9589c4664b",
+      "count": 204
+    },
+    "policies": {
+      "md5": "0b45b7c32d704a5390e9c9d38877ae23",
+      "count": 145
+    },
+    "triggers": {
+      "md5": "3fb5d9f2bb9fa277fe032264fd96631f",
+      "count": 74
+    },
+    "functions": {
+      "md5": "8c18a2563d2415139e96064afe79634c",
+      "count": 129
+    },
+    "relations": {
+      "md5": "17ac7050a03e8f66c059f5cb6bd09a1f",
+      "count": 82
+    },
+    "constraints": {
+      "md5": "9d53a94654f56ca418d533a67fde2670",
+      "count": 503
+    },
+    "table_grants": {
+      "md5": "6948c089fbffe433b6f2da4a40dc4b9e",
+      "count": 459
+    },
+    "function_grants": {
+      "md5": "8ebdb7bdd67b5a6fdd871202a043780f",
+      "count": 91
+    }
+  },
+  "logSha256": "04fb25020e1e1332a0b3f1a592c55e8f4e824905eecfeb04b40981b663c14926",
+  "remoteFixturesInserted": false,
+  "limits": [
+    "No remote authenticated Auth/Storage HTTP E2E",
+    "Agenda canonical visit linkage, offline queue and PDF/report emission not implemented in this SQL vertical",
+    "Only current TELHADO/OVERHEAD scalar inputs metragem and trechos are adopted; no new calculation engine",
+    "No normative limits or certification supplied; professional registry is declared application data",
+    "No production performance/physical-device claims"
+  ],
+  "remote": {
+    "appliedAt": "2026-10-22T11:19:38.549955+00:00",
+    "projectId": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+    "ledgerCount": 40,
+    "ledgerAllHashesMatchManifest": true,
+    "verification": "verificacao-remota-0021.json",
+    "catalogDiff": "schema-diff-40.json",
+    "remoteFixturesInserted": false,
+    "remoteAuthenticatedOrBinaryE2e": false
+  }
+}

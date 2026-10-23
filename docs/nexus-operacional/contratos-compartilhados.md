@@ -1,0 +1,201 @@
+# Contratos compartilhados do checkpoint
+
+## Recorte final autorizado — Agenda e Equipe
+
+Esta seção prevalece sobre checkpoints históricos abaixo. A Agenda usa
+`agenda_eventos`, participantes/reservas existentes e `acoes_operacionais`.
+Origens principais reais: ação, levantamento ou independente; cliente/unidade/
+projeto são contexto com FKs compostas. Não há cópia de tarefa nem origem OS
+fictícia. `ag_executar` é o comando transacional; consultas `ag_listar`,
+`ag_obter`, `ag_obter_acao`, `ag_opcoes`, `ag_pendentes`, `ag_historico`,
+`ag_notificacoes` e `ag_configuracao` são autorizadas e paginadas.
+
+Entrada de comando: organização validada pela sessão, chave UUID, comando e
+payload estrito. Edição/transição exige `expected_version`; mesmo UUID com
+payload diferente conflita. O banco trava autor, origem, ferramentas, evento
+e pessoas antes de validar e confirmar efeitos. Respostas de retries consultam
+o acesso atual; recibo não concede acesso histórico.
+
+Query keys começam por `agenda-equipe`, organização e usuário. Salvamento
+invalida os recortes relacionados; alteração de indisponibilidade invalida a
+Agenda da organização. Logout, troca de contexto e revogação removem conteúdo
+sensível; continuação tardia não repõe detalhe, editor ou arquivo.
+
+`eq_listar_indisponibilidades`/`eq_executar_indisponibilidade` reutilizam pessoas
+e bloqueios existentes. Cancelamento versionado com motivo não apaga o original.
+Competência, identidade profissional e papel de sistema continuam separados.
+Os anexos de eventos reutilizam `anexos`, bucket privado e confirmação canônica;
+o pai Agenda tem FK, autorização e flags de ação próprias. Novos metadados usam
+`iniciar_anexo_agenda`, preservando o hash de requests legados.
+
+Séries têm versões e ocorrências finitas; jobs materializam e notificam no
+backend com contexto privado e deduplicação. Progresso de job não altera versão
+humana do plano. Contratos temporais e recuperação: `agenda-equipe.md`.
+Migrações e estados efetivos de aplicação: `migracoes.md`.
+
+## Leitor privado PE — UI46 / schema44
+
+`LeitorArquivoPe` integra a ação Ler original ao arquivo confirmado de uma versão
+PE. `obterArquivoPe({organization_id,id})` consulta metadados exatos sob RLS,
+exige vínculo confirmado e revalida `pe_ler_projeto`; resposta privada/no-store,
+sem URL. `reader-adapter` confere id/org/projeto/versão/hash/tamanho/MIME/caminho,
+aceita somente URL assinada do objeto exato no Storage configurado e revalida
+antes/depois da assinatura. A consulta por ID não depende da lista limitada100.
+
+Leitura20MiB confere tamanho e hash antes do PDF.js6.4.299 lazy/cliente. URL não
+entra no cache; foco/retorno/intervalo30s consultam metadados sem nova assinatura.
+Negação ou falha de revalidação remove canvas/texto; fechamento/troca de contexto
+cancela recursos e descarta resultado tardio. Autorização não recolhe bytes já
+baixados nem revoga instantaneamente bearer emitido. Sem novo SQL/entidade.
+
+PDF/imagem é original de referência; texto por página é simples, sem OCR e sem
+persistência de evidência. Editor geométrico/3D e PDF/dossiê permanecem separados.
+Contrato/evidências: `projetos-engenharia-leitor.md`; UI final local seis larguras/
+oito jornadas passou, incluindo ajuste do canvas à área real do contêiner.
+
+## Pessoas, equipes e qualificações — UI45 / schema44
+
+Proprietários: `operacao` conserva `pessoas`; `pessoas-competencias/equipes` usa
+`equipes/equipe_membros`; `pessoas-competencias/qualificacoes` usa
+`competencias/pessoa_qualificacoes`. Usuário continua opcional, membro de equipe
+não recebe papel, produto/ativo/OS não são recriados. Todas as FKs organizacionais
+e os comandos vêm da fundação0012, endurecidos pela0025 aplicada.
+
+Equipes: `listarEquipes`, `obterEquipe`, `buscarPessoasEquipe`, `salvarEquipe`,
+`vincularMembroEquipe`, `encerrarMembroEquipe`. Listas/seletores e filhos paginam25;
+detalhe retorna equipe, líder autorizado, membros/total e flags atuais. Vigências
+são datas inclusivas, sem edição de período encerrado. Escrita usa chave UUID e
+versão quando cabível; resposta relê o estado atual depois do recibo.
+
+Competências/qualificações: `listar/obter/salvarCompetencia`,
+`listar/obter/salvarQualificacao`, `transicionarQualificacao` e
+`buscarOpcoesQualificacao`. Flags dependem de acesso, pessoa e estado atuais.
+Política utilizada congela exigências de evidência/validade. Validação exige outro
+usuário identificado independentemente de a pessoa estar ativa; anexar não valida.
+
+Cache: `['pessoas',org,'equipes'|'competencias'|'qualificacoes',...]`, incluindo
+listas, fichas e opções. Query de acesso/sessão remove esse prefixo na revogação.
+Anexos continuam `['anexos',pai]`; confirmar/cancelar comprovante invalida também
+`['pessoas',org,'qualificacoes']`. Rascunho fixa versão, comparação/adoção é explícita,
+negação desmonta editor/arquivos e rede não apaga preenchimento. Nenhum custo
+individual/prontuário é incluído nesses DTOs. Não há outbox nova nesta fatia.
+
+Dependências ausentes: matriz por serviço, política técnica com fonte/vigência,
+liderança/papel temporal, indisponibilidade corrigível, OS e transferência futura.
+Evidência:57 testes isolados, SQL real descartável e UI sintética separados em
+`validacao.md`. Auth/Storage HTTP conectado permanece não comprovado.
+
+## Estoque e ferramentas — checkpoint 42
+
+Proprietário: `src/features/almoxarifado`, migração `0023_almoxarifado.sql`, aplicada no projeto confirmado no checkpoint 42. Fontes: produto de catálogo; pessoa operacional; projeto e OP existentes; entrada física por recebimento de OC ou apontamento de produção. Inventário tem origem própria, sem produzir documento comercial fictício. Estoque possui ledger imutável por proveniência, local e posição; ferramenta é patrimônio individual com custódia, distinto de produto ou ativo de cliente.
+
+`alm_listar`, `alm_obter` e `alm_opcoes` retornam projeções autorizadas. `alm_executar` valida 23 comandos, versão, payload fechado, autoria e chave idempotente; replay reconstrói o detalhe pelo acesso atual. Quantidades de eventos/comandos usam até 12 inteiros e seis decimais; somas podem ultrapassar um evento e mantêm representação decimal em texto. Nenhuma disponibilidade ou valoração é calculada no browser. Chaves de consulta: `['almoxarifado',org,...]` e `['almoxarifado-opcoes',org,...]`; mutações invalidam as origens afetadas e não a aplicação inteira.
+
+Conferência distingue quantidade na unidade da origem e classificação na unidade de uso do catálogo. O servidor usa conversão confirmada e exige fechamento exato, sem arredondar no cliente. Retirada transfere aceito para em poder; consumo transfere em poder para consumido; devolução repõe sobra aceita, sem criar outra aquisição. Reservas e custódias são transacionais. Custódia guarda timezone IANA: o formulário envia o fuso real do navegador usado no `datetime-local` e nos instantes ISO; o padrão `America/Sao_Paulo` do contrato cobre clientes que omitem o campo. Reserva vinculada à Agenda exige fuso e janela compatíveis, sem alterar o evento.
+
+`anexos` é ampliada com pais FK explícitos de ferramenta/calibração e XOR entre cinco pais. Entradas opcionais novas não recebem defaults, preservando o hash de requisições antigas. `listar_anexos_operacionais` retorna registros/flags de retomada e cancelamento mais a capacidade atual de adicionar; ler não concede enviar. Confirmação privilegiada revalida autor/pai/bytes e cancelamento preserva o histórico.
+
+`aceitar_projeto_operacional` une aceite explícito da revisão, criação/reconciliação do projeto, vínculo de proposta/OC/OP, auditoria e recibo. O adaptador mantém o contrato de `transicionarRevisao` e usa a revisão como identidade estável da decisão. Motivo diferente com a mesma chave gera conflito. O guard de cabeçalho admite somente associação inicial a projeto correspondente exatamente à revisão aceita, mantendo imutáveis os demais campos; geração/preview/hash de ordens não foram substituídos.
+
+Históricos, lotes, custódias e políticas detalhadas ainda não têm paginação própria; não se declara desempenho validado com grande carga. Compra operacional independente, OS/custo realizado e a experiência consolidada de Agenda permanecem consumidores posteriores. Freeze, checksums, instalação/upgrade e aplicação conectada têm registros distintos em `migracoes.md`. A paridade de 25 respostas reais do PostgreSQL descartável (sete listas, oito detalhes, nove opções e um comando), incluindo timezone e saldo agregado, passou Zod em `evidencias/almoxarifado-dto-zod.json`; esse resumo não inclui as fixtures. Aplicação SQL não comprova jornadas com Auth/Storage HTTP conectados: esse E2E não foi executado nesta validação local.
+
+## Estudos técnicos — checkpoint 41
+
+Proprietário: `src/features/estudos`; tabelas `est_*`/`estudo_*` da migração0022. `est_executar` centraliza criar/contexto/conteúdo/perigo/medida/fonte/submeter/devolver/aprovar/cancelar/nova revisão; `est_publicar_metodo` publica versão e `est_vincular_acao` libera uma instrução ou vincula ação canônica por linhagem. Entradas Zod, chave idempotente e versões esperadas; excluir perigo também verifica a versão da revisão para preservar mudanças concorrentes em medidas/arquivos.
+
+Consulta `est_listar`/`est_obter`, métodos e seletores autorizados/paginados. Prefixos de cache `['estudos',org]`, `['estudo-opcoes',org]` e `['estudo-arquivos',org]`; atribuir ação invalida também `['acoes-operacionais',org]`. Editor fixa sua base de versão. Falha de rede preserva preenchimento; negação serializada de acesso remove o editor e suas cópias técnicas.
+
+Levantamento, PE e documento são fontes por FKs. Autorização atual de todas as fontes históricas restringe estudo, arquivos e histórico. Somente metadados/hash da fonte saem no payload; custos de proposta e modelos PE privados não são projetados. PE legado sem IDs e documento sem contexto congelado verificável ficam fora dos seletores/vínculos; não há backfill por nomes. Emissão PDF/dossiê e integração com OS/ativos continuam consumidores pendentes.
+
+Estado local em 22/10/2026. Este registro descreve objetos reais; nomes propostos no escopo sem implementação não são tabelas disponíveis. Migrações aplicadas/checksums e evidências executadas ficam em `migracoes.md`, manifesto e `validacao.md`.
+
+## Propriedade das identidades
+
+Pessoas no checkpoint44: lista `['pessoas',org,'lista',busca,pagina,arquivadas]` e ficha `['pessoas',org,'ficha',id]`, com recorte/seleção na URL e revalidação30s/foco. Leituras revalidam a capacidade antes/depois do SELECT; salvar relê a identidade autorizada atual após o RPC, sem tratar snapshot antigo do recibo como estado vigente. O formulário conserva a versão aberta e a comparação só altera campos por decisão explícita. `operacao/continuation.ts` compartilha a proteção de respostas tardias com Almoxarifado. Esse contrato não acrescenta tabelas/RPCs de equipe ou qualificação e não comprova Auth HTTP conectado.
+
+| Conceito                     | Fonte / proprietário                                                                | Contrato de integração                                                                                                            |
+| ---------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Organização e usuário        | `organizations`, Auth, `memberships`, `user_roles`; acesso                          | Toda operação recebe contexto de organização e revalida membership do ator autenticado                                            |
+| Pessoa                       | `pessoas`; operação                                                                 | Login opcional, único por organização; demais módulos referenciam pessoa, nunca criam colaborador paralelo                        |
+| Cliente/local/contato        | `clientes`, `unidades`, `contatos`; clientes                                        | Unidade pertence ao cliente; contato pode ter unidade do mesmo cliente; novas referências recusam arquivo                         |
+| Produto/sistema dimensionado | Catálogo e motores existentes                                                       | Nenhuma réplica de produto ou fórmula; ainda não existe ativo físico instalado                                                    |
+| Material físico              | `estoque_conferencias`, `estoque_movimentos`, `estoque_reservas`; almoxarifado      | Produto canônico, proveniência física e saldos derivados por local/posição; sem confundir aquisição, recebimento e consumo        |
+| Ferramenta própria/terceiro  | `ferramentas`, `ferramenta_custodias`, `ferramenta_calibracoes`; almoxarifado       | Patrimônio serializado e custódia temporal por pessoa; não é ativo instalado do cliente                                           |
+| Ação atribuível              | `acoes_operacionais`; operação                                                      | Um responsável principal; Agenda referencia a ação, sem copiar tarefa/estado                                                      |
+| Acervo de engenharia         | `pe_projetos` e `pe_versoes`; engenharia documental                                 | Independente de `projetos` operacionais e revisões comerciais; não altera cenas existentes                                        |
+| Arquivo                      | `anexos`, `pe_arquivos`, `levantamento_arquivos` ou `estudo_arquivos`, conforme pai | Metadado com FK explícita, SHA-256 e binário privado; pai determina acesso; fontes técnicas históricas também restringem o estudo |
+| Evento temporal              | `agenda_eventos`; agenda                                                            | Independente ou FK de ação + chave de ocorrência; várias visitas possíveis; execução pertence ao domínio de origem                |
+
+## Comandos e consultas disponíveis
+
+As funções de servidor usam middleware autenticado, schemas Zod e Supabase com token do usuário. SQL produz autoria, verifica capacidades e vínculos. Entradas não podem escolher autor oficial. Nas escritas versionadas, `id` nulo cria; `expected_version` acompanha alterações. Chave UUID idempotente identifica a intenção; repetir chave com dados diferentes produz conflito.
+
+| Domínio                      | RPCs de escrita                                                                                                                               | Consultas / consumidor                                                                                                                                                           |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pessoas                      | `salvar_pessoa`                                                                                                                               | `listarPessoas`, `obterPessoa`; tela Pessoas e seletor autorizado de responsável                                                                                                 |
+| Equipes/qualificações        | `salvar_equipe`, `vincular_membro_equipe`, `encerrar_membro_equipe`, `salvar_competencia`, `salvar_qualificacao`, `transicionar_qualificacao` | RLS das entidades; UI completa ainda pendente; requisitos usados na fundação da Agenda                                                                                           |
+| Ações                        | `salvar_acao_operacional`, `transicionar_acao_operacional`                                                                                    | `listarAcoes`, `obterAcao`; fila por responsável e origem temporal                                                                                                               |
+| Clientes                     | `salvar_cliente_operacional`, `salvar_unidade_operacional`, `salvar_contato_operacional`, `arquivar_cadastro_cliente`                         | `listar_cadastros_cliente`, `obter_cliente_operacional`, `obter_cadastro_cliente`; lista/ficha/formulários                                                                       |
+| Anexos                       | `preparar_anexo_operacional`, `confirmar_anexo_operacional`, `cancelar_anexo_operacional`                                                     | `listar_anexos_operacionais` informa capacidades atuais; preparo/retomada preservam a intenção; confirmação privilegiada verifica bytes; cancelamento mantém motivo/histórico    |
+| Engenharia documental        | `pe_executar` com comando discriminado                                                                                                        | Server functions do domínio; listagem, ficha, conteúdo autorizado e export JSON                                                                                                  |
+| Arquivos PE                  | `pe_preparar_arquivo`, `pe_confirmar_arquivo`, `pe_cancelar_arquivo`                                                                          | `listarArquivosPe`, `prepararArquivoPe`, `retomarArquivoPe`, `confirmarArquivoPe`, `cancelarArquivoPe`, `baixarArquivoPe`; leitura do pai revalidada e envio separado da leitura |
+| Almoxarifado/ferramentas     | `alm_executar` (23 comandos discriminados)                                                                                                    | `alm_listar`, `alm_obter`, `alm_opcoes`; projeções físicas paginadas e autorizadas, sem custos/preços no DTO operacional                                                         |
+| Aceite e projeto operacional | `aceitar_projeto_operacional`                                                                                                                 | Adaptador `transicionarRevisao`: aceite, projeto e associação inicial de OC/OP confirmam ou revertem na mesma transação                                                          |
+| Agenda                       | `salvar_evento_agenda`, `transicionar_evento_agenda`, `confirmar_participacao_agenda`, `registrar_indisponibilidade`                          | `listar_eventos_agenda`; backend sem tela final                                                                                                                                  |
+| Notificações                 | `processar_notificacoes_agenda`, `marcar_notificacao_lida`                                                                                    | Destinatário autorizado; processamento não acessível a sessões de aplicação                                                                                                      |
+| Administração                | `administrar_vinculo_operacional`                                                                                                             | `listarVinculos` paginado/admin; vínculo existente, papel, coordenação e desligamento                                                                                            |
+| Jobs                         | `executar_job_agenda_notificacoes`                                                                                                            | `consultar_jobs_operacionais`; execução pelo proprietário/scheduler, sem grants à aplicação                                                                                      |
+
+`pe_executar` aceita criar/salvar/submeter/devolver/congelar/nova_versao/vigente/arquivar/reativar/criar_cenario/salvar_cenario/promover_cenario/descartar_cenario. Cada comando valida seus estados e versões; não há UPDATE livre do modelo. O retorno idempotente é autorizado antes de consultar o recibo, e comandos de arquivo relêem estado atual antes de emitir novo token.
+
+Erros de autorização usam SQLSTATE `42501`; regras usam `23514`, colisões/mesma chave com outro payload usam `23505`, e conflito de versão é distinguido pelo comando. A interface preserva preenchimento e oferece recuperação. Mensagens não devem ser usadas como único contrato de permissão no browser.
+
+## Cache e privacidade
+
+| Query key                                                                                                              | Invalidação                                                                                                                                        |
+| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `['clientes', org, 'operacional', grupo, cliente, busca, situacao, pagina, limite]` e `['clientes', org, 'ficha', id]` | Escrita invalida prefixo `['clientes', org]`, preservando recorte da URL                                                                           |
+| `['pessoas', org, busca, pagina, arquivados]`                                                                          | Escrita invalida pessoas da organização; seletor usa mesmo prefixo e termo/página próprios                                                         |
+| `['acoes-operacionais', org, busca, pagina, encerradas]`                                                               | Escrita/transição invalida ações da organização                                                                                                    |
+| `['anexos', pai]`                                                                                                      | Pai inclui organização e FK explícita; confirmações/cancelamento invalidam esse pai                                                                |
+| `['operacao-acesso', org, user]`                                                                                       | Revalida em 30 segundos/foco; alteração remove caches de pessoas, ações, anexos, levantamentos, estudos e almoxarifado antes de reapresentar dados |
+| `['pe', org, ...]`, `['pe-opcoes', org, tipo, termo, clienteId]` e `['pe-files', org, versaoId]`                       | Escrita invalida acervo; arquivo invalida arquivos da versão e acervo                                                                              |
+| `['membros', org, ...]` e contexto `org`                                                                               | Administração invalida vínculo/contexto; mudanças de sessão removem caches sensíveis                                                               |
+
+Cancelamento de requisição usa sinal do TanStack Query nos fluxos novos. `useOrg` limpa caches em logout, troca de usuário/organização, papéis e perda de contexto. Capacidade de UI não expõe custos por ausência de papel; RLS continua a proteger respostas diretas. URLs temporárias não entram em assets públicos. Não há novo canal realtime global nem feed de calendário público.
+
+Listagens novas usam recortes finitos: clientes até 50 por página, vínculos 25; outras consultas possuem limites explícitos e busca. Algumas listas filhas de engenharia param em 100 registros e não representam paginação completa de todo o acervo; ampliar esse contrato exige paginação real, sem apresentar limite como total.
+
+`listarArquivosPe` retorna `{rows,permissoes:{ler:true,adicionar}}`. Consulta contexto mínimo da versão/projeto por RLS, revalida `pe_ler_projeto` e verifica capacidade atual, rascunho e projeto ativo antes de indicar envio. Lista vazia de `pe_arquivos`, isoladamente, não comprova leitura autorizada. Arquivamento/congelamento mantém leitura histórica permitida e impede novos envios. `ArquivosPe` revalida a cada 30 segundos e no foco, propaga cancelamento da consulta e oculta metadados/controles em erro; chave organização + versão reinicia estado e intenções locais. Falha de transporte conserva a intenção e o registro pendente para retomada; cancelar encerra todas as intenções locais dos mesmos bytes nessa versão, inclusive nomes deduplicados pelo servidor, sem alterar o original ou seu snapshot. A consulta mostra os 100 originais mais recentes e avisa ao atingir o limite; paginação completa permanece pendente. A correção passou nove testes unitários de endpoint e oito cenários de UI com transporte isolado (`evidencias/ui-pe-arquivos/pe-arquivos/results.json`), sem constituir E2E de Auth/Storage conectado.
+
+## Temporalidade e efeitos
+
+Agenda grava `timestamptz` e timezone IANA; dia inteiro guarda datas com fim exclusivo. Reservas de pessoas usam `[início,fim)` e locks ordenados; indisponibilidade usa o mesmo namespace. Publicação/início verificam qualificação no período. Observação/presença não executa a origem.
+
+Uma transação grava alteração, versão e outbox. Consumidor atual cria notificações internas por destinatário/evento/versão/tipo, com chave única e processamento repetível; payload leva IDs, não relato/título privado. Falha registra SQLSTATE, tentativa e próximo processamento. `pg_cron` foi configurado e seu disparo com fila vazia observado no projeto confirmado; `job_execucoes` registra resultado e `estado_scheduler_operacional` fornece resumo autorizado. Não há promessa de entrega exatamente uma vez, e-mail, WhatsApp ou lembrete temporal ainda não implementado.
+
+## Migrações e contratos ausentes
+
+Ordem append-only: `0012` fundação/permissões, `0013` clientes, `0014` acervo PE, `0015` Storage operacional, `0016` Agenda, `0017` arquivos PE, `0018` scheduler, `0019` administração, `0020` reautorização transacional na confirmação de arquivos, `0021` levantamentos, `0022` estudos técnicos e `0023` almoxarifado/ferramentas/aceite operacional. A matriz operacional vigente está em `operacao_autor_pode` da `0020`; o wrapper `operacao_pode` usa o mesmo predicado com o usuário autenticado. Testes de paridade leem essa definição vigente. A cadeia segue as 18 Supabase e 12 Drizzle históricas pelo manifesto único, sem duplicar DDL. Checksum, ledger, ambiente e estado efetivo pertencem a `migracoes.md` e `scripts/migrations/manifest.json`; fonte aplicada não pode ser reescrita.
+
+Ainda não há contrato executável de OS/horas/RDO, ativos, inspeções/achados, ocorrências, manutenção, compra operacional independente de proposta, frota/viagens, títulos/baixas/apropriações, recorrência ou documentação técnica/PDF. A tela consolidada de Agenda também permanece pendente. Os próximos módulos devem acrescentar FKs explícitas e testes de integração com as identidades implementadas, sem transformar um campo `tipo + id` em substituto de integridade. A aprovação de estudo técnico pertence ao contrato `0022` e exige profissional autorizado; o congelamento editorial do acervo PE não a supre nem substitui ART ou responsabilidade técnica aplicável.
+
+## Levantamentos — contrato0021
+
+Proprietário `src/features/levantamentos`; tabelas reais, estados, FKs e comandos em `levantamentos-tecnicos/arquitetura.md`. Pessoa/cliente/unidade/proposta/projeto continuam canônicos. `lev_listar` pagina25/50; `lev_obter` retorna revisão, filhos, histórico e permissões pelo pai. `lev_executar` verifica versões e autor; `excluir_ponto` exige também `expected_revision_version`. `lev_publicar_modelo` fixa requisitos/fonte por versão.
+
+Arquivos usam `levantamento_arquivos` com FKs explícitas a revisão/ponto e o protocolo privado `lev_preparar_arquivo`/`lev_confirmar_arquivo`/cancelamento. Aprovação congela contexto e evidências; atualização posterior não reescreve V1. `lev_prever_adocao`/`lev_adotar_medicao` comparam hash e alteram sistema em revisão comercial editável, sem novo motor, com recálculo canônico pendente explícito.
+
+Query keys: `['levantamentos', org, 'lista'|'ficha', recorte]`, `['levantamento-arquivos', org, revisão, ponto, página]`, `['levantamento-opcoes', org, tipo, contexto, busca]`. Adoção invalida o prefixo canônico `['rev', revisãoDestino]`. Formulários congelam a versão ao abrir e não adotam versões de polling silenciosamente.
+
+Migração0021 aplicada no projeto confirmado, posição40; checksum e catálogo em `migracoes.md`. Ainda não há evento Agenda com FK de levantamento, emissão PDF/dossiê ou offline completo. Programar o período não reserva recursos nem gera notificação temporal. Engenharia de estudos (`0022`) consome a revisão aprovada por FK, sem duplicar coleta.
+# Atualização45 — identidade e qualificação
+
+`pessoa_usuario_identidades` pertence a Pessoas. PK organization_id+pessoa_id+
+user_id, FK composta para pessoas e FK Auth RESTRICT; não depende de membership.
+É evento imutável e privado, preenchido por trigger/backfill verificável.
+Não usar como fonte de autorização ou associação atual de login.
+`qualificacao_validacao_permitida(_org,_id)` retorna somente booleano, exige
+capacidade atual de revisão e independência, sem expor histórico ao cliente.
+Qualificações consulta essa projeção e revalida acesso antes de retornar DTO.
+Migração0026/posição45 aplicada e conferida; evidência remota específica disponível.

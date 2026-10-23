@@ -1,0 +1,16 @@
+{
+  "baseline": "820c79d60055a25e2d56bf60a091f032c5e7a8bf",
+  "currentHead": "d9969e499aa5a51e737bee35118ddefc0e1ea6fc",
+  "protectedFiles": 134,
+  "changed": [],
+  "declaredExceptions": [
+    {
+      "path": "src/features/propostas/propostas.functions.ts",
+      "scope": "acceptance branch only",
+      "sha256": "7f2f1097e2ea8c683c78038a5638520fa353bb03137acfd2a98c30ffa3f61ca7",
+      "restUnchanged": true
+    }
+  ],
+  "unexpected": [],
+  "scope": "Git content comparison of engines, catalogue, proposal commands, 30 historical migrations, scenes and public assets. Library presentation and the reviewed acceptance RPC adapter are explicit exceptions; the rest of that source is byte-identical. Does not certify runtime FPS or physical devices."
+}

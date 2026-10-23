@@ -52,8 +52,13 @@ function Nova() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("clientes")
-        .select("id,razao_social,unidades(id,nome),contatos(id,nome)")
+        .select(
+          "id,razao_social,unidades:unidades!unidades_cliente_tenant_operacional(id,nome),contatos:contatos!contatos_cliente_tenant_operacional(id,nome)",
+        )
         .eq("organization_id", orgId)
+        .eq("situacao", "Ativo")
+        .is("unidades.arquivado_em", null)
+        .is("contatos.arquivado_em", null)
         .order("razao_social");
       if (error) throw error;
       return data;

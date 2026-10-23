@@ -1,0 +1,120 @@
+{
+  "database": "postgres",
+  "checks": [
+    {
+      "label": "draft persists with canonical people",
+      "result": "passed"
+    },
+    {
+      "label": "retry does not duplicate event",
+      "result": "passed"
+    },
+    {
+      "label": "same key different payload conflicts: 23505",
+      "result": "passed"
+    },
+    {
+      "label": "principal automatically participates",
+      "result": "passed"
+    },
+    {
+      "label": "publication reserves canonical tool",
+      "result": "passed"
+    },
+    {
+      "label": "publication reserves exactly two people",
+      "result": "passed"
+    },
+    {
+      "label": "stale version cannot overwrite plan: 40001",
+      "result": "passed"
+    },
+    {
+      "label": "reschedule replaces reservation atomically",
+      "result": "passed"
+    },
+    {
+      "label": "prior canonical custody is retained",
+      "result": "passed"
+    },
+    {
+      "label": "field principal receives exact commands",
+      "result": "passed"
+    },
+    {
+      "label": "attendance does not complete work",
+      "result": "passed"
+    },
+    {
+      "label": "field cannot edit plan: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "comment persists with canonical event",
+      "result": "passed"
+    },
+    {
+      "label": "roleless member denied: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "cross tenant read denied: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "action without time has no fake event",
+      "result": "passed"
+    },
+    {
+      "label": "canonical action appears unscheduled",
+      "result": "passed"
+    },
+    {
+      "label": "calendar completion never completes action",
+      "result": "passed"
+    },
+    {
+      "label": "source ACL intersects invitation (other participant): 42501",
+      "result": "passed"
+    },
+    {
+      "label": "cancellation releases people and preserves history",
+      "result": "passed"
+    },
+    {
+      "label": "canceled event cannot be edited: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "whole-day preserves 25-hour DST civil day",
+      "result": "passed"
+    },
+    {
+      "label": "nonexistent civil time rejected: 23514",
+      "result": "passed"
+    },
+    {
+      "label": "organization timezone is canonical",
+      "result": "passed"
+    },
+    {
+      "label": "calendar page and complete daily counts remain distinct",
+      "result": "passed"
+    },
+    {
+      "label": "operational DTO contains no financial fields",
+      "result": "passed"
+    },
+    {
+      "label": "direct event writes denied: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "private materializer is not authenticated RPC: 42501",
+      "result": "passed"
+    }
+  ],
+  "passed": 28,
+  "allPassed": true,
+  "classification": "PostgreSQL integration in disposable loopback cluster; not connected Auth/Storage/browser E2E"
+}

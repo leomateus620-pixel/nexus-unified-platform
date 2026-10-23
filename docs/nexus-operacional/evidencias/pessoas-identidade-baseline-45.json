@@ -1,0 +1,57 @@
+{
+  "postgres": "16.15",
+  "profile": "disposable local PostgreSQL; no connected fixtures",
+  "baseline": "44",
+  "candidate": "0026",
+  "results": [
+    {
+      "name": "baseline44 current-link-only review does not retain former identity (rolled back)",
+      "pass": true
+    },
+    {
+      "name": "upgrade recovers known association from server receipt without a current link",
+      "pass": true
+    },
+    {
+      "name": "permission projection retains independent review after unlink",
+      "pass": true
+    },
+    {
+      "name": "former association cannot approve its own qualification",
+      "pass": true
+    },
+    {
+      "name": "another authorized reviewer remains available",
+      "pass": true
+    },
+    {
+      "name": "independent reviewer approves a record registered by another administrator",
+      "pass": true
+    },
+    {
+      "name": "association history is not directly readable to application roles",
+      "pass": true
+    },
+    {
+      "name": "internal identity helper has no public execution privilege",
+      "pass": true
+    },
+    {
+      "name": "recorded associations remain immutable",
+      "pass": true
+    },
+    {
+      "name": "later association and removal preserve the same operational person",
+      "pass": true
+    },
+    {
+      "name": "historical association does not prevent authorized offboarding",
+      "pass": true
+    },
+    {
+      "name": "history does not grant review access after offboarding",
+      "pass": true
+    }
+  ],
+  "success": true
+}

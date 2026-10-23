@@ -1,0 +1,83 @@
+{
+  "method": "Catalog-only local disposable48 versus connected48, no operational records.",
+  "missing": [],
+  "changed": [
+    {
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)",
+      "md5": "76570abe3ddc04923a751cbe1e311c35",
+      "kind": "functions"
+    }
+  ],
+  "extraCounts": {
+    "function_grants": 116,
+    "table_grants": 415
+  },
+  "localSummary": {
+    "indexes": {
+      "md5": "3189858b1bf51abf80ffdb7cb544d78b",
+      "count": 331
+    },
+    "policies": {
+      "md5": "1a06b7e341f54ccf0227b94a789cb69d",
+      "count": 178
+    },
+    "triggers": {
+      "md5": "0aa896c8a2086e6d2ac82d23312c502a",
+      "count": 126
+    },
+    "functions": {
+      "md5": "0c19984d918ff28e2920342874de523b",
+      "count": 248
+    },
+    "relations": {
+      "md5": "b1667fe00d79fc783a06d9c03af71eb5",
+      "count": 117
+    },
+    "constraints": {
+      "md5": "be7a94e215de65932a2f789345be37ba",
+      "count": 858
+    },
+    "table_grants": {
+      "md5": "023e5b405bbdc96edc44f33ce1bf2d5a",
+      "count": 492
+    },
+    "function_grants": {
+      "md5": "7936e004ed8c9c04c6fc00517ebb970a",
+      "count": 128
+    }
+  },
+  "remoteSummary": {
+    "constraints": {
+      "count": 858,
+      "md5": "be7a94e215de65932a2f789345be37ba"
+    },
+    "function_grants": {
+      "count": 244,
+      "md5": "d7bb4b14d53b1f44f4f9dd145117b30d"
+    },
+    "functions": {
+      "count": 248,
+      "md5": "06b505dde7bef24590611ceb82a238c6"
+    },
+    "indexes": {
+      "count": 331,
+      "md5": "3189858b1bf51abf80ffdb7cb544d78b"
+    },
+    "policies": {
+      "count": 178,
+      "md5": "1a06b7e341f54ccf0227b94a789cb69d"
+    },
+    "relations": {
+      "count": 117,
+      "md5": "b1667fe00d79fc783a06d9c03af71eb5"
+    },
+    "table_grants": {
+      "count": 907,
+      "md5": "9a20bb642979999adc153bb367ffa359"
+    },
+    "triggers": {
+      "count": 126,
+      "md5": "0aa896c8a2086e6d2ac82d23312c502a"
+    }
+  }
+}

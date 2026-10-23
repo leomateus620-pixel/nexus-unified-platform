@@ -1,0 +1,131 @@
+{
+  "method": "Source UI with synthetic transport only; not Auth/SQL/RLS/Storage HTTP or physical device proof",
+  "layouts": [
+    {
+      "state": "lista",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "state": "ficha",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "state": "formulario",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "state": "lista",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "state": "ficha",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "state": "formulario",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "state": "lista",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "state": "ficha",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "state": "formulario",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "state": "lista",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "state": "ficha",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "state": "formulario",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "state": "lista",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "state": "ficha",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "state": "formulario",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "state": "lista",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "state": "ficha",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "state": "formulario",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "search, selection, reload and return preserve the URL recut",
+      "pass": true
+    },
+    {
+      "name": "failed save keeps fields and reuses the same intent on retry",
+      "pass": true
+    },
+    {
+      "name": "background detail refresh never advances an open form's version",
+      "pass": true
+    },
+    {
+      "name": "detail network error hides the old read but keeps the edit draft",
+      "pass": true
+    },
+    {
+      "name": "detail denial closes the editor and removes cached identity and attachments",
+      "pass": true
+    },
+    {
+      "name": "a new draft survives list network failure and is removed on explicit list denial",
+      "pass": true
+    },
+    {
+      "name": "mutation and comparison denial cannot leave a private form visible",
+      "pass": true
+    },
+    {
+      "name": "no matches and query failure are different states with recovery",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

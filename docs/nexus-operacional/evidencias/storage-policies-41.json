@@ -1,0 +1,77 @@
+{
+  "scope": "All Storage object policies after0022; definitions only, no objects/files read",
+  "policies": [
+    {
+      "check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM estudo_arquivos a\n  WHERE ((a.caminho = objects.name) AND est_pode_enviar_arquivo(a.organization_id, a.id)))))",
+      "command": "INSERT",
+      "name": "estudos arquivos privados enviar",
+      "roles": [
+        "authenticated"
+      ],
+      "using": null
+    },
+    {
+      "check": null,
+      "command": "SELECT",
+      "name": "estudos arquivos privados ler",
+      "roles": [
+        "authenticated"
+      ],
+      "using": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM estudo_arquivos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND est_ler_arquivo(a.organization_id, a.id)))))"
+    },
+    {
+      "check": null,
+      "command": "SELECT",
+      "name": "nexus_levantamento_download",
+      "roles": [
+        "authenticated"
+      ],
+      "using": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM levantamento_arquivos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND lev_ler(a.organization_id, a.levantamento_id)))))"
+    },
+    {
+      "check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM levantamento_arquivos a\n  WHERE ((a.caminho = objects.name) AND lev_pode_enviar_arquivo(a.organization_id, a.id)))))",
+      "command": "INSERT",
+      "name": "nexus_levantamento_upload",
+      "roles": [
+        "authenticated"
+      ],
+      "using": null
+    },
+    {
+      "check": null,
+      "command": "SELECT",
+      "name": "nexus_operacional_download",
+      "roles": [
+        "authenticated"
+      ],
+      "using": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM anexos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND operacao_ler_anexo(a.organization_id, a.id)))))"
+    },
+    {
+      "check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM anexos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'pendente'::text) AND (a.created_by = auth.uid()) AND operacao_ler_anexo(a.organization_id, a.id)))))",
+      "command": "INSERT",
+      "name": "nexus_operacional_upload",
+      "roles": [
+        "authenticated"
+      ],
+      "using": null
+    },
+    {
+      "check": null,
+      "command": "SELECT",
+      "name": "nexus_pe_download",
+      "roles": [
+        "authenticated"
+      ],
+      "using": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM pe_arquivos a\n  WHERE ((a.caminho = objects.name) AND (a.estado = 'vinculado'::text) AND pe_ler_arquivo(a.organization_id, a.id)))))"
+    },
+    {
+      "check": "((bucket_id = 'nexus-operacional'::text) AND (EXISTS ( SELECT 1\n   FROM pe_arquivos a\n  WHERE ((a.caminho = objects.name) AND pe_pode_enviar_arquivo(a.organization_id, a.id)))))",
+      "command": "INSERT",
+      "name": "nexus_pe_upload",
+      "roles": [
+        "authenticated"
+      ],
+      "using": null
+    }
+  ]
+}

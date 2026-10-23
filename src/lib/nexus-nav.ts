@@ -1,5 +1,6 @@
 import {
   LayoutDashboard,
+  CalendarDays,
   Handshake,
   Building2,
   Package,
@@ -14,8 +15,39 @@ import {
   BarChart3,
   Boxes,
   Settings,
+  Users,
+  ShieldAlert,
+  DraftingCompass,
+  Warehouse,
   type LucideIcon,
 } from "lucide-react";
+import type { Papel } from "@/features/auth/autorizacao";
+
+/** Disponibilidade de módulos. Menus e gate de URL usam a mesma concessão explícita. */
+const DISPONIBILIDADE_MODULOS: Readonly<Record<string, boolean>> = {
+  "/": true,
+  "/agenda-equipe": true,
+  "/comercial": true,
+  "/clientes": true,
+  "/produtos": true,
+  "/levantamentos": true,
+  "/engenharia": true,
+  "/projetos-engenharia": false,
+  "/mapas-3d": true,
+  "/mapas-3d/unidades": true,
+  "/escada-lc02": true,
+  "/projetos": true,
+  "/compras": true,
+  "/execucao": false,
+  "/almoxarifado": true,
+  "/equipe": true,
+  "/seguranca": false,
+  "/documentacao": false,
+  "/inspecoes": false,
+  "/financeiro": true,
+  "/relatorios": true,
+  "/configuracoes": true,
+};
 
 export type NavItem = {
   to: string;
@@ -38,6 +70,12 @@ export const navGroups: NavGroup[] = [
         label: "Dashboard",
         icon: LayoutDashboard,
         hint: "Indicadores e pendências",
+      },
+      {
+        to: "/agenda-equipe",
+        label: "Agenda Equipe",
+        icon: CalendarDays,
+        hint: "Compromissos, pessoas e disponibilidade",
       },
     ],
   },
@@ -64,7 +102,18 @@ export const navGroups: NavGroup[] = [
         hint: "Coleta em campo",
       },
       { to: "/engenharia", label: "Engenharia", icon: Ruler, hint: "Normas e dimensionamentos" },
-      { to: "/mapas-3d", label: "Mapas 3D das Unidades", icon: Boxes, hint: "Unidades em 3D" },
+      {
+        to: "/projetos-engenharia",
+        label: "Projetos de Engenharia",
+        icon: DraftingCompass,
+        hint: "Acervo, versões e cenários",
+      },
+      {
+        to: "/mapas-3d/unidades",
+        label: "Mapas 3D das Unidades",
+        icon: Boxes,
+        hint: "Biblioteca de unidades em 3D",
+      },
       {
         to: "/escada-lc02",
         label: "Escada LC-02",
@@ -87,8 +136,31 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
+    label: "Recursos",
+    items: [
+      {
+        to: "/almoxarifado",
+        label: "Almoxarifado e Ferramentas",
+        icon: Warehouse,
+        hint: "Saldo físico, reservas e custódia",
+      },
+      {
+        to: "/equipe",
+        label: "Pessoas e Competências",
+        icon: Users,
+        hint: "Pessoas e vínculos profissionais",
+      },
+    ],
+  },
+  {
     label: "Conformidade",
     items: [
+      {
+        to: "/seguranca",
+        label: "Ações operacionais",
+        icon: ShieldAlert,
+        hint: "Responsáveis, prazos e verificação",
+      },
       {
         to: "/documentacao",
         label: "Documentação Técnica",
@@ -132,18 +204,90 @@ export const flowSteps = [
 
 /**
  * Visibilidade de menus e etapas por papel (somente navegação; ações seguem a matriz do servidor).
- * Papéis ausentes aqui veem tudo. O acesso do usuário é a união dos seus papéis.
+ * O acesso do usuário é a união somente dos seus papéis conhecidos.
+ * Novos menus exigem concessão explícita; papéis ausentes/desconhecidos não concedem acesso.
  */
-type DestinoInicial = "/" | "/comercial";
+export type DestinoInicial = "/" | "/comercial" | "/auth";
 type Acesso = {
-  menus: string[];
+  menus: readonly string[];
   inicio?: DestinoInicial;
   rotasExtras?: string[];
   etapasOcultas?: string[];
 };
-const ACESSO_POR_PAPEL: Record<string, Acesso> = {
+// Concessões explícitas aos módulos existentes; novos domínios entram quando implementados.
+const MENUS_EXISTENTES = [
+  "/",
+  "/agenda-equipe",
+  "/comercial",
+  "/clientes",
+  "/produtos",
+  "/levantamentos",
+  "/engenharia",
+  "/mapas-3d",
+  "/mapas-3d/unidades",
+  "/escada-lc02",
+  "/projetos",
+  "/compras",
+  "/execucao",
+  "/documentacao",
+  "/inspecoes",
+  "/financeiro",
+  "/relatorios",
+  "/configuracoes",
+  "/equipe",
+  "/seguranca",
+  "/projetos-engenharia",
+  "/almoxarifado",
+] as const;
+export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
+  admin: { menus: MENUS_EXISTENTES },
+  comercial: { menus: ["/", "/clientes", "/comercial", "/produtos"] },
+  compras: {
+    menus: [
+      "/",
+      "/agenda-equipe",
+      "/clientes",
+      "/produtos",
+      "/compras",
+      "/projetos",
+      "/almoxarifado",
+    ],
+  },
+  financeiro: { menus: ["/", "/financeiro", "/relatorios", "/projetos"] },
+  campo: {
+    menus: [
+      "/",
+      "/agenda-equipe",
+      "/almoxarifado",
+      "/levantamentos",
+      "/execucao",
+      "/documentacao",
+      "/inspecoes",
+      "/equipe",
+      "/seguranca",
+    ],
+  },
   engenharia: {
-    menus: ["/comercial", "/produtos", "/engenharia"],
+    menus: [
+      "/",
+      "/agenda-equipe",
+      "/almoxarifado",
+      "/clientes",
+      "/comercial",
+      "/produtos",
+      "/levantamentos",
+      "/engenharia",
+      "/mapas-3d",
+      "/mapas-3d/unidades",
+      "/escada-lc02",
+      "/projetos",
+      "/execucao",
+      "/documentacao",
+      "/inspecoes",
+      "/equipe",
+      "/seguranca",
+      "/projetos-engenharia",
+    ],
     inicio: "/comercial",
     // abertas a partir das etapas Compras/Produção da proposta
     rotasExtras: ["/compras/ordens-compra", "/compras/ordens-producao"],
@@ -151,18 +295,40 @@ const ACESSO_POR_PAPEL: Record<string, Acesso> = {
   },
 };
 
-function acessos(roles: string[]): Acesso[] | null {
-  if (!roles.length) return null;
-  const lista = roles.map((r) => ACESSO_POR_PAPEL[r]);
-  return lista.some((a) => !a) ? null : (lista as Acesso[]);
+function acessos(roles: string[], capabilities: string[] = []): Acesso[] {
+  const a = roles.flatMap((role) =>
+    Object.hasOwn(ACESSO_POR_PAPEL, role) ? [ACESSO_POR_PAPEL[role as Papel]] : [],
+  );
+  if (capabilities.includes("coordenar_operacao"))
+    a.push({
+      menus: [
+        "/",
+        "/agenda-equipe",
+        "/levantamentos",
+        "/equipe",
+        "/seguranca",
+        "/execucao",
+        "/almoxarifado",
+      ],
+    });
+  return a;
 }
 
 const casa = (p: string, base: string) =>
   base === "/" ? p === "/" : p === base || p.startsWith(base + "/");
 
-export function podeVerRota(roles: string[], pathname: string) {
-  const a = acessos(roles);
-  if (!a) return true;
+export function rotaDisponivel(pathname: string) {
+  // A fronteira mais específica vence; módulos ausentes permanecem indisponíveis.
+  return (
+    Object.entries(DISPONIBILIDADE_MODULOS)
+      .sort(([a], [b]) => b.length - a.length)
+      .find(([base]) => casa(pathname, base))?.[1] === true
+  );
+}
+
+export function podeVerRota(roles: string[], pathname: string, capabilities: string[] = []) {
+  if (!rotaDisponivel(pathname)) return false;
+  const a = acessos(roles, capabilities);
   return a.some((x) => {
     const etapa = pathname.match(/\/revisoes\/[^/]+\/([^/]+)/)?.[1];
     if (etapa && x.etapasOcultas?.includes(etapa)) return false;
@@ -172,18 +338,22 @@ export function podeVerRota(roles: string[], pathname: string) {
 
 export function podeVerEtapa(roles: string[], etapa: string) {
   const a = acessos(roles);
-  return !a || a.some((x) => !x.etapasOcultas?.includes(etapa));
+  return a.some((x) => !x.etapasOcultas?.includes(etapa));
 }
 
-export function menusVisiveis(roles: string[]) {
-  const a = acessos(roles);
-  if (!a) return navGroups;
+export function menusVisiveis(roles: string[], capabilities: string[] = []) {
+  const a = acessos(roles, capabilities);
   return navGroups
-    .map((g) => ({ ...g, items: g.items.filter((i) => a.some((x) => x.menus.includes(i.to))) }))
+    .map((g) => ({
+      ...g,
+      items: g.items.filter((i) => rotaDisponivel(i.to) && a.some((x) => x.menus.includes(i.to))),
+    }))
     .filter((g) => g.items.length);
 }
 
-export function destinoInicial(roles: string[]): DestinoInicial {
-  const a = acessos(roles);
-  return a?.[0]?.inicio ?? "/";
+export function destinoInicial(roles: string[], capabilities: string[] = []): DestinoInicial {
+  const a = acessos(roles, capabilities);
+  if (!a.length) return "/auth";
+  if (a.some((x) => x.menus.includes("/") && !x.inicio)) return "/";
+  return a[0]?.inicio ?? "/";
 }

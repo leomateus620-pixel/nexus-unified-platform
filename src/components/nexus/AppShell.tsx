@@ -1,6 +1,6 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { LogOut, Menu, X } from "lucide-react";
+import { ChevronDown, LogOut, Menu, Search, X } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -13,7 +13,7 @@ import { NexusLogo } from "./NexusLogo";
 
 function Brand() {
   const org = useOrg();
-  const inicio = destinoInicial(org.data?.roles ?? []);
+  const inicio = destinoInicial(org.data?.roles ?? [], org.data?.capabilities);
   return (
     <Link to={inicio} className="nx-brand">
       <NexusLogo className="text-3xl" />
@@ -29,48 +29,91 @@ function Brand() {
 function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const org = useOrg();
-  const grupos = org.data ? menusVisiveis(org.data.roles) : navGroups;
+  const grupos = org.data ? menusVisiveis(org.data.roles, org.data.capabilities) : [];
+  const [busca, setBusca] = useState("");
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const matches = (value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  const activeRoute = (to: string) =>
+    to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(`${to}/`);
+  const filtered = grupos
+    .map((g) => ({
+      ...g,
+      items: g.items.filter((i) => matches(`${i.label} ${i.hint}`).includes(matches(busca.trim()))),
+    }))
+    .filter((g) => g.items.length);
 
   return (
-    <nav
-      aria-label="Navegação principal"
-      className="nx-sidebar-nav flex-1 overflow-y-auto"
-    >
-      {grupos.map((group) => (
-        <div key={group.label}>
-          <p className="nx-nav-group-label">
-            {group.label}
-          </p>
-          <ul className="space-y-1">
-            {group.items.map((item) => {
-              const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
-              const Icon = item.icon;
-              return (
-                <li key={item.to}>
-                  <Link
-                    to={item.to}
-                    onClick={onNavigate}
-                    className={cn(
-                      "nx-nav-link group flex items-center gap-3",
-                      active
-                        ? "nx-nav-link-active"
-                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-primary",
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "size-4 shrink-0",
-                        active ? "text-primary" : "text-muted-foreground",
-                      )}
-                    />
-                    <span className="truncate">{item.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))}
+    <nav aria-label="Navegação principal" className="nx-sidebar-nav flex-1 overflow-y-auto">
+      <label className="nx-nav-search">
+        <Search size={16} aria-hidden="true" />
+        <span className="sr-only">Buscar funcionalidade</span>
+        <input
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          placeholder="Buscar funcionalidade"
+          type="search"
+        />
+      </label>
+      {!filtered.length && (
+        <p className="px-4 py-3 text-sm text-sidebar-foreground">
+          Nenhuma função encontrada para este perfil.
+        </p>
+      )}
+      {filtered.map((group) => {
+        const active = group.items.some((i) => activeRoute(i.to));
+        const open =
+          !!busca.trim() || (expanded[group.label] ?? (active || group.label === "Visão geral"));
+        const regionId = `nav-${group.label.replace(/\s+/g, "-")}`;
+        return (
+          <div key={group.label}>
+            <button
+              type="button"
+              className="nx-nav-group-label nx-nav-group-toggle"
+              aria-expanded={open}
+              aria-controls={regionId}
+              onClick={() => setExpanded((prev) => ({ ...prev, [group.label]: !open }))}
+            >
+              {group.label}
+              <ChevronDown size={14} aria-hidden="true" className={open ? "" : "-rotate-90"} />
+            </button>
+            <ul id={regionId} className="space-y-1" hidden={!open && !active}>
+              {group.items
+                .filter((item) => open || activeRoute(item.to))
+                .map((item) => {
+                  const active = activeRoute(item.to);
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.to}>
+                      <Link
+                        to={item.to}
+                        onClick={onNavigate}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "nx-nav-link group flex items-center gap-3",
+                          active
+                            ? "nx-nav-link-active"
+                            : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-primary",
+                        )}
+                      >
+                        <Icon
+                          className={cn(
+                            "size-4 shrink-0",
+                            active ? "text-primary" : "text-muted-foreground",
+                          )}
+                        />
+                        <span className="truncate">{item.label}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        );
+      })}
     </nav>
   );
 }
@@ -78,20 +121,19 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const operational =
-    /^\/(comercial|clientes|produtos|projetos|compras)(\/|$)/.test(pathname) ||
-    pathname === "/configuracoes/orcamentos" ||
-    pathname === "/engenharia/dimensionamentos";
+  const operational = true;
   const area =
     navGroups
       .flatMap((group) => group.items)
-      .find((item) => item.to !== "/" && pathname.startsWith(item.to))?.label ?? "Operação";
+      .find(
+        (item) => item.to !== "/" && (pathname === item.to || pathname.startsWith(`${item.to}/`)),
+      )?.label ?? "Operação";
   if (pathname === "/mapas-3d" || pathname === "/auth") return <main>{children}</main>;
 
   return (
     <div
       className={cn(
-        "nx-app-shell nexus-operational nx-shell min-h-screen bg-background",
+        "nx-app-shell nx-stable-frame nexus-operational nx-shell min-h-screen bg-background",
         (/\/revisoes\//.test(pathname) || /\/compras\/ordens-(compra|producao)\//.test(pathname)) &&
           "nx-catalog-shell",
       )}

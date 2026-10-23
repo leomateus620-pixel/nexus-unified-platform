@@ -1,0 +1,57 @@
+{
+  "database": "postgres",
+  "host": "127.0.0.1",
+  "port": 55481,
+  "captured_at": "2026-10-22T18:46:50.046Z",
+  "method": "Private SQL recurrence expansion across explicit calendar windows plus public canonical save/list commands in a random disposable organization. No copied JS recurrence algorithm or connected-backend proof.",
+  "checks": [
+    {
+      "name": "monthly day31 skips February rather than moving it to February28; ordinal includes earlier windows",
+      "pass": true
+    },
+    {
+      "name": "monthly leap day29 is present in2028 and absent in non-leap2027",
+      "pass": true
+    },
+    {
+      "name": "daily recurrence crosses leap February28→29→March1 without duplicate or missing date",
+      "pass": true
+    },
+    {
+      "name": "weekly ISO weekdays and interval retain calendar alignment",
+      "pass": true
+    },
+    {
+      "name": "NewYork missing02:30 is an observable ignored occurrence and later civil hours do not drift",
+      "pass": true
+    },
+    {
+      "name": "NewYork ambiguous01:30 selects posterior06:30Z exactly once",
+      "pass": true
+    },
+    {
+      "name": "LordHowe half-hour DST gap is handled without assuming every transition is one hour",
+      "pass": true
+    },
+    {
+      "name": "quarter-hour IANA offset preserves an overnight civil duration",
+      "pass": true
+    },
+    {
+      "name": "whole-day recurrence preserves civil dates across a25-hour DST day",
+      "pass": true
+    },
+    {
+      "name": "an event ending exactly at midnight does not occupy the next civil day",
+      "pass": true
+    },
+    {
+      "name": "overnight events occupy both local days and explicit timezone is independent of sessionTimeZone",
+      "pass": true
+    },
+    {
+      "name": "whole-day dates stay civil when the calendar is viewed in a distant IANA timezone",
+      "pass": true
+    }
+  ]
+}

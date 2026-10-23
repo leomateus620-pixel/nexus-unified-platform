@@ -1,0 +1,1977 @@
+{
+  "checkpoint": "Pessoas45",
+  "status": "PASS",
+  "command": "npm run test:ui",
+  "exitCode": 0,
+  "exitCodeEvidence": "Processo completo observado pela raiz como EXIT0; os 19 relatórios reais foram lidos e conferidos nesta consolidação.",
+  "sourceState": {
+    "branch": "codex/nexus-operacao-integrada-agenda-equipe",
+    "baseCommit": "347e3471ceaa191337736f0126fb1547cee587cf",
+    "workingTree": true,
+    "immutableCommitProof": false
+  },
+  "environment": {
+    "platform": "Windows",
+    "node": "v24.15.0",
+    "browser": "153.0.8010.12",
+    "base": "http://127.0.0.1:4190",
+    "transport": "fixtures isoladas; componentes reais"
+  },
+  "log": {
+    "name": "nexus-ui-45-completa.log",
+    "bytes": 20659,
+    "sha256": "354d803209a9ca3dbf833daf3ccd50603374d4d3847ed4a67e543a2dc3215664",
+    "modifiedAtUtc": "2026-10-22T15:34:11.112Z",
+    "committed": false,
+    "hmrObserved": true
+  },
+  "counts": {
+    "reportFiles": 19,
+    "evidenceFiles": 244,
+    "operationalLayouts": 445,
+    "checkEntries": 175,
+    "namedCheckEntries": 159,
+    "explicitPassingChecks": 155,
+    "stringCheckDescriptions": 15,
+    "contrastPairs": 23,
+    "viewportCaptures": 88,
+    "workspaceViews": 32,
+    "reportedErrors": 0,
+    "normalViewportOverflows": 0
+  },
+  "countMeaning": "Contagens de entradas, capturas e layouts têm unidades diferentes e podem sobrepor jornadas; não representam testes independentes nem prova de produção.",
+  "reports": [
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/results.json",
+      "sha256": "7f71a6dcea375e67e09d8823905b0d6c7dbf3f99c01c31b8eefff33fee0786c4",
+      "bytes": 503,
+      "status": "PASS",
+      "success": true,
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 3,
+      "namedCheckEntries": 3,
+      "explicitPassingChecks": 3,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/results.json",
+      "sha256": "5c3f68adec9a9ce7aee6f7fda925eab7b165ad0b84790bb0627e487ee41491a3",
+      "bytes": 24390,
+      "status": "PASS",
+      "success": true,
+      "layouts": 228,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 17,
+      "namedCheckEntries": 17,
+      "explicitPassingChecks": 17,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/results.json",
+      "sha256": "8f2333fcf6f53e5377cc68d563d44aea3492834914ab332832a11ff7015f2a52",
+      "bytes": 1476,
+      "status": "PASS",
+      "success": true,
+      "layouts": 6,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 5,
+      "namedCheckEntries": 5,
+      "explicitPassingChecks": 5,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/accessibility.json",
+      "sha256": "9415c8f0a41bda4cbab26dbeba998f21f8b46fad20da3ac8f5784464328a90d3",
+      "bytes": 6678,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 14,
+      "namedCheckEntries": 14,
+      "explicitPassingChecks": 14,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 16,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimension-final-checks.json",
+      "sha256": "49bc490a697a2364aaf98fbfca20a5c59330c8bb69018b74d0f8a6b020cf7a86",
+      "bytes": 1171,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 9,
+      "namedCheckEntries": 4,
+      "explicitPassingChecks": 4,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/results.json",
+      "sha256": "c9b9504d0c03e8559450b0e719a916055b0efa572e29851910c768c7b4957848",
+      "bytes": 117232,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 0,
+      "namedCheckEntries": 0,
+      "explicitPassingChecks": 0,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0,
+      "viewportCaptures": 88,
+      "viewportWidths": [
+        320,
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440,
+        1920
+      ],
+      "viewportOverflows": 0,
+      "assertions": {
+        "viewportMatrixComplete": true,
+        "scenariosComplete": true,
+        "noBrowserErrors": true,
+        "noExternalApplicationRequests": true,
+        "noPageOverflow": true,
+        "editUsesOriginalPatch": true,
+        "pasteUsesOriginalInsert": true
+      }
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/checks.json",
+      "sha256": "cdcd3902d1bdcb42acd63a1091dcb6145cbce6d9e9f01a8f5d4eebf994cae6d2",
+      "bytes": 2365,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 11,
+      "namedCheckEntries": 0,
+      "explicitPassingChecks": 11,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/checks.json",
+      "sha256": "802ce12bf2e6f31312a7babcc7bc150f6d2b5b203a570b250e347b484217ddf1",
+      "bytes": 2439,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 15,
+      "namedCheckEntries": 15,
+      "explicitPassingChecks": 0,
+      "stringCheckDescriptions": 15,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/results.json",
+      "sha256": "84d767e151a6a43b6a822856c05df448281c7c8ab44d39e8cdc78518c4c8eb8a",
+      "bytes": 5549,
+      "status": "PASS",
+      "success": true,
+      "layouts": 36,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 16,
+      "namedCheckEntries": 16,
+      "explicitPassingChecks": 16,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/results.json",
+      "sha256": "7043dc16ffa0111d4929e0e7ac9d83c6d14db8adb0c073afa491902186268ecc",
+      "bytes": 7265,
+      "status": "PASS",
+      "success": true,
+      "layouts": 61,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 14,
+      "namedCheckEntries": 14,
+      "explicitPassingChecks": 14,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/results.json",
+      "sha256": "8b2d092991fa7b75154622bbf9e028dde293cb58389d893035af5d1988c68774",
+      "bytes": 3889,
+      "status": "PASS",
+      "success": true,
+      "layouts": 30,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 10,
+      "namedCheckEntries": 10,
+      "explicitPassingChecks": 10,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pe-arquivos/results.json",
+      "sha256": "54172e52a5e8855bd12a999bb7699dda4725339b749ff1414019e0c5086780f3",
+      "bytes": 1235,
+      "status": "PASS",
+      "success": true,
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 8,
+      "namedCheckEntries": 8,
+      "explicitPassingChecks": 8,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/results.json",
+      "sha256": "a2403d2ae40d7f745912c18ef2e312fe8787ed096ce9e33cb7963cabda9511ce",
+      "bytes": 2640,
+      "status": "PASS",
+      "success": true,
+      "layouts": 18,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 8,
+      "namedCheckEntries": 8,
+      "explicitPassingChecks": 8,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/results.json",
+      "sha256": "714feec02dd687542896262348d1b39e9c64b2602253265f325ebcc65564ac94",
+      "bytes": 7763,
+      "status": "PASS",
+      "layouts": 36,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 9,
+      "namedCheckEntries": 9,
+      "explicitPassingChecks": 9,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 7,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/results.json",
+      "sha256": "0de26c1ec6b70a59d190a7a883219014458bf469839772655adc526e994bcc8e",
+      "bytes": 3904,
+      "status": "PASS",
+      "success": true,
+      "layouts": 30,
+      "layoutWidths": [
+        360,
+        390,
+        768,
+        1024,
+        1366,
+        1440
+      ],
+      "checkEntries": 6,
+      "namedCheckEntries": 6,
+      "explicitPassingChecks": 6,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/checks.json",
+      "sha256": "a0ab5b9aeb5680b4f0163f9e4bf1adff3fc12e952c0fc982a35afc726809b292",
+      "bytes": 1214,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 7,
+      "namedCheckEntries": 7,
+      "explicitPassingChecks": 7,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/metrics.json",
+      "sha256": "3ae6cdd6b852a91ca58a7af82612584247137613a22d10cb990b81c657ec75c1",
+      "bytes": 6799,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 0,
+      "namedCheckEntries": 0,
+      "explicitPassingChecks": 0,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0,
+      "workspaceViews": 32,
+      "workspaceOverflows": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/checks.json",
+      "sha256": "e87583bbd3fba886d87d7a3904319aab082d200967b93249c2ca804d4f4206e6",
+      "bytes": 37348,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 16,
+      "namedCheckEntries": 16,
+      "explicitPassingChecks": 16,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-catalog/checks.json",
+      "sha256": "1262bc6df0befbe8e7c1d640c00817230a34b8b6b0ca8e4733d1811b9ddf84e1",
+      "bytes": 1068,
+      "status": "PASS",
+      "layouts": 0,
+      "layoutWidths": [],
+      "checkEntries": 7,
+      "namedCheckEntries": 7,
+      "explicitPassingChecks": 7,
+      "stringCheckDescriptions": 0,
+      "contrastPairs": 0,
+      "errors": 0
+    }
+  ],
+  "observations": [
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/results.json",
+      "field": "zoom200",
+      "viewport": 1366,
+      "pageWidth": 1730,
+      "overflow": true,
+      "classification": "Observação preexistente de CSS zoom 200%, fora da matriz normal; não resolvida nem comprovação de zoom nativo/conformidade.",
+      "reproduction": {
+        "script": "tests/ui/capture.mjs:365",
+        "route": "/?page=itens-comerciais&scenario=normal&count=17",
+        "cssViewport": "1366x768",
+        "mutation": "document.documentElement.style.zoom = '2'",
+        "measurement": "document.documentElement.scrollWidth > innerWidth + 1",
+        "normalOverflowAssertionExcludesZoom": true
+      },
+      "historicalReportsWithSameMeasurement": [
+        "docs/nexus-operacional/evidencias/ui-regressao-final/catalog-after/results.json",
+        "docs/nexus-operacional/evidencias/ui-40/catalog-after/results.json",
+        "docs/nexus-operacional/evidencias/ui-41/catalog-after/results.json",
+        "docs/nexus-operacional/evidencias/ui-42/catalog-after/results.json",
+        "docs/nexus-operacional/evidencias/ui-43/catalog-after/results.json"
+      ],
+      "unchangedFromCommit": "820c79d60055a25e2d56bf60a091f032c5e7a8bf",
+      "verifiedGitBlobs": [
+        {
+          "path": "src/features/propostas/ItensComerciais.tsx",
+          "baselineAndWorkingBlob": "cf7b4d830e9c8bbf439389dbdc23c008ef6584aa"
+        },
+        {
+          "path": "src/features/propostas/commercial-items.css",
+          "baselineAndWorkingBlob": "4bd5fbb4fd11cfbc902f8ec839c14681781164a8"
+        },
+        {
+          "path": "tests/ui/capture.mjs",
+          "baselineAndWorkingBlob": "08b8440729e68c8749fc80f9378fcfecca172275"
+        }
+      ],
+      "staticDiagnosis": "Provável extravasamento de .nx-commercial-row article: três colunas com mínimos190/190/150px, gap20px e padding20px permanecem no breakpoint desktop sob CSS zoom. Captura mostra controles fora da superfície. Causa DOM exata não reproduzida nesta auditoria somente leitura; nenhum arquivo Comercial alterado."
+    }
+  ],
+  "visuals": {
+    "selected": [
+      "docs/nexus-operacional/evidencias/pessoas-equipes/01-equipes-lista-desktop.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/03-ficha-mobile-refinada.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/04-formulario-mobile-validacao.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/09-qualificacao-desktop-topo.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/10-qualificacao-mobile-topo.jpg"
+    ],
+    "excludedFromStage": [
+      "docs/nexus-operacional/evidencias/pessoas-equipes/02-primeira-ficha-mobile.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/05-qualificacao-mobile.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/06-qualificacao-desktop.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/07-qualificacao-desktop-refinada.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/08-qualificacao-desktop-viewport.jpg"
+    ],
+    "desktopCssViewport": "1440x900",
+    "mobileCssViewport": "390x845",
+    "method": "Capturas CUA de navegador emulado; não aparelho físico. 09/10 recapturadas em scrollY0. 05–08 são intermediárias com enquadramento/clip de página rolada e não fundamentam conclusão de CSS."
+  },
+  "limits": [
+    "Não comprova Auth, SQL/RLS ou Storage HTTP conectado.",
+    "Dados criados nos transportes UI são sintéticos/em memória; recarga de URL não comprova persistência operacional.",
+    "Não comprova aparelho físico, teclado virtual, leitor de tela ou conformidade WCAG completa.",
+    "Não comprova percentis de produção, desempenho sob carga ou recursos 3D em dispositivo.",
+    "HMR aparece no log; a execução não é prova de um commit imutável ou de um snapshot de código congelado.",
+    "CI347 histórico continua falho em presentation; o resultado local não altera aquele registro nem antecipa CI do próximo commit.",
+    "Não valida o novo leitor PE por página, OCR/IA ou geometria."
+  ],
+  "connectedEvidenceSeparate": [
+    "docs/nexus-operacional/evidencias/verificacao-remota-0025.json",
+    "docs/nexus-operacional/evidencias/schema-diff-44.json"
+  ],
+  "staging": {
+    "performed": false,
+    "files": [
+      "docs/nexus-operacional/evidencias/pessoas-equipes/01-equipes-lista-desktop.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/03-ficha-mobile-refinada.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/04-formulario-mobile-validacao.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/09-qualificacao-desktop-topo.jpg",
+      "docs/nexus-operacional/evidencias/pessoas-equipes/10-qualificacao-mobile-topo.jpg",
+      "docs/nexus-operacional/evidencias/ui-45-completa-resumo.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/acao-vinculada-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/conflito-transicao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/ficha-ferramentas-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/ficha-ferramentas-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-conferir_evento-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-conferir_evento-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-reservar-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-reservar-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/jornada-material-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/lista-materiais-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/lista-materiais-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/erro-cache-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/pendente-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/pendente-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/accessibility.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/composition-desktop-1920.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/composition-mobile.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimension-final-checks.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-compact-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-compact-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-composition-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-composition-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-conflict.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-error.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-estado-zero.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-keyboard-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-pending.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-readonly.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/inspector-mobile.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-readonly.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-restricted.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-selected-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-selected-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-zoom200.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-issued.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-issued.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-pending.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-unavailable.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-1366-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-390-viewport.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-interno.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/budget-pending.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/checks.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/oc-dialog.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/op-dialog.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/summary-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/summary-360.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-itens-comerciais-1440.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-itens-comerciais-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produto-1440.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produto-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produtos-1440.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produtos-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/checks.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/inspector-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/master-editor-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/editar-equipe-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/editar-equipe-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/encerrar-participacao-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/encerrar-participacao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/ficha-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/ficha-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/incluir-pessoa-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/incluir-pessoa-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/lista-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/lista-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/nova-equipe-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/nova-equipe-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/equipes/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/acao-form-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/acao-form-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/cadastro-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/cadastro-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/conteudo-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/conteudo-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/editar-conteudo-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/editar-conteudo-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/falha-escrita-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/fonte-form-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/fonte-form-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/historico-versionado-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/lista-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/lista-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/medida-form-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/medida-form-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/metodo-form-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/metodo-form-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-detalhe-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-detalhe-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-form-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-form-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/refetch-conflito-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/estudos/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/adocao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/arquivo-falha-retry-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/cadastro-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/cadastro-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/coleta-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/coleta-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/conflito-ponto-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/falha-escrita-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/lista-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/lista-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/medida-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/medida-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/ponto-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/ponto-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/refetch-versao-conflito-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/validacao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pe-arquivos/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/ficha-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/ficha-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/formulario-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/formulario-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/lista-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/lista-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/clientes-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/clientes-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/comercial-frame-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/configuracoes-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/configuracoes-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/equipe-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/equipe-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/mapas-library-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/mapas-library-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/pe-erro-recuperavel-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/pessoa-texto-200-altura-480.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/pessoa-validacao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/projetos-engenharia-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/projetos-engenharia-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/seguranca-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/seguranca-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-ficha-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-ficha-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-formulario-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-formulario-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencias-lista-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencias-lista-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-ficha-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-ficha-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-formulario-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-formulario-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/results.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/checks.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/dimensionamento-panel-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/dimensionamento-panel-1920.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/dimensionamento-panel-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/document-commercial.pdf",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/document-internal.pdf",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/history-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/itens-comerciais-panel-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/itens-comerciais-panel-1920.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/itens-comerciais-panel-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/parameters-commercial-focus.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/production-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/purchases-pending.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/systems-duplicate-identities.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/compras-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/compras-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/compras-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/dimensionamento-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/dimensionamento-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/historico-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/historico-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/historico-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/itens-comerciais-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/itens-comerciais-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/metrics.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/orcamento-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/orcamento-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/parametros-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/parametros-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/parametros-focused.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/producao-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/producao-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/producao-empty.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/resumo-executivo-1366.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/resumo-executivo-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/resumo-textos-focused-390.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/checks.json",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/concurrent-field-conflict.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/concurrent-unrelated-field-preserved.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/failed-field-other-success.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/failed-write-retry.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/invalid-parameter-preserved.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/lost-checkpoint-retry.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/lost-write-confirmed.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/newer-edit-during-checkpoint.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/newer-revert-during-write.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/sparse-parameter-pending-revert.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/sparse-parameters-concurrent.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/texts-history.png",
+      "docs/nexus-operacional/evidencias/ui-45-completa/workspace-catalog/checks.json",
+      "docs/nexus-operacional/pessoas-competencias.md",
+      "docs/nexus-operacional/progresso.md",
+      "docs/nexus-operacional/validacao.md"
+    ]
+  },
+  "artifactFiles": [
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/acao-vinculada-390.png",
+      "bytes": 54195,
+      "sha256": "11389fa88511a339ca5c69bec84eb90afc9f956addf8883069837ad3df6c6694"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/conflito-transicao-390.png",
+      "bytes": 60229,
+      "sha256": "614bd58fa7d82ec3eb294bebf8e7818e8da41271ebafc6e9b44ffda8512641eb"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/acoes-vinculadas/results.json",
+      "bytes": 503,
+      "sha256": "7f71a6dcea375e67e09d8823905b0d6c7dbf3f99c01c31b8eefff33fee0786c4"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/ficha-ferramentas-1366.png",
+      "bytes": 114743,
+      "sha256": "ab03719f7579b996b8bad40ae3c2afc1825d0faccab2d570ebbf33c804af4755"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/ficha-ferramentas-390.png",
+      "bytes": 53830,
+      "sha256": "da59ac0c01c448dfd275916446141687afc7e3eeef4553089c58d02a6510f541"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-conferir_evento-1366.png",
+      "bytes": 118545,
+      "sha256": "529ae773b159491faec174350e8c490c19fa9422be0dea631ac20d57fb000913"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-conferir_evento-390.png",
+      "bytes": 51075,
+      "sha256": "f00359393494a31fcedcacd63eaa0419a9cc5d71176fed29f524913dc2771405"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-reservar-1366.png",
+      "bytes": 124066,
+      "sha256": "47e67fb4e7d0d200c31d84451f5c98609284972c4158eacda9814a418ec9f5a3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/form-reservar-390.png",
+      "bytes": 58997,
+      "sha256": "26a49d45f7e3ba30652b4b114167181ebd0fe7f036d7a12d02b7febbd94317d9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/jornada-material-390.png",
+      "bytes": 36175,
+      "sha256": "0668d4cbf7a40e85becb3e1881bbb3711e33d017feea069f7bfe4f4451f0784e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/lista-materiais-1366.png",
+      "bytes": 99619,
+      "sha256": "6e53e67e0dc4fa9f45ba61cd5529233807f6c0127bcf86984bf62a9ae219cf14"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/lista-materiais-390.png",
+      "bytes": 49600,
+      "sha256": "6695f9f31e5b99cf6e853a93c3542e9f1ba890358b57d8b90a67873e0bae1a59"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/almoxarifado/results.json",
+      "bytes": 24390,
+      "sha256": "5c3f68adec9a9ce7aee6f7fda925eab7b165ad0b84790bb0627e487ee41491a3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/erro-cache-390.png",
+      "bytes": 45328,
+      "sha256": "8ea430f0da2e893ed5b69a1afb9beec0d73da6b15af1307a35e5dadd2382cdc1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/pendente-1366.png",
+      "bytes": 122653,
+      "sha256": "f3907d9c032ab2429be5996262547a9077256fa0e20cb996dd5234e15baace29"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/pendente-390.png",
+      "bytes": 46209,
+      "sha256": "92bbb3d2e9f54d6c2d179ac4c461968356213bc4266395b952c1e41c34b424df"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/anexos-canonicos/results.json",
+      "bytes": 1476,
+      "sha256": "8f2333fcf6f53e5377cc68d563d44aea3492834914ab332832a11ff7015f2a52"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/accessibility.json",
+      "bytes": 6678,
+      "sha256": "9415c8f0a41bda4cbab26dbeba998f21f8b46fad20da3ac8f5784464328a90d3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/composition-desktop-1920.png",
+      "bytes": 275684,
+      "sha256": "7fdbfcd41ea8a956a8bf8fc1ccfb45c536a331fbcf491780895e42f295133a97"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/composition-mobile.png",
+      "bytes": 256098,
+      "sha256": "d68421df4c5fe6fac93a8f7c9918e76773293af8d0c9607c9799dd1d3d4a3aab"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-1366-viewport.png",
+      "bytes": 129220,
+      "sha256": "1341fe7c5157dd25f1f674ae980f622dca1c4cec37f76d9eaf02655c3a52dfe6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-1366.png",
+      "bytes": 408493,
+      "sha256": "74f8ac5ffa768ad11b018aecdd5557c75d434379cff134b494a23237175835be"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-390-viewport.png",
+      "bytes": 62320,
+      "sha256": "7fa82090225b795bd10dd4feffb428854af66c2de363b5fabaf0c611b27cade6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/compras-390.png",
+      "bytes": 355428,
+      "sha256": "ec04ed8d203df075763ba4bfc4f87d0a0370cea7abf9d18722aa205421871d66"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimension-final-checks.json",
+      "bytes": 1171,
+      "sha256": "49bc490a697a2364aaf98fbfca20a5c59330c8bb69018b74d0f8a6b020cf7a86"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-1366-viewport.png",
+      "bytes": 119209,
+      "sha256": "d9c1f16db3a832d5237017dc13671e50bb9351f1171bff857aa0c6856c37e1b1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-1366.png",
+      "bytes": 223406,
+      "sha256": "561980dc96807b7c7431ed7d8e6d8b093a8b113339cb299446331349c09a803a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-390-viewport.png",
+      "bytes": 57550,
+      "sha256": "ab78ed4cfb9b9a6d436db0b7b326de23cecec8bfc016e10851988760a551a098"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-390.png",
+      "bytes": 267715,
+      "sha256": "22442e5a239bd4f5abd4d829e49b507397760f9638e5406d510bd8122cda5d93"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-compact-1366.png",
+      "bytes": 224069,
+      "sha256": "886def3d24eaf2a1ae7c506ec664cdde5b5d74936ade7f04da92bf60206dfbea"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-compact-390.png",
+      "bytes": 268344,
+      "sha256": "79312d8e8076dba1761e25d1824785ff21cd7e60e61ac0521c5b13ac68127388"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-composition-1366.png",
+      "bytes": 318297,
+      "sha256": "914ea1cdfe8ef696b79fddd68894776a9c020de594a2628b91e3f5182c91db9e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-composition-390.png",
+      "bytes": 255435,
+      "sha256": "a443197f7adcbebd3eed830e8f7a4578fc2c8dc669ee2f59d1a949181d7f5dde"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-conflict.png",
+      "bytes": 229514,
+      "sha256": "c2b0b5685843094889351b6603b5565517cc9bf82b7deedb43dea999da20feb9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-empty.png",
+      "bytes": 98919,
+      "sha256": "47577a75f1fe76a312f1e65f875fce3e09bca526b1d9e8051cd860aa26b07a49"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-error.png",
+      "bytes": 45934,
+      "sha256": "e4e2d8ea3262b95c9a1e78584db50fc7fe3b2116c75c5ed2b301dfc71f929556"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-estado-zero.png",
+      "bytes": 230634,
+      "sha256": "bdcc5cdb2d15784f2f9076f145b85c79f5e42c400e222af36dc138c2c9573496"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-keyboard-viewport.png",
+      "bytes": 267507,
+      "sha256": "89f7f2ae2f901bbfd51e2455c373793f3ea8c2c3314f636b6fc99cfd36efca3a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-pending.png",
+      "bytes": 233128,
+      "sha256": "fa49b70486aaaddfaaffc08c8bc26468f8e9bea5ffe35742876908de93c11085"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/dimensionamento-readonly.png",
+      "bytes": 220974,
+      "sha256": "978a803a3a6a875251b06edfcfba67e1c58749153f5b0e4bbb1777678b33835b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-1366-viewport.png",
+      "bytes": 140109,
+      "sha256": "2672d1921a1b814d297db238db488302cf4d2d842c8fc9fa4e8b9339b538fe81"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-1366.png",
+      "bytes": 147546,
+      "sha256": "5ffd951aeb102c26cfa4436ea493db821f7bddb8ef7e8ac74a66f53b57c2fe12"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-390-viewport.png",
+      "bytes": 65575,
+      "sha256": "434f860ef787fb6fade3a5288f997f2dfacbdc441570a7b0bb5df14c69fbb816"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/historico-390.png",
+      "bytes": 99124,
+      "sha256": "f4f8d9886a8eb39ff8d11d7770fbf7d1d01f0f486089e0c9318e7d892d626d89"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/inspector-mobile.png",
+      "bytes": 419477,
+      "sha256": "67cf9f8ba1d98785f7c95f08e4c84a3e89d213edc9f93cd1c3102a61db8e48fe"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-1366-viewport.png",
+      "bytes": 137220,
+      "sha256": "fe7d473b7b5fb9e542ade5c9a8793c9d4db8b32ddaa0fd855f91f21c4cb898d1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-1366.png",
+      "bytes": 475526,
+      "sha256": "f608366afd25408945b919a77888c0d499b54cc527ea524def5df35e4720d548"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-390-viewport.png",
+      "bytes": 54403,
+      "sha256": "8058e25167db2cc5cbee059ce0e05b8eedc86561fadec7d2c7e8ed53ebba015d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-390.png",
+      "bytes": 415511,
+      "sha256": "489ec8a3ba9ccf7691d232ad41e76b698a105030f3ee9d2f67ef19e7748fa31c"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-empty.png",
+      "bytes": 100545,
+      "sha256": "602fca23788ea7fa1d315a9e810dcf4d86fd5d9e8fe6798be081e373ab63cb68"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-readonly.png",
+      "bytes": 434726,
+      "sha256": "b8a4de79d88d2d98136283e136f9895b0c6213c51152bda6ac8c92a2827ebcc2"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-comerciais-restricted.png",
+      "bytes": 435101,
+      "sha256": "3cb05974a9b08a6bf13893af05d7c0eced45bc16a35de4112e050ffec084df9a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-selected-1366.png",
+      "bytes": 541421,
+      "sha256": "0b2f01b7da235aaa73c81e329deddfad7bb46db54826112f6141ab4405ee064e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-selected-390.png",
+      "bytes": 418419,
+      "sha256": "ce9fb7ce09d2c3875aadf754ea75d513ffdac6bba4b94c5ceb55137ffa7a7980"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/itens-zoom200.png",
+      "bytes": 994315,
+      "sha256": "cb81f93ddeeb2ab36a8f5ed0631d9f29c7e1e924ce87c443dd140755f80847ab"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-1366-viewport.png",
+      "bytes": 128909,
+      "sha256": "9e81c44e08be682c7899aac46106ab867406bb8f736f6a8311e32b26776b95ba"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-1366.png",
+      "bytes": 286147,
+      "sha256": "ebcf668313d0f8d54aaec13c41e1e3c3b02f17cf5de3b71f797ac4466213ea7b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-390-viewport.png",
+      "bytes": 48214,
+      "sha256": "53e54240dcf8c8b773cdaf1c10b0106f758e44d875e3349bba103594866ddf85"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/list-390.png",
+      "bytes": 183531,
+      "sha256": "58cf4ee85ad361570b5051b761da9c8de037b605fb7130aa92f2b3b5283741b9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-1366-viewport.png",
+      "bytes": 126105,
+      "sha256": "5c54e494364f72c52b8173e838fb7115f6d3245996825df5eec461c4094414ad"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-1366.png",
+      "bytes": 159987,
+      "sha256": "0087f3f63878faa4c6a897a40c00fcf68b9eaa2e517ecd189f8738b25c663d49"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-390-viewport.png",
+      "bytes": 52337,
+      "sha256": "eec21969d7df3f3fe07685164780ba6706449886a4c2787ba33890e3a558d425"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-390.png",
+      "bytes": 121429,
+      "sha256": "ef186c716695d8bab486b39f2bc10f7144f71f189663d9d6a5a6d17ec0961088"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/oc-issued.png",
+      "bytes": 165089,
+      "sha256": "fa04e0a00a3fd1d01da3f07739b24d156e124f79c771e3f729280fd05f573c4c"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-1366-viewport.png",
+      "bytes": 126124,
+      "sha256": "f3039763b0767e532421740581882d88870f45e3733c75f0d8f021fec14eb60f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-1366.png",
+      "bytes": 146467,
+      "sha256": "8cb17738dbabb247a6a5552a495b840858db6d04c1284c0d3ab416ec93b3840d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-390-viewport.png",
+      "bytes": 54928,
+      "sha256": "eb1753964f025e642f2b5a9b26adf725b0d58d028d6ff27d9f52c88455ac2fcc"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-390.png",
+      "bytes": 108080,
+      "sha256": "b008336337a19cb00447454acc817a6222264a96616f23d99e5e555c5eda1927"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/op-issued.png",
+      "bytes": 148862,
+      "sha256": "f7e436953c190cf25de8d6db88be8f75784c010791e058844f775d49d07f9b93"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-1366-viewport.png",
+      "bytes": 134356,
+      "sha256": "ca9e33cf8eb2638df4b9033a765d264cba08a15ec60d39c2e4dea176c3751338"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-1366.png",
+      "bytes": 296522,
+      "sha256": "e10c28436c85f77debfacd9182e3734080723b4ca032fe30ce6fc763ae18fd99"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-390-viewport.png",
+      "bytes": 59638,
+      "sha256": "7fd0f7023688e7ecbbbe7c0e35ff32bd32d4b93695f0fb1c773db9a0f510cc5b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-390.png",
+      "bytes": 258920,
+      "sha256": "2f7bbf9a5e85c25cc60430e39f9812db4c203afcd8c1290d6cc23b0d837d22ef"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-pending.png",
+      "bytes": 304366,
+      "sha256": "30cbf59414b700e8f6aad0134680d62ab7269494df1247061db472febfb1feb7"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/orcamento-unavailable.png",
+      "bytes": 87249,
+      "sha256": "706b4cc180e1e3a4509704f7c7a68512063378a19a0de621812faad1c40e4f6e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-1366-viewport.png",
+      "bytes": 123550,
+      "sha256": "12f34a481acbce68961f792fd35172f1e69d8670ffba724517d1253cceb986aa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-1366.png",
+      "bytes": 123550,
+      "sha256": "12f34a481acbce68961f792fd35172f1e69d8670ffba724517d1253cceb986aa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-390-viewport.png",
+      "bytes": 55928,
+      "sha256": "9607705a1044554bbbda29dc6d1b596d4517e3ae7e8446aafb32b7a6a4f8c14f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/parametros-390.png",
+      "bytes": 91321,
+      "sha256": "41bd4b9fec67b61badfabdc5720e1507f65e84bcd99102023bc962cd3f78e48d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-1366-viewport.png",
+      "bytes": 133721,
+      "sha256": "311a2cc11ccc89986684c4e0ce6bb219ae35325930b5bf83e5197a582818345d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-1366.png",
+      "bytes": 247197,
+      "sha256": "a0af517d9d16bb342d3ab065c25b9fc68f74bb5ffb090ae633d1b5cf127b1a39"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-390-viewport.png",
+      "bytes": 66053,
+      "sha256": "32211eb89dae3aa3aa17eb6f060c257bc637a4b47d45bd71446ced75958be9b3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/producao-390.png",
+      "bytes": 197134,
+      "sha256": "d690437ed381cf4aa5b9ae3307fb4fbcf62a02a507a4c16fbb1dd51e54a1d439"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/results.json",
+      "bytes": 117232,
+      "sha256": "c9b9504d0c03e8559450b0e719a916055b0efa572e29851910c768c7b4957848"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-1366-viewport.png",
+      "bytes": 118689,
+      "sha256": "6d5c9ab4bcb975e396a827cc4b8598f0b695c5b846821a0f4a8e014e95c4a9dd"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-1366.png",
+      "bytes": 291817,
+      "sha256": "28665cdf6bbab91ade8bece508ec9f2c4e90084c24de64590612d184879be95a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-390-viewport.png",
+      "bytes": 62318,
+      "sha256": "1684626dfc9a2657d3229955f9332a50605e8c2fdd3e0d4be254de1b6d05c09d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-executivo-390.png",
+      "bytes": 243129,
+      "sha256": "3775b77764e90aec798b97ef25548e324a5625e0b7d301274d368832204f6082"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-after/resumo-interno.png",
+      "bytes": 302420,
+      "sha256": "80383ed7e34cef3c9f8b9985f387c152ae26d3101fb0dd140d535d0971d224e6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/budget-pending.png",
+      "bytes": 313434,
+      "sha256": "5ff3c9476b46759a90cfb8a3e99d989a549fbb23ea3267b2d72bab68b55364b6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/checks.json",
+      "bytes": 2365,
+      "sha256": "cdcd3902d1bdcb42acd63a1091dcb6145cbce6d9e9f01a8f5d4eebf994cae6d2"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/oc-dialog.png",
+      "bytes": 111672,
+      "sha256": "75bc934215a888d1dacbaa37a2439b5897c8d432988e35db085faf9373596fc4"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/op-dialog.png",
+      "bytes": 121099,
+      "sha256": "fba297a40ddfe79f9578ae2f46450ab812df68d5c18d1f1f6af09e0e22eb7490"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/summary-1366.png",
+      "bytes": 291817,
+      "sha256": "28665cdf6bbab91ade8bece508ec9f2c4e90084c24de64590612d184879be95a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/catalog-stages/summary-360.png",
+      "bytes": 242476,
+      "sha256": "cfd9cbb3c14432dc2e2dfb5c0fc114cb6902c833596e70639cf9cdb945e6e52f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-itens-comerciais-1440.png",
+      "bytes": 160873,
+      "sha256": "79e746d5073987f3562d1645d8f5be82ec247a12a3e86ea0ebeb9063b2f8d0a3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-itens-comerciais-390.png",
+      "bytes": 63485,
+      "sha256": "464999c52719b7f3d46a9f413c8c2dedfad1913afc6ef6323e034a2b29f71398"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produto-1440.png",
+      "bytes": 147149,
+      "sha256": "13972fae8106b7853b5719d14d11a21972f84e31f02d0835beabba403c70229a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produto-390.png",
+      "bytes": 57434,
+      "sha256": "2143d51570eddcc23eae8d0ceccc56c0d16b5fef1719ca6591d21fb339f5784c"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produtos-1440.png",
+      "bytes": 152417,
+      "sha256": "86740c0acfcf0e6092315e463d032b9e39017ea7ff83d0f742b276e7442fd024"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/after-produtos-390.png",
+      "bytes": 52988,
+      "sha256": "959673bb4c2cbe91d14275a0ffc1afc3ff0e54274efb29e4f8c17860cad447fa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/checks.json",
+      "bytes": 2439,
+      "sha256": "802ce12bf2e6f31312a7babcc7bc150f6d2b5b203a570b250e347b484217ddf1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/inspector-390.png",
+      "bytes": 57510,
+      "sha256": "1ee068b58dbcec3967049e83443e319cc3389a95fe734bd4db48322b774d78f4"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/commerce-refinement/master-editor-390.png",
+      "bytes": 52295,
+      "sha256": "cbedccfc8906e42eff9fffe39bdde36cb5e117a436e6ce1ef8e3dea710c5bf06"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/editar-equipe-1366.png",
+      "bytes": 122593,
+      "sha256": "891197c439b1279bbcbcfba9988cde8150beaf51dd5a642127965dc1ee04db18"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/editar-equipe-390.png",
+      "bytes": 53261,
+      "sha256": "592fde988ef6b0226b2596179aa2ba23e78a0f505f6c811684b3612e6d0db49f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/encerrar-participacao-1366.png",
+      "bytes": 121390,
+      "sha256": "2899ab94c6fa632c3e15310e8063de5c9513ba1f33e4a6eae8ee123da25a712e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/encerrar-participacao-390.png",
+      "bytes": 49578,
+      "sha256": "7a62c99e3ae8226b6b3ad2d80974fbacb90ec0e07a6e4518e2a1c1cc9e8dc088"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/ficha-1366.png",
+      "bytes": 123131,
+      "sha256": "f858e15d148b04de39df8eab0e855298678bfcaeb7cf5414b8da178984a36c50"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/ficha-390.png",
+      "bytes": 51764,
+      "sha256": "8005c4512f7ad480d19fdc9da979a7fd81934cdb504496bb9a9349af5bfd5d2a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/incluir-pessoa-1366.png",
+      "bytes": 119168,
+      "sha256": "d76f330223c5ddaab2667a6ff2fb3bfe37918c9181ea1f341a089bce40ba6b74"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/incluir-pessoa-390.png",
+      "bytes": 52527,
+      "sha256": "6131227969b1a07ddf00273b66539711c4a3641ee4b65543b0ef39914c3f42df"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/lista-1366.png",
+      "bytes": 85783,
+      "sha256": "e52942f8f270888e1189b490e6a7e00bf80e59e1664807b854549b22bde2da4a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/lista-390.png",
+      "bytes": 43544,
+      "sha256": "2c9670d45e6bf2f55c067758ff3c13c7772ce54e2299f6f213c865640307a5d9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/nova-equipe-1366.png",
+      "bytes": 90399,
+      "sha256": "7bd06cb9a1b7acf816ebf8e9b51cc288fc709df741849043c2b6cecb1b23d07f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/nova-equipe-390.png",
+      "bytes": 41474,
+      "sha256": "695978ffe3c93ace0272fcf7ba756e971bba0472ef2754c5b6e48948d12b652d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/equipes/results.json",
+      "bytes": 5549,
+      "sha256": "84d767e151a6a43b6a822856c05df448281c7c8ab44d39e8cdc78518c4c8eb8a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/acao-form-1366.png",
+      "bytes": 91763,
+      "sha256": "7f6b22c08df08c2b7aafcfc6b3873a2e9deeb02e4cfbb0578380d94c2eb3c8cc"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/acao-form-390.png",
+      "bytes": 39043,
+      "sha256": "7c21c46f04289a02d6425fdef716941f85d1f7a61f0a9391d6be392dc3f9a904"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/cadastro-1366.png",
+      "bytes": 109287,
+      "sha256": "bd9cf80803181bf92f3582c0cbc6f0e26b7d571d0052fb11432035be6bbba2fa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/cadastro-390.png",
+      "bytes": 44453,
+      "sha256": "9a1c99a6ce64e1b8dedbe02e35f54830ff82a353652c68537b83a5474eba3ae7"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/conteudo-1366.png",
+      "bytes": 109960,
+      "sha256": "0a7c67269d5de4a01011af929bf4c611dc4ffe4c05673f2982412d9f4f13fb92"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/conteudo-390.png",
+      "bytes": 52327,
+      "sha256": "cab46ad2d51c91d97ca1b9f34dac4bb098cfd7c4f00f81977ab5fefefd663853"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/editar-conteudo-1366.png",
+      "bytes": 122513,
+      "sha256": "a6762ccf605bd8bd0f9e01eb832afb8dcd9c10b4a1b67998bad4dca128db421c"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/editar-conteudo-390.png",
+      "bytes": 57540,
+      "sha256": "ab8d5ff0a2bad0c2ebfb0a7521eec1ca9988543e38a45a1e5dcd1d4bf76b8e83"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/falha-escrita-390.png",
+      "bytes": 51502,
+      "sha256": "e6b38940335054e41fc9deefec38884a0bdd2479cfde2fd04bd0571572095c5d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/fonte-form-1366.png",
+      "bytes": 107813,
+      "sha256": "2ea752fdb0ee9b847ed413e48b93d6e3695400c399b8c9f8b6a52a0793f814c2"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/fonte-form-390.png",
+      "bytes": 47487,
+      "sha256": "980b444e4ece9c1fe571e56dee3a6c84d9ed9adaf4937f71f2f468e48618f7b0"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/historico-versionado-390.png",
+      "bytes": 51275,
+      "sha256": "9866bcf1e487522a35eea40fb4e9a14a592cb4d0c9930d6946ebcab9d00f51d6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/lista-1366.png",
+      "bytes": 96179,
+      "sha256": "531190572ab026bef54a6dd2aea98368407ae1c40095dd508ff87fd4f8b5eae6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/lista-390.png",
+      "bytes": 47720,
+      "sha256": "4180f4dba07f10f7e474fff8f200f204a09c42909991d65415614b56496b3767"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/medida-form-1366.png",
+      "bytes": 82885,
+      "sha256": "974b23cf691139c299882986a1530b50318530c05df8ec17b2df9738751aed41"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/medida-form-390.png",
+      "bytes": 33699,
+      "sha256": "b7998472e026fcb1448e847fa75fee1a1c9fbca222857e5f074f52ac84f7b67b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/metodo-form-1366.png",
+      "bytes": 128891,
+      "sha256": "14f5590d3455d31089f4b87b2a34698a0d3da7e71bf2420d07e20a8008c1e2c2"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/metodo-form-390.png",
+      "bytes": 47838,
+      "sha256": "13950e797f2e55c8085c684ffa2fd871d8c574cd728834946709268f1bc8d321"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-detalhe-1366.png",
+      "bytes": 118942,
+      "sha256": "0e154442bf001b4b32a63be66acbc166b74a5b9cbc4b8cd4d819d769588b9745"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-detalhe-390.png",
+      "bytes": 50315,
+      "sha256": "f9a49490a82ed011b42c17036a8de8f82f69cffccc822aca75cc7ed6df1c0255"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-form-1366.png",
+      "bytes": 97138,
+      "sha256": "7fe974e26811d57e9ff570ad261fddb1e19e7d8c2309793ac1b1e10eb673bb1d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/perigo-form-390.png",
+      "bytes": 31155,
+      "sha256": "80134d5d3c35ec2d1cd54f2ed3471fb7adbbb5398f6aff313612858c91a6725a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/refetch-conflito-390.png",
+      "bytes": 43081,
+      "sha256": "ff4a630466262ca772cbc248a8d745efea1e70203847df606c97e61f3b97a881"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/estudos/results.json",
+      "bytes": 7265,
+      "sha256": "7043dc16ffa0111d4929e0e7ac9d83c6d14db8adb0c073afa491902186268ecc"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/adocao-390.png",
+      "bytes": 50998,
+      "sha256": "46d24c33f694cf67673aea690ea08bdad11d193312b2f4f12e1e6dee65e013aa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/arquivo-falha-retry-390.png",
+      "bytes": 53769,
+      "sha256": "e48611ed921a153fab255bb7e1be6c49918ef1aba6cdbbef8d1fb53cf5a4bd89"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/cadastro-1366.png",
+      "bytes": 109563,
+      "sha256": "9887083cef82eb34d4d2608f6c078b5b894be473469308a5b3976351d9153352"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/cadastro-390.png",
+      "bytes": 39635,
+      "sha256": "653e2e7e02086d293376e991c7088c3573d86db8d0ffbc45adf6493458361ca4"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/coleta-1366.png",
+      "bytes": 118672,
+      "sha256": "b75fc5dd42dc5dccd856944c15ec17255a6232ff77cac635f90e90e18a1639b4"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/coleta-390.png",
+      "bytes": 54219,
+      "sha256": "057a834c2d2e8c80ca925585abaa38dc27e6ebedac27c387d4a37f0169248a5f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/conflito-ponto-390.png",
+      "bytes": 50215,
+      "sha256": "9f61342adb64dcff39027a579c9ce89fbfa655a8c758762c23e228ece695fb12"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/falha-escrita-390.png",
+      "bytes": 43362,
+      "sha256": "a3a59ddf7449da782f95cb4b363ee46ef1eff01af24ec8eea74fc2416f4dcf6f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/lista-1366.png",
+      "bytes": 99176,
+      "sha256": "685b9716efb496496ba7b1dc150c0239cca2b9f6c83e29b2202682891a824e76"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/lista-390.png",
+      "bytes": 55740,
+      "sha256": "3244c17beb9a416a74a9026e432eaf18b9bf03377a56e6ec4f40d03534301dd1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/medida-1366.png",
+      "bytes": 99637,
+      "sha256": "0c20b0910cb1646ebac396131f38ed7d267e47866f9a623b02b7db9598b71a73"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/medida-390.png",
+      "bytes": 42972,
+      "sha256": "304360c6aa4c3aa15bcb299eccaed963c0b22988a4f37abfd36f88609e36db9f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/ponto-1366.png",
+      "bytes": 108196,
+      "sha256": "2b3ce83d2d086aee29b758707cd552add230802e8a2db2e831a72355212f5fa7"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/ponto-390.png",
+      "bytes": 26610,
+      "sha256": "1559fd380195f9ba2a2a7f3ca1042a8aefe45797d18cf628cd73eb019f3fcf46"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/refetch-versao-conflito-390.png",
+      "bytes": 46098,
+      "sha256": "83e2cd5860b22f79eebb63550792c535b848574910f417e459bf96f1d4fa27d9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/results.json",
+      "bytes": 3889,
+      "sha256": "8b2d092991fa7b75154622bbf9e028dde293cb58389d893035af5d1988c68774"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/levantamentos/validacao-390.png",
+      "bytes": 40905,
+      "sha256": "09d1663a51e5a3a0a300b91cf03ec6a9c2f4fc75ea3ab4b525b1ec229fa48212"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pe-arquivos/results.json",
+      "bytes": 1235,
+      "sha256": "54172e52a5e8855bd12a999bb7699dda4725339b749ff1414019e0c5086780f3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/ficha-1366.png",
+      "bytes": 133472,
+      "sha256": "51c0add453a0c9896eb7f33de872618edbda0d1384816588f4429461e4cb7875"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/ficha-390.png",
+      "bytes": 49430,
+      "sha256": "b4deba9a9b0a65349d4b90a754022066f623d1bb03fb672f0058c2710122f243"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/formulario-1366.png",
+      "bytes": 134594,
+      "sha256": "2ab39b32a2250ededf70f5b0c7c36877483b3b74bd8dd12457fc923930f46058"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/formulario-390.png",
+      "bytes": 43810,
+      "sha256": "6cdc78fc85301fe1f0ccd42487f1192c4c6c9f4cd7c4fa5626dc62281e14efc9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/lista-1366.png",
+      "bytes": 93966,
+      "sha256": "c46ada5ef4f4f1081f6deb6522ab557c48aab9544571d4209628249145fea325"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/lista-390.png",
+      "bytes": 49351,
+      "sha256": "73000a60a8913b22df97517fda4ba5fc93b7b78f1350f4820a7f406be9ab07c1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/pessoas/results.json",
+      "bytes": 2640,
+      "sha256": "a2403d2ae40d7f745912c18ef2e312fe8787ed096ce9e33cb7963cabda9511ce"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/clientes-1366.png",
+      "bytes": 77936,
+      "sha256": "66c1d63e40c6a39e6e20c41334a75e1e0a87942531b4dbcb3271ddb1d5e3ce62"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/clientes-390.png",
+      "bytes": 41752,
+      "sha256": "d45921f449f4f925c40e6d729b7bb83fa537aafd8c0c4ed0df9b20b8df1521eb"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/comercial-frame-1366.png",
+      "bytes": 139201,
+      "sha256": "485e3e1e327215cf88ba607a2fd264a79c2c2fd2f54df89649dfc8d7249ef1f8"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/configuracoes-1366.png",
+      "bytes": 111532,
+      "sha256": "d04752776beced8d474cb1172580b6ad00df76dd210741b3fc4d317c75c81fe2"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/configuracoes-390.png",
+      "bytes": 50779,
+      "sha256": "b02246999d73cf72607da37a08fd5432df946328f07dc50899267c59d519badd"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/equipe-1366.png",
+      "bytes": 93966,
+      "sha256": "c46ada5ef4f4f1081f6deb6522ab557c48aab9544571d4209628249145fea325"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/equipe-390.png",
+      "bytes": 49351,
+      "sha256": "73000a60a8913b22df97517fda4ba5fc93b7b78f1350f4820a7f406be9ab07c1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/mapas-library-1366.png",
+      "bytes": 305032,
+      "sha256": "7af81b9747a30878b7bfcd13635b041584fc72f8fb6babc990a3f41ecf42b14f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/mapas-library-390.png",
+      "bytes": 63212,
+      "sha256": "1c0112e0218bbf202b1a3d950ce6eea66575e3de416e114f705ea2de4bfacd23"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/pe-erro-recuperavel-390.png",
+      "bytes": 47343,
+      "sha256": "88578a779cd2a58edbc9e9a44d10d1e1c2ab6c2b116082fbebd9c55cd42f6fd0"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/pessoa-texto-200-altura-480.png",
+      "bytes": 29368,
+      "sha256": "482020b732560235b3e9c479ae3f6b454f4e929ad0a1cce9b5bed3d3af5bf3a8"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/pessoa-validacao-390.png",
+      "bytes": 41823,
+      "sha256": "4622c051873ef93e348f479233c6d9cbacb4937953ae60d434c49e8c4aa2ee15"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/projetos-engenharia-1366.png",
+      "bytes": 107188,
+      "sha256": "9ec9af2035ab5cc8b7e6392be398ba5fe611c9022663be5c78018016595e3825"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/projetos-engenharia-390.png",
+      "bytes": 46834,
+      "sha256": "986d941b7e4cbe72933fe647170801ac7565b324044067651b351b2d832aa5b1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/results.json",
+      "bytes": 7763,
+      "sha256": "714feec02dd687542896262348d1b39e9c64b2602253265f325ebcc65564ac94"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/seguranca-1366.png",
+      "bytes": 83036,
+      "sha256": "814a858743d0521ec07ecb8c2dc13740f32ef2d707ad60e663444e3c1aa8d886"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualidade-operacional/seguranca-390.png",
+      "bytes": 45289,
+      "sha256": "387ac25e494321bc7509498d2755d711c72108f99a1351a29f75e9efe8f6e858"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-ficha-1366.png",
+      "bytes": 109707,
+      "sha256": "db8227877e6b82908bb2a305298812e54a92413e65edbbb51ac9abd56de26ffb"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-ficha-390.png",
+      "bytes": 45531,
+      "sha256": "024a13565aa3acb23b06f0e7dac0be8e8cd533b240a057279f48c0b90f8fd159"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-formulario-1366.png",
+      "bytes": 112870,
+      "sha256": "80e1b24821ac48289f58ad19bc46d143024dabced7d1e5a13a293477696dc4a9"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencia-formulario-390.png",
+      "bytes": 50268,
+      "sha256": "3f542763018abd8bdcfef9998b58717a3cd65729dfe28699a64fc4d800b526fa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencias-lista-1366.png",
+      "bytes": 88653,
+      "sha256": "a480660289acd7d73a0ee0067c15273290c8cd0eeab1e57a14c3d262158de587"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/competencias-lista-390.png",
+      "bytes": 42655,
+      "sha256": "e04b5f53c27b26a4f93faf4313a3f1b68263bfb6d5e7ad67e25cb49bfc709f0d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-ficha-1366.png",
+      "bytes": 117581,
+      "sha256": "4fb1be4851c96c7ab067ed58a6d74b76de25093ea28c606466bb3319a95b0312"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-ficha-390.png",
+      "bytes": 47387,
+      "sha256": "f17deb5bc9d9f7adfb874186735c3eaf78d27c9e8fd59beba4892d1b1d533e8e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-formulario-1366.png",
+      "bytes": 123739,
+      "sha256": "81e2c030ef7a880cc3e765c474242a8e2f3c18eb9a0a6d1966b1d6622e9eab4c"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/qualificacao-formulario-390.png",
+      "bytes": 57938,
+      "sha256": "00d949a11eae4c75fc90df453053b83bb36d09b7bedf8abc5f6ca98e11d6f1ac"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/qualificacoes/results.json",
+      "bytes": 3904,
+      "sha256": "0de26c1ec6b70a59d190a7a883219014458bf469839772655adc526e994bcc8e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/checks.json",
+      "bytes": 1214,
+      "sha256": "a0ab5b9aeb5680b4f0163f9e4bf1adff3fc12e952c0fc982a35afc726809b292"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/dimensionamento-panel-1366.png",
+      "bytes": 164164,
+      "sha256": "43e037a6d77266b6639998bf5c62102a736a56e3815bf92509bbd6e01360cb5d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/dimensionamento-panel-1920.png",
+      "bytes": 178686,
+      "sha256": "096d60468cd037b7da5ed28d852982cf026f5ca50fbf530e8bde464f63b2cb3f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/dimensionamento-panel-390.png",
+      "bytes": 36558,
+      "sha256": "89db75dac024d8d23e4020955aa7b2bce00b1016aa156d35ca01de67397a4070"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/document-commercial.pdf",
+      "bytes": 55982,
+      "sha256": "06f9ce0ccae3a02c77ef9166bfaac4ba47383fc76f1203f2413679a78ce83f40"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/document-internal.pdf",
+      "bytes": 57053,
+      "sha256": "5f4e6fa7317e36c41634de57c62203efc1e1baca27a1c37da1f68e63198f1075"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/history-empty.png",
+      "bytes": 144155,
+      "sha256": "3dae435e1d58d18a8321a79f44b8feb444cf12dbd08df6175ec72e6c4f157920"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/itens-comerciais-panel-1366.png",
+      "bytes": 173459,
+      "sha256": "1f559221ba9bc21bb64b8c9b3e15e813038693fd7d6119f152feb0ebd8c44b9b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/itens-comerciais-panel-1920.png",
+      "bytes": 185072,
+      "sha256": "282ec9314f5ff5acfcf0fc322efe048adf52d47770e820decbd17c605cb05650"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/itens-comerciais-panel-390.png",
+      "bytes": 56629,
+      "sha256": "69aa6209e13b5535df7205b634549b9858ffa10a2a633ecacb09ef6611d79510"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/parameters-commercial-focus.png",
+      "bytes": 113794,
+      "sha256": "a43fc24414cf1b5f5b0d17f0944536388b7c9686418c6d06fe557bf562daf5e3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/production-empty.png",
+      "bytes": 107989,
+      "sha256": "ff4f5105a1f2c8a49665fd34f48c115de34a5c1669604c3959c4d5f39fc5aa00"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/purchases-pending.png",
+      "bytes": 162784,
+      "sha256": "5af96a6285d0e3225e6da3a918f728723789a7f058eb7251bd61fd19aea71666"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/revision-refinement/systems-duplicate-identities.png",
+      "bytes": 141604,
+      "sha256": "82417e81c1c88f7e5c73c1873807351afb2a0585e6fc9afc80add8379d3870e5"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/compras-1366.png",
+      "bytes": 129220,
+      "sha256": "1341fe7c5157dd25f1f674ae980f622dca1c4cec37f76d9eaf02655c3a52dfe6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/compras-390.png",
+      "bytes": 62394,
+      "sha256": "3c1c08376fc677eb62df69b1c18a669736cf07291a602421d96da570f1f5fcc8"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/compras-empty.png",
+      "bytes": 109112,
+      "sha256": "b84e2d7854847c117fc89b4996cc36be5cc1af7dd20d71f196824f4070143678"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/dimensionamento-1366.png",
+      "bytes": 117685,
+      "sha256": "6e61c35af8e7ef37fac174f91826fc8347943696871b756070983edc197feca1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/dimensionamento-390.png",
+      "bytes": 57509,
+      "sha256": "dd5ecfca16448fcbb40c0cdc32619db89c77ecbd7782969b07466aeb6e9c64bb"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/historico-1366.png",
+      "bytes": 140109,
+      "sha256": "2672d1921a1b814d297db238db488302cf4d2d842c8fc9fa4e8b9339b538fe81"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/historico-390.png",
+      "bytes": 65575,
+      "sha256": "434f860ef787fb6fade3a5288f997f2dfacbdc441570a7b0bb5df14c69fbb816"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/historico-empty.png",
+      "bytes": 145568,
+      "sha256": "8de54fa50a514cf80bd38804746d383885449a2d8adf26860d794c23a056167b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/itens-comerciais-1366.png",
+      "bytes": 137099,
+      "sha256": "01522e51a60249370c4cf81cbfc00f28cfe092cece47124230b1aeb887530d04"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/itens-comerciais-390.png",
+      "bytes": 54415,
+      "sha256": "17e35639c2e1b6376af4c1f2365653c412348a92dc4aa5b2d0437c0471d18b5f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/metrics.json",
+      "bytes": 6799,
+      "sha256": "3ae6cdd6b852a91ca58a7af82612584247137613a22d10cb990b81c657ec75c1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/orcamento-1366.png",
+      "bytes": 134333,
+      "sha256": "0620464b64ee0b0a15264b9dcef74c3d9792a4f1d4d9682a156a3209a5876043"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/orcamento-390.png",
+      "bytes": 59561,
+      "sha256": "4387d67c069f0f2589215ba3c4ffb5e89bba12146701b329fd6993c53f84325e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/parametros-1366.png",
+      "bytes": 123550,
+      "sha256": "12f34a481acbce68961f792fd35172f1e69d8670ffba724517d1253cceb986aa"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/parametros-390.png",
+      "bytes": 55928,
+      "sha256": "9607705a1044554bbbda29dc6d1b596d4517e3ae7e8446aafb32b7a6a4f8c14f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/parametros-focused.png",
+      "bytes": 123680,
+      "sha256": "c514dc0754ae7145f25c9eeb6e33a59a735ea7c72b5894aa87cf5f1f2c4297b1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/producao-1366.png",
+      "bytes": 133721,
+      "sha256": "311a2cc11ccc89986684c4e0ce6bb219ae35325930b5bf83e5197a582818345d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/producao-390.png",
+      "bytes": 66053,
+      "sha256": "32211eb89dae3aa3aa17eb6f060c257bc637a4b47d45bd71446ced75958be9b3"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/producao-empty.png",
+      "bytes": 109558,
+      "sha256": "19aea82f161f9618a08199b4ec750e44cd8879f9247a2281f7365f1e0d4db520"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/resumo-executivo-1366.png",
+      "bytes": 118689,
+      "sha256": "6d5c9ab4bcb975e396a827cc4b8598f0b695c5b846821a0f4a8e014e95c4a9dd"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/resumo-executivo-390.png",
+      "bytes": 62318,
+      "sha256": "1684626dfc9a2657d3229955f9332a50605e8c2fdd3e0d4be254de1b6d05c09d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-after/resumo-textos-focused-390.png",
+      "bytes": 57215,
+      "sha256": "a719c3d01be8445da668d47d7e1d964e5acd59d7b7aaf14bbca950ebf75911cd"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/checks.json",
+      "bytes": 37348,
+      "sha256": "e87583bbd3fba886d87d7a3904319aab082d200967b93249c2ca804d4f4206e6"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/concurrent-field-conflict.png",
+      "bytes": 97840,
+      "sha256": "b046c622e655d487dc60178fd65deb291a6297eafd5d3d3f0f25e5c40c9343dc"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/concurrent-unrelated-field-preserved.png",
+      "bytes": 124414,
+      "sha256": "c1be648bc9453b1982cac872e0b4769f91e920ff5d4d9392b35813176fa9661b"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/failed-field-other-success.png",
+      "bytes": 154083,
+      "sha256": "4cfec652b9eaf5d2f6330c9cf8a71e176838779279c59d7e02e83808c757049f"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/failed-write-retry.png",
+      "bytes": 123923,
+      "sha256": "4593a9168979936e56f70afa35cc3b1531b2f507d941692acc2a92cdf16ffbda"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/invalid-parameter-preserved.png",
+      "bytes": 116956,
+      "sha256": "7691871e23805bcf3cedc08aa25d1362f40e02412c261697f4ff8ca28d98239d"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/lost-checkpoint-retry.png",
+      "bytes": 124687,
+      "sha256": "77ead8aa521ac5cae033e491d4c89042a7eb5f6ee52015f5724ed638a39387b1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/lost-write-confirmed.png",
+      "bytes": 102815,
+      "sha256": "8fe1161b81729abd75614884287af29850994903b0e8ec62ada004c48d310dea"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/newer-edit-during-checkpoint.png",
+      "bytes": 102552,
+      "sha256": "d2fd69e7d02407890c8e7b96cab09235e9e25b2ecd6beca46f59573feec22e1e"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/newer-revert-during-write.png",
+      "bytes": 125722,
+      "sha256": "bc081e7b8e25ad9b8fd18e4c97d3e2dfe7e28fa68a2c98fe493e9b587e9aac60"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/sparse-parameter-pending-revert.png",
+      "bytes": 149805,
+      "sha256": "618a942a711dc59514cd9cda1a028f3cde1bfb22b993012d2a943fce7d239512"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/sparse-parameters-concurrent.png",
+      "bytes": 149805,
+      "sha256": "618a942a711dc59514cd9cda1a028f3cde1bfb22b993012d2a943fce7d239512"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-autosave/texts-history.png",
+      "bytes": 145433,
+      "sha256": "567da1b37fd0e793d1e29e6c4e76b1dfb67314b492662e513caebb672b90b25a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/ui-45-completa/workspace-catalog/checks.json",
+      "bytes": 1068,
+      "sha256": "1262bc6df0befbe8e7c1d640c00817230a34b8b6b0ca8e4733d1811b9ddf84e1"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/pessoas-equipes/01-equipes-lista-desktop.jpg",
+      "bytes": 79715,
+      "sha256": "06610cdd1025e4aa68bfb5077126e0cb35f7ae807e23e3bb96dc0ea115ea156a"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/pessoas-equipes/03-ficha-mobile-refinada.jpg",
+      "bytes": 50464,
+      "sha256": "da3c19e4de0bc6b48e38a0b515f16677505cef832ff1edc89035f3a83a7544a5"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/pessoas-equipes/04-formulario-mobile-validacao.jpg",
+      "bytes": 49711,
+      "sha256": "6b60402c79e5837e1710fbb9d93a5a1c716590e7761e080e29057a7dcb447b11"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/pessoas-equipes/09-qualificacao-desktop-topo.jpg",
+      "bytes": 107795,
+      "sha256": "cd71b7fdd42b5250b25bd8fe0a3b8466ee5dafda995f69d2b9369ff0f6dfea64"
+    },
+    {
+      "path": "docs/nexus-operacional/evidencias/pessoas-equipes/10-qualificacao-mobile-topo.jpg",
+      "bytes": 44679,
+      "sha256": "80e9f5928646297568120d1be9a21b8aa72d6b92359f6e6913cc709d8f8f3931"
+    }
+  ]
+}

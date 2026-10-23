@@ -1,0 +1,82 @@
+{
+  "method": "Connected schema/ledger/cron metadata only. No operational fixtures or authenticated Auth/Storage HTTP E2E.",
+  "project": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "rows": [
+    {
+      "anonymous_command": false,
+      "applied": [
+        {
+          "applied_at": "2026-10-22T18:34:59.068602+00:00",
+          "path": "drizzle/migrations/0027_agenda_equipe.sql",
+          "position": 46,
+          "sha256": "21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b"
+        },
+        {
+          "applied_at": "2026-10-22T18:35:03.300806+00:00",
+          "path": "drizzle/migrations/0028_agenda_anexos.sql",
+          "position": 47,
+          "sha256": "793ed8fa0a682a6143cc9b9d35f10fab66a0107981efca777785f17398a60acb"
+        }
+      ],
+      "authenticated_command": true,
+      "checked_at": "2026-10-22 18:35:23.585658+00",
+      "cron": [
+        {
+          "active": true,
+          "command": "select public.executar_job_agenda_notificacoes();",
+          "schedule": "* * * * *"
+        }
+      ],
+      "last_job": {
+        "erro_codigo": null,
+        "estado": "sucesso",
+        "falhas": 0,
+        "finalizado_em": "2026-10-22T18:35:00.039365+00:00",
+        "iniciado_em": "2026-10-22T18:35:00.016355+00:00",
+        "processados": 0
+      },
+      "ledger_count": 47,
+      "policies": [
+        {
+          "rls": true,
+          "table": "agenda_automacoes"
+        },
+        {
+          "rls": true,
+          "table": "agenda_comentarios"
+        },
+        {
+          "rls": true,
+          "table": "agenda_excecoes"
+        },
+        {
+          "rls": true,
+          "table": "agenda_ferramentas"
+        },
+        {
+          "rls": true,
+          "table": "agenda_preferencias"
+        },
+        {
+          "rls": true,
+          "table": "agenda_serie_ocorrencias"
+        },
+        {
+          "rls": true,
+          "table": "agenda_serie_versoes"
+        },
+        {
+          "rls": true,
+          "table": "agenda_series"
+        }
+      ],
+      "public_internal_files": false,
+      "public_internal_worker": false,
+      "scheduler": {
+        "detalhe": "Materialização limitada de séries, lembretes e outbox internos a cada minuto; sem canais externos.",
+        "estado": "ativo",
+        "job_id": 1
+      }
+    }
+  ]
+}

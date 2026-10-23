@@ -1,0 +1,254 @@
+{
+  "profile": "layouts-and-behaviors",
+  "method": "Source UI with synthetic transport fixtures. Does not prove connected Auth, SQL/RLS, real persistence, concurrent transactions or physical-device behavior. Reload check uses the fixed fixture identity; newly created state is in-memory only.",
+  "layouts": [
+    {
+      "name": "lista",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "nova-equipe",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "ficha",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "editar-equipe",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "incluir-pessoa",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "encerrar-participacao",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "nova-equipe",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "ficha",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "editar-equipe",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "incluir-pessoa",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "encerrar-participacao",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "nova-equipe",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "ficha",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "editar-equipe",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "incluir-pessoa",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "encerrar-participacao",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "nova-equipe",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "ficha",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "editar-equipe",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "incluir-pessoa",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "encerrar-participacao",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "lista",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "nova-equipe",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "ficha",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "editar-equipe",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "incluir-pessoa",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "encerrar-participacao",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "nova-equipe",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "ficha",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "editar-equipe",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "incluir-pessoa",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "encerrar-participacao",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "creation errors focus fields and dirty dismissal requires an explicit choice",
+      "pass": true
+    },
+    {
+      "name": "team creation and temporal replacement preserve both people and the closed period",
+      "pass": true
+    },
+    {
+      "name": "inclusive date overlap is rejected without losing the completed form",
+      "pass": true
+    },
+    {
+      "name": "fixed fixture URL reload and return preserve the search recut and focus",
+      "pass": true
+    },
+    {
+      "name": "authorized member opens the canonical person record and keeps the URL on reload",
+      "pass": true
+    },
+    {
+      "name": "network failure keeps the draft and retries the same idempotent intent",
+      "pass": true
+    },
+    {
+      "name": "polling and comparison do not advance the draft version until explicit adoption",
+      "pass": true
+    },
+    {
+      "name": "read network failure hides old detail while preserving an unsaved edit",
+      "pass": true
+    },
+    {
+      "name": "list denial removes a new editor and recovers only through a fresh authorized read",
+      "pass": true
+    },
+    {
+      "name": "detail denial removes the editor and prevents cached private content from reappearing",
+      "pass": true
+    },
+    {
+      "name": "command denial closes the private form immediately",
+      "pass": true
+    },
+    {
+      "name": "comparison denial closes the private form without adopting data",
+      "pass": true
+    },
+    {
+      "name": "archiving preserves existing periods and reactivation restores new inclusions",
+      "pass": true
+    },
+    {
+      "name": "pagination and internal Back preserve the server recut without resurrecting a cleared search",
+      "pass": true
+    },
+    {
+      "name": "empty search results and query failure remain distinct recoverable states",
+      "pass": true
+    },
+    {
+      "name": "restricted profile cannot manage teams or enumerate other people's memberships",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

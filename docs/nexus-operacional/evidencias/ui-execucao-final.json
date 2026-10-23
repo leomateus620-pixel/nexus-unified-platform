@@ -1,0 +1,23 @@
+{
+  "command": "npm run test:ui",
+  "exitCode": 0,
+  "completedAtUtc": "2026-10-22T09:34:41Z",
+  "implementationCommit": "05f69c9",
+  "environment": "Windows, Node 24.15.0, Chromium 153.0.8010.12, localhost isolated network fixtures",
+  "evidenceDirectory": "ui-regressao-final",
+  "coverage": {
+    "existingScreens": 11,
+    "existingWidths": [320, 360, 390, 768, 1024, 1366, 1440, 1920],
+    "existingWorkspaceViews": 32,
+    "autosaveChecks": 16,
+    "commerceChecks": 15,
+    "revisionChecks": 7,
+    "operationalLayouts": 36,
+    "operationalBehaviorChecks": 9,
+    "operationalContrastPairs": 7,
+    "operationalPageErrors": 0,
+    "operationalPageOverflows": 0
+  },
+  "scope": "Actual source components; test-only persistence adapters. Does not prove connected Auth/Storage, backend E2E, physical devices or field performance.",
+  "productionFixturesInserted": false
+}

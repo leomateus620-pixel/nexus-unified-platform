@@ -1,0 +1,39 @@
+{
+  "project": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "migration": "drizzle/migrations/0026_pessoas_identidade_conferencia.sql",
+  "sha256": "980e98d4036027aba1e0d54e16cc363abde4ae41f004938a8fabad3cd5efa41b",
+  "preflight": {
+    "rows": [
+      {
+        "identidade_historica": null,
+        "ledger": 44,
+        "ultima_posicao": 44,
+        "ultimo_checksum": "254504d1ca8335be6f12a57c7f216eadc8d09aaa1b93001f4078917189a6f44d",
+        "verificado_em": "2026-10-22 17:41:10.40316+00"
+      }
+    ]
+  },
+  "verification": {
+    "rows": [
+      {
+        "aplicativo_consulta_permissao": true,
+        "aplicativo_executa_helper": false,
+        "aplicativo_le_historico": false,
+        "ledger": 45,
+        "rls_ativa": true,
+        "transicao_identidade_atual": true,
+        "trigger_identidade": 1,
+        "ultima_migracao": {
+          "applied_at": "2026-10-22T17:41:22.74252+00:00",
+          "path": "drizzle/migrations/0026_pessoas_identidade_conferencia.sql",
+          "position": 45,
+          "sha256": "980e98d4036027aba1e0d54e16cc363abde4ae41f004938a8fabad3cd5efa41b"
+        },
+        "verificado_em": "2026-10-22 17:41:38.131934+00"
+      }
+    ]
+  },
+  "connectedFixtures": false,
+  "localEvidence": "tests/db/pessoas-identidade.mjs; scripts/migrations/test-installation.mjs; execução PostgreSQL16.15 descartável full45 exit0",
+  "connectedAuthStorageE2E": false
+}

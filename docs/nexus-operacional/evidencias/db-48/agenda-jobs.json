@@ -1,0 +1,88 @@
+{
+  "database": "postgres",
+  "checks": [
+    {
+      "label": "initial horizon materializes only 60 occurrences including anchor",
+      "result": "passed"
+    },
+    {
+      "label": "backend extends finite horizon without browser or fake Auth uid",
+      "result": "passed"
+    },
+    {
+      "label": "automatic reservation uses canonical custody and explicit requester/job audit",
+      "result": "passed"
+    },
+    {
+      "label": "repeated backend generation creates no duplicate event or custody",
+      "result": "passed"
+    },
+    {
+      "label": "worker no-op and generation do not change human series expected_version",
+      "result": "passed"
+    },
+    {
+      "label": "completed job context cannot be reused: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "interactive user cannot execute backend job: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "owner job also refuses non-null session uid: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "bounded worker batches preserve and drain explicit downtime backlog",
+      "result": "passed"
+    },
+    {
+      "label": "job catches up missed dates older than 60 days without silently discarding backlog",
+      "result": "passed"
+    },
+    {
+      "label": "past conflict remains an observable pending occurrence",
+      "result": "passed"
+    },
+    {
+      "label": "backend reports blocked occurrence as failure rather than false success",
+      "result": "passed"
+    },
+    {
+      "label": "past blocked occurrence remains visible in series diagnostics",
+      "result": "passed"
+    },
+    {
+      "label": "future cancellation preserves earlier pending occurrence and its recovery command",
+      "result": "passed"
+    },
+    {
+      "label": "backend retries and recovers the same past occurrence identity after conflict removal",
+      "result": "passed"
+    },
+    {
+      "label": "published notification and reminder persist for the actual participant",
+      "result": "passed"
+    },
+    {
+      "label": "repeated backend job does not duplicate notification effects",
+      "result": "passed"
+    },
+    {
+      "label": "participant reads current authorized backend notifications independently of first-page position",
+      "result": "passed"
+    },
+    {
+      "label": "automation context is never exposed to authenticated roles: 42501",
+      "result": "passed"
+    },
+    {
+      "label": "service RPC role cannot trigger private scheduler owner function: 42501",
+      "result": "passed"
+    }
+  ],
+  "passed": 20,
+  "allPassed": true,
+  "classification": "PostgreSQL integration in disposable loopback cluster; not connected Auth/Storage/browser E2E"
+}

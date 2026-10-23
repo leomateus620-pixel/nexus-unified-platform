@@ -1,0 +1,14 @@
+{
+  "rows": [
+    {
+      "args": "_rev uuid, _a jsonb, _b jsonb",
+      "proconfig": [
+        "search_path=public"
+      ],
+      "proname": "diferencas_comerciais",
+      "prosecdef": true,
+      "prosrc": "\n select d.* from diferencas_rascunho(_a,_b) d\n where not (d.objeto like 'override:%' and not (_b ? d.objeto) and not exists(\n  select 1 from sistema_componentes i where i.revisao_id=_rev\n    and 'override:'||i.sistema_id::text||':'||i.revisao_componente_id::text=d.objeto))\n",
+      "provolatile": "s"
+    }
+  ]
+}

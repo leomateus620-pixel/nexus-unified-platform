@@ -5,6 +5,15 @@
 export type Papel = "admin" | "comercial" | "engenharia" | "compras" | "financeiro" | "campo";
 
 export const MATRIZ = {
+  editar_cadastro: ["comercial", "engenharia", "compras"],
+  ver_equipe: ["engenharia", "compras", "campo"],
+  gerir_equipe: ["engenharia"],
+  ver_operacao: ["engenharia", "compras", "campo"],
+  gerir_operacao: ["engenharia"],
+  revisar_operacao: ["engenharia"],
+  gerir_documentos: ["engenharia"],
+  ver_projetos_engenharia: ["engenharia"],
+  gerir_projetos_engenharia: ["engenharia"],
   importar_catalogo: ["engenharia", "compras"],
   criar_proposta: ["comercial", "engenharia"],
   editar_revisao: ["comercial", "engenharia"],

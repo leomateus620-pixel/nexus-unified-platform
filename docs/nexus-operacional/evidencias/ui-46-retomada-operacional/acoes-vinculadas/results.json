@@ -1,0 +1,19 @@
+{
+  "method": "Actual UI with test-only adapter; no connected persistence claim",
+  "checks": [
+    {
+      "name": "canonical action URL opens the exact record and survives reload",
+      "pass": true
+    },
+    {
+      "name": "focus refetch cannot silently advance an open transition version; explicit reload keeps the result",
+      "pass": true
+    },
+    {
+      "name": "failed direct lookup hides cached detail and allows retry",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

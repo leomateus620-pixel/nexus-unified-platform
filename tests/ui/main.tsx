@@ -23,6 +23,16 @@ import { ImportacaoAssistida } from "@/features/importacao/ImportacaoAssistida";
 import { useSave } from "@/features/propostas/hooks";
 import { OutletContext, useFixturePage } from "./router";
 import { query, scenario } from "./data";
+import { Route as PessoasRoute } from "@/routes/_authenticated/equipe";
+import { Route as AgendaEquipeRoute } from "@/routes/_authenticated/agenda-equipe";
+import { Route as SegurancaRoute } from "@/routes/_authenticated/seguranca";
+import { Route as PeRoute } from "@/routes/_authenticated/projetos-engenharia";
+import { Route as MapsLibraryRoute } from "@/routes/mapas-3d_.unidades";
+import { Route as ClientesRoute } from "@/routes/_authenticated/clientes";
+import { Route as ConfiguracoesRoute } from "@/routes/_authenticated/configuracoes.index";
+import { Route as LevantamentosRoute } from "@/routes/_authenticated/levantamentos";
+import { Route as EngenhariaRoute } from "@/routes/_authenticated/engenharia.index";
+import { Route as AlmoxarifadoRoute } from "@/routes/_authenticated/almoxarifado";
 import "@/styles.css";
 
 const client = new QueryClient({
@@ -56,12 +66,42 @@ const Workspace = WorkspaceRoute.options.component,
 const Defaults = DefaultsRoute.options.component;
 const Products = ProductsRoute.options.component;
 const Product = ProductRoute.options.component;
+const ProjetosEngenharia = PeRoute.options.component;
+const MapsLibrary = MapsLibraryRoute.options.component;
+const Clientes = ClientesRoute.options.component;
+const Configuracoes = ConfiguracoesRoute.options.component;
+const Levantamentos = LevantamentosRoute.options.component;
+const Engenharia = EngenhariaRoute.options.component;
+const Almoxarifado = AlmoxarifadoRoute.options.component;
+const Seguranca = SegurancaRoute.options.component;
+const Pessoas = PessoasRoute.options.component;
+const AgendaEquipe = AgendaEquipeRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
     <QueryClientProvider client={client}>
       <AppShell>
-        {page === "produtos" ? (
+        {page === "agenda-equipe" ? (
+          <AgendaEquipe />
+        ) : page === "almoxarifado" ? (
+          <Almoxarifado />
+        ) : page === "engenharia" ? (
+          <Engenharia />
+        ) : page === "levantamentos" ? (
+          <Levantamentos />
+        ) : page === "equipe" ? (
+          <Pessoas />
+        ) : page === "seguranca" ? (
+          <Seguranca />
+        ) : page === "projetos-engenharia" ? (
+          <ProjetosEngenharia />
+        ) : page === "mapas-library" ? (
+          <MapsLibrary />
+        ) : page === "clientes" ? (
+          <Clientes />
+        ) : page === "configuracoes" ? (
+          <Configuracoes />
+        ) : page === "produtos" ? (
           <Products />
         ) : page === "produto" ? (
           <Product />

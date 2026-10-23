@@ -7,7 +7,7 @@
   --card-foreground: var(--foreground);
   --popover: oklch(0.2889 0.0321 158.23);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.85 0.23 145);
+  --primary: oklch(0.76 0.14 155);
   --primary-foreground: oklch(0.19 0.05 160);
   --secondary: var(--popover);
   --secondary-foreground: var(--foreground);
@@ -60,6 +60,66 @@
   accent-color: var(--primary);
 }
 
+.nx-nav-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0.75rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--sidebar-border);
+  border-radius: 0.5rem;
+  color: var(--sidebar-foreground);
+}
+.nx-nav-search input {
+  min-width: 0;
+  width: 100%;
+  min-height: 2rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.875rem;
+}
+.nx-nav-search input::placeholder { color: inherit; opacity: 0.75; }
+.nx-nav-group-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+.nx-sidebar-nav ul[hidden] { display: none; }
+.nx-upload-label { display: grid; gap: 0.5rem; font-size: 0.875rem; }
+.nx-upload-label input { max-width: 100%; min-height: 2.75rem; }
+.nx-map-library > a { flex-direction: column; min-width: 0; }
+.nx-map-library > a > div:first-child { height: 11rem; overflow: hidden; }
+.nx-map-library > a > div:first-child img,
+.nx-map-library > a > div:first-child svg { height: 100%; width: 100%; }
+.nx-map-library > a > div:last-child { flex: 1; flex-direction: column; align-items: stretch; padding: 1.25rem; }
+.nx-map-open { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: auto; min-height: 2.75rem; border-top: 1px solid var(--border); padding-top: 0.75rem; color: var(--primary); font-size: 0.875rem; font-weight: 600; }
+/* The navigation frame owns its palette and dimensions even around a light workspace. */
+.nx-app-shell.nx-stable-frame.nexus-operational :is(.nx-sidebar, .nx-topbar) {
+  color-scheme: dark;
+  --background: var(--navigation-background);
+  --foreground: var(--navigation-foreground);
+  --card: var(--navigation-active-surface);
+  --primary: var(--navigation-active);
+  --primary-foreground: oklch(0.19 0.05 160);
+  --muted-foreground: var(--navigation-muted);
+  --border: var(--navigation-border);
+  --input: var(--navigation-border);
+  --ring: var(--navigation-active);
+  background: var(--navigation-background);
+  color: var(--navigation-foreground);
+}
+.nx-app-shell.nx-stable-frame.nexus-operational .nx-sidebar { width: 16rem; }
+.nx-app-shell.nx-stable-frame.nexus-operational .nx-brand { flex-wrap: nowrap; gap: 0.75rem; padding: 0.9rem 1rem; }
+.nx-app-shell.nx-stable-frame.nexus-operational .nx-topbar { height: 3.25rem; }
+@media (min-width: 1024px) {
+  .nx-app-shell.nx-stable-frame.nexus-operational > .nx-shell-content { padding-left: 16rem; }
+}
+.nx-map-library h2 { font-size: 1.125rem; line-height: 1.5; }
 .nexus-operational :where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;
@@ -120,9 +180,9 @@
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  padding: 1.35rem 1rem;
+  padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--sidebar-border);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .nexus-operational .nx-brand > span:last-child {
   font-size: 0.625rem;
@@ -135,7 +195,7 @@
   scrollbar-width: thin;
 }
 .nexus-operational .nx-sidebar-nav > div + div {
-  margin-top: 1.125rem;
+  margin-top: 0.375rem;
 }
 .nexus-operational .nx-sidebar-nav p {
   font-size: 0.6875rem;

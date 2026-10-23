@@ -1,0 +1,39 @@
+.nx-stock-workspace .nx-stock-tabs [aria-current="page"] {
+  background: var(--accent);
+  border-color: var(--primary);
+  color: var(--foreground);
+}
+.nx-stock-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+.nx-stock-facts dt {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.nx-stock-facts dd {
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.nx-stock-workspace .nx-stat {
+  min-width: 0;
+}
+.nx-stock-workspace .nx-stat > p:nth-child(2) {
+  overflow-wrap: anywhere;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+.nx-stock-workspace .nx-table button {
+  min-height: 2.75rem;
+}
+@media (max-width: 639px) {
+  .nx-stock-workspace .nx-stock-tabs {
+    gap: 0.375rem;
+  }
+  .nx-stock-workspace .nx-stock-tabs button {
+    flex: 1 1 9rem;
+    text-align: left;
+  }
+}

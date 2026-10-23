@@ -1,0 +1,3326 @@
+{
+  "format": "nexus-public-catalog-v1",
+  "summary": {
+    "local": {
+      "indexes": {
+        "md5": "f57d1186254d3e081f589716e97a04e3",
+        "count": 168
+      },
+      "policies": {
+        "md5": "eaf675cd2f5118de8c78004f3068a7e8",
+        "count": 136
+      },
+      "triggers": {
+        "md5": "4b9ad32bb08ab790e9978b1ba4eab90d",
+        "count": 63
+      },
+      "functions": {
+        "md5": "19c01498699f2e6c48cd9d6ff2854ca8",
+        "count": 106
+      },
+      "relations": {
+        "md5": "244aa127e1d86bf882416d03a2702a79",
+        "count": 73
+      },
+      "constraints": {
+        "md5": "d995a9fc8fea5d6960f6a235d23510a4",
+        "count": 406
+      },
+      "table_grants": {
+        "md5": "9848f499b95869088eaecaf31c117f1d",
+        "count": 450
+      },
+      "function_grants": {
+        "md5": "ba6f0818cc2ee1a9cfa7c5f6bef65fd1",
+        "count": 79
+      }
+    },
+    "remote": {
+      "constraints": {
+        "count": 406,
+        "md5": "d995a9fc8fea5d6960f6a235d23510a4"
+      },
+      "function_grants": {
+        "count": 204,
+        "md5": "7d273745f23be40bf222593984f7fabc"
+      },
+      "functions": {
+        "count": 106,
+        "md5": "6c5626e3711e18ebbda63229e8c5cc96"
+      },
+      "indexes": {
+        "count": 168,
+        "md5": "f57d1186254d3e081f589716e97a04e3"
+      },
+      "policies": {
+        "count": 136,
+        "md5": "eaf675cd2f5118de8c78004f3068a7e8"
+      },
+      "relations": {
+        "count": 73,
+        "md5": "244aa127e1d86bf882416d03a2702a79"
+      },
+      "table_grants": {
+        "count": 865,
+        "md5": "dff13b50526b6cde99c8eabb57716472"
+      },
+      "triggers": {
+        "count": 63,
+        "md5": "4b9ad32bb08ab790e9978b1ba4eab90d"
+      }
+    }
+  },
+  "diffs": [
+    {
+      "kind": "functions",
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb)",
+      "local": "76570abe3ddc04923a751cbe1e311c35",
+      "remote": "ff92341df9062907025a4dfb22027dca"
+    },
+    {
+      "kind": "function_grants",
+      "key": "_alvos_rascunho_op(_op uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "_plano_ordens(_rev uuid, _escopo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "administrar_vinculo_operacional(_org uuid, _chave uuid, _comando text, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "agenda_ler_evento(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "agenda_registrar_revisao(_org uuid, _id uuid, _anterior text, _efeito text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "agenda_reservar(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "aplicar_demanda(_rev uuid, _hash text, _linhas jsonb, _remover uuid[]).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "arquivar_cadastro_cliente(_org uuid, _chave uuid, _entidade text, _id uuid, _expected_version integer, _arquivar boolean, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "arvore_produto(_produto uuid, _nivel integer).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "arvore_produto(_produto uuid, _nivel integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "atualizar_componentes_revisao(_rev uuid, _ids uuid[], _patch jsonb, _esperados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "bloquear_alteracao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "bloquear_alteracao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "cadastrar_produto_codificado(_org uuid, _familia text, _tipo character, _chave uuid, _dados jsonb, _custo numeric).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "can_see_costs(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "capturar_revisao(_rev uuid, _operacao uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "cliente_cadastro_audit().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "cliente_cadastro_guard().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "cliente_nova_referencia().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "concluir_revisao(_rev uuid, _versao bigint, _versao_salva bigint, _snapshot jsonb, _calculo jsonb, _operacao uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "confirmar_participacao_agenda(_org uuid, _chave uuid, _id uuid, _expected_version integer, _confirmacao text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "consultar_jobs_operacionais(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "criar_organizacao(_nome text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "custo_inclui_padrao().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "custo_inclui_padrao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "custo_inclui_padrao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "diferencas_comerciais(_rev uuid, _a jsonb, _b jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "diferencas_rascunho(_a jsonb, _b jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "editar_produto(_produto uuid, _dados jsonb).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "editar_produto(_produto uuid, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "encerrar_membro_equipe(_org uuid, _chave uuid, _id uuid, _fim date, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "exigir_revisao_editavel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "formatar_codigo(_familia text, _tipo character, _seq integer).authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "formatar_codigo(_familia text, _tipo character, _seq integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "gerar_ordens(_rev uuid, _chave text, _escopo text, _plano_hash text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "has_org_role(_org uuid, _role app_role).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "hash_tecnico(_rev uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "importar_produto_oficial(_org uuid, _codigo text, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "incluir_produto_revisao(_rev uuid, _produto uuid, _quantidade numeric).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "incluir_produto_revisao(_rev uuid, _produto uuid, _quantidade numeric).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "is_member(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "listar_cadastros_cliente(_org uuid, _grupo text, _cliente uuid, _busca text, _situacao text, _pagina integer, _limite integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "listar_eventos_agenda(_org uuid, _inicio timestamp with time zone, _fim timestamp with time zone, _pagina integer, _tamanho integer, _minha boolean).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "marcar_notificacao_lida(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "objeto_rascunho(_t text, _r jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "obter_cadastro_cliente(_org uuid, _entidade text, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "obter_cliente_operacional(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "op_exige_aprovacao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "op_exige_aprovacao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_audit().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_concluir(_org uuid, _chave uuid, _comando text, _payload jsonb, _resultado jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_guard().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_ler_acao(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_ler_anexo(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_minha_pessoa(_org uuid, _pessoa uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_pode(_org uuid, _acao text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "operacao_repetir(_org uuid, _chave uuid, _comando text, _payload jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "ordem_cabecalho_imutavel().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "ordem_cabecalho_imutavel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "ordem_item_imutavel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_arquivo_guard().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_autor_acessa(_org uuid, _projeto uuid, _autor uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_cancelar_arquivo(_org uuid, _id uuid, _chave uuid, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_executar(_org uuid, _chave uuid, _comando text, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_guard().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_ler_arquivo(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_ler_projeto(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_pode_enviar_arquivo(_org uuid, _id uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_preparar_arquivo(_org uuid, _versao uuid, _chave uuid, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_snapshot_arquivos().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pe_validar_modelo(_modelo jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "planejar_ordens(_rev uuid, _escopo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "pode(_org uuid, _acao text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "preparar_anexo_operacional(_org uuid, _chave uuid, _dados jsonb).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "previa_codigo(_org uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_codigo_produto().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_codigo_produto().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_codigo_produto().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proteger_ultimo_administrador().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proximo_numero(_org uuid, _prefixo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "proximo_numero_proposta(_org uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "rastrear_rascunho().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "reclassificar_produto(_produto uuid, _familia text, _tipo character, _motivo text).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "reclassificar_produto(_produto uuid, _familia text, _tipo character, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "recodificar_produto(_produto uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "registrar_aquisicao(_produto uuid, _chave text, _dados jsonb, _custo_sugerido numeric).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "registrar_indisponibilidade(_org uuid, _chave uuid, _pessoa uuid, _inicio timestamp with time zone, _fim timestamp with time zone, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "registrar_movimento(_tipo text, _item uuid, _quantidade numeric, _chave text, _estorno_de uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "reservar_sequencia(_org uuid, _familia text, _tipo character).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_componente_custo_origem().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_componente_custo_origem().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_componente_custo_origem().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_editavel(_rev uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_transicao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_transicao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_version().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisao_version().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "revisar_rascunho_op(_op uuid, _chave text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_acao_operacional(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_cliente_operacional(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_competencia(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_composicao(_produto uuid, _itens jsonb, _status text).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_composicao(_produto uuid, _itens jsonb, _status text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_contato_operacional(_org uuid, _chave uuid, _cliente uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_equipe(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_evento_agenda(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_pessoa(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_qualificacao(_org uuid, _chave uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "salvar_unidade_operacional(_org uuid, _chave uuid, _cliente uuid, _dados jsonb, _id uuid, _expected_version integer).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "snapshot_rascunho(_rev uuid).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "transicionar_acao_operacional(_org uuid, _chave uuid, _id uuid, _expected_version integer, _estado text, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "transicionar_evento_agenda(_org uuid, _chave uuid, _id uuid, _expected_version integer, _estado text, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "transicionar_qualificacao(_org uuid, _chave uuid, _id uuid, _expected_version integer, _estado text, _motivo text).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "trava_revisao_edicao().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "trava_revisao_edicao().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "trava_revisao_edicao().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "travar_revisao(_rev uuid).anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_estrutura().anon.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_estrutura().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_estrutura().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_indivisivel().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_indivisivel().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_vinculos().authenticated.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "validar_vinculos().service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "function_grants",
+      "key": "vincular_membro_equipe(_org uuid, _chave uuid, _equipe uuid, _pessoa uuid, _inicio date, _fim date).service_role.EXECUTE",
+      "local": null,
+      "remote": "68934a3e9455fa72420237eb05902327"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acao_colaboradores.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "acoes_operacionais.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_evento_revisoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_eventos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_participantes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_requisitos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "agenda_reservas_pessoas.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "anexos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "apontamentos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aprovacoes.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "aquisicoes.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "auditoria.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "calculo_execucoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "cliente_historico.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "clientes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "codigo_equivalencias.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "competencias.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "config_orcamento.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "contatos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "demandas.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "documentos_fiscais.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipe_membros.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "equipes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fabricantes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "familias_codigo.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "fornecedores.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "geracao_ordens.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "importacao_registros.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "indisponibilidades.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "job_execucoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "job_execucoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "job_execucoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "job_execucoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "job_execucoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "job_execucoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "memberships.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "notificacoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "numeracao.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacao_historico.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "operacoes_idempotentes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_compra_itens.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordem_producao_itens.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_compra.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "ordens_producao.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "organizations.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "outbox_eventos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_arquivos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_cenarios.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_eventos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_projetos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pe_versoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoa_qualificacoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "pessoas.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "politicas_custo.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_conversoes.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_custos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_estrutura.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produto_referencias.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "produtos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "projetos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_checkpoints.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_operacoes.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_rascunho_autores.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_revisoes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "proposta_salvamentos.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "propostas.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "recebimentos.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "regras_versionadas.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "revisao_componentes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "scheduler_configuracao.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "scheduler_configuracao.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "scheduler_configuracao.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "scheduler_configuracao.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "scheduler_configuracao.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "scheduler_configuracao.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_codigo.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "series_planilha.authenticated.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistema_componentes.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "sistemas_dimensionados.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "unidades.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.REFERENCES",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.TRIGGER",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.TRUNCATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_capacidades.service_role.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.DELETE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.INSERT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.SELECT",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    },
+    {
+      "kind": "table_grants",
+      "key": "user_roles.anon.UPDATE",
+      "local": null,
+      "remote": "e053b472d8c218cfc5d7343f16149bfe"
+    }
+  ],
+  "counts": {
+    "functions": 1,
+    "function_grants": 125,
+    "table_grants": 415
+  }
+}

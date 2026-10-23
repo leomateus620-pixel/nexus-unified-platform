@@ -1,0 +1,291 @@
+{
+  "profile": "layouts-and-behaviors",
+  "method": "Real source reader and PDF.js canvas; synthetic two-page A4/A3 landscape PDF and local signed-URL fixture. No connected Auth, SQL/RLS, Storage HTTP or physical device proof.",
+  "renderingLimit": "Distinct nonwhite canvas pixels and extracted identifiers prove the local render path; they do not certify universal document fidelity, OCR, engineering correctness or field performance.",
+  "fixture": {
+    "file": "tests/ui/fixtures/nexus-original-isolado.pdf",
+    "sha256": "287df01036e2d32f8156ca19648e6898b1c490583fccf14bcfc85b03dfcd2a95",
+    "size": 9134
+  },
+  "layouts": [
+    {
+      "width": 360,
+      "height": 844,
+      "first": {
+        "width": 328,
+        "height": 463,
+        "cssWidth": 328,
+        "cssHeight": 463.875,
+        "colors": 512,
+        "nonwhite": 22143
+      },
+      "availableWidth": 328,
+      "second": {
+        "width": 328,
+        "height": 231,
+        "cssWidth": 328,
+        "cssHeight": 231.9375,
+        "colors": 512,
+        "nonwhite": 18081
+      },
+      "textIdentifiers": [
+        "Identificador: NXS-TESTE-001",
+        "Identificador: NXS-TESTE-002"
+      ],
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "first": {
+        "width": 357,
+        "height": 506,
+        "cssWidth": 358,
+        "cssHeight": 506.3125,
+        "colors": 512,
+        "nonwhite": 26135
+      },
+      "availableWidth": 358,
+      "second": {
+        "width": 358,
+        "height": 253,
+        "cssWidth": 358,
+        "cssHeight": 253.15625,
+        "colors": 512,
+        "nonwhite": 21006
+      },
+      "textIdentifiers": [
+        "Identificador: NXS-TESTE-001",
+        "Identificador: NXS-TESTE-002"
+      ],
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "height": 900,
+      "first": {
+        "width": 702,
+        "height": 992,
+        "cssWidth": 702,
+        "cssHeight": 992.828125,
+        "colors": 440,
+        "nonwhite": 30025
+      },
+      "availableWidth": 702,
+      "second": {
+        "width": 702,
+        "height": 496,
+        "cssWidth": 702,
+        "cssHeight": 496.40625,
+        "colors": 512,
+        "nonwhite": 72536
+      },
+      "textIdentifiers": [
+        "Identificador: NXS-TESTE-001",
+        "Identificador: NXS-TESTE-002"
+      ],
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "first": {
+        "width": 958,
+        "height": 1354,
+        "cssWidth": 958,
+        "cssHeight": 1354.875,
+        "colors": 512,
+        "nonwhite": 26724
+      },
+      "availableWidth": 958,
+      "second": {
+        "width": 958,
+        "height": 677,
+        "cssWidth": 958,
+        "cssHeight": 677.4375,
+        "colors": 447,
+        "nonwhite": 43142
+      },
+      "textIdentifiers": [
+        "Identificador: NXS-TESTE-001",
+        "Identificador: NXS-TESTE-002"
+      ],
+      "overflow": false
+    },
+    {
+      "width": 1366,
+      "height": 900,
+      "first": {
+        "width": 1300,
+        "height": 1838,
+        "cssWidth": 1300,
+        "cssHeight": 1838.5625,
+        "colors": 512,
+        "nonwhite": 26484
+      },
+      "availableWidth": 1300,
+      "second": {
+        "width": 1300,
+        "height": 919,
+        "cssWidth": 1300,
+        "cssHeight": 919.28125,
+        "colors": 345,
+        "nonwhite": 46920
+      },
+      "textIdentifiers": [
+        "Identificador: NXS-TESTE-001",
+        "Identificador: NXS-TESTE-002"
+      ],
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "first": {
+        "width": 1374,
+        "height": 1943,
+        "cssWidth": 1374,
+        "cssHeight": 1943.21875,
+        "colors": 512,
+        "nonwhite": 24910
+      },
+      "availableWidth": 1374,
+      "second": {
+        "width": 1374,
+        "height": 971,
+        "cssWidth": 1374,
+        "cssHeight": 971.609375,
+        "colors": 449,
+        "nonwhite": 43800
+      },
+      "textIdentifiers": [
+        "Identificador: NXS-TESTE-001",
+        "Identificador: NXS-TESTE-002"
+      ],
+      "overflow": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "real two-page render, extracted identifiers, page bounds, zoom, rotation and keyboard navigation",
+      "pass": true
+    },
+    {
+      "name": "current metadata denial on focus erases canvas and extracted text, then permits safe retry",
+      "pass": true
+    },
+    {
+      "name": "transient metadata failure also erases the preview and recovers without changing the original",
+      "pass": true
+    },
+    {
+      "name": "metadata denial before loading keeps the original filename and pixels out of the reader",
+      "pass": true
+    },
+    {
+      "name": "same-size corrupt bytes fail SHA-256 verification before render and recover with canonical metadata unchanged",
+      "pass": true
+    },
+    {
+      "name": "one expired signed URL is reauthorized once after a metadata check",
+      "pass": true
+    },
+    {
+      "name": "closing a pending download aborts it, restores focus and never reopens a late preview",
+      "pass": true
+    },
+    {
+      "name": "switching versions after close does not reuse the former text, zoom, page or original identity",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "network": {
+    "requests": 18,
+    "responses": [
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 403
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "status": 200
+      }
+    ],
+    "interruptions": [
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "failure": "net::ERR_ABORTED"
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "failure": "net::ERR_ABORTED"
+      },
+      {
+        "path": "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf",
+        "failure": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  "success": true
+}

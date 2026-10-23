@@ -1,0 +1,42 @@
+{
+  "format": "single-DO-per-file",
+  "schemaEvidenceSha256": "fbfda65bc98b8ffd6ed55153c91fef4c40cd31e6e06858ae2b93fe5d1afc17d0",
+  "batches": [
+    {
+      "name": "0000_baseline_reconciliada.sql",
+      "sha256": "a6120e5357b9b142da13178a47ddef401be517e4ad052e4d9b02eff6abfc86e1"
+    },
+    {
+      "name": "0031_0012_operational_foundation.sql",
+      "sha256": "dc1e9aaf4de6a4b7d43b26391b9baa882fc84ad363839fa81727bcd63289b47e"
+    },
+    {
+      "name": "0032_0013_clientes_operacionais.sql",
+      "sha256": "162d482b563f1ebe6250686067ae2d6a9e3ad8cfd1891ed4c369748ae753f92b"
+    },
+    {
+      "name": "0033_0014_projetos_engenharia.sql",
+      "sha256": "0a2ca312cdaad192dd3494521f5e60ac7dbc6ce5bf3ee8cc74232af77a373fc0"
+    },
+    {
+      "name": "0034_0015_operational_storage.sql",
+      "sha256": "d1b863b9c41cbdd68f137ed3ee27d592eac6eeee704968b2097a95ea3e0270e3"
+    },
+    {
+      "name": "0035_0016_agenda_foundation.sql",
+      "sha256": "c95e38fbc517446e79ff53afb0afe25ba75a9badcb44ee8b679630781f7bcda4"
+    },
+    {
+      "name": "0036_0017_pe_arquivos.sql",
+      "sha256": "df76c2c3944959555061d92565499cf3ea6e2624f725156042e1a79d72aa0135"
+    },
+    {
+      "name": "0037_0018_scheduler.sql",
+      "sha256": "3d38f8be59fe9354704546319b894e128d06297373dd38e7d0333801f44e04e8"
+    },
+    {
+      "name": "0038_0019_admin_vinculos.sql",
+      "sha256": "b8316d8b85773a03958bb4686117e0b748eff6244de048bb16cb8cf4074b799d"
+    }
+  ]
+}

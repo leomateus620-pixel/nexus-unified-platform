@@ -54,4 +54,10 @@ describe("S02 — autorização considera só o usuário atual", () => {
     expect(papelAutoriza(["campo"], "ver_custos")).toBe(false);
     expect(papelAutoriza(["financeiro"], "ver_custos")).toBe(true);
   });
+  it("papel ausente ou desconhecido não concede valores internos", () => {
+    expect(papelAutoriza([], "ver_custos")).toBe(false);
+    expect(papelAutoriza(["futuro"], "ver_custos")).toBe(false);
+    expect(papelAutoriza(["campo", "futuro"], "ver_custos")).toBe(false);
+    expect(papelAutoriza(["campo", "financeiro", "futuro"], "ver_custos")).toBe(true);
+  });
 });

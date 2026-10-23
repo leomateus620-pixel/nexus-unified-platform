@@ -1,0 +1,31 @@
+{
+  "method": "DTOs produzidos por RPC PostgreSQL local55470, fixtures BEGIN/ROLLBACK, validados com o parser Zod real da aplicação",
+  "parser": "src/features/operacao/schemas.ts:anexosListaSchema",
+  "checks": [
+    {
+      "name": "pessoa",
+      "records": 1,
+      "pass": true
+    },
+    {
+      "name": "calibracao",
+      "records": 1,
+      "pass": true
+    },
+    {
+      "name": "ferramenta",
+      "records": 3,
+      "pass": true
+    }
+  ],
+  "success": true,
+  "limits": [
+    "Somente metadados; sem Auth do provedor, StorageHTTP, bytes, produção ou prova de migração limpa/upgrade.",
+    "Dump temporário contém exclusivamente fixtures locais da suíte almoxarifado-arquivos.sql."
+  ],
+  "source_commit": "07d91f8e666ad6aa9d882dc2155c863d57af99b4",
+  "sql_fixture_file": "tests/db/almoxarifado-arquivos.sql",
+  "sql_fixture_sha256": "f5195d3c2bb5368c01c645584ccac6d778484e87ecdcdbd822f01632bcae626a",
+  "temporary_harness": "nexus-anexos-real-dto.sql + nexus-anexos-real-dto-check.mts",
+  "method_detail": "A cópia temporária da suíte exporta três listar_anexos_operacionais antes do ROLLBACK; o harness TSX importa o schema real e valida cada retorno."
+}

@@ -44,8 +44,12 @@ const printer = ts.createPrinter({ removeComments: true });
 function extract(source, name) {
   const file = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const output = { routes: [], requests: [], hooks: [], primaryHandlers: [] };
+  // Declarations may have no initializer. Preserve that fact in the comparison
+  // instead of asking the printer to render an absent node and crashing.
   const text = (node) =>
-    printer.printNode(ts.EmitHint.Unspecified, node, file).replace(/\s+/g, " ").trim();
+    node
+      ? printer.printNode(ts.EmitHint.Unspecified, node, file).replace(/\s+/g, " ").trim()
+      : "<missing-node>";
   function walk(node) {
     if (
       ts.isFunctionDeclaration(node) &&

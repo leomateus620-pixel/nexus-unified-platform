@@ -1,0 +1,257 @@
+{
+  "method": "Actual source route/components/hooks with synthetic mutable transport fixtures. No connected Auth, SQL/RLS, Storage HTTP, real recurrence/concurrent reservations, production persistence, deployment or physical-device proof.",
+  "layouts": [
+    {
+      "name": "calendario-semana",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 1024,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "overflow": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "invalid required fields focus correctly, dirty close preserves draft and Escape restores trigger",
+      "pass": true
+    },
+    {
+      "name": "new whole-day event uses a valid exclusive end and canonical person",
+      "pass": true
+    },
+    {
+      "name": "action without schedule stays canonical without inventing a calendar event",
+      "pass": true
+    },
+    {
+      "name": "new action and scheduled event share one source and the visible principal",
+      "pass": true
+    },
+    {
+      "name": "changing the principal preserves one responsible role and changing client clears the previous project",
+      "pass": true
+    },
+    {
+      "name": "choosing an existing origin requires its identity and reuses that canonical action",
+      "pass": true
+    },
+    {
+      "name": "existing pending source schedules a visit without duplicating the action",
+      "pass": true
+    },
+    {
+      "name": "lost response preserves input and retries the same key with one persisted fixture effect",
+      "pass": true
+    },
+    {
+      "name": "version conflict keeps local input until explicit current-version adoption",
+      "pass": true
+    },
+    {
+      "name": "recurrence keeps anchor weekday, series version and explicit future scope/reason",
+      "pass": true
+    },
+    {
+      "name": "cancellation requires a reason and confirmation of presence does not conclude an event",
+      "pass": true
+    },
+    {
+      "name": "notifications and preferences use explicit authenticated commands",
+      "pass": true
+    },
+    {
+      "name": "empty and network error states differ and a failed lookup can recover",
+      "pass": true
+    },
+    {
+      "name": "unsupported legacy response timezone preserves ISO instants, blocks civil edits and recovers by explicit display timezone",
+      "pass": true
+    },
+    {
+      "name": "denial erases the open private editor and recovery reloads the current authorized data",
+      "pass": true
+    },
+    {
+      "name": "late successful transport response after source denial cannot reopen detail or overwrite URL context",
+      "pass": true
+    },
+    {
+      "name": "opening and returning preserves calendar context, URL state and a usable focus target",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": []
+}

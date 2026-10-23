@@ -14,19 +14,24 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAgendaEquipeRouteImport } from './routes/_authenticated/agenda-equipe'
+import { Route as AuthenticatedAlmoxarifadoRouteImport } from './routes/_authenticated/almoxarifado'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComercialRouteImport } from './routes/_authenticated/comercial'
 import { Route as AuthenticatedComprasRouteImport } from './routes/_authenticated/compras'
 import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated/configuracoes'
 import { Route as AuthenticatedDocumentacaoRouteImport } from './routes/_authenticated/documentacao'
 import { Route as AuthenticatedEngenhariaRouteImport } from './routes/_authenticated/engenharia'
+import { Route as AuthenticatedEquipeRouteImport } from './routes/_authenticated/equipe'
 import { Route as AuthenticatedExecucaoRouteImport } from './routes/_authenticated/execucao'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedInspecoesRouteImport } from './routes/_authenticated/inspecoes'
 import { Route as AuthenticatedLevantamentosRouteImport } from './routes/_authenticated/levantamentos'
 import { Route as AuthenticatedProdutosRouteImport } from './routes/_authenticated/produtos'
 import { Route as AuthenticatedProjetosRouteImport } from './routes/_authenticated/projetos'
+import { Route as AuthenticatedProjetosEngenhariaRouteImport } from './routes/_authenticated/projetos-engenharia'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
+import { Route as AuthenticatedSegurancaRouteImport } from './routes/_authenticated/seguranca'
 import { Route as Mapas3dSiloEngolfamentoRouteImport } from './routes/mapas-3d_.silo-engolfamento'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
@@ -85,6 +90,18 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAgendaEquipeRoute =
+  AuthenticatedAgendaEquipeRouteImport.update({
+    id: '/agenda-equipe',
+    path: '/agenda-equipe',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAlmoxarifadoRoute =
+  AuthenticatedAlmoxarifadoRouteImport.update({
+    id: '/almoxarifado',
+    path: '/almoxarifado',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
   id: '/clientes',
   path: '/clientes',
@@ -115,6 +132,11 @@ const AuthenticatedDocumentacaoRoute =
 const AuthenticatedEngenhariaRoute = AuthenticatedEngenhariaRouteImport.update({
   id: '/engenharia',
   path: '/engenharia',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEquipeRoute = AuthenticatedEquipeRouteImport.update({
+  id: '/equipe',
+  path: '/equipe',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedExecucaoRoute = AuthenticatedExecucaoRouteImport.update({
@@ -148,9 +170,20 @@ const AuthenticatedProjetosRoute = AuthenticatedProjetosRouteImport.update({
   path: '/projetos',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedProjetosEngenhariaRoute =
+  AuthenticatedProjetosEngenhariaRouteImport.update({
+    id: '/projetos-engenharia',
+    path: '/projetos-engenharia',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSegurancaRoute = AuthenticatedSegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const Mapas3dSiloEngolfamentoRoute = Mapas3dSiloEngolfamentoRouteImport.update({
@@ -381,19 +414,24 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
+  '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/compras': typeof AuthenticatedComprasRouteWithChildren
   '/configuracoes': typeof AuthenticatedConfiguracoesRouteWithChildren
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
+  '/equipe': typeof AuthenticatedEquipeRoute
   '/execucao': typeof AuthenticatedExecucaoRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/inspecoes': typeof AuthenticatedInspecoesRoute
   '/levantamentos': typeof AuthenticatedLevantamentosRoute
   '/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/projetos': typeof AuthenticatedProjetosRouteWithChildren
+  '/projetos-engenharia': typeof AuthenticatedProjetosEngenhariaRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/seguranca': typeof AuthenticatedSegurancaRoute
   '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
@@ -432,13 +470,18 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
+  '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/documentacao': typeof AuthenticatedDocumentacaoRoute
+  '/equipe': typeof AuthenticatedEquipeRoute
   '/execucao': typeof AuthenticatedExecucaoRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/inspecoes': typeof AuthenticatedInspecoesRoute
   '/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/projetos-engenharia': typeof AuthenticatedProjetosEngenhariaRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/seguranca': typeof AuthenticatedSegurancaRoute
   '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
@@ -479,19 +522,24 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/_authenticated/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
+  '/_authenticated/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comercial': typeof AuthenticatedComercialRouteWithChildren
   '/_authenticated/compras': typeof AuthenticatedComprasRouteWithChildren
   '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRouteWithChildren
   '/_authenticated/documentacao': typeof AuthenticatedDocumentacaoRoute
   '/_authenticated/engenharia': typeof AuthenticatedEngenhariaRouteWithChildren
+  '/_authenticated/equipe': typeof AuthenticatedEquipeRoute
   '/_authenticated/execucao': typeof AuthenticatedExecucaoRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/inspecoes': typeof AuthenticatedInspecoesRoute
   '/_authenticated/levantamentos': typeof AuthenticatedLevantamentosRoute
   '/_authenticated/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/_authenticated/projetos': typeof AuthenticatedProjetosRouteWithChildren
+  '/_authenticated/projetos-engenharia': typeof AuthenticatedProjetosEngenhariaRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/_authenticated/seguranca': typeof AuthenticatedSegurancaRoute
   '/mapas-3d_/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
@@ -534,19 +582,24 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/agenda-equipe'
+    | '/almoxarifado'
     | '/clientes'
     | '/comercial'
     | '/compras'
     | '/configuracoes'
     | '/documentacao'
     | '/engenharia'
+    | '/equipe'
     | '/execucao'
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
     | '/produtos'
     | '/projetos'
+    | '/projetos-engenharia'
     | '/relatorios'
+    | '/seguranca'
     | '/mapas-3d/silo-engolfamento'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
@@ -585,13 +638,18 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/agenda-equipe'
+    | '/almoxarifado'
     | '/clientes'
     | '/documentacao'
+    | '/equipe'
     | '/execucao'
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/projetos-engenharia'
     | '/relatorios'
+    | '/seguranca'
     | '/mapas-3d/silo-engolfamento'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
@@ -631,19 +689,24 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/_authenticated/agenda-equipe'
+    | '/_authenticated/almoxarifado'
     | '/_authenticated/clientes'
     | '/_authenticated/comercial'
     | '/_authenticated/compras'
     | '/_authenticated/configuracoes'
     | '/_authenticated/documentacao'
     | '/_authenticated/engenharia'
+    | '/_authenticated/equipe'
     | '/_authenticated/execucao'
     | '/_authenticated/financeiro'
     | '/_authenticated/inspecoes'
     | '/_authenticated/levantamentos'
     | '/_authenticated/produtos'
     | '/_authenticated/projetos'
+    | '/_authenticated/projetos-engenharia'
     | '/_authenticated/relatorios'
+    | '/_authenticated/seguranca'
     | '/mapas-3d_/silo-engolfamento'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
@@ -727,6 +790,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/agenda-equipe': {
+      id: '/_authenticated/agenda-equipe'
+      path: '/agenda-equipe'
+      fullPath: '/agenda-equipe'
+      preLoaderRoute: typeof AuthenticatedAgendaEquipeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/almoxarifado': {
+      id: '/_authenticated/almoxarifado'
+      path: '/almoxarifado'
+      fullPath: '/almoxarifado'
+      preLoaderRoute: typeof AuthenticatedAlmoxarifadoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/clientes': {
       id: '/_authenticated/clientes'
       path: '/clientes'
@@ -767,6 +844,13 @@ declare module '@tanstack/react-router' {
       path: '/engenharia'
       fullPath: '/engenharia'
       preLoaderRoute: typeof AuthenticatedEngenhariaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/equipe': {
+      id: '/_authenticated/equipe'
+      path: '/equipe'
+      fullPath: '/equipe'
+      preLoaderRoute: typeof AuthenticatedEquipeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/execucao': {
@@ -811,11 +895,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjetosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/projetos-engenharia': {
+      id: '/_authenticated/projetos-engenharia'
+      path: '/projetos-engenharia'
+      fullPath: '/projetos-engenharia'
+      preLoaderRoute: typeof AuthenticatedProjetosEngenhariaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/relatorios': {
       id: '/_authenticated/relatorios'
       path: '/relatorios'
       fullPath: '/relatorios'
       preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/seguranca': {
+      id: '/_authenticated/seguranca'
+      path: '/seguranca'
+      fullPath: '/seguranca'
+      preLoaderRoute: typeof AuthenticatedSegurancaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/mapas-3d_/silo-engolfamento': {
@@ -1212,36 +1310,46 @@ const AuthenticatedProjetosRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAgendaEquipeRoute: typeof AuthenticatedAgendaEquipeRoute
+  AuthenticatedAlmoxarifadoRoute: typeof AuthenticatedAlmoxarifadoRoute
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComercialRoute: typeof AuthenticatedComercialRouteWithChildren
   AuthenticatedComprasRoute: typeof AuthenticatedComprasRouteWithChildren
   AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRouteWithChildren
   AuthenticatedDocumentacaoRoute: typeof AuthenticatedDocumentacaoRoute
   AuthenticatedEngenhariaRoute: typeof AuthenticatedEngenhariaRouteWithChildren
+  AuthenticatedEquipeRoute: typeof AuthenticatedEquipeRoute
   AuthenticatedExecucaoRoute: typeof AuthenticatedExecucaoRoute
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedInspecoesRoute: typeof AuthenticatedInspecoesRoute
   AuthenticatedLevantamentosRoute: typeof AuthenticatedLevantamentosRoute
   AuthenticatedProdutosRoute: typeof AuthenticatedProdutosRouteWithChildren
   AuthenticatedProjetosRoute: typeof AuthenticatedProjetosRouteWithChildren
+  AuthenticatedProjetosEngenhariaRoute: typeof AuthenticatedProjetosEngenhariaRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
+  AuthenticatedSegurancaRoute: typeof AuthenticatedSegurancaRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAgendaEquipeRoute: AuthenticatedAgendaEquipeRoute,
+  AuthenticatedAlmoxarifadoRoute: AuthenticatedAlmoxarifadoRoute,
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComercialRoute: AuthenticatedComercialRouteWithChildren,
   AuthenticatedComprasRoute: AuthenticatedComprasRouteWithChildren,
   AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRouteWithChildren,
   AuthenticatedDocumentacaoRoute: AuthenticatedDocumentacaoRoute,
   AuthenticatedEngenhariaRoute: AuthenticatedEngenhariaRouteWithChildren,
+  AuthenticatedEquipeRoute: AuthenticatedEquipeRoute,
   AuthenticatedExecucaoRoute: AuthenticatedExecucaoRoute,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedInspecoesRoute: AuthenticatedInspecoesRoute,
   AuthenticatedLevantamentosRoute: AuthenticatedLevantamentosRoute,
   AuthenticatedProdutosRoute: AuthenticatedProdutosRouteWithChildren,
   AuthenticatedProjetosRoute: AuthenticatedProjetosRouteWithChildren,
+  AuthenticatedProjetosEngenhariaRoute: AuthenticatedProjetosEngenhariaRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
+  AuthenticatedSegurancaRoute: AuthenticatedSegurancaRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 

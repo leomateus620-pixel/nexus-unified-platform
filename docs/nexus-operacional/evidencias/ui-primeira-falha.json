@@ -1,0 +1,131 @@
+{
+  "failure": "page.waitForFunction: Timeout 30000ms exceeded.",
+  "label": "catalog-after",
+  "base": "http://127.0.0.1:4190",
+  "date": "2026-10-22T08:40:55.544Z",
+  "browser": "153.0.8010.12",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpus": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logicalCpus": 4
+  },
+  "methodology": "Synthetic presentation-only fixtures; actual source components/hooks/handlers. Browser events to second requestAnimationFrame (conservative local paint proxy, not server time). No CPU throttle. Five observations including the first interaction per count/action, 1366×768. Physical keyboard/zoom/mobile device unavailable. No production backend reachable.",
+  "blocked": [],
+  "errors": [
+    "Cannot read properties of undefined (reading 'length')",
+    "Cannot read properties of undefined (reading 'length')"
+  ],
+  "viewports": [
+    {
+      "screen": "list",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.1864 0.0135 169.78)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 487.9375,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 642.9375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    }
+  ],
+  "scenarios": [],
+  "performance": [],
+  "systemPerformance": [],
+  "passes": [
+    {
+      "phase": "all",
+      "at": "2026-10-22T08:40:55.545Z"
+    }
+  ]
+}

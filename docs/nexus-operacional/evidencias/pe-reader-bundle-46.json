@@ -1,0 +1,34 @@
+{
+  "method": "Production Vite/Nitro artifacts; gzip measured individually with Node zlib, no transfer or field-latency claim",
+  "files": [
+    {
+      "name": "pdf.min-B4PKkjro.js",
+      "bytes": 485309,
+      "gzipBytes": 146072,
+      "sha256": "ac13d962ed6c55aa16560ccf9ca7f11b7d5286ac39652108fa57df2699f3e01d"
+    },
+    {
+      "name": "pdf.worker.min-Dkey6ZUl.mjs",
+      "bytes": 1321307,
+      "gzipBytes": 393030,
+      "sha256": "145d2dd3ab0c86151011dba95acfa2d5336e2accd59388ea43dbee0efddaaec6"
+    },
+    {
+      "name": "renderer.client-DqluRdGj.js",
+      "bytes": 4558,
+      "gzipBytes": 2129,
+      "sha256": "44131a5e2eb25ca8f3939703c8fbd0d8919a828e0d577480683d7422984b958a"
+    }
+  ],
+  "gzipBytes": 541231,
+  "maxGzipBytes": 716800,
+  "staticResources": {
+    "version": "6.4.299",
+    "files": 199,
+    "bytes": 3059136,
+    "checksumsMatch": true
+  },
+  "ssrClientBoundary": true,
+  "limits": "Lazy network behavior, worker execution, CSP at the deployed edge, memory and physical devices require runtime evidence separately",
+  "success": true
+}

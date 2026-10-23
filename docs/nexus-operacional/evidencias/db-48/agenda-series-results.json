@@ -1,0 +1,21 @@
+{
+  "database": "postgres",
+  "host": "127.0.0.1",
+  "port": 55481,
+  "captured_at": "2026-10-22T18:46:56.536Z",
+  "method": "Public canonical recurrence commands and direct read-only PostgreSQL snapshots in a random disposable organization. No fake clock, remote write or copied recurrence algorithm.",
+  "checks": [
+    {
+      "name": "editing all future occurrences preserves a completed past visit and an individual future exception exactly",
+      "pass": true
+    },
+    {
+      "name": "this and future scope preserves earlier future occurrences and versions",
+      "pass": true
+    },
+    {
+      "name": "one conflicting future reservation rolls back the whole series revision and all prior reservations",
+      "pass": true
+    }
+  ]
+}

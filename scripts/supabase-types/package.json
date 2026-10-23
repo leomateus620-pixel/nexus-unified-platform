@@ -1,0 +1,8 @@
+{
+  "name": "nexus-official-typegen-experiment",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@supabase/postgres-meta": "0.100.0"
+  }
+}

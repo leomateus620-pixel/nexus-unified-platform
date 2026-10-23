@@ -2,16 +2,36 @@
 // Funções puras — a tela e os testes usam este módulo. Nada é inventado: sem correspondência, fica pendente.
 
 export const CAMPOS = [
-  { chave: "codigo", rotulo: "Código NEXUS", sinonimos: ["codigo", "código", "cod nxs", "codigo nexus"] },
-  { chave: "ref_fornecedor", rotulo: "Referência do fornecedor", sinonimos: ["ref", "referencia", "referência", "cod fornecedor", "código fornecedor"] },
-  { chave: "descricao", rotulo: "Descrição", sinonimos: ["descricao", "descrição", "produto", "item"] },
+  {
+    chave: "codigo",
+    rotulo: "Código NEXUS",
+    sinonimos: ["codigo", "código", "cod nxs", "codigo nexus"],
+  },
+  {
+    chave: "ref_fornecedor",
+    rotulo: "Referência do fornecedor",
+    sinonimos: ["ref", "referencia", "referência", "cod fornecedor", "código fornecedor"],
+  },
+  {
+    chave: "descricao",
+    rotulo: "Descrição",
+    sinonimos: ["descricao", "descrição", "produto", "item"],
+  },
   { chave: "fornecedor", rotulo: "Fornecedor", sinonimos: ["fornecedor", "emitente"] },
-  { chave: "nf_numero", rotulo: "Nº da nota", sinonimos: ["nf", "nota", "numero nf", "nº nf", "n nf"] },
+  {
+    chave: "nf_numero",
+    rotulo: "Nº da nota",
+    sinonimos: ["nf", "nota", "numero nf", "nº nf", "n nf"],
+  },
   { chave: "nf_serie", rotulo: "Série", sinonimos: ["serie", "série"] },
   { chave: "data", rotulo: "Data de emissão", sinonimos: ["data", "emissao", "emissão"] },
   { chave: "quantidade", rotulo: "Quantidade", sinonimos: ["qtd", "quantidade", "qtde"] },
   { chave: "unidade", rotulo: "Unidade de compra", sinonimos: ["un", "unid", "unidade"] },
-  { chave: "produtos", rotulo: "Valor dos produtos (total da linha)", sinonimos: ["valor", "vlr total", "valor total", "total produtos"] },
+  {
+    chave: "produtos",
+    rotulo: "Valor dos produtos (total da linha)",
+    sinonimos: ["valor", "vlr total", "valor total", "total produtos"],
+  },
   { chave: "desconto", rotulo: "Desconto", sinonimos: ["desconto"] },
   { chave: "frete", rotulo: "Frete", sinonimos: ["frete"] },
   { chave: "ipi", rotulo: "IPI", sinonimos: ["ipi"] },
@@ -21,7 +41,10 @@ export type CampoChave = (typeof CAMPOS)[number]["chave"];
 export type Mapa = Partial<Record<CampoChave, number>>;
 
 export function lerTabela(texto: string): string[][] {
-  const linhas = texto.replace(/\r/g, "").split("\n").filter((l) => l.trim());
+  const linhas = texto
+    .replace(/\r/g, "")
+    .split("\n")
+    .filter((l) => l.trim());
   if (!linhas.length) return [];
   const l0 = linhas[0] ?? "";
   const sep = l0.includes("\t") ? "\t" : l0.split(";").length > 1 ? ";" : ",";
@@ -29,7 +52,13 @@ export function lerTabela(texto: string): string[][] {
 }
 
 const normal = (s: string) =>
-  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
 /** Sugere o mapeamento pelo cabeçalho; o usuário confirma ou corrige na tela. */
 export function sugerirMapa(cabecalho: string[]): Mapa {
@@ -59,7 +88,12 @@ export function data(v: string | undefined): string | null {
   return /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
 }
 
-export type ProdutoRef = { id: string; codigo: string; unidade: string; refs: { fornecedor_id: string; codigo: string }[] };
+export type ProdutoRef = {
+  id: string;
+  codigo: string;
+  unidade: string;
+  refs: { fornecedor_id: string; codigo: string }[];
+};
 export type FornecedorRef = { id: string; nome: string };
 
 export type Situacao = "novo" | "existente" | "conflito" | "incompleto";
@@ -75,7 +109,14 @@ export type LinhaClassificada = {
     emitido_em: string;
     quantidade: number;
     unidade: string;
-    parcelas: { produtos: number | null; desconto: number | null; frete: number | null; ipi: number | null; difal: number | null; outras: null };
+    parcelas: {
+      produtos: number | null;
+      desconto: number | null;
+      frete: number | null;
+      ipi: number | null;
+      difal: number | null;
+      outras: null;
+    };
   };
   /** Chave estável da compra: fornecedor + nota + série + produto + linha de origem. */
   identidade: string;
@@ -101,10 +142,20 @@ export function classificar(
     let cand = cod ? porCodigo.get(cod) : undefined;
     if (!cand && ref) {
       const ms = produtos.filter((p) =>
-        p.refs.some((x) => x.codigo.toUpperCase() === ref && (!fornecedor_id || x.fornecedor_id === fornecedor_id)),
+        p.refs.some(
+          (x) =>
+            x.codigo.toUpperCase() === ref && (!fornecedor_id || x.fornecedor_id === fornecedor_id),
+        ),
       );
       if (ms.length > 1)
-        return base(linha, "conflito", `Referência ${ref} corresponde a ${ms.length} produtos.`, fornecedor_id, origem, r);
+        return base(
+          linha,
+          "conflito",
+          `Referência ${ref} corresponde a ${ms.length} produtos.`,
+          fornecedor_id,
+          origem,
+          r,
+        );
       cand = ms[0];
     }
     if (!cand)
@@ -117,7 +168,17 @@ export function classificar(
         r,
       );
     if (fNome && !fornecedor_id)
-      return base(linha, "conflito", forn.length > 1 ? "Fornecedor ambíguo." : `Fornecedor "${get(r, "fornecedor")}" não cadastrado — não será atribuído por suposição.`, null, origem, r, cand);
+      return base(
+        linha,
+        "conflito",
+        forn.length > 1
+          ? "Fornecedor ambíguo."
+          : `Fornecedor "${get(r, "fornecedor")}" não cadastrado — não será atribuído por suposição.`,
+        null,
+        origem,
+        r,
+        cand,
+      );
     const nf = get(r, "nf_numero");
     const emitido = data(get(r, "data"));
     const qtd = numero(get(r, "quantidade"));
@@ -130,9 +191,32 @@ export function classificar(
       outras: null,
     };
     if (!nf || !emitido || !(qtd && qtd > 0))
-      return base(linha, "incompleto", "Faltam nota, data ou quantidade.", fornecedor_id, origem, r, cand);
-    const identidade = [fornecedor_id ?? "sem-fornecedor", nf, get(r, "nf_serie"), cand.id, origem.arquivo, origem.aba, linha].join("|");
-    const compra = { nf_numero: nf, nf_serie: get(r, "nf_serie"), emitido_em: emitido, quantidade: qtd, unidade: get(r, "unidade") || cand.unidade, parcelas };
+      return base(
+        linha,
+        "incompleto",
+        "Faltam nota, data ou quantidade.",
+        fornecedor_id,
+        origem,
+        r,
+        cand,
+      );
+    const identidade = [
+      fornecedor_id ?? "sem-fornecedor",
+      nf,
+      get(r, "nf_serie"),
+      cand.id,
+      origem.arquivo,
+      origem.aba,
+      linha,
+    ].join("|");
+    const compra = {
+      nf_numero: nf,
+      nf_serie: get(r, "nf_serie"),
+      emitido_em: emitido,
+      quantidade: qtd,
+      unidade: get(r, "unidade") || cand.unidade,
+      parcelas,
+    };
     const ja = existentes.has(identidade);
     return {
       linha,
@@ -159,7 +243,14 @@ function base(
   r: string[],
   produto?: ProdutoRef,
 ): LinhaClassificada {
-  return { linha, situacao, motivo, fornecedor_id, produto, identidade: [origem.arquivo, origem.aba, linha, r.join("¦")].join("|") };
+  return {
+    linha,
+    situacao,
+    motivo,
+    fornecedor_id,
+    produto,
+    identidade: [origem.arquivo, origem.aba, linha, r.join("¦")].join("|"),
+  };
 }
 
 /** UUID determinístico (formato v5) a partir da identidade — reenvio gera a mesma chave. */

@@ -1,0 +1,373 @@
+{
+  "method": "Actual source components with test-only network fixtures; not connected-backend E2E",
+  "checks": [
+    {
+      "name": "navigation frame retains palette and width across preserved workspaces",
+      "pass": true
+    },
+    {
+      "name": "validation focuses the invalid field, dialog fits and Escape restores trigger",
+      "pass": true
+    },
+    {
+      "name": "dirty dialog preserves input until explicit discard",
+      "pass": true
+    },
+    {
+      "name": "write failure preserves the draft and shows actionable feedback",
+      "pass": true
+    },
+    {
+      "name": "mobile navigation search and focus recovery",
+      "pass": true
+    },
+    {
+      "name": "empty and failed queries present different recoverable states",
+      "pass": true
+    },
+    {
+      "name": "library search survives reload and exposes a clear viewer action",
+      "pass": true
+    },
+    {
+      "name": "short viewport and 200 percent text scale keep the person form usable",
+      "pass": true
+    },
+    {
+      "name": "PE failure keeps version content and provides feedback next to Save",
+      "pass": true
+    }
+  ],
+  "layouts": [
+    {
+      "screen": "equipe",
+      "width": 360,
+      "height": 844,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "screen": "clientes",
+      "width": 360,
+      "height": 844,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "screen": "seguranca",
+      "width": 360,
+      "height": 844,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "screen": "projetos-engenharia",
+      "width": 360,
+      "height": 844,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "screen": "mapas-library",
+      "width": 360,
+      "height": 844,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "screen": "configuracoes",
+      "width": 360,
+      "height": 844,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "screen": "equipe",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "screen": "clientes",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "screen": "seguranca",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "screen": "projetos-engenharia",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "screen": "mapas-library",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "screen": "configuracoes",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "screen": "equipe",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "screen": "clientes",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "screen": "seguranca",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "screen": "projetos-engenharia",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "screen": "mapas-library",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "screen": "configuracoes",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "screen": "equipe",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "clientes",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "seguranca",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "projetos-engenharia",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "mapas-library",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "configuracoes",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "equipe",
+      "width": 1366,
+      "height": 900,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "screen": "clientes",
+      "width": 1366,
+      "height": 900,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "screen": "seguranca",
+      "width": 1366,
+      "height": 900,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "screen": "projetos-engenharia",
+      "width": 1366,
+      "height": 900,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "screen": "mapas-library",
+      "width": 1366,
+      "height": 900,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "screen": "configuracoes",
+      "width": 1366,
+      "height": 900,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "screen": "equipe",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "clientes",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "seguranca",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "projetos-engenharia",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "mapas-library",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "configuracoes",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "frameParity": [
+    {
+      "sidebarWidth": 256,
+      "sidebarBackground": "oklch(0.145 0.023 166)",
+      "headerBackground": "oklch(0.145 0.023 166)",
+      "headerHeight": 52
+    },
+    {
+      "sidebarWidth": 256,
+      "sidebarBackground": "oklch(0.145 0.023 166)",
+      "headerBackground": "oklch(0.145 0.023 166)",
+      "headerHeight": 52
+    },
+    {
+      "sidebarWidth": 256,
+      "sidebarBackground": "oklch(0.145 0.023 166)",
+      "headerBackground": "oklch(0.145 0.023 166)",
+      "headerHeight": 52
+    },
+    {
+      "sidebarWidth": 256,
+      "sidebarBackground": "oklch(0.145 0.023 166)",
+      "headerBackground": "oklch(0.145 0.023 166)",
+      "headerHeight": 52
+    }
+  ],
+  "contrast": [
+    {
+      "fg": "--foreground",
+      "bg": "--background",
+      "min": 4.5,
+      "ratio": 17.129064825022844,
+      "pass": true
+    },
+    {
+      "fg": "--muted-foreground",
+      "bg": "--card",
+      "min": 4.5,
+      "ratio": 9.833919855688317,
+      "pass": true
+    },
+    {
+      "fg": "--primary-foreground",
+      "bg": "--primary",
+      "min": 4.5,
+      "ratio": 8.983578738742475,
+      "pass": true
+    },
+    {
+      "fg": "--primary",
+      "bg": "--card",
+      "min": 4.5,
+      "ratio": 8.11474860057222,
+      "pass": true
+    },
+    {
+      "fg": "--destructive",
+      "bg": "--nx-error-surface",
+      "min": 4.5,
+      "ratio": 6.748738976615549,
+      "pass": true
+    },
+    {
+      "fg": "--ring",
+      "bg": "--background",
+      "min": 3,
+      "ratio": 9.141769775149076,
+      "pass": true
+    },
+    {
+      "fg": "--input",
+      "bg": "--card",
+      "min": 3,
+      "ratio": 4.7561346960605615,
+      "pass": true
+    }
+  ]
+}

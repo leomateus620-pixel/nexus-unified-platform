@@ -1,0 +1,10 @@
+{
+  "method": "Read-only metadata after applying0028. Backend pg_cron executions; no browser timer, fixture, Auth session or actual reminder delivery tested in the operational project.",
+  "checkedAt": "2026-10-22T18:37:47.695533Z",
+  "project": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "executions": [
+    {"startedAt":"2026-10-22T18:37:00.035173Z","finishedAt":"2026-10-22T18:37:00.053985Z","state":"sucesso","processed":0,"failures":0},
+    {"startedAt":"2026-10-22T18:36:00.025913Z","finishedAt":"2026-10-22T18:36:00.043695Z","state":"sucesso","processed":0,"failures":0}
+  ],
+  "limit": "Empty operational queue observed. Actual recurrence/reminder effects and deduplication were tested only in isolated PostgreSQL."
+}

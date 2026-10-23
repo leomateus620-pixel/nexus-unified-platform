@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-22T13:12:32.855Z",
+  "status": "REMOTE_APPLIED_SCHEMA_VERIFIED_UI_RELATION_CORRECTION_REQUIRED",
+  "postgres": "16.15 isolated disposable Windows cluster",
+  "command": "tests/db/run.ps1 -PostgresBin <verified PostgreSQL16.15/bin> -Port 55475 -CaptureFingerprint",
+  "exitCode": 0,
+  "migrations": {
+    "total": 42,
+    "baseline": 30,
+    "upgradeFromOperationalCheckpoint": 41,
+    "legacyReceiptAndAccumulatorPreserved": true,
+    "noRetroactiveWarehouseBalance": true,
+    "cleanInstall": true,
+    "retry": true,
+    "ddlAndLedgerRollback": true,
+    "connectorSingleDo": true,
+    "latest": {
+      "path": "drizzle/migrations/0023_almoxarifado.sql",
+      "sha256": "4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8"
+    }
+  },
+  "assertions": {
+    "warehouse": 49,
+    "warehouseFiles": 38,
+    "realConcurrentChecks": 10,
+    "fullHistoricalAndPriorOperationalSuites": true,
+    "timezoneCivilDatesAndExclusiveMidnight": true,
+    "fragmentedConversionReversalWithoutRounding": true,
+    "largeOrganizationalNumericAggregate": true,
+    "acceptanceRollbackAcrossProposalPurchaseProduction": true,
+    "concurrentAcceptanceOneDecision": true,
+    "currentScopeOnReplayAfterRoleDowngrade": true,
+    "manifestUnitTests": 9,
+    "scopedJavaScriptLintPassed": true,
+    "publishedManifestPrefixExactlyUnchanged": true
+  },
+  "catalog": {
+    "indexes": {
+      "md5": "a42a564cf44085f7d229be32b92006bd",
+      "count": 307
+    },
+    "policies": {
+      "md5": "37be7431f94cab2fad14f16ce8c5fa6d",
+      "count": 171
+    },
+    "triggers": {
+      "md5": "287bfc24101b9d72d2fc27288c90fac8",
+      "count": 116
+    },
+    "functions": {
+      "md5": "f93111f605ff212da2eaccdc63be44ff",
+      "count": 194
+    },
+    "relations": {
+      "md5": "d8f936cd513b68618187990f6071bc81",
+      "count": 108
+    },
+    "constraints": {
+      "md5": "1f8e5728cf87a8a3adbbb8c68e0e3144",
+      "count": 795
+    },
+    "table_grants": {
+      "md5": "f4815a94ddd0cd082bb22e61e7790417",
+      "count": 485
+    },
+    "function_grants": {
+      "md5": "f5d89fe402acf5d39624a22016eb35a0",
+      "count": 116
+    }
+  },
+  "logSha256LF": "d2f4b5c562970edd0346d7963169865b08070e4ee0762fcf0b35e94dff5fe9a5",
+  "schemaDiff": {
+    "added": 323,
+    "removed": 2,
+    "changed": 5
+  },
+  "connector": {
+    "envelopePath": "C:\\Users\\Leonardo\\AppData\\Local\\Temp/nexus-connector-0023-1792674752834/0042_0023_almoxarifado.sql",
+    "sha256": "0a43c01f3b567e222406a641362ae30e49381e6c4849b82a38c385b6f2012601",
+    "characters": 124925
+  },
+  "limits": [
+    "Remote application is evidenced separately in verificacao-remota-0023/0024; local tests cannot prove it",
+    "No operational fixtures on connected project",
+    "SQL Storage tests cover metadata/RLS, not remote binary HTTP/Auth end-to-end",
+    "No frontend deployment, physical-device or production performance evidence",
+    "Detail collections are not yet paginated",
+    "Standalone operational purchase without commercial proposal remains next vertical"
+  ],
+  "remote": {
+    "applied_at": "2026-10-22T13:16:47.507078+00:00",
+    "verified_at": "2026-10-22T13:18:07.996240+00:00",
+    "ledger": 42,
+    "verification": "verificacao-remota-0023.json",
+    "catalogDiff": "schema-diff-42.json",
+    "securityMatchesLocal": true,
+    "knownCompatibilityIssue": "Nine duplicate FK relationships make existing PostgREST embeds ambiguous; append-only0024 required",
+    "noOperationalFixtures": true,
+    "authAndBinaryStorageE2E": false
+  }
+}

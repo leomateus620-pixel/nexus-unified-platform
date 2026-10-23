@@ -1,0 +1,34 @@
+{
+  "headRevision": "347e3471ceaa191337736f0126fb1547cee587cf",
+  "checkedAt": "2026-10-22T15:04:45.365Z",
+  "method": "Code Review backend per Actions run, preserved headRevision",
+  "checks": [
+    {
+      "id": 119892866630,
+      "name": "verify",
+      "conclusion": "success"
+    },
+    {
+      "id": 119892866156,
+      "name": "presentation",
+      "conclusion": "failure"
+    },
+    {
+      "id": 119892865086,
+      "name": "circulation",
+      "conclusion": "success"
+    }
+  ],
+  "runs": [
+    39798688866,
+    39798688734,
+    39798688671
+  ],
+  "failure": {
+    "file": "tests/ui/anexos-canonicos-quality.mjs:36",
+    "message": "Old mobile Abrir locator no longer matched source People cards",
+    "repair": "Open canonical person detail URL; local six layouts/five file behavior checks passed",
+    "nextCi": "Pending after next push"
+  },
+  "limits": "CI fixtures do not prove connected Auth/Storage or deployment"
+}

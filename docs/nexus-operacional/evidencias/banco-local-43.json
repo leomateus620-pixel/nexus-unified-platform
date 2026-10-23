@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-22T13:26:31.404Z",
+  "status": "LOCAL_TESTED_REMOTE_APPLICATION_EVIDENCED_SEPARATELY",
+  "postgres": "16.15 isolated disposable Windows cluster",
+  "command": "tests/db/run.ps1 -PostgresBin <verified PostgreSQL16.15/bin> -Port55476 -CaptureFingerprint",
+  "exitCode": 0,
+  "additionalDirectTenantCommand": "tests/db/run.ps1 -PostgresBin <verified PostgreSQL16.15/bin> -Port55477 -OnlyAlmoxarifado",
+  "migrations": {
+    "total": 43,
+    "upgradeFrom42": true,
+    "cleanInstall": true,
+    "publishedPrefix42Exact": true,
+    "source": "drizzle/migrations/0024_suprimentos_relacoes_univocas.sql",
+    "sha256": "3186fcc00879dad91e02c0bf55bb6d856e69d77a12a8d1b546b7c80ae2fd5faa"
+  },
+  "assertions": {
+    "relationPairs": 9,
+    "internalTriggerPrivate": true,
+    "directCrossTenantSupplyWrites": 6,
+    "fullHistoricalAndOperationalSuites": true,
+    "warehouse": 49,
+    "warehouseFiles": 38,
+    "concurrentAndTransactionalChecks": 10,
+    "manifestUnitTests": 9
+  },
+  "catalog": {
+    "indexes": {
+      "md5": "a42a564cf44085f7d229be32b92006bd",
+      "count": 307
+    },
+    "policies": {
+      "md5": "37be7431f94cab2fad14f16ce8c5fa6d",
+      "count": 171
+    },
+    "triggers": {
+      "md5": "287bfc24101b9d72d2fc27288c90fac8",
+      "count": 116
+    },
+    "functions": {
+      "md5": "f93111f605ff212da2eaccdc63be44ff",
+      "count": 194
+    },
+    "relations": {
+      "md5": "d8f936cd513b68618187990f6071bc81",
+      "count": 108
+    },
+    "constraints": {
+      "md5": "39e7ee7ea907c097d419bb3c4a61f70e",
+      "count": 786
+    },
+    "table_grants": {
+      "md5": "f4815a94ddd0cd082bb22e61e7790417",
+      "count": 485
+    },
+    "function_grants": {
+      "md5": "8638b592e5e4a5b1b634c037c73c320a",
+      "count": 115
+    }
+  },
+  "diff": {
+    "added": 0,
+    "removed": 10,
+    "changed": 9
+  },
+  "logSha256LF": "0094a9cd7b616d75bd1d81a1118381d3b847fb46ee928a3f19cc7426e817bf79",
+  "additionalLogSha256LF": "2537e331ba73d2484edfc0afcc6e889ad8470d33e9e78bbaa36e35ce333ea280",
+  "connector": {
+    "path": "C:/Users/Leonardo/AppData/Local/Temp/nexus-almoxarifado-0023/0043_0024_suprimentos_relacoes_univocas.sql",
+    "sha256": "c412de7c254286a30ee3694b67bfad2dfb6df5982e6295bd00cb9809fa199c7c",
+    "characters": 11663
+  },
+  "limits": [
+    "Remote application and metadata verification must be evidenced separately; local tests cannot prove them",
+    "No operational fixtures on connected project",
+    "Catalog relationship test is not live PostgREST HTTP execution",
+    "Official generated types and global typecheck are verified separately by root",
+    "No remote Auth/Storage binary E2E, frontend deployment, physical device or production performance proof"
+  ],
+  "remote": {
+    "applied_at": "2026-10-22T13:29:30.366847+00:00",
+    "verified_at": "2026-10-22T13:30:19.277589+00:00",
+    "verification": "verificacao-remota-0024.json",
+    "catalogDiff": "schema-diff-43.json",
+    "ledger": 43,
+    "securityMetadataMatchesLocal": true,
+    "noOperationalFixtures": true,
+    "authAndStorageBinaryE2E": false
+  }
+}

@@ -1,0 +1,3117 @@
+{
+  "configuracao": {
+    "jobs": {
+      "scheduler": {
+        "estado": "indisponivel",
+        "detalhe": "Extensão pg_cron não disponível neste PostgreSQL; nenhum agendamento automático foi criado.",
+        "extensao": "pg_cron",
+        "verificado_em": "2026-10-22T15:04:12.366017-03:00"
+      },
+      "ultima_execucao": null,
+      "fila_organizacao": {
+        "falhas": 0,
+        "pendentes": 6,
+        "concluidos": 0
+      }
+    },
+    "timezone": "America/Sao_Paulo",
+    "permissoes": {
+      "criar": true,
+      "criar_acao": true,
+      "gerir_series": true
+    },
+    "server_now": "2026-10-22T15:04:19.536234-03:00",
+    "preferencias": {
+      "notificar": true,
+      "notificar_atrasos": true,
+      "antecedencia_minutos": 60
+    },
+    "minha_pessoa_id": "61461047-9680-4680-8ef8-eac9da377cc4"
+  },
+  "lista": {
+    "fim": "2026-12-01",
+    "dias": [
+      {
+        "data": "2026-11-01",
+        "total": 1
+      },
+      {
+        "data": "2026-11-02",
+        "total": 0
+      },
+      {
+        "data": "2026-11-03",
+        "total": 0
+      },
+      {
+        "data": "2026-11-04",
+        "total": 0
+      },
+      {
+        "data": "2026-11-05",
+        "total": 0
+      },
+      {
+        "data": "2026-11-06",
+        "total": 0
+      },
+      {
+        "data": "2026-11-07",
+        "total": 0
+      },
+      {
+        "data": "2026-11-08",
+        "total": 0
+      },
+      {
+        "data": "2026-11-09",
+        "total": 0
+      },
+      {
+        "data": "2026-11-10",
+        "total": 1
+      },
+      {
+        "data": "2026-11-11",
+        "total": 1
+      },
+      {
+        "data": "2026-11-12",
+        "total": 0
+      },
+      {
+        "data": "2026-11-13",
+        "total": 0
+      },
+      {
+        "data": "2026-11-14",
+        "total": 0
+      },
+      {
+        "data": "2026-11-15",
+        "total": 0
+      },
+      {
+        "data": "2026-11-16",
+        "total": 0
+      },
+      {
+        "data": "2026-11-17",
+        "total": 0
+      },
+      {
+        "data": "2026-11-18",
+        "total": 0
+      },
+      {
+        "data": "2026-11-19",
+        "total": 0
+      },
+      {
+        "data": "2026-11-20",
+        "total": 0
+      },
+      {
+        "data": "2026-11-21",
+        "total": 0
+      },
+      {
+        "data": "2026-11-22",
+        "total": 0
+      },
+      {
+        "data": "2026-11-23",
+        "total": 0
+      },
+      {
+        "data": "2026-11-24",
+        "total": 0
+      },
+      {
+        "data": "2026-11-25",
+        "total": 0
+      },
+      {
+        "data": "2026-11-26",
+        "total": 0
+      },
+      {
+        "data": "2026-11-27",
+        "total": 0
+      },
+      {
+        "data": "2026-11-28",
+        "total": 0
+      },
+      {
+        "data": "2026-11-29",
+        "total": 0
+      },
+      {
+        "data": "2026-11-30",
+        "total": 0
+      }
+    ],
+    "total": 3,
+    "inicio": "2026-11-01",
+    "limite": 1,
+    "pagina": 0,
+    "timezone": "America/Sao_Paulo",
+    "registros": [
+      {
+        "id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be",
+        "fim": "2026-11-02T02:00:00-03:00",
+        "tipo": "visita_tecnica",
+        "local": "Local de teste",
+        "estado": "rascunho",
+        "inicio": "2026-11-01T01:00:00-03:00",
+        "motivo": null,
+        "origem": {
+          "id": null,
+          "tipo": "independente",
+          "estado": null,
+          "titulo": null
+        },
+        "titulo": "Dia civil",
+        "acao_id": null,
+        "excecao": false,
+        "version": 1,
+        "data_fim": "2026-11-02",
+        "serie_id": null,
+        "timezone": "America/New_York",
+        "descricao": "Execução de teste SQL",
+        "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+        "created_at": "2026-10-22T15:04:18.166416-03:00",
+        "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "permissoes": {
+          "editar": true,
+          "iniciar": false,
+          "cancelar": true,
+          "comentar": true,
+          "concluir": false,
+          "publicar": true,
+          "confirmar": false,
+          "abrir_origem": false,
+          "editar_serie": false
+        },
+        "projeto_id": null,
+        "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+        "updated_at": "2026-10-22T15:04:18.166416-03:00",
+        "data_inicio": "2026-11-01",
+        "dia_inteiro": true,
+        "cliente_nome": "Cliente isolado",
+        "unidade_nome": "Unidade isolada",
+        "visibilidade": "participantes",
+        "dias_visiveis": [
+          "2026-11-01"
+        ],
+        "geracao_job_id": null,
+        "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+        "levantamento_id": null,
+        "ocorrencia_data": null,
+        "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+        "serie_versao_id": null,
+        "responsavel_nome": "Pessoa principal teste",
+        "bloqueia_recursos": true,
+        "minha_confirmacao": null,
+        "origem_ocorrencia": null,
+        "gerado_automaticamente": false
+      }
+    ],
+    "permissoes": {
+      "criar": true,
+      "criar_acao": true,
+      "gerir_series": true
+    },
+    "minha_pessoa_id": "61461047-9680-4680-8ef8-eac9da377cc4"
+  },
+  "detalhe": {
+    "serie": null,
+    "evento": {
+      "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+      "fim": "2026-11-10T13:00:00-03:00",
+      "tipo": "visita_tecnica",
+      "local": "Local de teste",
+      "estado": "cancelado",
+      "inicio": "2026-11-10T12:00:00-03:00",
+      "motivo": "Cancelar visita de teste",
+      "origem": {
+        "id": null,
+        "tipo": "independente",
+        "estado": null,
+        "titulo": null
+      },
+      "titulo": "Visita técnica isolada",
+      "acao_id": null,
+      "excecao": false,
+      "version": 4,
+      "data_fim": null,
+      "serie_id": null,
+      "timezone": "America/Sao_Paulo",
+      "descricao": "Execução de teste SQL",
+      "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+      "created_at": "2026-10-22T15:04:18.166416-03:00",
+      "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+      "permissoes": {
+        "editar": false,
+        "iniciar": false,
+        "cancelar": false,
+        "comentar": true,
+        "concluir": false,
+        "publicar": false,
+        "confirmar": false,
+        "abrir_origem": false,
+        "editar_serie": false
+      },
+      "projeto_id": null,
+      "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+      "updated_at": "2026-10-22T15:04:18.166416-03:00",
+      "data_inicio": null,
+      "dia_inteiro": false,
+      "cliente_nome": "Cliente isolado",
+      "unidade_nome": "Unidade isolada",
+      "visibilidade": "participantes",
+      "dias_visiveis": [],
+      "geracao_job_id": null,
+      "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+      "levantamento_id": null,
+      "ocorrencia_data": null,
+      "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+      "serie_versao_id": null,
+      "responsavel_nome": "Pessoa principal teste",
+      "bloqueia_recursos": true,
+      "minha_confirmacao": null,
+      "origem_ocorrencia": null,
+      "gerado_automaticamente": false
+    },
+    "bloqueios": [],
+    "historico": {
+      "total": 4,
+      "limite": 25,
+      "pagina": 0,
+      "registros": [
+        {
+          "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "versao": 4,
+          "snapshot": {
+            "evento": {
+              "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "fim": "2026-11-10T13:00:00-03:00",
+              "tipo": "visita_tecnica",
+              "local": "Local de teste",
+              "estado": "cancelado",
+              "inicio": "2026-11-10T12:00:00-03:00",
+              "motivo": "Cancelar visita de teste",
+              "titulo": "Visita técnica isolada",
+              "acao_id": null,
+              "excecao": false,
+              "version": 4,
+              "data_fim": null,
+              "serie_id": null,
+              "timezone": "America/Sao_Paulo",
+              "descricao": "Execução de teste SQL",
+              "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "projeto_id": null,
+              "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+              "updated_at": "2026-10-22T15:04:18.166416-03:00",
+              "data_inicio": null,
+              "dia_inteiro": false,
+              "visibilidade": "participantes",
+              "geracao_job_id": null,
+              "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "levantamento_id": null,
+              "ocorrencia_data": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "serie_versao_id": null,
+              "bloqueia_recursos": true,
+              "origem_ocorrencia": null,
+              "gerado_automaticamente": false
+            },
+            "ferramentas": [
+              {
+                "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+                "version": 2,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+                "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+              }
+            ],
+            "competencias": [],
+            "participantes": [
+              {
+                "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+                "funcao": "participante",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              },
+              {
+                "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+                "funcao": "responsavel",
+                "version": 2,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "ciencia_em": "2026-10-22T15:04:18.956607-03:00",
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "confirmada",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              }
+            ]
+          },
+          "created_at": "2026-10-22T15:04:18.166416-03:00"
+        },
+        {
+          "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "versao": 3,
+          "snapshot": {
+            "evento": {
+              "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "fim": "2026-11-10T13:00:00-03:00",
+              "tipo": "visita_tecnica",
+              "local": "Local de teste",
+              "estado": "publicado",
+              "inicio": "2026-11-10T12:00:00-03:00",
+              "motivo": "Planejamento atualizado",
+              "titulo": "Visita técnica isolada",
+              "acao_id": null,
+              "excecao": false,
+              "version": 3,
+              "data_fim": null,
+              "serie_id": null,
+              "timezone": "America/Sao_Paulo",
+              "descricao": "Execução de teste SQL",
+              "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "projeto_id": null,
+              "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+              "updated_at": "2026-10-22T15:04:18.166416-03:00",
+              "data_inicio": null,
+              "dia_inteiro": false,
+              "visibilidade": "participantes",
+              "geracao_job_id": null,
+              "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "levantamento_id": null,
+              "ocorrencia_data": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "serie_versao_id": null,
+              "bloqueia_recursos": true,
+              "origem_ocorrencia": null,
+              "gerado_automaticamente": false
+            },
+            "ferramentas": [
+              {
+                "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+                "version": 2,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+                "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+              }
+            ],
+            "competencias": [],
+            "participantes": [
+              {
+                "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+                "funcao": "participante",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              },
+              {
+                "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+                "funcao": "responsavel",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              }
+            ]
+          },
+          "created_at": "2026-10-22T15:04:18.166416-03:00"
+        },
+        {
+          "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "versao": 2,
+          "snapshot": {
+            "evento": {
+              "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "fim": "2026-11-10T11:00:00-03:00",
+              "tipo": "visita_tecnica",
+              "local": "Local de teste",
+              "estado": "publicado",
+              "inicio": "2026-11-10T10:00:00-03:00",
+              "motivo": null,
+              "titulo": "Visita técnica isolada",
+              "acao_id": null,
+              "excecao": false,
+              "version": 2,
+              "data_fim": null,
+              "serie_id": null,
+              "timezone": "America/Sao_Paulo",
+              "descricao": "Execução de teste SQL",
+              "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "projeto_id": null,
+              "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+              "updated_at": "2026-10-22T15:04:18.166416-03:00",
+              "data_inicio": null,
+              "dia_inteiro": false,
+              "visibilidade": "participantes",
+              "geracao_job_id": null,
+              "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "levantamento_id": null,
+              "ocorrencia_data": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "serie_versao_id": null,
+              "bloqueia_recursos": true,
+              "origem_ocorrencia": null,
+              "gerado_automaticamente": false
+            },
+            "ferramentas": [
+              {
+                "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                "version": 2,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "custodia_id": "1e61e9be-4903-41de-83f7-f60be7f9ac5d",
+                "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+              }
+            ],
+            "competencias": [],
+            "participantes": [
+              {
+                "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                "funcao": "participante",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              },
+              {
+                "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                "funcao": "responsavel",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              }
+            ]
+          },
+          "created_at": "2026-10-22T15:04:18.166416-03:00"
+        },
+        {
+          "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "versao": 1,
+          "snapshot": {
+            "evento": {
+              "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "fim": "2026-11-10T11:00:00-03:00",
+              "tipo": "visita_tecnica",
+              "local": "Local de teste",
+              "estado": "rascunho",
+              "inicio": "2026-11-10T10:00:00-03:00",
+              "motivo": null,
+              "titulo": "Visita técnica isolada",
+              "acao_id": null,
+              "excecao": false,
+              "version": 1,
+              "data_fim": null,
+              "serie_id": null,
+              "timezone": "America/Sao_Paulo",
+              "descricao": "Execução de teste SQL",
+              "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "projeto_id": null,
+              "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+              "updated_at": "2026-10-22T15:04:18.166416-03:00",
+              "data_inicio": null,
+              "dia_inteiro": false,
+              "visibilidade": "participantes",
+              "geracao_job_id": null,
+              "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "levantamento_id": null,
+              "ocorrencia_data": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "serie_versao_id": null,
+              "bloqueia_recursos": true,
+              "origem_ocorrencia": null,
+              "gerado_automaticamente": false
+            },
+            "ferramentas": [
+              {
+                "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "custodia_id": null,
+                "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+              }
+            ],
+            "competencias": [],
+            "participantes": [
+              {
+                "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                "funcao": "participante",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              },
+              {
+                "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                "funcao": "responsavel",
+                "version": 1,
+                "vigente": true,
+                "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                "ciencia_em": null,
+                "created_at": "2026-10-22T15:04:18.166416-03:00",
+                "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                "confirmacao": "pendente",
+                "retirado_em": null,
+                "equipe_inicio": null,
+                "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                "equipe_origem_id": null
+              }
+            ]
+          },
+          "created_at": "2026-10-22T15:04:18.166416-03:00"
+        }
+      ]
+    },
+    "permissoes": {
+      "editar": false,
+      "iniciar": false,
+      "cancelar": false,
+      "comentar": true,
+      "concluir": false,
+      "publicar": false,
+      "confirmar": false,
+      "abrir_origem": false,
+      "editar_serie": false
+    },
+    "server_now": "2026-10-22T15:04:19.601142-03:00",
+    "comentarios": {
+      "total": 1,
+      "limite": 25,
+      "pagina": 0,
+      "registros": [
+        {
+          "id": "4d748f68-af3d-4349-902a-4adc3beebf63",
+          "texto": "Comentário de teste isolado",
+          "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+          "autor_nome": "Pessoa principal teste",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "a3fa9e7c-c4eb-4859-88e0-4ebb1de57b97",
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+        }
+      ]
+    },
+    "ferramentas": [
+      {
+        "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+        "estado": "cancelada",
+        "version": 2,
+        "descricao": "Ferramenta isolada",
+        "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+        "patrimonio": "TEST-47",
+        "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+        "pessoa_nome": "Pessoa principal teste",
+        "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507"
+      }
+    ],
+    "competencias": [],
+    "participantes": [
+      {
+        "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+        "funcao": "responsavel",
+        "version": 2,
+        "vigente": true,
+        "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+        "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+        "ciencia_em": "2026-10-22T15:04:18.956607-03:00",
+        "created_at": "2026-10-22T15:04:18.166416-03:00",
+        "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "confirmacao": "confirmada",
+        "pessoa_nome": "Pessoa principal teste",
+        "retirado_em": null,
+        "equipe_inicio": null,
+        "pode_confirmar": false,
+        "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+        "equipe_origem_id": null
+      },
+      {
+        "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+        "funcao": "participante",
+        "version": 1,
+        "vigente": true,
+        "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+        "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+        "ciencia_em": null,
+        "created_at": "2026-10-22T15:04:18.166416-03:00",
+        "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "confirmacao": "pendente",
+        "pessoa_nome": "Outra pessoa teste",
+        "retirado_em": null,
+        "equipe_inicio": null,
+        "pode_confirmar": false,
+        "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+        "equipe_origem_id": null
+      }
+    ]
+  },
+  "acao": {
+    "acao": {
+      "id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+      "prazo": "2026-11-20",
+      "estado": "aberta",
+      "motivo": null,
+      "titulo": "Ação canônica teste",
+      "version": 1,
+      "conclusao": null,
+      "descricao": "Sem evento fictício",
+      "created_at": "2026-10-22T15:04:18.166416-03:00",
+      "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+      "prioridade": "normal",
+      "updated_at": "2026-10-22T15:04:18.166416-03:00",
+      "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+      "verificado_por": null,
+      "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+      "exige_verificacao": true
+    },
+    "permissoes": {
+      "agendar": true,
+      "iniciar": true,
+      "cancelar": true,
+      "concluir": false,
+      "devolver": false,
+      "enviar_verificacao": false
+    },
+    "responsavel_nome": "Pessoa principal teste"
+  },
+  "pendentes": {
+    "total": 1,
+    "limite": 25,
+    "pagina": 0,
+    "registros": [
+      {
+        "id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+        "tipo": "acao",
+        "prazo": "2026-11-20",
+        "estado": "aberta",
+        "titulo": "Ação canônica teste",
+        "cliente_id": null,
+        "unidade_id": null,
+        "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+        "responsavel_nome": "Pessoa principal teste"
+      }
+    ]
+  },
+  "notificacoes": {
+    "total": 0,
+    "limite": 25,
+    "pagina": 0,
+    "nao_lidas": 0,
+    "registros": []
+  },
+  "opcoes": {
+    "total": 3,
+    "limite": 25,
+    "pagina": 0,
+    "registros": [
+      {
+        "id": "61461047-9680-4680-8ef8-eac9da377cc4",
+        "nome": "Gestora teste",
+        "contexto": "colaborador",
+        "pessoa_id": "61461047-9680-4680-8ef8-eac9da377cc4"
+      },
+      {
+        "id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+        "nome": "Outra pessoa teste",
+        "contexto": "colaborador",
+        "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0"
+      },
+      {
+        "id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+        "nome": "Pessoa principal teste",
+        "contexto": "colaborador",
+        "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07"
+      }
+    ]
+  },
+  "historico_revisoes": {
+    "total": 4,
+    "limite": 25,
+    "pagina": 0,
+    "registros": [
+      {
+        "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "versao": 4,
+        "snapshot": {
+          "evento": {
+            "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "fim": "2026-11-10T13:00:00-03:00",
+            "tipo": "visita_tecnica",
+            "local": "Local de teste",
+            "estado": "cancelado",
+            "inicio": "2026-11-10T12:00:00-03:00",
+            "motivo": "Cancelar visita de teste",
+            "titulo": "Visita técnica isolada",
+            "acao_id": null,
+            "excecao": false,
+            "version": 4,
+            "data_fim": null,
+            "serie_id": null,
+            "timezone": "America/Sao_Paulo",
+            "descricao": "Execução de teste SQL",
+            "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "projeto_id": null,
+            "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+            "updated_at": "2026-10-22T15:04:18.166416-03:00",
+            "data_inicio": null,
+            "dia_inteiro": false,
+            "visibilidade": "participantes",
+            "geracao_job_id": null,
+            "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "levantamento_id": null,
+            "ocorrencia_data": null,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "serie_versao_id": null,
+            "bloqueia_recursos": true,
+            "origem_ocorrencia": null,
+            "gerado_automaticamente": false
+          },
+          "ferramentas": [
+            {
+              "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+              "version": 2,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+              "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+            }
+          ],
+          "competencias": [],
+          "participantes": [
+            {
+              "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+              "funcao": "participante",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            },
+            {
+              "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+              "funcao": "responsavel",
+              "version": 2,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "ciencia_em": "2026-10-22T15:04:18.956607-03:00",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "confirmada",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-22T15:04:18.166416-03:00"
+      },
+      {
+        "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "versao": 3,
+        "snapshot": {
+          "evento": {
+            "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "fim": "2026-11-10T13:00:00-03:00",
+            "tipo": "visita_tecnica",
+            "local": "Local de teste",
+            "estado": "publicado",
+            "inicio": "2026-11-10T12:00:00-03:00",
+            "motivo": "Planejamento atualizado",
+            "titulo": "Visita técnica isolada",
+            "acao_id": null,
+            "excecao": false,
+            "version": 3,
+            "data_fim": null,
+            "serie_id": null,
+            "timezone": "America/Sao_Paulo",
+            "descricao": "Execução de teste SQL",
+            "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "projeto_id": null,
+            "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+            "updated_at": "2026-10-22T15:04:18.166416-03:00",
+            "data_inicio": null,
+            "dia_inteiro": false,
+            "visibilidade": "participantes",
+            "geracao_job_id": null,
+            "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "levantamento_id": null,
+            "ocorrencia_data": null,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "serie_versao_id": null,
+            "bloqueia_recursos": true,
+            "origem_ocorrencia": null,
+            "gerado_automaticamente": false
+          },
+          "ferramentas": [
+            {
+              "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+              "version": 2,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+              "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+            }
+          ],
+          "competencias": [],
+          "participantes": [
+            {
+              "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+              "funcao": "participante",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            },
+            {
+              "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+              "funcao": "responsavel",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-22T15:04:18.166416-03:00"
+      },
+      {
+        "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "versao": 2,
+        "snapshot": {
+          "evento": {
+            "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "fim": "2026-11-10T11:00:00-03:00",
+            "tipo": "visita_tecnica",
+            "local": "Local de teste",
+            "estado": "publicado",
+            "inicio": "2026-11-10T10:00:00-03:00",
+            "motivo": null,
+            "titulo": "Visita técnica isolada",
+            "acao_id": null,
+            "excecao": false,
+            "version": 2,
+            "data_fim": null,
+            "serie_id": null,
+            "timezone": "America/Sao_Paulo",
+            "descricao": "Execução de teste SQL",
+            "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "projeto_id": null,
+            "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+            "updated_at": "2026-10-22T15:04:18.166416-03:00",
+            "data_inicio": null,
+            "dia_inteiro": false,
+            "visibilidade": "participantes",
+            "geracao_job_id": null,
+            "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "levantamento_id": null,
+            "ocorrencia_data": null,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "serie_versao_id": null,
+            "bloqueia_recursos": true,
+            "origem_ocorrencia": null,
+            "gerado_automaticamente": false
+          },
+          "ferramentas": [
+            {
+              "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+              "version": 2,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "custodia_id": "1e61e9be-4903-41de-83f7-f60be7f9ac5d",
+              "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+            }
+          ],
+          "competencias": [],
+          "participantes": [
+            {
+              "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+              "funcao": "participante",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            },
+            {
+              "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+              "funcao": "responsavel",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-22T15:04:18.166416-03:00"
+      },
+      {
+        "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+        "versao": 1,
+        "snapshot": {
+          "evento": {
+            "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "fim": "2026-11-10T11:00:00-03:00",
+            "tipo": "visita_tecnica",
+            "local": "Local de teste",
+            "estado": "rascunho",
+            "inicio": "2026-11-10T10:00:00-03:00",
+            "motivo": null,
+            "titulo": "Visita técnica isolada",
+            "acao_id": null,
+            "excecao": false,
+            "version": 1,
+            "data_fim": null,
+            "serie_id": null,
+            "timezone": "America/Sao_Paulo",
+            "descricao": "Execução de teste SQL",
+            "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "projeto_id": null,
+            "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+            "updated_at": "2026-10-22T15:04:18.166416-03:00",
+            "data_inicio": null,
+            "dia_inteiro": false,
+            "visibilidade": "participantes",
+            "geracao_job_id": null,
+            "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "levantamento_id": null,
+            "ocorrencia_data": null,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "serie_versao_id": null,
+            "bloqueia_recursos": true,
+            "origem_ocorrencia": null,
+            "gerado_automaticamente": false
+          },
+          "ferramentas": [
+            {
+              "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "custodia_id": null,
+              "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+            }
+          ],
+          "competencias": [],
+          "participantes": [
+            {
+              "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+              "funcao": "participante",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            },
+            {
+              "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+              "funcao": "responsavel",
+              "version": 1,
+              "vigente": true,
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+              "ciencia_em": null,
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "confirmacao": "pendente",
+              "retirado_em": null,
+              "equipe_inicio": null,
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+              "equipe_origem_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-22T15:04:18.166416-03:00"
+      }
+    ]
+  },
+  "historico_comentarios": {
+    "total": 1,
+    "limite": 25,
+    "pagina": 0,
+    "registros": [
+      {
+        "id": "4d748f68-af3d-4349-902a-4adc3beebf63",
+        "texto": "Comentário de teste isolado",
+        "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+        "autor_nome": "Pessoa principal teste",
+        "created_at": "2026-10-22T15:04:18.166416-03:00",
+        "created_by": "a3fa9e7c-c4eb-4859-88e0-4ebb1de57b97",
+        "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+      }
+    ]
+  },
+  "recibos": [
+    {
+      "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+      "tipo": "evento",
+      "acao_id": null,
+      "detalhe": {
+        "serie": null,
+        "evento": {
+          "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+          "fim": "2026-11-10T11:00:00-03:00",
+          "tipo": "visita_tecnica",
+          "local": "Local de teste",
+          "estado": "rascunho",
+          "inicio": "2026-11-10T10:00:00-03:00",
+          "motivo": null,
+          "origem": {
+            "id": null,
+            "tipo": "independente",
+            "estado": null,
+            "titulo": null
+          },
+          "titulo": "Visita técnica isolada",
+          "acao_id": null,
+          "excecao": false,
+          "version": 1,
+          "data_fim": null,
+          "serie_id": null,
+          "timezone": "America/Sao_Paulo",
+          "descricao": "Execução de teste SQL",
+          "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "permissoes": {
+            "editar": true,
+            "iniciar": false,
+            "cancelar": true,
+            "comentar": true,
+            "concluir": false,
+            "publicar": true,
+            "confirmar": false,
+            "abrir_origem": false,
+            "editar_serie": false
+          },
+          "projeto_id": null,
+          "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "data_inicio": null,
+          "dia_inteiro": false,
+          "cliente_nome": "Cliente isolado",
+          "unidade_nome": "Unidade isolada",
+          "visibilidade": "participantes",
+          "dias_visiveis": [],
+          "geracao_job_id": null,
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "levantamento_id": null,
+          "ocorrencia_data": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "serie_versao_id": null,
+          "responsavel_nome": "Pessoa principal teste",
+          "bloqueia_recursos": true,
+          "minha_confirmacao": null,
+          "origem_ocorrencia": null,
+          "gerado_automaticamente": false
+        },
+        "bloqueios": [],
+        "historico": {
+          "total": 1,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 1,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "rascunho",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 1,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": null,
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            }
+          ]
+        },
+        "permissoes": {
+          "editar": true,
+          "iniciar": false,
+          "cancelar": true,
+          "comentar": true,
+          "concluir": false,
+          "publicar": true,
+          "confirmar": false,
+          "abrir_origem": false,
+          "editar_serie": false
+        },
+        "server_now": "2026-10-22T15:04:18.615309-03:00",
+        "comentarios": {
+          "total": 0,
+          "limite": 25,
+          "pagina": 0,
+          "registros": []
+        },
+        "ferramentas": [
+          {
+            "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+            "estado": "planejada",
+            "version": 1,
+            "descricao": "Ferramenta isolada",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "patrimonio": "TEST-47",
+            "custodia_id": null,
+            "pessoa_nome": "Pessoa principal teste",
+            "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507"
+          }
+        ],
+        "competencias": [],
+        "participantes": [
+          {
+            "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+            "funcao": "responsavel",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Pessoa principal teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          },
+          {
+            "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+            "funcao": "participante",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Outra pessoa teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          }
+        ]
+      },
+      "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb"
+    },
+    {
+      "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+      "tipo": "evento",
+      "acao_id": null,
+      "detalhe": {
+        "serie": null,
+        "evento": {
+          "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+          "fim": "2026-11-10T11:00:00-03:00",
+          "tipo": "visita_tecnica",
+          "local": "Local de teste",
+          "estado": "publicado",
+          "inicio": "2026-11-10T10:00:00-03:00",
+          "motivo": null,
+          "origem": {
+            "id": null,
+            "tipo": "independente",
+            "estado": null,
+            "titulo": null
+          },
+          "titulo": "Visita técnica isolada",
+          "acao_id": null,
+          "excecao": false,
+          "version": 2,
+          "data_fim": null,
+          "serie_id": null,
+          "timezone": "America/Sao_Paulo",
+          "descricao": "Execução de teste SQL",
+          "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "permissoes": {
+            "editar": true,
+            "iniciar": true,
+            "cancelar": true,
+            "comentar": true,
+            "concluir": false,
+            "publicar": false,
+            "confirmar": false,
+            "abrir_origem": false,
+            "editar_serie": false
+          },
+          "projeto_id": null,
+          "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "data_inicio": null,
+          "dia_inteiro": false,
+          "cliente_nome": "Cliente isolado",
+          "unidade_nome": "Unidade isolada",
+          "visibilidade": "participantes",
+          "dias_visiveis": [],
+          "geracao_job_id": null,
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "levantamento_id": null,
+          "ocorrencia_data": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "serie_versao_id": null,
+          "responsavel_nome": "Pessoa principal teste",
+          "bloqueia_recursos": true,
+          "minha_confirmacao": null,
+          "origem_ocorrencia": null,
+          "gerado_automaticamente": false
+        },
+        "bloqueios": [],
+        "historico": {
+          "total": 2,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 2,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "publicado",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 2,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": "1e61e9be-4903-41de-83f7-f60be7f9ac5d",
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            },
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 1,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "rascunho",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 1,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": null,
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            }
+          ]
+        },
+        "permissoes": {
+          "editar": true,
+          "iniciar": true,
+          "cancelar": true,
+          "comentar": true,
+          "concluir": false,
+          "publicar": false,
+          "confirmar": false,
+          "abrir_origem": false,
+          "editar_serie": false
+        },
+        "server_now": "2026-10-22T15:04:18.747939-03:00",
+        "comentarios": {
+          "total": 0,
+          "limite": 25,
+          "pagina": 0,
+          "registros": []
+        },
+        "ferramentas": [
+          {
+            "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+            "estado": "reservada",
+            "version": 2,
+            "descricao": "Ferramenta isolada",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "patrimonio": "TEST-47",
+            "custodia_id": "1e61e9be-4903-41de-83f7-f60be7f9ac5d",
+            "pessoa_nome": "Pessoa principal teste",
+            "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507"
+          }
+        ],
+        "competencias": [],
+        "participantes": [
+          {
+            "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+            "funcao": "responsavel",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Pessoa principal teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          },
+          {
+            "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+            "funcao": "participante",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Outra pessoa teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          }
+        ]
+      },
+      "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb"
+    },
+    {
+      "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+      "tipo": "evento",
+      "acao_id": null,
+      "detalhe": {
+        "serie": null,
+        "evento": {
+          "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+          "fim": "2026-11-10T13:00:00-03:00",
+          "tipo": "visita_tecnica",
+          "local": "Local de teste",
+          "estado": "publicado",
+          "inicio": "2026-11-10T12:00:00-03:00",
+          "motivo": "Planejamento atualizado",
+          "origem": {
+            "id": null,
+            "tipo": "independente",
+            "estado": null,
+            "titulo": null
+          },
+          "titulo": "Visita técnica isolada",
+          "acao_id": null,
+          "excecao": false,
+          "version": 3,
+          "data_fim": null,
+          "serie_id": null,
+          "timezone": "America/Sao_Paulo",
+          "descricao": "Execução de teste SQL",
+          "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "permissoes": {
+            "editar": true,
+            "iniciar": true,
+            "cancelar": true,
+            "comentar": true,
+            "concluir": false,
+            "publicar": false,
+            "confirmar": false,
+            "abrir_origem": false,
+            "editar_serie": false
+          },
+          "projeto_id": null,
+          "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "data_inicio": null,
+          "dia_inteiro": false,
+          "cliente_nome": "Cliente isolado",
+          "unidade_nome": "Unidade isolada",
+          "visibilidade": "participantes",
+          "dias_visiveis": [],
+          "geracao_job_id": null,
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "levantamento_id": null,
+          "ocorrencia_data": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "serie_versao_id": null,
+          "responsavel_nome": "Pessoa principal teste",
+          "bloqueia_recursos": true,
+          "minha_confirmacao": null,
+          "origem_ocorrencia": null,
+          "gerado_automaticamente": false
+        },
+        "bloqueios": [],
+        "historico": {
+          "total": 3,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 3,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T13:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "publicado",
+                  "inicio": "2026-11-10T12:00:00-03:00",
+                  "motivo": "Planejamento atualizado",
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 3,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            },
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 2,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "publicado",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 2,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": "1e61e9be-4903-41de-83f7-f60be7f9ac5d",
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            },
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 1,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "rascunho",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 1,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": null,
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            }
+          ]
+        },
+        "permissoes": {
+          "editar": true,
+          "iniciar": true,
+          "cancelar": true,
+          "comentar": true,
+          "concluir": false,
+          "publicar": false,
+          "confirmar": false,
+          "abrir_origem": false,
+          "editar_serie": false
+        },
+        "server_now": "2026-10-22T15:04:18.926595-03:00",
+        "comentarios": {
+          "total": 0,
+          "limite": 25,
+          "pagina": 0,
+          "registros": []
+        },
+        "ferramentas": [
+          {
+            "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+            "estado": "reservada",
+            "version": 2,
+            "descricao": "Ferramenta isolada",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "patrimonio": "TEST-47",
+            "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+            "pessoa_nome": "Pessoa principal teste",
+            "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507"
+          }
+        ],
+        "competencias": [],
+        "participantes": [
+          {
+            "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+            "funcao": "responsavel",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Pessoa principal teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          },
+          {
+            "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+            "funcao": "participante",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Outra pessoa teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          }
+        ]
+      },
+      "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb"
+    },
+    {
+      "id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+      "tipo": "acao",
+      "acao_id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+      "detalhe": {
+        "acao": {
+          "id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+          "prazo": "2026-11-20",
+          "estado": "aberta",
+          "motivo": null,
+          "titulo": "Ação canônica teste",
+          "version": 1,
+          "conclusao": null,
+          "descricao": "Sem evento fictício",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "prioridade": "normal",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "verificado_por": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "exige_verificacao": true
+        },
+        "evento": null
+      },
+      "evento_id": null
+    },
+    {
+      "id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+      "tipo": "evento",
+      "acao_id": null,
+      "detalhe": {
+        "serie": null,
+        "evento": {
+          "id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+          "fim": "2026-11-11T11:00:00-03:00",
+          "tipo": "visita_tecnica",
+          "local": "Local de teste",
+          "estado": "rascunho",
+          "inicio": "2026-11-11T10:00:00-03:00",
+          "motivo": null,
+          "origem": {
+            "id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+            "tipo": "acao",
+            "estado": "aberta",
+            "titulo": "Ação canônica teste"
+          },
+          "titulo": "Visita da ação",
+          "acao_id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+          "excecao": false,
+          "version": 1,
+          "data_fim": null,
+          "serie_id": null,
+          "timezone": "America/Sao_Paulo",
+          "descricao": "Execução de teste SQL",
+          "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "permissoes": {
+            "editar": true,
+            "iniciar": false,
+            "cancelar": true,
+            "comentar": true,
+            "concluir": false,
+            "publicar": true,
+            "confirmar": false,
+            "abrir_origem": true,
+            "editar_serie": false
+          },
+          "projeto_id": null,
+          "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "data_inicio": null,
+          "dia_inteiro": false,
+          "cliente_nome": "Cliente isolado",
+          "unidade_nome": "Unidade isolada",
+          "visibilidade": "participantes",
+          "dias_visiveis": [],
+          "geracao_job_id": null,
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "levantamento_id": null,
+          "ocorrencia_data": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "serie_versao_id": null,
+          "responsavel_nome": "Pessoa principal teste",
+          "bloqueia_recursos": true,
+          "minha_confirmacao": null,
+          "origem_ocorrencia": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+          "gerado_automaticamente": false
+        },
+        "bloqueios": [],
+        "historico": {
+          "total": 1,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 1,
+              "snapshot": {
+                "evento": {
+                  "id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+                  "fim": "2026-11-11T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "rascunho",
+                  "inicio": "2026-11-11T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita da ação",
+                  "acao_id": "663c81e1-35d6-4911-bf68-a846eb2efb53",
+                  "excecao": false,
+                  "version": 1,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "cef2ab21-0220-42f5-b567-c964771af32b",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f8abb1b5-e252-4a15-af7b-e3880bdf071e",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            }
+          ]
+        },
+        "permissoes": {
+          "editar": true,
+          "iniciar": false,
+          "cancelar": true,
+          "comentar": true,
+          "concluir": false,
+          "publicar": true,
+          "confirmar": false,
+          "abrir_origem": true,
+          "editar_serie": false
+        },
+        "server_now": "2026-10-22T15:04:19.134155-03:00",
+        "comentarios": {
+          "total": 0,
+          "limite": 25,
+          "pagina": 0,
+          "registros": []
+        },
+        "ferramentas": [],
+        "competencias": [],
+        "participantes": [
+          {
+            "id": "f8abb1b5-e252-4a15-af7b-e3880bdf071e",
+            "funcao": "responsavel",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Pessoa principal teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          },
+          {
+            "id": "cef2ab21-0220-42f5-b567-c964771af32b",
+            "funcao": "participante",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "2b43792f-669d-4ec5-8c6c-099e46df0406",
+            "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Outra pessoa teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          }
+        ]
+      },
+      "evento_id": "2b43792f-669d-4ec5-8c6c-099e46df0406"
+    },
+    {
+      "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+      "tipo": "evento",
+      "acao_id": null,
+      "detalhe": {
+        "serie": null,
+        "evento": {
+          "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+          "fim": "2026-11-10T13:00:00-03:00",
+          "tipo": "visita_tecnica",
+          "local": "Local de teste",
+          "estado": "cancelado",
+          "inicio": "2026-11-10T12:00:00-03:00",
+          "motivo": "Cancelar visita de teste",
+          "origem": {
+            "id": null,
+            "tipo": "independente",
+            "estado": null,
+            "titulo": null
+          },
+          "titulo": "Visita técnica isolada",
+          "acao_id": null,
+          "excecao": false,
+          "version": 4,
+          "data_fim": null,
+          "serie_id": null,
+          "timezone": "America/Sao_Paulo",
+          "descricao": "Execução de teste SQL",
+          "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "permissoes": {
+            "editar": false,
+            "iniciar": false,
+            "cancelar": false,
+            "comentar": true,
+            "concluir": false,
+            "publicar": false,
+            "confirmar": false,
+            "abrir_origem": false,
+            "editar_serie": false
+          },
+          "projeto_id": null,
+          "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "data_inicio": null,
+          "dia_inteiro": false,
+          "cliente_nome": "Cliente isolado",
+          "unidade_nome": "Unidade isolada",
+          "visibilidade": "participantes",
+          "dias_visiveis": [],
+          "geracao_job_id": null,
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "levantamento_id": null,
+          "ocorrencia_data": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "serie_versao_id": null,
+          "responsavel_nome": "Pessoa principal teste",
+          "bloqueia_recursos": true,
+          "minha_confirmacao": null,
+          "origem_ocorrencia": null,
+          "gerado_automaticamente": false
+        },
+        "bloqueios": [],
+        "historico": {
+          "total": 4,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 4,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T13:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "cancelado",
+                  "inicio": "2026-11-10T12:00:00-03:00",
+                  "motivo": "Cancelar visita de teste",
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 4,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+                    "funcao": "responsavel",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": "2026-10-22T15:04:18.956607-03:00",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "confirmada",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            },
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 3,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T13:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "publicado",
+                  "inicio": "2026-11-10T12:00:00-03:00",
+                  "motivo": "Planejamento atualizado",
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 3,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            },
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 2,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "publicado",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 2,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 2,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": "1e61e9be-4903-41de-83f7-f60be7f9ac5d",
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            },
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 1,
+              "snapshot": {
+                "evento": {
+                  "id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                  "fim": "2026-11-10T11:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "rascunho",
+                  "inicio": "2026-11-10T10:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Visita técnica isolada",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 1,
+                  "data_fim": null,
+                  "serie_id": null,
+                  "timezone": "America/Sao_Paulo",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": null,
+                  "dia_inteiro": false,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [
+                  {
+                    "id": "889d25ae-7ceb-4774-bc68-7155bc3e181d",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "custodia_id": null,
+                    "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507",
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+                  }
+                ],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "2a379d85-2674-46c1-bd34-d0f58e765f2c",
+                    "funcao": "participante",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  },
+                  {
+                    "id": "f36af975-3490-4fcd-a2fc-3768119337c4",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            }
+          ]
+        },
+        "permissoes": {
+          "editar": false,
+          "iniciar": false,
+          "cancelar": false,
+          "comentar": true,
+          "concluir": false,
+          "publicar": false,
+          "confirmar": false,
+          "abrir_origem": false,
+          "editar_serie": false
+        },
+        "server_now": "2026-10-22T15:04:19.370832-03:00",
+        "comentarios": {
+          "total": 1,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "id": "4d748f68-af3d-4349-902a-4adc3beebf63",
+              "texto": "Comentário de teste isolado",
+              "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+              "autor_nome": "Pessoa principal teste",
+              "created_at": "2026-10-22T15:04:18.166416-03:00",
+              "created_by": "a3fa9e7c-c4eb-4859-88e0-4ebb1de57b97",
+              "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9"
+            }
+          ]
+        },
+        "ferramentas": [
+          {
+            "id": "ed328b48-4192-4050-bfbd-0fe6f0da1506",
+            "estado": "cancelada",
+            "version": 2,
+            "descricao": "Ferramenta isolada",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "patrimonio": "TEST-47",
+            "custodia_id": "09174ef8-1f45-497b-a9cd-b56551c8d86b",
+            "pessoa_nome": "Pessoa principal teste",
+            "ferramenta_id": "9bb7a455-2f5d-4ee3-87db-ec0d5a18d507"
+          }
+        ],
+        "competencias": [],
+        "participantes": [
+          {
+            "id": "1ce277e9-cf0a-4550-af1d-d094fbf703c6",
+            "funcao": "responsavel",
+            "version": 2,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "ciencia_em": "2026-10-22T15:04:18.956607-03:00",
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "confirmada",
+            "pessoa_nome": "Pessoa principal teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          },
+          {
+            "id": "a5f97bdb-21e7-494e-af59-12d59499e6d0",
+            "funcao": "participante",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb",
+            "pessoa_id": "85eab04d-5ce0-40e6-8d3d-c44b213899c0",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Outra pessoa teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          }
+        ]
+      },
+      "evento_id": "49a9275d-a6c4-4483-b0e7-0d6a512be1bb"
+    },
+    {
+      "id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be",
+      "tipo": "evento",
+      "acao_id": null,
+      "detalhe": {
+        "serie": null,
+        "evento": {
+          "id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be",
+          "fim": "2026-11-02T02:00:00-03:00",
+          "tipo": "visita_tecnica",
+          "local": "Local de teste",
+          "estado": "rascunho",
+          "inicio": "2026-11-01T01:00:00-03:00",
+          "motivo": null,
+          "origem": {
+            "id": null,
+            "tipo": "independente",
+            "estado": null,
+            "titulo": null
+          },
+          "titulo": "Dia civil",
+          "acao_id": null,
+          "excecao": false,
+          "version": 1,
+          "data_fim": "2026-11-02",
+          "serie_id": null,
+          "timezone": "America/New_York",
+          "descricao": "Execução de teste SQL",
+          "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+          "created_at": "2026-10-22T15:04:18.166416-03:00",
+          "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+          "permissoes": {
+            "editar": true,
+            "iniciar": false,
+            "cancelar": true,
+            "comentar": true,
+            "concluir": false,
+            "publicar": true,
+            "confirmar": false,
+            "abrir_origem": false,
+            "editar_serie": false
+          },
+          "projeto_id": null,
+          "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+          "updated_at": "2026-10-22T15:04:18.166416-03:00",
+          "data_inicio": "2026-11-01",
+          "dia_inteiro": true,
+          "cliente_nome": "Cliente isolado",
+          "unidade_nome": "Unidade isolada",
+          "visibilidade": "participantes",
+          "dias_visiveis": [],
+          "geracao_job_id": null,
+          "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+          "levantamento_id": null,
+          "ocorrencia_data": null,
+          "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+          "serie_versao_id": null,
+          "responsavel_nome": "Pessoa principal teste",
+          "bloqueia_recursos": true,
+          "minha_confirmacao": null,
+          "origem_ocorrencia": null,
+          "gerado_automaticamente": false
+        },
+        "bloqueios": [],
+        "historico": {
+          "total": 1,
+          "limite": 25,
+          "pagina": 0,
+          "registros": [
+            {
+              "autor": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+              "versao": 1,
+              "snapshot": {
+                "evento": {
+                  "id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be",
+                  "fim": "2026-11-02T02:00:00-03:00",
+                  "tipo": "visita_tecnica",
+                  "local": "Local de teste",
+                  "estado": "rascunho",
+                  "inicio": "2026-11-01T01:00:00-03:00",
+                  "motivo": null,
+                  "titulo": "Dia civil",
+                  "acao_id": null,
+                  "excecao": false,
+                  "version": 1,
+                  "data_fim": "2026-11-02",
+                  "serie_id": null,
+                  "timezone": "America/New_York",
+                  "descricao": "Execução de teste SQL",
+                  "cliente_id": "15fe417e-1c9d-4871-a4e7-c2fe2d378f1b",
+                  "created_at": "2026-10-22T15:04:18.166416-03:00",
+                  "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                  "projeto_id": null,
+                  "unidade_id": "51173df3-9b14-4015-b14b-6d621bc06d7b",
+                  "updated_at": "2026-10-22T15:04:18.166416-03:00",
+                  "data_inicio": "2026-11-01",
+                  "dia_inteiro": true,
+                  "visibilidade": "participantes",
+                  "geracao_job_id": null,
+                  "responsavel_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                  "levantamento_id": null,
+                  "ocorrencia_data": null,
+                  "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                  "serie_versao_id": null,
+                  "bloqueia_recursos": true,
+                  "origem_ocorrencia": null,
+                  "gerado_automaticamente": false
+                },
+                "ferramentas": [],
+                "competencias": [],
+                "participantes": [
+                  {
+                    "id": "a7089e47-2e15-45fc-bcd3-10dd42929b14",
+                    "funcao": "responsavel",
+                    "version": 1,
+                    "vigente": true,
+                    "evento_id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be",
+                    "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+                    "ciencia_em": null,
+                    "created_at": "2026-10-22T15:04:18.166416-03:00",
+                    "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+                    "confirmacao": "pendente",
+                    "retirado_em": null,
+                    "equipe_inicio": null,
+                    "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+                    "equipe_origem_id": null
+                  }
+                ]
+              },
+              "created_at": "2026-10-22T15:04:18.166416-03:00"
+            }
+          ]
+        },
+        "permissoes": {
+          "editar": true,
+          "iniciar": false,
+          "cancelar": true,
+          "comentar": true,
+          "concluir": false,
+          "publicar": true,
+          "confirmar": false,
+          "abrir_origem": false,
+          "editar_serie": false
+        },
+        "server_now": "2026-10-22T15:04:19.495629-03:00",
+        "comentarios": {
+          "total": 0,
+          "limite": 25,
+          "pagina": 0,
+          "registros": []
+        },
+        "ferramentas": [],
+        "competencias": [],
+        "participantes": [
+          {
+            "id": "a7089e47-2e15-45fc-bcd3-10dd42929b14",
+            "funcao": "responsavel",
+            "version": 1,
+            "vigente": true,
+            "evento_id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be",
+            "pessoa_id": "eac9041f-8834-47a2-8e66-05a5a38ead07",
+            "ciencia_em": null,
+            "created_at": "2026-10-22T15:04:18.166416-03:00",
+            "created_by": "5cea998b-c9d9-43c3-bb66-56e63e58728f",
+            "confirmacao": "pendente",
+            "pessoa_nome": "Pessoa principal teste",
+            "retirado_em": null,
+            "equipe_inicio": null,
+            "pode_confirmar": false,
+            "organization_id": "b8198fbd-e717-4b5a-bd44-ddebe38d73c9",
+            "equipe_origem_id": null
+          }
+        ]
+      },
+      "evento_id": "25eb4779-0e5d-4e4b-955e-57b5dd7ea4be"
+    }
+  ]
+}

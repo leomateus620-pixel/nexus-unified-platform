@@ -1,0 +1,59 @@
+{
+  "method": "Actual RecordFiles source with test-only transport fixtures; not real Auth, SQL/RLS, Storage HTTP, operational persistence or physical-device evidence",
+  "layouts": [
+    {
+      "name": "pending-with-cancellation",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "pending-with-cancellation",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "cancel validates reason, preserves it after failure and restores section focus",
+      "pass": true
+    },
+    {
+      "name": "new selection after cancellation uses a new intention key",
+      "pass": true
+    },
+    {
+      "name": "resume accepts renamed original bytes, preserves metadata and does not prepare a second record",
+      "pass": true
+    },
+    {
+      "name": "current parent capability hides upload and recovery after focus revalidation",
+      "pass": true
+    },
+    {
+      "name": "query failure hides cached filenames and upload, then retry recovers",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

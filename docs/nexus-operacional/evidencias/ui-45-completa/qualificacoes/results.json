@@ -1,0 +1,183 @@
+{
+  "method": "Source UI with synthetic transport; no connected Auth/SQL/RLS/Storage HTTP, durable persistence or physical-device proof",
+  "layouts": [
+    {
+      "name": "competencias-lista",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "competencia-ficha",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "competencia-formulario",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "qualificacao-ficha",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "qualificacao-formulario",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "competencias-lista",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "competencia-ficha",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "competencia-formulario",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "qualificacao-ficha",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "qualificacao-formulario",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "competencias-lista",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "competencia-ficha",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "competencia-formulario",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "qualificacao-ficha",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "qualificacao-formulario",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "competencias-lista",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "competencia-ficha",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "competencia-formulario",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "qualificacao-ficha",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "qualificacao-formulario",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "name": "competencias-lista",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "competencia-ficha",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "competencia-formulario",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "qualificacao-ficha",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "qualificacao-formulario",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "competencias-lista",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "competencia-ficha",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "competencia-formulario",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "qualificacao-ficha",
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "name": "qualificacao-formulario",
+      "width": 1440,
+      "scrollWidth": 1440
+    }
+  ],
+  "checks": [
+    {
+      "name": "used competence preserves requirement flags and supports current-version comparison",
+      "pass": true
+    },
+    {
+      "name": "failed qualification save keeps fields and retries the same intent",
+      "pass": true
+    },
+    {
+      "name": "review, return, correction, private evidence, validation and revocation retain one qualification",
+      "pass": true
+    },
+    {
+      "name": "a network refresh failure hides stale detail while preserving the open draft",
+      "pass": true
+    },
+    {
+      "name": "list, detail, mutation and comparison denials remove the editor and private files",
+      "pass": true
+    },
+    {
+      "name": "canonical links open the same person and competence, with browser return to the qualification",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

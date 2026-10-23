@@ -8,7 +8,8 @@ permissions:
 jobs:
   circulation:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Runner dependency setup can consume fourteen minutes before browser checks start.
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.0.0
@@ -41,5 +42,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: escada-lc02-browser
-          path: test-results/escada-lc02
+          path: |
+            test-results/escada-lc02
+            /tmp/lc02-vite.log
           if-no-files-found: ignore

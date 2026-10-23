@@ -1,0 +1,120 @@
+{
+  "generatedAtUtc": "2026-10-22T09:12:49.2741820Z",
+  "environment": {
+    "os": "Windows",
+    "node": "24.15.0",
+    "branch": "codex/nexus-operacao-integrada-agenda-equipe",
+    "base": "820c79d60055a25e2d56bf60a091f032c5e7a8bf",
+    "scope": "Working tree local; sem UI completa, deploy ou prova de banco conectado"
+  },
+  "results": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "durationSeconds": 57.87
+    },
+    {
+      "command": "npm run test:operacional",
+      "exitCode": 0,
+      "unitTests": 48,
+      "manifestTests": 9,
+      "protectedFiles": 134,
+      "durationSeconds": 21.81
+    },
+    {
+      "command": "npm run test:orcamento",
+      "exitCode": 0,
+      "mainTests": 59,
+      "catalogTests": 5,
+      "durationSeconds": 22.35
+    },
+    {
+      "command": "npm run test:silo",
+      "exitCode": 0,
+      "tests": 69,
+      "durationSeconds": 15.45
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "durationSeconds": 80.91,
+      "warnings": [
+        "Chunks maiores que 500kB após minificação",
+        "inlineDynamicImports ignorado porque codeSplitting está configurado"
+      ]
+    },
+    {
+      "command": "eslint scoped TS/TSX alterados sem gerados",
+      "exitCode": 0,
+      "files": 47,
+      "errors": 0,
+      "warnings": 1,
+      "warningRule": "react-refresh/only-export-components",
+      "warningFile": "src/features/operacao/components.tsx",
+      "durationSeconds": 18.69,
+      "paths": [
+        "src/components/nexus/AppShell.tsx",
+        "src/features/auth/autorizacao.ts",
+        "src/features/clientes/CadastroEditor.tsx",
+        "src/features/clientes/clientes.functions.ts",
+        "src/features/clientes/ClientesWorkspace.tsx",
+        "src/features/clientes/queries.ts",
+        "src/features/clientes/schemas.ts",
+        "src/features/operacao/access.ts",
+        "src/features/operacao/AcoesWorkspace.tsx",
+        "src/features/operacao/admin.functions.ts",
+        "src/features/operacao/AdminVinculos.tsx",
+        "src/features/operacao/components.tsx",
+        "src/features/operacao/files.functions.ts",
+        "src/features/operacao/files.ts",
+        "src/features/operacao/operacao.functions.ts",
+        "src/features/operacao/PessoasWorkspace.tsx",
+        "src/features/operacao/RecordFiles.tsx",
+        "src/features/operacao/schemas.ts",
+        "src/features/org/session.ts",
+        "src/features/projetos-engenharia/ArquivosPe.tsx",
+        "src/features/projetos-engenharia/domain.ts",
+        "src/features/projetos-engenharia/pe-arquivos.functions.ts",
+        "src/features/projetos-engenharia/projetos-engenharia.functions.ts",
+        "src/features/projetos-engenharia/ProjetosEngenhariaPage.tsx",
+        "src/features/projetos-engenharia/schemas.ts",
+        "src/features/projetos-engenharia/types.ts",
+        "src/lib/nexus-nav.ts",
+        "src/routes/_authenticated/clientes.tsx",
+        "src/routes/_authenticated/comercial.propostas.nova.tsx",
+        "src/routes/_authenticated/configuracoes.index.tsx",
+        "src/routes/_authenticated/equipe.tsx",
+        "src/routes/_authenticated/projetos-engenharia.tsx",
+        "src/routes/_authenticated/route.tsx",
+        "src/routes/_authenticated/seguranca.tsx",
+        "src/routes/mapas-3d_.unidades.tsx",
+        "tests/autorizacao.test.ts",
+        "tests/clientes-operacionais.test.ts",
+        "tests/nexus-nav.test.ts",
+        "tests/operacao-files.test.ts",
+        "tests/operacao-permissions.test.ts",
+        "tests/projetos-engenharia.test.ts",
+        "tests/session-access.test.ts",
+        "tests/ui/main.tsx",
+        "tests/ui/operacional-server.ts",
+        "tests/ui/router.tsx",
+        "tests/ui/server.ts",
+        "tests/ui/session.ts"
+      ]
+    }
+  ],
+  "baselineGlobalLint": {
+    "executedIn": "auditoria inicial da base",
+    "errors": 34043,
+    "warnings": 17,
+    "repeatedInFinalRound": false
+  },
+  "legacyContract": {
+    "command": "npm run test:ui:legacy-contracts",
+    "exitCode": 1,
+    "baseline": "e4dea2acae5b6649674e4d5640f2b8f02aac03e2",
+    "report": "legacy-contracts/catalog-contracts.json",
+    "astCrashCorrected": true
+  },
+  "limit": "Durações incluem execução paralela e não representam benchmark de experiência."
+}

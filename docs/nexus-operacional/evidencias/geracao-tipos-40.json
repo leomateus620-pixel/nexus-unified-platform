@@ -1,0 +1,105 @@
+{
+  "method": "Official @supabase/postgres-meta generation mode; isolated PostgreSQL catalog introspection, no remote data",
+  "generator": {
+    "name": "@supabase/postgres-meta",
+    "version": "0.100.0"
+  },
+  "postgres": "16.15",
+  "migrationCount": 40,
+  "manifestHash": "15204d798d55457cc091c5d68f58e82480d07ab2e110bd8dc632a09ca9dfacb7",
+  "schemas": ["public"],
+  "postgrestContract": "14.5",
+  "postgrestVersionSource": "existing generated client contract; not detected from a remote service",
+  "detectOneToOneRelationships": true,
+  "formatter": {
+    "name": "prettier",
+    "version": "3.9.6",
+    "typescriptAstPreserved": true
+  },
+  "tables": 82,
+  "views": 0,
+  "functions": 103,
+  "enums": 4,
+  "sha256": "a8a1e42873895234b693b54bb8c8f52696fa572530eabe95a26913c845d053eb",
+  "rawSha256": "b0010543f86309cc6a68e4d795c371da4e22a116549c65f581c233649618b720",
+  "bytes": 168996,
+  "rawBytes": 165333,
+  "standaloneTypescriptDiagnostics": 0,
+  "warning": "(node:3284) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added to [BoundPool]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit\n(Use `node --trace-warnings ...` to show where the warning was created)",
+  "scope": "Local disposable PostgreSQL metadata and generated TypeScript only; no connected Auth/Storage HTTP or production data validation",
+  "runtime": {
+    "node": "24.15.0",
+    "npm": "11.12.1",
+    "postgres": "16.15",
+    "supabaseCliInstalled": false,
+    "dockerInstalled": false
+  },
+  "source": {
+    "repository": "https://github.com/supabase/postgres-meta",
+    "registry": "https://registry.npmjs.org",
+    "package": "@supabase/postgres-meta@0.100.0",
+    "typegen": "0.2.2",
+    "postgrestTypegen": "0.4.0",
+    "lockSha256": "ce34b726da39c6a95868c7c16ffcd63aa0255f9211f808160fe52939d85b8a18",
+    "installLifecycleScriptsExecuted": false
+  },
+  "validation": [
+    {
+      "command": "PGTEST_EPHEMERAL=1; scripts/supabase-types/run.ps1 -PostgresBin <verified PG16.15 bin> -Check",
+      "exitCode": 0,
+      "checks": "clean schema installation, current manifest, public table/column/function/enum parity, standalone TypeScript, formatter AST equivalence, generated file hash equality, cluster stopped"
+    },
+    {
+      "command": "npx tsc --noEmit --pretty false",
+      "exitCode": 0
+    },
+    {
+      "command": "npx eslint src/integrations/supabase/types.ts src/features/propostas/hooks.ts src/routes/_authenticated/comercial.propostas.nova.tsx scripts/supabase-types/*.mjs",
+      "exitCode": 0,
+      "files": 7,
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "command": "npm run test:orcamento",
+      "exitCode": 0,
+      "tests": 64
+    },
+    {
+      "command": "node --test scripts/supabase-types/contract.test.mjs",
+      "exitCode": 0,
+      "tests": 3
+    }
+  ],
+  "rawDeterminism": {
+    "runs": 3,
+    "identical": true,
+    "sha256": "b0010543f86309cc6a68e4d795c371da4e22a116549c65f581c233649618b720"
+  },
+  "priorClientComparison": {
+    "tablesBefore": 46,
+    "tablesAfter": 82,
+    "functionsBefore": 36,
+    "functionsAfter": 103,
+    "enumsBefore": 4,
+    "enumsAfter": 4,
+    "removedTables": [],
+    "removedColumns": [],
+    "helpersRawEqualAfterEolNormalization": [
+      "Json",
+      "Tables",
+      "TablesInsert",
+      "TablesUpdate",
+      "Enums",
+      "CompositeTypes"
+    ]
+  },
+  "limitedFixes": [
+    "Explicit unidades_cliente_tenant_operacional and contatos_cliente_tenant_operacional relationship hints with preserved aliases",
+    "NonNullable<Json> annotation for existing non-null object patches; no runtime calculation change"
+  ],
+  "failuresResolved": [
+    "Raw generator formatting differs from project Prettier: automated project formatting preserves AST and both hashes",
+    "Initial textual printer comparator treated trailing enum array comma as change: replaced by AST traversal with semantic-change regression tests"
+  ]
+}

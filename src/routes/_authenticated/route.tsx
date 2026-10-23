@@ -1,6 +1,14 @@
-import { createFileRoute, Link, Navigate, Outlet, redirect, useRouterState } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Navigate,
+  Outlet,
+  redirect,
+  useNavigate,
+  useRouterState,
+} from "@tanstack/react-router";
 
-import { destinoInicial, podeVerRota } from "@/lib/nexus-nav";
+import { destinoInicial, podeVerRota, type DestinoInicial } from "@/lib/nexus-nav";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -26,24 +34,50 @@ function Gate() {
   if (org.isPending) return <LoadingState />;
   if (org.isError) return <ErrorState error={org.error} onRetry={() => org.refetch()} />;
   if (!org.data) return <Onboarding />;
-  if (!podeVerRota(org.data.roles, pathname)) {
-    const inicio = destinoInicial(org.data.roles);
-    if (pathname === "/" && inicio !== "/") return <Navigate to={inicio} replace />;
+  if (!podeVerRota(org.data.roles, pathname, org.data.capabilities)) {
+    const inicio = destinoInicial(org.data.roles, org.data.capabilities);
+    if (pathname === "/" && inicio !== "/" && podeVerRota(org.data.roles, inicio))
+      return <Navigate to={inicio} replace />;
     return <SemAcesso inicio={inicio} />;
   }
   return <Outlet />;
 }
 
-function SemAcesso({ inicio }: { inicio: "/" | "/comercial" }) {
+function SemAcesso({ inicio }: { inicio: DestinoInicial }) {
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+  const [erro, setErro] = useState<string | null>(null);
+  const sair = async () => {
+    await qc.cancelQueries();
+    qc.clear();
+    const { error } = await supabase.auth.signOut();
+    if (error) return setErro("Não foi possível sair. Tente novamente.");
+    await navigate({ to: "/auth", replace: true });
+  };
   return (
     <div className="mx-auto mt-16 max-w-md rounded-lg border border-border bg-card p-6 text-center">
       <h1 className="text-lg font-semibold text-foreground">Sem acesso</h1>
       <p className="mt-1 text-sm text-muted-foreground">
         Seu perfil não tem acesso a esta área. Fale com um administrador se precisar dela.
       </p>
-      <Link to={inicio} className="mt-4 inline-block text-sm text-primary underline">
-        Voltar à área inicial
-      </Link>
+      {inicio === "/auth" ? (
+        <button
+          type="button"
+          onClick={sair}
+          className="mt-4 min-h-11 text-sm text-primary underline"
+        >
+          Sair desta conta
+        </button>
+      ) : (
+        <Link to={inicio} className="mt-4 inline-block text-sm text-primary underline">
+          Voltar à área inicial
+        </Link>
+      )}
+      {erro && (
+        <p role="alert" className="mt-2 text-sm text-destructive">
+          {erro}
+        </p>
+      )}
     </div>
   );
 }

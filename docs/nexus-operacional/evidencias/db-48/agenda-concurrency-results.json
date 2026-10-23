@@ -1,0 +1,45 @@
+{
+  "method": "Two actual PostgreSQL mutation sessions, with third read-only lock observer, isolated random organization and canonical commands. No connected-backend proof.",
+  "database": "postgres",
+  "host": "127.0.0.1",
+  "port": 55481,
+  "captured_at": "2026-10-22T18:47:23.085Z",
+  "checks": [
+    {
+      "name": "last person reservation is revalidated after a real concurrent wait",
+      "pass": true
+    },
+    {
+      "name": "last tool reservation cannot be won by two events with different people",
+      "pass": true
+    },
+    {
+      "name": "cancel wins against stale reschedule without ghost person or tool reservation",
+      "pass": true
+    },
+    {
+      "name": "reschedule wins against stale cancel and keeps the new canonical reservation",
+      "pass": true
+    },
+    {
+      "name": "qualification revoked before publication commit blocks the waiting publication atomically",
+      "pass": true
+    },
+    {
+      "name": "qualification revoked before start commit blocks start and preserves the published plan",
+      "pass": true
+    },
+    {
+      "name": "withdrawn tool blocks cancel and reschedule; completing the event never fabricates physical return",
+      "pass": true
+    },
+    {
+      "name": "unavailability wins against waiting publication for the same person and interval",
+      "pass": true
+    },
+    {
+      "name": "publication wins against waiting unavailability and leaves exactly one confirmed person reservation",
+      "pass": true
+    }
+  ]
+}

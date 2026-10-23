@@ -11,10 +11,16 @@ else run() { bash -c "$*"; }; fi
 run "initdb -D $DIR/data -U postgres -A trust >/dev/null"
 run "pg_ctl -D $DIR/data -o '-p $PORT -k $DIR' -l $DIR/log start -w >/dev/null"
 trap 'run "pg_ctl -D $DIR/data stop -m fast >/dev/null" || true; rm -rf "$DIR"' EXIT
+# Every child scenario runs only after this runner has created the disposable cluster.
+export PGTEST_EPHEMERAL=1
 P="psql -X -q -v ON_ERROR_STOP=1 -h $DIR -p $PORT -U postgres -d postgres"
 $P -f "$ROOT/tests/db/bootstrap.sql"
-for f in "$ROOT"/supabase/migrations/*.sql "$ROOT"/drizzle/migrations/*.sql; do $P -f "$f" >/dev/null; done
+PGTEST_EPHEMERAL=1 PGTEST_PORT="$PORT" node "$ROOT/scripts/migrations/test-installation.mjs"
+$P -f "$ROOT/tests/db/suprimentos-relacoes.sql"
 OUT="$($P -A -F ' | ' -f "$ROOT/tests/db/cenarios.sql")"
+$P -f "$ROOT/tests/db/clientes-operacionais.sql"
+$P -f "$ROOT/tests/db/projetos-engenharia.sql"
+$P -f "$ROOT/tests/db/pe-arquivos.sql"
 # T07/T05: concorrência real com sessões paralelas
 $P -f "$ROOT/tests/db/concorrencia.sql"
 C=0; for k in a b; do ($P -v chave="c7-$k" -v item=29000000-0000-0000-0000-000000000002 -v qtd=7 -f "$ROOT/tests/db/receber7.sql" >/dev/null 2>&1 && echo ok || echo negado) > "$DIR/r-$k" & done; wait
@@ -57,6 +63,28 @@ C01 edição técnica durante geração | $C1 | comprometido $C1Q (esperado 30),
 C02 atualização de demanda durante geração | $C2 | comprometido $C2Q (esperado 40)"
 $P -f "$ROOT/tests/db/save-checkpoints.sql"
 PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/save-concurrency.mjs"
+$P -f "$ROOT/tests/db/operacional.sql"
+$P -f "$ROOT/tests/db/anexos-confirmacao.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/anexos-confirmacao-concurrency.mjs"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/operacional-concurrency.mjs"
+PGTEST_PORT="$PORT" node "$ROOT/tests/db/pessoas-concurrency.mjs"
+PGTEST_PORT="$PORT" node "$ROOT/tests/db/pessoas-identidade.mjs"
+$P -f "$ROOT/tests/db/agenda-foundation.sql"
+$P -f "$ROOT/tests/db/admin-vinculos.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/agenda-concurrency.mjs"
+$P -f "$ROOT/tests/db/scheduler.sql"
+$P -f "$ROOT/tests/db/levantamentos.sql"
+$P -f "$ROOT/tests/db/levantamento-arquivos.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/levantamentos-concurrency.mjs"
+$P -f "$ROOT/tests/db/estudos.sql"
+$P -f "$ROOT/tests/db/estudo-arquivos.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/estudos-concurrency.mjs"
+$P -f "$ROOT/tests/db/almoxarifado.sql"
+$P -f "$ROOT/tests/db/almoxarifado-arquivos.sql"
+PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/almoxarifado-concurrency.mjs"
+for SCENARIO in equipe-disponibilidade agenda-basic agenda-safety agenda-jobs agenda-temporal-edge agenda-series-edge agenda-edge-concurrency agenda-anexos agenda-anexos-concurrency agenda-list-performance; do
+  PGTEST_HOST=127.0.0.1 PGTEST_DATABASE=postgres PGTEST_PORT="$PORT" node "$ROOT/tests/db/$SCENARIO.mjs"
+done
 echo "$OUT"
 if echo "$OUT" | grep -q "FALHOU"; then echo "RESULTADO: FALHAS"; exit 1; fi
 echo "RESULTADO: TODOS PASSARAM"

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-22",
+  "environment": "Local disposable PostgreSQL 16.15 on Windows; three ephemeral databases for install/upgrade/connector-envelope checks",
+  "command": "tests/db/run.ps1 -PostgresBin <PostgreSQL16.15/bin> -Port 55446",
+  "exitCode": 0,
+  "migrations": {
+    "historical": 30,
+    "total": 38,
+    "upgrade": 8,
+    "cleanInstall": true,
+    "existingClientRetained": true,
+    "retryWithoutMigrationDDL": true,
+    "failedDDLAndLedgerRollback": true,
+    "connectorSingleStatementEnvelope": true,
+    "nativeMetadataFixturesIsolated": true
+  },
+  "assertions": {
+    "clients": 28,
+    "engineeringProjects": 19,
+    "engineeringFiles": 19,
+    "foundation": 45,
+    "agenda": 38,
+    "administration": 16,
+    "scheduler": 3,
+    "concurrencyOperational": 8
+  },
+  "scheduler": {
+    "extensionAvailableLocally": false,
+    "manualWorkerTested": true,
+    "automaticCronTestedLocally": false
+  },
+  "storageEvidence": "SQL metadata/policies only; binary HTTP and real connected persistence require separate validation",
+  "productionFixturesInserted": false,
+  "logSha256": "ba8ff816b10edab262045216fc921f62eb8d36396a5fde5e5776792767102ed4"
+}

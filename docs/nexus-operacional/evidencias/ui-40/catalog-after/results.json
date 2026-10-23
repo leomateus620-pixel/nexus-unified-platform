@@ -1,0 +1,3399 @@
+{
+  "label": "catalog-after",
+  "base": "http://127.0.0.1:4194",
+  "date": "2026-10-22T11:20:01.992Z",
+  "browser": "153.0.8010.12",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpus": "Intel(R) Core(TM) i5-1035G1 CPU @ 1.00GHz",
+    "logicalCpus": 4
+  },
+  "methodology": "Synthetic presentation-only fixtures; actual source components/hooks/handlers. Browser events to second requestAnimationFrame (conservative local paint proxy, not server time). No CPU throttle. Five observations including the first interaction per count/action, 1366×768. Physical keyboard/zoom/mobile device unavailable. No production backend reachable.",
+  "blocked": [],
+  "errors": [],
+  "viewports": [
+    {
+      "screen": "list",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 487.9375,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 642.9375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 489.9375,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 916.59375,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 753.046875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 487.9375,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 642.9375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 468.9375,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 868.078125,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 360,
+      "viewport": 360,
+      "pageWidth": 360,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 735.71875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 487.9375,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 642.9375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 468.9375,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 868.078125,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 735.71875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 379.046875,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 478.046875,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 318.046875,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 551.640625,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 470.640625,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 379.046875,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 478.046875,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 318.046875,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 552.09375,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1024,
+      "viewport": 1024,
+      "pageWidth": 1024,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 471.09375,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 382.609375,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 425.609375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 321.609375,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 554.96875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1366,
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 473.96875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 384.046875,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 427.046875,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 323.046875,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 555.578125,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 474.578125,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "list",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Propostas",
+        "Carteira de propostas"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 384.046875,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 427.046875,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "compras",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de compra"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "producao",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Demandas de produção"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "resumo-executivo",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Documento e emissão",
+        "Textos do documento",
+        "Documentos emitidos"
+      ],
+      "rows": 17,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "parametros",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Parâmetros desta revisão"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "historico",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Salvamentos confirmados",
+        "Revisões",
+        "Registros legados",
+        "Cálculos (não contam como edições)"
+      ],
+      "rows": 0,
+      "firstObjectTop": 323.046875,
+      "objectCount": 2,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 559.609375,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "width": 1920,
+      "viewport": 1920,
+      "pageWidth": 1920,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 478.609375,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "screen": "dimensionamento",
+      "scenario": "pending",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nAtualizando cálculo e histórico…\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nRecalculando… · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nSistemas dimensionados\n\nIdentifique o local, defina o sistema e consulte sua composição.\n\nAdicionar sistema\n17 sistema(s)\nCategorias e critérios de medida\n\nCálculo pendente · a composição será atualizada após o recálculo.\n\n#1 · system-0\nOverhead\nPavilhão de recebimento • passarela norte\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#2 · system-1\nTelhado\nSetor 02 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#3 · system-2\nOverhead\nSetor 03 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#4 · system-3\nTelhado\nSetor 04 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#5 · system-4\nOverhead\nSetor 05 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#6 · system-5\nTelhado\nSetor 06 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#7 · system-6\nOverhead\nSetor 07 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#8 · system-7\nTelhado\nSetor 08 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#9 · system-8\nOverhead\nSetor 09 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#10 · system-9\nTelhado\nSetor 10 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#11 · system-1\nOverhead\nSetor 11 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#12 · system-1\nTelhado\nSetor 12 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#13 · system-1\nOverhead\nSetor 13 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#14 · system-1\nTelhado\nSetor 14 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#15 · system-1\nOverhead\nSetor 15 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\n#16 · system-1\nTelhado\nSetor 16 — cobertura industrial\n↗\nExtensão · prévia\n80 m\nCabo\n84 m\n\nResultado desatualizado\nManual\n\nVer composição\n#17 · system-1\nOverhead\nSetor 17 — cobertura industrial\n↗\nExtensão · prévia\n480 m\nCabo\n500 m\n\nResultado desatualizado\nManual\n\nVer composição\nColar sistemas de planilha",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 442.90625,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "empty",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nCálculo atualizado · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nSistemas dimensionados\n\nIdentifique o local, defina o sistema e consulte sua composição.\n\nAdicionar sistema\n0 sistema(s)\nCategorias e critérios de medida\n\nNenhum sistema dimensionado\n\nAdicione sistemas manualmente ou cole linhas de uma planilha. Dimensionamento manual fica identificado como tal.\n\nColar sistemas de planilha",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "readonly",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nEnviada\nSomente leitura\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nCálculo atualizado · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nSistemas dimensionados\n\nIdentifique o local, defina o sistema e consulte sua composição.\n\n17 sistema(s)\n\nRevisão somente leitura\n\nCategorias e critérios de medida\n#1 · system-0\nOverhead\nPavilhão de recebimento • passarela norte\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#2 · system-1\nTelhado\nSetor 02 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#3 · system-2\nOverhead\nSetor 03 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#4 · system-3\nTelhado\nSetor 04 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#5 · system-4\nOverhead\nSetor 05 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#6 · system-5\nTelhado\nSetor 06 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#7 · system-6\nOverhead\nSetor 07 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#8 · system-7\nTelhado\nSetor 08 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#9 · system-8\nOverhead\nSetor 09 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#10 · system-9\nTelhado\nSetor 10 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#11 · system-1\nOverhead\nSetor 11 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#12 · system-1\nTelhado\nSetor 12 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#13 · system-1\nOverhead\nSetor 13 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#14 · system-1\nTelhado\nSetor 14 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#15 · system-1\nOverhead\nSetor 15 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#16 · system-1\nTelhado\nSetor 16 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#17 · system-1\nOverhead\nSetor 17 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 363.609375,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "error",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\n\nNão foi possível carregar: Falha simulada no ambiente isolado de teste\n\nTentar novamente",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "dimensionamento",
+      "scenario": "conflict",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nConflito · trabalho local preservado — Conflito simulado: outra sessão atualizou esta revisão.\nTentar novamente\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nAtualização pendente · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nSistemas dimensionados\n\nIdentifique o local, defina o sistema e consulte sua composição.\n\nAdicionar sistema\n17 sistema(s)\nCategorias e critérios de medida\n#1 · system-0\nOverhead\nPavilhão de recebimento • passarela norte\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#2 · system-1\nTelhado\nSetor 02 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#3 · system-2\nOverhead\nSetor 03 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#4 · system-3\nTelhado\nSetor 04 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#5 · system-4\nOverhead\nSetor 05 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#6 · system-5\nTelhado\nSetor 06 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#7 · system-6\nOverhead\nSetor 07 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#8 · system-7\nTelhado\nSetor 08 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#9 · system-8\nOverhead\nSetor 09 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#10 · system-9\nTelhado\nSetor 10 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#11 · system-1\nOverhead\nSetor 11 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#12 · system-1\nTelhado\nSetor 12 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#13 · system-1\nOverhead\nSetor 13 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#14 · system-1\nTelhado\nSetor 14 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#15 · system-1\nOverhead\nSetor 15 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\n#16 · system-1\nTelhado\nSetor 16 — cobertura industrial\n↗\nExtensão\n80 m\nCabo\n84 m\n\nMedidas calculadas\nManual\n\nVer composição\n#17 · system-1\nOverhead\nSetor 17 — cobertura industrial\n↗\nExtensão\n480 m\nCabo\n500 m\n\nMedidas calculadas\nManual\n\nVer composição\nColar sistemas de planilha",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Sistemas dimensionados",
+        "Editar sistema"
+      ],
+      "rows": 0,
+      "firstObjectTop": 436.203125,
+      "objectCount": 17,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "scenario": "restricted",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · comercial\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nCálculo atualizado · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nItens comerciais\n\nSelecione um item para ajustar demanda, composição e fornecimento nesta revisão.\n\nAdicionar item\nBuscar item\nFornecimento\nTodas as modalidades\nComprar\nFabricar\nTerceirizar\nIncluir todos no orçamento\n21 de 21 itens\nConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\n↗\nCOMP-001\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-002\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-003\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-004\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-005\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-006\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-007\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-008\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-009\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-010\n\nTipo não informado · m · Fabricar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-011\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-012\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-013\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-014\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-015\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-016\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-017\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-018\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-019\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-020\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-021\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nNo orçamento\nSelecionar para lote",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 425.609375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "scenario": "readonly",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nEnviada\nSomente leitura\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nCálculo atualizado · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nItens comerciais\n\nSelecione um item para ajustar demanda, composição e fornecimento nesta revisão.\n\nBuscar item\nFornecimento\nTodas as modalidades\nComprar\nFabricar\nTerceirizar\n21 de 21 itens\n\nRevisão somente leitura\n\nConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\n↗\nCOMP-001\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 12.345,6789\nNo orçamento\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-002\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 22,94\nNo orçamento\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-003\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 32,94\nNo orçamento\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-004\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 42,94\nNo orçamento\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-005\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 52,94\nNo orçamento\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-006\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 62,94\nNo orçamento\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-007\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 72,94\nNo orçamento\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-008\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 82,94\nNo orçamento\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-009\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 92,94\nNo orçamento\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-010\n\nTipo não informado · m · Fabricar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 102,94\nNo orçamento\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-011\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 112,94\nNo orçamento\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-012\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 122,94\nNo orçamento\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-013\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 132,94\nNo orçamento\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-014\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 142,94\nNo orçamento\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-015\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 152,94\nNo orçamento\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-016\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 162,94\nNo orçamento\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-017\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 172,94\nNo orçamento\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\n↗\nCOMP-018\n\nTipo não informado · m · Comprar\n\nManual adicional\n0 m\nConsolidada\n20 m\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 182,94\nNo orçamento\nConjunto de fixação e interface para cobertura metálica\n↗\nCOMP-019\n\nTipo não informado · un · Fabricar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 192,94\nNo orçamento\nAbsorvedor de energia com indicador de impacto\n↗\nCOMP-020\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 202,94\nNo orçamento\nPilar de ancoragem para sistema de proteção contra quedas\n↗\nCOMP-021\n\nTipo não informado · un · Comprar\n\nManual adicional\n0 un\nConsolidada\n20 un\nPreço / un.\nR$ 249,2345\nCusto adotado / un.\nR$ 212,94\nNo orçamento",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": 421.609375,
+      "objectCount": 21,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "itens-comerciais",
+      "scenario": "empty",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nCálculo atualizado · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nItens comerciais\n\nSelecione um item para ajustar demanda, composição e fornecimento nesta revisão.\n\nAdicionar item\nBuscar item\nFornecimento\nTodas as modalidades\nComprar\nFabricar\nTerceirizar\n0 de 0 itens\n\nEsta revisão ainda não tem itens\n\nUse Adicionar item para buscar no catálogo ou cadastrar um produto, com quantidade manual ou somente disponível nesta revisão.\n\nColar custos de planilha",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Itens comerciais",
+        "Item comercial"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "scenario": "pending",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nAtualizando cálculo e histórico…\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nRecalculando… · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\n\nHá alterações não refletidas nos valores abaixo. A atualização aguarda a confirmação das entradas.\n\nPendências\nValidação da Engenharia pendente para fórmulas de pilares/intermediárias.\nLocalizar sistemas no dimensionamento →\nMateriais\nR$ 1.245.789,12\n+\nMontagem · venda\nR$ 498.315,65\n\n40% dos materiais\n\n+\nItem técnico\nR$ 19.750,00\n−\nDesconto\nR$ 12.500,00\n=\nTotal final\nR$ 1.751.354,77\n\nRecalculando\n\nAnálise interna\nMargem estimada 28%\nResultado R$ 490.379,34\nPor sistema\nPor componente\nMateriais por sistema\nSistema nº 1 · Suspenso (OVERHEAD)\nPavilhão de recebimento • passarela norte\nR$ 73.500,00\nVenda de materiais\nSistema nº 2 · Telhado\nSetor 02 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 3 · Suspenso (OVERHEAD)\nSetor 03 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 4 · Telhado\nSetor 04 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 5 · Suspenso (OVERHEAD)\nSetor 05 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 6 · Telhado\nSetor 06 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 7 · Suspenso (OVERHEAD)\nSetor 07 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 8 · Telhado\nSetor 08 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 9 · Suspenso (OVERHEAD)\nSetor 09 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 10 · Telhado\nSetor 10 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 11 · Suspenso (OVERHEAD)\nSetor 11 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 12 · Telhado\nSetor 12 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 13 · Suspenso (OVERHEAD)\nSetor 13 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 14 · Telhado\nSetor 14 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 15 · Suspenso (OVERHEAD)\nSetor 15 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 16 · Telhado\nSetor 16 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nSistema nº 17 · Suspenso (OVERHEAD)\nSetor 17 — cobertura industrial\nR$ 73.500,00\nVenda de materiais\nOperação prevista (recursos)\nMetragem telhado\n640 m\nMetragem overhead (equivalente)\n4.320 m\nCabo total\n5.172 m\nDias-equipe\n43 dias\nViagens\n9\nMão de obra\nR$ 54.123,45\nAlimentação\nR$ 9.675,00\nHospedagem\nR$ 18.060,00\nCombustível\nR$ 1.595,36\nEngenharia (custo)\nR$ 4.320,00\nTotal operação · custo\nR$ 87.773,81\nResultado calculado pelo modelo\n\nNão é demonstração contábil. Tributos são provisões parametrizadas, sem validação fiscal.\n\nPreço-base\nR$ 1.763.854,77\n(−) Desconto\nR$ 12.500,00\nPreço final\nR$ 1.751.354,77\n(−) Custo de materiais + frete\nR$ 923.410,17\n(−) Provisão tributos materiais\nR$ 121.223,40\n(−) Provisão tributos serviços\nR$ 45.223,81\n(−) Operação\nR$ 87.773,81\nResultado\nR$ 490.379,34\nMargem\n28%",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial",
+        "Pendências",
+        "Materiais por sistema",
+        "Operação prevista (recursos)",
+        "Resultado calculado pelo modelo"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "orcamento",
+      "scenario": "unavailable",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nAtualizando cálculo e histórico…\nTotal da proposta\nBRL\n\n—\n\nRecalculando…\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\n\nRevisão ainda não calculada\n\nDimensione um sistema para iniciar. Alterações válidas são salvas e calculadas automaticamente com o motor da revisão.\n\nAbrir dimensionamento →",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "Proteção de acesso e manutenção industrial"
+      ],
+      "rows": 0,
+      "firstObjectTop": null,
+      "objectCount": 0,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        },
+        {
+          "background": "oklch(0.95 0.008 130)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "oc",
+      "scenario": "issued",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nTÉCNICO\nOPERAÇÃO\nProjetos\nCompras e Produção\nExecução / OS\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nCompras e Produção\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nOrdens de compra\n/ OC-2026-0042 · Origem\n054/26 Rev. 05\n· Projeto\nPRJ-054\n\nORDEM DE COMPRA\n\nOC-2026-0042 · Suprimentos industriais — teste\n\nCusto de aquisição, não preço de venda. Após emitida, a OC não é alterada.\n\nemitida\nCondições de aquisição\n\nOrdem emitida: condições preservadas, somente leitura.\n\nEntrega prevista\nFrete (R$)\nCondições\n\nTotal de aquisição\nR$ 20.388,76\n\nItens da ordem\n\nRecebimentos mantêm o vínculo com a demanda de origem.\n\nCOMP-001\nConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\nQuantidade\n20 un\nRecebida\n7\nSaldo a receber\n13\nPreço unitário de aquisiçãoR$ 249,2345\nRegistrar recebimento\nCOMP-002\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\nQuantidade\n20 m\nRecebida\n7\nSaldo a receber\n13\nPreço unitário de aquisiçãoR$ 249,2345\nRegistrar recebimento\nCOMP-003\nConjunto de fixação e interface para cobertura metálica\nQuantidade\n20 un\nRecebida\n7\nSaldo a receber\n13\nPreço unitário de aquisiçãoR$ 249,2345\nRegistrar recebimento\nCOMP-004\nAbsorvedor de energia com indicador de impacto\nQuantidade\n20 un\nRecebida\n7\nSaldo a receber\n13\nPreço unitário de aquisiçãoR$ 249,2345\nRegistrar recebimento",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OC-2026-0042 · Suprimentos industriais — teste",
+        "Condições de aquisição",
+        "Itens da ordem"
+      ],
+      "rows": 0,
+      "firstObjectTop": 502.96875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    },
+    {
+      "screen": "op",
+      "scenario": "issued",
+      "text": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nTÉCNICO\nOPERAÇÃO\nProjetos\nCompras e Produção\nExecução / OS\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nCompras e Produção\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nOrdens de produção\n/ OP-2026-0011 · Origem\n054/26 Rev. 05\n· Projeto\nPRJ-054\n\nORDEM DE PRODUÇÃO\n\nOP-2026-0011\n\nMatéria-prima e roteiro não são inferidos do nome do componente (F15).\n\nliberada\nResponsabilidade e prazo\n\nPlanejamento preservado após a liberação. Acompanhe os apontamentos nos itens.\n\nResponsável\nPrazo\nItens e ficha técnica\n\nA ficha técnica permanece vinculada ao componente e à demanda de origem.\n\nCOMP-001\nConjunto de ancoragem para linha de vida horizontal — cobertura industrial da unidade de recebimento e armazenagem, incluindo interface com estrutura metálica e identificação permanente\nQuantidade\n20 un\nProduzida\n5\nFicha técnica / matéria-prima\nPendente: ficha técnica não informada\nApontar produção\nCOMP-002\nCabo de aço galvanizado com alma de fibra — fornecimento por metro\nQuantidade\n20 m\nProduzida\n5\nFicha técnica / matéria-prima\nFicha de teste — sem validação técnica\nApontar produção\nCOMP-003\nConjunto de fixação e interface para cobertura metálica\nQuantidade\n20 un\nProduzida\n5\nFicha técnica / matéria-prima\nFicha de teste — sem validação técnica\nApontar produção\nCOMP-004\nAbsorvedor de energia com indicador de impacto\nQuantidade\n20 un\nProduzida\n5\nFicha técnica / matéria-prima\nFicha de teste — sem validação técnica\nApontar produção",
+      "viewport": 1366,
+      "pageWidth": 1366,
+      "overflow": false,
+      "headings": [
+        "OP-2026-0011",
+        "Responsabilidade e prazo",
+        "Itens e ficha técnica"
+      ],
+      "rows": 0,
+      "firstObjectTop": 421.96875,
+      "objectCount": 4,
+      "unnamedInputs": [],
+      "opaqueHeader": [
+        {
+          "background": "oklch(0.145 0.023 166)",
+          "backdrop": "none"
+        }
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "count": 17,
+      "componentCount": 21,
+      "action": "input",
+      "medianMs": 42.20000000111759,
+      "maxMs": 67.30000000074506,
+      "samples": [
+        {
+          "ms": 67.30000000074506,
+          "nodes": 903,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012516800149544656
+        },
+        {
+          "ms": 43.90000000037253,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012516800149544656
+        },
+        {
+          "ms": 41.5,
+          "nodes": 903,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012516800149544656
+        },
+        {
+          "ms": 40.40000000037253,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012516800149544656
+        },
+        {
+          "ms": 42.20000000111759,
+          "nodes": 903,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012516800149544656
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "componentCount": 21,
+      "action": "selection",
+      "medianMs": 43.30000000074506,
+      "maxMs": 112,
+      "samples": [
+        {
+          "ms": 57.90000000037253,
+          "nodes": 912,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 42.19999999925494,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 43.30000000074506,
+          "nodes": 912,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 112,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 42.59999999962747,
+          "nodes": 912,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "componentCount": 21,
+      "action": "panel",
+      "medianMs": 47.09999999962747,
+      "maxMs": 75.20000000111759,
+      "samples": [
+        {
+          "ms": 75.20000000111759,
+          "nodes": 966,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 47.09999999962747,
+          "nodes": 966,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 48.5,
+          "nodes": 966,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 44.90000000037253,
+          "nodes": 966,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 47,
+          "nodes": 966,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "componentCount": 21,
+      "action": "scroll",
+      "medianMs": 32,
+      "maxMs": 32.40000000037253,
+      "samples": [
+        {
+          "ms": 11.400000000372529,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.30000000074506,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.40000000037253,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31,
+          "nodes": 899,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "componentCount": 100,
+      "action": "input",
+      "medianMs": 69.59999999962747,
+      "maxMs": 82.40000000037253,
+      "samples": [
+        {
+          "ms": 82.40000000037253,
+          "nodes": 1716,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 69.59999999962747,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 69,
+          "nodes": 1716,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 66.09999999962747,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 71.30000000074506,
+          "nodes": 1716,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "componentCount": 100,
+      "action": "selection",
+      "medianMs": 66.90000000037253,
+      "maxMs": 82.10000000149012,
+      "samples": [
+        {
+          "ms": 82.10000000149012,
+          "nodes": 1725,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 66.90000000037253,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 65.80000000074506,
+          "nodes": 1725,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 64.59999999962747,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 70,
+          "nodes": 1725,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "componentCount": 100,
+      "action": "panel",
+      "medianMs": 66.29999999888241,
+      "maxMs": 89.59999999962747,
+      "samples": [
+        {
+          "ms": 89.59999999962747,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 66.29999999888241,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 66.39999999850988,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 30.59999999962747,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 27.59999999962747,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "componentCount": 100,
+      "action": "scroll",
+      "medianMs": 32.09999999962747,
+      "maxMs": 32.40000000037253,
+      "samples": [
+        {
+          "ms": 6.5,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.40000000037253,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.09999999962747,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 32.09999999962747,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 31.699999999254942,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "componentCount": 500,
+      "action": "input",
+      "medianMs": 98.29999999888241,
+      "maxMs": 108.59999999962747,
+      "samples": [
+        {
+          "ms": 108.59999999962747,
+          "nodes": 1716,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 98.5,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 98.29999999888241,
+          "nodes": 1716,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 95.89999999850988,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        },
+        {
+          "ms": 96.5,
+          "nodes": 1716,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.0012479212161107586
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "componentCount": 500,
+      "action": "selection",
+      "medianMs": 77.70000000111759,
+      "maxMs": 100,
+      "samples": [
+        {
+          "ms": 100,
+          "nodes": 1725,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 79,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 77.70000000111759,
+          "nodes": 1725,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 76.40000000037253,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        },
+        {
+          "ms": 77.30000000074506,
+          "nodes": 1725,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.026605788383407755
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "componentCount": 500,
+      "action": "panel",
+      "medianMs": 78,
+      "maxMs": 109.19999999925494,
+      "samples": [
+        {
+          "ms": 109.19999999925494,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 75,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 78,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 80.19999999925494,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        },
+        {
+          "ms": 33.5,
+          "nodes": 1779,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0.00015988840388653322
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "componentCount": 500,
+      "action": "scroll",
+      "medianMs": 30.5,
+      "maxMs": 50.59999999962747,
+      "samples": [
+        {
+          "ms": 6.399999998509884,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 50.59999999962747,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 34.19999999925494,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 30.5,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        },
+        {
+          "ms": 30,
+          "nodes": 1712,
+          "width": 1366,
+          "layoutShiftIncludingRecentInput": 0
+        }
+      ]
+    }
+  ],
+  "systemPerformance": [
+    {
+      "count": 17,
+      "action": "typing",
+      "medianMs": 31.699999999254942,
+      "maxMs": 35.29999999888241,
+      "samples": [
+        {
+          "ms": 35.29999999888241,
+          "nodes": 721
+        },
+        {
+          "ms": 18.200000001117587,
+          "nodes": 721
+        },
+        {
+          "ms": 31.199999999254942,
+          "nodes": 721
+        },
+        {
+          "ms": 32.80000000074506,
+          "nodes": 721
+        },
+        {
+          "ms": 31.699999999254942,
+          "nodes": 721
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "composition",
+      "medianMs": 28.90000000037253,
+      "maxMs": 45.70000000111759,
+      "samples": [
+        {
+          "ms": 45.70000000111759,
+          "nodes": 743
+        },
+        {
+          "ms": 29.699999999254942,
+          "nodes": 743
+        },
+        {
+          "ms": 28.90000000037253,
+          "nodes": 743
+        },
+        {
+          "ms": 28.199999999254942,
+          "nodes": 743
+        },
+        {
+          "ms": 27.899999998509884,
+          "nodes": 743
+        }
+      ]
+    },
+    {
+      "count": 17,
+      "action": "scroll",
+      "medianMs": 31.40000000037253,
+      "maxMs": 32.19999999925494,
+      "samples": [
+        {
+          "ms": 5.700000001117587,
+          "nodes": 691
+        },
+        {
+          "ms": 29,
+          "nodes": 691
+        },
+        {
+          "ms": 32,
+          "nodes": 691
+        },
+        {
+          "ms": 32.19999999925494,
+          "nodes": 691
+        },
+        {
+          "ms": 31.40000000037253,
+          "nodes": 691
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "typing",
+      "medianMs": 31.299999998882413,
+      "maxMs": 66.10000000149012,
+      "samples": [
+        {
+          "ms": 66.10000000149012,
+          "nodes": 1483
+        },
+        {
+          "ms": 8.099999999627471,
+          "nodes": 1483
+        },
+        {
+          "ms": 31.299999998882413,
+          "nodes": 1483
+        },
+        {
+          "ms": 33.100000001490116,
+          "nodes": 1483
+        },
+        {
+          "ms": 30.300000000745058,
+          "nodes": 1483
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "composition",
+      "medianMs": 56.20000000111759,
+      "maxMs": 71.5,
+      "samples": [
+        {
+          "ms": 71.5,
+          "nodes": 1505
+        },
+        {
+          "ms": 56.20000000111759,
+          "nodes": 1505
+        },
+        {
+          "ms": 58.29999999888241,
+          "nodes": 1505
+        },
+        {
+          "ms": 40.09999999962747,
+          "nodes": 1505
+        },
+        {
+          "ms": 32.19999999925494,
+          "nodes": 1505
+        }
+      ]
+    },
+    {
+      "count": 100,
+      "action": "scroll",
+      "medianMs": 31.300000000745058,
+      "maxMs": 32.80000000074506,
+      "samples": [
+        {
+          "ms": 10.599999999627471,
+          "nodes": 1453
+        },
+        {
+          "ms": 32.80000000074506,
+          "nodes": 1453
+        },
+        {
+          "ms": 31,
+          "nodes": 1453
+        },
+        {
+          "ms": 32.09999999962747,
+          "nodes": 1453
+        },
+        {
+          "ms": 31.300000000745058,
+          "nodes": 1453
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "typing",
+      "medianMs": 31.5,
+      "maxMs": 69.09999999962747,
+      "samples": [
+        {
+          "ms": 69.09999999962747,
+          "nodes": 1483
+        },
+        {
+          "ms": 27.40000000037253,
+          "nodes": 1483
+        },
+        {
+          "ms": 32.59999999962747,
+          "nodes": 1483
+        },
+        {
+          "ms": 31.5,
+          "nodes": 1483
+        },
+        {
+          "ms": 31.5,
+          "nodes": 1483
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "composition",
+      "medianMs": 59.69999999925494,
+      "maxMs": 72.60000000149012,
+      "samples": [
+        {
+          "ms": 72.60000000149012,
+          "nodes": 1505
+        },
+        {
+          "ms": 59.69999999925494,
+          "nodes": 1505
+        },
+        {
+          "ms": 59.79999999888241,
+          "nodes": 1505
+        },
+        {
+          "ms": 42.59999999962747,
+          "nodes": 1505
+        },
+        {
+          "ms": 30.5,
+          "nodes": 1505
+        }
+      ]
+    },
+    {
+      "count": 500,
+      "action": "scroll",
+      "medianMs": 31.799999998882413,
+      "maxMs": 32.80000000074506,
+      "samples": [
+        {
+          "ms": 14.900000000372529,
+          "nodes": 1453
+        },
+        {
+          "ms": 31.799999998882413,
+          "nodes": 1453
+        },
+        {
+          "ms": 30.09999999962747,
+          "nodes": 1453
+        },
+        {
+          "ms": 32.100000001490116,
+          "nodes": 1453
+        },
+        {
+          "ms": 32.80000000074506,
+          "nodes": 1453
+        }
+      ]
+    }
+  ],
+  "passes": [
+    {
+      "phase": "all",
+      "at": "2026-10-22T11:20:01.993Z"
+    }
+  ],
+  "editPayload": [
+    {
+      "table": "sistemas_dimensionados",
+      "mutation": "update",
+      "payload": {
+        "identificacao": "Identificação editada no teste"
+      },
+      "filters": [
+        [
+          "eq",
+          "id",
+          "system-0"
+        ],
+        [
+          "eq",
+          "identificacao",
+          "Pavilhão de recebimento • passarela norte"
+        ]
+      ]
+    }
+  ],
+  "pastePayload": [
+    {
+      "table": "sistemas_dimensionados",
+      "mutation": "update",
+      "payload": {
+        "identificacao": "Identificação editada no teste"
+      },
+      "filters": [
+        [
+          "eq",
+          "id",
+          "system-0"
+        ],
+        [
+          "eq",
+          "identificacao",
+          "Pavilhão de recebimento • passarela norte"
+        ]
+      ]
+    },
+    {
+      "name": "consolidarProposta",
+      "payload": {
+        "data": {
+          "revisao_id": "rev-fixture",
+          "operacao_id": "f03ece7a-1684-470d-8134-3fef2cc3ef75"
+        }
+      }
+    },
+    {
+      "table": "sistemas_dimensionados",
+      "mutation": "upsert",
+      "payload": [
+        {
+          "identificacao": "Setor colado",
+          "tipo": "OVERHEAD",
+          "metragem": 120,
+          "trechos": 4,
+          "id": "5524a5e7-5aaf-4c18-bb58-db323375f212",
+          "organization_id": "org-fixture",
+          "revisao_id": "rev-fixture",
+          "ordem": 18,
+          "origem": "manual"
+        }
+      ],
+      "filters": []
+    },
+    {
+      "name": "consolidarProposta",
+      "payload": {
+        "data": {
+          "revisao_id": "rev-fixture",
+          "operacao_id": "7dac10fa-4e49-491e-a457-fc4cde56c8dd"
+        }
+      }
+    }
+  ],
+  "internalSummary": "Ir para o conteúdo\nNEXUS\nTecnologia em Segurança\npara o Agroindustrial\nBuscar funcionalidade\nVISÃO GERAL\nDashboard\nCOMERCIAL\nComercial\nClientes\nProdutos e Soluções\nTÉCNICO\nOPERAÇÃO\nRECURSOS\nCONFORMIDADE\nGESTÃO\nWorkspace\nComercial\n\nrevisao-ui@example.invalid\n\nAmbiente isolado de apresentação · admin\n\nRE\nPropostas\n054/26 · Rev. 05\nRascunho\nProteção de acesso e manutenção industrial\n\nCooperativa Industrial — Unidade de teste · Recebimento e armazenagem de grãos\n\nDetalhes da proposta\nTotal da proposta\nBRL\n\nR$ 1.751.354,77\n\nCálculo atualizado · 1 pendência\nItens\nDimensionamento\nOrçamento\nCompras\nProdução\nResumo\nParâmetros\n· Área auxiliar\nHistórico\n· Área auxiliar\nPrévia interna\nFocar documento\nEditar textos\n\nNEXUS\n\nVisão interna (contém custos) · RASCUNHO\n\nProposta 054/26 · Rev. 05\n\nNão emitida\n\nHá pendências nesta revisão. 1 pendência(s) para conferência no Orçamento.\n\nCliente: Cooperativa Industrial — Unidade de teste · CNPJ 00.000.000/0000-00\n\nObra: Recebimento e armazenagem de grãos · Endereço sintético para revisão visual\n\nContato: Contato de teste contato@example.invalid\n\nInstalação de sistemas de proteção para manutenção e acesso industrial.\n\nSistemas\nNº\tIdentificação / local\tTipo\tExtensão\n1\tPavilhão de recebimento • passarela norte\tSuspenso (OVERHEAD)\t480 m\n2\tSetor 02 — cobertura industrial\tTelhado\t80 m\n3\tSetor 03 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n4\tSetor 04 — cobertura industrial\tTelhado\t80 m\n5\tSetor 05 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n6\tSetor 06 — cobertura industrial\tTelhado\t80 m\n7\tSetor 07 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n8\tSetor 08 — cobertura industrial\tTelhado\t80 m\n9\tSetor 09 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n10\tSetor 10 — cobertura industrial\tTelhado\t80 m\n11\tSetor 11 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n12\tSetor 12 — cobertura industrial\tTelhado\t80 m\n13\tSetor 13 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n14\tSetor 14 — cobertura industrial\tTelhado\t80 m\n15\tSetor 15 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\n16\tSetor 16 — cobertura industrial\tTelhado\t80 m\n17\tSetor 17 — cobertura industrial\tSuspenso (OVERHEAD)\t480 m\nInvestimento\nItem técnico\nR$ 19.750,00\nMateriais\nR$ 1.245.789,12\nMontagem\nR$ 498.315,65\nDesconto\nR$ 12.500,00\nTotal\nR$ 1.751.354,77\nResultado (interno)\nR$ 490.379,34\nMargem (interno)\n28%\nFormas de pagamento\n\nOpção 1 · 12 parcelas sem juros\nR$ 145.946,23 a R$ 145.946,23.\n\nOpção 2 · 50% / 30% / 20%\nItem técnico + materiais (R$ 632.769,56 / R$ 379.661,74 / R$ 253.107,82); montagem por medições quinzenais.\n\nCondições\nValidade\n30 dias\nGarantia\n5 anos\n\nFrete incluso. Condições comerciais sujeitas à emissão da proposta.\n\nResponsável técnico: Responsável de teste\n\nDocumento e emissão\nrascunho\n\nNão emitida · Visão interna\n\n1 pendência(s). Confira o Orçamento antes da emissão.\n\nVer documento do cliente\nImprimir\nEmitir proposta\n\nRegistra o documento e o status comercial. O envio por e-mail não está integrado.\n\nTextos do documento\n\nTextos desta revisão. As alterações válidas são salvas automaticamente.\n\nObjeto\nDescrição do escopo da proposta, exibida antes dos sistemas.\nValidade\nGarantia\nCondições\nResponsável técnico\n\nA prévia exibe os textos confirmados. Salvamento e emissão são ações distintas.\n\nDocumentos emitidos\n\nNenhum documento emitido.",
+  "keyboardFirstFocus": {
+    "tag": "A",
+    "text": "Ir para o conteúdo",
+    "label": null,
+    "outline": "oklch(0.44 0.1 158) solid 2px"
+  },
+  "zoom200": {
+    "viewport": 1366,
+    "pageWidth": 1730,
+    "overflow": true,
+    "headings": [
+      "Proteção de acesso e manutenção industrial",
+      "Itens comerciais",
+      "Item comercial"
+    ],
+    "rows": 0,
+    "firstObjectTop": 1289.796875,
+    "objectCount": 21,
+    "unnamedInputs": [],
+    "opaqueHeader": [
+      {
+        "background": "oklch(0.145 0.023 166)",
+        "backdrop": "none"
+      },
+      {
+        "background": "oklch(0.95 0.008 130)",
+        "backdrop": "none"
+      }
+    ]
+  },
+  "keyboardViewportProxy": {
+    "viewport": 390,
+    "pageWidth": 390,
+    "overflow": false,
+    "headings": [
+      "Proteção de acesso e manutenção industrial",
+      "Sistemas dimensionados",
+      "Editar sistema"
+    ],
+    "rows": 0,
+    "firstObjectTop": 138.9375,
+    "objectCount": 17,
+    "unnamedInputs": [],
+    "opaqueHeader": [
+      {
+        "background": "oklch(0.145 0.023 166)",
+        "backdrop": "none"
+      },
+      {
+        "background": "oklch(0.95 0.008 130)",
+        "backdrop": "none"
+      }
+    ]
+  },
+  "assertions": {
+    "viewportMatrixComplete": true,
+    "scenariosComplete": true,
+    "noBrowserErrors": true,
+    "noExternalApplicationRequests": true,
+    "noPageOverflow": true,
+    "editUsesOriginalPatch": true,
+    "pasteUsesOriginalInsert": true
+  }
+}

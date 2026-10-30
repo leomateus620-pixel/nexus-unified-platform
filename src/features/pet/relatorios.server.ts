@@ -3,6 +3,7 @@ import { z } from "zod";
 import { detalheResult, objectResult, type Json } from "./schemas";
 import { gerarPetPdf, type PetPdfImagem } from "./pdf";
 import { sha256, validarBinario } from "@/features/operacao/files";
+import { chaveRelatorio, type PetRelatorioRenderVersao } from "./relatorio-version";
 
 const metadataSchema = z
   .object({
@@ -44,6 +45,7 @@ export type GerarRelatorioOptions = {
   userId: string;
   chave: string;
   expectedVersion?: number;
+  renderVersao?: PetRelatorioRenderVersao;
   carregarAdmin?: (() => Promise<SupabaseClient>) | undefined;
 };
 
@@ -52,6 +54,8 @@ export type GerarRelatorioOptions = {
  * No operation here issues a permit or creates a certified signature. */
 export async function gerarRelatorioPersistido(options: GerarRelatorioOptions) {
   const { db, organizationId: org, petId, userId } = options;
+  const renderVersao = options.renderVersao ?? "1";
+  const requestKey = await chaveRelatorio(options.chave, renderVersao);
   const current = detalheResult.parse(
     result(await db.rpc("pet_obter", { p_org: org, p_id: petId })),
   );
@@ -63,7 +67,7 @@ export async function gerarRelatorioPersistido(options: GerarRelatorioOptions) {
     p_org: org,
     p_pet: petId,
     p_expected_version: version,
-    p_chave: options.chave,
+    p_chave: requestKey,
   });
   if (!prepared.error || !unavailable.has(prepared.error.code ?? "")) {
     const job = objectResult.parse(result(prepared));
@@ -105,7 +109,11 @@ export async function gerarRelatorioPersistido(options: GerarRelatorioOptions) {
       tamanho: bytes.length,
       version: Number(pet["version"]),
       tipo: "relatorio_derivado" as const,
-      nome: `${String(pet["numero"])}-relatorio-v${String(pet["version"])}.pdf`,
+      nome:
+        renderVersao === "1"
+          ? `${String(pet["numero"])}-relatorio-v${String(pet["version"])}.pdf`
+          : `${String(pet["numero"])}-relatorio-v${String(pet["version"])}-formato-${renderVersao}.pdf`,
+      render_versao: renderVersao,
       persistido,
       mensagem,
       documento_id: documento?.["id"] ?? null,
@@ -177,7 +185,8 @@ export async function gerarRelatorioPersistido(options: GerarRelatorioOptions) {
     await fail("Uma fotografia confirmada não pôde ser consultada/verificada.");
     throw error;
   }
-  const bytes = await gerarPetPdf(
+  const renderer = renderVersao === "1" ? gerarPetPdf : (await import("./pdf-v2")).gerarPetPdfV2;
+  const bytes = await renderer(
     {
       ...snapshot,
       anexos: metadata,
@@ -197,13 +206,14 @@ export async function gerarRelatorioPersistido(options: GerarRelatorioOptions) {
   }
   const hash = await sha256(bytes);
   try {
-    const nome = `${String(asObject(snapshot["pet"])["numero"])}-relatorio-${String(documento["id"])}.pdf`;
+    const suffix = renderVersao === "1" ? "" : `-formato-${renderVersao}`;
+    const nome = `${String(asObject(snapshot["pet"])["numero"])}-relatorio-${String(documento["id"])}${suffix}.pdf`;
     const preparedAttachment = objectResult.parse(
       result(
         await db.rpc("iniciar_anexo_pet", {
           _org: org,
           _pet: petId,
-          _chave: options.chave,
+          _chave: requestKey,
           _dados: {
             nome,
             mime: "application/pdf",

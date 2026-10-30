@@ -3,9 +3,11 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Json } from "../src/features/pet/schemas";
 import { petPdfFixture } from "./fixtures/pet-pdf.fixture";
-const pdf = vi.hoisted(() => ({ gerar: vi.fn() }));
+const pdf = vi.hoisted(() => ({ gerar: vi.fn(), gerarV2: vi.fn() }));
 vi.mock("../src/features/pet/pdf", () => ({ gerarPetPdf: pdf.gerar }));
+vi.mock("../src/features/pet/pdf-v2", () => ({ gerarPetPdfV2: pdf.gerarV2 }));
 import { gerarRelatorioPersistido } from "../src/features/pet/relatorios.server";
+import { chaveRelatorio } from "../src/features/pet/relatorio-version";
 
 const id = (n: number) => `b7330000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const bytes = new TextEncoder().encode("%PDF-1.7\nDERIVED TEST ONLY\n%%EOF");
@@ -109,6 +111,7 @@ function database(
 beforeEach(() => {
   vi.clearAllMocks();
   pdf.gerar.mockResolvedValue(bytes);
+  pdf.gerarV2.mockResolvedValue(bytes);
 });
 describe("PET: relatório derivado e arquivamento privado", () => {
   it("preserva download sem serviço, registra falha e não anuncia arquivo disponível", async () => {
@@ -183,6 +186,67 @@ describe("PET: relatório derivado e arquivamento privado", () => {
     expect(r.persistido).toBe(true);
     expect(pdf.gerar).not.toHaveBeenCalled();
     expect(t.store.uploadToSignedUrl).not.toHaveBeenCalled();
+    expect(t.store.download).toHaveBeenCalledWith(meta.caminho);
+  });
+
+  it("retry pendente V1 preserva renderer e payload legados após a introdução do V2", async () => {
+    const t = database({ needsUpload: true });
+    const r = await gerarRelatorioPersistido({
+      ...t.params,
+      renderVersao: "1",
+      carregarAdmin: t.loadAdmin,
+    });
+    expect(r.persistido).toBe(true);
+    expect(r.render_versao).toBe("1");
+    expect(pdf.gerar).toHaveBeenCalledOnce();
+    expect(pdf.gerarV2).not.toHaveBeenCalled();
+    expect(t.db.rpc).toHaveBeenCalledWith(
+      "iniciar_anexo_pet",
+      expect.objectContaining({
+        _chave: id(4),
+        _dados: expect.objectContaining({
+          nome: `PET-DEMONSTRACAO-relatorio-${id(5)}.pdf`,
+          sha256: hash,
+        }),
+      }),
+    );
+  });
+
+  it("fixa o formato V2 numa chave própria e usa o snapshot preparado em retries", async () => {
+    const t = database();
+    const params = { ...t.params, renderVersao: "2" as const, carregarAdmin: t.loadAdmin };
+    const requestKey = await chaveRelatorio(id(4), "2");
+    const first = await gerarRelatorioPersistido(params);
+    const retry = await gerarRelatorioPersistido(params);
+    expect(first.render_versao).toBe("2");
+    expect(first.nome).toContain("formato-2.pdf");
+    expect(first.sha256).toBe(retry.sha256);
+    expect(pdf.gerar).not.toHaveBeenCalled();
+    expect(pdf.gerarV2).toHaveBeenCalledTimes(2);
+    expect(t.db.rpc).toHaveBeenCalledWith("pet_preparar_relatorio", {
+      p_org: id(1),
+      p_pet: id(3),
+      p_expected_version: 7,
+      p_chave: requestKey,
+    });
+    expect(t.db.rpc).toHaveBeenCalledWith(
+      "iniciar_anexo_pet",
+      expect.objectContaining({
+        _chave: requestKey,
+        _dados: expect.objectContaining({
+          nome: `PET-DEMONSTRACAO-relatorio-${id(5)}-formato-2.pdf`,
+        }),
+      }),
+    );
+    expect(t.store.uploadToSignedUrl).not.toHaveBeenCalled();
+  });
+
+  it("retry V2 arquivado devolve os bytes preservados sem chamar nenhum renderer", async () => {
+    const t = database({ available: true });
+    const r = await gerarRelatorioPersistido({ ...t.params, renderVersao: "2" });
+    expect(r.persistido).toBe(true);
+    expect(pdf.gerar).not.toHaveBeenCalled();
+    expect(pdf.gerarV2).not.toHaveBeenCalled();
     expect(t.store.download).toHaveBeenCalledWith(meta.caminho);
   });
 

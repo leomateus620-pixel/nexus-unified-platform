@@ -1,0 +1,227 @@
+{
+  "recorded_at": "2026-10-30T06:06:17.294450+00:00",
+  "scope": "PDF renderer/API compatibility, local list restoration, and full disposable PostgreSQL regression",
+  "certification_claimed": false,
+  "remote_database_tested": false,
+  "tests": {
+    "passed": 32,
+    "failed": 0,
+    "suites_passed": 11,
+    "cases": [
+      {
+        "suite": "pet-documentos-functions.test.ts",
+        "name": "PET: contrato autenticado do relatório / preserva o input legado e retorna explicitamente arquivamento não configurado",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-documentos-functions.test.ts",
+        "name": "PET: contrato autenticado do relatório / preserva chave e versão explícitas e deriva autoria da sessão",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-documentos-functions.test.ts",
+        "name": "PET: contrato autenticado do relatório / recusa identificadores ou versão inválidos antes de preparar documento",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-documentos-functions.test.ts",
+        "name": "PET: contrato autenticado do relatório / fixa formato explícito V2 sem alterar a chave de solicitação recebida",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-documentos-functions.test.ts",
+        "name": "PET: pacote original e revogação durante leitura / recusa devolver os bytes se o acesso for revogado depois do Storage",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-documentos-functions.test.ts",
+        "name": "PET: pacote original e revogação durante leitura / devolve o original somente com acesso revalidado",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / restores search, zero-based page, tab and scroll without storing record data",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / isolates organization, account, OS and the execution overview",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / fails safely for malformed, incompatible or excessively large session values",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / bounds local fields and ignores unrelated or prototype-named properties",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / remains usable when session storage is blocked or unavailable",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / reconciles an obsolete page only from the current completed server response",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-list-state.test.ts",
+        "name": "PET list: local scope and return position / accepts optional legacy pagination metadata and rejects unconfirmed counts",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf-v2.test.ts",
+        "name": "PET: relatório V2 e preservação de formato / mantém a chave legada e separa formatos sem incluir a versão operacional",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf-v2.test.ts",
+        "name": "PET: relatório V2 e preservação de formato / preserva os bytes do renderer V1 para o snapshot de referência",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf-v2.test.ts",
+        "name": "PET: relatório V2 e preservação de formato / gera bytes V2 idênticos, com fontes locais incorporadas e registros completos",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf-v2.test.ts",
+        "name": "PET: relatório V2 e preservação de formato / apresenta encerramento e correções sem confundir o original com a projeção efetiva",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf.test.ts",
+        "name": "PET PDF de consulta / gera A4 multipágina com seções, cabeçalhos repetidos e classificação derivada",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf.test.ts",
+        "name": "PET PDF de consulta / usa snapshot, fuso e durações oficiais, preservando saída com assinatura pendente",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf.test.ts",
+        "name": "PET PDF de consulta / não perde o documento por glifo não suportado, texto longo ou imagem inválida",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf.test.ts",
+        "name": "PET PDF de consulta / incorpora fotografia com legenda e preserva identificação antiga quando o snapshot é textual",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-pdf.test.ts",
+        "name": "PET PDF de consulta / distingue horários retificados, eventos originais e integridade do job derivado",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / preserva download sem serviço, registra falha e não anuncia arquivo disponível",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / mantém compatibilidade do download se a migração nova não estiver aplicada",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / usa snapshot fixado e confirma bytes antes de disponibilizar o documento",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / não confirma bytes divergentes e mantém o relatório local explicitamente não arquivado",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / repetição de documento disponível baixa o original arquivado sem regenerar ou sobrescrever",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / retry pendente V1 preserva renderer e payload legados após a introdução do V2",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / fixa o formato V2 numa chave própria e usa o snapshot preparado em retries",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / retry V2 arquivado devolve os bytes preservados sem chamar nenhum renderer",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / nega leitura e revogação sem entregar bytes ou promover documento",
+        "status": "passed"
+      },
+      {
+        "suite": "pet-relatorios.test.ts",
+        "name": "PET: relatório derivado e arquivamento privado / retoma objeto já enviado verificando hash sem enviar novamente",
+        "status": "passed"
+      }
+    ]
+  },
+  "database": {
+    "runner": "tests/db/run.sh",
+    "result": "passed",
+    "migration_count": 56,
+    "pet_listagem_checks": 20,
+    "pet_listagem_fixture_count": 136,
+    "pet_lifecycle_checks": 45,
+    "pet_retificacao_checks": 20,
+    "pet_relatorio_checks": 19,
+    "topology": "separate disposable loopback cluster, stopped by runner"
+  },
+  "pdf_visual_qa": {
+    "format": "2",
+    "pages": 11,
+    "controlled_fixture": true,
+    "fixture_source": "tests/fixtures/pet-pdf.fixture.ts (45 checklist rows)",
+    "embedded_picture": "Repository demonstration screenshot, for image pipeline inspection only; not a field evidence record",
+    "checks": [
+      "A4 pages rendered and visually inspected",
+      "Saira and Barlow embedded from licensed local assets",
+      "First page, repeated table headings, final audit and photographic caption inspected",
+      "No text bounding boxes outside margins in V2 tests",
+      "Same snapshot/images/renderer produce identical bytes",
+      "V1 baseline golden SHA-256 preserved",
+      "Pending V1 and archived V1/V2 retries preserve their renderer and files"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "pdf/pet-v2-capa.png",
+      "bytes": 111540,
+      "sha256": "b5783e83989c998a962df396fafd67b75003fc186592999e246d1bd48272ba58"
+    },
+    {
+      "path": "pdf/pet-v2-demonstracao.pdf",
+      "bytes": 209193,
+      "sha256": "31593c09bf35b67df55bbafe299197437b9cf68609c83b054623220aa4c39141"
+    },
+    {
+      "path": "pdf/pet-v2-encerrada.png",
+      "bytes": 114122,
+      "sha256": "a66108e7d0be01afb4a87f9a4510c0db540c6d8f9c7d6f9f132518815d35cef0"
+    },
+    {
+      "path": "pdf/pet-v2-fotografia.png",
+      "bytes": 188310,
+      "sha256": "36e996fae293e89896d3a45a307ae45ef309c3e25a220007abf3f6c736e74aca"
+    },
+    {
+      "path": "pdf/pet-v2-paginacao.png",
+      "bytes": 482714,
+      "sha256": "2f458ca6a48270885f2c9cee03c70f56744bae7fd1e1b9f4a9389b4ae346c203"
+    }
+  ]
+}

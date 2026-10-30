@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -21,6 +21,22 @@ import {
 } from "./ui-types";
 import "./pet.css";
 import { PetModelos } from "./PetModelos";
+import { PetAppearanceProvider, PetThemeToggle, usePetAppearance } from "./PetAppearance";
+import { PetPicker } from "./PetPicker";
+import {
+  petListStateKey,
+  readPetListState,
+  writePetListState,
+  petListPageAfterResponse,
+} from "./list-state";
+
+function listSessionStorage(): Storage | null {
+  try {
+    return typeof window === "undefined" ? null : window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
 
 export function PetStatus({ value, attention = false }: { value: string; attention?: boolean }) {
   const tone =
@@ -37,7 +53,7 @@ export function PetStatus({ value, attention = false }: { value: string; attenti
     </span>
   );
 }
-export function PetCard({ pet }: { pet: PetResumo }) {
+export function PetCard({ pet, onOpen }: { pet: PetResumo; onOpen?: () => void }) {
   const expired =
     !!pet.emitida_em && !pet.encerrada_em && new Date(pet.termino_previsto).getTime() <= Date.now();
   return (
@@ -64,7 +80,21 @@ export function PetCard({ pet }: { pet: PetResumo }) {
             ? ` · ${pet.assinaturas_pendentes} assinatura(s) pendente(s)`
             : ""}
         </span>
-        <Link className="nx-pet-link" to="/execucao/pets/$petId" params={{ petId: pet.id }}>
+        <Link
+          className="nx-pet-link"
+          to="/execucao/pets/$petId"
+          params={{ petId: pet.id }}
+          onClick={(event) => {
+            if (
+              event.button === 0 &&
+              !event.metaKey &&
+              !event.ctrlKey &&
+              !event.shiftKey &&
+              !event.altKey
+            )
+              onOpen?.();
+          }}
+        >
           Abrir PET <ArrowRight size={15} aria-hidden />
         </Link>
       </div>
@@ -81,14 +111,16 @@ export function ExecucaoWorkspace({ ordemId }: { ordemId?: string | undefined })
   if (session.isError || access.isError)
     return <ErrorState error={session.error || access.error} onRetry={() => access.refetch()} />;
   return (
-    <ExecucaoContent
-      key={`${org}:${user}:${session.data.roles.join(",")}:${JSON.stringify(access.data)}`}
-      organizationId={org}
-      userId={user}
-      ordemId={ordemId}
-      canManage={access.data.gerirOperacao}
-      canReview={access.data.revisarOperacao}
-    />
+    <PetAppearanceProvider organizationId={org} userId={user}>
+      <ExecucaoContent
+        key={`${org}:${user}:${ordemId || "lista"}:${session.data.roles.join(",")}:${JSON.stringify(access.data)}`}
+        organizationId={org}
+        userId={user}
+        ordemId={ordemId}
+        canManage={access.data.gerirOperacao}
+        canReview={access.data.revisarOperacao}
+      />
+    </PetAppearanceProvider>
   );
 }
 function ExecucaoContent({
@@ -104,13 +136,44 @@ function ExecucaoContent({
   canManage: boolean;
   canReview: boolean;
 }) {
+  const { theme } = usePetAppearance();
+  const stateKey = petListStateKey(organizationId, userId, ordemId);
+  const [restored] = useState(() => readPetListState(listSessionStorage(), stateKey));
+  const [page, setPage] = useState(restored.page);
   const listFn = useServerFn(petListar),
     optionsFn = useServerFn(petOpcoes),
     executeFn = useServerFn(petExecutar);
   const queryClient = useQueryClient(),
     navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  const [tab, setTab] = useState<"ordens" | "pets">("ordens");
+  const [search, setSearch] = useState(restored.search);
+  const [tab, setTab] = useState<"ordens" | "pets">(restored.tab);
+  const pendingScroll = useRef<number | null>(restored.scrollY);
+  const positionCaptured = useRef(false);
+  const currentView = useRef(restored);
+  currentView.current = { ...currentView.current, search, page, tab };
+  useEffect(() => {
+    positionCaptured.current = false;
+    writePetListState(listSessionStorage(), stateKey, currentView.current);
+  }, [stateKey, search, page, tab]);
+  useEffect(
+    () => () => {
+      const state = currentView.current;
+      writePetListState(listSessionStorage(), stateKey, {
+        ...state,
+        scrollY:
+          pendingScroll.current === null && !positionCaptured.current
+            ? window.scrollY
+            : state.scrollY,
+      });
+    },
+    [stateKey],
+  );
+  const capturePosition = () => {
+    pendingScroll.current = null;
+    positionCaptured.current = true;
+    currentView.current = { ...currentView.current, scrollY: window.scrollY };
+    writePetListState(listSessionStorage(), stateKey, currentView.current);
+  };
   const [dialog, setDialog] = useState<"os" | "pet" | "espaco" | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [busy, setBusy] = useState(false);
@@ -118,12 +181,55 @@ function ExecucaoContent({
   const keyFor = useCommandKey();
   const [notice, setNotice] = useState("");
   const list = useQuery({
-    queryKey: ["pet", organizationId, userId, "lista"],
+    queryKey: [
+      "pet",
+      organizationId,
+      userId,
+      "lista",
+      ordemId,
+      tab,
+      ordemId || tab === "pets" ? search : "",
+      page,
+    ],
     queryFn: ({ signal }) =>
-      listFn({ data: { organization_id: organizationId }, signal }) as Promise<PetLista>,
+      listFn({
+        data: {
+          organization_id: organizationId,
+          filtros: {
+            ...(ordemId ? { os_id: ordemId } : {}),
+            busca: ordemId || tab === "pets" ? search : "",
+            pagina: page,
+            limite: 20,
+          },
+        },
+        signal,
+      }) as Promise<PetLista>,
     refetchInterval: 30_000,
+    placeholderData: (previous, query) => (query?.queryKey[4] === ordemId ? previous : undefined),
     retry: false,
   });
+  const confirmedPage = list.isSuccess && !list.isFetching && !list.isPlaceholderData;
+  const correctedPage = petListPageAfterResponse(page, list.data, confirmedPage);
+  useEffect(() => {
+    if (correctedPage !== null) setPage(correctedPage);
+  }, [correctedPage]);
+  useEffect(() => {
+    if (!confirmedPage || correctedPage !== null || pendingScroll.current === null) return;
+    const top = pendingScroll.current;
+    let second = 0;
+    const first = requestAnimationFrame(() => {
+      second = requestAnimationFrame(() => {
+        pendingScroll.current = null;
+        window.scrollTo({ top, behavior: "instant" });
+        currentView.current = { ...currentView.current, scrollY: window.scrollY };
+        writePetListState(listSessionStorage(), stateKey, currentView.current);
+      });
+    });
+    return () => {
+      cancelAnimationFrame(first);
+      cancelAnimationFrame(second);
+    };
+  }, [confirmedPage, correctedPage, stateKey]);
   const options = useQuery({
     queryKey: ["pet", organizationId, userId, "opcoes"],
     queryFn: ({ signal }) =>
@@ -183,13 +289,7 @@ function ExecucaoContent({
   const ordem = ordemId ? list.data.ordens.find((o) => o.id === ordemId) : null;
   if (ordemId && !ordem)
     return <ErrorState error={new Error("Ordem indisponível ou sem permissão de acesso.")} />;
-  const pets = list.data.registros.filter(
-    (p) =>
-      (!ordemId || p.os_id === ordemId) &&
-      `${p.numero} ${p.atividade} ${p.espaco_nome || ""}`
-        .toLocaleLowerCase()
-        .includes(search.toLocaleLowerCase()),
-  );
+  const pets = list.data.registros;
   const ordens = list.data.ordens.filter((o) =>
     `${o.numero} ${o.titulo}`.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
   );
@@ -222,8 +322,8 @@ function ExecucaoContent({
               : "Acompanhe ordens de serviço e permissões de entrada em uma jornada conectada."}
           </p>
         </div>
-        {canManage && (
-          <ActionButton onClick={() => (ordem ? openPet() : setDialog("os"))}>
+        {canManage && !ordem && (
+          <ActionButton onClick={() => setDialog("os")}>
             <Plus size={16} aria-hidden className="mr-2 inline" />
             {ordem ? "Criar PET" : "Nova ordem de serviço"}
           </ActionButton>
@@ -302,7 +402,10 @@ function ExecucaoContent({
           )}
         </div>
       )}
-      <section className="nx-pet-panel">
+      <section
+        className={`nx-pet-panel${ordem || tab === "pets" ? " pet-section" : ""}`}
+        data-pet-theme={ordem || tab === "pets" ? theme : undefined}
+      >
         <div className="nx-pet-section-top">
           <div>
             <h2>{ordem ? "Permissões de Entrada e Trabalho" : "Seu workspace de execução"}</h2>
@@ -312,11 +415,14 @@ function ExecucaoContent({
                 : "Consulte os registros autorizados ao seu perfil."}
             </p>
           </div>
-          {ordem && canManage && (
-            <ActionButton variant="ghost" onClick={openPet}>
-              <Plus size={15} aria-hidden className="mr-1 inline" /> Criar PET
-            </ActionButton>
-          )}
+          <div className="nx-pet-actions">
+            {(ordem || tab === "pets") && <PetThemeToggle />}
+            {ordem && canManage && !["concluida", "cancelada"].includes(ordem.estado) && (
+              <ActionButton onClick={openPet}>
+                <Plus size={16} aria-hidden /> Criar PET
+              </ActionButton>
+            )}
+          </div>
         </div>
         <div className="nx-pet-controls">
           {!ordem && (
@@ -325,7 +431,11 @@ function ExecucaoContent({
                 variant={tab === "ordens" ? "primary" : "ghost"}
                 role="tab"
                 aria-selected={tab === "ordens"}
-                onClick={() => setTab("ordens")}
+                onClick={() => {
+                  pendingScroll.current = null;
+                  setTab("ordens");
+                  setPage(0);
+                }}
               >
                 Ordens de serviço
               </ActionButton>
@@ -333,7 +443,11 @@ function ExecucaoContent({
                 variant={tab === "pets" ? "primary" : "ghost"}
                 role="tab"
                 aria-selected={tab === "pets"}
-                onClick={() => setTab("pets")}
+                onClick={() => {
+                  pendingScroll.current = null;
+                  setTab("pets");
+                  setPage(0);
+                }}
               >
                 PETs
               </ActionButton>
@@ -346,8 +460,13 @@ function ExecucaoContent({
             </span>
             <input
               type="search"
+              maxLength={120}
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                pendingScroll.current = null;
+                setSearch(e.target.value);
+                setPage(0);
+              }}
               placeholder="Número, atividade ou identificação"
             />
           </label>
@@ -355,21 +474,19 @@ function ExecucaoContent({
         <div className="nx-pet-list">
           {ordem || tab === "pets" ? (
             pets.length ? (
-              pets.map((p) => <PetCard key={p.id} pet={p} />)
+              pets.map((p) => <PetCard key={p.id} pet={p} onOpen={capturePosition} />)
             ) : (
               <EmptyState
                 title="Nenhuma PET encontrada"
-                hint="Crie a permissão a partir da ordem de serviço e do espaço confinado."
+                hint={
+                  search
+                    ? "Ajuste a busca para consultar outras permissões."
+                    : "Crie a permissão a partir da ordem de serviço."
+                }
               />
             )
           ) : ordens.length ? (
-            ordens.map((o) => (
-              <OrdemCard
-                key={o.id}
-                ordem={o}
-                pets={list.data.registros.filter((p) => p.os_id === o.id)}
-              />
-            ))
+            ordens.map((o) => <OrdemCard key={o.id} ordem={o} />)
           ) : (
             <EmptyState
               title="Nenhuma ordem de serviço"
@@ -377,6 +494,17 @@ function ExecucaoContent({
             />
           )}
         </div>
+        {(ordem || tab === "pets") && list.data.total > (list.data.limite || 20) && (
+          <PetPagination
+            page={page}
+            total={list.data.total}
+            limit={list.data.limite || 20}
+            onChange={(next) => {
+              pendingScroll.current = null;
+              setPage(next);
+            }}
+          />
+        )}
       </section>
       {!ordem && canManage && opts && (
         <PetModelos
@@ -402,6 +530,7 @@ function ExecucaoContent({
       >
         <form
           className="nx-pet space-y-4"
+          data-pet-theme={dialog === "os" ? undefined : theme}
           data-dirty="true"
           aria-busy={busy}
           onSubmit={(e) => {
@@ -420,6 +549,8 @@ function ExecucaoContent({
                 identificacao: form.identificacao,
                 localizacao: form.localizacao,
               });
+            else if (!form.espaco_id || !form.os_id)
+              setError(new Error("Selecione a OS e o espaço confinado."));
             else
               void command("criar_pet", {
                 os_id: form.os_id,
@@ -502,54 +633,52 @@ function ExecucaoContent({
           )}
           {dialog === "pet" && (
             <>
-              <label className="nx-pet-field">
-                OS vinculada
-                <select
-                  required
+              <div className="pet-create-context">
+                <strong>
+                  {ordem?.numero || list.data.ordens.find((o) => o.id === form.os_id)?.numero}
+                </strong>
+                {" · "}
+                {ordem?.titulo || list.data.ordens.find((o) => o.id === form.os_id)?.titulo}
+              </div>
+              {!ordem && (
+                <PetPicker
+                  label="Ordem de serviço"
                   value={form.os_id}
-                  onChange={(e) => set("os_id", e.target.value)}
-                  disabled={!!ordem}
-                >
-                  <option value="">Selecione a OS</option>
-                  {list.data.ordens
+                  options={list.data.ordens
                     .filter((o) => !["concluida", "cancelada"].includes(o.estado))
-                    .map((o) => (
-                      <option value={o.id} key={o.id}>
-                        {o.numero} · {o.titulo}
-                      </option>
-                    ))}
-                </select>
-              </label>
-              <label className="nx-pet-field">
-                Espaço confinado
-                <select
-                  required
-                  value={form.espaco_id}
-                  onChange={(e) => set("espaco_id", e.target.value)}
-                >
-                  <option value="">Selecione o espaço cadastrado</option>
-                  {opts?.espacos
-                    .filter(
-                      (o) =>
-                        o.unidade_id ===
-                        (ordem?.unidade_id ||
-                          list.data.ordens.find((o) => o.id === form.os_id)?.unidade_id),
-                    )
-                    .map((o) => (
-                      <option value={o.id} key={o.id}>
-                        {optionName(o)}
-                      </option>
-                    ))}
-                </select>
-                <small>Origem: cadastro de espaços da unidade vinculada à OS.</small>
-              </label>
+                    .map((o) => ({ id: o.id, label: `${o.numero} · ${o.titulo}` }))}
+                  onChange={(value) => {
+                    set("os_id", value);
+                    set("espaco_id", "");
+                  }}
+                  placeholder="Buscar OS"
+                />
+              )}
+              <PetPicker
+                label="Espaço confinado"
+                value={form.espaco_id}
+                options={(opts?.espacos || [])
+                  .filter(
+                    (o) =>
+                      o.unidade_id ===
+                      (ordem?.unidade_id ||
+                        list.data.ordens.find((o) => o.id === form.os_id)?.unidade_id),
+                  )
+                  .map((o) => ({
+                    id: o.id,
+                    label: optionName(o),
+                    ...(o.localizacao ? { description: o.localizacao } : {}),
+                  }))}
+                onChange={(value) => set("espaco_id", value)}
+                placeholder="Buscar espaço desta unidade"
+              />
               {ordem && (
                 <ActionButton variant="ghost" onClick={() => setDialog("espaco")}>
                   Cadastrar espaço desta unidade
                 </ActionButton>
               )}
               <label className="nx-pet-field">
-                Objetivo e descrição do trabalho
+                Atividade a realizar
                 <textarea
                   required
                   value={form.atividade}
@@ -557,23 +686,21 @@ function ExecucaoContent({
                 />
               </label>
               <label className="nx-pet-field">
-                Término previsto da jornada
+                Validade prevista
                 <input
                   type="datetime-local"
                   required
                   value={form.termino_previsto}
                   onChange={(e) => set("termino_previsto", e.target.value)}
                 />
-                <small>
-                  Defina a jornada real. O prazo não é preenchido automaticamente como 24 horas.
-                </small>
+                <small>Informe o término real previsto para a jornada.</small>
               </label>
               <label className="nx-pet-field">
                 Fuso utilizado
                 <select value={form.timezone} onChange={(e) => set("timezone", e.target.value)}>
-                  <option value="America/Sao_Paulo">Brasília · America/Sao_Paulo</option>
-                  <option value="America/Manaus">Manaus · America/Manaus</option>
-                  <option value="America/Rio_Branco">Rio Branco · America/Rio_Branco</option>
+                  <option value="America/Sao_Paulo">Brasília</option>
+                  <option value="America/Manaus">Manaus</option>
+                  <option value="America/Rio_Branco">Rio Branco</option>
                 </select>
               </label>
             </>
@@ -615,14 +742,14 @@ function ExecucaoContent({
               ? "Criar OS"
               : dialog === "espaco"
                 ? "Salvar espaço"
-                : "Criar rascunho da PET"}
+                : "Criar e preparar PET"}
           </ActionButton>
         </form>
       </OperationalDialog>
     </div>
   );
 }
-function OrdemCard({ ordem, pets }: { ordem: PetOrdem; pets: PetResumo[] }) {
+function OrdemCard({ ordem }: { ordem: PetOrdem }) {
   return (
     <article className="nx-pet-card">
       <div className="nx-pet-card-top">
@@ -634,10 +761,7 @@ function OrdemCard({ ordem, pets }: { ordem: PetOrdem; pets: PetResumo[] }) {
       </div>
       <p className="nx-pet-subtitle">{ordem.escopo}</p>
       <div className="nx-pet-card-bottom">
-        <span>
-          {pets.length} PET(s) vinculada(s) · {pets.reduce((s, p) => s + (p.presentes || 0), 0)}{" "}
-          pessoa(s) com presença aberta
-        </span>
+        <span>Consultar permissões e presenças vinculadas</span>
         <Link className="nx-pet-link" to="/execucao/ordens/$ordemId" params={{ ordemId: ordem.id }}>
           Abrir OS <ArrowRight size={15} aria-hidden />
         </Link>
@@ -647,19 +771,46 @@ function OrdemCard({ ordem, pets }: { ordem: PetOrdem; pets: PetResumo[] }) {
 }
 
 export function PetHistoricoUnidade({ unidadeId }: { unidadeId: string }) {
+  const session = useOrg();
+  return (
+    <PetHistoricoUnidadeScope
+      key={`${session.data?.orgId}:${session.data?.userId}:${unidadeId}`}
+      unidadeId={unidadeId}
+    />
+  );
+}
+function PetHistoricoUnidadeScope({ unidadeId }: { unidadeId: string }) {
   const org = useOrg();
   const load = useServerFn(petListar);
   const [search, setSearch] = useState("");
-  const q = useQuery({
-    queryKey: ["pet", org.data?.orgId, org.data?.userId, "unidade", unidadeId],
+  const [page, setPage] = useState(0);
+  const q = useQuery<PetLista>({
+    queryKey: ["pet", org.data?.orgId, org.data?.userId, "unidade", unidadeId, search, page],
+    placeholderData: (previous, query) =>
+      query?.queryKey[1] === org.data?.orgId &&
+      query?.queryKey[2] === org.data?.userId &&
+      query?.queryKey[4] === unidadeId
+        ? previous
+        : undefined,
     enabled: !!org.data?.orgId && !!unidadeId,
     queryFn: ({ signal }) =>
       load({
-        data: { organization_id: org.data!.orgId, filtros: { unidade_id: unidadeId } },
+        data: {
+          organization_id: org.data!.orgId,
+          filtros: { unidade_id: unidadeId, busca: search, pagina: page, limite: 20 },
+        },
         signal,
       }) as Promise<PetLista>,
     retry: false,
   });
+  const correctedPage = petListPageAfterResponse(
+    page,
+    q.data,
+    q.isSuccess && !q.isFetching && !q.isPlaceholderData,
+  );
+  useEffect(() => {
+    if (correctedPage !== null) setPage(correctedPage);
+  }, [correctedPage]);
   return (
     <section className="nx-pet nx-pet-panel">
       <div className="nx-pet-section-top">
@@ -673,7 +824,15 @@ export function PetHistoricoUnidade({ unidadeId }: { unidadeId: string }) {
       </div>
       <label className="nx-pet-field mb-4">
         Buscar número, espaço ou atividade
-        <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} />
+        <input
+          type="search"
+          maxLength={120}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(0);
+          }}
+        />
       </label>
       {q.isPending ? (
         <LoadingState />
@@ -681,23 +840,56 @@ export function PetHistoricoUnidade({ unidadeId }: { unidadeId: string }) {
         <ErrorState error={q.error} onRetry={() => q.refetch()} />
       ) : (
         <div className="nx-pet-list">
-          {q.data.registros
-            .filter((p) =>
-              `${p.numero} ${p.espaco_nome || ""} ${p.atividade}`
-                .toLowerCase()
-                .includes(search.toLowerCase()),
-            )
-            .map((p) => (
-              <PetCard key={p.id} pet={p} />
-            ))}
+          {q.data.registros.map((p) => (
+            <PetCard key={p.id} pet={p} />
+          ))}
           {!q.data.registros.length && (
             <EmptyState
               title="Esta unidade ainda não possui PETs"
               hint="As permissões criadas nas ordens de serviço aparecerão aqui."
             />
           )}
+          {q.data.total > (q.data.limite || 20) && (
+            <PetPagination
+              page={page}
+              total={q.data.total}
+              limit={q.data.limite || 20}
+              onChange={setPage}
+            />
+          )}
         </div>
       )}
     </section>
+  );
+}
+function PetPagination({
+  page,
+  total,
+  limit,
+  onChange,
+}: {
+  page: number;
+  total: number;
+  limit: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <nav className="pet-pagination" aria-label="Páginas de PETs">
+      <span>
+        {total} permissões · Página {page + 1} de {Math.ceil(total / limit)}
+      </span>
+      <div className="nx-pet-actions">
+        <ActionButton variant="ghost" disabled={page === 0} onClick={() => onChange(page - 1)}>
+          Anterior
+        </ActionButton>
+        <ActionButton
+          variant="ghost"
+          disabled={(page + 1) * limit >= total}
+          onClick={() => onChange(page + 1)}
+        >
+          Próxima
+        </ActionButton>
+      </div>
+    </nav>
   );
 }

@@ -80,10 +80,11 @@ export default defineConfig({
               else throw Error("Operação não disponível");
             });
             if (name === "pdf") {
-              const { gerarPetPdf } = await server.ssrLoadModule(
-                path.join(app, "src/features/pet/pdf.ts"),
+              const v2 = data.render_versao === "2";
+              const renderer = await server.ssrLoadModule(
+                path.join(app, v2 ? "src/features/pet/pdf-v2.ts" : "src/features/pet/pdf.ts"),
               );
-              const bytes = await gerarPetPdf(result);
+              const bytes = await (v2 ? renderer.gerarPetPdfV2 : renderer.gerarPetPdf)(result);
               result = {
                 base64: Buffer.from(bytes).toString("base64"),
                 nome: result.pet.numero + "-relatorio.pdf",

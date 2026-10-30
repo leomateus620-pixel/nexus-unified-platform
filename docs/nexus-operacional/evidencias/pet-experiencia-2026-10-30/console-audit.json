@@ -1,0 +1,78 @@
+{
+  "consoleErrors": [],
+  "pageErrors": [],
+  "pages": [
+    {
+      "state": "draft",
+      "theme": "dark"
+    },
+    {
+      "state": "emitted",
+      "theme": "dark"
+    },
+    {
+      "state": "expired",
+      "theme": "dark"
+    },
+    {
+      "state": "interrupted",
+      "theme": "dark"
+    },
+    {
+      "state": "closing-preparation",
+      "theme": "dark"
+    },
+    {
+      "state": "closing",
+      "theme": "dark"
+    },
+    {
+      "state": "closed",
+      "theme": "dark"
+    },
+    {
+      "state": "cancelled",
+      "theme": "dark"
+    },
+    {
+      "state": "readonly",
+      "theme": "dark"
+    },
+    {
+      "state": "draft",
+      "theme": "light"
+    },
+    {
+      "state": "emitted",
+      "theme": "light"
+    },
+    {
+      "state": "expired",
+      "theme": "light"
+    },
+    {
+      "state": "interrupted",
+      "theme": "light"
+    },
+    {
+      "state": "closing-preparation",
+      "theme": "light"
+    },
+    {
+      "state": "closing",
+      "theme": "light"
+    },
+    {
+      "state": "closed",
+      "theme": "light"
+    },
+    {
+      "state": "cancelled",
+      "theme": "light"
+    },
+    {
+      "state": "readonly",
+      "theme": "light"
+    }
+  ]
+}

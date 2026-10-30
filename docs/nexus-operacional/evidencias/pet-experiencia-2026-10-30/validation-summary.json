@@ -1,0 +1,88 @@
+{
+  "scope": "PET dentro da OS; componentes reais, banco local descartável e fixtures de apresentação separadas",
+  "typecheck": "passed",
+  "assets": "passed: 199 arquivos PDF.js 6.4.299",
+  "build": "passed",
+  "unit": {
+    "files": 14,
+    "passed": 74,
+    "failed": 0
+  },
+  "contracts": {
+    "tests": 12,
+    "protectedFiles": 134,
+    "unexpectedChanges": 0
+  },
+  "database": {
+    "fullRunner": "passed",
+    "migrations": 56,
+    "petLifecycle": 45,
+    "petCorrections": 20,
+    "petReports": 19,
+    "petList": 20,
+    "listFixturePets": 136
+  },
+  "browser": {
+    "sqlBehaviorGroups": 11,
+    "presentationLayouts": 100,
+    "presentationGroups": 7,
+    "cancelAndConcurrentGroups": 4,
+    "listReturnGroups": 3,
+    "preparationLayouts": 60,
+    "pageErrors": 0,
+    "widths": [
+      360,
+      390,
+      430,
+      768,
+      1366,
+      1920
+    ],
+    "themes": [
+      "dark",
+      "light"
+    ],
+    "browser": "Installed Google Chrome headless",
+    "deviceTimeZone": "Asia/Tokyo",
+    "reducedMotion": true
+  },
+  "lint": {
+    "scopeErrors": 0,
+    "scopeWarnings": 1,
+    "existingWarning": "react-refresh/only-export-components em PetDocumentos.tsx",
+    "globalSource": {
+      "errors": 156,
+      "warnings": 25,
+      "files": 28,
+      "changedFileErrors": 0,
+      "command": "eslint src scripts tests --format json"
+    }
+  },
+  "remoteMigration": {
+    "connector": "Lovable",
+    "chatStarted": false,
+    "path": "drizzle/migrations/0037_pet_listagem.sql",
+    "position": 56,
+    "sha256": "1d34f65a9cb1b4ad6383c96e06ae9f4192c3f8ebe5f9df4d7a5dd88e8e2f1e44",
+    "ledgerVerified": true,
+    "authorizedSqlRead": {
+      "total": 0,
+      "pagina": 0,
+      "limite": 1,
+      "rows": 0
+    },
+    "productionFixturesCreated": false
+  },
+  "pdf": {
+    "format": "2",
+    "pagesInspected": 11,
+    "v1Unchanged": true,
+    "deterministicAndArchivedRetriesTested": true
+  },
+  "limits": [
+    "Nenhum provedor certificado real foi validado; emissão/aditamento continuam bloqueados sem integração.",
+    "Auth/Storage HTTP privado, iPhone físico, VoiceOver e teclado virtual real não exercitados.",
+    "Laboratório usa roteador controlado com useBlocker stub; bloqueio de navegação de produção não exercitado.",
+    "Fixtures de apresentação não comprovam persistência; SQL e testes de comportamento separados constam dos relatórios."
+  ]
+}

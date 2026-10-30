@@ -1,0 +1,10 @@
+{
+  "method": "Actual PET-only cancellation dialog with synthetic draft/access transport. No database mutation or operational certification.",
+  "checks": [
+    "draft cancellation is reachable with manage access and no PET operating permission",
+    "network failure preserves motive and explicit confirmation in the light portal",
+    "cancellation stays unavailable for non-managers, issued PETs and cancelled records",
+    "concurrent finalization preserves local closing text until explicit discard"
+  ],
+  "errors": []
+}

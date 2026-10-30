@@ -6,6 +6,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { obterInput, detalheResult, type Json } from "./schemas";
 import { petResult } from "./pet.functions";
 import { validarBinario } from "@/features/operacao/files";
+import type { PetRelatorioRenderVersao } from "./relatorio-version";
 
 /** A derived download is useful even when private archival is not configured.
  * Availability in the document ledger requires verified storage and finalization. */
@@ -15,6 +16,7 @@ export const petGerarRelatorio = createServerFn({ method: "POST" })
     obterInput.extend({
       chave: z.string().uuid().optional(),
       expected_version: z.number().int().positive().optional(),
+      render_versao: z.enum(["1", "2"]).optional(),
     }),
   )
   .handler(async ({ context, data }) => {
@@ -25,6 +27,7 @@ export const petGerarRelatorio = createServerFn({ method: "POST" })
       petId: data.id,
       userId: context.userId,
       chave: data.chave ?? crypto.randomUUID(),
+      renderVersao: (data.render_versao ?? "1") as PetRelatorioRenderVersao,
       ...(data.expected_version !== undefined ? { expectedVersion: data.expected_version } : {}),
       carregarAdmin:
         process.env["SUPABASE_SERVICE_ROLE_KEY"] && process.env["SUPABASE_URL"]

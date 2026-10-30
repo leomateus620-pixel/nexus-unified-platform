@@ -1,50 +1,34 @@
-import { useId, useState, type ReactNode } from "react";
-import { Plus, Trash2, UserRound, Save } from "lucide-react";
+import { cloneElement, isValidElement, useId, useState, type ReactNode } from "react";
+import { Plus, Trash2, UserRound, ShieldCheck } from "lucide-react";
 import { ActionButton } from "@/components/nexus/Page";
-import type { Json } from "./schemas";
 import {
   optionName,
   petSnapshotOption,
   PET_FUNCOES,
+  PET_ETAPAS,
   petDate,
-  petDateInput,
-  petInstant,
   type PetDetalhe,
   type PetExecute,
   type PetOpcoes,
-  type PetResposta,
 } from "./ui-types";
 import { PetStatus } from "./ExecucaoWorkspace";
 import { petDangerEvidenceItem } from "./evidence-context";
+import { PetPicker } from "./PetPicker";
+import {
+  PET_CONTROLES,
+  pendingTarget,
+  petAnswerError,
+  petConferenceActions,
+  petModelRequirements,
+  updatePetAnswer,
+  type PetDraft,
+} from "./preparation-domain";
+import "./pet-preparation.css";
+// eslint-disable-next-line react-refresh/only-export-components -- Existing public imports forward pure helpers.
+export { PET_CONTROLES, draftPayload, petDraft, pendingTarget } from "./preparation-domain";
+export type { PetDraft } from "./preparation-domain";
+export type PetPreparationFieldErrors = { atividade?: string; termino_previsto?: string };
 
-export const PET_CONTROLES: { grupo: string; itens: [string, string][] }[] = [
-  {
-    grupo: "EPC · proteção coletiva",
-    itens: [
-      ["isolamento", "Isolamento com barreira física / guarda-corpo"],
-      ["sinalizacao", "Sinalização de segurança: placas, fitas e cones"],
-      ["lanterna", "Lanterna intrinsecamente segura"],
-      ["incendio", "Proteção contra incêndio e extintores"],
-      ["resgate", "Sistema de resgate e corda de segurança"],
-      ["iluminacao", "Iluminação geral e escada móvel"],
-      ["comunicacao", "Comunicação adequada ao ambiente / área classificada"],
-      ["movimentacao_vertical", "Movimentação vertical e suportes externos"],
-    ],
-  },
-  {
-    grupo: "EPI · proteção individual",
-    itens: [
-      ["epi_basico", "Capacete, calçado, luvas e óculos de proteção"],
-      ["quedas", "Cinturão, talabarte e trava-quedas"],
-      ["respirador", "Máscara e respirador selecionados para o risco"],
-      ["auditiva", "Proteção auditiva e creme de proteção"],
-      ["roupa", "Roupa de proteção aplicável"],
-      ["ar_trabalho", "Proteção respiratória / ar mandado para a equipe de trabalho"],
-      ["ar_resgate", "Proteção respiratória / ar mandado para o resgate"],
-      ["eletronicos", "Equipamentos elétricos e eletrônicos adequados à classificação do local"],
-    ],
-  },
-];
 const PERIGOS: Record<string, string[]> = {
   Químicos: ["Poeiras", "Fumos", "Gases tóxicos", "Vapores", "Névoas", "Derivados de petróleo"],
   Físicos: ["Ruído", "Calor", "Frio", "Umidade", "Radiação ionizante", "Radiação não ionizante"],
@@ -67,90 +51,63 @@ const PERIGOS: Record<string, string[]> = {
   ],
   "Outros perigos": [],
 };
-type Perigo = { grupo: string; perigo: string; medida: string; evidencia: string };
-type Equipe = { pessoa_id: string; funcao: string; classificacao: string; empresa: string };
-export type PetDraft = {
-  atividade: string;
-  termino_previsto: string;
-  participantes: Equipe[];
-  respostas: PetResposta[];
-  perigos: Perigo[];
-  procedimentos: Record<string, string>;
-  monitoramento_continuo: { confirmado: boolean; equipamento: string; registro: string };
-  contatos_emergencia: string;
-  outras_informacoes: string;
-  modelo_id: string;
-};
-export function petDraft(detail: PetDetalhe): PetDraft {
-  const c = detail.pet.conteudo || {};
-  return {
-    atividade: detail.pet.atividade,
-    termino_previsto: petDateInput(detail.pet.termino_previsto, detail.pet.timezone),
-    participantes: detail.participantes
-      .filter((p) => !p.fim_vigencia && !(p as unknown as { fim?: string }).fim)
-      .map((p) => ({
-        pessoa_id: p.pessoa_id,
-        funcao: p.funcao,
-        classificacao: p.classificacao,
-        empresa: p.empresa || "",
-      })),
-    respostas: detail.respostas.map((r) => ({ ...r })),
-    perigos: (c["perigos"] as Perigo[]) || [],
-    procedimentos: (c["procedimentos"] as Record<string, string>) || {},
-    monitoramento_continuo: (c["monitoramento_continuo"] as PetDraft["monitoramento_continuo"]) || {
-      confirmado: false,
-      equipamento: "",
-      registro: "",
-    },
-    contatos_emergencia: String(c["contatos_emergencia"] || ""),
-    outras_informacoes: String(c["outras_informacoes"] || ""),
-    modelo_id: String(detail.pet.modelo_versao_id || c["modelo_id"] || ""),
-  };
-}
-export function draftPayload(draft: PetDraft, timezone = "America/Sao_Paulo") {
-  return {
-    atividade: draft.atividade,
-    termino_previsto: petInstant(draft.termino_previsto, timezone),
-    participantes: draft.participantes,
-    respostas: draft.respostas.map((r) => ({
-      item: r.item,
-      resposta: r.resposta,
-      justificativa: r.justificativa || "",
-    })),
-    conteudo: {
-      perigos: draft.perigos,
-      procedimentos: draft.procedimentos,
-      monitoramento_continuo: draft.monitoramento_continuo,
-      contatos_emergencia: draft.contatos_emergencia,
-      outras_informacoes: draft.outras_informacoes,
-      modelo_id: draft.modelo_id,
-    },
-  } as Record<string, Json>;
-}
 export function PetField({
+  id: suppliedId,
+  item,
   label,
   hint,
   error,
   children,
   wide = false,
 }: {
+  id?: string;
+  item?: string;
   label: string;
   hint?: string | undefined;
   error?: string | undefined;
   children: ReactNode;
   wide?: boolean;
 }) {
+  const generatedId = useId();
+  const id = suppliedId || generatedId;
+  const describedBy =
+    [hint ? id + "-hint" : "", error ? id + "-error" : ""].filter(Boolean).join(" ") || undefined;
+  const directControl =
+    isValidElement<{
+      id?: string;
+      "aria-describedby"?: string | undefined;
+      "aria-invalid"?: boolean;
+    }>(children) &&
+    typeof children.type === "string" &&
+    ["input", "select", "textarea"].includes(children.type);
+  const control = directControl
+    ? cloneElement(children, {
+        id,
+        "aria-describedby":
+          [children.props["aria-describedby"], describedBy].filter(Boolean).join(" ") || undefined,
+        ...(error ? { "aria-invalid": true } : {}),
+      })
+    : children;
   return (
-    <label className={`nx-pet-field${wide ? " nx-pet-wide" : ""}`}>
-      <span>{label}</span>
-      {children}
-      {hint && <small>{hint}</small>}
+    <div className={`nx-pet-field${wide ? " nx-pet-wide" : ""}`} data-pet-field={item}>
+      {directControl ? (
+        <>
+          <label htmlFor={id}>{label}</label>
+          {control}
+        </>
+      ) : (
+        <label className="pet-compound-field">
+          <span>{label}</span>
+          {control}
+        </label>
+      )}
+      {hint && <small id={id + "-hint"}>{hint}</small>}
       {error && (
-        <span role="alert" className="nx-pet-field-error">
+        <span role="alert" id={id + "-error"} className="nx-pet-field-error">
           {error}
         </span>
       )}
-    </label>
+    </div>
   );
 }
 export function PetDraftStage({
@@ -161,6 +118,7 @@ export function PetDraftStage({
   options,
   readOnly,
   evidences,
+  fieldErrors,
 }: {
   stage: number;
   draft: PetDraft;
@@ -169,268 +127,329 @@ export function PetDraftStage({
   options: PetOpcoes;
   readOnly: boolean;
   evidences?: ((item: string) => ReactNode) | undefined;
+  fieldErrors?: PetPreparationFieldErrors;
 }) {
-  const [personSearch, setPersonSearch] = useState("");
+  const id = useId();
   const [selectedPerson, setSelectedPerson] = useState("");
   const [funcao, setFuncao] = useState("trabalhador");
   const [classificacao, setClassificacao] = useState("interno");
   const [empresa, setEmpresa] = useState("");
-  const [other, setOther] = useState("");
-  const id = useId();
-  const selectedModel = options.modelos.find((m) => m.id === draft.modelo_id);
-  const modelProcedure = selectedModel?.["procedimento"] as Record<string, unknown> | undefined;
-  const requirements = (
-    Array.isArray(modelProcedure?.["itens"]) ? modelProcedure["itens"] : []
-  ) as Record<string, unknown>[];
+  const [otherByGroup, setOtherByGroup] = useState<Record<string, string>>({});
+  const [observations, setObservations] = useState<Record<string, boolean>>({});
+  const selectedModel = options.modelos.find((model) => model.id === draft.modelo_id);
+  const requirements = petModelRequirements(selectedModel);
   const controlGroups = [
     ...PET_CONTROLES,
     {
-      grupo: "Itens específicos do procedimento",
+      grupo: "Itens do procedimento",
       itens: requirements
-        .filter((r) => !PET_CONTROLES.some((g) => g.itens.some(([id]) => id === r["id"])))
-        .map((r) => [String(r["id"]), String(r["rotulo"] || r["id"])] as [string, string]),
+        .filter(
+          (rule) => !PET_CONTROLES.some((group) => group.itens.some(([key]) => key === rule.id)),
+        )
+        .map((rule) => [rule.id, rule.rotulo || rule.id] as [string, string]),
     },
-  ].filter((g) => g.itens.length);
-
+  ].filter((group) => group.itens.length);
   const set = <K extends keyof PetDraft>(key: K, value: PetDraft[K]) =>
     onChange({ ...draft, [key]: value });
-  const p = (key: string, value: string) =>
+  const procedure = (key: string, value: string) =>
     set("procedimentos", { ...draft.procedimentos, [key]: value });
+  const name = (personId: string) => {
+    const snapshot = detail.participantes.find((person) => person.pessoa_id === personId);
+    return (
+      snapshot?.nome_snapshot ||
+      snapshot?.nome ||
+      optionName(options.pessoas.find((person) => person.id === personId))
+    );
+  };
   const addDanger = (grupo: string, perigo: string) => {
-    if (!draft.perigos.some((p) => p.grupo === grupo && p.perigo === perigo))
+    if (!draft.perigos.some((danger) => danger.grupo === grupo && danger.perigo === perigo))
       set("perigos", [...draft.perigos, { grupo, perigo, medida: "", evidencia: "" }]);
   };
+  const knownSpace = petSnapshotOption(detail, "espaco") || detail.espaco;
+
   if (stage === 0)
     return (
-      <div className="nx-pet-panel">
-        <h2>O que será realizado?</h2>
-        <p className="nx-pet-subtitle mb-6">
-          Confira o contexto herdado da OS. Resultados de campo e horários reais pertencem à
-          ocorrência atual.
-        </p>
-        <div className="nx-pet-grid">
-          <PetField label="Cliente" hint="Origem: cadastro vinculado à OS.">
-            <input
-              readOnly
-              value={optionName(
+      <section className="nx-pet-panel pet-preparation">
+        <header className="pet-section-heading">
+          <div>
+            <p className="nx-pet-kicker">Preparação</p>
+            <h2>Contexto do trabalho</h2>
+          </div>
+          <span className="pet-source-tag">Vinculado à OS</span>
+        </header>
+        <dl className="pet-inherited-context">
+          <div>
+            <dt>Cliente</dt>
+            <dd>
+              {optionName(
                 petSnapshotOption(detail, "cliente") ||
-                  options.clientes.find((o) => o.id === detail.os?.cliente_id),
+                  options.clientes.find((client) => client.id === detail.os?.cliente_id),
               )}
-            />
-          </PetField>
-          <PetField label="Unidade" hint="Origem: unidade da OS.">
-            <input
-              readOnly
-              value={optionName(
+            </dd>
+          </div>
+          <div>
+            <dt>Unidade</dt>
+            <dd>
+              {optionName(
                 petSnapshotOption(detail, "unidade") ||
-                  options.unidades.find((o) => o.id === detail.pet.unidade_id),
+                  options.unidades.find((unit) => unit.id === detail.pet.unidade_id),
               )}
-            />
-          </PetField>
-          <PetField label="Espaço confinado">
-            <input
-              readOnly
-              value={optionName(petSnapshotOption(detail, "espaco") || detail.espaco)}
-            />
-          </PetField>
-          <PetField label="Localização">
-            <input
-              readOnly
-              value={String(
-                (petSnapshotOption(detail, "espaco") || detail.espaco)?.localizacao ||
-                  "Não informada",
-              )}
-            />
-          </PetField>
-          <PetField wide label="Objetivo e descrição do trabalho">
+            </dd>
+          </div>
+          <div>
+            <dt>Espaço confinado</dt>
+            <dd>{optionName(knownSpace)}</dd>
+          </div>
+          <div>
+            <dt>Localização</dt>
+            <dd>{String(knownSpace?.localizacao || "Não informada")}</dd>
+          </div>
+        </dl>
+        <div className="nx-pet-grid">
+          <PetField
+            wide
+            item="atividade"
+            label="Atividade a realizar"
+            error={fieldErrors?.atividade}
+          >
             <textarea
               disabled={readOnly}
               required
               value={draft.atividade}
-              onChange={(e) => set("atividade", e.target.value)}
-              aria-invalid={!draft.atividade.trim()}
+              onChange={(event) => set("atividade", event.target.value)}
             />
           </PetField>
           <PetField
-            label="Término previsto da jornada"
-            hint={`Fuso da PET: ${detail.pet.timezone}. Ajuste para a jornada efetiva.`}
+            item="termino_previsto"
+            label="Validade prevista"
+            hint={`Horário no fuso ${detail.pet.timezone}.`}
+            error={fieldErrors?.termino_previsto}
           >
             <input
               type="datetime-local"
               disabled={readOnly}
               required
               value={draft.termino_previsto}
-              onChange={(e) => set("termino_previsto", e.target.value)}
+              onChange={(event) => set("termino_previsto", event.target.value)}
             />
           </PetField>
           <PetField
+            item="modelo_versao_id"
             label="Modelo e critérios aprovados"
-            hint="A liberação exige modelo aprovado pelo responsável de segurança."
+            hint="A versão selecionada define as verificações desta PET."
           >
             <select
               disabled={readOnly}
               value={draft.modelo_id}
-              onChange={(e) => set("modelo_id", e.target.value)}
+              onChange={(event) => set("modelo_id", event.target.value)}
             >
-              <option value="">Conferir modelo da organização</option>
-              {options.modelos.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {optionName(o)} · {o.estado || (o["status"] as string) || "A conferir"}
+              <option value="">Selecionar versão aprovada</option>
+              {draft.modelo_id && !selectedModel && (
+                <option value={draft.modelo_id}>Versão vinculada · {draft.modelo_id}</option>
+              )}
+              {options.modelos.map((model) => (
+                <option
+                  key={model.id}
+                  value={model.id}
+                  disabled={(model.estado || model["status"]) !== "aprovado"}
+                >
+                  {optionName(model)}
+                  {typeof model["versao"] === "number" || typeof model["versao"] === "string"
+                    ? ` · versão ${model["versao"]}`
+                    : ""}{" "}
+                  · {model.estado || String(model["status"] || "A conferir")}
                 </option>
               ))}
             </select>
           </PetField>
         </div>
-        <div className="nx-pet-notice mt-6">
-          A PET é específica para este espaço, atividade e jornada. O rascunho não autoriza entrada.
-          Não há emissão ou liberação offline nesta entrega.
-        </div>
+        <p className="pet-preparation-note">
+          <ShieldCheck size={17} aria-hidden />
+          <span>
+            O rascunho prepara esta atividade, espaço e jornada. A entrada depende da emissão e
+            liberação válidas.
+          </span>
+        </p>
         {evidences && (
-          <details className="nx-pet-accordion mt-5">
-            <summary>Identificação do espaço · fotos e referências</summary>
+          <details className="nx-pet-accordion pet-evidence">
+            <summary>Fotos e referências do espaço</summary>
             <div>{evidences("identificacao_espaco")}</div>
           </details>
         )}
-      </div>
+      </section>
     );
+
   if (stage === 1)
     return (
-      <div className="nx-pet-panel">
-        <h2>Quem participa desta permissão?</h2>
-        <p className="nx-pet-subtitle mb-5">
-          Pessoa, conta Nexus e função nesta PET são vínculos distintos. Cada signatário precisa de
-          identificação própria.
+      <section className="nx-pet-panel pet-preparation">
+        <header className="pet-section-heading">
+          <div>
+            <p className="nx-pet-kicker">Pessoas e responsabilidades</p>
+            <h2>Equipe desta PET</h2>
+          </div>
+        </header>
+        <p className="nx-pet-subtitle">
+          Relacione cada pessoa pela função que exercerá nesta permissão.
         </p>
         {!readOnly && (
-          <div className="nx-pet-grid mb-5">
-            <PetField label="Buscar pessoa cadastrada">
-              <input
-                type="search"
-                value={personSearch}
-                onChange={(e) => setPersonSearch(e.target.value)}
-                placeholder="Nome da pessoa"
-              />
-            </PetField>
-            <PetField label="Pessoa">
-              <select value={selectedPerson} onChange={(e) => setSelectedPerson(e.target.value)}>
-                <option value="">Selecione a pessoa</option>
-                {options.pessoas
-                  .filter((p) => optionName(p).toLowerCase().includes(personSearch.toLowerCase()))
-                  .map((o) => (
-                    <option key={o.id} value={o.id}>
-                      {optionName(o)}
-                    </option>
-                  ))}
-              </select>
-            </PetField>
+          <div className="pet-team-composer" data-pet-field="participantes">
+            <PetPicker
+              id={id + "-person"}
+              label="Pessoa cadastrada"
+              placeholder="Buscar pessoa cadastrada"
+              value={selectedPerson}
+              options={options.pessoas.map((person) => ({
+                id: person.id,
+                label: optionName(person),
+                description: [person["funcao"], person["vinculo"], person["telefone_profissional"]]
+                  .filter((value): value is string => typeof value === "string" && !!value.trim())
+                  .join(" · "),
+              }))}
+              onChange={setSelectedPerson}
+            />
             <PetField label="Função nesta PET">
-              <select value={funcao} onChange={(e) => setFuncao(e.target.value)}>
-                {Object.entries(PET_FUNCOES).map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
+              <select value={funcao} onChange={(event) => setFuncao(event.target.value)}>
+                {Object.entries(PET_FUNCOES).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
                   </option>
                 ))}
               </select>
             </PetField>
-            <PetField label="Classificação">
-              <select value={classificacao} onChange={(e) => setClassificacao(e.target.value)}>
+            <PetField label="Vínculo">
+              <select
+                value={classificacao}
+                onChange={(event) => setClassificacao(event.target.value)}
+              >
                 <option value="interno">Colaborador interno</option>
                 <option value="terceirizado">Colaborador terceirizado</option>
               </select>
             </PetField>
             {classificacao === "terceirizado" && (
               <PetField label="Empresa de vínculo">
-                <input value={empresa} onChange={(e) => setEmpresa(e.target.value)} />
+                <input value={empresa} onChange={(event) => setEmpresa(event.target.value)} />
               </PetField>
             )}
-            <div className="flex items-end">
-              <ActionButton
-                variant="ghost"
-                disabled={!selectedPerson || (classificacao === "terceirizado" && !empresa.trim())}
-                onClick={() => {
-                  if (
-                    draft.participantes.some(
-                      (p) => p.pessoa_id === selectedPerson && p.funcao === funcao,
-                    )
+            <ActionButton
+              variant="ghost"
+              className="pet-team-add"
+              disabled={
+                !selectedPerson ||
+                (classificacao === "terceirizado" && !empresa.trim()) ||
+                draft.participantes.some(
+                  (person) => person.pessoa_id === selectedPerson && person.funcao === funcao,
+                )
+              }
+              onClick={() => {
+                if (
+                  !selectedPerson ||
+                  draft.participantes.some(
+                    (person) => person.pessoa_id === selectedPerson && person.funcao === funcao,
                   )
-                    return;
-                  set("participantes", [
-                    ...draft.participantes,
-                    {
-                      pessoa_id: selectedPerson,
-                      funcao,
-                      classificacao,
-                      empresa: classificacao === "terceirizado" ? empresa : "",
-                    },
-                  ]);
-                  setSelectedPerson("");
-                }}
-              >
-                <Plus size={15} aria-hidden className="mr-2 inline" /> Adicionar à equipe
-              </ActionButton>
-            </div>
+                )
+                  return;
+                set("participantes", [
+                  ...draft.participantes,
+                  {
+                    pessoa_id: selectedPerson,
+                    funcao,
+                    classificacao,
+                    empresa: classificacao === "terceirizado" ? empresa : "",
+                  },
+                ]);
+                setSelectedPerson("");
+              }}
+            >
+              <Plus size={16} aria-hidden /> Adicionar à equipe
+            </ActionButton>
           </div>
         )}
-        <div className="nx-pet-list">
-          {draft.participantes.length ? (
-            draft.participantes.map((p, index) => (
-              <div className="nx-pet-card" key={`${p.pessoa_id}:${p.funcao}`}>
-                <div className="nx-pet-card-top">
-                  <div>
-                    <p className="nx-pet-card-title">
-                      <UserRound size={14} aria-hidden className="mr-2 inline" />
-                      {optionName(options.pessoas.find((o) => o.id === p.pessoa_id))}
-                    </p>
-                    <p className="nx-pet-subtitle">
-                      {PET_FUNCOES[p.funcao] || p.funcao} ·{" "}
-                      {p.classificacao === "interno" ? "Interno" : `Terceirizado · ${p.empresa}`}
-                    </p>
-                  </div>
-                  {!readOnly && (
-                    <ActionButton
-                      variant="ghost"
-                      aria-label={`Remover ${optionName(options.pessoas.find((o) => o.id === p.pessoa_id))} da equipe do rascunho`}
-                      onClick={() =>
-                        set(
-                          "participantes",
-                          draft.participantes.filter((_, i) => i !== index),
-                        )
-                      }
-                    >
-                      <Trash2 size={15} aria-hidden />
-                    </ActionButton>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="nx-pet-notice">
-              Inclua supervisor, vigia, trabalhadores autorizados e equipe de resgate.
-            </p>
-          )}
+        <div className="pet-team-groups" data-pet-field={readOnly ? "participantes" : undefined}>
+          {[
+            ...new Set([
+              ...Object.keys(PET_FUNCOES),
+              ...draft.participantes.map((person) => person.funcao),
+            ]),
+          ].map((role) => {
+            const people = draft.participantes.filter((person) => person.funcao === role);
+            return (
+              <section className="pet-team-group" key={role}>
+                <h3>
+                  {PET_FUNCOES[role] || role}
+                  <span>{people.length}</span>
+                </h3>
+                {people.length ? (
+                  <ul>
+                    {people.map((person) => (
+                      <li key={person.pessoa_id + ":" + person.funcao}>
+                        <UserRound size={18} aria-hidden />
+                        <div>
+                          <strong>{name(person.pessoa_id)}</strong>
+                          <p>
+                            {person.classificacao === "interno"
+                              ? "Interno"
+                              : `Terceirizado · ${person.empresa || "Empresa não informada"}`}
+                          </p>
+                        </div>
+                        {!readOnly && (
+                          <ActionButton
+                            variant="ghost"
+                            aria-label={`Remover ${name(person.pessoa_id)} da função ${PET_FUNCOES[role] || role}`}
+                            onClick={() =>
+                              set(
+                                "participantes",
+                                draft.participantes.filter((current) => current !== person),
+                              )
+                            }
+                          >
+                            <Trash2 size={16} aria-hidden />
+                          </ActionButton>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="pet-team-empty">Nenhuma pessoa relacionada.</p>
+                )}
+              </section>
+            );
+          })}
         </div>
-        {detail.participantes.some((p) => p.fim) && (
-          <details className="nx-pet-accordion my-5">
-            <summary>Histórico de funções e vigências anteriores</summary>
+        <PetField
+          item="contatos_emergencia"
+          label="Contatos operacionais, emergência e resgate"
+          hint="Informe os canais previstos no procedimento. O aplicativo não aciona o resgate."
+        >
+          <textarea
+            disabled={readOnly}
+            value={draft.contatos_emergencia}
+            onChange={(event) => set("contatos_emergencia", event.target.value)}
+          />
+        </PetField>
+        {detail.participantes.some((person) => person.fim || person.fim_vigencia) && (
+          <details className="nx-pet-accordion pet-evidence">
+            <summary>Funções e vigências anteriores</summary>
             <div className="nx-pet-table-scroll">
               <table className="nx-pet-table">
                 <thead>
                   <tr>
-                    <th>Pessoa</th>
-                    <th>Função</th>
-                    <th>Início</th>
-                    <th>Término</th>
+                    <th scope="col">Pessoa</th>
+                    <th scope="col">Função</th>
+                    <th scope="col">Início</th>
+                    <th scope="col">Término</th>
                   </tr>
                 </thead>
                 <tbody>
                   {detail.participantes
-                    .filter((p) => p.fim)
-                    .map((p) => (
-                      <tr key={p.id}>
-                        <td>{p.nome_snapshot || p.nome}</td>
-                        <td>{PET_FUNCOES[p.funcao]}</td>
-                        <td>{petDate(p.inicio, detail.pet.timezone)}</td>
-                        <td>{petDate(p.fim, detail.pet.timezone)}</td>
+                    .filter((person) => person.fim || person.fim_vigencia)
+                    .map((person) => (
+                      <tr key={person.id}>
+                        <td>{person.nome_snapshot || person.nome}</td>
+                        <td>{PET_FUNCOES[person.funcao] || person.funcao}</td>
+                        <td>
+                          {petDate(person.inicio || person.inicio_vigencia, detail.pet.timezone)}
+                        </td>
+                        <td>{petDate(person.fim || person.fim_vigencia, detail.pet.timezone)}</td>
                       </tr>
                     ))}
                 </tbody>
@@ -438,210 +457,281 @@ export function PetDraftStage({
             </div>
           </details>
         )}
-        <PetField
-          label="Contatos operacionais, emergência e resgate"
-          hint="Informe os canais reais previstos no procedimento. O aplicativo não aciona o resgate automaticamente."
-        >
-          <textarea
-            disabled={readOnly}
-            className="mt-4"
-            value={draft.contatos_emergencia}
-            onChange={(e) => set("contatos_emergencia", e.target.value)}
-          />
-        </PetField>
-      </div>
+      </section>
     );
+
   if (stage === 2)
     return (
-      <div className="space-y-5">
-        <section className="nx-pet-panel">
-          <h2>Perigos e medidas preventivas</h2>
-          <p className="nx-pet-subtitle mb-5">
-            Selecione os perigos observados e descreva os controles deste trabalho.
+      <div className="pet-preparation pet-safety-sections">
+        <section className="nx-pet-panel" data-pet-field="perigos" tabIndex={-1}>
+          <header className="pet-section-heading">
+            <div>
+              <p className="nx-pet-kicker">Identificação de riscos</p>
+              <h2>Perigos e medidas preventivas</h2>
+            </div>
+            <span className="pet-source-tag">{draft.perigos.length} identificado(s)</span>
+          </header>
+          <p className="nx-pet-subtitle">
+            Selecione o que foi observado e registre a medida ao lado de cada perigo.
           </p>
-          {Object.entries(PERIGOS).map(([grupo, itens]) => (
-            <details className="nx-pet-accordion" key={grupo}>
-              <summary>
-                {grupo} · {draft.perigos.filter((p) => p.grupo === grupo).length} selecionado(s)
-              </summary>
-              <div>
-                <div className="nx-pet-answer">
-                  {itens.map((item) => (
-                    <label key={item}>
-                      <input
-                        type="checkbox"
-                        disabled={readOnly}
-                        checked={draft.perigos.some((p) => p.grupo === grupo && p.perigo === item)}
-                        onChange={(e) =>
-                          e.target.checked
-                            ? addDanger(grupo, item)
-                            : set(
+          {[
+            ...new Set([...Object.keys(PERIGOS), ...draft.perigos.map((danger) => danger.grupo)]),
+          ].map((group) => {
+            const selected = draft.perigos.filter((danger) => danger.grupo === group);
+            const other = otherByGroup[group] || "";
+            return (
+              <details
+                className="nx-pet-accordion pet-danger-group"
+                key={group}
+                open={selected.length > 0}
+              >
+                <summary>
+                  <span>{group}</span>
+                  <span className="pet-group-count">{selected.length} selecionado(s)</span>
+                </summary>
+                <div>
+                  {!!PERIGOS[group]?.length && (
+                    <div className="pet-danger-options">
+                      {PERIGOS[group]!.map((danger) => (
+                        <label key={danger}>
+                          <input
+                            type="checkbox"
+                            disabled={readOnly}
+                            checked={selected.some((current) => current.perigo === danger)}
+                            onChange={(event) =>
+                              event.target.checked
+                                ? addDanger(group, danger)
+                                : set(
+                                    "perigos",
+                                    draft.perigos.filter(
+                                      (current) =>
+                                        !(current.grupo === group && current.perigo === danger),
+                                    ),
+                                  )
+                            }
+                          />
+                          <span>{danger}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                  {selected.map((danger) => (
+                    <article className="pet-danger-detail" key={danger.perigo}>
+                      <header>
+                        <h3>{danger.perigo}</h3>
+                        {!readOnly && (
+                          <ActionButton
+                            variant="ghost"
+                            aria-label={`Remover perigo ${danger.perigo} de ${group}`}
+                            onClick={() =>
+                              set(
                                 "perigos",
-                                draft.perigos.filter(
-                                  (p) => !(p.grupo === grupo && p.perigo === item),
+                                draft.perigos.filter((current) => current !== danger),
+                              )
+                            }
+                          >
+                            <Trash2 size={16} aria-hidden />
+                          </ActionButton>
+                        )}
+                      </header>
+                      <div className="nx-pet-grid">
+                        <PetField label={`Medida preventiva · ${danger.perigo}`}>
+                          <textarea
+                            disabled={readOnly}
+                            value={danger.medida}
+                            onChange={(event) =>
+                              set(
+                                "perigos",
+                                draft.perigos.map((current) =>
+                                  current === danger
+                                    ? { ...current, medida: event.target.value }
+                                    : current,
                                 ),
                               )
-                        }
-                      />
-                      {item}
-                    </label>
-                  ))}
-                </div>
-                <div className="nx-pet-actions mt-4">
-                  <input
-                    className="min-h-11 rounded border border-input bg-background p-2 text-sm"
-                    aria-label={`Complemento de ${grupo}`}
-                    disabled={readOnly}
-                    value={other}
-                    placeholder="Outro perigo identificado"
-                    onChange={(e) => setOther(e.target.value)}
-                  />
-                  <ActionButton
-                    variant="ghost"
-                    disabled={readOnly || !other.trim()}
-                    onClick={() => {
-                      addDanger(grupo, other.trim());
-                      setOther("");
-                    }}
-                  >
-                    Adicionar perigo
-                  </ActionButton>
-                </div>
-              </div>
-            </details>
-          ))}
-          {draft.perigos.map((perigo, index) => (
-            <div className="nx-pet-check" key={`${perigo.grupo}:${perigo.perigo}`}>
-              <div>
-                <p className="nx-pet-hint">{perigo.grupo}</p>
-                <h3>{perigo.perigo}</h3>
-              </div>
-              <PetField label="Medida preventiva">
-                <textarea
-                  disabled={readOnly}
-                  value={perigo.medida}
-                  onChange={(e) =>
-                    set(
-                      "perigos",
-                      draft.perigos.map((p, i) =>
-                        i === index ? { ...p, medida: e.target.value } : p,
-                      ),
-                    )
-                  }
-                />
-              </PetField>
-              <PetField label="Referência ou observação da evidência">
-                <input
-                  disabled={readOnly}
-                  value={perigo.evidencia}
-                  onChange={(e) =>
-                    set(
-                      "perigos",
-                      draft.perigos.map((p, i) =>
-                        i === index ? { ...p, evidencia: e.target.value } : p,
-                      ),
-                    )
-                  }
-                />
-              </PetField>
-              {evidences && (
-                <details className="nx-pet-accordion">
-                  <summary>Fotos e evidências deste perigo</summary>
-                  <div>{evidences(petDangerEvidenceItem(perigo.grupo, perigo.perigo))}</div>
-                </details>
-              )}
-            </div>
-          ))}
-        </section>
-        <section className="nx-pet-panel">
-          <h2>Proteções coletivas e individuais</h2>
-          <p className="nx-pet-subtitle mb-4">
-            Responda cada item. “Ainda não verificado” mantém uma pendência. A aplicabilidade
-            depende do procedimento aprovado.
-          </p>
-          {controlGroups.map((group) => (
-            <details className="nx-pet-accordion" key={group.grupo} open>
-              <summary>{group.grupo}</summary>
-              <div className="nx-pet-checklist">
-                {group.itens.map(([item, label]) => {
-                  const answer = draft.respostas.find((r) => r.item === item);
-                  const rule = requirements.find((r) => r["id"] === item);
-                  const naInvalid =
-                    answer?.resposta === "nao_aplicavel" &&
-                    rule &&
-                    (rule["permite_na"] !== true ||
-                      (rule["justificativa_na"] !== false &&
-                        (answer.justificativa || "").trim().length < 5));
-                  return (
-                    <div className="nx-pet-check" key={item}>
-                      <h3>
-                        {label}
-                        {rule?.["obrigatorio"] === true ? " · obrigatório" : ""}
-                      </h3>
-                      <div className="nx-pet-answer" role="radiogroup" aria-label={label}>
-                        {(
-                          [
-                            ["sim", "Sim"],
-                            ["nao", "Não"],
-                            ["nao_aplicavel", "Não se aplica"],
-                            ["nao_verificado", "Ainda não verificado"],
-                          ] as const
-                        ).map(([value, text]) => (
-                          <label key={value}>
-                            <input
-                              type="radio"
-                              name={`${id}-${item}`}
-                              disabled={
-                                readOnly ||
-                                (value === "nao_aplicavel" && !!rule && rule["permite_na"] !== true)
-                              }
-                              checked={(answer?.resposta || "nao_verificado") === value}
-                              onChange={() =>
-                                set("respostas", [
-                                  ...draft.respostas.filter((r) => r.item !== item),
-                                  {
-                                    item,
-                                    resposta: value,
-                                    justificativa: answer?.justificativa || "",
-                                  },
-                                ])
-                              }
-                            />
-                            {text}
-                          </label>
-                        ))}
+                            }
+                          />
+                        </PetField>
+                        <PetField label={`Referência da evidência · ${danger.perigo}`}>
+                          <textarea
+                            disabled={readOnly}
+                            value={danger.evidencia}
+                            onChange={(event) =>
+                              set(
+                                "perigos",
+                                draft.perigos.map((current) =>
+                                  current === danger
+                                    ? { ...current, evidencia: event.target.value }
+                                    : current,
+                                ),
+                              )
+                            }
+                          />
+                        </PetField>
                       </div>
-                      <PetField
-                        label="Justificativa / verificação"
-                        error={
-                          naInvalid
-                            ? "Confira a previsão de não aplicabilidade e justifique com pelo menos 5 caracteres."
-                            : undefined
-                        }
-                        hint={
-                          answer?.resposta === "nao_aplicavel"
-                            ? "Justifique a não aplicabilidade; o procedimento decide se ela é permitida."
-                            : undefined
-                        }
-                      >
+                      {evidences && (
+                        <details className="nx-pet-accordion pet-evidence">
+                          <summary>Fotos e arquivos de {danger.perigo}</summary>
+                          <div>{evidences(petDangerEvidenceItem(danger.grupo, danger.perigo))}</div>
+                        </details>
+                      )}
+                    </article>
+                  ))}
+                  {!readOnly && (
+                    <div className="pet-add-danger">
+                      <PetField label={`Outro perigo · ${group}`}>
                         <input
-                          disabled={readOnly}
-                          value={answer?.justificativa || ""}
-                          onChange={(e) =>
-                            set("respostas", [
-                              ...draft.respostas.filter((r) => r.item !== item),
-                              {
-                                item,
-                                resposta: answer?.resposta || "nao_verificado",
-                                justificativa: e.target.value,
-                              },
-                            ])
+                          value={other}
+                          placeholder="Descrever perigo identificado"
+                          onChange={(event) =>
+                            setOtherByGroup((previous) => ({
+                              ...previous,
+                              [group]: event.target.value,
+                            }))
                           }
                         />
                       </PetField>
+                      <ActionButton
+                        variant="ghost"
+                        disabled={!other.trim()}
+                        onClick={() => {
+                          addDanger(group, other.trim());
+                          setOtherByGroup((previous) => ({ ...previous, [group]: "" }));
+                        }}
+                      >
+                        <Plus size={16} aria-hidden /> Adicionar
+                      </ActionButton>
+                    </div>
+                  )}
+                </div>
+              </details>
+            );
+          })}
+        </section>
+        <section className="nx-pet-panel" data-pet-field="respostas" tabIndex={-1}>
+          <header className="pet-section-heading">
+            <div>
+              <p className="nx-pet-kicker">Verificação de campo</p>
+              <h2>Proteções e controles</h2>
+            </div>
+          </header>
+          <p className="nx-pet-subtitle">
+            Responda cada item conforme a verificação realizada. O procedimento aprovado define a
+            aplicabilidade.
+          </p>
+          {controlGroups.map((group, groupIndex) => (
+            <details
+              className="nx-pet-accordion pet-control-group"
+              key={group.grupo}
+              open={groupIndex === 0}
+            >
+              <summary>
+                <span>{group.grupo}</span>
+                <span className="pet-group-count">
+                  {
+                    group.itens.filter(([item]) =>
+                      draft.respostas.some(
+                        (answer) => answer.item === item && answer.resposta !== "nao_verificado",
+                      ),
+                    ).length
+                  }
+                  /{group.itens.length} respondidos
+                </span>
+              </summary>
+              <div className="pet-control-list">
+                {group.itens.map(([item, label]) => {
+                  const answer = draft.respostas.find((current) => current.item === item);
+                  const rule = requirements.find((current) => current.id === item);
+                  const answerError = petAnswerError(answer, rule);
+                  const showJustification =
+                    observations[item] ||
+                    !!answer?.justificativa ||
+                    ["nao", "nao_aplicavel"].includes(answer?.resposta || "");
+                  const fieldId = id + "-control-" + encodeURIComponent(item);
+                  return (
+                    <div className="pet-control-row" key={item} data-pet-field={item} tabIndex={-1}>
+                      <fieldset aria-describedby={answerError ? fieldId + "-error" : undefined}>
+                        <legend>
+                          {label}
+                          {rule?.obrigatorio && (
+                            <span className="pet-required-tag">Obrigatório</span>
+                          )}
+                        </legend>
+                        <div className="pet-control-answers">
+                          {(
+                            [
+                              ["sim", "Sim"],
+                              ["nao", "Não"],
+                              ["nao_aplicavel", "Não se aplica"],
+                              ["nao_verificado", "Não verificado"],
+                            ] as const
+                          ).map(([value, text]) => (
+                            <label
+                              key={value}
+                              data-selected={(answer?.resposta || "nao_verificado") === value}
+                            >
+                              <input
+                                type="radio"
+                                name={fieldId}
+                                disabled={
+                                  readOnly ||
+                                  (value === "nao_aplicavel" && !!rule && rule.permite_na !== true)
+                                }
+                                checked={(answer?.resposta || "nao_verificado") === value}
+                                onChange={() =>
+                                  set(
+                                    "respostas",
+                                    updatePetAnswer(draft.respostas, item, { resposta: value }),
+                                  )
+                                }
+                              />
+                              <span>{text}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
+                      {showJustification ? (
+                        <PetField
+                          id={fieldId}
+                          label={`Justificativa / verificação · ${label}`}
+                          hint={
+                            answer?.resposta === "nao_aplicavel"
+                              ? "A justificativa segue as condições do procedimento."
+                              : undefined
+                          }
+                          error={answerError}
+                        >
+                          <input
+                            disabled={readOnly}
+                            value={answer?.justificativa || ""}
+                            onChange={(event) =>
+                              set(
+                                "respostas",
+                                updatePetAnswer(draft.respostas, item, {
+                                  justificativa: event.target.value,
+                                }),
+                              )
+                            }
+                          />
+                        </PetField>
+                      ) : (
+                        !readOnly && (
+                          <button
+                            type="button"
+                            className="pet-text-button"
+                            onClick={() =>
+                              setObservations((previous) => ({ ...previous, [item]: true }))
+                            }
+                          >
+                            Adicionar observação
+                          </button>
+                        )
+                      )}
                       {evidences && (
-                        <details className="nx-pet-accordion">
-                          <summary>Anexar evidência de {label.toLowerCase()}</summary>
+                        <details className="nx-pet-accordion pet-evidence">
+                          <summary>
+                            Evidências de {label.toLocaleLowerCase("pt-BR")}
+                            {rule?.evidencia_obrigatoria ? " · obrigatórias" : ""}
+                          </summary>
                           <div>{evidences(item)}</div>
                         </details>
                       )}
@@ -654,14 +744,20 @@ export function PetDraftStage({
         </section>
       </div>
     );
+
   if (stage === 3)
     return (
-      <div className="nx-pet-panel">
-        <h2>Procedimentos e monitoramento</h2>
-        <p className="nx-pet-subtitle mb-6">
-          Registre as condições verificadas nesta ocorrência. Leituras avulsas não comprovam
-          monitoramento atmosférico contínuo.
-        </p>
+      <section
+        className="nx-pet-panel pet-preparation"
+        data-pet-field="procedimentos"
+        tabIndex={-1}
+      >
+        <header className="pet-section-heading">
+          <div>
+            <p className="nx-pet-kicker">Condições da ocorrência</p>
+            <h2>Procedimentos e monitoramento</h2>
+          </div>
+        </header>
         <div className="nx-pet-grid">
           {(
             [
@@ -672,28 +768,26 @@ export function PetDraftStage({
               ["comunicacao", "Procedimento de comunicação"],
               ["resgate", "Procedimento de emergência e resgate"],
               ["treinamentos", "Treinamentos e qualificações conferidos"],
-              [
-                "dispositivo_verificacao",
-                "Verificação do dispositivo, grau de proteção e classificação do local",
-              ],
+              ["dispositivo_verificacao", "Verificação do dispositivo e classificação do local"],
             ] as const
           ).map(([key, label]) => (
-            <PetField key={key} label={label}>
+            <PetField key={key} item={"procedimentos." + key} label={label}>
               <textarea
                 disabled={readOnly}
                 value={draft.procedimentos[key] || ""}
-                onChange={(e) => p(key, e.target.value)}
+                onChange={(event) => procedure(key, event.target.value)}
               />
             </PetField>
           ))}
           <PetField
+            item="procedimentos.dispositivo_adequado"
             label="Dispositivo adequado ao ambiente de uso"
-            hint="Inclui grau de proteção e, quando aplicável, certificação para a área classificada."
+            hint="Confira proteção e certificação aplicáveis ao local."
           >
             <select
               disabled={readOnly}
               value={draft.procedimentos["dispositivo_adequado"] || "nao_verificado"}
-              onChange={(e) => p("dispositivo_adequado", e.target.value)}
+              onChange={(event) => procedure("dispositivo_adequado", event.target.value)}
             >
               <option value="nao_verificado">Ainda não verificado</option>
               <option value="sim">Sim · adequação conferida</option>
@@ -701,71 +795,87 @@ export function PetDraftStage({
             </select>
           </PetField>
           <PetField
+            item="procedimentos.ventilacao_minutos"
             label="Duração da ventilação (min)"
-            hint="Tempo verificado na ocorrência atual."
+            hint="Tempo verificado nesta ocorrência."
           >
             <input
               disabled={readOnly}
               inputMode="decimal"
               value={draft.procedimentos["ventilacao_minutos"] || ""}
-              onChange={(e) => p("ventilacao_minutos", e.target.value)}
+              onChange={(event) => procedure("ventilacao_minutos", event.target.value)}
             />
           </PetField>
         </div>
-        <div className="nx-pet-notice mt-5">
+        <section className="pet-monitoring" data-pet-field="monitoramento_continuo" tabIndex={-1}>
           <h3>Monitoramento atmosférico contínuo</h3>
           <p className="nx-pet-subtitle">
-            Confirme o equipamento adequado com leitura direta e alarmes, o procedimento e os
-            registros que sustentam a continuidade.
+            Registre o equipamento, os alarmes e a referência que sustentam o monitoramento.
+            Leituras pontuais não o substituem.
           </p>
-          <label className="flex min-h-12 items-center gap-3 text-sm">
+          <label className="pet-confirmation" data-pet-field="monitoramento_continuo.confirmado">
             <input
               type="checkbox"
               disabled={readOnly}
               checked={draft.monitoramento_continuo.confirmado}
-              onChange={(e) =>
+              onChange={(event) =>
                 set("monitoramento_continuo", {
                   ...draft.monitoramento_continuo,
-                  confirmado: e.target.checked,
+                  confirmado: event.target.checked,
                 })
               }
-            />{" "}
-            Verificação de campo registrada conforme procedimento
+            />
+            <span>Verificação de campo registrada conforme procedimento</span>
           </label>
-          <div className="nx-pet-grid mt-3">
-            <PetField label="Equipamento e identificação">
+          <div className="nx-pet-grid">
+            <PetField item="monitoramento_continuo.equipamento" label="Equipamento e identificação">
               <input
                 disabled={readOnly}
                 value={draft.monitoramento_continuo.equipamento}
-                onChange={(e) =>
+                onChange={(event) =>
                   set("monitoramento_continuo", {
                     ...draft.monitoramento_continuo,
-                    equipamento: e.target.value,
+                    equipamento: event.target.value,
                   })
                 }
               />
             </PetField>
-            <PetField label="Procedimento e referência do registro contínuo">
+            <PetField
+              item="monitoramento_continuo.registro"
+              label="Procedimento e referência do registro contínuo"
+            >
               <textarea
                 disabled={readOnly}
                 value={draft.monitoramento_continuo.registro}
-                onChange={(e) =>
+                onChange={(event) =>
                   set("monitoramento_continuo", {
                     ...draft.monitoramento_continuo,
-                    registro: e.target.value,
+                    registro: event.target.value,
                   })
                 }
               />
             </PetField>
           </div>
-        </div>
+        </section>
+        <details className="nx-pet-accordion pet-evidence" open={!!draft.outras_informacoes}>
+          <summary>Informações complementares</summary>
+          <div>
+            <PetField label="Outras informações desta PET">
+              <textarea
+                disabled={readOnly}
+                value={draft.outras_informacoes}
+                onChange={(event) => set("outras_informacoes", event.target.value)}
+              />
+            </PetField>
+          </div>
+        </details>
         {evidences && (
-          <details className="nx-pet-accordion mt-5">
-            <summary>Instrumentos, bloqueios e procedimentos · evidências</summary>
+          <details className="nx-pet-accordion pet-evidence">
+            <summary>Evidências de instrumentos, bloqueios e procedimentos</summary>
             <div>{evidences("atmosfera_procedimentos")}</div>
           </details>
         )}
-      </div>
+      </section>
     );
   return null;
 }
@@ -780,17 +890,23 @@ export function PetConferencia({
   options: PetOpcoes;
   onCommand: PetExecute;
   busy: boolean;
-  onPending: (stage: number) => void;
+  onPending: (stage: number, item?: string) => void;
 }) {
+  const model = options.modelos.find((option) => option.id === detail.pet.modelo_versao_id);
+  const actions = petConferenceActions(
+    detail.pet.estado_documental,
+    detail.permissoes,
+    options.integracao_assinatura.configurada,
+  );
   return (
-    <div className="space-y-5">
+    <div className="pet-preparation pet-conference">
       <section className="nx-pet-panel">
         <div className="nx-pet-section-top">
           <div>
-            <h2>Conferência antes da liberação</h2>
+            <p className="nx-pet-kicker">Verificação técnica</p>
+            <h2>Conferência e assinaturas</h2>
             <p className="nx-pet-subtitle">
-              A conferência é reavaliada pelo servidor. Conteúdo coberto por assinatura é preservado
-              em versão própria.
+              Revise as pendências e solicite a conferência da versão atual no servidor.
             </p>
           </div>
           <PetStatus value={detail.pet.estado_documental} />
@@ -798,35 +914,26 @@ export function PetConferencia({
         {detail.pendencias?.length ? (
           <div className="nx-pet-notice" data-tone="attention">
             <h3>Pendências para revisar</h3>
-            <ul className="mt-3 space-y-1">
+            <ul className="pet-pending-list">
               {detail.pendencias.map((p, i) => {
                 const text =
                   typeof p === "string"
                     ? p
                     : p.mensagem || p.descricao || p.codigo || "Revisão necessária";
-                const campo = typeof p === "string" ? p : p.campo || "";
-                const code = typeof p === "string" ? "" : p.codigo || "";
-                const stage =
-                  /equipe|participantes|supervisor|vigia|trabalhador|contatos_emergencia/.test(
-                    campo,
-                  )
-                    ? 1
-                    : /assinatura|integracao/.test(campo + code)
-                      ? 4
-                      : /atmosfera|leitura|avalia|monitoramento|procedimento/.test(campo)
-                        ? 3
-                        : /resposta|controle|perigo|evidencia|na_invalido/.test(campo + code) ||
-                            PET_CONTROLES.some((g) => g.itens.some(([id]) => id === campo))
-                          ? 2
-                          : 0;
+                const target = pendingTarget(p, model);
                 return (
                   <li key={i}>
                     <button
                       type="button"
-                      className="min-h-11 text-left text-sm underline underline-offset-4"
-                      onClick={() => onPending(stage)}
+                      className="pet-pending-link"
+                      onClick={() => onPending(target.stage, target.item)}
                     >
-                      {text}
+                      <span>{text}</span>
+                      <small>
+                        {target.item
+                          ? `Revisar ${PET_ETAPAS[target.stage]?.toLocaleLowerCase("pt-BR") || "etapa"}`
+                          : "Verificar nesta conferência"}
+                      </small>
                     </button>
                   </li>
                 );
@@ -835,38 +942,39 @@ export function PetConferencia({
           </div>
         ) : (
           <p className="nx-pet-notice">
-            Não há pendências retornadas nesta consulta. Execute a conferência técnica para
-            revalidar o conteúdo atual.
+            Nenhuma pendência retornada nesta consulta. A conferência no servidor revalida o
+            conteúdo atual.
           </p>
         )}
-        <div className="nx-pet-actions mt-5">
-          <ActionButton
-            loading={busy}
-            disabled={!detail.permissoes["conferir"]}
-            onClick={() =>
-              onCommand({
-                comando: "conferir",
-                dados: { pet_id: detail.pet.id, expected_version: detail.pet.version },
-              })
-            }
-          >
-            <Save size={15} aria-hidden className="mr-2 inline" /> Conferir versão no servidor
-          </ActionButton>
-        </div>
+        {actions.conferir.visible && (
+          <div className="nx-pet-actions mt-5">
+            <ActionButton
+              loading={busy}
+              disabled={!actions.conferir.enabled}
+              onClick={() =>
+                onCommand({
+                  comando: "conferir",
+                  dados: { pet_id: detail.pet.id, expected_version: detail.pet.version },
+                })
+              }
+            >
+              <ShieldCheck size={16} aria-hidden className="mr-2 inline" /> Conferir versão no
+              servidor
+            </ActionButton>
+          </div>
+        )}
       </section>
-      <section className="nx-pet-panel">
-        <h2>Assinaturas e responsabilidade</h2>
+      <section className="nx-pet-panel" data-pet-field="assinaturas" tabIndex={-1}>
+        <h2>Assinaturas e emissão</h2>
         <p className="nx-pet-subtitle mb-4">
-          Assinatura na tela e aceite autenticado são métodos distintos da assinatura certificada. O
-          login do supervisor não substitui a identidade de outro signatário.
+          Cada signatário precisa de identificação própria e assinatura certificada vinculada a esta
+          versão.
         </p>
         {!options.integracao_assinatura.configurada && (
           <div className="nx-pet-notice" data-tone="attention">
             <strong>Integração não configurada</strong>
             <p className="mt-1">
-              O provedor de assinatura ICP-Brasil não está disponível neste ambiente. Emissão e
-              liberação permanecem bloqueadas. Nenhum aceite é apresentado como certificado
-              validado.
+              O provedor ICP-Brasil está indisponível. Emissão e liberação permanecem bloqueadas.
             </p>
           </div>
         )}
@@ -887,7 +995,7 @@ export function PetConferencia({
                 </div>
                 <p className="nx-pet-hint">
                   {s.provedor || "Provedor não informado"} ·{" "}
-                  {petDate(s.assinada_em || s.criada_em || s.created_at)}
+                  {petDate(s.assinada_em || s.criada_em || s.created_at, detail.pet.timezone)}
                 </p>
                 {(s.conteudo_sha256 || s.conteudo_hash) && (
                   <p className="nx-pet-hint break-all mt-2">
@@ -900,22 +1008,24 @@ export function PetConferencia({
             <p className="nx-pet-hint">Nenhuma assinatura registrada para esta versão.</p>
           )}
         </div>
-        <ActionButton
-          className="mt-5"
-          loading={busy}
-          disabled={!options.integracao_assinatura.configurada || !detail.permissoes["emitir"]}
-          onClick={() =>
-            onCommand({
-              comando: "emitir",
-              dados: { pet_id: detail.pet.id, expected_version: detail.pet.version },
-            })
-          }
-        >
-          Emitir PET com assinaturas validadas
-        </ActionButton>
+        {actions.emitir.visible && (
+          <ActionButton
+            className="mt-5"
+            loading={busy}
+            disabled={!actions.emitir.enabled}
+            onClick={() =>
+              onCommand({
+                comando: "emitir",
+                dados: { pet_id: detail.pet.id, expected_version: detail.pet.version },
+              })
+            }
+          >
+            Emitir PET com assinaturas validadas
+          </ActionButton>
+        )}
         <p className="nx-pet-hint mt-3">
-          Novas emissões dependem do modelo aprovado, da conferência técnica e das assinaturas
-          exigidas. Rascunhos não autorizam entrada.
+          A emissão depende do modelo aprovado, da conferência técnica e das assinaturas exigidas.
+          Rascunhos não autorizam entrada.
         </p>
       </section>
     </div>

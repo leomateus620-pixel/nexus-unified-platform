@@ -41,6 +41,11 @@ export type PetResumo = {
   termino_previsto: string;
   emitida_em: string | null;
   encerrada_em: string | null;
+  termino_operacional_em?: string | null;
+  created_at?: string;
+  validade_temporal?: string;
+  revisao_atual_id?: string | null;
+  motivo_cancelamento?: string | null;
   version: number;
   timezone: string;
   presentes?: number;
@@ -88,6 +93,8 @@ export type PetIntervalo = {
 };
 export type PetAssinatura = {
   id: string;
+  revisao_id?: string | null;
+  participante_id?: string | null;
   pessoa_id: string;
   nome?: string;
   finalidade: string;
@@ -131,9 +138,15 @@ export type PetDetalhe = {
   pet: PetResumo;
   os: PetOrdem;
   espaco: PetOption;
+  modelo?: PetOption | null;
+  servidor_em?: string;
   revisoes: {
     id: string;
     numero?: number;
+    versao?: number;
+    finalidade?: string;
+    sha256?: string;
+    created_at?: string;
     conteudo?: Record<string, unknown>;
     modelo_versao_id?: string | null;
     snapshot_identificacao?: Record<string, unknown>;
@@ -156,7 +169,16 @@ export type PetDetalhe = {
     dados?: Record<string, unknown>;
   }[];
   assinaturas: PetAssinatura[];
-  documentos: { id: string; tipo: string; sha256?: string; estado?: string; criado_em?: string }[];
+  documentos: {
+    id: string;
+    tipo: string;
+    sha256?: string;
+    estado?: string;
+    criado_em?: string;
+    created_at?: string;
+    anexo_id?: string | null;
+    revisao_id?: string | null;
+  }[];
   pendencias: PetPendencia[];
   metricas: {
     duracao_documental_segundos?: number;
@@ -175,7 +197,13 @@ export type PetOpcoes = {
   ordens: PetOrdem[];
   integracao_assinatura: { configurada: boolean; provedor?: string; mensagem?: string };
 };
-export type PetLista = { registros: PetResumo[]; ordens: PetOrdem[]; total: number };
+export type PetLista = {
+  registros: PetResumo[];
+  ordens: PetOrdem[];
+  total: number;
+  pagina?: number;
+  limite?: number;
+};
 export type PetCommandName = z.infer<typeof executarInput>["comando"]["comando"];
 export type PetUICommand = { comando: PetCommandName; dados: Record<string, Json> };
 export type PetExecute = (command: PetUICommand) => Promise<boolean>;
@@ -193,10 +221,12 @@ export function optionName(value?: PetOption | null): string {
 export const PET_ETAPAS = [
   "Contexto",
   "Equipe",
-  "Perigos e controles",
+  "Segurança",
   "Atmosfera e procedimentos",
-  "Conferência e assinaturas",
-  "Acompanhamento",
+  "Conferência",
+  "Operação",
+  "Encerramento",
+  "Consulta final",
 ];
 export const PET_FUNCOES: Record<string, string> = {
   supervisor: "Supervisor de entrada",

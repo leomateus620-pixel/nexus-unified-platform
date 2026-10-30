@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "sdk_version": "3.4.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://yhtgijtllvgzoqtfcgal.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "nexus-unified-platform",
+      "version": "1.0.0",
+      "title": "Nexus Unified Platform"
+    },
+    "tools": [
+      {
+        "name": "list_organizations",
+        "title": "Organizações disponíveis",
+        "description": "Lista até 50 organizações às quais o usuário autenticado pertence.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_products",
+        "title": "Consultar produtos Nexus",
+        "description": "Busca até 30 produtos por nome ou código, sem expor custos, conforme o acesso ao catálogo.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "organization_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "search": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "organization_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_proposals",
+        "title": "Consultar propostas Nexus",
+        "description": "Lista até 30 cabeçalhos de propostas da organização, sem custos ou parâmetros de revisão.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "organization_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "organization_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

@@ -13,6 +13,8 @@ import { useOrgId } from "@/features/org/session";
 import { RecordIdentity } from "@/components/nexus/OperationalDetails";
 import { usePropostas } from "@/features/propostas/lista";
 import { brl, dataBR } from "@/lib/format";
+import { useWebMCP } from "use-webmcp-tool";
+import { runWebMCPTool } from "@/lib/webmcp-telemetry";
 
 const search = z.object({
   status: z
@@ -29,6 +31,8 @@ export const Route = createFileRoute("/_authenticated/comercial/propostas/")({
       { name: "description", content: "Lista de propostas comerciais e suas revisões." },
       { property: "og:title", content: "Propostas — Sistema Nexus" },
       { property: "og:description", content: "Propostas comerciais e revisões." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Propostas,
@@ -45,6 +49,16 @@ function Propostas() {
       (!texto ||
         `${p.numero} ${p.cliente} ${p.titulo ?? ""}`.toLowerCase().includes(texto.toLowerCase())),
   );
+  useWebMCP({
+    name: "list_visible_proposals",
+    description: "Consulta até 30 propostas exibidas nesta tela, respeitando seus filtros atuais.",
+    annotations: { readOnlyHint: true, untrustedContentHint: true },
+    execute: () => runWebMCPTool("list_visible_proposals", () => {
+      if (q.isPending) return "Propostas carregando.";
+      if (q.isError) throw new Error("Não foi possível carregar as propostas.");
+      return filtradas.length ? filtradas.slice(0, 30).map(p => `${p.id}: ${p.numero} — ${p.titulo ?? "Sem título"} — ${p.revisao?.status ?? "Sem revisão"}`).join("\n") : "Nenhuma proposta exibida.";
+    }),
+  });
   return (
     <div className="space-y-4">
       <PageHeader

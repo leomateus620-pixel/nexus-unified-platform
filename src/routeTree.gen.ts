@@ -13,6 +13,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedAgendaEquipeRouteImport } from './routes/_authenticated/agenda-equipe'
 import { Route as AuthenticatedAlmoxarifadoRouteImport } from './routes/_authenticated/almoxarifado'
@@ -37,6 +39,7 @@ import { Route as AuthenticatedSegurancaRouteImport } from './routes/_authentica
 import { Route as Mapas3dSiloEngolfamentoRouteImport } from './routes/mapas-3d_.silo-engolfamento'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
 import { Route as AuthenticatedComprasIndexRouteImport } from './routes/_authenticated/compras.index'
 import { Route as AuthenticatedComprasDemandasRouteImport } from './routes/_authenticated/compras.demandas'
@@ -94,6 +97,17 @@ const Mapas3dRoute = Mapas3dRouteImport.update({
   path: '/mapas-3d',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -218,6 +232,11 @@ const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
 const Mapas3dUnidadesRoute = Mapas3dUnidadesRouteImport.update({
   id: '/mapas-3d_/unidades',
   path: '/mapas-3d/unidades',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedComercialIndexRoute =
@@ -471,6 +490,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
@@ -494,6 +515,7 @@ export interface FileRoutesByFullPath {
   '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -536,6 +558,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
@@ -551,6 +575,7 @@ export interface FileRoutesByTo {
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/': typeof AuthenticatedIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -594,6 +619,8 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/_authenticated/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
@@ -618,6 +645,7 @@ export interface FileRoutesById {
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/_authenticated/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/_authenticated/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/_authenticated/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -663,6 +691,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/agenda-equipe'
     | '/almoxarifado'
     | '/clientes'
@@ -686,6 +716,7 @@ export interface FileRouteTypes {
     | '/mapas-3d/silo-engolfamento'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/.lovable/oauth/consent'
     | '/compras/demandas'
     | '/compras/fornecedores'
     | '/configuracoes/orcamentos'
@@ -728,6 +759,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/agenda-equipe'
     | '/almoxarifado'
     | '/clientes'
@@ -743,6 +776,7 @@ export interface FileRouteTypes {
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/'
+    | '/.lovable/oauth/consent'
     | '/compras/demandas'
     | '/compras/fornecedores'
     | '/configuracoes/orcamentos'
@@ -785,6 +819,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/_authenticated/agenda-equipe'
     | '/_authenticated/almoxarifado'
     | '/_authenticated/clientes'
@@ -809,6 +845,7 @@ export interface FileRouteTypes {
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
     | '/_authenticated/'
+    | '/.lovable/oauth/consent'
     | '/_authenticated/compras/demandas'
     | '/_authenticated/compras/fornecedores'
     | '/_authenticated/configuracoes/orcamentos'
@@ -853,9 +890,12 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   EscadaLc02Route: typeof EscadaLc02Route
   Mapas3dRoute: typeof Mapas3dRoute
+  McpRoute: typeof McpRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   Mapas3dSiloEngolfamentoRoute: typeof Mapas3dSiloEngolfamentoRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -886,6 +926,20 @@ declare module '@tanstack/react-router' {
       path: '/mapas-3d'
       fullPath: '/mapas-3d'
       preLoaderRoute: typeof Mapas3dRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/': {
@@ -1054,6 +1108,13 @@ declare module '@tanstack/react-router' {
       path: '/mapas-3d/unidades'
       fullPath: '/mapas-3d/unidades'
       preLoaderRoute: typeof Mapas3dUnidadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/comercial/': {
@@ -1577,9 +1638,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   EscadaLc02Route: EscadaLc02Route,
   Mapas3dRoute: Mapas3dRoute,
+  McpRoute: McpRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   Mapas3dSiloEngolfamentoRoute: Mapas3dSiloEngolfamentoRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -10,8 +10,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import authArtAsset from "@/assets/auth-art.png.asset.json";
 import { NexusLogo } from "@/components/nexus/NexusLogo";
+import { oauthReturnPath } from "@/lib/oauth-return-path";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>): { next?: string } => ({ next: oauthReturnPath(s['next']) }),
   head: () => ({
     meta: [
       { title: "Entrar — Sistema Nexus" },
@@ -21,6 +23,8 @@ export const Route = createFileRoute("/auth")({
       },
       { property: "og:title", content: "Entrar — Sistema Nexus" },
       { property: "og:description", content: "Acesso ao Sistema Nexus." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,
@@ -38,6 +42,8 @@ const fieldInput =
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next: returnPath } = Route.useSearch();
+  const next = returnPath ?? "/";
   const [modo, setModo] = useState<"entrar" | "cadastrar">("entrar");
   const [msg, setMsg] = useState<string | null>(null);
   const [erro, setErro] = useState<string | null>(null);
@@ -49,9 +55,9 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/", replace: true });
+      if (data.user) navigate({ href: next, replace: true });
     });
-  }, [navigate]);
+  }, [navigate, next]);
 
   const onSubmit = form.handleSubmit(async ({ email, senha }) => {
     setErro(null);
@@ -64,12 +70,12 @@ function AuthPage() {
             ? "E-mail ou senha incorretos."
             : error.message,
         );
-      navigate({ to: "/", replace: true });
+      navigate({ href: next, replace: true });
     } else {
       const { error } = await supabase.auth.signUp({
         email,
         password: senha,
-        options: { emailRedirectTo: window.location.origin },
+        options: { emailRedirectTo: new URL(next, window.location.origin).href },
       });
       if (error) return setErro(error.message);
       setMsg("Enviamos um link de confirmação para o seu e-mail.");
@@ -79,11 +85,11 @@ function AuthPage() {
   const google = async () => {
     setErro(null);
     const r = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: new URL(next, window.location.origin).href,
     });
     if (r.error) return setErro("Não foi possível entrar com Google.");
     if (r.redirected) return;
-    navigate({ to: "/", replace: true });
+    navigate({ href: next, replace: true });
   };
 
   return (

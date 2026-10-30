@@ -25,6 +25,8 @@ export const Route = createFileRoute("/_authenticated/")({
       },
       { property: "og:title", content: "Dashboard — Sistema Nexus" },
       { property: "og:description", content: "Indicadores de propostas, projetos e suprimentos." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Dashboard,

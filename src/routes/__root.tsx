@@ -145,7 +145,7 @@ function RootComponent() {
   }, [router, queryClient]);
   const dedicatedModel = useRouterState({
     select: (state) =>
-      ["/mapas-3d/trevisan", "/escada-lc02", "/mapas-3d/silo-engolfamento"].includes(
+      ["/mapas-3d/trevisan", "/escada-lc02", "/mapas-3d/silo-engolfamento", "/.lovable/oauth/consent"].includes(
         state.location.pathname.replace(/\/$/, ""),
       ),
   });

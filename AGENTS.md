@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Architecture rules
+- Agent integrations use SDK-generated MCP routes, verified OAuth caller clients and existing module permissions; browser tools read only the currently rendered collection. Why: external agents must never bypass Nexus authorization or commit operational actions.
 - Business routes live under `src/routes/_authenticated/` (client-only gate + organization onboarding); `/auth` and the 3D map routes stay public. Why: session is in browser storage and all data is organization-scoped.
 - Budget formulas live only in `src/features/calculo/domain.ts` (pure, versioned `MOTOR_VERSAO`, tested in `tests/calculo.test.ts`); pages never compute business values themselves. Why: preview and server calculation must share one rule set.
 - `sistema_componentes` is the single source of quantities; the canonical recalculation runs in `recalcularRevisao` (server function) and persists `calculo_execucoes`. Why: traceability and no diverging totals.

@@ -4,6 +4,7 @@ import type { z } from "zod";
 import type { listarInput, pendentesInput } from "./schemas";
 import {
   obterAcaoAgenda,
+  obterDashboardAgenda,
   listarAgenda,
   obterConfiguracaoAgenda,
   obterEventoAgenda,
@@ -107,4 +108,14 @@ export async function invalidateAgenda(qc: QueryClient, org: string) {
     qc.invalidateQueries({ queryKey: ["levantamentos", org] }),
     qc.invalidateQueries({ queryKey: ["almoxarifado", org] }),
   ]);
+}
+
+export function useAgendaDashboard(data: import("./types").AgendaDashboardInput, enabled = true) {
+  const load = useServerFn(obterDashboardAgenda);
+  return useQuery({
+    queryKey: [...agendaKeys.all(data.organization_id), "dashboard", data],
+    enabled: enabled && !!data.organization_id,
+    ...agendaFreshness,
+    queryFn: ({ signal }) => load({ data, signal }),
+  });
 }

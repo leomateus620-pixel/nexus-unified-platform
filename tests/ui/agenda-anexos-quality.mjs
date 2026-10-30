@@ -7,7 +7,12 @@ import { evidenceRoot } from "./evidence.mjs";
 const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4209";
 const directory = `${evidenceRoot}/agenda-anexos`;
 await mkdir(directory, { recursive: true });
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  headless: true,
+  ...(process.env.NEXUS_UI_BROWSER_EXECUTABLE
+    ? { executablePath: process.env.NEXUS_UI_BROWSER_EXECUTABLE }
+    : {}),
+});
 const page = await browser.newPage({ locale: "pt-BR", reducedMotion: "reduce" });
 page.setDefaultTimeout(10000);
 const report = {
@@ -87,7 +92,7 @@ async function cancelForm() {
 }
 
 try {
-  for (const width of [360, 390, 768, 1024, 1366, 1440]) {
+  for (const width of [360, 390, 430, 768, 1366, 1920]) {
     await page.setViewportSize({ width, height: width < 768 ? 844 : 900 });
     await go();
     await pending();

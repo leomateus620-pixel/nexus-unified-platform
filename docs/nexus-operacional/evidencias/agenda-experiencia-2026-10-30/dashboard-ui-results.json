@@ -1,0 +1,238 @@
+{
+  "method": "Actual source with isolated synthetic transport. Browser/device-zone and responsive checks; no claim of connected production persistence or SQL authorization.",
+  "checks": [
+    "one creation entry and deferred dashboard query",
+    "list, filters and Dashboard remain within all six target widths",
+    "dashboard uses the complete month and provides five insights with explicit units",
+    "filter cancel is transactional; apply and clear update real query inputs",
+    "day and hour values are available without tooltips and drill into the confirmed universe",
+    "person drilldown excludes drafts and return restores dashboard filters",
+    "weekly navigation keeps zero-hour people and clips drilldowns to the selected period",
+    "period navigation clears dashboard drilldown bounds and loads the new week",
+    "team scope survives unscheduled actions, notifications and Dashboard round trips",
+    "detail is a bounded accessible dialog on mobile and desktop with Escape return",
+    "Agenda appearance persists per user and stays scoped across Dashboard and portals",
+    "empty month has no zero winners; failed query is recoverable and never shown as zero"
+  ],
+  "layouts": [
+    {
+      "name": "lista-escura",
+      "width": 360,
+      "viewport": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "lista-escura",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-escura",
+      "width": 430,
+      "viewport": 430,
+      "scrollWidth": 430
+    },
+    {
+      "name": "lista-escura",
+      "width": 768,
+      "viewport": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "lista-escura",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-escura",
+      "width": 1920,
+      "viewport": 1920,
+      "scrollWidth": 1920
+    },
+    {
+      "name": "dashboard-escura",
+      "width": 360,
+      "viewport": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "dashboard-escura",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "dashboard-escura",
+      "width": 430,
+      "viewport": 430,
+      "scrollWidth": 430
+    },
+    {
+      "name": "dashboard-escura",
+      "width": 768,
+      "viewport": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "dashboard-escura",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "dashboard-escura",
+      "width": 1920,
+      "viewport": 1920,
+      "scrollWidth": 1920
+    },
+    {
+      "name": "dashboard-clara",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "dashboard-clara",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "filtros",
+      "width": 360,
+      "viewport": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "filtros",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "filtros",
+      "width": 430,
+      "viewport": 430,
+      "scrollWidth": 430
+    },
+    {
+      "name": "filtros",
+      "width": 768,
+      "viewport": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "filtros",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "filtros",
+      "width": 1920,
+      "viewport": 1920,
+      "scrollWidth": 1920
+    },
+    {
+      "name": "detalhe",
+      "width": 360,
+      "viewport": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "detalhe",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "detalhe",
+      "width": 430,
+      "viewport": 430,
+      "scrollWidth": 430
+    },
+    {
+      "name": "detalhe",
+      "width": 768,
+      "viewport": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "detalhe",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "detalhe",
+      "width": 1920,
+      "viewport": 1920,
+      "scrollWidth": 1920
+    },
+    {
+      "name": "dashboard-clara",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "dashboard-clara",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "filtros-claros",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "filtros-claros",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "lista-clara",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "lista-clara",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "editor-claro",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "editor-claro",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "detalhe-claro",
+      "width": 390,
+      "viewport": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "detalhe-claro",
+      "width": 1366,
+      "viewport": 1366,
+      "scrollWidth": 1366
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "laboratoryResourceNotes": []
+}

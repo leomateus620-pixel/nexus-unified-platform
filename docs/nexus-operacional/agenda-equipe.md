@@ -5,7 +5,7 @@
 `/agenda-equipe` usa pessoas e equipes de `/equipe`, ações operacionais,
 levantamentos autorizados e ferramentas do almoxarifado. Um evento pode ser
 independente ou agendar uma visita de ação/levantamento. Ações sem horário
-permanecem na fila Pendentes. Não se cria uma segunda tarefa para agendá-las.
+permanecem na lista cronológica e na fila contextual de ações. Não se cria uma segunda tarefa para agendá-las.
 OS, inspeção, manutenção e viagem não são origens selecionáveis enquanto seus
 fluxos próprios estiverem adiados. Os tipos de atividade não criam tais registros.
 
@@ -23,13 +23,13 @@ As fontes e URLs permanecem no repositório para evolução posterior.
 2. Na ficha da pessoa, registre indisponibilidades com período e motivo
    operacional. Se já houver visita confirmada, reprograme-a antes do bloqueio.
    Cancelar o bloqueio exige motivo e preserva o registro original.
-3. Na Agenda, escolha Minha agenda ou Equipe e o período. Semana é a vista
-   de planejamento desktop; celular usa leitura cronológica. Mês e lista
-   compartilham os mesmos filtros e dados paginados.
-4. Novo evento cria rascunho com título, período, fuso, responsável e pessoas.
-   Equipe expande membros com vigência, sem duplicar pessoas. Observador não
-   bloqueia a jornada. Contexto, requisitos e ferramentas são progressivos.
-5. Nova ação aceita prazo sem horário. Agendar registro existente reutiliza a
+3. A lista cronológica é a entrada padrão. Semana e Mês compartilham os
+   mesmos filtros e dados paginados. Busca e recortes ficam no painel de filtros.
+4. Novo evento abre o editor único Evento/Ação. O comando `agendar` cria e
+   publica em uma transação idempotente; uma falha não deixa um rascunho parcial.
+   Pessoas e responsável fazem parte da mesma seleção. Novos compromissos
+   usam São Paulo; fuso e visibilidade são políticas internas.
+5. Ação aceita prazo sem horário. Agendar registro existente reutiliza a
    ação ou levantamento; Abrir origem leva ao registro autorizado.
 6. Publicar valida pessoas, qualificação durante a janela, indisponibilidade e
    reservas. Iniciar revalida os requisitos atuais. Presença não conclui a tarefa.
@@ -109,3 +109,57 @@ O usuário autorizou validação local, sem fixtures no banco operacional. A
 aplicação de migração e leitura de metadados conectados são registradas em
 migracoes.md; não equivalem a E2E Auth/Storage HTTP conectado, hardware físico,
 leitor de tela ou desempenho de campo. Resultados finais ficam em validacao.md.
+
+## Dashboard e contratos da experiência
+
+A migração incremental `0034_agenda_experiencia.sql` mantém os contratos
+antigos e adiciona `ag_listar_v2`, `ag_dashboard` e `ag_pendentes_v2`.
+`ag_universo` é a única seleção de eventos para a lista e os agregados;
+verifica organização, autorização atual e ACL de origem. O agregador recebe
+o período completo e nunca recebe a página carregada. A consulta devolve
+apenas agregados e nomes autorizados, sem baixar todos os detalhes no cliente.
+
+`sem_categoria` representa ausência de classificação nos novos eventos. Os
+valores legados permanecem intactos; não há classificação por título. Natureza
+Evento/Ação usa `acao_id`, separada de categoria. A fila sem horário usa a
+ação canônica e exclui IDs vinculados a qualquer evento não cancelado. Assim
+a mesma ação não ganha um segundo card nem um segundo evento estatístico.
+
+O seletor de projeto usa `projetos.cliente_id` e a unidade da proposta
+canônica (`projetos.proposta_id → propostas.unidade_id → unidades.endereco`).
+A relação cliente/projeto é verificada por FK composta da organização. Um
+projeto não recebe endereço do cliente por aproximação. Ações sem horário
+guardam cliente/projeto/unidade/local na própria ação e pessoas em
+`acao_colaboradores`, sem cadastro paralelo. A projeção de leitura
+`0035_agenda_acao_contexto.sql` resolve nomes e colaboradores após a ACL
+da ação, permitindo reabrir ou agendar o mesmo registro com seu contexto.
+`0036_agenda_acao_versao_inicial.sql` evita revisões vazias ao criar ações
+legadas sem contexto adicional, mantendo sua versão inicial canônica.
+
+Indicadores usam eventos publicados, em andamento e concluídos. Cancelados
+e rascunhos continuam consultáveis na agenda. O recorte `demanda` nos
+drilldowns aplica exatamente esse universo. Cada ocorrência real tem um ID
+e é contada uma vez, inclusive quando vinculada a uma ação.
+
+- Dias: interseção com cada dia civil de São Paulo; todos os dias aparecem,
+  inclusive os que têm zero. Evento de vários dias ocupa várias barras,
+  embora o total único permaneça por ID.
+- Horas: cada par evento/data que intersecta uma faixa local de uma hora.
+  Intervalos são `[início,fim)`; terminar às 10h não ocupa a faixa das 10h.
+- Pessoas: responsável e participantes vigentes, sem duplicatas, excluindo
+  observadores e recusas. A soma pode superar o total de eventos.
+- Semanas: segunda-feira local, intervalos recortados ao período e à semana,
+  unidos com `range_agg` antes da soma. Os minutos sobrepostos contam uma
+  vez por pessoa. São horas agendadas, sem dividir por participantes.
+- Dia inteiro: conta em dias e categorias; não cria 24h de demanda ou carga.
+- Empates são valores iguais no DTO, sem escolha arbitrária de vencedor.
+
+Edição editorial conserva os IDs de participação e reserva. Replanejamento
+conserva confirmação, ciência, função e atribuição histórica da equipe para
+pessoas mantidas. Valores ocultos continuam enviados a partir da ficha
+autorizada; `expected_version` e a máquina de estados permanecem obrigatórios.
+
+O cenário `tests/db/agenda-dashboard.mjs` usa somente cluster descartável
+loopback, sem URL de produção. Cobre universo paginado, permissões, categoria
+ausente, vínculo canônico, recorrência, empates, meia-noite, domingo/segunda,
+faixa exclusiva, dia inteiro, sobreposição e criação/publicação idempotente.

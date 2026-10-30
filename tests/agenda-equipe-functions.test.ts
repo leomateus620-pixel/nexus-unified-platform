@@ -34,6 +34,7 @@ import {
   obterAcaoAgenda,
   obterConfiguracaoAgenda,
   obterEventoAgenda,
+  obterDashboardAgenda,
 } from "../src/features/agenda-equipe/agenda.functions";
 import { AGENDA_ACESSO_NEGADO } from "../src/features/agenda-equipe/domain";
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -70,8 +71,8 @@ async function invoke(fn: unknown, fx: ReturnType<typeof fixture>, data: unknown
 }
 describe("Agenda: fronteiras autenticadas e DTO sem fallback silencioso", () => {
   beforeEach(() => vi.clearAllMocks());
-  it("todas as nove funções declaram o middleware de sessão", () => {
-    expect(harness.middleware).toHaveLength(9);
+  it("todas as dez funções declaram o middleware de sessão", () => {
+    expect(harness.middleware).toHaveLength(10);
     expect(harness.middleware.every((m) => m.includes(harness.auth))).toBe(true);
   });
   it("lista usa recorte civil/filtros exatos e sinal da requisição", async () => {
@@ -95,20 +96,75 @@ describe("Agenda: fronteiras autenticadas e DTO sem fallback silencioso", () => 
       minha: true,
       pagina: 2,
     });
-    expect(f.rpc).toHaveBeenCalledWith("ag_listar", {
+    expect(f.rpc).toHaveBeenCalledWith("ag_listar_v2", {
       _org: org,
       _inicio: "2026-10-22",
       _fim: "2026-10-23",
-      _timezone: "America/Sao_Paulo",
-      _minha: true,
-      _busca: "Equipe A",
-      _estado: null,
-      _tipo: null,
-      _equipe: null,
+      _filtros: {
+        demanda: false,
+        minha: true,
+        busca: "Equipe A",
+        estado: null,
+        tipo: null,
+        equipe_id: null,
+        pessoa_id: null,
+        cliente_id: null,
+        projeto_id: null,
+        natureza: null,
+        hora: null,
+      },
       _pagina: 2,
       _limite: 50,
     });
     expect(f.signals).toEqual([harness.signal]);
+  });
+  it("dashboard usa agregado completo autenticado e preserva todos os filtros sem paginação", async () => {
+    const f = fixture();
+    f.set({
+      inicio: "2026-10-01",
+      fim: "2026-11-01",
+      timezone: "America/Sao_Paulo",
+      total: 0,
+      pessoas: [],
+      dias: [],
+      horas: [],
+      categorias: [],
+      semanas: [],
+    });
+    await invoke(obterDashboardAgenda, f, {
+      organization_id: org,
+      inicio: "2026-10-01",
+      fim: "2026-11-01",
+      pessoa_id: id(6),
+      natureza: "acao",
+      hora: 9,
+    });
+    expect(f.rpc).toHaveBeenCalledWith("ag_dashboard", {
+      _org: org,
+      _inicio: "2026-10-01",
+      _fim: "2026-11-01",
+      _filtros: {
+        demanda: undefined,
+        minha: false,
+        busca: "",
+        estado: null,
+        tipo: null,
+        equipe_id: null,
+        pessoa_id: id(6),
+        cliente_id: null,
+        projeto_id: null,
+        natureza: "acao",
+        hora: 9,
+      },
+    });
+    f.set(null);
+    await expect(
+      invoke(obterDashboardAgenda, f, {
+        organization_id: org,
+        inicio: "2026-10-01",
+        fim: "2026-11-01",
+      }),
+    ).rejects.toThrow();
   });
   it("não consulta nem escreve com janela ilimitada ou autoria forjada", async () => {
     const f = fixture();

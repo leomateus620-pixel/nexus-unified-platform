@@ -1,0 +1,64 @@
+{
+  "method": "Actual AgendaDetail/RecordFiles source with synthetic mutable transport and deliberate late responses. Not connected Auth/SQL/RLS/Storage HTTP, operational persistence, deployment or physical-device evidence.",
+  "layouts": [
+    {
+      "name": "agenda-private-file-pending",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "name": "agenda-private-file-pending",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "name": "agenda-private-file-pending",
+      "width": 430,
+      "scrollWidth": 430
+    },
+    {
+      "name": "agenda-private-file-pending",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "name": "agenda-private-file-pending",
+      "width": 1366,
+      "scrollWidth": 1366
+    },
+    {
+      "name": "agenda-private-file-pending",
+      "width": 1920,
+      "scrollWidth": 1920
+    }
+  ],
+  "checks": [
+    {
+      "name": "late staging never confirms or appears on the next event",
+      "pass": true
+    },
+    {
+      "name": "late staging after a failed parent revalidation remains recoverable and unconfirmed",
+      "pass": true
+    },
+    {
+      "name": "late confirmation cannot update another event's files or feedback",
+      "pass": true
+    },
+    {
+      "name": "late confirmation cannot reveal cached metadata after current access query fails",
+      "pass": true
+    },
+    {
+      "name": "late cancellation cannot clear or focus the next event's file section",
+      "pass": true
+    },
+    {
+      "name": "cleanup uses its own current permission after new uploads are closed; network failure preserves reason",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "success": true
+}

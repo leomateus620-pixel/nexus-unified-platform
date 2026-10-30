@@ -1,6 +1,6 @@
 import { CalendarPlus, ChevronRight } from "lucide-react";
-import { ActionButton } from "@/components/nexus/Page";
 import { formatCivil } from "./calendar-domain";
+import { AgendaEventCard } from "./AgendaEventCard";
 
 /** Modelo de apresentação. O adapter será preenchido somente pelo DTO autorizado do backend. */
 export type AgendaCalendarItem = {
@@ -15,6 +15,16 @@ export type AgendaCalendarItem = {
   origemCurta: string;
   diasVisiveis: readonly string[];
   diaInteiro: boolean;
+  estadoCanonico?: string;
+  inicio?: string;
+  fim?: string;
+  dataInicio?: string | null;
+  dataFim?: string | null;
+  descricao?: string | null;
+  local?: string | null;
+  cliente?: string | null;
+  projeto?: string | null;
+  pessoas?: readonly { pessoa_id: string; nome: string; funcao: string; confirmacao: string }[];
 };
 type Props = {
   view: "semana" | "mes" | "lista";
@@ -33,7 +43,6 @@ export function AgendaCalendar(props: Props) {
   const isList = props.view === "lista";
   return (
     <div className="min-w-0 space-y-3">
-      <p className="text-xs text-muted-foreground">Horários em {props.timezone}.</p>
       {!isList && (
         <div className="hidden min-w-0 xl:block">
           <section
@@ -59,19 +68,21 @@ export function AgendaCalendar(props: Props) {
         </div>
       )}
       <div className={isList ? "min-w-0" : "min-w-0 xl:hidden"}>
-        <ol aria-label="Atividades em ordem cronológica" className="space-y-4">
-          {props.days
-            .filter(
-              (day) =>
-                day === props.today ||
-                day === props.selectedDay ||
-                props.dayCounts[day] !== 0 ||
-                props.items.some((item) => item.diasVisiveis.includes(day)),
-            )
-            .map((day) => (
-              <ChronologicalDay key={day} {...props} day={day} />
+        {props.items.length ? (
+          <ol aria-label="Atividades em ordem cronológica" className="agenda-event-list">
+            {props.items.map((item) => (
+              <li key={item.id}>
+                <AgendaEventCard item={item} onOpen={props.onOpen} />
+              </li>
             ))}
-        </ol>
+          </ol>
+        ) : (
+          <div className="agenda-empty">
+            <CalendarPlus size={28} aria-hidden="true" />
+            <h2>Nenhum compromisso neste período</h2>
+            <p>Os próximos eventos aparecerão aqui.</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -201,61 +212,6 @@ function CalendarDay({ day, compact, ...props }: Props & { day: string; compact:
           <ChevronRight size={14} aria-hidden="true" />
         </button>
       )}
-    </li>
-  );
-}
-function ChronologicalDay({ day, ...props }: Props & { day: string }) {
-  const items = props.items.filter((item) => item.diasVisiveis.includes(day));
-  const total = props.dayCounts[day];
-  const label = formatCivil(day, {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-  });
-  return (
-    <li className="min-w-0 overflow-hidden rounded-lg border border-border bg-card">
-      <div className="flex min-w-0 flex-wrap items-center justify-between gap-2 border-b border-border px-3 py-2">
-        <h3 className="min-w-0 text-sm font-semibold capitalize">
-          {label}
-          {day === props.today ? (
-            <span className="ml-2 text-xs font-medium text-primary">Hoje</span>
-          ) : null}
-        </h3>
-        {props.onCreate && (
-          <ActionButton
-            variant="ghost"
-            className="inline-flex min-h-11 items-center gap-2"
-            onClick={() => props.onCreate?.(day)}
-          >
-            <CalendarPlus size={16} aria-hidden="true" />
-            Agendar
-          </ActionButton>
-        )}
-      </div>
-      <div className="p-3">
-        {items.length ? (
-          <ul className="grid gap-3">
-            {items.map((item) => (
-              <li key={item.id}>
-                <EventButton item={item} onOpen={props.onOpen} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="py-2 text-sm text-muted-foreground">
-            {total === 0
-              ? "Nenhum agendamento neste dia."
-              : total
-                ? "Há atividades neste dia. Abra o recorte completo para consultá-las."
-                : "Nenhum item deste dia foi exibido na página atual."}
-          </p>
-        )}
-        {total !== undefined && total > items.length && (
-          <ActionButton variant="ghost" className="mt-3 min-h-11" onClick={() => props.onDay(day)}>
-            Ver atividades do dia ({total})
-          </ActionButton>
-        )}
-      </div>
     </li>
   );
 }

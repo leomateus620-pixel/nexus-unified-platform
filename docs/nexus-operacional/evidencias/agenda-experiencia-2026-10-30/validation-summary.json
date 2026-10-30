@@ -1,0 +1,50 @@
+{
+  "typecheck": "passed",
+  "build": "passed",
+  "agenda_vitest": {
+    "files": 6,
+    "tests": 72,
+    "status": "passed"
+  },
+  "migration_contract_tests": {
+    "tests": 12,
+    "status": "passed"
+  },
+  "postgresql": {
+    "version": "18.4",
+    "runner": "tests/db/run.sh",
+    "status": "passed",
+    "migrations": 55,
+    "dashboard_assertions": 31
+  },
+  "ui": {
+    "runner": "node tests/ui/run.mjs --agenda",
+    "behavior_checks": 41,
+    "layout_checks": 82,
+    "page_errors": 0,
+    "console_errors": 0,
+    "status": "passed"
+  },
+  "scoped_lint": "passed",
+  "source_lint": {
+    "status": "existing_failures_outside_change",
+    "errors": 156,
+    "warnings": 28,
+    "changed_files_with_findings": [],
+    "excluded_generated_paths": [
+      "public/**",
+      "docs/**"
+    ]
+  },
+  "connected_server": {
+    "lovable_chat_started": false,
+    "migration_positions_verified": [
+      53,
+      54,
+      55
+    ],
+    "anonymous_dashboard_execute": false,
+    "authorized_read_smoke": "passed"
+  },
+  "physical_device_auth_storage_http_e2e": "not_executed"
+}

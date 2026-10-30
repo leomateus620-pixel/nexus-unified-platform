@@ -211,6 +211,18 @@
     {
       "path": "drizzle/migrations/0033_pet_relatorios.sql",
       "sha256": "4d9164d3f1766488ee8d13fc981adc0e7edb497898851abb259bdddb19eb8a2f"
+    },
+    {
+      "path": "drizzle/migrations/0034_agenda_experiencia.sql",
+      "sha256": "9568ff9541890b584ace87541cda468d2b4cd7aaaf055f88dff0165fe8a154b6"
+    },
+    {
+      "path": "drizzle/migrations/0035_agenda_acao_contexto.sql",
+      "sha256": "1ef478f53a4c1b7b2841e4a364e34bf7bc9265c6fe5efaa459e603a8ad11bc1b"
+    },
+    {
+      "path": "drizzle/migrations/0036_agenda_acao_versao_inicial.sql",
+      "sha256": "4f7ac9196b97809980a058a497f4d008ab8b07e7d98fb24054c94f29ba8cdfb3"
     }
   ]
 }

@@ -15,6 +15,7 @@ export const estadoLabels: Record<EventoAgenda["estado"], string> = {
   cancelado: "Cancelado",
 };
 export const tipoLabels: Record<EventoAgenda["tipo"], string> = {
+  sem_categoria: "Sem categoria",
   visita_tecnica: "Visita técnica",
   levantamento: "Levantamento",
   execucao: "Execução em campo",

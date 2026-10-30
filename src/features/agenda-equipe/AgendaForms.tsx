@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { ActionButton, ErrorState } from "@/components/nexus/Page";
 import { fieldClass, OperationalDialog, useCommandKey } from "@/features/operacao/components";
 import { AgendaEventFields, type AgendaLabels } from "./AgendaEventFields";
-import { AgendaPicker } from "./AgendaPicker";
+import { useAgendaAppearance } from "./AgendaAppearance";
 import { RecurrenceFields } from "./RecurrenceFields";
 import { agendaErrorMap, comandoInput } from "./schemas";
 import { eventForSave, inputFromDetail, periodoEvento } from "./domain";
@@ -46,6 +46,9 @@ export type AgendaFormProps = {
   onClose: () => void;
   onDenied: (error: unknown) => void;
   onCompare: () => Promise<DetalheAgenda | undefined>;
+  currentPerson?: { id: string; nome: string } | undefined;
+  canCreateEvent?: boolean;
+  canCreateAction?: boolean;
 };
 const defaultRule: RegraSerie = {
   frequencia: "semanal",
@@ -58,27 +61,40 @@ const defaultRule: RegraSerie = {
   hora_ambigua: "posterior",
   hora_inexistente: "pular",
 };
-function blankEvent(day: string, timezone: string, source?: PendenteAgenda): EventoInput {
+function blankEvent(
+  day: string,
+  source?: PendenteAgenda,
+  person?: { id: string; nome: string },
+): EventoInput {
   return {
     titulo: source?.titulo ?? "",
     descricao: "",
-    tipo: source?.tipo === "levantamento" ? "levantamento" : "visita_tecnica",
-    timezone,
+    tipo: source?.tipo === "levantamento" ? "levantamento" : "sem_categoria",
+    timezone: "America/Sao_Paulo",
     dia_inteiro: false,
     inicio_local: day ? day + "T08:00" : "",
     fim_local: day ? day + "T09:00" : "",
-    local: "",
-    responsavel_id: source?.responsavel_id ?? "",
+    local: source?.local ?? "",
+    responsavel_id: source?.responsavel_id ?? person?.id ?? "",
     acao_id: source?.tipo === "acao" ? source.id : null,
     levantamento_id: source?.tipo === "levantamento" ? source.id : null,
     bloqueia_recursos: true,
-    participantes: source ? [{ pessoa_id: source.responsavel_id, funcao: "responsavel" }] : [],
+    participantes: source
+      ? [
+          { pessoa_id: source.responsavel_id, funcao: "responsavel" },
+          ...(source.pessoas ?? [])
+            .filter((p) => p.pessoa_id !== source.responsavel_id)
+            .map((p) => ({ pessoa_id: p.pessoa_id, funcao: "participante" as const })),
+        ]
+      : person
+        ? [{ pessoa_id: person.id, funcao: "responsavel" }]
+        : [],
     competencias: [],
     equipes: [],
     ferramentas: [],
     cliente_id: source?.cliente_id ?? null,
     unidade_id: source?.unidade_id ?? null,
-    projeto_id: null,
+    projeto_id: source?.projeto_id ?? null,
     visibilidade: "participantes",
   };
 }
@@ -89,6 +105,7 @@ function labelsFromDetail(detail: DetalheAgenda | null): AgendaLabels {
     [e.responsavel_id, e.responsavel_nome],
     ...(e.cliente_id ? [[e.cliente_id, e.cliente_nome ?? "Cliente vinculado"]] : []),
     ...(e.unidade_id ? [[e.unidade_id, e.unidade_nome ?? "Unidade vinculada"]] : []),
+    ...(e.projeto_id ? [[e.projeto_id, e.projeto_nome ?? "Projeto vinculado"]] : []),
     ...detail.participantes.map((p) => [p.pessoa_id, p.pessoa_nome]),
     ...detail.competencias.map((c) => [c.competencia_id, c.nome]),
     ...detail.ferramentas.map((t) => [t.ferramenta_id, t.patrimonio + " · " + t.descricao]),
@@ -109,7 +126,7 @@ export function AgendaForm(props: AgendaFormProps) {
 }
 function AgendaFormContent({
   org,
-  timezone,
+  timezone: _timezone,
   editor,
   busy,
   error,
@@ -117,33 +134,42 @@ function AgendaFormContent({
   onClose,
   onDenied,
   onCompare,
+  currentPerson,
+  canCreateEvent = true,
+  canCreateAction = true,
 }: AgendaFormProps) {
+  const { theme } = useAgendaAppearance();
   const [base, setBase] = useState(editor.tipo === "acao" ? null : editor.base),
     [value, setValue] = useState<EventoInput>(() =>
       editor.tipo !== "acao" && editor.base
         ? inputFromDetail(editor.base)
         : blankEvent(
             editor.tipo === "comando" ? "" : editor.day,
-            timezone,
             editor.tipo === "evento" ? editor.source : undefined,
+            currentPerson,
           ),
     );
   const [labels, setLabels] = useState<AgendaLabels>(() => ({
+    ...(currentPerson ? { [currentPerson.id]: currentPerson.nome || "Você" } : {}),
     ...labelsFromDetail(editor.tipo === "acao" ? null : editor.base),
     ...(editor.tipo === "evento" && editor.source
       ? {
           [editor.source.responsavel_id]: editor.source.responsavel_nome,
           [editor.source.id]: editor.source.titulo,
+          ...(editor.source.cliente_id && editor.source.cliente_nome
+            ? { [editor.source.cliente_id]: editor.source.cliente_nome }
+            : {}),
+          ...(editor.source.projeto_id && editor.source.projeto_nome
+            ? { [editor.source.projeto_id]: editor.source.projeto_nome }
+            : {}),
+          ...Object.fromEntries((editor.source.pessoas ?? []).map((p) => [p.pessoa_id, p.nome])),
         }
       : {}),
   }));
-  const [originIntent, setOriginIntent] = useState<"independente" | "acao" | "levantamento">(() =>
-    value.acao_id ? "acao" : value.levantamento_id ? "levantamento" : "independente",
+  const [mode, setMode] = useState<"evento" | "acao">(() =>
+    editor.tipo === "acao" || value.acao_id ? "acao" : "evento",
   );
   const [action, setAction] = useState({
-    titulo: "",
-    descricao: "",
-    responsavel_id: "",
     prazo: null as string | null,
     prioridade: "normal" as "baixa" | "normal" | "alta" | "critica",
     exige_verificacao: true,
@@ -202,52 +228,35 @@ function AgendaFormContent({
     editar_serie: "Alterar compromissos futuros",
     cancelar_serie: "Cancelar compromissos futuros",
   };
-  const title =
-    editor.tipo === "acao"
-      ? "Nova ação"
-      : command
-        ? titles[command]
-        : base
-          ? "Editar compromisso"
-          : "Novo evento";
+  const title = command
+    ? titles[command]
+    : base
+      ? "Editar compromisso"
+      : mode === "acao"
+        ? "Nova ação"
+        : "Novo evento";
   async function submit(e: FormEvent) {
     e.preventDefault();
     if (busy) return;
     setLocalError("");
     setIssues({});
-    if (
-      editor.tipo !== "acao" &&
-      ((originIntent === "acao" && !value.acao_id) ||
-        (originIntent === "levantamento" && !value.levantamento_id))
-    ) {
-      setIssues({ origem: "Selecione a origem escolhida antes de salvar." });
-      setLocalError("Escolha a ação ou o levantamento a agendar. Nenhuma alteração foi enviada.");
-      requestAnimationFrame(() => summary.current?.focus());
-      return;
-    }
     let body: ComandoBody;
-    if (editor.tipo === "acao")
+    if (!base && !command && mode === "acao" && !(editor.tipo === "evento" && editor.source))
       body = {
         comando: "criar_acao",
         dados: {
-          acao: action,
-          ...(schedule
-            ? {
-                evento: {
-                  ...value,
-                  responsavel_id: action.responsavel_id,
-                  participantes: [
-                    { pessoa_id: action.responsavel_id, funcao: "responsavel" },
-                    ...value.participantes
-                      .filter((p) => p.pessoa_id !== action.responsavel_id)
-                      .map((p) => ({
-                        ...p,
-                        funcao: p.funcao === "responsavel" ? ("participante" as const) : p.funcao,
-                      })),
-                  ],
-                },
-              }
-            : {}),
+          acao: {
+            ...action,
+            titulo: value.titulo,
+            descricao: value.descricao,
+            responsavel_id: value.responsavel_id,
+            participantes: value.participantes,
+            cliente_id: value.cliente_id,
+            projeto_id: value.projeto_id,
+            unidade_id: value.unidade_id,
+            local: value.local,
+          },
+          ...(schedule ? { evento: value } : {}),
         },
       };
     else if (command && base) {
@@ -297,7 +306,7 @@ function AgendaFormContent({
       }
     } else
       body = {
-        comando: "salvar_evento",
+        comando: base ? "salvar_evento" : "agendar",
         dados: {
           ...(base
             ? {
@@ -344,8 +353,8 @@ function AgendaFormContent({
       setComparing(false);
     }
   }
-  const showEvent =
-    editor.tipo === "evento" || (editor.tipo === "acao" && schedule) || command === "editar_serie";
+  const showEvent = !command || command === "editar_serie";
+  const isNew = !base && !command && !(editor.tipo === "evento" && editor.source);
   const showRule = command === "criar_serie" || command === "editar_serie";
   return (
     <OperationalDialog
@@ -364,7 +373,8 @@ function AgendaFormContent({
         data-dirty={dirty ? "true" : "false"}
         aria-busy={busy}
         noValidate
-        className="grid min-w-0 gap-5"
+        className="agenda-composer grid min-w-0 gap-5"
+        data-agenda-theme={theme}
       >
         {Boolean(localError || error) && (
           <div
@@ -397,121 +407,25 @@ function AgendaFormContent({
             )}
           </div>
         )}
-        {editor.tipo === "acao" && (
-          <fieldset className="grid gap-4">
-            <legend className="mb-3 text-sm font-medium">Ação operacional</legend>
-            <label className="grid gap-1 text-sm">
-              Título da ação *
-              <input
-                className={fieldClass}
-                name="titulo"
-                value={action.titulo}
-                maxLength={200}
-                onChange={(e) => setAction({ ...action, titulo: e.target.value })}
-                aria-invalid={!!issues["titulo"]}
-                aria-describedby={issues["titulo"] ? uid + "-titulo" : undefined}
-              />
-            </label>
-            {issues["titulo"] && (
-              <p id={uid + "-titulo"} className="text-sm text-destructive">
-                {issues["titulo"]}
-              </p>
-            )}
-            <AgendaPicker
-              org={org}
-              tipo="pessoas"
-              label="Responsável pela ação"
-              value={action.responsavel_id}
-              required
-              error={issues["responsavel_id"]}
-              onDenied={onDenied}
-              onChange={(row) => {
-                setAction({ ...action, responsavel_id: row?.id ?? "" });
-                if (row) {
-                  setLabels((l) => ({ ...l, [row.id]: row.nome }));
-                  setValue((v) => ({
-                    ...v,
-                    responsavel_id: row.id,
-                    participantes: [
-                      { pessoa_id: row.id, funcao: "responsavel" },
-                      ...v.participantes
-                        .filter((p) => p.pessoa_id !== row.id)
-                        .map((p) => ({
-                          ...p,
-                          funcao: p.funcao === "responsavel" ? ("participante" as const) : p.funcao,
-                        })),
-                    ],
-                  }));
-                }
-              }}
-            />
-            <div className="grid gap-3 sm:grid-cols-2">
-              <label className="grid gap-1 text-sm">
-                Prazo (opcional)
-                <input
-                  className={fieldClass}
-                  type="date"
-                  value={action.prazo ?? ""}
-                  onChange={(e) => setAction({ ...action, prazo: e.target.value || null })}
-                />
-              </label>
-              <label className="grid gap-1 text-sm">
-                Prioridade
-                <select
-                  className={fieldClass}
-                  value={action.prioridade}
-                  onChange={(e) =>
-                    setAction({
-                      ...action,
-                      prioridade: e.target.value as typeof action.prioridade,
-                    })
-                  }
-                >
-                  <option value="baixa">Baixa</option>
-                  <option value="normal">Normal</option>
-                  <option value="alta">Alta</option>
-                  <option value="critica">Crítica</option>
-                </select>
-              </label>
-            </div>
-            <label className="grid gap-1 text-sm">
-              Descrição da ação
-              <textarea
-                className={fieldClass + " min-h-24"}
-                value={action.descricao}
-                maxLength={4000}
-                onChange={(e) => setAction({ ...action, descricao: e.target.value })}
-              />
-            </label>
-            <label className="flex min-h-11 items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={action.exige_verificacao}
-                onChange={(e) => setAction({ ...action, exige_verificacao: e.target.checked })}
-              />
-              Exigir verificação da conclusão
-            </label>
-            <label className="flex min-h-11 items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={schedule}
-                onChange={(e) => {
-                  setSchedule(e.target.checked);
-                  if (e.target.checked)
-                    setValue((v) => ({
-                      ...v,
-                      titulo: v.titulo || action.titulo,
-                      tipo: "acao_interna",
-                    }));
-                }}
-              />
-              Reservar um horário para esta ação
-            </label>
-            <p className="text-xs text-muted-foreground">
-              Sem horário, a ação permanece na fila de pendências. O prazo é opcional e não gera um
-              evento de dia inteiro.
-            </p>
-          </fieldset>
+        {isNew && (
+          <div role="group" aria-label="Natureza do compromisso" className="agenda-mode-switch">
+            <button
+              type="button"
+              aria-pressed={mode === "evento"}
+              disabled={busy || !canCreateEvent}
+              onClick={() => setMode("evento")}
+            >
+              Evento
+            </button>
+            <button
+              type="button"
+              aria-pressed={mode === "acao"}
+              disabled={busy || !canCreateAction}
+              onClick={() => setMode("acao")}
+            >
+              Ação
+            </button>
+          </div>
         )}
         {showEvent && (
           <AgendaEventFields
@@ -522,10 +436,17 @@ function AgendaFormContent({
             labels={labels}
             onLabel={(id, name) => setLabels((l) => ({ ...l, [id]: name }))}
             onDenied={onDenied}
-            originLocked={!!base || editor.tipo === "acao"}
-            responsibleLocked={editor.tipo === "acao"}
-            onOriginIntent={setOriginIntent}
+            originLocked={!!base || (editor.tipo === "evento" && !!editor.source)}
             errors={issues}
+            action={mode === "acao"}
+            scheduled={!isNew || mode === "evento" || schedule}
+            onScheduledChange={isNew && mode === "acao" ? setSchedule : undefined}
+            deadline={action.prazo || ""}
+            onDeadlineChange={
+              isNew && mode === "acao"
+                ? (prazo) => setAction((v) => ({ ...v, prazo: prazo || null }))
+                : undefined
+            }
           />
         )}
         {(command === "cancelar_serie" || command === "editar_serie") && (
@@ -632,20 +553,20 @@ function AgendaFormContent({
             )}
           </div>
         )}
-        <div className="flex flex-wrap justify-end gap-2 border-t border-border pt-4">
+        <div className="agenda-composer-footer flex flex-wrap justify-end gap-2 border-t border-border pt-4">
           <Dialog.Close asChild>
             <ActionButton variant="ghost" disabled={busy}>
               Voltar
             </ActionButton>
           </Dialog.Close>
           <ActionButton type="submit" loading={busy}>
-            {editor.tipo === "acao"
-              ? schedule
-                ? "Criar ação e agendar"
-                : "Criar ação"
-              : command
-                ? titles[command]
-                : "Salvar rascunho"}
+            {command
+              ? titles[command]
+              : base
+                ? "Salvar alterações"
+                : mode === "acao" && !schedule && isNew
+                  ? "Criar ação"
+                  : "Agendar"}
           </ActionButton>
         </div>
       </form>

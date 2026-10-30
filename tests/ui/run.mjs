@@ -31,6 +31,7 @@ try {
     "--disponibilidade": [["disponibilidade-quality.mjs"]],
     "--agenda": [
       ["agenda-quality.mjs"],
+      ["agenda-redesign-quality.mjs"],
       ["agenda-anexos-quality.mjs"],
       ["agenda-serie-pendencias-quality.mjs"],
     ],

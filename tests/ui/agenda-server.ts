@@ -1,7 +1,8 @@
 // Laboratory-only transport. Canonical SQL/RLS/concurrency and persistence are tested separately.
-// Fixtures never enter application builds and do not implement a second scheduling engine.
+// Fixtures never enter application builds; dashboard figures below are laboratory projections, never production evidence.
 import { scenario } from "./data";
 import * as s from "@/features/agenda-equipe/schemas";
+import { addCivilDays, daysInWindow, mondayOf } from "@/features/agenda-equipe/calendar-domain";
 import { AGENDA_ACESSO_NEGADO } from "@/features/agenda-equipe/domain";
 import {
   pendenciasSerieInput,
@@ -211,6 +212,15 @@ function eventView(e, start = null, end = null) {
   return {
     ...copy(e),
     responsavel_nome: names[e.responsavel_id] ?? "Pessoa vinculada",
+    pessoas: (state.participants[e.id] ?? [participant(e)])
+      .filter((p) => p.vigente)
+      .map((p) => ({
+        pessoa_id: p.pessoa_id,
+        nome: p.pessoa_nome,
+        funcao: p.funcao,
+        confirmacao: p.confirmacao,
+      })),
+    projeto_nome: e.projeto_id ? "Projeto operacional do laboratório" : null,
     permissoes: permissions(e),
     dias_visiveis: start && end ? days(e, start, end) : [],
     origem: {
@@ -314,6 +324,7 @@ export const obterConfiguracaoAgenda = async ({ data }) => {
   await before("obterConfiguracaoAgenda", data);
   return s.configuracaoAgenda.parse({
     minha_pessoa_id: person,
+    minha_pessoa_nome: names[person],
     permissoes: privileges(),
     preferencias: state.preferences,
     timezone: responseTimezone,
@@ -342,7 +353,8 @@ export const listarAgenda = async ({ data }) => {
         e.dias_visiveis.length &&
         (!q.busca || e.titulo.toLocaleLowerCase().includes(q.busca.toLocaleLowerCase())) &&
         (!q.estado || e.estado === q.estado) &&
-        (!q.tipo || e.tipo === q.tipo),
+        (!q.tipo || e.tipo === q.tipo) &&
+        matchesFixtureScope(e, q),
     );
   const counts = [];
   for (
@@ -361,6 +373,122 @@ export const listarAgenda = async ({ data }) => {
     minha_pessoa_id: person,
   });
 };
+// This projection only supplies the isolated UI with live synthetic fixture values.
+// SQL tests exercise authorization, temporal boundaries and complete-period aggregation.
+const fixtureOperationalPeople = (e) =>
+  (state.participants[e.id] ?? [participant(e)]).filter(
+    (p) => p.vigente && p.funcao !== "observador" && p.confirmacao !== "recusada",
+  );
+function fixtureOccupiesHour(e, start, end, hour) {
+  if (e.dia_inteiro) return false;
+  return daysInWindow(start, end).some((date) => {
+    const from = Date.parse(`${date}T${String(hour).padStart(2, "0")}:00:00-03:00`);
+    return Date.parse(e.inicio) < from + 3600000 && Date.parse(e.fim) > from;
+  });
+}
+function matchesFixtureScope(e, q) {
+  return (
+    (!q.demanda || !["rascunho", "cancelado"].includes(e.estado)) &&
+    (!q.minha || fixtureOperationalPeople(e).some((p) => p.pessoa_id === person)) &&
+    (!q.pessoa_id || fixtureOperationalPeople(e).some((p) => p.pessoa_id === q.pessoa_id)) &&
+    (!q.cliente_id || e.cliente_id === q.cliente_id) &&
+    (!q.projeto_id || e.projeto_id === q.projeto_id) &&
+    (!q.natureza || (q.natureza === "acao" ? !!e.acao_id : !e.acao_id)) &&
+    (q.hora == null || fixtureOccupiesHour(e, q.inicio, q.fim, q.hora))
+  );
+}
+export const obterDashboardAgenda = async ({ data }) => {
+  await before("obterDashboardAgenda", data);
+  const q = s.dashboardInput.parse(data),
+    dates = daysInWindow(q.inicio, q.fim);
+  const events = state.events.filter(
+    (e) =>
+      !["rascunho", "cancelado"].includes(e.estado) &&
+      days(e, q.inicio, q.fim).length &&
+      (!q.busca || e.titulo.toLocaleLowerCase().includes(q.busca.toLocaleLowerCase())) &&
+      (!q.estado || e.estado === q.estado) &&
+      (!q.tipo || e.tipo === q.tipo) &&
+      matchesFixtureScope(e, q),
+  );
+  const people = [
+    ...new Set(events.flatMap((e) => fixtureOperationalPeople(e).map((p) => p.pessoa_id))),
+  ];
+  const rankedPeople = people
+    .map((id) => ({
+      pessoa_id: id,
+      nome: names[id] ?? "Pessoa do laboratório",
+      total: events.filter((e) => fixtureOperationalPeople(e).some((p) => p.pessoa_id === id))
+        .length,
+    }))
+    .sort((a, b) => b.total - a.total);
+  const categories = [...new Set(events.map((e) => e.tipo))]
+    .map((tipo) => ({ tipo, total: events.filter((e) => e.tipo === tipo).length }))
+    .sort((a, b) => b.total - a.total);
+  const weeks = [];
+  for (let week = mondayOf(q.inicio); week < q.fim; week = addCivilDays(week, 7)) {
+    const end = addCivilDays(week, 7),
+      from = week < q.inicio ? q.inicio : week,
+      until = end > q.fim ? q.fim : end;
+    const startMs = Date.parse(from + "T00:00:00-03:00"),
+      endMs = Date.parse(until + "T00:00:00-03:00");
+    const ids = [...new Set([...(q.minha ? [person] : Object.keys(names)), ...people])].filter(
+      (id) => !q.pessoa_id || id === q.pessoa_id,
+    );
+    weeks.push({
+      inicio: week,
+      fim: end,
+      parcial: from !== week || until !== end,
+      pessoas: ids
+        .map((id) => {
+          const spans = events
+            .filter(
+              (e) => !e.dia_inteiro && fixtureOperationalPeople(e).some((p) => p.pessoa_id === id),
+            )
+            .map((e) => [
+              Math.max(startMs, Date.parse(e.inicio)),
+              Math.min(endMs, Date.parse(e.fim)),
+            ])
+            .filter(([a, b]) => b > a)
+            .sort((a, b) => a[0] - b[0]);
+          const merged = [];
+          for (const span of spans) {
+            const previous = merged.at(-1);
+            if (previous && span[0] <= previous[1]) previous[1] = Math.max(previous[1], span[1]);
+            else merged.push([...span]);
+          }
+          return {
+            pessoa_id: id,
+            nome: names[id] ?? "Pessoa do laboratório",
+            minutos: merged.reduce((sum, [a, b]) => sum + (b - a) / 60000, 0),
+          };
+        })
+        .sort((a, b) => b.minutos - a.minutos),
+    });
+  }
+  return s.dashboardAgenda.parse({
+    inicio: q.inicio,
+    fim: q.fim,
+    timezone: "America/Sao_Paulo",
+    total: events.length,
+    pessoas: rankedPeople,
+    dias: dates.map((date) => ({
+      data: date,
+      total: events.filter((e) => days(e, date, addCivilDays(date, 1)).length).length,
+    })),
+    horas: Array.from({ length: 24 }, (_, hora) => ({
+      hora,
+      total: dates.reduce(
+        (sum, date) =>
+          sum +
+          events.filter((e) => fixtureOccupiesHour(e, date, addCivilDays(date, 1), hora)).length,
+        0,
+      ),
+    })),
+    categorias: categories,
+    semanas: weeks,
+  });
+};
+
 export const obterEventoAgenda = async ({ data }) => {
   await before("obterEventoAgenda", data);
   return detail(data.id);
@@ -371,6 +499,18 @@ export const obterAcaoAgenda = async ({ data }) => {
   if (!a) throw new Error(AGENDA_ACESSO_NEGADO);
   return s.acaoAgenda.parse({
     acao: copy(a),
+    cliente_nome: a.cliente_id ? "Cliente de teste" : null,
+    projeto_nome: a.projeto_id ? "Projeto operacional do laboratório" : null,
+    unidade_nome: a.unidade_id ? "Unidade norte" : null,
+    pessoas: [
+      ...new Set([a.responsavel_id, ...(a.participantes ?? []).map((p) => p.pessoa_id)]),
+    ].map((pessoa_id) => ({
+      pessoa_id,
+      nome:
+        names[pessoa_id] ||
+        window.__nexusOperational?.pessoas.find((p) => p.id === pessoa_id)?.nome ||
+        "Pessoa do laboratório",
+    })),
     responsavel_nome: state.actions.includes(a)
       ? names[a.responsavel_id]
       : (window.__nexusOperational?.pessoas.find((person) => person.id === a.responsavel_id)
@@ -434,7 +574,9 @@ export const buscarOpcoesAgenda = async ({ data }) => {
           {
             id: "40000000-0000-4000-8000-000000000009",
             nome: "Projeto operacional do laboratório",
-            contexto: "Em andamento",
+            contexto: "Cliente de teste · Em andamento",
+            cliente_nome: "Cliente de teste",
+            endereco: "Rua de validação, 100 · Unidade norte",
             cliente_id: client,
           },
         ],
@@ -468,9 +610,7 @@ export const listarPendentesAgenda = async ({ data }) => {
       .filter(
         (a) =>
           !["concluida", "cancelada"].includes(a.estado) &&
-          !state.events.some(
-            (e) => e.acao_id === a.id && ["publicado", "em_andamento"].includes(e.estado),
-          ),
+          !state.events.some((e) => e.acao_id === a.id && e.estado !== "cancelado"),
       )
       .map((a) => ({
         id: a.id,
@@ -573,8 +713,12 @@ export const executarAgenda = async ({ data }) => {
   }
   let r;
   const d = parsed.dados;
-  if (parsed.comando === "salvar_evento") {
+  if (["salvar_evento", "agendar"].includes(parsed.comando)) {
     const e = save(d);
+    if (parsed.comando === "agendar") {
+      e.estado = "publicado";
+      e.version++;
+    }
     r = receipt("evento", e.id, e.id, e.acao_id, detail(e.id));
   } else if (["publicar", "iniciar", "concluir", "cancelar"].includes(parsed.comando)) {
     const e = state.events.find((e) => e.id === d.evento_id);
@@ -612,6 +756,10 @@ export const executarAgenda = async ({ data }) => {
     const e = d.evento
       ? save({ evento: { ...d.evento, acao_id: a.id, levantamento_id: null } })
       : null;
+    if (e) {
+      e.estado = "publicado";
+      e.version++;
+    }
     r = receipt("acao", a.id, e?.id ?? null, a.id, { acao: a, evento: e ? detail(e.id) : null });
   } else if (parsed.comando === "transicionar_acao") {
     const a = canonicalAction(d.acao_id);

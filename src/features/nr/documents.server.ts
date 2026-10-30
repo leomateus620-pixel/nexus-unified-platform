@@ -124,8 +124,13 @@ export async function exportarDocumentoNr(
   if (rendered.bytes.length > 50 * 1024 * 1024)
     throw new Error("Exportação excedeu 50 MiB; divida o documento.");
   await documento(client, input);
+  const nomeExportado = Array.from(row.titulo, (character) =>
+    character.charCodeAt(0) < 32 || '\\/:*?"<>|'.includes(character) ? "_" : character,
+  )
+    .join("")
+    .slice(0, 140);
   return {
-    nome: `${row.titulo.replace(/[\\/:*?"<>|\x00-\x1f]/g, "_").slice(0, 140)}-rev${row.revisao_numero}-derivado.${input.formato}`,
+    nome: `${nomeExportado}-rev${row.revisao_numero}-derivado.${input.formato}`,
     mime: input.formato === "pdf" ? NR_ARQUIVO_MIMES.pdf : NR_ARQUIVO_MIMES.docx,
     base64: Buffer.from(rendered.bytes).toString("base64"),
     sha256: await sha256Nr(rendered.bytes),

@@ -43,7 +43,13 @@ export type NrArquivoLimites = {
   extensoes: string[];
 };
 export function extensaoNr(nome: string): string {
-  if (!nome.trim() || nome.length > 500 || /[\x00-\x1f/\\]/.test(nome))
+  if (
+    !nome.trim() ||
+    nome.length > 500 ||
+    Array.from(nome).some(
+      (character) => character.charCodeAt(0) < 32 || character === "/" || character === "\\",
+    )
+  )
     throw new Error("Nome de arquivo inválido.");
   return (nome.split(".").pop() ?? "").toLowerCase();
 }
@@ -188,7 +194,8 @@ function lerZip(bytes: Uint8Array): ZipEntry[] {
     if (
       !nome ||
       nome.startsWith("/") ||
-      /[\\\x00]/.test(nome) ||
+      nome.includes("\\") ||
+      nome.includes("\0") ||
       nome.split("/").includes("..") ||
       names.has(nome)
     )

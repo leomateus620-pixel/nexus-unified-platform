@@ -165,6 +165,21 @@ async function setup(
 }
 beforeEach(() => vi.clearAllMocks());
 describe("NR documentos: derivado rastreável e concorrência", () => {
+  it("substitui controles e caracteres reservados no nome exportado sem alterar o título da fonte", async () => {
+    const t = await setup(),
+      originalTitle = source.titulo;
+    const controls = Array.from({ length: 32 }, (_, code) => String.fromCharCode(code)).join("");
+    const title = `Ação 😀 ${controls}\\/:*?"<>| ${"X".repeat(150)}`;
+    try {
+      source.titulo = title;
+      const result = await exportarDocumentoNr(t.client, { ...input, formato: "docx" });
+      expect(result.nome).toBe(`Ação 😀 ${"_".repeat(41)} ${"X".repeat(90)}-rev3-derivado.docx`);
+      expect(source.titulo).toBe(title);
+      expect(t.rpc.mock.calls.some(([name]) => name === "nr_executar")).toBe(false);
+    } finally {
+      source.titulo = originalTitle;
+    }
+  });
   it("converte original importado com vínculo secundário exato e preserva sua revisão", async () => {
     const t = await setup("secondary");
     const result = await converterDocumentoNr(t.client, id(7), {

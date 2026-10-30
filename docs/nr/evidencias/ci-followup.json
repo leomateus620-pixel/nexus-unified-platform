@@ -1,0 +1,18 @@
+{
+  "reason": "GitHub CI reported no-control-regex in filename, ZIP-entry and export-name validation.",
+  "change": "Equivalent character-code and literal-string checks retain all safety restrictions; no lint suppression and no SQL change.",
+  "regressions": [
+    "All 32 ASCII control characters and directory separators rejected in filenames; Unicode and 500-character limit preserved.",
+    "ZIP entry NUL and backslash paths rejected.",
+    "Exported names sanitized and limited to 140 characters without modifying source titles."
+  ],
+  "nr_tests_passed": 60,
+  "tool_tests_passed": 18,
+  "full_features_eslint_errors": 0,
+  "existing_unrelated_eslint_warnings": 11,
+  "typecheck": "passed",
+  "production_build": "passed",
+  "database_migrations_unchanged": 64,
+  "database_checks_previous_verified": 312,
+  "pull_request": "https://github.com/leomateus620-pixel/nexus-unified-platform/pull/17"
+}

@@ -20,6 +20,37 @@ function docx(extra: Record<string, Uint8Array> = {}) {
   });
 }
 describe("NR: bytes, MIME, extensão e integridade do acervo", () => {
+  it("recusa todos os controles ASCII em nomes e preserva Unicode, espaços e o limite de 500 caracteres", () => {
+    const metadata = {
+      mime: NR_ARQUIVO_MIMES.pdf,
+      tamanho: 1,
+      sha256: "a".repeat(64),
+    };
+    for (let code = 0; code < 32; code++)
+      expect(() =>
+        validarMetadataNr({ ...metadata, nome: `Registro${String.fromCharCode(code)}13A.pdf` }),
+      ).toThrow("Nome de arquivo inválido");
+    for (const separator of ["/", "\\"])
+      expect(() =>
+        validarMetadataNr({ ...metadata, nome: `pasta${separator}arquivo.pdf` }),
+      ).toThrow("Nome de arquivo inválido");
+    expect(validarMetadataNr({ ...metadata, nome: "Ação 😀 — 61 EFGHIJ 63CDEFGH.PDF" })).toBe(
+      "pdf",
+    );
+    expect(validarMetadataNr({ ...metadata, nome: `${"a".repeat(496)}.pdf` })).toBe("pdf");
+    expect(() => validarMetadataNr({ ...metadata, nome: `${"a".repeat(497)}.pdf` })).toThrow(
+      "Nome de arquivo inválido",
+    );
+  });
+  it("bloqueia NUL e barra invertida em entradas ZIP sem rejeitar caminhos Office Unicode", async () => {
+    for (const name of ["word/oculto\0.xml", "word\\oculto.xml"])
+      await expect(mimeDetectadoNr(docx({ [name]: strToU8("<x/>") }))).rejects.toThrow(
+        "Caminho ambíguo",
+      );
+    expect(
+      await mimeDetectadoNr(docx({ "word/metadados/ação.xml": strToU8("<x>Preservado</x>") })),
+    ).toBe(NR_ARQUIVO_MIMES.docx);
+  });
   it("confere os bytes completos e não confunde HTML ou visualizador com PDF", async () => {
     const meta = {
       nome: "Original Rev. 03.pdf",

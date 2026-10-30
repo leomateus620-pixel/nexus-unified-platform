@@ -1,0 +1,24 @@
+
+ RUN  v3.2.7 <PROJETO>
+
+ ✓ tests/pet-ui-time.test.ts (3 tests) 48ms
+ ✓ tests/pet-preparation.test.ts (11 tests) 31ms
+ ✓ tests/pet-documentos-functions.test.ts (6 tests) 24ms
+ ✓ tests/pet-list-state.test.ts (7 tests) 6ms
+ ✓ tests/pet-offline-ledger.test.ts (5 tests) 201ms
+ ✓ tests/pet-ui-resilience.test.ts (3 tests) 2ms
+ ✓ tests/pet-relatorios.test.ts (10 tests) 146ms
+ ✓ tests/pet-domain.test.ts (4 tests) 214ms
+ ✓ tests/pet-operations-presentation.test.ts (6 tests) 8ms
+ ✓ tests/pet-presentation.test.ts (4 tests) 1ms
+ ✓ tests/pet-command-intents.test.ts (2 tests) 2ms
+ ✓ tests/pet-pdf.test.ts (5 tests) 330ms
+ ✓ tests/pet-offline-viewer.test.ts (4 tests) 628ms
+ ✓ tests/pet-pdf-v2.test.ts (4 tests) 2698ms
+   ✓ PET: relatório V2 e preservação de formato > gera bytes V2 idênticos, com fontes locais incorporadas e registros completos  1903ms
+   ✓ PET: relatório V2 e preservação de formato > apresenta encerramento e correções sem confundir o original com a projeção efetiva  733ms
+
+ Test Files  14 passed (14)
+      Tests  74 passed (74)
+   Start at  16:14:35
+   Duration  3.63s (transform 549ms, setup 0ms, collect 1.71s, tests 4.34s, environment 11ms, prepare 803ms)

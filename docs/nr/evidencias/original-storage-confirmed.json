@@ -1,0 +1,106 @@
+{
+  "format": "nexus-original-storage-confirmed-v1",
+  "project_ref": "yhtgijtllvgzoqtfcgal",
+  "source_message_id": "umsg_01m675e35nedyr19v7kvr94a1g",
+  "actual_get_verified": 605,
+  "actual_bytes": 232242866,
+  "canonical_sha256": "e847a61300694e121a25bb5dd5767833c2511beac3d2adfa1c285d142a5e445a",
+  "expected_hash_independently_matches": true,
+  "readback": {
+    "rows": [
+      {
+        "arquivos": 605,
+        "bytes": "232242866",
+        "estado": "vinculado"
+      }
+    ]
+  },
+  "confirmation_batches": [
+    {
+      "batch": 0,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 1,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 2,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 3,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 4,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 5,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 6,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 7,
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "batch": 8,
+      "rows": [
+        {
+          "confirmados": 5
+        }
+      ]
+    }
+  ],
+  "formats": {
+    "pdf": {
+      "objects": 232,
+      "bytes": 119003700
+    },
+    "docx": {
+      "objects": 233,
+      "bytes": 99714362
+    },
+    "jpeg": {
+      "objects": 140,
+      "bytes": 13524804
+    }
+  }
+}

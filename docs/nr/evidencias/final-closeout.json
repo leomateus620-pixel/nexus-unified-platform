@@ -1,0 +1,555 @@
+{
+  "format": "nexus-nr-final-production-closeout-v1",
+  "captured_at": "2026-10-30T20:31:19.669Z",
+  "source_snapshot_captured_at": "2026-10-30T17:42:01.011Z",
+  "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "execution": "Actual authorized source migration through Lovable owner query_database; no production fixtures",
+  "lot": {
+    "state": "com_pendencias",
+    "total_items": 4300,
+    "processing_pending": 0,
+    "terminal_outcomes": {
+      "importado": 3260,
+      "indisponivel": 550,
+      "sem_correspondencia": 490
+    },
+    "closed_at": "2026-10-30 20:29:52.989097+00"
+  },
+  "source_baseline": {
+    "clients": 2,
+    "units": 4,
+    "locations": 112,
+    "confined_spaces": 108,
+    "height_only_locations": 4,
+    "documentary_records": 736,
+    "pending_open": 51,
+    "pending_closed": 29
+  },
+  "per_unit": [
+    {
+      "abertas_atuais": 17,
+      "abertas_origem": 17,
+      "altura_origem": 0,
+      "bytes_originais_confirmados": 145168190,
+      "ec_origem": 30,
+      "emitidos_origem": 65,
+      "encerradas_atuais": 19,
+      "encerradas_origem": 19,
+      "locais": 30,
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "originais_confirmados": 296,
+      "pendencias_origem": 36,
+      "pet_espacos_vinculados": 30,
+      "rascunhos_origem": 181,
+      "recebidos_origem": 6,
+      "registros_documentais_origem": 253,
+      "revisao_origem": 1
+    },
+    {
+      "abertas_atuais": 2,
+      "abertas_origem": 2,
+      "altura_origem": 0,
+      "bytes_originais_confirmados": 0,
+      "ec_origem": 0,
+      "emitidos_origem": 0,
+      "encerradas_atuais": 0,
+      "encerradas_origem": 0,
+      "locais": 0,
+      "nome": "Matriz — Santa Rosa",
+      "originais_confirmados": 0,
+      "pendencias_origem": 2,
+      "pet_espacos_vinculados": 0,
+      "rascunhos_origem": 0,
+      "recebidos_origem": 1,
+      "registros_documentais_origem": 1,
+      "revisao_origem": 0
+    },
+    {
+      "abertas_atuais": 31,
+      "abertas_origem": 31,
+      "altura_origem": 4,
+      "bytes_originais_confirmados": 87074676,
+      "ec_origem": 78,
+      "emitidos_origem": 0,
+      "encerradas_atuais": 10,
+      "encerradas_origem": 10,
+      "locais": 82,
+      "nome": "São Luiz Gonzaga — RS",
+      "originais_confirmados": 309,
+      "pendencias_origem": 41,
+      "pet_espacos_vinculados": 78,
+      "rascunhos_origem": 477,
+      "recebidos_origem": 4,
+      "registros_documentais_origem": 481,
+      "revisao_origem": 0
+    },
+    {
+      "abertas_atuais": 1,
+      "abertas_origem": 1,
+      "altura_origem": 0,
+      "bytes_originais_confirmados": 0,
+      "ec_origem": 0,
+      "emitidos_origem": 0,
+      "encerradas_atuais": 0,
+      "encerradas_origem": 0,
+      "locais": 0,
+      "nome": "Sementeiro — Santa Rosa",
+      "originais_confirmados": 0,
+      "pendencias_origem": 1,
+      "pet_espacos_vinculados": 0,
+      "rascunhos_origem": 0,
+      "recebidos_origem": 1,
+      "registros_documentais_origem": 1,
+      "revisao_origem": 0
+    }
+  ],
+  "per_category": [
+    {
+      "tipo": "cliente",
+      "resultado": "importado",
+      "quantidade": 2
+    },
+    {
+      "tipo": "contexto_origem",
+      "resultado": "importado",
+      "quantidade": 4
+    },
+    {
+      "tipo": "criterio",
+      "resultado": "importado",
+      "quantidade": 6
+    },
+    {
+      "tipo": "evento",
+      "resultado": "importado",
+      "quantidade": 9
+    },
+    {
+      "tipo": "familia",
+      "resultado": "importado",
+      "quantidade": 12
+    },
+    {
+      "tipo": "levantamento",
+      "resultado": "importado",
+      "quantidade": 112
+    },
+    {
+      "tipo": "local",
+      "resultado": "importado",
+      "quantidade": 112
+    },
+    {
+      "tipo": "modelo_documento",
+      "resultado": "importado",
+      "quantidade": 7
+    },
+    {
+      "tipo": "modelo_historico",
+      "resultado": "importado",
+      "quantidade": 4
+    },
+    {
+      "tipo": "modelo_levantamento",
+      "resultado": "importado",
+      "quantidade": 1
+    },
+    {
+      "tipo": "pasta_origem",
+      "resultado": "importado",
+      "quantidade": 60
+    },
+    {
+      "tipo": "pendencia",
+      "resultado": "importado",
+      "quantidade": 80
+    },
+    {
+      "tipo": "referencia",
+      "resultado": "importado",
+      "quantidade": 525
+    },
+    {
+      "tipo": "referencia",
+      "resultado": "sem_correspondencia",
+      "quantidade": 490
+    },
+    {
+      "tipo": "registro_documental",
+      "resultado": "importado",
+      "quantidade": 969
+    },
+    {
+      "tipo": "regra",
+      "resultado": "importado",
+      "quantidade": 9
+    },
+    {
+      "tipo": "sistema",
+      "resultado": "importado",
+      "quantidade": 1344
+    },
+    {
+      "tipo": "unidade",
+      "resultado": "importado",
+      "quantidade": 4
+    },
+    {
+      "tipo": "versao_arquivo",
+      "resultado": "indisponivel",
+      "quantidade": 550
+    }
+  ],
+  "per_unit_categories": [
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 30,
+      "resultado": "importado",
+      "tipo": "levantamento"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 30,
+      "resultado": "importado",
+      "tipo": "local"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 13,
+      "resultado": "importado",
+      "tipo": "pasta_origem"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 36,
+      "resultado": "importado",
+      "tipo": "pendencia"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 264,
+      "resultado": "importado",
+      "tipo": "referencia"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 152,
+      "resultado": "sem_correspondencia",
+      "tipo": "referencia"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 379,
+      "resultado": "importado",
+      "tipo": "registro_documental"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 360,
+      "resultado": "importado",
+      "tipo": "sistema"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "unidade"
+    },
+    {
+      "nome": "Fábrica de Ração — Santa Rosa",
+      "quantidade": 510,
+      "resultado": "indisponivel",
+      "tipo": "versao_arquivo"
+    },
+    {
+      "nome": "Matriz — Santa Rosa",
+      "quantidade": 2,
+      "resultado": "importado",
+      "tipo": "pendencia"
+    },
+    {
+      "nome": "Matriz — Santa Rosa",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "registro_documental"
+    },
+    {
+      "nome": "Matriz — Santa Rosa",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "unidade"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 82,
+      "resultado": "importado",
+      "tipo": "levantamento"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 82,
+      "resultado": "importado",
+      "tipo": "local"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 47,
+      "resultado": "importado",
+      "tipo": "pasta_origem"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 41,
+      "resultado": "importado",
+      "tipo": "pendencia"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 261,
+      "resultado": "importado",
+      "tipo": "referencia"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 338,
+      "resultado": "sem_correspondencia",
+      "tipo": "referencia"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 588,
+      "resultado": "importado",
+      "tipo": "registro_documental"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 984,
+      "resultado": "importado",
+      "tipo": "sistema"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "unidade"
+    },
+    {
+      "nome": "São Luiz Gonzaga — RS",
+      "quantidade": 40,
+      "resultado": "indisponivel",
+      "tipo": "versao_arquivo"
+    },
+    {
+      "nome": "Sementeiro — Santa Rosa",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "pendencia"
+    },
+    {
+      "nome": "Sementeiro — Santa Rosa",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "registro_documental"
+    },
+    {
+      "nome": "Sementeiro — Santa Rosa",
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "unidade"
+    },
+    {
+      "nome": null,
+      "quantidade": 2,
+      "resultado": "importado",
+      "tipo": "cliente"
+    },
+    {
+      "nome": null,
+      "quantidade": 4,
+      "resultado": "importado",
+      "tipo": "contexto_origem"
+    },
+    {
+      "nome": null,
+      "quantidade": 6,
+      "resultado": "importado",
+      "tipo": "criterio"
+    },
+    {
+      "nome": null,
+      "quantidade": 9,
+      "resultado": "importado",
+      "tipo": "evento"
+    },
+    {
+      "nome": null,
+      "quantidade": 12,
+      "resultado": "importado",
+      "tipo": "familia"
+    },
+    {
+      "nome": null,
+      "quantidade": 7,
+      "resultado": "importado",
+      "tipo": "modelo_documento"
+    },
+    {
+      "nome": null,
+      "quantidade": 4,
+      "resultado": "importado",
+      "tipo": "modelo_historico"
+    },
+    {
+      "nome": null,
+      "quantidade": 1,
+      "resultado": "importado",
+      "tipo": "modelo_levantamento"
+    },
+    {
+      "nome": null,
+      "quantidade": 9,
+      "resultado": "importado",
+      "tipo": "regra"
+    }
+  ],
+  "documents": {
+    "historical_source_records": 736,
+    "editable_docx_derivatives": 233,
+    "derivative_state": "rascunho",
+    "derivative_converter": "nr-docx-1.0.1",
+    "total": 969,
+    "derivative_native_blocks": 4073,
+    "no_professional_approval_or_issuance_inferred": true
+  },
+  "files": {
+    "original_current_objects": 605,
+    "original_current_unique_sha256": 604,
+    "original_current_bytes": 232242866,
+    "extracted_docx_images": 417,
+    "extracted_docx_image_bytes": 59629408,
+    "total_confirmed_objects": 1022,
+    "total_confirmed_bytes": 291872274,
+    "actual_authenticated_full_GET_verified": true,
+    "actual_GET_canonical_receipts": [
+      {
+        "scope": "originais_capturados",
+        "canonical_sha256": "e847a61300694e121a25bb5dd5767833c2511beac3d2adfa1c285d142a5e445a",
+        "files": 605,
+        "bytes": 232242866,
+        "durable_database_recorded_at": "2026-10-30 20:18:07.608769+00"
+      },
+      {
+        "scope": "imagens_docx_derivadas",
+        "canonical_sha256": "98c1cb8024eac2842ea6a3b4f11537e434f622e5115a1ce0c754b9a9f0ff802d",
+        "files": 417,
+        "bytes": 59629408,
+        "durable_database_recorded_at": "2026-10-30 20:18:11.848954+00"
+      }
+    ],
+    "full_GET_errors": 0,
+    "manifest_mismatches": 0,
+    "storage_and_database_mismatches": {
+      "integridade_divergente": 0,
+      "metadados_ausentes": 0,
+      "nao_confirmados": 0,
+      "storage_divergente": 0
+    },
+    "known_issued_documents": 65,
+    "known_word_pdf_links": 130,
+    "explicit_file_junctions": 718,
+    "source_file_references_imported": 465,
+    "source_folders_imported": 60
+  },
+  "context_metadata": {
+    "records_imported": 4,
+    "keys": [
+      "meta",
+      "opcoes_interface",
+      "projeto",
+      "selecao_ui"
+    ],
+    "capture_timestamp_preserved": true,
+    "ui_literal_dictionaries": 7,
+    "ui_extra_literal_sets": [
+      "SIT_PEND",
+      "SIT_ANC"
+    ],
+    "source_script_executed": false,
+    "declared_responsibles_retained_as_metadata_only": 2,
+    "auth_accounts_or_privileges_created": 0,
+    "legacy_selection_applied_to_current_nexus_context": false
+  },
+  "audit": {
+    "source_events_preserved": 9,
+    "durable_storage_receipts": 2,
+    "existing_per_file_database_confirmation_events": 1022,
+    "original_verbose_HTTP_reports": "Lost after provider /tmp reset; canonical receipts and per-file database confirmation events retained",
+    "per_file_HTTP_timestamps_reconstructed": false,
+    "technical_receipt_is_not_signature_or_certification": true
+  },
+  "retained_issues": [
+    {
+      "type": "referencia",
+      "result": "sem_correspondencia",
+      "count": 490,
+      "reasons": [
+        "Imagem relativa da origem ainda não obtida: prévia Chrome em branco e Mac bloqueado informados pelo agente principal; desbloqueio solicitado, sem resposta até este fechamento. A falha de captura não prova ausência física/documental e candidatos Drive não substituem o original."
+      ]
+    },
+    {
+      "type": "versao_arquivo",
+      "result": "indisponivel",
+      "count": 550,
+      "reasons": [
+        "Bytes da revisão histórica indisponíveis pela API Google Drive: keepForever=false. Download de amostra retornou403. Metadados preservados; nenhuma retenção foi alterada e nenhum original foi reconstruído."
+      ]
+    }
+  ],
+  "historical_revisions": {
+    "metadata_preserved": 550,
+    "all_keepForever_false": true,
+    "binary_downloads": 0,
+    "bytes_validated": 0,
+    "advertised_metadata_bytes": 267139136,
+    "max_advertised_file_bytes": 5605739,
+    "current_plus_historical_advertised_projection_bytes": 499382002,
+    "projection_is_not_downloaded_or_bucket_usage": true
+  },
+  "source_image_paths": {
+    "originals": 245,
+    "thumbnails": 245,
+    "total": 490,
+    "bytes": null,
+    "no_drive_candidate_or_TAG_identity_inferred": true,
+    "retained_as_recoverable_pending": true
+  },
+  "measured_storage_and_database": {
+    "bucket_configuration": {
+      "allowed_mime_types": [
+        "application/pdf",
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ],
+      "file_size_limit": 52428800,
+      "public": false
+    },
+    "capacity_scope": "10 GB informados; recurso e unidade GB/GiB não confirmados",
+    "medido_em": "2026-10-30 20:27:39.910137+00",
+    "nr_relations_disk_bytes": 130703360,
+    "objects_with_unknown_size": 0,
+    "postgres_database_disk_bytes": 165612691,
+    "private_bucket_object_bytes": 291872274,
+    "private_bucket_object_count": 1022,
+    "ram_scope": "2 GB RAM informados; não medidos por esta consulta"
+  },
+  "limitations": [
+    "736 source documentary records are distinct from physical files and from233 editable derivatives.",
+    "Current and historical Drive revisions are counted separately. Historical metadata sizes are planning inputs, not byte preservation proof.",
+    "10 GB capacity scope and GB/GiB interpretation remain unconfirmed; measured database disk, Storage object bytes and reported RAM are separate dimensions.",
+    "No individual HTTP GET timestamps or original detailed HTTP reports were reconstructed after provider /tmp reset.",
+    "Source photo capture requires authorized source access restoration; pending records retain source paths and links for resumption."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "capturado_em": "2026-10-30T19:59:55.275Z",
+  "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "original_reference_reconciliation": {
+    "files": 465,
+    "folders": 60,
+    "source_image_paths_still_pending": 490,
+    "executed_after_original_Storage_confirmation": true
+  },
+  "docx_images": {
+    "converter": "nr-docx-1.0.1",
+    "prepared_records": 417,
+    "staged_bytes": 59629408,
+    "actual_byte_validation_passed": 417,
+    "state_verified": "preparado",
+    "Storage_confirmation": "not performed by this phase"
+  },
+  "package": {
+    "id": "8f13d80d17eb775cd1fd8314",
+    "archives": 3,
+    "archive_bytes": 60112510,
+    "targets": 417,
+    "errors": 0
+  },
+  "lot_closeout": "not executed"
+}

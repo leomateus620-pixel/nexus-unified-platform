@@ -64,6 +64,22 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
+          /\/features\/nr\/(?:nr|files|documents|impactos|history|technical-publication|import-inspection)\.functions(?:\.ts)?$/.test(
+            id,
+          ) ||
+          ([
+            "./nr.functions",
+            "./files.functions",
+            "./documents.functions",
+            "./impactos.functions",
+            "./history.functions",
+            "./technical-publication.functions",
+            "./import-inspection.functions",
+          ].includes(id) &&
+            /\/features\/nr\//.test(importer || ""))
+        )
+          return path.join(root, "nr-server.ts");
+        if (
           /\/features\/pet\/(?:pet|documentos|retificacoes)\.functions(?:\.ts)?$/.test(id) ||
           (/^\.\/(?:pet|documentos|retificacoes)\.functions(?:\.ts)?$/.test(id) &&
             /\/features\/pet\//.test(importer || ""))

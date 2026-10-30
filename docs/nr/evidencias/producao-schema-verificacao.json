@@ -1,0 +1,24 @@
+{
+  "captured_at": "2026-10-30 19:36:30.645081+00",
+  "method": "read-only connected catalog compared against isolated complete manifest62 catalog",
+  "tables": 20,
+  "rls_all": true,
+  "anon_table_select_denied": true,
+  "authenticated_direct_mutation_denied": true,
+  "constraints": 219,
+  "constraints_validated": true,
+  "indexes": 92,
+  "functions": 31,
+  "function_definition_differences": [],
+  "all_function_definitions_match": true,
+  "anon_functions_denied": true,
+  "security_definer_empty_search_path": true,
+  "owner_only_import_internal_functions_isolated": true,
+  "nr_bucket_private": true,
+  "nr_bucket_max_bytes": 52428800,
+  "storage_policies": [
+    "nr_arquivo_download",
+    "nr_arquivo_upload"
+  ],
+  "note": "Catalog verification plus isolated negative-role tests; owner SQL execution itself does not prove authenticated browser access."
+}

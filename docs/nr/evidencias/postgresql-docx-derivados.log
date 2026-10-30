@@ -1,0 +1,1 @@
+{"suite":"DOCX derived import envelopes PostgreSQL","assertions":17,"passed":true,"scope":"Synthetic fixtures inside disposable local transaction rolled back; exact original/revision/image guards, separate derivatives, native images, retry, later edit/new revision, three-way conflict and issued-source immutability. No Storage HTTP or source-document conversion claim."}

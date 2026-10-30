@@ -1,0 +1,8 @@
+{
+  "captured_at": "2026-10-30 19:35:56.863255+00",
+  "method": "read-only Lovable query_database; postgres owner; ledger contains no customer payload",
+  "count": 62,
+  "exact_paths_order_checksums": true,
+  "differences": [],
+  "manifestHash": "cafd2d62ca70e9728fd6713e75e4827590109829981343246381f4f0c08a2fd5"
+}

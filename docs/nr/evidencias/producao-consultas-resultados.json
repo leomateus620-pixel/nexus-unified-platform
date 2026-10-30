@@ -1,0 +1,44 @@
+{
+  "rows": [
+    {
+      "captured_at": "2026-10-30 19:38:41.552534+00",
+      "caso": "busca_ec",
+      "distinct_returned_unit_count": 1,
+      "norma": "NR33",
+      "payload_bytes": 22106,
+      "recurso": "documentos",
+      "returned_rows": 25,
+      "total": 243
+    },
+    {
+      "captured_at": "2026-10-30 19:38:41.552534+00",
+      "caso": "lista_maior_unidade",
+      "distinct_returned_unit_count": 1,
+      "norma": "NR33",
+      "payload_bytes": 22106,
+      "recurso": "documentos",
+      "returned_rows": 25,
+      "total": 394
+    },
+    {
+      "captured_at": "2026-10-30 19:38:41.552534+00",
+      "caso": "locais_altura",
+      "distinct_returned_unit_count": 1,
+      "norma": "NR35",
+      "payload_bytes": 3211,
+      "recurso": "locais",
+      "returned_rows": 4,
+      "total": 4
+    },
+    {
+      "captured_at": "2026-10-30 19:38:41.552534+00",
+      "caso": "troca_unidade",
+      "distinct_returned_unit_count": 1,
+      "norma": "NR33",
+      "payload_bytes": 23598,
+      "recurso": "documentos",
+      "returned_rows": 25,
+      "total": 220
+    }
+  ]
+}

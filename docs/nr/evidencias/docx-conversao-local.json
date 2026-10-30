@@ -1,0 +1,44 @@
+{
+  "conversion": {
+    "format": "nexus-docx-conversions-summary/1",
+    "converter": "nr-docx-1.0.1",
+    "captured_at": "2026-10-30T19:47:58.011Z",
+    "identified": 233,
+    "converted": 233,
+    "errors": 0,
+    "totals": {
+      "blocos": 4073,
+      "tabelas": 506,
+      "linhas": 13649,
+      "celulas": 42981,
+      "caracteres": 2589878,
+      "imagens": 605,
+      "bytes_imagens": 88593664
+    },
+    "database_writes": false,
+    "storage_uploads": false,
+    "originals_modified": false
+  },
+  "text_coverage": {
+    "format": "nexus-docx-text-coverage/1",
+    "converter": "nr-docx-1.0.1",
+    "method": "Independent Python OOXML body text-node extraction, including Word/DrawingML/OfficeMath t nodes; native paragraph/title/table text excludes generated reference messages; whitespace removed; no visual or mathematical-notation equivalence claim",
+    "files": 233,
+    "exact_sequence": 233,
+    "missing_character_files": 0,
+    "missing_characters": 0,
+    "additional_characters": 0,
+    "source_characters": 2208222,
+    "derived_characters": 2208222
+  },
+  "physical_assets": {
+    "unique_objects_by_context": 417,
+    "bytes": 59629408
+  },
+  "limits": [
+    "Body text coverage compares normalized text only; it does not certify visual/mathematical notation fidelity.",
+    "Supported raster images are extracted as derivatives. One EMF remains referenced only in its preserved original.",
+    "Merged cells and image positions are linearized; OfficeMath formatting requires original review.",
+    "This local conversion report does not declare database persistence or Storage confirmation."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "format": "nexus-nr-history-review-v1",
+  "verified_at": "2026-10-30T20:49:35.443Z",
+  "migration": {
+    "path": "drizzle/migrations/0045_nr_historico_paginado.sql",
+    "manifest_position": 64,
+    "sha256": "c237f3b7165586cbb4119fa9d7002ac0ecd4b72712562e0d92a921747eb52a47",
+    "production_application": "Not performed by this verification; requires transactional connector envelope and remote ledger readback"
+  },
+  "postgres": {
+    "version": "17",
+    "environment": "Isolated loopback PostgreSQL",
+    "fixture_retention": "Rolled back",
+    "assertions": 79,
+    "result": "passed"
+  },
+  "covered": [
+    "History and revision lists default25 metadata only; full snapshots on demand",
+    "Chronological created_at DESC,id DESC ordering and exact bigint string identifiers",
+    "31 revisions per document/model and multiple history pages without overlap",
+    "Large before/after/content/source snapshots absent from list responses",
+    "Current document content and104 model fields preserved",
+    "Direct RLS and RPC organization/role/norm negative cases",
+    "Unknown-scope source events visible without assigning client/unit/norm",
+    "Private raw-source/Storage receipt audit requires configuration capability",
+    "Exact-parent-only context completion for new events",
+    "Administrative import lot/item pagination, filters, aggregates and lazy raw payload",
+    "Published/superseded history remains immutable"
+  ],
+  "independent_SQL_review": "Completed by separate backend agent; no remaining material defect found",
+  "production_fixtures": false
+}

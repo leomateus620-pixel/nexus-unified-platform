@@ -1,0 +1,69 @@
+{
+  "captured_window_utc": "2026-10-30 19:37–19:39 UTC",
+  "postgres": "17.6",
+  "environment": "Supabase conectado; usuário postgres via Lovable query_database; claim de membro existente escolhido somente em configuração local da consulta; nenhum dado/fixture/DDL alterado",
+  "sampling": "Uma execução por cenário, sem esvaziar cache e durante transferência concorrente de arquivos; números incluem autorização/RPC/serialização e a descoberta SQL do contexto de teste. Não são p95 nem tempo de navegador/rede.",
+  "data_volume": {
+    "locais": 112,
+    "documentos": 736,
+    "sistemas": 1344,
+    "pendencias": 80,
+    "preparacoes_arquivo": 605
+  },
+  "measurements": [
+    {
+      "scenario": "documentos_pagina_25",
+      "execution_ms": 13.888,
+      "planning_ms": 2.06,
+      "shared_hit_blocks": 1005,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "documentos_busca_ec",
+      "execution_ms": 28.968,
+      "planning_ms": 1.506,
+      "shared_hit_blocks": 1005,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "troca_unidade_documentos",
+      "execution_ms": 14.766,
+      "planning_ms": 5.165,
+      "shared_hit_blocks": 996,
+      "shared_read_blocks": 15,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "documento_detalhe",
+      "execution_ms": 23.963,
+      "planning_ms": 1.957,
+      "shared_hit_blocks": 1776,
+      "shared_read_blocks": 3,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "locais_altura",
+      "execution_ms": 8.227,
+      "planning_ms": 1.054,
+      "shared_hit_blocks": 777,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "painel_nr33",
+      "execution_ms": 16.579,
+      "planning_ms": 1.8,
+      "shared_hit_blocks": 1655,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    }
+  ],
+  "limitations": [
+    "A execução SQL usa proprietário do banco; os checks internos de autorização da RPC usam o claim escolhido, mas esta medição não prova sessão/browser autenticado nem teste negativo de RLS em produção.",
+    "EXPLAIN externo de PL/pgSQL mostra custo agregado; não expõe o plano de cada SQL interno. Catálogo de índices e ensaios negativos isolados são evidências separadas.",
+    "Busca parcial atual usa ILIKE em contexto filtrado; índice GIN de texto completo existe mas não é usado automaticamente por essa busca. Avaliar pg_trgm ou FTS se o acervo crescer; nenhuma extensão/índice foi alterado nesta inspeção.",
+    "Sem carga concorrente sintética, sem arquivo completo em listagem, sem download/renderização no tempo medido."
+  ]
+}

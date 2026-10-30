@@ -1,0 +1,116 @@
+import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import {
+  nrConsultaSchema,
+  nrContextoSchema,
+  nrExecutarSchema,
+  nrHistoricoSchema,
+  nrListaSchema,
+  nrPainelSchema,
+  nrRowSchema,
+} from "./schemas";
+import type { NrJson } from "./domain";
+
+// A fronteira valida os tipos aditivos até o procedimento oficial regenerar o schema.
+const client = (value: unknown) => value as SupabaseClient;
+export function nrResult(response: {
+  data: unknown;
+  error: { code?: string; message: string } | null;
+}): unknown {
+  if (!response.error) return response.data;
+  const code = response.error.code;
+  if (code === "40001")
+    throw new Error(
+      "Outra pessoa alterou este registro. Seu preenchimento foi preservado. Recarregue e compare as versões antes de salvar novamente.",
+    );
+  if (["42501", "23503"].includes(code ?? ""))
+    throw new Error("Registro indisponível ou sem permissão no contexto atual.");
+  if (code === "23505")
+    throw new Error(
+      "Identidade ou chave já utilizada. Confira o registro existente e a operação anterior antes de repetir.",
+    );
+  if (["PGRST202", "42P01", "42883"].includes(code ?? ""))
+    throw new Error(
+      "Integração não configurada: o fluxo NR-33/NR-35 ainda não está disponível nesta versão do banco. Seu preenchimento foi preservado.",
+    );
+  if (["23514", "22023"].includes(code ?? "")) throw new Error(response.error.message);
+  throw new Error(
+    response.error.message ||
+      "Não foi possível concluir a operação. Seu preenchimento foi preservado.",
+  );
+}
+
+export const nrConsultar = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(nrConsultaSchema)
+  .handler(async ({ context, data }) => {
+    const { organization_id, norma, recurso, operacao: _operacao, ...filtros } = data;
+    const response = nrResult(
+      await client(context.supabase)
+        .rpc("nr_consultar", {
+          p_org: organization_id,
+          p_norma: norma,
+          p_recurso: recurso,
+          p_filtros: Object.fromEntries(
+            Object.entries(filtros).filter(([, value]) => value !== undefined),
+          ),
+        })
+        .abortSignal(getRequest().signal),
+    );
+    if (recurso === "contexto") {
+      const parsed = nrContextoSchema.parse(response);
+      return {
+        ...parsed,
+        clientes: parsed.clientes.map((cliente) => ({
+          id: cliente.id,
+          nome:
+            cliente.nome ??
+            cliente.nome_exibicao ??
+            cliente.razao_social ??
+            "Cliente sem nome informado",
+        })),
+      };
+    }
+    if (recurso === "painel") return nrPainelSchema.parse(response);
+    if (recurso === "historico") return nrHistoricoSchema.parse(response);
+    if (data.id) {
+      const wrapped = z.object({ registro: nrRowSchema }).safeParse(response);
+      return wrapped.success ? wrapped.data : { registro: nrRowSchema.parse(response) };
+    }
+    return nrListaSchema.parse(response);
+  });
+
+export const nrExecutar = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(nrExecutarSchema)
+  .handler(async ({ context, data }) => {
+    const comando =
+      data.comando === "criar_revisao"
+        ? "nova_revisao"
+        : data.comando === "lixeira"
+          ? "arquivar"
+          : data.comando === "tratar_pendencia"
+            ? data.dados["estado"] === "aberta"
+              ? "reabrir"
+              : "encerrar"
+            : data.comando;
+    const dados: Record<string, NrJson> = { ...data.dados };
+    if (data.comando === "tratar_pendencia") delete dados["estado"];
+    const response = nrResult(
+      await client(context.supabase).rpc("nr_executar", {
+        p_org: data.organization_id,
+        p_norma: data.norma,
+        p_recurso: data.recurso,
+        p_comando: comando,
+        p_id: data.id ?? null,
+        p_expected_version: data.expected_version ?? null,
+        p_chave: data.chave,
+        p_dados: dados,
+      }),
+    );
+    const wrapped = z.object({ registro: nrRowSchema }).safeParse(response);
+    return wrapped.success ? wrapped.data : { registro: nrRowSchema.parse(response) };
+  });

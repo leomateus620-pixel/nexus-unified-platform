@@ -1,0 +1,92 @@
+{
+  "rows": [
+    {
+      "captured_at": "2026-10-30 19:37:20.26515+00",
+      "database_bytes": 131599507,
+      "execution_role": "postgres",
+      "planner_stats": [
+        {
+          "index_scans": 1211,
+          "rows_estimated": 605,
+          "sequential_scans": 12,
+          "table": "nr_arquivos"
+        },
+        {
+          "index_scans": 4417,
+          "rows_estimated": 736,
+          "sequential_scans": 7,
+          "table": "nr_documentos"
+        },
+        {
+          "index_scans": 5128,
+          "rows_estimated": 112,
+          "sequential_scans": 8,
+          "table": "nr_locais"
+        },
+        {
+          "index_scans": 115,
+          "rows_estimated": 80,
+          "sequential_scans": 6,
+          "table": "nr_pendencias"
+        },
+        {
+          "index_scans": 3474,
+          "rows_estimated": 1344,
+          "sequential_scans": 5,
+          "table": "nr_sistemas"
+        }
+      ],
+      "storage_medicao": [
+        {
+          "bucket": "nexus-nr-acervo",
+          "bytes": 59053823,
+          "objects": 135
+        }
+      ],
+      "totais": {
+        "arquivos_confirmados": 0,
+        "arquivos_preparados": 605,
+        "bytes_confirmados": 0,
+        "documentos": 736,
+        "levantamentos": 112,
+        "locais": 112,
+        "modelos": 39,
+        "pastas": 60,
+        "pendencias": 80,
+        "revisoes": 736,
+        "sistemas": 1344
+      },
+      "unidades_anonimizadas": [
+        {
+          "documentos": 1,
+          "locais": 0,
+          "pendencias_abertas": 2,
+          "pendencias_encerradas": 0,
+          "unidade_indice": 1
+        },
+        {
+          "documentos": 481,
+          "locais": 82,
+          "pendencias_abertas": 31,
+          "pendencias_encerradas": 10,
+          "unidade_indice": 2
+        },
+        {
+          "documentos": 253,
+          "locais": 30,
+          "pendencias_abertas": 17,
+          "pendencias_encerradas": 19,
+          "unidade_indice": 3
+        },
+        {
+          "documentos": 1,
+          "locais": 0,
+          "pendencias_abertas": 1,
+          "pendencias_encerradas": 0,
+          "unidade_indice": 4
+        }
+      ]
+    }
+  ],
+  "note": "Snapshot intermediário durante transferência concorrente. Preparação e objeto no Storage não equivalem a confirmação; os totais finais exigem nova medição após conclusão."
+}

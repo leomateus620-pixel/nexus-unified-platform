@@ -1,0 +1,202 @@
+{
+  "captured_at": "2026-10-30 21:00:08.853769+00",
+  "manifest_count": 64,
+  "read_only": true,
+  "method": "Single EXPLAIN ANALYZE BUFFERS sample per scenario; live Supabase PostgreSQL17.6; postgres owner with local claim of existing authorized member; includes actor/context selection and RPC serialization. No fixtures or writes.",
+  "measurements": [
+    {
+      "scenario": "documentos_pagina_25",
+      "execution_ms": 17.134,
+      "planning_ms": 2.273,
+      "shared_hit_blocks": 1193,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "documentos_busca_ec",
+      "execution_ms": 37.376,
+      "planning_ms": 1.891,
+      "shared_hit_blocks": 1193,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "troca_unidade",
+      "execution_ms": 14.931,
+      "planning_ms": 1.634,
+      "shared_hit_blocks": 1193,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "maior_derivado_detalhe",
+      "execution_ms": 47.581,
+      "planning_ms": 2.774,
+      "shared_hit_blocks": 3475,
+      "shared_read_blocks": 1,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "historico_global_25",
+      "execution_ms": 73.412,
+      "planning_ms": 0.936,
+      "shared_hit_blocks": 2490,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "historico_registro_25",
+      "execution_ms": 22.158,
+      "planning_ms": 2.608,
+      "shared_hit_blocks": 2507,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "revisoes_metadata_25",
+      "execution_ms": 21.608,
+      "planning_ms": 2.882,
+      "shared_hit_blocks": 2079,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "revisao_completa_sob_demanda",
+      "execution_ms": 42.696,
+      "planning_ms": 3.242,
+      "shared_hit_blocks": 3826,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "conciliacao_25",
+      "execution_ms": 21.921,
+      "planning_ms": 1.543,
+      "shared_hit_blocks": 3392,
+      "shared_read_blocks": 43,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "publicacao_contexto_metadata",
+      "execution_ms": 13.167,
+      "planning_ms": 1.822,
+      "shared_hit_blocks": 951,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    }
+  ],
+  "results": [
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "conciliacao_25",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 24583,
+      "rows_count": 25,
+      "total": 4300,
+      "rows_with_any_payload_key": 0
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "documentos_busca_ec",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 22305,
+      "rows_count": 25,
+      "total": 350,
+      "rows_with_any_payload_key": 25
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "documentos_pagina_25",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 22305,
+      "rows_count": 25,
+      "total": 501,
+      "rows_with_any_payload_key": 25
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "historico_global_25",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 11684,
+      "rows_count": 25,
+      "total": 4571,
+      "rows_with_any_payload_key": 0
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "historico_registro_25",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 486,
+      "rows_count": 1,
+      "total": 1,
+      "rows_with_any_payload_key": 0
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "maior_derivado_detalhe",
+      "embedded_history_metadata_rows": 1,
+      "embedded_revision_metadata_rows": 1,
+      "payload_bytes": 157712,
+      "rows_count": null,
+      "total": null,
+      "rows_with_any_payload_key": null
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "publicacao_contexto_metadata",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 580,
+      "rows_count": null,
+      "total": null,
+      "rows_with_any_payload_key": null
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "revisao_completa_sob_demanda",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 318101,
+      "rows_count": null,
+      "total": null,
+      "rows_with_any_payload_key": null
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "revisoes_metadata_25",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 371,
+      "rows_count": 1,
+      "total": 1,
+      "rows_with_any_payload_key": 0
+    },
+    {
+      "captured_at": "2026-10-30 21:00:08.853769+00",
+      "caso": "troca_unidade",
+      "embedded_history_metadata_rows": null,
+      "embedded_revision_metadata_rows": null,
+      "payload_bytes": 22561,
+      "rows_count": 25,
+      "total": 344,
+      "rows_with_any_payload_key": 25
+    }
+  ],
+  "detail_payload_comparison": {
+    "same_largest_native_document_blocks": 788,
+    "before_manifest64_bytes": 796908,
+    "after_manifest64_bytes": 157712,
+    "reduction_percent": 80.2
+  },
+  "limitations": [
+    "Not a browser/auth-session test, p95, stress test or network/rendering latency. Table RLS bypasses under owner; internal RPC authorization uses a local existing-member claim.",
+    "History, revisions and reconciliation lists have0 full-payload field names. Ordinary business list rows retain required dados:{} placeholders; rows_with_any_payload_key counts presence of that empty key and does not mean body content was returned.",
+    "Full revision/audit snapshots remain available only after the explicit detail request. No index/schema was changed by these measurements.",
+    "The raw EXPLAIN contains aggregate PL/pgSQL cost; it does not expose every nested statement plan."
+  ]
+}

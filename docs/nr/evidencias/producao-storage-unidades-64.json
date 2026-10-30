@@ -1,0 +1,19 @@
+{
+  "rows": [
+    {
+      "captured_at": "2026-10-30 21:03:18.916596+00",
+      "confirmed_bytes": "111115588",
+      "objects": 533,
+      "physical_bytes": "111115588",
+      "unidade_indice": 1
+    },
+    {
+      "captured_at": "2026-10-30 21:03:18.916596+00",
+      "confirmed_bytes": "180756686",
+      "objects": 489,
+      "physical_bytes": "180756686",
+      "unidade_indice": 2
+    }
+  ],
+  "scope": "Read-only metadata measurement after manifest64; organization files joined once to Storage objects, units anonymized; no multiplication by secondary links."
+}

@@ -1,0 +1,1 @@
+{"suite":"Manifest62→64 PostgreSQL upgrade","assertions":11,"passed":true,"scope":"fresh disposable database; preexisting audit JSON/id/date/hash preserved by generated-column rewrite; immutable trigger retained; new indexes valid; empty publication history; exact ledger; retry no DDL"}

@@ -1,0 +1,48 @@
+{
+  "capturado_em": "2026-10-30T18:44:18.046Z",
+  "ambiente": "PostgreSQL17.10 loopback em Mac ARM, conexão persistente única; fonte real somente em staging privado isolado",
+  "volume": {
+    "locais": 112,
+    "documentos": 736,
+    "sistemas": 1344,
+    "pendencias": 80
+  },
+  "measurements": [
+    {
+      "scenario": "painel",
+      "samples": 10,
+      "p50_ms": 1.09,
+      "p95_ms": 5.85,
+      "response_bytes": 1857
+    },
+    {
+      "scenario": "documentos_pagina",
+      "samples": 10,
+      "p50_ms": 1.31,
+      "p95_ms": 1.87,
+      "response_bytes": 21190
+    },
+    {
+      "scenario": "busca",
+      "samples": 10,
+      "p50_ms": 5.84,
+      "p95_ms": 6.1,
+      "response_bytes": 21050
+    },
+    {
+      "scenario": "troca_unidade",
+      "samples": 10,
+      "p50_ms": 0.7,
+      "p95_ms": 0.94,
+      "response_bytes": 845
+    },
+    {
+      "scenario": "detalhe",
+      "samples": 10,
+      "p50_ms": 2.06,
+      "p95_ms": 5.23,
+      "response_bytes": 137841
+    }
+  ],
+  "limites": "Medição SQL/RPC local; exclui rede,StorageHTTP,renderização de navegador e concorrência de produção. Cache PostgreSQL aquecido após primeiras chamadas."
+}

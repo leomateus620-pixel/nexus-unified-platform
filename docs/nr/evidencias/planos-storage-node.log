@@ -1,0 +1,26 @@
+✔ requires confirmed image bytes in the exact client/unit context (43.720375ms)
+✔ preserves 65 explicit document relations while 168 received files get no invented original (365.225917ms)
+✔ payload identity excludes capture timestamp and private staging paths (12.087625ms)
+✔ rejects altered originals and unproven images without planning orphan uploads (14.614959ms)
+✔ rejects ambiguous mappings and keeps private material outside the repository (6.481166ms)
+✔ compiler rejects payload, namespace, relationship and authorization-context tampering (6.553625ms)
+✔ compiler keeps source text inside escaped JSON and chooses a safe DO delimiter (8.612ms)
+✔ an exact readback receipt produces only a private confirmation plan (65.315792ms)
+✔ mismatched hashes, counts, bytes and incomplete/error receipts produce no plan (319.755958ms)
+✔ duplicate targets and foreign-context paths reject even with matching receipt aggregates (107.678666ms)
+✔ invalid integrity metadata cannot become a confirmation command (166.307416ms)
+✔ private transfer uploads without overwrite and validates exact readback (71.953375ms)
+✔ lost upload response can resume through duplicate plus readback (85.419542ms)
+✔ transient status retries once and preserves immutable upload (1077.360375ms)
+✔ different readback bytes remain an error, never database confirmation (58.789958ms)
+✔ HTML MIME after upload remains an error (64.342917ms)
+✔ foreign bucket/context/path and duplicate paths cannot request HTTP (250.173042ms)
+✔ wrong project, archive hash and checkpoint reject before HTTP (259.447041ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1946.547417

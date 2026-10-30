@@ -27,6 +27,8 @@ import { Route as AuthenticatedExecucaoRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedInspecoesRouteImport } from './routes/_authenticated/inspecoes'
 import { Route as AuthenticatedLevantamentosRouteImport } from './routes/_authenticated/levantamentos'
+import { Route as AuthenticatedNr33RouteImport } from './routes/_authenticated/nr-33'
+import { Route as AuthenticatedNr35RouteImport } from './routes/_authenticated/nr-35'
 import { Route as AuthenticatedProdutosRouteImport } from './routes/_authenticated/produtos'
 import { Route as AuthenticatedProjetosRouteImport } from './routes/_authenticated/projetos'
 import { Route as AuthenticatedProjetosEngenhariaRouteImport } from './routes/_authenticated/projetos-engenharia'
@@ -45,6 +47,10 @@ import { Route as AuthenticatedEngenhariaIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedEngenhariaDimensionamentosRouteImport } from './routes/_authenticated/engenharia.dimensionamentos'
 import { Route as AuthenticatedEngenhariaRegrasDimensionamentoRouteImport } from './routes/_authenticated/engenharia.regras-dimensionamento'
 import { Route as AuthenticatedExecucaoIndexRouteImport } from './routes/_authenticated/execucao.index'
+import { Route as AuthenticatedNr33IndexRouteImport } from './routes/_authenticated/nr-33.index'
+import { Route as AuthenticatedNr33SplatRouteImport } from './routes/_authenticated/nr-33.$'
+import { Route as AuthenticatedNr35IndexRouteImport } from './routes/_authenticated/nr-35.index'
+import { Route as AuthenticatedNr35SplatRouteImport } from './routes/_authenticated/nr-35.$'
 import { Route as AuthenticatedProdutosIndexRouteImport } from './routes/_authenticated/produtos.index'
 import { Route as AuthenticatedProdutosProdutoIdRouteImport } from './routes/_authenticated/produtos.$produtoId'
 import { Route as AuthenticatedProjetosIndexRouteImport } from './routes/_authenticated/projetos.index'
@@ -163,6 +169,16 @@ const AuthenticatedLevantamentosRoute =
     path: '/levantamentos',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedNr33Route = AuthenticatedNr33RouteImport.update({
+  id: '/nr-33',
+  path: '/nr-33',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNr35Route = AuthenticatedNr35RouteImport.update({
+  id: '/nr-35',
+  path: '/nr-35',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedProdutosRoute = AuthenticatedProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -264,6 +280,26 @@ const AuthenticatedExecucaoIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedExecucaoRoute,
   } as any)
+const AuthenticatedNr33IndexRoute = AuthenticatedNr33IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedNr33Route,
+} as any)
+const AuthenticatedNr33SplatRoute = AuthenticatedNr33SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => AuthenticatedNr33Route,
+} as any)
+const AuthenticatedNr35IndexRoute = AuthenticatedNr35IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedNr35Route,
+} as any)
+const AuthenticatedNr35SplatRoute = AuthenticatedNr35SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => AuthenticatedNr35Route,
+} as any)
 const AuthenticatedProdutosIndexRoute =
   AuthenticatedProdutosIndexRouteImport.update({
     id: '/',
@@ -448,6 +484,8 @@ export interface FileRoutesByFullPath {
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/inspecoes': typeof AuthenticatedInspecoesRoute
   '/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/nr-33': typeof AuthenticatedNr33RouteWithChildren
+  '/nr-35': typeof AuthenticatedNr35RouteWithChildren
   '/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/projetos': typeof AuthenticatedProjetosRouteWithChildren
   '/projetos-engenharia': typeof AuthenticatedProjetosEngenhariaRoute
@@ -461,6 +499,8 @@ export interface FileRoutesByFullPath {
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
   '/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
   '/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  '/nr-33/$': typeof AuthenticatedNr33SplatRoute
+  '/nr-35/$': typeof AuthenticatedNr35SplatRoute
   '/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
   '/projetos/$projetoId': typeof AuthenticatedProjetosProjetoIdRoute
   '/comercial/': typeof AuthenticatedComercialIndexRoute
@@ -468,6 +508,8 @@ export interface FileRoutesByFullPath {
   '/configuracoes/': typeof AuthenticatedConfiguracoesIndexRoute
   '/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
   '/execucao/': typeof AuthenticatedExecucaoIndexRoute
+  '/nr-33/': typeof AuthenticatedNr33IndexRoute
+  '/nr-35/': typeof AuthenticatedNr35IndexRoute
   '/produtos/': typeof AuthenticatedProdutosIndexRoute
   '/projetos/': typeof AuthenticatedProjetosIndexRoute
   '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
@@ -514,6 +556,8 @@ export interface FileRoutesByTo {
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
   '/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
   '/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  '/nr-33/$': typeof AuthenticatedNr33SplatRoute
+  '/nr-35/$': typeof AuthenticatedNr35SplatRoute
   '/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
   '/projetos/$projetoId': typeof AuthenticatedProjetosProjetoIdRoute
   '/comercial': typeof AuthenticatedComercialIndexRoute
@@ -521,6 +565,8 @@ export interface FileRoutesByTo {
   '/configuracoes': typeof AuthenticatedConfiguracoesIndexRoute
   '/engenharia': typeof AuthenticatedEngenhariaIndexRoute
   '/execucao': typeof AuthenticatedExecucaoIndexRoute
+  '/nr-33': typeof AuthenticatedNr33IndexRoute
+  '/nr-35': typeof AuthenticatedNr35IndexRoute
   '/produtos': typeof AuthenticatedProdutosIndexRoute
   '/projetos': typeof AuthenticatedProjetosIndexRoute
   '/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
@@ -561,6 +607,8 @@ export interface FileRoutesById {
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/inspecoes': typeof AuthenticatedInspecoesRoute
   '/_authenticated/levantamentos': typeof AuthenticatedLevantamentosRoute
+  '/_authenticated/nr-33': typeof AuthenticatedNr33RouteWithChildren
+  '/_authenticated/nr-35': typeof AuthenticatedNr35RouteWithChildren
   '/_authenticated/produtos': typeof AuthenticatedProdutosRouteWithChildren
   '/_authenticated/projetos': typeof AuthenticatedProjetosRouteWithChildren
   '/_authenticated/projetos-engenharia': typeof AuthenticatedProjetosEngenhariaRoute
@@ -575,6 +623,8 @@ export interface FileRoutesById {
   '/_authenticated/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
   '/_authenticated/engenharia/dimensionamentos': typeof AuthenticatedEngenhariaDimensionamentosRoute
   '/_authenticated/engenharia/regras-dimensionamento': typeof AuthenticatedEngenhariaRegrasDimensionamentoRoute
+  '/_authenticated/nr-33/$': typeof AuthenticatedNr33SplatRoute
+  '/_authenticated/nr-35/$': typeof AuthenticatedNr35SplatRoute
   '/_authenticated/produtos/$produtoId': typeof AuthenticatedProdutosProdutoIdRoute
   '/_authenticated/projetos/$projetoId': typeof AuthenticatedProjetosProjetoIdRoute
   '/_authenticated/comercial/': typeof AuthenticatedComercialIndexRoute
@@ -582,6 +632,8 @@ export interface FileRoutesById {
   '/_authenticated/configuracoes/': typeof AuthenticatedConfiguracoesIndexRoute
   '/_authenticated/engenharia/': typeof AuthenticatedEngenhariaIndexRoute
   '/_authenticated/execucao/': typeof AuthenticatedExecucaoIndexRoute
+  '/_authenticated/nr-33/': typeof AuthenticatedNr33IndexRoute
+  '/_authenticated/nr-35/': typeof AuthenticatedNr35IndexRoute
   '/_authenticated/produtos/': typeof AuthenticatedProdutosIndexRoute
   '/_authenticated/projetos/': typeof AuthenticatedProjetosIndexRoute
   '/_authenticated/comercial/propostas/nova': typeof AuthenticatedComercialPropostasNovaRoute
@@ -624,6 +676,8 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/inspecoes'
     | '/levantamentos'
+    | '/nr-33'
+    | '/nr-35'
     | '/produtos'
     | '/projetos'
     | '/projetos-engenharia'
@@ -637,6 +691,8 @@ export interface FileRouteTypes {
     | '/configuracoes/orcamentos'
     | '/engenharia/dimensionamentos'
     | '/engenharia/regras-dimensionamento'
+    | '/nr-33/$'
+    | '/nr-35/$'
     | '/produtos/$produtoId'
     | '/projetos/$projetoId'
     | '/comercial/'
@@ -644,6 +700,8 @@ export interface FileRouteTypes {
     | '/configuracoes/'
     | '/engenharia/'
     | '/execucao/'
+    | '/nr-33/'
+    | '/nr-35/'
     | '/produtos/'
     | '/projetos/'
     | '/comercial/propostas/nova'
@@ -690,6 +748,8 @@ export interface FileRouteTypes {
     | '/configuracoes/orcamentos'
     | '/engenharia/dimensionamentos'
     | '/engenharia/regras-dimensionamento'
+    | '/nr-33/$'
+    | '/nr-35/$'
     | '/produtos/$produtoId'
     | '/projetos/$projetoId'
     | '/comercial'
@@ -697,6 +757,8 @@ export interface FileRouteTypes {
     | '/configuracoes'
     | '/engenharia'
     | '/execucao'
+    | '/nr-33'
+    | '/nr-35'
     | '/produtos'
     | '/projetos'
     | '/comercial/propostas/nova'
@@ -736,6 +798,8 @@ export interface FileRouteTypes {
     | '/_authenticated/financeiro'
     | '/_authenticated/inspecoes'
     | '/_authenticated/levantamentos'
+    | '/_authenticated/nr-33'
+    | '/_authenticated/nr-35'
     | '/_authenticated/produtos'
     | '/_authenticated/projetos'
     | '/_authenticated/projetos-engenharia'
@@ -750,6 +814,8 @@ export interface FileRouteTypes {
     | '/_authenticated/configuracoes/orcamentos'
     | '/_authenticated/engenharia/dimensionamentos'
     | '/_authenticated/engenharia/regras-dimensionamento'
+    | '/_authenticated/nr-33/$'
+    | '/_authenticated/nr-35/$'
     | '/_authenticated/produtos/$produtoId'
     | '/_authenticated/projetos/$projetoId'
     | '/_authenticated/comercial/'
@@ -757,6 +823,8 @@ export interface FileRouteTypes {
     | '/_authenticated/configuracoes/'
     | '/_authenticated/engenharia/'
     | '/_authenticated/execucao/'
+    | '/_authenticated/nr-33/'
+    | '/_authenticated/nr-35/'
     | '/_authenticated/produtos/'
     | '/_authenticated/projetos/'
     | '/_authenticated/comercial/propostas/nova'
@@ -918,6 +986,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLevantamentosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/nr-33': {
+      id: '/_authenticated/nr-33'
+      path: '/nr-33'
+      fullPath: '/nr-33'
+      preLoaderRoute: typeof AuthenticatedNr33RouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/nr-35': {
+      id: '/_authenticated/nr-35'
+      path: '/nr-35'
+      fullPath: '/nr-35'
+      preLoaderRoute: typeof AuthenticatedNr35RouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/produtos': {
       id: '/_authenticated/produtos'
       path: '/produtos'
@@ -1043,6 +1125,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/execucao/'
       preLoaderRoute: typeof AuthenticatedExecucaoIndexRouteImport
       parentRoute: typeof AuthenticatedExecucaoRoute
+    }
+    '/_authenticated/nr-33/': {
+      id: '/_authenticated/nr-33/'
+      path: '/'
+      fullPath: '/nr-33/'
+      preLoaderRoute: typeof AuthenticatedNr33IndexRouteImport
+      parentRoute: typeof AuthenticatedNr33Route
+    }
+    '/_authenticated/nr-33/$': {
+      id: '/_authenticated/nr-33/$'
+      path: '/$'
+      fullPath: '/nr-33/$'
+      preLoaderRoute: typeof AuthenticatedNr33SplatRouteImport
+      parentRoute: typeof AuthenticatedNr33Route
+    }
+    '/_authenticated/nr-35/': {
+      id: '/_authenticated/nr-35/'
+      path: '/'
+      fullPath: '/nr-35/'
+      preLoaderRoute: typeof AuthenticatedNr35IndexRouteImport
+      parentRoute: typeof AuthenticatedNr35Route
+    }
+    '/_authenticated/nr-35/$': {
+      id: '/_authenticated/nr-35/$'
+      path: '/$'
+      fullPath: '/nr-35/$'
+      preLoaderRoute: typeof AuthenticatedNr35SplatRouteImport
+      parentRoute: typeof AuthenticatedNr35Route
     }
     '/_authenticated/produtos/': {
       id: '/_authenticated/produtos/'
@@ -1355,6 +1465,32 @@ const AuthenticatedExecucaoRouteWithChildren =
     AuthenticatedExecucaoRouteChildren,
   )
 
+interface AuthenticatedNr33RouteChildren {
+  AuthenticatedNr33SplatRoute: typeof AuthenticatedNr33SplatRoute
+  AuthenticatedNr33IndexRoute: typeof AuthenticatedNr33IndexRoute
+}
+
+const AuthenticatedNr33RouteChildren: AuthenticatedNr33RouteChildren = {
+  AuthenticatedNr33SplatRoute: AuthenticatedNr33SplatRoute,
+  AuthenticatedNr33IndexRoute: AuthenticatedNr33IndexRoute,
+}
+
+const AuthenticatedNr33RouteWithChildren =
+  AuthenticatedNr33Route._addFileChildren(AuthenticatedNr33RouteChildren)
+
+interface AuthenticatedNr35RouteChildren {
+  AuthenticatedNr35SplatRoute: typeof AuthenticatedNr35SplatRoute
+  AuthenticatedNr35IndexRoute: typeof AuthenticatedNr35IndexRoute
+}
+
+const AuthenticatedNr35RouteChildren: AuthenticatedNr35RouteChildren = {
+  AuthenticatedNr35SplatRoute: AuthenticatedNr35SplatRoute,
+  AuthenticatedNr35IndexRoute: AuthenticatedNr35IndexRoute,
+}
+
+const AuthenticatedNr35RouteWithChildren =
+  AuthenticatedNr35Route._addFileChildren(AuthenticatedNr35RouteChildren)
+
 interface AuthenticatedProdutosRouteChildren {
   AuthenticatedProdutosProdutoIdRoute: typeof AuthenticatedProdutosProdutoIdRoute
   AuthenticatedProdutosIndexRoute: typeof AuthenticatedProdutosIndexRoute
@@ -1399,6 +1535,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedInspecoesRoute: typeof AuthenticatedInspecoesRoute
   AuthenticatedLevantamentosRoute: typeof AuthenticatedLevantamentosRoute
+  AuthenticatedNr33Route: typeof AuthenticatedNr33RouteWithChildren
+  AuthenticatedNr35Route: typeof AuthenticatedNr35RouteWithChildren
   AuthenticatedProdutosRoute: typeof AuthenticatedProdutosRouteWithChildren
   AuthenticatedProjetosRoute: typeof AuthenticatedProjetosRouteWithChildren
   AuthenticatedProjetosEngenhariaRoute: typeof AuthenticatedProjetosEngenhariaRoute
@@ -1421,6 +1559,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedInspecoesRoute: AuthenticatedInspecoesRoute,
   AuthenticatedLevantamentosRoute: AuthenticatedLevantamentosRoute,
+  AuthenticatedNr33Route: AuthenticatedNr33RouteWithChildren,
+  AuthenticatedNr35Route: AuthenticatedNr35RouteWithChildren,
   AuthenticatedProdutosRoute: AuthenticatedProdutosRouteWithChildren,
   AuthenticatedProjetosRoute: AuthenticatedProjetosRouteWithChildren,
   AuthenticatedProjetosEngenhariaRoute: AuthenticatedProjetosEngenhariaRoute,

@@ -1,0 +1,1202 @@
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+vite v8.1.5 building client environment for production...
+[2K
+transforming...[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/custos/custos.functions.ts:17:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/custos/custos.functions.ts:101:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:34:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:86:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:92:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:110:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:137:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:155:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:178:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/operacao.functions.ts:194:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:8:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:50:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:69:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:81:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:93:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:112:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:130:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:146:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:165:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:210:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/pet.functions.ts:10:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/pet.functions.ts:22:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/pet.functions.ts:34:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/pet.functions.ts:46:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:30:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:52:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:108:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:154:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:170:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/admin.functions.ts:19:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/admin.functions.ts:40:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:182:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:309:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:474:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:484:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:497:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:619:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:850:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:863:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:899:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:917:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:949:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:982:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:1010:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/propostas/propostas.functions.ts:1039:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:28:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:78:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:93:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:176:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:203:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:227:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/catalogo/catalogo.functions.ts:252:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:47:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:67:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:80:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:94:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:110:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:127:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/clientes/clientes.functions.ts:144:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:173:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:202:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:216:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:240:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:265:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:289:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:183:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:204:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:210:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:233:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:239:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:259:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:279:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:300:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/files.functions.ts:14:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/files.functions.ts:52:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/files.functions.ts:105:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/files.functions.ts:125:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/files.functions.ts:175:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/operacao/files.functions.ts:191:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/documentos.functions.ts:13:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/documentos.functions.ts:43:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/nr.functions.ts:46:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/nr.functions.ts:86:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:58:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:77:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:91:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:108:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:124:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:153:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:205:49 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:259:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:64:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:89:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:103:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:120:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:136:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:158:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/estudos.functions.ts:177:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:91:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:123:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:158:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:167:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:202:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:222:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:125:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:157:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:182:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:192:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:227:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:247:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:77:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:115:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:193:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:227:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:236:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:277:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:297:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:53:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:80:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:100:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:117:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/documents.functions.ts:12:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/documents.functions.ts:19:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/impactos.functions.ts:7:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/disponibilidade/functions.ts:34:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pessoas-competencias/disponibilidade/functions.ts:51:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/import-inspection.functions.ts:8:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:38:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:50:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:69:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:94:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:102:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:154:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:186:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:201:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/files.functions.ts:213:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/technical-publication.functions.ts:14:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/technical-publication.functions.ts:31:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/history.functions.ts:15:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/history.functions.ts:34:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/history.functions.ts:53:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/nr/history.functions.ts:69:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/agenda-equipe/serie-pendencias.functions.ts:67:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] <PROJETO>/src/features/pet/retificacoes.functions.ts:16:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+✓ 3580 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/Barlow-Regular-BeTQORF1.ttf                                                         104.06 kB
+.output/public/assets/Barlow-SemiBold-DrsHaTWO.ttf                                                        108.34 kB
+.output/public/assets/Saira-SemiBold-BJLoY5Cs.ttf                                                         112.36 kB
+.output/public/assets/pdf.worker.min-Dkey6ZUl.mjs                                                       1,321.30 kB
+.output/public/assets/almoxarifado-D3EziyW8.css                                                             0.75 kB │ gzip:   0.39 kB
+.output/public/assets/clientes-DoLYyCjO.css                                                                 3.73 kB │ gzip:   1.12 kB
+.output/public/assets/engenharia-Dyc7KohQ.css                                                               3.90 kB │ gzip:   1.02 kB
+.output/public/assets/levantamentos-BtU3raE1.css                                                            4.00 kB │ gzip:   1.08 kB
+.output/public/assets/ProductEditor-BE3gdNdS.css                                                            7.11 kB │ gzip:   1.87 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId-DAmrHfIe.css                      8.83 kB │ gzip:   2.05 kB
+.output/public/assets/AgendaDashboard-jddI3CYm.css                                                          9.39 kB │ gzip:   2.09 kB
+.output/public/assets/NrRoute-BHGczgmI.css                                                                  9.45 kB │ gzip:   2.40 kB
+.output/public/assets/TrevisanViewer-PJTJattx.css                                                          12.02 kB │ gzip:   3.33 kB
+.output/public/assets/EditorWorkspace-B89npKoY.css                                                         12.22 kB │ gzip:   2.71 kB
+.output/public/assets/Etapas-9On9O4JE.css                                                                  13.95 kB │ gzip:   2.02 kB
+.output/public/assets/execucao.pets-D1Lgerwf.css                                                           15.26 kB │ gzip:   3.12 kB
+.output/public/assets/SiloViewer-CgR1Rcxw.css                                                              16.14 kB │ gzip:   4.02 kB
+.output/public/assets/EscadaViewer-SeAZmEnY.css                                                            16.21 kB │ gzip:   4.04 kB
+.output/public/assets/ObjectCards-D8ourA_w.css                                                             17.56 kB │ gzip:   3.37 kB
+.output/public/assets/IndustrialMap-BSoWcYsp.css                                                           18.28 kB │ gzip:   4.37 kB
+.output/public/assets/agenda-equipe-CMSdnKTH.css                                                           25.77 kB │ gzip:   5.18 kB
+.output/public/assets/ExecucaoWorkspace-DWq4jYCF.css                                                       28.91 kB │ gzip:   5.70 kB
+.output/public/assets/index-DLLlwrIp.css                                                                   54.08 kB │ gzip:   7.71 kB
+.output/public/assets/styles-BXQwgXnr.css                                                                 119.23 kB │ gzip:  19.78 kB
+.output/public/assets/root-DLTE-HSj.js                                                                      0.03 kB │ gzip:   0.05 kB
+.output/public/assets/not-found-DIgawKw1.js                                                                 0.05 kB │ gzip:   0.07 kB
+.output/public/assets/invariant-DEEwAagU.js                                                                 0.06 kB │ gzip:   0.08 kB
+.output/public/assets/pdf.worker.min-WWY7VKxM.js                                                            0.06 kB │ gzip:   0.08 kB
+.output/public/assets/check-36OnHiEM.js                                                                     0.12 kB │ gzip:   0.14 kB
+.output/public/assets/chevron-left-BqXVpTN8.js                                                              0.13 kB │ gzip:   0.14 kB
+.output/public/assets/chevron-right-CHJcvRU6.js                                                             0.13 kB │ gzip:   0.14 kB
+.output/public/assets/execucao-Dh9nOOeW.js                                                                  0.14 kB │ gzip:   0.13 kB
+.output/public/assets/matchContext-DyXrH4xk.js                                                              0.14 kB │ gzip:   0.12 kB
+.output/public/assets/produtos-Dh9nOOeW.js                                                                  0.14 kB │ gzip:   0.13 kB
+.output/public/assets/projetos-Dh9nOOeW.js                                                                  0.14 kB │ gzip:   0.13 kB
+.output/public/assets/execucao.index-xEIYhjff.js                                                            0.14 kB │ gzip:   0.14 kB
+.output/public/assets/nr-33._-BMSBrNjb.js                                                                   0.15 kB │ gzip:   0.14 kB
+.output/public/assets/nr-35._-B0g5s7_P.js                                                                   0.15 kB │ gzip:   0.14 kB
+.output/public/assets/useRouter-BGpAXxmD.js                                                                 0.15 kB │ gzip:   0.14 kB
+.output/public/assets/plus-qKI-KwZh.js                                                                      0.15 kB │ gzip:   0.15 kB
+.output/public/assets/nr-33-B0GKCe4a.js                                                                     0.15 kB │ gzip:   0.14 kB
+.output/public/assets/nr-35-B0GKCe4a.js                                                                     0.15 kB │ gzip:   0.14 kB
+.output/public/assets/arrow-left-Bdt1PfM_.js                                                                0.16 kB │ gzip:   0.16 kB
+.output/public/assets/arrow-up-right-gWBRGWxE.js                                                            0.16 kB │ gzip:   0.15 kB
+.output/public/assets/clock-3-CYmXgIUv.js                                                                   0.16 kB │ gzip:   0.16 kB
+.output/public/assets/nr-33.index-DPojBtaW.js                                                               0.17 kB │ gzip:   0.16 kB
+.output/public/assets/nr-35.index-M9KB38_m.js                                                               0.17 kB │ gzip:   0.16 kB
+.output/public/assets/circle-check-DjOsU-2G.js                                                              0.17 kB │ gzip:   0.16 kB
+.output/public/assets/route-DYdQXvu_.js                                                                     0.18 kB │ gzip:   0.16 kB
+.output/public/assets/rotate-ccw-CLESVSgn.js                                                                0.20 kB │ gzip:   0.18 kB
+.output/public/assets/rotate-cw-Bup1sIXL.js                                                                 0.20 kB │ gzip:   0.18 kB
+.output/public/assets/info-CXmWm2VU.js                                                                      0.20 kB │ gzip:   0.17 kB
+.output/public/assets/arrow-down-to-line-C1qZsoW9.js                                                        0.20 kB │ gzip:   0.17 kB
+.output/public/assets/ellipsis-DigZMmY8.js                                                                  0.22 kB │ gzip:   0.16 kB
+.output/public/assets/download-CV6x-mg2.js                                                                  0.23 kB │ gzip:   0.19 kB
+.output/public/assets/history-Dx6VBB_L.js                                                                   0.23 kB │ gzip:   0.19 kB
+.output/public/assets/maximize-2-CdIP7WtM.js                                                                0.23 kB │ gzip:   0.18 kB
+.output/public/assets/execucao.ordens._ordemId-BhhDpvlY.js                                                  0.23 kB │ gzip:   0.19 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-BIUg3wtJ.js             0.25 kB │ gzip:   0.19 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.parametros-CdUTWOaA.js            0.25 kB │ gzip:   0.19 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-Cih4qf0B.js      0.25 kB │ gzip:   0.19 kB
+.output/public/assets/external-link-BYVStqz6.js                                                             0.25 kB │ gzip:   0.19 kB
+.output/public/assets/settings-2-C4npFlLj.js                                                                0.25 kB │ gzip:   0.19 kB
+.output/public/assets/archive-RY94tT4C.js                                                                   0.25 kB │ gzip:   0.21 kB
+.output/public/assets/users-round-BzXFTrcy.js                                                               0.25 kB │ gzip:   0.21 kB
+.output/public/assets/route-sUIiNMTj.js                                                                     0.25 kB │ gzip:   0.19 kB
+.output/public/assets/lock-keyhole-25y-IAns.js                                                              0.25 kB │ gzip:   0.22 kB
+.output/public/assets/eye-Cbs9C6DS.js                                                                       0.25 kB │ gzip:   0.20 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.historico-BUdSzKon.js             0.25 kB │ gzip:   0.19 kB
+.output/public/assets/map-pin-BupMBcH4.js                                                                   0.25 kB │ gzip:   0.22 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.producao-Ym6t81yj.js              0.26 kB │ gzip:   0.20 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.compras-DHTYoCrC.js               0.26 kB │ gzip:   0.21 kB
+.output/public/assets/arrow-up-Oy2EwIov.js                                                                  0.27 kB │ gzip:   0.20 kB
+.output/public/assets/pencil-CFgylVBP.js                                                                    0.27 kB │ gzip:   0.22 kB
+.output/public/assets/book-open-D5-VjScL.js                                                                 0.27 kB │ gzip:   0.20 kB
+.output/public/assets/house-DMC1VfUl.js                                                                     0.28 kB │ gzip:   0.21 kB
+.output/public/assets/ClientOnly-nvZNiUta.js                                                                0.29 kB │ gzip:   0.22 kB
+.output/public/assets/box-CtdF9Q2T.js                                                                       0.31 kB │ gzip:   0.22 kB
+.output/public/assets/refresh-cw-CHzni4H4.js                                                                0.32 kB │ gzip:   0.22 kB
+.output/public/assets/trash-2-D9HI9O7Q.js                                                                   0.32 kB │ gzip:   0.21 kB
+.output/public/assets/play-B3lrLyfe.js                                                                      0.34 kB │ gzip:   0.24 kB
+.output/public/assets/custos.functions-mV6HHHSJ.js                                                          0.35 kB │ gzip:   0.25 kB
+.output/public/assets/file-clock-DSmlOEQ7.js                                                                0.35 kB │ gzip:   0.26 kB
+.output/public/assets/SubNav-VZiggyo1.js                                                                    0.37 kB │ gzip:   0.26 kB
+.output/public/assets/useSelector-CnzbM6Yy.js                                                               0.38 kB │ gzip:   0.27 kB
+.output/public/assets/redirect-DmtLUW0N.js                                                                  0.38 kB │ gzip:   0.25 kB
+.output/public/assets/minus-BHgfhg-8.js                                                                     0.40 kB │ gzip:   0.25 kB
+.output/public/assets/inspecoes-CMwI9qpJ.js                                                                 0.40 kB │ gzip:   0.30 kB
+.output/public/assets/factory-BocmWUxM.js                                                                   0.40 kB │ gzip:   0.25 kB
+.output/public/assets/useServerFn-kDmC3O2N.js                                                               0.40 kB │ gzip:   0.28 kB
+.output/public/assets/layers-C_9oEa0w.js                                                                    0.42 kB │ gzip:   0.24 kB
+.output/public/assets/file-pen-line-DGIf0fFg.js                                                             0.46 kB │ gzip:   0.30 kB
+.output/public/assets/sun-BluM9ucl.js                                                                       0.47 kB │ gzip:   0.25 kB
+.output/public/assets/documentacao-DNg7N1pj.js                                                              0.48 kB │ gzip:   0.34 kB
+.output/public/assets/mouse-pointer-2-D6dTji56.js                                                           0.49 kB │ gzip:   0.30 kB
+.output/public/assets/files-FEBM34z2.js                                                                     0.50 kB │ gzip:   0.35 kB
+.output/public/assets/calculator-Bqh42_l1.js                                                                0.53 kB │ gzip:   0.28 kB
+.output/public/assets/pet.functions-Dzom7NtJ.js                                                             0.59 kB │ gzip:   0.36 kB
+.output/public/assets/configuracoes-Di-U_lhI.js                                                             0.63 kB │ gzip:   0.36 kB
+.output/public/assets/engenharia-8IGiv6_v.js                                                                0.63 kB │ gzip:   0.32 kB
+.output/public/assets/format-JPM5IPtx.js                                                                    0.63 kB │ gzip:   0.30 kB
+.output/public/assets/dist-iJovUNnp.js                                                                      0.64 kB │ gzip:   0.39 kB
+.output/public/assets/queries-J-bHhND7.js                                                                   0.64 kB │ gzip:   0.41 kB
+.output/public/assets/lista-CLRZjDz9.js                                                                     0.70 kB │ gzip:   0.42 kB
+.output/public/assets/comercial-qLyQ7Xdv.js                                                                 0.78 kB │ gzip:   0.41 kB
+.output/public/assets/compras-rAYDJi2D.js                                                                   0.78 kB │ gzip:   0.35 kB
+.output/public/assets/levantamentos.functions-BK8o3OD5.js                                                   1.08 kB │ gzip:   0.53 kB
+.output/public/assets/useInfiniteQuery-CfnjNlGw.js                                                          1.11 kB │ gzip:   0.47 kB
+.output/public/assets/compras.index-C9tmQm-J.js                                                             1.17 kB │ gzip:   0.62 kB
+.output/public/assets/createLucideIcon-CLdWFMku.js                                                          1.19 kB │ gzip:   0.69 kB
+.output/public/assets/files.functions-DTHkeeYn.js                                                           1.20 kB │ gzip:   0.58 kB
+.output/public/assets/compras.ordens-producao.index-BJjjwMYQ.js                                             1.26 kB │ gzip:   0.72 kB
+.output/public/assets/projetos.index-BbjwYuOP.js                                                            1.30 kB │ gzip:   0.69 kB
+.output/public/assets/codigos-C8jQaOj9.js                                                                   1.33 kB │ gzip:   0.41 kB
+.output/public/assets/compras.ordens-compra.index-CKTT9qUc.js                                               1.43 kB │ gzip:   0.75 kB
+.output/public/assets/OperationalDetails-B1G1ojIS.js                                                        1.43 kB │ gzip:   0.65 kB
+.output/public/assets/mapas-3d_.silo-engolfamento-B6AxH1Lz.js                                               1.45 kB │ gzip:   0.81 kB
+.output/public/assets/escada-lc02-DbKEm6XM.js                                                               1.49 kB │ gzip:   0.81 kB
+.output/public/assets/useBlocker-Y2mGLlK8.js                                                                1.54 kB │ gzip:   0.67 kB
+.output/public/assets/financeiro-BETNotxJ.js                                                                1.60 kB │ gzip:   0.85 kB
+.output/public/assets/mapas-3d_.trevisan-C1kDzOeQ.js                                                        1.60 kB │ gzip:   0.86 kB
+.output/public/assets/mapas-3d-crydCgaA.js                                                                  1.60 kB │ gzip:   0.87 kB
+.output/public/assets/with-selector-dQnI5o1Q.js                                                             1.62 kB │ gzip:   0.71 kB
+.output/public/assets/compras.demandas-tIamgsSP.js                                                          1.68 kB │ gzip:   0.82 kB
+.output/public/assets/relatorios-BmNeHjtP.js                                                                1.77 kB │ gzip:   0.81 kB
+.output/public/assets/configuracoes.orcamentos-BnJXlyqx.js                                                  1.78 kB │ gzip:   1.04 kB
+.output/public/assets/access-C1rsN7Gf.js                                                                    1.78 kB │ gzip:   0.95 kB
+.output/public/assets/dialog-C8nXt0wU.js                                                                    1.89 kB │ gzip:   0.78 kB
+.output/public/assets/dist-KOZ5jgoT.js                                                                      1.93 kB │ gzip:   0.70 kB
+.output/public/assets/propostas.functions-Cl2A_Cms.js                                                       1.94 kB │ gzip:   0.84 kB
+.output/public/assets/engenharia.dimensionamentos-B9_b-aGX.js                                               2.00 kB │ gzip:   1.02 kB
+.output/public/assets/NrConversionNotice-DSAaanNo.js                                                        2.06 kB │ gzip:   1.09 kB
+.output/public/assets/EntityPicker-BDHXdS5w.js                                                              2.16 kB │ gzip:   1.11 kB
+.output/public/assets/comercial.index-ffRMDm5d.js                                                           2.25 kB │ gzip:   1.04 kB
+.output/public/assets/useMutation-BwTkjgdw.js                                                               2.25 kB │ gzip:   0.93 kB
+.output/public/assets/compras.fornecedores-B2C-p1Wa.js                                                      2.39 kB │ gzip:   1.13 kB
+.output/public/assets/domain-J43KOqGI.js                                                                    2.49 kB │ gzip:   1.07 kB
+.output/public/assets/dist-XNuZCjgt.js                                                                      2.49 kB │ gzip:   1.16 kB
+.output/public/assets/queries-B5x8nE-n.js                                                                   2.80 kB │ gzip:   0.77 kB
+.output/public/assets/_authenticated-C-z2EAaz.js                                                            2.80 kB │ gzip:   1.19 kB
+.output/public/assets/route-CkYX_oLx.js                                                                     2.87 kB │ gzip:   1.24 kB
+.output/public/assets/components-CtODIT5I.js                                                                3.09 kB │ gzip:   1.42 kB
+.output/public/assets/comercial.propostas.index-DHeEzTer.js                                                 3.11 kB │ gzip:   1.36 kB
+.output/public/assets/NrDocumentActions-D32i_kZ9.js                                                         3.47 kB │ gzip:   1.57 kB
+.output/public/assets/engenharia.regras-dimensionamento-ClOXPAHK.js                                         3.74 kB │ gzip:   1.88 kB
+.output/public/assets/projetos._projetoId-D939s0x2.js                                                       3.90 kB │ gzip:   1.50 kB
+.output/public/assets/comercial.propostas.nova-BZsMYLYw.js                                                  3.95 kB │ gzip:   1.62 kB
+.output/public/assets/hooks-D4sIz41D.js                                                                     4.15 kB │ gzip:   1.59 kB
+.output/public/assets/auth-middleware-46iuowr-.js                                                           4.49 kB │ gzip:   1.89 kB
+.output/public/assets/NrStorageUsage-DR0rCweS.js                                                            4.51 kB │ gzip:   1.65 kB
+.output/public/assets/domain-BvEfVCLU.js                                                                    4.56 kB │ gzip:   2.08 kB
+.output/public/assets/renderer.client-_a2WKbdQ.js                                                           4.61 kB │ gzip:   2.16 kB
+.output/public/assets/NrDocumentImpacts-CGRNlUXu.js                                                         5.17 kB │ gzip:   2.20 kB
+.output/public/assets/compras.ordens-producao._ordemId-DZe-uPP_.js                                          5.51 kB │ gzip:   2.31 kB
+.output/public/assets/ObjectCards-BPBawPeH.js                                                               5.58 kB │ gzip:   2.04 kB
+.output/public/assets/lc02-walkway-aYWWSxkD.js                                                              5.65 kB │ gzip:   2.50 kB
+.output/public/assets/compras.ordens-compra._ordemId-CQao4cUL.js                                            5.67 kB │ gzip:   2.32 kB
+.output/public/assets/queries-DTDILuWO.js                                                                   6.02 kB │ gzip:   2.41 kB
+.output/public/assets/EditorWorkspace-DIrMD2aQ.js                                                           6.45 kB │ gzip:   2.46 kB
+.output/public/assets/configuracoes.index-Ba7wlyjH.js                                                       7.62 kB │ gzip:   2.96 kB
+.output/public/assets/mapas-3d_.unidades-COjaC1j4.js                                                        8.05 kB │ gzip:   2.83 kB
+.output/public/assets/NrImportInspection-DmkiKpag.js                                                        8.18 kB │ gzip:   2.97 kB
+.output/public/assets/jsx-runtime-B-hcVAMW.js                                                               8.55 kB │ gzip:   3.26 kB
+.output/public/assets/data-BZUl9xrP.js                                                                      9.06 kB │ gzip:   3.58 kB
+.output/public/assets/link-C1l-lFpQ.js                                                                      9.32 kB │ gzip:   4.29 kB
+.output/public/assets/RecordFiles-DjX5h9SS.js                                                              10.53 kB │ gzip:   4.07 kB
+.output/public/assets/dist-Bll0zzpx.js                                                                     11.30 kB │ gzip:   4.12 kB
+.output/public/assets/NrRecordHistory-Cd778Yts.js                                                          11.65 kB │ gzip:   4.01 kB
+.output/public/assets/auth-BkiA1zDZ.js                                                                     12.62 kB │ gzip:   4.88 kB
+.output/public/assets/TrevisanViewer-DryBPCaY.js                                                           12.85 kB │ gzip:   4.46 kB
+.output/public/assets/seguranca-j_EGY3NA.js                                                                13.58 kB │ gzip:   4.68 kB
+.output/public/assets/LeitorOriginalPe-DGvS_UKz.js                                                         14.49 kB │ gzip:   5.11 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId-BH6qar93.js                      14.66 kB │ gzip:   5.24 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-DV9JqDtm.js      14.81 kB │ gzip:   5.04 kB
+.output/public/assets/NrFilesPanel-CqIPG2q3.js                                                             15.11 kB │ gzip:   5.64 kB
+.output/public/assets/TrevisanScene-CvfIZHUS.js                                                            17.82 kB │ gzip:   6.96 kB
+.output/public/assets/OrbitControls-ueK4VAY1.js                                                            19.85 kB │ gzip:   4.40 kB
+.output/public/assets/EscadaViewer-Bn8gNjO2.js                                                             22.14 kB │ gzip:   7.23 kB
+.output/public/assets/OrbitControls-B0nLwl6b.js                                                            23.09 kB │ gzip:   7.59 kB
+.output/public/assets/NrTechnicalPublication-h1B8pPza.js                                                   24.15 kB │ gzip:   8.24 kB
+.output/public/assets/EscadaScene-DtQCJPb3.js                                                              24.31 kB │ gzip:   9.54 kB
+.output/public/assets/IndustrialMap-DkIXUmn7.js                                                            26.52 kB │ gzip:   8.73 kB
+.output/public/assets/clientes-BlU08juB.js                                                                 26.82 kB │ gzip:   8.55 kB
+.output/public/assets/produtos._produtoId-D-n0HdJg.js                                                      29.93 kB │ gzip:   8.36 kB
+.output/public/assets/zod-CIW_pPax.js                                                                      30.29 kB │ gzip:  10.90 kB
+.output/public/assets/ProductEditor-BNtQDtVH.js                                                            30.45 kB │ gzip:   9.23 kB
+.output/public/assets/dist-CHmEnSZU.js                                                                     30.71 kB │ gzip:  11.63 kB
+.output/public/assets/produtos.index-DmeIPUTR.js                                                           34.85 kB │ gzip:  11.04 kB
+.output/public/assets/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-CM_ECmAe.js     38.49 kB │ gzip:  11.38 kB
+.output/public/assets/projetos-engenharia-CcXmSSoi.js                                                      48.45 kB │ gzip:  14.44 kB
+.output/public/assets/GLTFLoader-BJVGCGIT.js                                                               48.98 kB │ gzip:  14.32 kB
+.output/public/assets/Etapas-DmNGvvJo.js                                                                   51.64 kB │ gzip:  15.06 kB
+.output/public/assets/types-9nia2RzJ.js                                                                    56.67 kB │ gzip:  13.03 kB
+.output/public/assets/almoxarifado-B_qHgmkm.js                                                             57.97 kB │ gzip:  15.69 kB
+.output/public/assets/ExecucaoWorkspace-DqZKAFEj.js                                                        59.79 kB │ gzip:  17.35 kB
+.output/public/assets/levantamentos-Birm5dIX.js                                                            60.25 kB │ gzip:  17.36 kB
+.output/public/assets/engenharia.index-CNn6aRv_.js                                                         65.06 kB │ gzip:  18.14 kB
+.output/public/assets/IndustrialScene-ZWrZMuq7.js                                                          66.98 kB │ gzip:  21.66 kB
+.output/public/assets/equipe-By3Ak2MQ.js                                                                   78.66 kB │ gzip:  19.90 kB
+.output/public/assets/NrRoute-BhpeWlAp.js                                                                  82.25 kB │ gzip:  22.68 kB
+.output/public/assets/execucao.pets._petId-CcORwMUS.js                                                     98.01 kB │ gzip:  26.87 kB
+.output/public/assets/spatial-ggJm29VR.js                                                                 105.59 kB │ gzip:  24.50 kB
+.output/public/assets/agenda-equipe-BaQceH_-.js                                                           107.44 kB │ gzip:  30.88 kB
+.output/public/assets/SiloViewer-M5zbO1hG.js                                                              147.22 kB │ gzip:  49.44 kB
+.output/public/assets/react-three-fiber.esm-DU2ZxiCA.js                                                   154.45 kB │ gzip:  49.14 kB
+.output/public/assets/three.module-CH1IZa3a.js                                                            365.01 kB │ gzip:  89.39 kB
+.output/public/assets/three.core-DOQ_Anfr.js                                                              377.36 kB │ gzip: 100.68 kB
+.output/public/assets/AgendaDashboard-CFVbmExH.js                                                         382.34 kB │ gzip: 102.14 kB
+.output/public/assets/pdf.min-DRCZcrTU.js                                                                 485.30 kB │ gzip: 147.35 kB
+.output/public/assets/index-BlkGNJJg.js                                                                   741.38 kB │ gzip: 214.95 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.68s
+vite v8.1.5 building ssr environment for production...
+[2K
+transforming...[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:183:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:204:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:210:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:233:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:239:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:259:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:279:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts?tss-serverfn-split:300:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:34:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:86:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:92:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:110:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:137:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:155:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:178:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts?tss-serverfn-split:194:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:8:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:50:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:69:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:81:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:93:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:112:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:130:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:146:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:165:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts?tss-serverfn-split:210:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts?tss-serverfn-split:14:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts?tss-serverfn-split:52:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts?tss-serverfn-split:105:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts?tss-serverfn-split:125:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts?tss-serverfn-split:175:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts?tss-serverfn-split:191:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts?tss-serverfn-split:30:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts?tss-serverfn-split:52:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts?tss-serverfn-split:108:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts?tss-serverfn-split:154:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts?tss-serverfn-split:170:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:38:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:50:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:69:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:94:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:102:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:154:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:186:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:201:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts?tss-serverfn-split:213:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/technical-publication.functions.ts?tss-serverfn-split:14:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/technical-publication.functions.ts?tss-serverfn-split:31:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts?tss-serverfn-split:173:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts?tss-serverfn-split:202:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts?tss-serverfn-split:216:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts?tss-serverfn-split:240:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts?tss-serverfn-split:265:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts?tss-serverfn-split:289:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/nr.functions.ts?tss-serverfn-split:46:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/nr.functions.ts?tss-serverfn-split:86:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/custos/custos.functions.ts?tss-serverfn-split:17:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/custos/custos.functions.ts?tss-serverfn-split:101:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts?tss-serverfn-split:10:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts?tss-serverfn-split:22:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts?tss-serverfn-split:34:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts?tss-serverfn-split:46:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/impactos.functions.ts?tss-serverfn-split:7:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/documents.functions.ts?tss-serverfn-split:12:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/documents.functions.ts?tss-serverfn-split:19:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/documentos.functions.ts?tss-serverfn-split:13:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/documentos.functions.ts?tss-serverfn-split:43:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts?tss-serverfn-split:15:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts?tss-serverfn-split:34:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts?tss-serverfn-split:53:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts?tss-serverfn-split:69:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:47:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:67:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:80:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:94:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:110:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:127:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts?tss-serverfn-split:144:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/disponibilidade/functions.ts?tss-serverfn-split:34:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/disponibilidade/functions.ts?tss-serverfn-split:51:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/import-inspection.functions.ts?tss-serverfn-split:8:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:34:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:86:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:92:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:110:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:137:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:155:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:178:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/operacao.functions.ts:194:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/nr.functions.ts:46:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/nr.functions.ts:86:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts:10:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts:22:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts:34:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/pet.functions.ts:46:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/serie-pendencias.functions.ts?tss-serverfn-split:67:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:77:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:115:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:193:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:227:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:236:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:277:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts?tss-serverfn-split:297:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:28:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:78:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:93:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:176:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:203:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:227:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts?tss-serverfn-split:252:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:182:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:309:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:474:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:484:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:497:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:619:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:850:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:863:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:899:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:917:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:949:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:982:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:1010:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts?tss-serverfn-split:1039:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts?tss-serverfn-split:91:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts?tss-serverfn-split:123:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts?tss-serverfn-split:158:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts?tss-serverfn-split:167:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts?tss-serverfn-split:202:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts?tss-serverfn-split:222:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:58:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:77:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:91:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:108:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:124:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:153:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:205:49 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts?tss-serverfn-split:259:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/admin.functions.ts?tss-serverfn-split:19:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/admin.functions.ts?tss-serverfn-split:40:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:64:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:89:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:103:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:120:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:136:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:158:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts?tss-serverfn-split:177:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts?tss-serverfn-split:125:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts?tss-serverfn-split:157:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts?tss-serverfn-split:182:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts?tss-serverfn-split:192:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts?tss-serverfn-split:227:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts?tss-serverfn-split:247:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:8:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:50:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:69:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:81:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:93:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:112:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:130:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:146:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:165:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/agenda.functions.ts:210:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/retificacoes.functions.ts?tss-serverfn-split:16:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts?tss-serverfn-split:53:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts?tss-serverfn-split:80:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts?tss-serverfn-split:100:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts?tss-serverfn-split:117:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:30:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:52:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:108:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:154:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/projetos-engenharia.functions.ts:170:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/custos/custos.functions.ts:17:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/custos/custos.functions.ts:101:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:182:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:309:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:474:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:484:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:497:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:619:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:850:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:863:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:899:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:917:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:949:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:982:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:1010:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/propostas/propostas.functions.ts:1039:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/admin.functions.ts:19:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/admin.functions.ts:40:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:28:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:78:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:93:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:176:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:203:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:227:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/catalogo/catalogo.functions.ts:252:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:47:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:67:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:80:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:94:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:110:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:127:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/clientes/clientes.functions.ts:144:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:183:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:204:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:210:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:233:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:239:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:259:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:279:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/qualificacoes/functions.ts:300:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:173:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:202:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:216:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:240:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:265:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/equipes/functions.ts:289:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts:14:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts:52:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts:105:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts:125:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts:175:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/operacao/files.functions.ts:191:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/documentos.functions.ts:13:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/documentos.functions.ts:43:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:53:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:80:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:100:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/almoxarifado/almoxarifado.functions.ts:117:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:64:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:89:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:103:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:120:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:136:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:158:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/estudos.functions.ts:177:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:58:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:77:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:91:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:108:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:124:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:153:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:205:49 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/levantamentos.functions.ts:259:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/disponibilidade/functions.ts:34:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pessoas-competencias/disponibilidade/functions.ts:51:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:38:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:50:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:69:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:94:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:102:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:154:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:186:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:201:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/files.functions.ts:213:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/impactos.functions.ts:7:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts:15:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts:34:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts:53:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/history.functions.ts:69:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/documents.functions.ts:12:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/documents.functions.ts:19:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/technical-publication.functions.ts:14:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/technical-publication.functions.ts:31:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/nr/import-inspection.functions.ts:8:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:125:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:157:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:182:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:192:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:227:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/estudos/est-arquivos.functions.ts:247:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:91:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:123:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:158:43 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:167:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:202:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/levantamentos/lev-arquivos.functions.ts:222:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:77:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:115:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:193:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:227:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:236:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:277:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/projetos-engenharia/pe-arquivos.functions.ts:297:32 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/agenda-equipe/serie-pendencias.functions.ts:67:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] <PROJETO>/src/features/pet/retificacoes.functions.ts:16:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+✓ 518 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/Barlow-Regular-BeTQORF1.ttf                                                       104.06 kB
+node_modules/.nitro/vite/services/ssr/assets/Barlow-SemiBold-DrsHaTWO.ttf                                                      108.34 kB
+node_modules/.nitro/vite/services/ssr/assets/Saira-SemiBold-BJLoY5Cs.ttf                                                       112.36 kB
+node_modules/.nitro/vite/services/ssr/assets/almoxarifado-D3EziyW8.css                                                           0.75 kB │ gzip:   0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/clientes-DoLYyCjO.css                                                               3.73 kB │ gzip:   1.12 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia-Dyc7KohQ.css                                                             3.90 kB │ gzip:   1.02 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos-BtU3raE1.css                                                          4.00 kB │ gzip:   1.08 kB
+node_modules/.nitro/vite/services/ssr/assets/ProductEditor-BE3gdNdS.css                                                          7.11 kB │ gzip:   1.87 kB
+node_modules/.nitro/vite/services/ssr/assets/product-costs-CzF7Tdcd.css                                                          8.09 kB │ gzip:   1.88 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId-DAmrHfIe.css                    8.83 kB │ gzip:   2.05 kB
+node_modules/.nitro/vite/services/ssr/assets/AgendaDashboard-jddI3CYm.css                                                        9.39 kB │ gzip:   2.09 kB
+node_modules/.nitro/vite/services/ssr/assets/NrRoute-BHGczgmI.css                                                                9.45 kB │ gzip:   2.40 kB
+node_modules/.nitro/vite/services/ssr/assets/stages-BUJrVlaN.css                                                                10.87 kB │ gzip:   2.26 kB
+node_modules/.nitro/vite/services/ssr/assets/EditorWorkspace-B89npKoY.css                                                       12.22 kB │ gzip:   2.71 kB
+node_modules/.nitro/vite/services/ssr/assets/Etapas-9On9O4JE.css                                                                13.95 kB │ gzip:   2.02 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao.pets-D1Lgerwf.css                                                         15.26 kB │ gzip:   3.12 kB
+node_modules/.nitro/vite/services/ssr/assets/SiloViewer-CgR1Rcxw.css                                                            16.14 kB │ gzip:   4.02 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaViewer-SeAZmEnY.css                                                          16.21 kB │ gzip:   4.04 kB
+node_modules/.nitro/vite/services/ssr/assets/ObjectCards-D8ourA_w.css                                                           17.56 kB │ gzip:   3.37 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialMap-BSoWcYsp.css                                                         18.28 kB │ gzip:   4.37 kB
+node_modules/.nitro/vite/services/ssr/assets/agenda-equipe-CMSdnKTH.css                                                         25.77 kB │ gzip:   5.18 kB
+node_modules/.nitro/vite/services/ssr/assets/ExecucaoWorkspace-DWq4jYCF.css                                                     28.91 kB │ gzip:   5.70 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes-BVcoxNsl.css                              35.11 kB │ gzip:   4.73 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-BXQwgXnr.css                                                               119.23 kB │ gzip:  19.78 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js                                                   0.22 kB │ gzip:   0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/nr-33-lnBhgqHv.js                                                                   0.26 kB │ gzip:   0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/nr-35-Cuu_MY9T.js                                                                   0.26 kB │ gzip:   0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao-BuRDaHtl.js                                                                0.27 kB │ gzip:   0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos-BSlCURtE.js                                                                0.27 kB │ gzip:   0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos-CbNy0BB_.js                                                                0.27 kB │ gzip:   0.20 kB
+node_modules/.nitro/vite/services/ssr/assets/nr-33._-yheXdE99.js                                                                 0.29 kB │ gzip:   0.22 kB
+node_modules/.nitro/vite/services/ssr/assets/nr-35._-CnPRZfV6.js                                                                 0.29 kB │ gzip:   0.22 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao.index-DrRQQvVG.js                                                          0.31 kB │ gzip:   0.22 kB
+node_modules/.nitro/vite/services/ssr/assets/nr-33.index-bPCYbL4z.js                                                             0.32 kB │ gzip:   0.24 kB
+node_modules/.nitro/vite/services/ssr/assets/nr-35.index-BBHXanIp.js                                                             0.32 kB │ gzip:   0.24 kB
+node_modules/.nitro/vite/services/ssr/assets/route-BhpKpV1e.js                                                                   0.33 kB │ gzip:   0.23 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerRpc-BnVxBGl4.js                                                         0.40 kB │ gzip:   0.27 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao.ordens._ordemId-CdBB1B2k.js                                                0.43 kB │ gzip:   0.27 kB
+node_modules/.nitro/vite/services/ssr/assets/escada-lc02-CX7pXOCt.js                                                             0.45 kB │ gzip:   0.29 kB
+node_modules/.nitro/vite/services/ssr/assets/seguranca-Dw8IUz7i.js                                                               0.47 kB │ gzip:   0.29 kB
+node_modules/.nitro/vite/services/ssr/assets/agenda-equipe-CyhqTuSR.js                                                           0.48 kB │ gzip:   0.28 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d-Do0LjlXb.js                                                                0.48 kB │ gzip:   0.31 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao.ordens._ordemId-IvzksaS-.js                                                0.49 kB │ gzip:   0.31 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-CBfQOxfG.js           0.49 kB │ gzip:   0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao.pets._petId-DFpC30x9.js                                                    0.49 kB │ gzip:   0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-CPLQfDH1.js    0.50 kB │ gzip:   0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.silo-engolfamento-Didc1tFC.js                                             0.50 kB │ gzip:   0.33 kB
+node_modules/.nitro/vite/services/ssr/assets/NexusLogo-CFKbjeon.js                                                               0.50 kB │ gzip:   0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.historico-CzejWAbv.js           0.51 kB │ gzip:   0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.parametros-DeLGE4W-.js          0.51 kB │ gzip:   0.30 kB
+node_modules/.nitro/vite/services/ssr/assets/SubNav-D--uE1vB.js                                                                  0.51 kB │ gzip:   0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.compras-CDo85jH7.js             0.52 kB │ gzip:   0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.producao-DHefaCjM.js            0.52 kB │ gzip:   0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.unidades-DNfj1j7H.js                                                      0.54 kB │ gzip:   0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.trevisan-ByETU91o.js                                                      0.54 kB │ gzip:   0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos._projetoId-Cnus0u17.js                                                     0.55 kB │ gzip:   0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-compra._ordemId-1bBv7Ap9.js                                          0.57 kB │ gzip:   0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/pessoas-domain-BjzazRqg.js                                                          0.58 kB │ gzip:   0.35 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-producao._ordemId-BYwUsGVJ.js                                        0.59 kB │ gzip:   0.35 kB
+node_modules/.nitro/vite/services/ssr/assets/createSsrRpc-B_VnTZtm.js                                                            0.60 kB │ gzip:   0.36 kB
+node_modules/.nitro/vite/services/ssr/assets/inspecoes-CgDnsosf.js                                                               0.62 kB │ gzip:   0.40 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos._produtoId-RNeActer.js                                                     0.62 kB │ gzip:   0.36 kB
+node_modules/.nitro/vite/services/ssr/assets/useServerFn-CrZF2pjq.js                                                             0.63 kB │ gzip:   0.35 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId-gcclFq3X.js                     0.64 kB │ gzip:   0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos-engenharia-B9tscPUO.js                                                     0.67 kB │ gzip:   0.41 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.historico-D1o-AQkq.js           0.68 kB │ gzip:   0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-e5N-kYlH.js           0.68 kB │ gzip:   0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.parametros-BSHXO26X.js          0.69 kB │ gzip:   0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/documentacao-DGNdldj7.js                                                            0.70 kB │ gzip:   0.44 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.compras-D0SxOumC.js             0.70 kB │ gzip:   0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-sNjgaDft.js     0.71 kB │ gzip:   0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.producao-CtVQJYQx.js            0.71 kB │ gzip:   0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-lN4K-C_O.js    0.71 kB │ gzip:   0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-C0nCa5jY.js    0.71 kB │ gzip:   0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/relatorio-version-CE-D430B.js                                                       0.76 kB │ gzip:   0.47 kB
+node_modules/.nitro/vite/services/ssr/assets/createMiddleware-B_4t7rW1.js                                                        0.83 kB │ gzip:   0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-DM95RNVA.js                                                                  0.88 kB │ gzip:   0.46 kB
+node_modules/.nitro/vite/services/ssr/assets/route-state-BEGYaQRw.js                                                             0.92 kB │ gzip:   0.38 kB
+node_modules/.nitro/vite/services/ssr/assets/queries-DPzSSCTN.js                                                                 0.93 kB │ gzip:   0.54 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes-CJOn9VXa.js                                                           0.95 kB │ gzip:   0.47 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia-CC830MS5.js                                                              0.96 kB │ gzip:   0.42 kB
+node_modules/.nitro/vite/services/ssr/assets/almoxarifado-C-KTL8Sp.js                                                            1.03 kB │ gzip:   0.51 kB
+node_modules/.nitro/vite/services/ssr/assets/lista-D1EiieyH.js                                                                   1.05 kB │ gzip:   0.56 kB
+node_modules/.nitro/vite/services/ssr/assets/clientes-B4fDZUmu.js                                                                1.06 kB │ gzip:   0.57 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial-B6daajPO.js                                                               1.08 kB │ gzip:   0.52 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas.index-DlDgQSdl.js                                               1.08 kB │ gzip:   0.52 kB
+node_modules/.nitro/vite/services/ssr/assets/format-DYYL_DXD.js                                                                  1.13 kB │ gzip:   0.47 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-Cat-m-c5.js                                                                  1.17 kB │ gzip:   0.58 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.index-WgpyNOqX.js                                                        1.18 kB │ gzip:   0.55 kB
+node_modules/.nitro/vite/services/ssr/assets/equipe-CEanxeLZ.js                                                                  1.21 kB │ gzip:   0.50 kB
+node_modules/.nitro/vite/services/ssr/assets/compras-WEkihlKI.js                                                                 1.22 kB │ gzip:   0.45 kB
+node_modules/.nitro/vite/services/ssr/assets/files-B8vtXtr1.js                                                                   1.22 kB │ gzip:   0.65 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos-DOTBHj9L.js                                                           1.23 kB │ gzip:   0.56 kB
+node_modules/.nitro/vite/services/ssr/assets/draft-recovery-DKPRHXjC.js                                                          1.25 kB │ gzip:   0.66 kB
+node_modules/.nitro/vite/services/ssr/assets/pet.functions-C76P05A6.js                                                           1.26 kB │ gzip:   0.56 kB
+node_modules/.nitro/vite/services/ssr/assets/retificacoes.functions-sJkw3TAZ.js                                                  1.26 kB │ gzip:   0.64 kB
+node_modules/.nitro/vite/services/ssr/assets/import-inspection.schemas-D4kVlGZa.js                                               1.38 kB │ gzip:   0.58 kB
+node_modules/.nitro/vite/services/ssr/assets/access-BBcqzwu8.js                                                                  1.39 kB │ gzip:   0.66 kB
+node_modules/.nitro/vite/services/ssr/assets/import-inspection.functions-DnxEOPp-.js                                             1.50 kB │ gzip:   0.69 kB
+node_modules/.nitro/vite/services/ssr/assets/errors-DLi1L_SS.js                                                                  1.54 kB │ gzip:   0.75 kB
+node_modules/.nitro/vite/services/ssr/assets/custos.functions-Czl5eWK6.js                                                        1.69 kB │ gzip:   0.80 kB
+node_modules/.nitro/vite/services/ssr/assets/client.server-KzwUIAkW.js                                                           1.73 kB │ gzip:   0.78 kB
+node_modules/.nitro/vite/services/ssr/assets/impactos.functions-Dkgeb_br.js                                                      1.75 kB │ gzip:   0.75 kB
+node_modules/.nitro/vite/services/ssr/assets/nr.functions-DFmkTxK6.js                                                            1.82 kB │ gzip:   0.88 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-DQPNGTlJ.js                                                                 1.82 kB │ gzip:   0.76 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.index-BbyIx72g.js                                                           1.86 kB │ gzip:   0.83 kB
+node_modules/.nitro/vite/services/ssr/assets/history.schemas-B_QFpXAu.js                                                         1.91 kB │ gzip:   0.88 kB
+node_modules/.nitro/vite/services/ssr/assets/autorizacao-D3H9japl.js                                                             2.00 kB │ gzip:   0.75 kB
+node_modules/.nitro/vite/services/ssr/assets/documents.functions-D2jkdjb4.js                                                     2.02 kB │ gzip:   0.75 kB
+node_modules/.nitro/vite/services/ssr/assets/start-B1c397FU.js                                                                   2.05 kB │ gzip:   0.88 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-DXe6s1VZ.js                                                                 2.18 kB │ gzip:   0.73 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-producao.index-mezM1vS8.js                                           2.22 kB │ gzip:   0.99 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos.index-m9-iPMjy.js                                                          2.27 kB │ gzip:   0.96 kB
+node_modules/.nitro/vite/services/ssr/assets/codigos-CEMYQxcZ.js                                                                 2.31 kB │ gzip:   0.81 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-BnbEW2Mp.js                                                                 2.39 kB │ gzip:   0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/createCsrfMiddleware-jzif2P7h.js                                                    2.45 kB │ gzip:   0.86 kB
+node_modules/.nitro/vite/services/ssr/assets/technical-publication.functions-DBPIJDG9.js                                         2.45 kB │ gzip:   0.87 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-compra.index-BKUKRk7h.js                                             2.52 kB │ gzip:   1.05 kB
+node_modules/.nitro/vite/services/ssr/assets/files.functions-Mn5LGVhi.js                                                         2.55 kB │ gzip:   0.89 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-35pTVNOu.js                                                                  2.59 kB │ gzip:   1.20 kB
+node_modules/.nitro/vite/services/ssr/assets/OperationalDetails-Dl9wAIc7.js                                                      2.65 kB │ gzip:   0.97 kB
+node_modules/.nitro/vite/services/ssr/assets/financeiro-Cv__07pT.js                                                              2.65 kB │ gzip:   1.10 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-middleware-CNRI6lH3.js                                                         2.67 kB │ gzip:   1.09 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos.functions-BCN8I7eV.js                                                 2.68 kB │ gzip:   0.87 kB
+node_modules/.nitro/vite/services/ssr/assets/operacao.functions-BelC0Yzq.js                                                      2.77 kB │ gzip:   1.09 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes.orcamentos-DGxqDDtM.js                                                2.79 kB │ gzip:   1.32 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.demandas-CeboVDfC.js                                                        2.83 kB │ gzip:   1.08 kB
+node_modules/.nitro/vite/services/ssr/assets/relatorios-CM6f8-6J.js                                                              2.94 kB │ gzip:   1.10 kB
+node_modules/.nitro/vite/services/ssr/assets/functions-CLNrNm2b.js                                                               2.97 kB │ gzip:   1.12 kB
+node_modules/.nitro/vite/services/ssr/assets/dialog-BWXrXqoK.js                                                                  3.03 kB │ gzip:   0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/pet.functions-DnpPr7l6.js                                                           3.05 kB │ gzip:   0.94 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.dimensionamentos-BLqbnZtp.js                                             3.21 kB │ gzip:   1.36 kB
+node_modules/.nitro/vite/services/ssr/assets/NrConversionNotice-Kvt9KAMC.js                                                      3.25 kB │ gzip:   1.33 kB
+node_modules/.nitro/vite/services/ssr/assets/session-D1Cmi8Vy.js                                                                 3.32 kB │ gzip:   1.32 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.index-DL4XD_iU.js                                                         3.51 kB │ gzip:   1.35 kB
+node_modules/.nitro/vite/services/ssr/assets/EntityPicker-CUpV2h-h.js                                                            3.67 kB │ gzip:   1.47 kB
+node_modules/.nitro/vite/services/ssr/assets/queries-5KUF69qT.js                                                                 3.69 kB │ gzip:   0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/history.functions-lqJm6SX4.js                                                       3.71 kB │ gzip:   0.98 kB
+node_modules/.nitro/vite/services/ssr/assets/admin.functions-DLZ9QIi3.js                                                         3.83 kB │ gzip:   1.37 kB
+node_modules/.nitro/vite/services/ssr/assets/documentos.functions-SX-XZwtz.js                                                    4.03 kB │ gzip:   1.68 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.fornecedores-Be-kQoLM.js                                                    4.08 kB │ gzip:   1.51 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-kcr4hLDV.js                                                                  4.12 kB │ gzip:   1.61 kB
+node_modules/.nitro/vite/services/ssr/assets/custos.functions-BgOjIved.js                                                        4.31 kB │ gzip:   1.55 kB
+node_modules/.nitro/vite/services/ssr/assets/nr.functions-CP4BJzvE.js                                                            4.32 kB │ gzip:   1.63 kB
+node_modules/.nitro/vite/services/ssr/assets/queries-ByIHqy0U.js                                                                 4.32 kB │ gzip:   1.06 kB
+node_modules/.nitro/vite/services/ssr/assets/route-DcieZnfi.js                                                                   4.42 kB │ gzip:   1.56 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-yr9JUxYj.js                                                                  4.60 kB │ gzip:   1.87 kB
+node_modules/.nitro/vite/services/ssr/index.js                                                                                   4.61 kB │ gzip:   1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/_authenticated-9Md4BYPH.js                                                          4.66 kB │ gzip:   1.57 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-bxWQoOqR.js                                                                  4.77 kB │ gzip:   1.58 kB
+node_modules/.nitro/vite/services/ssr/assets/components-ER7A5vBS.js                                                              4.82 kB │ gzip:   1.81 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-CDzsJ3pC.js                                                                 4.92 kB │ gzip:   1.36 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas.index-iA4TYfSK.js                                               5.03 kB │ gzip:   1.75 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-Wx5xODBT.js                                                                 5.17 kB │ gzip:   1.44 kB
+node_modules/.nitro/vite/services/ssr/assets/almoxarifado.functions-D9M8Ob1I.js                                                  5.61 kB │ gzip:   1.71 kB
+node_modules/.nitro/vite/services/ssr/assets/propostas.functions-B04Ze-BI.js                                                     5.64 kB │ gzip:   1.88 kB
+node_modules/.nitro/vite/services/ssr/assets/serie-pendencias.functions-C_I5dv9_.js                                              5.78 kB │ gzip:   1.93 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.regras-dimensionamento-CNWE49_c.js                                       5.79 kB │ gzip:   2.34 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos._projetoId-DESG_Uec.js                                                     5.80 kB │ gzip:   1.89 kB
+node_modules/.nitro/vite/services/ssr/assets/serie-pendencias.schemas-BfZZWLcQ.js                                                5.88 kB │ gzip:   2.11 kB
+node_modules/.nitro/vite/services/ssr/assets/NrDocumentActions-DX_So-Uz.js                                                       6.10 kB │ gzip:   2.13 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas.nova-DvKW85pQ.js                                                6.20 kB │ gzip:   2.06 kB
+node_modules/.nitro/vite/services/ssr/assets/NrStorageUsage-BJ8jmP1K.js                                                          6.40 kB │ gzip:   1.87 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-BkMB-AQQ.js                                                                 6.47 kB │ gzip:   2.07 kB
+node_modules/.nitro/vite/services/ssr/assets/technical-publication.schemas-0WEAEK60.js                                           6.64 kB │ gzip:   2.42 kB
+node_modules/.nitro/vite/services/ssr/assets/hooks--kA76PPX.js                                                                   7.02 kB │ gzip:   2.26 kB
+node_modules/.nitro/vite/services/ssr/assets/client-DPSioFQs.js                                                                  7.06 kB │ gzip:   2.44 kB
+node_modules/.nitro/vite/services/ssr/assets/clientes.functions-COO83YXY.js                                                      7.38 kB │ gzip:   1.93 kB
+node_modules/.nitro/vite/services/ssr/assets/ObjectCards-COhTh1Lm.js                                                             7.50 kB │ gzip:   2.17 kB
+node_modules/.nitro/vite/services/ssr/assets/nexus-nav-DxrvThlJ.js                                                               7.63 kB │ gzip:   2.44 kB
+node_modules/.nitro/vite/services/ssr/assets/files.functions-tqyjxVkc.js                                                         7.84 kB │ gzip:   2.17 kB
+node_modules/.nitro/vite/services/ssr/assets/estudos.functions-DUEKqP0F.js                                                       8.14 kB │ gzip:   2.17 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-producao._ordemId-B3iRyTxM.js                                        8.44 kB │ gzip:   2.86 kB
+node_modules/.nitro/vite/services/ssr/assets/lc02-walkway-C7CNFSzG.js                                                            8.55 kB │ gzip:   3.11 kB
+node_modules/.nitro/vite/services/ssr/assets/NrDocumentImpacts-Bx2Pi55c.js                                                       8.59 kB │ gzip:   2.95 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos-engenharia.functions-BJw6K_Co.js                                           8.68 kB │ gzip:   2.41 kB
+node_modules/.nitro/vite/services/ssr/assets/compras.ordens-compra._ordemId-B9AOux2E.js                                          8.90 kB │ gzip:   2.90 kB
+node_modules/.nitro/vite/services/ssr/assets/documents.pdf-bhqBdMvP.js                                                           9.55 kB │ gzip:   3.64 kB
+node_modules/.nitro/vite/services/ssr/assets/operacao.functions-D2BzXyZL.js                                                      9.63 kB │ gzip:   2.57 kB
+node_modules/.nitro/vite/services/ssr/assets/catalogo.functions-Cacs4LmV.js                                                      9.76 kB │ gzip:   2.61 kB
+node_modules/.nitro/vite/services/ssr/assets/agenda.functions-CNugJHuC.js                                                        9.93 kB │ gzip:   2.39 kB
+node_modules/.nitro/vite/services/ssr/assets/lev-arquivos.functions-Cux2ABQF.js                                                 10.39 kB │ gzip:   2.83 kB
+node_modules/.nitro/vite/services/ssr/assets/Page-DQOC1QRr.js                                                                   10.50 kB │ gzip:   3.10 kB
+node_modules/.nitro/vite/services/ssr/assets/documents.server-Cn5SvYwf.js                                                       10.79 kB │ gzip:   3.57 kB
+node_modules/.nitro/vite/services/ssr/assets/est-arquivos.functions-BcavLPgU.js                                                 10.82 kB │ gzip:   3.01 kB
+node_modules/.nitro/vite/services/ssr/assets/files.functions-F5SOGExk.js                                                        11.11 kB │ gzip:   2.97 kB
+node_modules/.nitro/vite/services/ssr/assets/EditorWorkspace-hlSpZb1z.js                                                        11.32 kB │ gzip:   3.47 kB
+node_modules/.nitro/vite/services/ssr/assets/functions-DZnYNqV9.js                                                              11.56 kB │ gzip:   2.93 kB
+node_modules/.nitro/vite/services/ssr/assets/mapas-3d_.unidades-BOWs7iK0.js                                                     11.71 kB │ gzip:   3.21 kB
+node_modules/.nitro/vite/services/ssr/assets/native-content-Dqk0Kj37.js                                                         11.81 kB │ gzip:   3.30 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-ByKLm90m.js                                                                12.02 kB │ gzip:   3.29 kB
+node_modules/.nitro/vite/services/ssr/assets/NrImportInspection-DfU4skPF.js                                                     12.08 kB │ gzip:   3.45 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos.functions-OcAWVy5B.js                                                12.09 kB │ gzip:   3.22 kB
+node_modules/.nitro/vite/services/ssr/assets/pe-arquivos.functions-DFjrvVZu.js                                                  12.33 kB │ gzip:   3.17 kB
+node_modules/.nitro/vite/services/ssr/assets/configuracoes.index-BJnw3Cyv.js                                                    12.79 kB │ gzip:   3.90 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerFn-BD5RBfF2.js                                                         13.15 kB │ gzip:   3.76 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-C0JE2ooo.js                                                                   13.43 kB │ gzip:   3.90 kB
+node_modules/.nitro/vite/services/ssr/assets/functions-DTK5QNZk.js                                                              14.09 kB │ gzip:   3.35 kB
+node_modules/.nitro/vite/services/ssr/assets/files.schemas-C0dPoBw6.js                                                          14.93 kB │ gzip:   5.04 kB
+node_modules/.nitro/vite/services/ssr/assets/domain-DO4lymkC.js                                                                 15.77 kB │ gzip:   5.13 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-Dxu6xHtU.js                                                                16.36 kB │ gzip:   3.69 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-DD75bkVy.js                                                                16.60 kB │ gzip:   4.16 kB
+node_modules/.nitro/vite/services/ssr/assets/RecordFiles-Fd9Yar4z.js                                                            18.41 kB │ gzip:   5.43 kB
+node_modules/.nitro/vite/services/ssr/assets/NrRecordHistory-DcOln_v1.js                                                        20.07 kB │ gzip:   5.31 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-ofmiEMW8.js                                                                21.76 kB │ gzip:   4.20 kB
+node_modules/.nitro/vite/services/ssr/assets/LeitorOriginalPe-BuEhR_f2.js                                                       22.32 kB │ gzip:   6.00 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId-Ais7-0Uv.js                    22.38 kB │ gzip:   6.63 kB
+node_modules/.nitro/vite/services/ssr/assets/documents-DCZNjlsC.js                                                              22.39 kB │ gzip:   7.73 kB
+node_modules/.nitro/vite/services/ssr/assets/NrFilesPanel-nRslc_Cx.js                                                           23.17 kB │ gzip:   6.31 kB
+node_modules/.nitro/vite/services/ssr/assets/seguranca-DHbKFaf0.js                                                              23.37 kB │ gzip:   6.24 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-DeiwUtVA.js    24.06 kB │ gzip:   6.41 kB
+node_modules/.nitro/vite/services/ssr/assets/AgendaDashboard-DaelNUGH.js                                                        26.23 kB │ gzip:   5.82 kB
+node_modules/.nitro/vite/services/ssr/assets/schemas-BtYWuodX.js                                                                28.47 kB │ gzip:   6.71 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-BAAp0qrc.js                                             28.66 kB │ gzip:   3.79 kB
+node_modules/.nitro/vite/services/ssr/assets/__23tanstack-start-server-fn-resolver-D1ZdbGFa.js                                  29.28 kB │ gzip:   7.81 kB
+node_modules/.nitro/vite/services/ssr/assets/pdf-v2-Cagn9i5s.js                                                                 29.86 kB │ gzip:   9.91 kB
+node_modules/.nitro/vite/services/ssr/assets/NrTechnicalPublication-DcOGxbws.js                                                 32.60 kB │ gzip:   8.49 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaViewer-DMH6JsV9.js                                                           33.16 kB │ gzip:   8.11 kB
+node_modules/.nitro/vite/services/ssr/assets/relatorios.server-BVwr-RMb.js                                                      34.26 kB │ gzip:  11.34 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialScene-DD4l4BWr.js                                                        36.06 kB │ gzip:  10.94 kB
+node_modules/.nitro/vite/services/ssr/assets/propostas.functions-DgUeH-zz.js                                                    37.05 kB │ gzip:   9.54 kB
+node_modules/.nitro/vite/services/ssr/assets/IndustrialMap-umVr5wil.js                                                          38.93 kB │ gzip:   9.34 kB
+node_modules/.nitro/vite/services/ssr/assets/clientes-D-SWpRC9.js                                                               40.48 kB │ gzip:  10.05 kB
+node_modules/.nitro/vite/services/ssr/assets/EscadaScene-BABHHdTO.js                                                            40.52 kB │ gzip:  12.35 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos._produtoId-r5kCmS9p.js                                                    45.34 kB │ gzip:  10.26 kB
+node_modules/.nitro/vite/services/ssr/assets/ProductEditor-CulO9x8w.js                                                          50.71 kB │ gzip:  12.45 kB
+node_modules/.nitro/vite/services/ssr/assets/router-62gPo697.js                                                                 52.37 kB │ gzip:  10.29 kB
+node_modules/.nitro/vite/services/ssr/assets/produtos.index-CDBxkCU1.js                                                         55.03 kB │ gzip:  13.84 kB
+node_modules/.nitro/vite/services/ssr/assets/server-BXU7OS-N.js                                                                 60.28 kB │ gzip:  15.51 kB
+node_modules/.nitro/vite/services/ssr/assets/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-BD7nNrGo.js   62.45 kB │ gzip:  15.14 kB
+node_modules/.nitro/vite/services/ssr/assets/Etapas-QP9qOzC8.js                                                                 77.02 kB │ gzip:  18.20 kB
+node_modules/.nitro/vite/services/ssr/assets/projetos-engenharia-CEhfGzcj.js                                                    80.35 kB │ gzip:  18.17 kB
+node_modules/.nitro/vite/services/ssr/assets/almoxarifado-Czjvcqsn.js                                                           90.72 kB │ gzip:  20.18 kB
+node_modules/.nitro/vite/services/ssr/assets/ExecucaoWorkspace-zUjE3hpg.js                                                      97.54 kB │ gzip:  23.11 kB
+node_modules/.nitro/vite/services/ssr/assets/levantamentos-TCXlpLxW.js                                                         102.28 kB │ gzip:  23.58 kB
+node_modules/.nitro/vite/services/ssr/assets/engenharia.index-CcBQPDht.js                                                      106.19 kB │ gzip:  23.75 kB
+node_modules/.nitro/vite/services/ssr/assets/NrRoute-CiDVxe_Q.js                                                               106.45 kB │ gzip:  23.14 kB
+node_modules/.nitro/vite/services/ssr/assets/equipe-ByQbjOFH.js                                                                121.80 kB │ gzip:  26.73 kB
+node_modules/.nitro/vite/services/ssr/assets/agenda-equipe-BkuXMT7j.js                                                         141.55 kB │ gzip:  31.52 kB
+node_modules/.nitro/vite/services/ssr/assets/spatial-D0MGp2sa.js                                                               147.07 kB │ gzip:  27.63 kB
+node_modules/.nitro/vite/services/ssr/assets/execucao.pets._petId-3m6VkIFs.js                                                  153.09 kB │ gzip:  34.56 kB
+node_modules/.nitro/vite/services/ssr/assets/SiloViewer-3AdzmvGq.js                                                            234.12 kB │ gzip:  64.28 kB
+node_modules/.nitro/vite/services/ssr/assets/Saira-SemiBold-DDu7uonl.js                                                        433.54 kB │ gzip: 202.00 kB
+
+✓ built in 1.45s
+
+[nitro] ◐ Building [Nitro] (preset: cloudflare-module, compatibility: 2026-10-25)
+[nitro] ✔ Generated public .output/public
+vite v8.1.5 building nitro environment for production...
+
+ WARN  inlineDynamicImports option is ignored because the codeSplitting option is specified.
+
+[2K
+transforming...✓ 3616 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs                                                     0.23 kB │ gzip:   0.16 kB
+.output/server/_libs/babel__runtime.mjs                                                                    0.39 kB │ gzip:   0.26 kB
+.output/server/_ssr/createServerRpc-BnVxBGl4.mjs                                                           0.40 kB │ gzip:   0.27 kB
+.output/server/_ssr/nr-33-lnBhgqHv.mjs                                                                     0.41 kB │ gzip:   0.27 kB
+.output/server/_ssr/nr-35-Cuu_MY9T.mjs                                                                     0.41 kB │ gzip:   0.27 kB
+.output/server/_ssr/execucao-BuRDaHtl.mjs                                                                  0.42 kB │ gzip:   0.27 kB
+.output/server/_ssr/produtos-BSlCURtE.mjs                                                                  0.42 kB │ gzip:   0.27 kB
+.output/server/_ssr/projetos-CbNy0BB_.mjs                                                                  0.42 kB │ gzip:   0.27 kB
+.output/server/_ssr/nr-33._-yheXdE99.mjs                                                                   0.42 kB │ gzip:   0.29 kB
+.output/server/_ssr/nr-35._-CnPRZfV6.mjs                                                                   0.42 kB │ gzip:   0.29 kB
+.output/server/_ssr/execucao.index-DrRQQvVG.mjs                                                            0.44 kB │ gzip:   0.28 kB
+.output/server/_ssr/nr-33.index-bPCYbL4z.mjs                                                               0.45 kB │ gzip:   0.30 kB
+.output/server/_ssr/nr-35.index-BBHXanIp.mjs                                                               0.45 kB │ gzip:   0.30 kB
+.output/server/_ssr/route-BhpKpV1e.mjs                                                                     0.46 kB │ gzip:   0.30 kB
+.output/server/_ssr/agenda-equipe-CyhqTuSR.mjs                                                             0.54 kB │ gzip:   0.33 kB
+.output/server/_ssr/execucao.ordens._ordemId-IvzksaS-.mjs                                                  0.54 kB │ gzip:   0.35 kB
+.output/server/_ssr/execucao.pets._petId-DFpC30x9.mjs                                                      0.55 kB │ gzip:   0.37 kB
+.output/server/_ssr/execucao.ordens._ordemId-CdBB1B2k.mjs                                                  0.56 kB │ gzip:   0.33 kB
+.output/server/_ssr/seguranca-Dw8IUz7i.mjs                                                                 0.58 kB │ gzip:   0.36 kB
+.output/server/_chunks/ssr-renderer.mjs                                                                    0.60 kB │ gzip:   0.36 kB
+.output/server/_ssr/projetos._projetoId-Cnus0u17.mjs                                                       0.60 kB │ gzip:   0.39 kB
+.output/server/_ssr/createSsrRpc-B_VnTZtm.mjs                                                              0.61 kB │ gzip:   0.38 kB
+.output/server/_ssr/pessoas-domain-BjzazRqg.mjs                                                            0.61 kB │ gzip:   0.38 kB
+.output/server/_ssr/mapas-3d_.unidades-DNfj1j7H.mjs                                                        0.61 kB │ gzip:   0.39 kB
+.output/server/_ssr/produtos._produtoId-RNeActer.mjs                                                       0.61 kB │ gzip:   0.39 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-CBfQOxfG.mjs             0.62 kB │ gzip:   0.36 kB
+.output/server/_ssr/compras.ordens-compra._ordemId-1bBv7Ap9.mjs                                            0.63 kB │ gzip:   0.39 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-CPLQfDH1.mjs      0.63 kB │ gzip:   0.36 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.historico-CzejWAbv.mjs             0.64 kB │ gzip:   0.36 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.parametros-DeLGE4W-.mjs            0.64 kB │ gzip:   0.36 kB
+.output/server/_ssr/compras.ordens-producao._ordemId-BYwUsGVJ.mjs                                          0.64 kB │ gzip:   0.41 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.compras-CDo85jH7.mjs               0.65 kB │ gzip:   0.38 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.producao-DHefaCjM.mjs              0.65 kB │ gzip:   0.38 kB
+.output/server/_ssr/NexusLogo-CFKbjeon.mjs                                                                 0.66 kB │ gzip:   0.45 kB
+.output/server/_ssr/SubNav-D--uE1vB.mjs                                                                    0.67 kB │ gzip:   0.42 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId-gcclFq3X.mjs                       0.70 kB │ gzip:   0.42 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.historico-D1o-AQkq.mjs             0.74 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.orcamento-e5N-kYlH.mjs             0.74 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.parametros-BSHXO26X.mjs            0.74 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.compras-D0SxOumC.mjs               0.76 kB │ gzip:   0.43 kB
+.output/server/_ssr/mapas-3d_.trevisan-ByETU91o.mjs                                                        0.76 kB │ gzip:   0.45 kB
+.output/server/_libs/radix-ui__react-direction.mjs                                                         0.76 kB │ gzip:   0.40 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-sNjgaDft.mjs       0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.producao-CtVQJYQx.mjs              0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-lN4K-C_O.mjs      0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.resumo-executivo-C0nCa5jY.mjs      0.77 kB │ gzip:   0.43 kB
+.output/server/_ssr/projetos-engenharia-B9tscPUO.mjs                                                       0.77 kB │ gzip:   0.47 kB
+.output/server/_ssr/inspecoes-CgDnsosf.mjs                                                                 0.79 kB │ gzip:   0.46 kB
+.output/server/_ssr/escada-lc02-CX7pXOCt.mjs                                                               0.82 kB │ gzip:   0.42 kB
+.output/server/_ssr/createMiddleware-B_4t7rW1.mjs                                                          0.83 kB │ gzip:   0.33 kB
+.output/server/_ssr/useServerFn-CrZF2pjq.mjs                                                               0.83 kB │ gzip:   0.45 kB
+.output/server/_ssr/mapas-3d-Do0LjlXb.mjs                                                                  0.86 kB │ gzip:   0.44 kB
+.output/server/_ssr/documentacao-DGNdldj7.mjs                                                              0.87 kB │ gzip:   0.50 kB
+.output/server/_ssr/mapas-3d_.silo-engolfamento-Didc1tFC.mjs                                               0.87 kB │ gzip:   0.45 kB
+.output/server/_ssr/domain-DM95RNVA.mjs                                                                    0.91 kB │ gzip:   0.49 kB
+.output/server/_ssr/queries-DPzSSCTN.mjs                                                                   0.99 kB │ gzip:   0.58 kB
+.output/server/_ssr/route-state-BEGYaQRw.mjs                                                               1.09 kB │ gzip:   0.46 kB
+.output/server/_ssr/lista-D1EiieyH.mjs                                                                     1.10 kB │ gzip:   0.60 kB
+.output/server/_ssr/comercial.propostas.index-DlDgQSdl.mjs                                                 1.11 kB │ gzip:   0.58 kB
+.output/server/_ssr/almoxarifado-C-KTL8Sp.mjs                                                              1.16 kB │ gzip:   0.57 kB
+.output/server/_libs/hookable.mjs                                                                          1.16 kB │ gzip:   0.51 kB
+.output/server/_ssr/format-DYYL_DXD.mjs                                                                    1.18 kB │ gzip:   0.51 kB
+.output/server/_ssr/domain-Cat-m-c5.mjs                                                                    1.20 kB │ gzip:   0.61 kB
+.output/server/_ssr/clientes-B4fDZUmu.mjs                                                                  1.22 kB │ gzip:   0.64 kB
+.output/server/_ssr/configuracoes-CJOn9VXa.mjs                                                             1.22 kB │ gzip:   0.54 kB
+.output/server/_ssr/engenharia-CC830MS5.mjs                                                                1.23 kB │ gzip:   0.50 kB
+.output/server/_ssr/files-B8vtXtr1.mjs                                                                     1.25 kB │ gzip:   0.67 kB
+.output/server/_ssr/draft-recovery-DKPRHXjC.mjs                                                            1.29 kB │ gzip:   0.69 kB
+.output/server/_ssr/pet.functions-C76P05A6.mjs                                                             1.30 kB │ gzip:   0.59 kB
+.output/server/_ssr/engenharia.index-WgpyNOqX.mjs                                                          1.31 kB │ gzip:   0.62 kB
+.output/server/_ssr/comercial-B6daajPO.mjs                                                                 1.33 kB │ gzip:   0.59 kB
+.output/server/_ssr/equipe-CEanxeLZ.mjs                                                                    1.35 kB │ gzip:   0.57 kB
+.output/server/_ssr/levantamentos-DOTBHj9L.mjs                                                             1.35 kB │ gzip:   0.62 kB
+.output/server/_ssr/retificacoes.functions-sJkw3TAZ.mjs                                                    1.37 kB │ gzip:   0.70 kB
+.output/server/_ssr/access-BBcqzwu8.mjs                                                                    1.44 kB │ gzip:   0.70 kB
+.output/server/_ssr/import-inspection.functions-DnxEOPp-.mjs                                               1.52 kB │ gzip:   0.72 kB
+.output/server/_ssr/compras-WEkihlKI.mjs                                                                   1.54 kB │ gzip:   0.52 kB
+.output/server/_ssr/errors-DLi1L_SS.mjs                                                                    1.58 kB │ gzip:   0.77 kB
+.output/server/_ssr/import-inspection.schemas-D4kVlGZa.mjs                                                 1.60 kB │ gzip:   0.66 kB
+.output/server/_runtime.mjs                                                                                1.61 kB │ gzip:   0.74 kB
+.output/server/_libs/react-is.mjs                                                                          1.67 kB │ gzip:   0.65 kB
+.output/server/_ssr/client.server-KzwUIAkW.mjs                                                             1.83 kB │ gzip:   0.83 kB
+.output/server/_libs/radix-ui__primitive.mjs                                                               1.83 kB │ gzip:   0.72 kB
+.output/server/_ssr/custos.functions-Czl5eWK6.mjs                                                          1.84 kB │ gzip:   0.86 kB
+.output/server/_ssr/impactos.functions-Dkgeb_br.mjs                                                        1.86 kB │ gzip:   0.80 kB
+.output/server/_ssr/nr.functions-DFmkTxK6.mjs                                                              1.86 kB │ gzip:   0.91 kB
+.output/server/_ssr/start-B1c397FU.mjs                                                                     1.95 kB │ gzip:   0.86 kB
+.output/server/_ssr/schemas-DQPNGTlJ.mjs                                                                   2.01 kB │ gzip:   0.82 kB
+.output/server/_ssr/autorizacao-D3H9japl.mjs                                                               2.04 kB │ gzip:   0.78 kB
+.output/server/_ssr/documents.functions-D2jkdjb4.mjs                                                       2.13 kB │ gzip:   0.81 kB
+.output/server/_ssr/compras.index-BbyIx72g.mjs                                                             2.14 kB │ gzip:   0.90 kB
+.output/server/_ssr/history.schemas-B_QFpXAu.mjs                                                           2.14 kB │ gzip:   0.96 kB
+.output/server/_libs/prop-types.mjs                                                                        2.27 kB │ gzip:   0.84 kB
+.output/server/_ssr/codigos-CEMYQxcZ.mjs                                                                   2.35 kB │ gzip:   0.83 kB
+.output/server/_ssr/createCsrfMiddleware-jzif2P7h.mjs                                                      2.45 kB │ gzip:   0.86 kB
+.output/server/_ssr/schemas-DXe6s1VZ.mjs                                                                   2.47 kB │ gzip:   0.83 kB
+.output/server/_ssr/technical-publication.functions-DBPIJDG9.mjs                                           2.48 kB │ gzip:   0.90 kB
+.output/server/_ssr/compras.ordens-producao.index-mezM1vS8.mjs                                             2.54 kB │ gzip:   1.06 kB
+.output/server/_ssr/schemas-BnbEW2Mp.mjs                                                                   2.58 kB │ gzip:   1.05 kB
+.output/server/_ssr/files.functions-Mn5LGVhi.mjs                                                           2.59 kB │ gzip:   0.92 kB
+.output/server/_ssr/projetos.index-m9-iPMjy.mjs                                                            2.62 kB │ gzip:   1.04 kB
+.output/server/_ssr/domain-35pTVNOu.mjs                                                                    2.62 kB │ gzip:   1.23 kB
+.output/server/_ssr/levantamentos.functions-BCN8I7eV.mjs                                                   2.71 kB │ gzip:   0.90 kB
+.output/server/_ssr/auth-middleware-CNRI6lH3.mjs                                                           2.77 kB │ gzip:   1.13 kB
+.output/server/_ssr/operacao.functions-BelC0Yzq.mjs                                                        2.81 kB │ gzip:   1.13 kB
+.output/server/_ssr/compras.ordens-compra.index-BKUKRk7h.mjs                                               2.87 kB │ gzip:   1.12 kB
+.output/server/_ssr/functions-CLNrNm2b.mjs                                                                 2.96 kB │ gzip:   1.14 kB
+.output/server/_ssr/financeiro-Cv__07pT.mjs                                                                2.97 kB │ gzip:   1.16 kB
+.output/server/_ssr/pet.functions-DnpPr7l6.mjs                                                             3.07 kB │ gzip:   0.97 kB
+.output/server/_ssr/compras.demandas-CeboVDfC.mjs                                                          3.12 kB │ gzip:   1.15 kB
+.output/server/_libs/class-variance-authority+clsx.mjs                                                     3.17 kB │ gzip:   1.24 kB
+.output/server/_libs/d3-path.mjs                                                                           3.25 kB │ gzip:   1.16 kB
+.output/server/_ssr/configuracoes.orcamentos-DGxqDDtM.mjs                                                  3.29 kB │ gzip:   1.43 kB
+.output/server/_ssr/OperationalDetails-Dl9wAIc7.mjs                                                        3.42 kB │ gzip:   1.09 kB
+.output/server/_ssr/relatorios-CM6f8-6J.mjs                                                                3.49 kB │ gzip:   1.17 kB
+.output/server/_ssr/engenharia.dimensionamentos-BLqbnZtp.mjs                                               3.52 kB │ gzip:   1.43 kB
+.output/server/_ssr/session-D1Cmi8Vy.mjs                                                                   3.56 kB │ gzip:   1.43 kB
+.output/server/_ssr/dialog-BWXrXqoK.mjs                                                                    3.62 kB │ gzip:   1.12 kB
+.output/server/_ssr/history.functions-lqJm6SX4.mjs                                                         3.74 kB │ gzip:   1.00 kB
+.output/server/_ssr/queries-5KUF69qT.mjs                                                                   3.74 kB │ gzip:   1.01 kB
+.output/server/_ssr/NrConversionNotice-Kvt9KAMC.mjs                                                        3.86 kB │ gzip:   1.48 kB
+.output/server/_ssr/admin.functions-DLZ9QIi3.mjs                                                           3.99 kB │ gzip:   1.44 kB
+.output/server/_ssr/comercial.index-DL4XD_iU.mjs                                                           4.07 kB │ gzip:   1.42 kB
+.output/server/_ssr/domain-kcr4hLDV.mjs                                                                    4.15 kB │ gzip:   1.63 kB
+.output/server/_ssr/documentos.functions-SX-XZwtz.mjs                                                      4.21 kB │ gzip:   1.76 kB
+.output/server/_ssr/EntityPicker-CUpV2h-h.mjs                                                              4.23 kB │ gzip:   1.59 kB
+.output/server/_ssr/queries-ByIHqy0U.mjs                                                                   4.36 kB │ gzip:   1.09 kB
+.output/server/_ssr/nr.functions-CP4BJzvE.mjs                                                              4.37 kB │ gzip:   1.67 kB
+.output/server/_ssr/custos.functions-BgOjIved.mjs                                                          4.45 kB │ gzip:   1.60 kB
+.output/server/_ssr/ssr.mjs                                                                                4.55 kB │ gzip:   1.92 kB
+.output/server/_ssr/domain-yr9JUxYj.mjs                                                                    4.57 kB │ gzip:   1.85 kB
+.output/server/_ssr/compras.fornecedores-Be-kQoLM.mjs                                                      4.83 kB │ gzip:   1.63 kB
+.output/server/_ssr/domain-bxWQoOqR.mjs                                                                    4.90 kB │ gzip:   1.63 kB
+.output/server/_libs/d3-interpolate.mjs                                                                    5.02 kB │ gzip:   1.61 kB
+.output/server/_ssr/schemas-CDzsJ3pC.mjs                                                                   5.21 kB │ gzip:   1.44 kB
+.output/server/_ssr/route-DcieZnfi.mjs                                                                     5.25 kB │ gzip:   1.70 kB
+.output/server/_authenticated-9Md4BYPH.mjs                                                                 5.41 kB │ gzip:   1.66 kB
+.output/server/_ssr/schemas-Wx5xODBT.mjs                                                                   5.51 kB │ gzip:   1.52 kB
+.output/server/_ssr/almoxarifado.functions-D9M8Ob1I.mjs                                                    5.65 kB │ gzip:   1.75 kB
+.output/server/_ssr/components-ER7A5vBS.mjs                                                                5.69 kB │ gzip:   1.96 kB
+.output/server/_ssr/comercial.propostas.index-iA4TYfSK.mjs                                                 5.70 kB │ gzip:   1.83 kB
+.output/server/_ssr/propostas.functions-B04Ze-BI.mjs                                                       5.83 kB │ gzip:   1.94 kB
+.output/server/_ssr/serie-pendencias.functions-C_I5dv9_.mjs                                                5.89 kB │ gzip:   1.99 kB
+.output/server/_ssr/serie-pendencias.schemas-BfZZWLcQ.mjs                                                  6.01 kB │ gzip:   2.17 kB
+.output/server/_libs/radix-ui__react-tabs.mjs                                                              6.09 kB │ gzip:   1.77 kB
+.output/server/_libs/lovable.dev__cloud-auth-js.mjs                                                        6.12 kB │ gzip:   2.22 kB
+.output/server/_ssr/projetos._projetoId-DESG_Uec.mjs                                                       6.55 kB │ gzip:   1.97 kB
+.output/server/_ssr/schemas-BkMB-AQQ.mjs                                                                   6.59 kB │ gzip:   2.12 kB
+.output/server/_ssr/engenharia.regras-dimensionamento-CNWE49_c.mjs                                         6.63 kB │ gzip:   2.46 kB
+.output/server/_ssr/technical-publication.schemas-0WEAEK60.mjs                                             6.87 kB │ gzip:   2.51 kB
+.output/server/_ssr/client-DPSioFQs.mjs                                                                    7.09 kB │ gzip:   2.48 kB
+.output/server/_ssr/NrDocumentActions-DX_So-Uz.mjs                                                         7.09 kB │ gzip:   2.30 kB
+.output/server/_ssr/comercial.propostas.nova-DvKW85pQ.mjs                                                  7.18 kB │ gzip:   2.20 kB
+.output/server/_ssr/hooks--kA76PPX.mjs                                                                     7.18 kB │ gzip:   2.35 kB
+.output/server/_ssr/clientes.functions-COO83YXY.mjs                                                        7.46 kB │ gzip:   1.98 kB
+.output/server/_libs/tanstack__react-query.mjs                                                             7.62 kB │ gzip:   1.98 kB
+.output/server/_ssr/nexus-nav-DxrvThlJ.mjs                                                                 7.81 kB │ gzip:   2.54 kB
+.output/server/_ssr/NrStorageUsage-BJ8jmP1K.mjs                                                            7.88 kB │ gzip:   1.97 kB
+.output/server/_ssr/files.functions-tqyjxVkc.mjs                                                           7.91 kB │ gzip:   2.22 kB
+.output/server/_libs/d3-array.mjs                                                                          8.05 kB │ gzip:   2.25 kB
+.output/server/_ssr/estudos.functions-DUEKqP0F.mjs                                                         8.27 kB │ gzip:   2.23 kB
+.output/server/_libs/eventemitter3.mjs                                                                     8.31 kB │ gzip:   2.05 kB
+.output/server/_ssr/lc02-walkway-C7CNFSzG.mjs                                                              8.54 kB │ gzip:   3.13 kB
+.output/server/_ssr/projetos-engenharia.functions-BJw6K_Co.mjs                                             8.76 kB │ gzip:   2.47 kB
+.output/server/_ssr/ObjectCards-COhTh1Lm.mjs                                                               9.23 kB │ gzip:   2.33 kB
+.output/server/_ssr/compras.ordens-producao._ordemId-B3iRyTxM.mjs                                          9.46 kB │ gzip:   3.00 kB
+.output/server/_ssr/operacao.functions-D2BzXyZL.mjs                                                        9.65 kB │ gzip:   2.61 kB
+.output/server/_ssr/documents.pdf-bhqBdMvP.mjs                                                             9.66 kB │ gzip:   3.69 kB
+.output/server/_libs/radix-ui__react-popover.mjs                                                           9.66 kB │ gzip:   2.39 kB
+.output/server/_ssr/NrDocumentImpacts-Bx2Pi55c.mjs                                                         9.83 kB │ gzip:   3.11 kB
+.output/server/_libs/h3-v2+rou3+srvx.mjs                                                                   9.89 kB │ gzip:   3.06 kB
+.output/server/_ssr/compras.ordens-compra._ordemId-B9AOux2E.mjs                                            9.93 kB │ gzip:   3.03 kB
+.output/server/_ssr/agenda.functions-CNugJHuC.mjs                                                          9.95 kB │ gzip:   2.42 kB
+.output/server/_ssr/catalogo.functions-Cacs4LmV.mjs                                                        9.96 kB │ gzip:   2.68 kB
+.output/server/_libs/d3-color.mjs                                                                         10.38 kB │ gzip:   3.57 kB
+.output/server/_ssr/lev-arquivos.functions-Cux2ABQF.mjs                                                   10.56 kB │ gzip:   2.90 kB
+.output/server/_libs/d3-format.mjs                                                                        10.56 kB │ gzip:   3.02 kB
+.output/server/_ssr/est-arquivos.functions-BcavLPgU.mjs                                                   11.00 kB │ gzip:   3.09 kB
+.output/server/_ssr/documents.server-Cn5SvYwf.mjs                                                         11.00 kB │ gzip:   3.65 kB
+.output/server/_ssr/files.functions-F5SOGExk.mjs                                                          11.19 kB │ gzip:   3.02 kB
+.output/server/_ssr/functions-DZnYNqV9.mjs                                                                11.56 kB │ gzip:   2.96 kB
+.output/server/_ssr/Page-DQOC1QRr.mjs                                                                     12.27 kB │ gzip:   3.28 kB
+.output/server/_ssr/levantamentos.functions-OcAWVy5B.mjs                                                  12.30 kB │ gzip:   3.30 kB
+.output/server/_libs/tanstack__history.mjs                                                                12.50 kB │ gzip:   3.70 kB
+.output/server/_ssr/schemas-ByKLm90m.mjs                                                                  12.53 kB │ gzip:   3.41 kB
+.output/server/_ssr/pe-arquivos.functions-DFjrvVZu.mjs                                                    12.55 kB │ gzip:   3.25 kB
+.output/server/_ssr/EditorWorkspace-hlSpZb1z.mjs                                                          12.63 kB │ gzip:   3.62 kB
+.output/server/_ssr/createServerFn-BD5RBfF2.mjs                                                           12.66 kB │ gzip:   3.77 kB
+.output/server/_libs/supabase__functions-js+tslib.mjs                                                     13.21 kB │ gzip:   3.65 kB
+.output/server/_ssr/mapas-3d_.unidades-BOWs7iK0.mjs                                                       13.42 kB │ gzip:   3.32 kB
+.output/server/_ssr/native-content-Dqk0Kj37.mjs                                                           13.62 kB │ gzip:   3.45 kB
+.output/server/_ssr/NrImportInspection-DfU4skPF.mjs                                                       14.13 kB │ gzip:   3.61 kB
+.output/server/_ssr/functions-DTK5QNZk.mjs                                                                14.17 kB │ gzip:   3.40 kB
+.output/server/_ssr/configuracoes.index-BJnw3Cyv.mjs                                                      14.28 kB │ gzip:   4.03 kB
+.output/server/_libs/fast-equals.mjs                                                                      14.37 kB │ gzip:   3.62 kB
+.output/server/_ssr/auth-C0JE2ooo.mjs                                                                     15.11 kB │ gzip:   4.04 kB
+.output/server/_ssr/files.schemas-C0dPoBw6.mjs                                                            15.23 kB │ gzip:   5.15 kB
+.output/server/_ssr/domain-DO4lymkC.mjs                                                                   15.81 kB │ gzip:   5.16 kB
+.output/server/_libs/radix-ui__react-collection.mjs                                                       16.58 kB │ gzip:   3.70 kB
+.output/server/_libs/h3+rou3+srvx.mjs                                                                     16.61 kB │ gzip:   4.80 kB
+.output/server/_ssr/schemas-Dxu6xHtU.mjs                                                                  16.90 kB │ gzip:   3.80 kB
+.output/server/_ssr/schemas-DD75bkVy.mjs                                                                  17.07 kB │ gzip:   4.27 kB
+.output/server/_ssr/RecordFiles-Fd9Yar4z.mjs                                                              19.51 kB │ gzip:   5.53 kB
+.output/server/_libs/@radix-ui/react-tooltip+[...].mjs                                                    19.56 kB │ gzip:   4.55 kB
+.output/server/_ssr/schemas-ofmiEMW8.mjs                                                                  22.29 kB │ gzip:   4.28 kB
+.output/server/_ssr/documents-DCZNjlsC.mjs                                                                22.49 kB │ gzip:   7.78 kB
+.output/server/_ssr/NrRecordHistory-DcOln_v1.mjs                                                          22.83 kB │ gzip:   5.46 kB
+.output/server/_libs/decimal.js-light.mjs                                                                 23.31 kB │ gzip:   6.89 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId-Ais7-0Uv.mjs                      24.49 kB │ gzip:   6.78 kB
+.output/server/_ssr/LeitorOriginalPe-BuEhR_f2.mjs                                                         24.54 kB │ gzip:   6.15 kB
+.output/server/_libs/d3-shape.mjs                                                                         24.56 kB │ gzip:   5.02 kB
+.output/server/_libs/fflate.mjs                                                                           25.25 kB │ gzip:   8.91 kB
+.output/server/_libs/@floating-ui/dom+[...].mjs                                                           25.38 kB │ gzip:   6.57 kB
+.output/server/_libs/@floating-ui/core+[...].mjs                                                          25.55 kB │ gzip:   6.32 kB
+.output/server/_ssr/seguranca-DHbKFaf0.mjs                                                                26.15 kB │ gzip:   6.37 kB
+.output/server/_ssr/NrFilesPanel-nRslc_Cx.mjs                                                             26.44 kB │ gzip:   6.52 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.dimensionamento-DeiwUtVA.mjs      26.64 kB │ gzip:   6.53 kB
+.output/server/_tanstack-start-manifest_v-BAAp0qrc.mjs                                                    28.72 kB │ gzip:   3.82 kB
+.output/server/_ssr/schemas-BtYWuodX.mjs                                                                  29.36 kB │ gzip:   6.83 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs                                                      29.60 kB │ gzip:   7.99 kB
+.output/server/_ssr/pdf-v2-Cagn9i5s.mjs                                                                   29.96 kB │ gzip:   9.96 kB
+.output/server/__23tanstack-start-server-fn-resolver-D1ZdbGFa.mjs                                         30.21 kB │ gzip:   7.86 kB
+.output/server/_ssr/AgendaDashboard-DaelNUGH.mjs                                                          30.31 kB │ gzip:   5.99 kB
+.output/server/_libs/@floating-ui/react-dom+[...].mjs                                                     31.30 kB │ gzip:   7.98 kB
+.output/server/_ssr/relatorios.server-BVwr-RMb.mjs                                                        35.11 kB │ gzip:  11.70 kB
+.output/server/_ssr/NrTechnicalPublication-DcOGxbws.mjs                                                   35.99 kB │ gzip:   8.69 kB
+.output/server/_ssr/propostas.functions-DgUeH-zz.mjs                                                      37.19 kB │ gzip:   9.59 kB
+.output/server/_libs/react-smooth.mjs                                                                     37.83 kB │ gzip:   8.15 kB
+.output/server/_ssr/IndustrialScene-DD4l4BWr.mjs                                                          37.85 kB │ gzip:  11.03 kB
+.output/server/_libs/supabase__supabase-js.mjs                                                            37.87 kB │ gzip:  11.17 kB
+.output/server/_ssr/EscadaViewer-DMH6JsV9.mjs                                                             39.23 kB │ gzip:   8.38 kB
+.output/server/_ssr/EscadaScene-BABHHdTO.mjs                                                              41.44 kB │ gzip:  12.58 kB
+.output/server/_libs/pdf-lib__upng.mjs                                                                    45.32 kB │ gzip:  12.02 kB
+.output/server/_ssr/clientes-D-SWpRC9.mjs                                                                 45.53 kB │ gzip:  10.30 kB
+.output/server/_libs/@radix-ui/react-dropdown-menu+[...].mjs                                              45.86 kB │ gzip:  10.05 kB
+.output/server/_ssr/IndustrialMap-umVr5wil.mjs                                                            46.25 kB │ gzip:   9.68 kB
+.output/server/_libs/supabase__phoenix.mjs                                                                50.54 kB │ gzip:  12.76 kB
+.output/server/_ssr/produtos._produtoId-r5kCmS9p.mjs                                                      51.57 kB │ gzip:  10.43 kB
+.output/server/_ssr/router-62gPo697.mjs                                                                   51.94 kB │ gzip:  10.27 kB
+.output/server/_ssr/ProductEditor-CulO9x8w.mjs                                                            56.33 kB │ gzip:  12.77 kB
+.output/server/_libs/d3-scale+[...].mjs                                                                   58.22 kB │ gzip:  12.11 kB
+.output/server/_ssr/server-BXU7OS-N.mjs                                                                   59.27 kB │ gzip:  15.45 kB
+.output/server/_ssr/produtos.index-CDBxkCU1.mjs                                                           61.22 kB │ gzip:  14.04 kB
+.output/server/_libs/lucide-react.mjs                                                                     62.48 kB │ gzip:  11.43 kB
+.output/server/_libs/tanstack__query-core.mjs                                                             68.18 kB │ gzip:  14.30 kB
+.output/server/_ssr/comercial.propostas._propostaId.revisoes._revisaoId.itens-comerciais-BD7nNrGo.mjs     69.65 kB │ gzip:  15.44 kB
+.output/server/_libs/@hookform/resolvers+[...].mjs                                                        79.83 kB │ gzip:  18.73 kB
+.output/server/_libs/supabase__realtime-js.mjs                                                            81.91 kB │ gzip:  20.94 kB
+.output/server/_ssr/Etapas-QP9qOzC8.mjs                                                                   85.67 kB │ gzip:  18.77 kB
+.output/server/_libs/tailwind-merge.mjs                                                                   88.13 kB │ gzip:  15.66 kB
+.output/server/_ssr/projetos-engenharia-CEhfGzcj.mjs                                                      88.31 kB │ gzip:  18.48 kB
+.output/server/_libs/@radix-ui/react-alert-dialog+[...].mjs                                               93.99 kB │ gzip:  21.08 kB
+.output/server/_ssr/almoxarifado-Czjvcqsn.mjs                                                             99.84 kB │ gzip:  20.47 kB
+.output/server/_libs/zod.mjs                                                                             100.71 kB │ gzip:  17.49 kB
+.output/server/_ssr/ExecucaoWorkspace-zUjE3hpg.mjs                                                       109.13 kB │ gzip:  23.56 kB
+.output/server/_libs/supabase__postgrest-js.mjs                                                          110.15 kB │ gzip:  23.14 kB
+.output/server/_ssr/levantamentos-TCXlpLxW.mjs                                                           112.55 kB │ gzip:  23.92 kB
+.output/server/_ssr/engenharia.index-CcBQPDht.mjs                                                        117.80 kB │ gzip:  24.09 kB
+.output/server/index.mjs                                                                                 120.90 kB │ gzip:  23.92 kB
+.output/server/_ssr/NrRoute-CiDVxe_Q.mjs                                                                 121.56 kB │ gzip:  23.76 kB
+.output/server/_libs/@supabase/storage-js+[...].mjs                                                      126.29 kB │ gzip:  23.51 kB
+.output/server/_libs/pdf-lib__standard-fonts.mjs                                                         132.65 kB │ gzip:  97.52 kB
+.output/server/_ssr/equipe-ByQbjOFH.mjs                                                                  134.19 kB │ gzip:  27.06 kB
+.output/server/_ssr/spatial-D0MGp2sa.mjs                                                                 147.09 kB │ gzip:  27.73 kB
+.output/server/_ssr/agenda-equipe-BkuXMT7j.mjs                                                           157.30 kB │ gzip:  32.08 kB
+.output/server/_libs/lodash.mjs                                                                          161.80 kB │ gzip:  29.45 kB
+.output/server/_ssr/execucao.pets._petId-3m6VkIFs.mjs                                                    171.78 kB │ gzip:  35.20 kB
+.output/server/_libs/three.mjs                                                                           175.35 kB │ gzip:  38.87 kB
+.output/server/_ssr/SiloViewer-3AdzmvGq.mjs                                                              241.82 kB │ gzip:  64.87 kB
+.output/server/_libs/supabase__auth-js+tslib.mjs                                                         319.92 kB │ gzip:  64.91 kB
+.output/server/_ssr/Saira-SemiBold-DDu7uonl.mjs                                                          433.39 kB │ gzip: 201.92 kB
+.output/server/_libs/recharts+[...].mjs                                                                  492.42 kB │ gzip:  92.93 kB
+.output/server/_libs/pdf-lib+tslib.mjs                                                                   618.35 kB │ gzip: 118.05 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs                                                    748.04 kB │ gzip: 158.33 kB
+.output/server/_libs/pako+pdf-lib__fontkit+unenv.mjs                                                   1,159.90 kB │ gzip: 394.60 kB
+.output/server/_libs/@react-three/drei+[...].mjs                                                       2,686.77 kB │ gzip: 539.51 kB
+
+✓ built in 2.13s
+[nitro] ℹ Using auto generated worker name: leomateus620-pixel-nexus-unified-platform
+ℹ Generated .output/server/wrangler.json
+ℹ Generated .wrangler/deploy/config.json
+ℹ Generated .output/public/_headers
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+[nitro] ✔ You can deploy this build using npx nitro deploy --prebuilt

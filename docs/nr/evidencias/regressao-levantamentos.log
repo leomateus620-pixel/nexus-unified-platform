@@ -1,0 +1,20 @@
+
+ RUN  v3.2.7 <PROJETO>
+
+ ✓ tests/levantamentos.test.ts (11 tests) 10ms
+ ✓ tests/levantamentos-functions.test.ts (6 tests) 16ms
+
+ Test Files  2 passed (2)
+      Tests  17 passed (17)
+   Start at  16:14:35
+   Duration  490ms (transform 83ms, setup 0ms, collect 154ms, tests 25ms, environment 0ms, prepare 158ms)
+
+
+ RUN  v3.2.7 <PROJETO>
+
+ ✓ tests/levantamento-arquivos.test.ts (3 tests) 1ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  16:14:37
+   Duration  278ms (transform 32ms, setup 0ms, collect 21ms, tests 1ms, environment 0ms, prepare 53ms)

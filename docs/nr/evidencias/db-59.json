@@ -1,0 +1,37 @@
+{
+  "capturado_em": "2026-10-30T18:44:05.480Z",
+  "postgres": "17.10",
+  "manifesto": 59,
+  "isolated": true,
+  "suites": [
+    {
+      "suite": "NR core PostgreSQL",
+      "assertions": 33,
+      "passed": true,
+      "scope": "isolated fixtures; real PostgreSQL constraints/RLS/RPC/locks; no Storage HTTP proof"
+    },
+    {
+      "suite": "NR files PostgreSQL",
+      "assertions": 22,
+      "passed": true,
+      "scope": "isolated SQL metadata/RLS/permissions; does not prove Storage HTTP or actual blob bytes"
+    },
+    {
+      "suite": "NR import PostgreSQL",
+      "assertions": 17,
+      "passed": true,
+      "scope": "private staging, canonical CNPJ identity, no fabricated Auth actor, resume,idempotence,three-way conflict,partial failure rollback,original historical status"
+    }
+  ],
+  "regressao_pet": {
+    "pet": 45,
+    "retificacoes": 20,
+    "relatorios": 19,
+    "listagem": 20,
+    "passed": true
+  },
+  "limites": [
+    "SQL/metadata,RLS,RPC and real concurrency tests",
+    "Storage HTTP,certification provider and normative approval not exercised by these tests"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "format": "nexus-nr-storage-dimensioning-v1",
+  "captured_at": "2026-10-30T20:18:09Z",
+  "current_originals": {
+    "objects": 605,
+    "bytes": 232242866,
+    "max_file_bytes": 5500384,
+    "status": "actual_storage_get_and_database_confirmed",
+    "evidence": "original-storage-confirmed.json"
+  },
+  "historical_revisions": {
+    "records": 550,
+    "declared_metadata_bytes": 267139136,
+    "declared_max_file_bytes": 5605739,
+    "binary_downloads": 0,
+    "validated_binary_bytes": 0,
+    "status": "metadata_preserved_bytes_unavailable_keepForever_false"
+  },
+  "derived_images": {
+    "objects_by_context": 417,
+    "locally_verified_bytes": 59629408,
+    "actual_confirmed_bytes": 59629408,
+    "status": "actual_storage_get_and_database_confirmed",
+    "evidence": "docx-images-storage-confirmed.json"
+  },
+  "confirmed_acervo_total": {
+    "objects": 1022,
+    "bytes": 291872274,
+    "status": "actual_storage_get_and_database_confirmed",
+    "includes_only_current_originals_and_derived_images": true
+  },
+  "source_photos": {
+    "original_paths": 245,
+    "thumbnail_paths": 245,
+    "bytes": null,
+    "status": "source_capture_pending_no_identity_inferred_from_drive_names"
+  },
+  "planning_arithmetic": {
+    "current_originals_plus_declared_historical_bytes": 499382002,
+    "current_confirmed_acervo_plus_declared_historical_bytes": 559011410,
+    "is_actual_bucket_usage": false,
+    "is_confirmed_quota": false,
+    "excludes_unknown_source_photos_and_thumbnails": true,
+    "excludes_other_modules_database_overhead_backups_and_future_retention": true
+  },
+  "illustrative_growth_scenarios": {
+    "base_bytes": 559011410,
+    "assumed_annual_compound_growth": 0.25,
+    "assumed_additional_reserve": 0.2,
+    "months_12_ceil_bytes": 838517115,
+    "months_24_ceil_bytes": 1048146394,
+    "assumptions_approved_as_quota": false
+  },
+  "reported_resources": {
+    "storage_value": 10,
+    "storage_unit_reported": "GB",
+    "storage_scope_and_GB_GiB_confirmed": false,
+    "available_quota_confirmed": false,
+    "memory_value": 2,
+    "memory_unit_reported": "GB",
+    "resource_label_observed": "Small",
+    "memory_consumption_measured": false
+  },
+  "accounting_notes": [
+    "Private transfer ZIPs and local staging are not bucket usage.",
+    "Implemented native PDF/DOCX consultation exports are not automatically persisted to Storage.",
+    "Metadata byte sizes are planning inputs, not proof of historical binary preservation.",
+    "Repeated image placements are not counted as separate physical assets within the same context.",
+    "No capacity, concurrency, free-space or RAM conclusion is inferred from reported infrastructure values."
+  ]
+}

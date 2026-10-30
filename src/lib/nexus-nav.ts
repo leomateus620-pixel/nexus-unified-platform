@@ -19,6 +19,8 @@ import {
   ShieldAlert,
   DraftingCompass,
   Warehouse,
+  Container,
+  HardHat,
   type LucideIcon,
 } from "lucide-react";
 import type { Papel } from "@/features/auth/autorizacao";
@@ -32,6 +34,8 @@ const DISPONIBILIDADE_MODULOS: Readonly<Record<string, boolean>> = {
   "/produtos": true,
   "/levantamentos": true,
   "/engenharia": true,
+  "/nr-33": true,
+  "/nr-35": true,
   "/projetos-engenharia": false,
   "/mapas-3d": true,
   "/mapas-3d/unidades": true,
@@ -156,6 +160,18 @@ export const navGroups: NavGroup[] = [
     label: "Conformidade",
     items: [
       {
+        to: "/nr-33",
+        label: "NR-33 — Espaços confinados",
+        icon: Container,
+        hint: "Inventário, documentos, levantamentos e PET",
+      },
+      {
+        to: "/nr-35",
+        label: "NR-35 — Trabalho em altura",
+        icon: HardHat,
+        hint: "Locais, sistemas de proteção e inspeções",
+      },
+      {
         to: "/seguranca",
         label: "Ações operacionais",
         icon: ShieldAlert,
@@ -223,6 +239,8 @@ const MENUS_EXISTENTES = [
   "/produtos",
   "/levantamentos",
   "/engenharia",
+  "/nr-33",
+  "/nr-35",
   "/mapas-3d",
   "/mapas-3d/unidades",
   "/escada-lc02",
@@ -251,6 +269,8 @@ export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
       "/compras",
       "/projetos",
       "/almoxarifado",
+      "/nr-33",
+      "/nr-35",
     ],
   },
   financeiro: { menus: ["/", "/financeiro", "/relatorios", "/projetos"] },
@@ -265,6 +285,8 @@ export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
       "/inspecoes",
       "/equipe",
       "/seguranca",
+      "/nr-33",
+      "/nr-35",
     ],
   },
   engenharia: {
@@ -277,6 +299,8 @@ export const ACESSO_POR_PAPEL: Record<Papel, Acesso> = {
       "/produtos",
       "/levantamentos",
       "/engenharia",
+      "/nr-33",
+      "/nr-35",
       "/mapas-3d",
       "/mapas-3d/unidades",
       "/escada-lc02",

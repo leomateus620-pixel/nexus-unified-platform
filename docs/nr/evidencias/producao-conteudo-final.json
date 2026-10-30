@@ -1,0 +1,52 @@
+{
+  "format": "nexus-final-native-content-verification/1",
+  "captured_at": "2026-10-30 20:24:37.863335+00",
+  "read_only": true,
+  "execution_role": "postgres",
+  "method": "Hashes computed over frozen private conversion plans/source capture in isolated PostgreSQL17; compared with connected current revisions using SHA-256(jsonb::text), UTF-8 and explicit COLLATE C ordering. No customer body text was downloaded.",
+  "expected": {
+    "derived": {
+      "n": 233,
+      "source_hash": "70e8986af0dbb78bd6ca02064d5a44aaafa0bf274768cec0d0415dfc773e2318",
+      "content_hash": "486f8a70fcecf702342d2c17fbf7e8c8027d9ea2159094f9fcc68af495f523fb",
+      "snapshot_hash": "15093394963201b08d451b1d4fc77348320a6907401268f8c83e68811472125b",
+      "metadata_hash": "358a6e5a5227f78f670c8071a60cac6c8303fb9a3c3de4e3e5528faf4202c5ce"
+    },
+    "original": {
+      "n": 736,
+      "aggregate_hash": "831b63ddd14c28dc34e354c18691d98afb9983f31ec08c9417e3cbb0f5fe8ab3"
+    }
+  },
+  "observed": {
+    "derived": {
+      "content_hash": "486f8a70fcecf702342d2c17fbf7e8c8027d9ea2159094f9fcc68af495f523fb",
+      "metadata_hash": "358a6e5a5227f78f670c8071a60cac6c8303fb9a3c3de4e3e5528faf4202c5ce",
+      "n": 233,
+      "snapshot_hash": "15093394963201b08d451b1d4fc77348320a6907401268f8c83e68811472125b",
+      "source_hash": "70e8986af0dbb78bd6ca02064d5a44aaafa0bf274768cec0d0415dfc773e2318"
+    },
+    "original": {
+      "aggregate_hash": "831b63ddd14c28dc34e354c18691d98afb9983f31ec08c9417e3cbb0f5fe8ab3",
+      "n": 736
+    }
+  },
+  "derived_all_components_match": true,
+  "original_source_and_snapshots_match": true,
+  "current_revision_checks": {
+    "captured_at": "2026-10-30 20:19:49.478118+00",
+    "derived": {
+      "current_revision_matches_import_snapshot": 233,
+      "drafts": 233,
+      "n": 233,
+      "native_blocks": 4073,
+      "sha_revision_matches_source": 233
+    },
+    "execution_role": "postgres",
+    "original": {
+      "current_revision_matches_import_snapshot": 736,
+      "n": 736,
+      "sha_revision_matches_source": 736
+    }
+  },
+  "note": "Current revisions also match the imported source snapshot pointers (233 derivatives,736 originals). These checks observe present equality; preservation under subsequent editing/conflicts is covered by isolated concurrent/idempotency tests."
+}

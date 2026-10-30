@@ -1,0 +1,109 @@
+{
+  "format": "nexus-nr-rehearsal-v1",
+  "started_at": "2026-10-30T18:42:50.790Z",
+  "phases": [
+    {
+      "phase": "clientes",
+      "count": 2,
+      "batches": 1,
+      "elapsed_ms": 102,
+      "errors": 0
+    },
+    {
+      "phase": "unidades",
+      "count": 4,
+      "batches": 1,
+      "elapsed_ms": 103,
+      "errors": 0
+    },
+    {
+      "phase": "modelos",
+      "count": 39,
+      "batches": 2,
+      "elapsed_ms": 127,
+      "errors": 0
+    },
+    {
+      "phase": "locais",
+      "count": 112,
+      "batches": 65,
+      "elapsed_ms": 329,
+      "errors": 0
+    },
+    {
+      "phase": "levantamentos",
+      "count": 112,
+      "batches": 77,
+      "elapsed_ms": 411,
+      "errors": 0
+    },
+    {
+      "phase": "sistemas",
+      "count": 1344,
+      "batches": 31,
+      "elapsed_ms": 484,
+      "errors": 0
+    },
+    {
+      "phase": "documentos",
+      "count": 736,
+      "batches": 657,
+      "elapsed_ms": 2771,
+      "errors": 0
+    },
+    {
+      "phase": "pendencias",
+      "count": 80,
+      "batches": 3,
+      "elapsed_ms": 129,
+      "errors": 0
+    },
+    {
+      "phase": "eventos",
+      "count": 9,
+      "batches": 1,
+      "elapsed_ms": 103,
+      "errors": 0
+    },
+    {
+      "phase": "referencias",
+      "count": 1015,
+      "batches": 30,
+      "elapsed_ms": 229,
+      "errors": 0
+    }
+  ],
+  "scope": "Source-backed private rehearsal on disposable local PostgreSQL; no remote writes; no proof of migrated file bytes",
+  "totals": {
+    "clientes": 2,
+    "unidades": 4,
+    "nr_locais": 112,
+    "pet_espacos": 108,
+    "nr_documentos": 736,
+    "nr_documento_revisoes": 736,
+    "nr_modelos": 39,
+    "nr_modelo_versoes": 39,
+    "nr_levantamentos": 112,
+    "nr_sistemas": 1344,
+    "nr_pendencias": 80,
+    "nr_tratativas": 35,
+    "nr_fontes": 3453,
+    "nr_import_itens": 3453
+  },
+  "pendencias": {
+    "abertas": 51,
+    "encerradas": 29
+  },
+  "retry": {
+    "items": 3453,
+    "elapsed_ms": 1090,
+    "counts_unchanged": true,
+    "pending_references_preserved": 1015
+  },
+  "summary": {
+    "importado": 2429,
+    "sem_correspondencia": 1024
+  },
+  "passed": true,
+  "finished_at": "2026-10-30T18:42:56.734Z"
+}

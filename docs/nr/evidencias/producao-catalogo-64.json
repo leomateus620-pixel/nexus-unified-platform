@@ -1,0 +1,3221 @@
+{
+  "rows": [
+    {
+      "captured_at": "2026-10-30 20:56:04.483875+00",
+      "constraints": [
+        {
+          "definition": "CHECK (((documento_id IS NULL) = (revisao_id IS NULL)))",
+          "name": "nr_arquivo_vinculos_check",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((num_nonnulls(documento_id, local_id, pasta_id) > 0))",
+          "name": "nr_arquivo_vinculos_check1",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(evidencia) = 'object'::text))",
+          "name": "nr_arquivo_vinculos_evidencia_check",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, arquivo_id, origem_chave)",
+          "name": "nr_arquivo_vinculos_organization_id_arquivo_id_origem_chave_key",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, arquivo_id) REFERENCES nr_arquivos(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivo_vinculos_organization_id_cliente_id_unidade_id__fkey",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, documento_id) REFERENCES nr_documentos(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivo_vinculos_organization_id_cliente_id_unidade_id_fkey1",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivo_vinculos_organization_id_cliente_id_unidade_id_fkey2",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, pasta_id) REFERENCES nr_pastas(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivo_vinculos_organization_id_cliente_id_unidade_id_fkey3",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id, revisao_id) REFERENCES nr_documento_revisoes(organization_id, documento_id, id)",
+          "name": "nr_arquivo_vinculos_organization_id_documento_id_revisao_i_fkey",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(origem_chave) >= 1) AND (length(origem_chave) <= 1000)))",
+          "name": "nr_arquivo_vinculos_origem_chave_check",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_arquivo_vinculos_pkey",
+          "table": "nr_arquivo_vinculos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (caminho)",
+          "name": "nr_arquivos_caminho_key",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((documento_id IS NULL) = (revisao_id IS NULL)))",
+          "name": "nr_arquivos_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((origem = 'upload'::text) AND (created_by IS NOT NULL)) OR (origem = 'importacao'::text)))",
+          "name": "nr_arquivos_check1",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((estado <> ALL (ARRAY['verificado'::text, 'vinculado'::text])) OR (bytes_verificados AND (verificado_em IS NOT NULL))))",
+          "name": "nr_arquivos_check2",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((caminho = (((((organization_id)::text || '/acervo/'::text) || (id)::text) || '.'::text) || extensao)))",
+          "name": "nr_arquivos_check3",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_arquivos_created_by_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['preparado'::text, 'verificado'::text, 'vinculado'::text, 'falhou'::text, 'arquivado'::text])))",
+          "name": "nr_arquivos_estado_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((extensao = ANY (ARRAY['pdf'::text, 'png'::text, 'jpg'::text, 'jpeg'::text, 'webp'::text, 'docx'::text, 'xlsx'::text])))",
+          "name": "nr_arquivos_extensao_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((mime = ANY (ARRAY['application/pdf'::text, 'image/png'::text, 'image/jpeg'::text, 'image/webp'::text, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'::text, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'::text])))",
+          "name": "nr_arquivos_mime_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((length(TRIM(BOTH FROM nome)) >= 1) AND (length(TRIM(BOTH FROM nome)) <= 500)) AND (nome !~ '[\\\\/\u0001-\u001f]'::text)))",
+          "name": "nr_arquivos_nome_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((nome_exibicao IS NULL) OR (((length(TRIM(BOTH FROM nome_exibicao)) >= 1) AND (length(TRIM(BOTH FROM nome_exibicao)) <= 500)) AND (nome_exibicao !~ '[\\\\/\u0001-\u001f]'::text))))",
+          "name": "nr_arquivos_nome_exibicao_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_arquivos_normas_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, chave)",
+          "name": "nr_arquivos_organization_id_chave_key",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, documento_id) REFERENCES nr_documentos(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivos_organization_id_cliente_id_unidade_id_document_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_arquivos_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivos_organization_id_cliente_id_unidade_id_id_key",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivos_organization_id_cliente_id_unidade_id_local_id_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, pasta_id) REFERENCES nr_pastas(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivos_organization_id_cliente_id_unidade_id_pasta_id_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id, revisao_id) REFERENCES nr_documento_revisoes(organization_id, documento_id, id)",
+          "name": "nr_arquivos_organization_id_documento_id_revisao_id_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_arquivos_organization_id_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_arquivos_organization_id_id_key",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, lote_id) REFERENCES nr_import_lotes(organization_id, id)",
+          "name": "nr_arquivos_organization_id_lote_id_fkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((origem = ANY (ARRAY['upload'::text, 'importacao'::text])))",
+          "name": "nr_arquivos_origem_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(origem_metadata) = 'object'::text))",
+          "name": "nr_arquivos_origem_metadata_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((papel = ANY (ARRAY['original'::text, 'derivado'::text, 'foto'::text, 'anexo'::text, 'representacao'::text])))",
+          "name": "nr_arquivos_papel_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_arquivos_pkey",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((sha256 ~ '^[a-f0-9]{64}$'::text))",
+          "name": "nr_arquivos_sha256_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((tamanho >= 1) AND (tamanho <= 52428800)))",
+          "name": "nr_arquivos_tamanho_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_arquivos_version_check",
+          "table": "nr_arquivos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id, revisao_destino_id) REFERENCES nr_documento_revisoes(organization_id, documento_id, id)",
+          "name": "nr_documento_impacto_revisoe_organization_id_documento_id_fkey1",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (autor) REFERENCES auth.users(id)",
+          "name": "nr_documento_impacto_revisoes_autor_fkey",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((base_version_conferida > 0))",
+          "name": "nr_documento_impacto_revisoes_base_version_conferida_check",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM motivo)) >= 3) AND (length(TRIM(BOTH FROM motivo)) <= 4000)))",
+          "name": "nr_documento_impacto_revisoes_motivo_check",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id, impacto_id) REFERENCES nr_documento_impactos(organization_id, documento_id, id)",
+          "name": "nr_documento_impacto_revisoes_organization_id_documento_id_fkey",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_documento_impacto_revisoes_organization_id_id_key",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, impacto_id)",
+          "name": "nr_documento_impacto_revisoes_organization_id_impacto_id_key",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, responsavel_id) REFERENCES pessoas(organization_id, id)",
+          "name": "nr_documento_impacto_revisoes_organization_id_responsavel__fkey",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_documento_impacto_revisoes_pkey",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((revisao_sha256 ~ '^[a-f0-9]{64}$'::text))",
+          "name": "nr_documento_impacto_revisoes_revisao_sha256_check",
+          "table": "nr_documento_impacto_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(alteracoes) = 'object'::text))",
+          "name": "nr_documento_impactos_alteracoes_check",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (autor) REFERENCES auth.users(id)",
+          "name": "nr_documento_impactos_autor_fkey",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((base_version_anterior > 0))",
+          "name": "nr_documento_impactos_base_version_anterior_check",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((cardinality(campos_alterados) > 0))",
+          "name": "nr_documento_impactos_campos_alterados_check",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((base_version_nova > base_version_anterior))",
+          "name": "nr_documento_impactos_check",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_documento_impactos_organization_id_cliente_id_unidade__fkey1",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, documento_id) REFERENCES nr_documentos(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_documento_impactos_organization_id_cliente_id_unidade_i_fkey",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, documento_id, id)",
+          "name": "nr_documento_impactos_organization_id_documento_id_id_key",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, documento_id, local_id, base_version_nova)",
+          "name": "nr_documento_impactos_organization_id_documento_id_local_id_key",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id, revisao_origem_id) REFERENCES nr_documento_revisoes(organization_id, documento_id, id)",
+          "name": "nr_documento_impactos_organization_id_documento_id_revisao_fkey",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_documento_impactos_organization_id_id_key",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_documento_impactos_pkey",
+          "table": "nr_documento_impactos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((documento_id <> documento_relacionado_id))",
+          "name": "nr_documento_relacoes_check",
+          "table": "nr_documento_relacoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id) REFERENCES nr_documentos(organization_id, id)",
+          "name": "nr_documento_relacoes_organization_id_documento_id_fkey",
+          "table": "nr_documento_relacoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_relacionado_id) REFERENCES nr_documentos(organization_id, id)",
+          "name": "nr_documento_relacoes_organization_id_documento_relacionad_fkey",
+          "table": "nr_documento_relacoes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (organization_id, documento_id, documento_relacionado_id, tipo)",
+          "name": "nr_documento_relacoes_pkey",
+          "table": "nr_documento_relacoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((tipo = ANY (ARRAY['substituido_por'::text, 'referencia'::text, 'depende'::text])))",
+          "name": "nr_documento_relacoes_tipo_check",
+          "table": "nr_documento_relacoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((jsonb_typeof(conteudo) = 'object'::text) AND ((conteudo ->> 'schema_version'::text) = '1'::text) AND (jsonb_typeof((conteudo -> 'blocos'::text)) = 'array'::text) AND (octet_length((conteudo)::text) <= 4000000)))",
+          "name": "nr_documento_revisoes_conteudo_check",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_documento_revisoes_created_by_fkey",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (documento_id, numero)",
+          "name": "nr_documento_revisoes_documento_id_numero_key",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['rascunho'::text, 'em_revisao'::text, 'emitido_origem'::text, 'emitido'::text])))",
+          "name": "nr_documento_revisoes_estado_check",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((numero > 0))",
+          "name": "nr_documento_revisoes_numero_check",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id) REFERENCES nr_documentos(organization_id, id)",
+          "name": "nr_documento_revisoes_organization_id_documento_id_fkey",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, documento_id, id)",
+          "name": "nr_documento_revisoes_organization_id_documento_id_id_key",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, documento_id, substitui_id) REFERENCES nr_documento_revisoes(organization_id, documento_id, id)",
+          "name": "nr_documento_revisoes_organization_id_documento_id_substit_fkey",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_documento_revisoes_organization_id_id_key",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_documento_revisoes_pkey",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((sha256 IS NULL) OR (sha256 ~ '^[0-9a-f]{64}$'::text)))",
+          "name": "nr_documento_revisoes_sha256_check",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((vigencia = ANY (ARRAY['vigente'::text, 'superada'::text])))",
+          "name": "nr_documento_revisoes_vigencia_check",
+          "table": "nr_documento_revisoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, id, revisao_atual_id) REFERENCES nr_documento_revisoes(organization_id, documento_id, id)",
+          "name": "nr_doc_revisao_fk",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_documentos_created_by_fkey",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(dados) = 'object'::text))",
+          "name": "nr_documentos_dados_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_documentos_descricao_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['rascunho'::text, 'em_revisao'::text, 'emitido_origem'::text, 'arquivado'::text])))",
+          "name": "nr_documentos_estado_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_documentos_normas_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_documentos_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_documentos_organization_id_cliente_id_unidade_id_id_key",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_documentos_organization_id_cliente_id_unidade_id_local__fkey",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, pasta_id) REFERENCES nr_pastas(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_documentos_organization_id_cliente_id_unidade_id_pasta__fkey",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_documentos_organization_id_fkey",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_documentos_organization_id_id_key",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((origem_url IS NULL) OR ((length(origem_url) <= 4000) AND (origem_url ~ '^https://'::text))))",
+          "name": "nr_documentos_origem_url_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_documentos_pkey",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((recebimento = ANY (ARRAY['nativo'::text, 'referencia'::text, 'pendente'::text, 'recebido'::text, 'indisponivel'::text])))",
+          "name": "nr_documentos_recebimento_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_documentos_titulo_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_documentos_version_check",
+          "table": "nr_documentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_fontes_organization_id_fkey",
+          "table": "nr_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, lote_id) REFERENCES nr_import_lotes(organization_id, id)",
+          "name": "nr_fontes_organization_id_lote_id_fkey",
+          "table": "nr_fontes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, origem, tipo, externo_id)",
+          "name": "nr_fontes_organization_id_origem_tipo_externo_id_key",
+          "table": "nr_fontes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_fontes_pkey",
+          "table": "nr_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (autor) REFERENCES auth.users(id)",
+          "name": "nr_historico_autor_fkey",
+          "table": "nr_historico",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_historico_organization_id_fkey",
+          "table": "nr_historico",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_historico_pkey",
+          "table": "nr_historico",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_import_itens_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_import_itens",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, lote_id) REFERENCES nr_import_lotes(organization_id, id)",
+          "name": "nr_import_itens_organization_id_lote_id_fkey",
+          "table": "nr_import_itens",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, lote_id, tipo, externo_id)",
+          "name": "nr_import_itens_organization_id_lote_id_tipo_externo_id_key",
+          "table": "nr_import_itens",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_import_itens_pkey",
+          "table": "nr_import_itens",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((resultado = ANY (ARRAY['identificado'::text, 'extraido'::text, 'importado'::text, 'ja_existente'::text, 'duplicado_legitimo'::text, 'conflito'::text, 'indisponivel'::text, 'erro'::text, 'sem_correspondencia'::text])))",
+          "name": "nr_import_itens_resultado_check",
+          "table": "nr_import_itens",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((sha256 ~ '^[0-9a-f]{64}$'::text))",
+          "name": "nr_import_itens_sha256_check",
+          "table": "nr_import_itens",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_import_lotes_created_by_fkey",
+          "table": "nr_import_lotes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['extracao'::text, 'staging'::text, 'validacao'::text, 'correspondencia'::text, 'importacao'::text, 'conciliacao'::text, 'concluido'::text, 'com_pendencias'::text, 'falhou'::text])))",
+          "name": "nr_import_lotes_estado_check",
+          "table": "nr_import_lotes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_import_lotes_organization_id_fkey",
+          "table": "nr_import_lotes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_import_lotes_organization_id_id_key",
+          "table": "nr_import_lotes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, origem, chave)",
+          "name": "nr_import_lotes_organization_id_origem_chave_key",
+          "table": "nr_import_lotes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_import_lotes_pkey",
+          "table": "nr_import_lotes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_levantamentos_created_by_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(dados) = 'object'::text))",
+          "name": "nr_levantamentos_dados_check",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_levantamentos_descricao_check",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['rascunho'::text, 'em_revisao'::text, 'arquivado'::text])))",
+          "name": "nr_levantamentos_estado_check",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_levantamentos_normas_check",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_levantamentos_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_levantamentos_organization_id_cliente_id_unidade_id_id_key",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_levantamentos_organization_id_cliente_id_unidade_id_loc_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_levantamentos_organization_id_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_levantamentos_organization_id_id_key",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, levantamento_canonico_id) REFERENCES levantamentos(organization_id, id)",
+          "name": "nr_levantamentos_organization_id_levantamento_canonico_id_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, modelo_id) REFERENCES nr_modelos(organization_id, id)",
+          "name": "nr_levantamentos_organization_id_modelo_id_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, modelo_id, modelo_versao_id) REFERENCES nr_modelo_versoes(organization_id, modelo_id, id)",
+          "name": "nr_levantamentos_organization_id_modelo_id_modelo_versao_i_fkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_levantamentos_pkey",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_levantamentos_titulo_check",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_levantamentos_version_check",
+          "table": "nr_levantamentos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((pet_espaco_id IS NULL) OR ('NR33'::text = ANY (normas))))",
+          "name": "nr_locais_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_locais_created_by_fkey",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((jsonb_typeof(dados) = 'object'::text) AND (octet_length((dados)::text) <= 2000000)))",
+          "name": "nr_locais_dados_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_locais_descricao_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['ativo'::text, 'arquivado'::text])))",
+          "name": "nr_locais_estado_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_locais_normas_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_locais_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_locais_organization_id_cliente_id_unidade_id_id_key",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_locais_organization_id_fkey",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_locais_organization_id_id_key",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, pet_espaco_id)",
+          "name": "nr_locais_organization_id_pet_espaco_id_key",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, unidade_id, pet_espaco_id) REFERENCES pet_espacos(organization_id, unidade_id, id)",
+          "name": "nr_locais_organization_id_unidade_id_pet_espaco_id_fkey",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_locais_pkey",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(tag) <= 120))",
+          "name": "nr_locais_tag_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_locais_titulo_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_locais_version_check",
+          "table": "nr_locais",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((arquivo_contexto IS NULL) OR (jsonb_typeof(arquivo_contexto) = 'object'::text)))",
+          "name": "nr_modelo_publicacao_fontes_arquivo_contexto_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((arquivo_sha256 ~ '^[a-f0-9]{64}$'::text))",
+          "name": "nr_modelo_publicacao_fontes_arquivo_sha256_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((data_fonte <= consultado_em))",
+          "name": "nr_modelo_publicacao_fontes_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((arquivo_id IS NULL) = (arquivo_sha256 IS NULL)))",
+          "name": "nr_modelo_publicacao_fontes_check1",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((natureza <> 'licenciada'::text) OR ((arquivo_id IS NOT NULL) AND licenca_confirmada AND (licenca_referencia IS NOT NULL) AND ((length(TRIM(BOTH FROM licenca_referencia)) >= 20) AND (length(TRIM(BOTH FROM licenca_referencia)) <= 4000)))))",
+          "name": "nr_modelo_publicacao_fontes_check2",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM confronto)) >= 20) AND (length(TRIM(BOTH FROM confronto)) <= 10000)))",
+          "name": "nr_modelo_publicacao_fontes_confronto_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((natureza = ANY (ARRAY['oficial'::text, 'licenciada'::text])))",
+          "name": "nr_modelo_publicacao_fontes_natureza_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_modelo_publicacao_fontes_normas_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, arquivo_id) REFERENCES nr_arquivos(organization_id, id)",
+          "name": "nr_modelo_publicacao_fontes_organization_id_arquivo_id_fkey",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_modelo_publicacao_fontes_organization_id_fkey",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_modelo_publicacao_fontes_organization_id_id_key",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, modelo_id, modelo_versao_id) REFERENCES nr_modelo_versoes(organization_id, modelo_id, id)",
+          "name": "nr_modelo_publicacao_fontes_organization_id_modelo_id_mode_fkey",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, responsavel_id) REFERENCES pessoas(organization_id, id)",
+          "name": "nr_modelo_publicacao_fontes_organization_id_responsavel_id_fkey",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_modelo_publicacao_fontes_pkey",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (publicado_por) REFERENCES auth.users(id)",
+          "name": "nr_modelo_publicacao_fontes_publicado_por_fkey",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 5) AND (length(TRIM(BOTH FROM titulo)) <= 500)))",
+          "name": "nr_modelo_publicacao_fontes_titulo_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((url IS NULL) OR (length(url) <= 2000)))",
+          "name": "nr_modelo_publicacao_fontes_url_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM versao)) >= 3) AND (length(TRIM(BOTH FROM versao)) <= 500)))",
+          "name": "nr_modelo_publicacao_fontes_versao_check",
+          "table": "nr_modelo_publicacao_fontes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_modelo_versoes_created_by_fkey",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (modelo_id, numero)",
+          "name": "nr_modelo_versoes_modelo_id_numero_key",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_modelo_versoes_organization_id_id_key",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, modelo_id) REFERENCES nr_modelos(organization_id, id)",
+          "name": "nr_modelo_versoes_organization_id_modelo_id_fkey",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, modelo_id, id)",
+          "name": "nr_modelo_versoes_organization_id_modelo_id_id_key",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, responsavel_id) REFERENCES pessoas(organization_id, id)",
+          "name": "nr_modelo_versoes_organization_id_responsavel_id_fkey",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_modelo_versoes_pkey",
+          "table": "nr_modelo_versoes",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((unidade_id IS NULL) OR (cliente_id IS NOT NULL)))",
+          "name": "nr_modelos_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((jsonb_typeof(conteudo) = 'object'::text) AND ((conteudo ->> 'schema_version'::text) = '1'::text) AND (jsonb_typeof((conteudo -> 'blocos'::text)) = 'array'::text)))",
+          "name": "nr_modelos_conteudo_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_modelos_created_by_fkey",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(dados) = 'object'::text))",
+          "name": "nr_modelos_dados_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_modelos_descricao_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['rascunho'::text, 'em_revisao'::text, 'publicado'::text, 'arquivado'::text])))",
+          "name": "nr_modelos_estado_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_modelos_normas_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id) REFERENCES clientes(organization_id, id)",
+          "name": "nr_modelos_organization_id_cliente_id_fkey",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_modelos_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_modelos_organization_id_fkey",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_modelos_organization_id_id_key",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_modelos_pkey",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((tipo = ANY (ARRAY['documento'::text, 'levantamento'::text, 'regra'::text, 'criterio'::text, 'familia'::text, 'configuracao'::text])))",
+          "name": "nr_modelos_tipo_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_modelos_titulo_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_modelos_version_check",
+          "table": "nr_modelos",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((parent_id IS DISTINCT FROM id))",
+          "name": "nr_pastas_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_pastas_created_by_fkey",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(dados) = 'object'::text))",
+          "name": "nr_pastas_dados_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_pastas_descricao_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['ativo'::text, 'arquivado'::text])))",
+          "name": "nr_pastas_estado_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_pastas_normas_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_pastas_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_pastas_organization_id_cliente_id_unidade_id_id_key",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, parent_id) REFERENCES nr_pastas(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_pastas_organization_id_cliente_id_unidade_id_parent_id_fkey",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_pastas_organization_id_fkey",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_pastas_organization_id_id_key",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_pastas_pkey",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_pastas_titulo_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_pastas_version_check",
+          "table": "nr_pastas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_pendencias_created_by_fkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((criticidade = ANY (ARRAY['a_classificar'::text, 'baixa'::text, 'media'::text, 'alta'::text, 'critica'::text])))",
+          "name": "nr_pendencias_criticidade_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(dados) = 'object'::text))",
+          "name": "nr_pendencias_dados_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_pendencias_descricao_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['aberta'::text, 'encerrada'::text, 'arquivado'::text])))",
+          "name": "nr_pendencias_estado_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_pendencias_normas_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, documento_id) REFERENCES nr_documentos(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_pendencias_organization_id_cliente_id_unidade_id_docume_fkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_pendencias_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_pendencias_organization_id_cliente_id_unidade_id_local__fkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_pendencias_organization_id_fkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_pendencias_organization_id_id_key",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, responsavel_id) REFERENCES pessoas(organization_id, id)",
+          "name": "nr_pendencias_organization_id_responsavel_id_fkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_pendencias_pkey",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_pendencias_titulo_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_pendencias_version_check",
+          "table": "nr_pendencias",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(campo_id) >= 1) AND (length(campo_id) <= 160)))",
+          "name": "nr_respostas_campo_id_check",
+          "table": "nr_respostas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, levantamento_id) REFERENCES nr_levantamentos(organization_id, id)",
+          "name": "nr_respostas_organization_id_levantamento_id_fkey",
+          "table": "nr_respostas",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (organization_id, levantamento_id, campo_id)",
+          "name": "nr_respostas_pkey",
+          "table": "nr_respostas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (updated_by) REFERENCES auth.users(id)",
+          "name": "nr_respostas_updated_by_fkey",
+          "table": "nr_respostas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_sistemas_created_by_fkey",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((jsonb_typeof(dados) = 'object'::text))",
+          "name": "nr_sistemas_dados_check",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((length(descricao) <= 20000))",
+          "name": "nr_sistemas_descricao_check",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((estado = ANY (ARRAY['ativo'::text, 'arquivado'::text])))",
+          "name": "nr_sistemas_estado_check",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((((cardinality(normas) >= 1) AND (cardinality(normas) <= 2)) AND ((cardinality(normas) = 1) OR (normas[1] <> normas[2])) AND (normas <@ ARRAY['NR33'::text, 'NR35'::text])))",
+          "name": "nr_sistemas_normas_check",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id) REFERENCES unidades(organization_id, cliente_id, id)",
+          "name": "nr_sistemas_organization_id_cliente_id_unidade_id_fkey",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, cliente_id, unidade_id, local_id) REFERENCES nr_locais(organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_sistemas_organization_id_cliente_id_unidade_id_local_id_fkey",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id) REFERENCES organizations(id)",
+          "name": "nr_sistemas_organization_id_fkey",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "UNIQUE (organization_id, id)",
+          "name": "nr_sistemas_organization_id_id_key",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_sistemas_pkey",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM titulo)) >= 2) AND (length(TRIM(BOTH FROM titulo)) <= 240)))",
+          "name": "nr_sistemas_titulo_check",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((version > 0))",
+          "name": "nr_sistemas_version_check",
+          "table": "nr_sistemas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (created_by) REFERENCES auth.users(id)",
+          "name": "nr_tratativas_created_by_fkey",
+          "table": "nr_tratativas",
+          "validated": true
+        },
+        {
+          "definition": "FOREIGN KEY (organization_id, pendencia_id) REFERENCES nr_pendencias(organization_id, id)",
+          "name": "nr_tratativas_organization_id_pendencia_id_fkey",
+          "table": "nr_tratativas",
+          "validated": true
+        },
+        {
+          "definition": "PRIMARY KEY (id)",
+          "name": "nr_tratativas_pkey",
+          "table": "nr_tratativas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK (((length(TRIM(BOTH FROM texto)) >= 2) AND (length(TRIM(BOTH FROM texto)) <= 20000)))",
+          "name": "nr_tratativas_texto_check",
+          "table": "nr_tratativas",
+          "validated": true
+        },
+        {
+          "definition": "CHECK ((tipo = ANY (ARRAY['comentario'::text, 'encerramento'::text, 'reabertura'::text, 'historico_importado'::text])))",
+          "name": "nr_tratativas_tipo_check",
+          "table": "nr_tratativas",
+          "validated": true
+        }
+      ],
+      "execution_role": "postgres",
+      "functions": [
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "682a0ce1a7d4d2de4d7f466283c5b351",
+          "identity_args": "p_org uuid, p_id uuid, p_expected_version integer, p_chave uuid, p_comando text, p_dados jsonb",
+          "name": "nr_arquivo_alterar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "f1dd18f2c5320cab433f8ce687e06bf9",
+          "identity_args": "p_org uuid, p_id uuid, p_motivo text, p_chave uuid",
+          "name": "nr_arquivo_cancelar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "60ebcabcbcf424f69b5d25764828bdbe",
+          "identity_args": "p_org uuid, p_id uuid, p_autor uuid, p_sha256 text, p_tamanho bigint, p_mime text",
+          "name": "nr_arquivo_confirmar",
+          "service_execute": true
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "96496443d5775c3609ea75dc46177e0a",
+          "identity_args": "p_org uuid, p_id uuid, p_sha256 text, p_tamanho bigint, p_mime text, p_autor uuid, p_importacao boolean",
+          "name": "nr_arquivo_confirmar_interno",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "bc763a71f9be051c993040955ce32919",
+          "identity_args": "p_org uuid",
+          "name": "nr_arquivo_consumo",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "37e4018e69442eb2a35d442e5c7b289a",
+          "identity_args": "p_org uuid, p_id uuid, p_importacao boolean",
+          "name": "nr_arquivo_destino",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "bf397b18aad80300980ffb06a73d3c23",
+          "identity_args": "p_org uuid, p_id uuid, p_autor uuid, p_motivo text",
+          "name": "nr_arquivo_falhar",
+          "service_execute": true
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": false,
+          "definition_md5": "befbe0bdbdfcdf03efd41f00230f9c23",
+          "identity_args": "",
+          "name": "nr_arquivo_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "3c2c00ac74745f22687e8021c387e4ce",
+          "identity_args": "p_org uuid, p_id uuid, p_sha256 text, p_tamanho bigint, p_mime text",
+          "name": "nr_arquivo_importar_confirmar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "c1f8fe924acfb5e75c64677b48cc9325",
+          "identity_args": "p_org uuid, p_chave uuid, p_dados jsonb",
+          "name": "nr_arquivo_importar_preparar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "5993493e2cd43834b183de601a18c8e1",
+          "identity_args": "p_org uuid, p_arquivo uuid, p_chave text, p_destino jsonb, p_evidencia jsonb",
+          "name": "nr_arquivo_importar_vinculo",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "56316fc69dcb6f547879ac10a97ed7e1",
+          "identity_args": "p_org uuid, p_id uuid",
+          "name": "nr_arquivo_ler",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "79df58250bb2dc659e3ce8d6899bba14",
+          "identity_args": "p_org uuid",
+          "name": "nr_arquivo_limites",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "e204dfd7812994b15598514e74089250",
+          "identity_args": "p_org uuid, p_norma text, p_filtros jsonb",
+          "name": "nr_arquivo_listar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "051492e7c503895d293ebb78dc820b24",
+          "identity_args": "p_org uuid, p_id uuid",
+          "name": "nr_arquivo_pode_enviar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "ca4335ef1ca12054ce71989a70157ad7",
+          "identity_args": "p_org uuid, p_chave uuid, p_dados jsonb",
+          "name": "nr_arquivo_preparar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "563f9a28776977ca6ea12fce7c23c913",
+          "identity_args": "p_org uuid, p_chave uuid, p_dados jsonb, p_autor uuid, p_importacao boolean",
+          "name": "nr_arquivo_preparar_interno",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "4c9ff5d2f8547b4121d01d365476c71b",
+          "identity_args": "p_org uuid, p_lote uuid",
+          "name": "nr_concluir_importacao",
+          "service_execute": true
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "64a99f9ebd563453f73954d421f448b3",
+          "identity_args": "p_org uuid, p_norma text, p_recurso text, p_filtros jsonb",
+          "name": "nr_consultar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "4d47b44af7dd2423b8a5c592302dd9e8",
+          "identity_args": "",
+          "name": "nr_conteudo_arquivos_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "6e551fafb540ee19a357ed52b591a09d",
+          "identity_args": "p_org uuid, p_norma text, p_documento uuid, p_revisao uuid, p_expected_version integer, p_base_expected_version integer, p_chave uuid, p_motivo text",
+          "name": "nr_documento_revisar_impactos",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "a0599b3cb63210922ee44498a5720bb3",
+          "identity_args": "p_org uuid, p_norma text, p_recurso text, p_comando text, p_id uuid, p_expected_version integer, p_chave text, p_dados jsonb",
+          "name": "nr_executar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": false,
+          "definition_md5": "c269758bef3137fb3b20f999b2468036",
+          "identity_args": "p_url text, p_norma text",
+          "name": "nr_fonte_oficial_valida",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "398d33db0d750c6cc6ee5c5ccb92dfd4",
+          "identity_args": "",
+          "name": "nr_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "3d73a264196190240e6ebf3c2068e26c",
+          "identity_args": "p_org uuid, p_norma text, p_id bigint",
+          "name": "nr_historico_detalhe",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "6befafb1edebb27a4caf2cf3e11d710f",
+          "identity_args": "",
+          "name": "nr_historico_incluir_contexto",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "fae0091470512d6e90b9995696697148",
+          "identity_args": "p_org uuid, p_norma text, p_recurso text, p_registro uuid, p_pagina integer, p_limite integer",
+          "name": "nr_historico_listar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "e094c86b7638e67d5a8fff950028fcc2",
+          "identity_args": "",
+          "name": "nr_impacto_vinculo_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "795058152fb73b78db1897a4100959dc",
+          "identity_args": "p_org uuid, p_entidade text, p_id uuid",
+          "name": "nr_import_snapshot",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "03c5267da1b6a86b1e664cb7622e4262",
+          "identity_args": "p_org uuid, p_lote uuid, p_item uuid, p_filtros jsonb",
+          "name": "nr_importacao_inspecionar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "e071a5df48d7860361c723ed967da596",
+          "identity_args": "p_org uuid, p_lote uuid, p_tipo text, p_externo_id text, p_payload jsonb, p_destino jsonb, p_hash text, p_capturado_em timestamp with time zone",
+          "name": "nr_importar_item",
+          "service_execute": true
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "a29a2a17ebc090859f10bcae5b7f0b22",
+          "identity_args": "p_org uuid, p_origem text, p_chave text, p_snapshot_inicio timestamp with time zone, p_snapshot_fim timestamp with time zone, p_manifesto jsonb",
+          "name": "nr_iniciar_importacao",
+          "service_execute": true
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "f4056008b5eb65ef5d20714074b18700",
+          "identity_args": "p_recurso text, p_linha jsonb",
+          "name": "nr_linha",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "257e6a3cd90930e96aab64881ea23aa2",
+          "identity_args": "",
+          "name": "nr_modelo_dados_publicacao_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "67d171b8dc29bd8999acf998c3f33b26",
+          "identity_args": "",
+          "name": "nr_modelo_fonte_retencao_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "9046854c10e30284e932eefb39e3ed05",
+          "identity_args": "p_org uuid, p_norma text, p_id uuid",
+          "name": "nr_modelo_publicacao_contexto",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "d9280de0772aafbbfa0a1e6aa4d90aea",
+          "identity_args": "",
+          "name": "nr_modelo_publicacao_fonte_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "a4abed2ba98767e5306b13c94291d11e",
+          "identity_args": "p_org uuid, p_norma text, p_id uuid, p_expected_version integer, p_chave uuid, p_evidencia jsonb",
+          "name": "nr_modelo_publicar_tecnico",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "87865242a2f96abfc1ab635b43ef454a",
+          "identity_args": "",
+          "name": "nr_registrar_impactos_local",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "df8b774ae7c31e049680af3f348670ce",
+          "identity_args": "p_org uuid, p_norma text, p_recurso text, p_registro uuid",
+          "name": "nr_registro_visivel",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "31252a96ebec46afc9efff56a6f66580",
+          "identity_args": "p_org uuid, p_norma text, p_recurso text, p_registro uuid, p_revisao uuid",
+          "name": "nr_revisao_detalhe",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": false,
+          "definition_md5": "75b15da3a32e6cf0a3252369e6874baa",
+          "identity_args": "",
+          "name": "nr_revisao_guard",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": true,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "c943abda20050889a5f00e151bf8391b",
+          "identity_args": "p_org uuid, p_norma text, p_recurso text, p_registro uuid, p_pagina integer, p_limite integer",
+          "name": "nr_revisoes_listar",
+          "service_execute": false
+        },
+        {
+          "anon_execute": false,
+          "auth_execute": false,
+          "config": [
+            "search_path=\"\""
+          ],
+          "definer": true,
+          "definition_md5": "ae8d86bf5fbe8eaeb3fba80cd16c3207",
+          "identity_args": "p_org uuid, p_origem text, p_tipo text, p_externo_de text, p_externo_para text, p_relacao text, p_evidencia jsonb",
+          "name": "nr_vincular_documentos_importados",
+          "service_execute": true
+        }
+      ],
+      "indexes": [
+        {
+          "definition": "CREATE INDEX nr_arquivo_contexto ON public.nr_arquivos USING btree (organization_id, unidade_id, estado, created_at DESC, id)",
+          "name": "nr_arquivo_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_arquivo_documento ON public.nr_arquivos USING btree (organization_id, documento_id, revisao_id, id)",
+          "name": "nr_arquivo_documento",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_arquivo_hash ON public.nr_arquivos USING btree (organization_id, sha256)",
+          "name": "nr_arquivo_hash",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_arquivo_local ON public.nr_arquivos USING btree (organization_id, local_id, id)",
+          "name": "nr_arquivo_local",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_arquivo_normas ON public.nr_arquivos USING gin (normas)",
+          "name": "nr_arquivo_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_arquivo_pasta ON public.nr_arquivos USING btree (organization_id, pasta_id, created_at DESC, id)",
+          "name": "nr_arquivo_pasta",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivo_vinculos_organization_id_arquivo_id_origem_chave_key ON public.nr_arquivo_vinculos USING btree (organization_id, arquivo_id, origem_chave)",
+          "name": "nr_arquivo_vinculos_organization_id_arquivo_id_origem_chave_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivo_vinculos_pkey ON public.nr_arquivo_vinculos USING btree (id)",
+          "name": "nr_arquivo_vinculos_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivos_caminho_key ON public.nr_arquivos USING btree (caminho)",
+          "name": "nr_arquivos_caminho_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivos_organization_id_chave_key ON public.nr_arquivos USING btree (organization_id, chave)",
+          "name": "nr_arquivos_organization_id_chave_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivos_organization_id_cliente_id_unidade_id_id_key ON public.nr_arquivos USING btree (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_arquivos_organization_id_cliente_id_unidade_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivos_organization_id_id_key ON public.nr_arquivos USING btree (organization_id, id)",
+          "name": "nr_arquivos_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_arquivos_pkey ON public.nr_arquivos USING btree (id)",
+          "name": "nr_arquivos_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_doc_revisoes_pai ON public.nr_documento_revisoes USING btree (organization_id, documento_id, numero DESC)",
+          "name": "nr_doc_revisoes_pai",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impacto_revisoes_organization_id_id_key ON public.nr_documento_impacto_revisoes USING btree (organization_id, id)",
+          "name": "nr_documento_impacto_revisoes_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impacto_revisoes_organization_id_impacto_id_key ON public.nr_documento_impacto_revisoes USING btree (organization_id, impacto_id)",
+          "name": "nr_documento_impacto_revisoes_organization_id_impacto_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impacto_revisoes_pkey ON public.nr_documento_impacto_revisoes USING btree (id)",
+          "name": "nr_documento_impacto_revisoes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impactos_organization_id_documento_id_id_key ON public.nr_documento_impactos USING btree (organization_id, documento_id, id)",
+          "name": "nr_documento_impactos_organization_id_documento_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impactos_organization_id_documento_id_local_id_key ON public.nr_documento_impactos USING btree (organization_id, documento_id, local_id, base_version_nova)",
+          "name": "nr_documento_impactos_organization_id_documento_id_local_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impactos_organization_id_id_key ON public.nr_documento_impactos USING btree (organization_id, id)",
+          "name": "nr_documento_impactos_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_impactos_pkey ON public.nr_documento_impactos USING btree (id)",
+          "name": "nr_documento_impactos_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_relacoes_pkey ON public.nr_documento_relacoes USING btree (organization_id, documento_id, documento_relacionado_id, tipo)",
+          "name": "nr_documento_relacoes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_revisoes_documento_id_numero_key ON public.nr_documento_revisoes USING btree (documento_id, numero)",
+          "name": "nr_documento_revisoes_documento_id_numero_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_revisoes_organization_id_documento_id_id_key ON public.nr_documento_revisoes USING btree (organization_id, documento_id, id)",
+          "name": "nr_documento_revisoes_organization_id_documento_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_revisoes_organization_id_id_key ON public.nr_documento_revisoes USING btree (organization_id, id)",
+          "name": "nr_documento_revisoes_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documento_revisoes_pkey ON public.nr_documento_revisoes USING btree (id)",
+          "name": "nr_documento_revisoes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_documentos_busca ON public.nr_documentos USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_documentos_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_documentos_contexto ON public.nr_documentos USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_documentos_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_documentos_normas ON public.nr_documentos USING gin (normas)",
+          "name": "nr_documentos_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documentos_organization_id_cliente_id_unidade_id_id_key ON public.nr_documentos USING btree (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_documentos_organization_id_cliente_id_unidade_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documentos_organization_id_id_key ON public.nr_documentos USING btree (organization_id, id)",
+          "name": "nr_documentos_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_documentos_pkey ON public.nr_documentos USING btree (id)",
+          "name": "nr_documentos_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_fontes_destino ON public.nr_fontes USING btree (organization_id, destino_tipo, destino_id)",
+          "name": "nr_fontes_destino",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_fontes_organization_id_origem_tipo_externo_id_key ON public.nr_fontes USING btree (organization_id, origem, tipo, externo_id)",
+          "name": "nr_fontes_organization_id_origem_tipo_externo_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_fontes_pkey ON public.nr_fontes USING btree (id)",
+          "name": "nr_fontes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_historico_contexto_cronologia ON public.nr_historico USING btree (organization_id, cliente_contexto, unidade_contexto, created_at DESC, id DESC)",
+          "name": "nr_historico_contexto_cronologia",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_historico_cronologia ON public.nr_historico USING btree (organization_id, created_at DESC, id DESC)",
+          "name": "nr_historico_cronologia",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_historico_normas_contexto ON public.nr_historico USING gin (normas_contexto jsonb_path_ops)",
+          "name": "nr_historico_normas_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_historico_pkey ON public.nr_historico USING btree (id)",
+          "name": "nr_historico_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_historico_registro ON public.nr_historico USING btree (organization_id, recurso, registro_id, id DESC)",
+          "name": "nr_historico_registro",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_historico_registro_cronologia ON public.nr_historico USING btree (organization_id, recurso, registro_id, created_at DESC, id DESC)",
+          "name": "nr_historico_registro_cronologia",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_impacto_revisoes_documento ON public.nr_documento_impacto_revisoes USING btree (organization_id, documento_id, revisao_destino_id)",
+          "name": "nr_impacto_revisoes_documento",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_impactos_contexto ON public.nr_documento_impactos USING btree (organization_id, cliente_id, unidade_id, created_at DESC)",
+          "name": "nr_impactos_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_impactos_documento ON public.nr_documento_impactos USING btree (organization_id, documento_id, created_at DESC, id)",
+          "name": "nr_impactos_documento",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_impactos_local ON public.nr_documento_impactos USING btree (organization_id, local_id, base_version_nova, documento_id)",
+          "name": "nr_impactos_local",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_import_item_cronologia ON public.nr_import_itens USING btree (organization_id, lote_id, updated_at DESC, id DESC)",
+          "name": "nr_import_item_cronologia",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_import_item_resultado ON public.nr_import_itens USING btree (organization_id, lote_id, resultado, id)",
+          "name": "nr_import_item_resultado",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_import_itens_organization_id_lote_id_tipo_externo_id_key ON public.nr_import_itens USING btree (organization_id, lote_id, tipo, externo_id)",
+          "name": "nr_import_itens_organization_id_lote_id_tipo_externo_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_import_itens_pkey ON public.nr_import_itens USING btree (id)",
+          "name": "nr_import_itens_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_import_lote_cronologia ON public.nr_import_lotes USING btree (organization_id, created_at DESC, id DESC)",
+          "name": "nr_import_lote_cronologia",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_import_lotes_organization_id_id_key ON public.nr_import_lotes USING btree (organization_id, id)",
+          "name": "nr_import_lotes_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_import_lotes_organization_id_origem_chave_key ON public.nr_import_lotes USING btree (organization_id, origem, chave)",
+          "name": "nr_import_lotes_organization_id_origem_chave_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_import_lotes_pkey ON public.nr_import_lotes USING btree (id)",
+          "name": "nr_import_lotes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_levantamentos_busca ON public.nr_levantamentos USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_levantamentos_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_levantamentos_contexto ON public.nr_levantamentos USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_levantamentos_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_levantamentos_normas ON public.nr_levantamentos USING gin (normas)",
+          "name": "nr_levantamentos_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_levantamentos_organization_id_cliente_id_unidade_id_id_key ON public.nr_levantamentos USING btree (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_levantamentos_organization_id_cliente_id_unidade_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_levantamentos_organization_id_id_key ON public.nr_levantamentos USING btree (organization_id, id)",
+          "name": "nr_levantamentos_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_levantamentos_pkey ON public.nr_levantamentos USING btree (id)",
+          "name": "nr_levantamentos_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_locais_busca ON public.nr_locais USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_locais_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_locais_contexto ON public.nr_locais USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_locais_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_locais_normas ON public.nr_locais USING gin (normas)",
+          "name": "nr_locais_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_locais_organization_id_cliente_id_unidade_id_id_key ON public.nr_locais USING btree (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_locais_organization_id_cliente_id_unidade_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_locais_organization_id_id_key ON public.nr_locais USING btree (organization_id, id)",
+          "name": "nr_locais_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_locais_organization_id_pet_espaco_id_key ON public.nr_locais USING btree (organization_id, pet_espaco_id)",
+          "name": "nr_locais_organization_id_pet_espaco_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_locais_pkey ON public.nr_locais USING btree (id)",
+          "name": "nr_locais_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelo_publicacao_fontes_organization_id_id_key ON public.nr_modelo_publicacao_fontes USING btree (organization_id, id)",
+          "name": "nr_modelo_publicacao_fontes_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelo_publicacao_fontes_pkey ON public.nr_modelo_publicacao_fontes USING btree (id)",
+          "name": "nr_modelo_publicacao_fontes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelo_versoes_modelo_id_numero_key ON public.nr_modelo_versoes USING btree (modelo_id, numero)",
+          "name": "nr_modelo_versoes_modelo_id_numero_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelo_versoes_organization_id_id_key ON public.nr_modelo_versoes USING btree (organization_id, id)",
+          "name": "nr_modelo_versoes_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelo_versoes_organization_id_modelo_id_id_key ON public.nr_modelo_versoes USING btree (organization_id, modelo_id, id)",
+          "name": "nr_modelo_versoes_organization_id_modelo_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelo_versoes_pkey ON public.nr_modelo_versoes USING btree (id)",
+          "name": "nr_modelo_versoes_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_modelos_busca ON public.nr_modelos USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_modelos_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_modelos_contexto ON public.nr_modelos USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_modelos_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_modelos_normas ON public.nr_modelos USING gin (normas)",
+          "name": "nr_modelos_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelos_organization_id_id_key ON public.nr_modelos USING btree (organization_id, id)",
+          "name": "nr_modelos_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_modelos_pkey ON public.nr_modelos USING btree (id)",
+          "name": "nr_modelos_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_pasta_nome_ativo ON public.nr_pastas USING btree (organization_id, unidade_id, COALESCE(parent_id, '00000000-0000-0000-0000-000000000000'::uuid), lower(titulo)) WHERE (arquivado_em IS NULL)",
+          "name": "nr_pasta_nome_ativo",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pastas_busca ON public.nr_pastas USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_pastas_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pastas_contexto ON public.nr_pastas USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_pastas_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pastas_normas ON public.nr_pastas USING gin (normas)",
+          "name": "nr_pastas_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_pastas_organization_id_cliente_id_unidade_id_id_key ON public.nr_pastas USING btree (organization_id, cliente_id, unidade_id, id)",
+          "name": "nr_pastas_organization_id_cliente_id_unidade_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_pastas_organization_id_id_key ON public.nr_pastas USING btree (organization_id, id)",
+          "name": "nr_pastas_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_pastas_pkey ON public.nr_pastas USING btree (id)",
+          "name": "nr_pastas_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pendencias_busca ON public.nr_pendencias USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_pendencias_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pendencias_contexto ON public.nr_pendencias USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_pendencias_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pendencias_normas ON public.nr_pendencias USING gin (normas)",
+          "name": "nr_pendencias_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_pendencias_organization_id_id_key ON public.nr_pendencias USING btree (organization_id, id)",
+          "name": "nr_pendencias_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_pendencias_pkey ON public.nr_pendencias USING btree (id)",
+          "name": "nr_pendencias_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_pendencias_prazo ON public.nr_pendencias USING btree (organization_id, unidade_id, estado, prazo, id)",
+          "name": "nr_pendencias_prazo",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_publicacao_fontes_arquivo ON public.nr_modelo_publicacao_fontes USING btree (organization_id, arquivo_id) WHERE (arquivo_id IS NOT NULL)",
+          "name": "nr_publicacao_fontes_arquivo",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_publicacao_fontes_versao ON public.nr_modelo_publicacao_fontes USING btree (organization_id, modelo_id, modelo_versao_id, created_at)",
+          "name": "nr_publicacao_fontes_versao",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_respostas_pkey ON public.nr_respostas USING btree (organization_id, levantamento_id, campo_id)",
+          "name": "nr_respostas_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_sistemas_busca ON public.nr_sistemas USING gin (to_tsvector('portuguese'::regconfig, ((titulo || ' '::text) || descricao)))",
+          "name": "nr_sistemas_busca",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_sistemas_contexto ON public.nr_sistemas USING btree (organization_id, cliente_id, unidade_id, estado, updated_at DESC, id)",
+          "name": "nr_sistemas_contexto",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_sistemas_normas ON public.nr_sistemas USING gin (normas)",
+          "name": "nr_sistemas_normas",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_sistemas_organization_id_id_key ON public.nr_sistemas USING btree (organization_id, id)",
+          "name": "nr_sistemas_organization_id_id_key",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_sistemas_pkey ON public.nr_sistemas USING btree (id)",
+          "name": "nr_sistemas_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE UNIQUE INDEX nr_tratativas_pkey ON public.nr_tratativas USING btree (id)",
+          "name": "nr_tratativas_pkey",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_vinculo_documento ON public.nr_arquivo_vinculos USING btree (organization_id, documento_id, revisao_id, arquivo_id)",
+          "name": "nr_vinculo_documento",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_vinculo_local ON public.nr_arquivo_vinculos USING btree (organization_id, local_id, arquivo_id)",
+          "name": "nr_vinculo_local",
+          "valid": true
+        },
+        {
+          "definition": "CREATE INDEX nr_vinculo_pasta ON public.nr_arquivo_vinculos USING btree (organization_id, pasta_id, arquivo_id)",
+          "name": "nr_vinculo_pasta",
+          "valid": true
+        }
+      ],
+      "ledger": [
+        {
+          "path": "supabase/migrations/20260927192805_86439f42-e956-4a5a-b03e-b13076527dc5.sql",
+          "position": 1,
+          "sha256": "c58dce7df5e49fe047b1541726c3f1c7522881c5775e42d3e89a311ce5c93efa"
+        },
+        {
+          "path": "supabase/migrations/20260927192823_20a4739a-e284-49c4-bc4e-1f93f7e5fef4.sql",
+          "position": 2,
+          "sha256": "b6c1c88579ede44f29b6f9874f3be4f2ad6bec4088d07b7c1f3b713a3d3580cc"
+        },
+        {
+          "path": "supabase/migrations/20260927193124_665e6ca6-37a5-4adc-b802-5e465d4d651a.sql",
+          "position": 3,
+          "sha256": "3f3e6b846926ae8440af2061f7eb2e5110d60271371206cef0a61aaaaa1371b5"
+        },
+        {
+          "path": "supabase/migrations/20260927212855_c5ec0858-1acc-4d63-8afc-6ae8797e3073.sql",
+          "position": 4,
+          "sha256": "38ba71f9b905ad3fd9f604a2fffbc9e55cc374740d6cd561d132d473612d29f6"
+        },
+        {
+          "path": "supabase/migrations/20260927212914_d0117df7-66f1-4a34-9e75-51abd2850661.sql",
+          "position": 5,
+          "sha256": "8e3a2619dba79bd4b1105a8b68439669da0b550cee3c2854ea34fea1b6e1b648"
+        },
+        {
+          "path": "supabase/migrations/20260927213227_c47c219d-3f42-4881-832f-4ed78b4f776c.sql",
+          "position": 6,
+          "sha256": "b6eca3976522a92c32dfe18839d3767adab31443b5fddd0b00aedbcae9afd60e"
+        },
+        {
+          "path": "supabase/migrations/20260928010000_proposta_checkpoints.sql",
+          "position": 7,
+          "sha256": "7fd3090276c7261e729e3bf491e6cf3512af24a49b12cd7a5110050b00544557"
+        },
+        {
+          "path": "supabase/migrations/20260928034624_82f59063-c063-4b24-8d7d-8c5da6b72e8a.sql",
+          "position": 8,
+          "sha256": "9fde803c898e49365b301350c46ceab51e9c95db7e22971af4f8c496c90d2db1"
+        },
+        {
+          "path": "supabase/migrations/20260928034654_4d48323c-488a-4ebb-8a93-175b74cd09ea.sql",
+          "position": 9,
+          "sha256": "81626668ed55c35454fac710d5d48536594b5d02bd1c40aeb9d953636fad23d0"
+        },
+        {
+          "path": "supabase/migrations/20260928034747_e3f4b468-d68a-4c10-ae3c-a64d7fb70d63.sql",
+          "position": 10,
+          "sha256": "b5d346f33fdf0c6da8cfe3d1deffe541564c43bd1e7f204671407912673ada81"
+        },
+        {
+          "path": "supabase/migrations/20260928034807_7a2ba155-5022-4a01-b6e3-bd8aad49eaa8.sql",
+          "position": 11,
+          "sha256": "1aa9e343fb9b4d1bfed95f6fb5d08e636bb07870ea080e70639e1745115d92d4"
+        },
+        {
+          "path": "supabase/migrations/20260928034824_934a4c94-2c49-428a-a278-d2647d2f6169.sql",
+          "position": 12,
+          "sha256": "9924da547938070fce8110ca2f3f154b547a1e37d674eb25668532863dd973f8"
+        },
+        {
+          "path": "supabase/migrations/20260928034852_ddc858f9-8930-4e1c-923b-257c3f8ff386.sql",
+          "position": 13,
+          "sha256": "64b117dec5f2351921f6d81c442dda3f77bfec9e7f0b4a459feba51d5632a157"
+        },
+        {
+          "path": "supabase/migrations/20260928034943_c32daa06-f656-425c-89fd-2a6a7e42b8af.sql",
+          "position": 14,
+          "sha256": "db7f6ca31e797a1820b195de5cea14b4e0570f84ed29c80e8b761c4a6b100ecc"
+        },
+        {
+          "path": "supabase/migrations/20260928035006_5d85a7e1-4c0b-4ccb-9224-6959f5fd97d9.sql",
+          "position": 15,
+          "sha256": "7eaab57033347e30b19e912eb07633735cc8c6eb94b2415c1db7706f86156245"
+        },
+        {
+          "path": "supabase/migrations/20260928035016_4db8ec1b-e59d-4488-8792-26fd85c0fc79.sql",
+          "position": 16,
+          "sha256": "9d4f2c61d94fa4e5bbf17b7a7a7ce4725dcc5cff6df098ce77d9006b49a5f763"
+        },
+        {
+          "path": "supabase/migrations/20261001140449_490da786-ee36-4270-9b51-835ff20f94c3.sql",
+          "position": 17,
+          "sha256": "a78341c7d347ad9cca6a2dd1e53206249b0fe891a28b874384d88aaadb84cbac"
+        },
+        {
+          "path": "supabase/migrations/20261001140514_949b8f16-40fa-4569-8b86-341dacc205d3.sql",
+          "position": 18,
+          "sha256": "3e2f833ae330227e503c9ed5aa7e587d9e888fbfad41896b3dd56a0b7b14a6bf"
+        },
+        {
+          "path": "drizzle/migrations/0000_estrutura_produtos_itens_avulsos.sql",
+          "position": 19,
+          "sha256": "a53b17c319973a794f82adb7ed10eb3f72cc6083be8caf2d05032e60f49a92ff"
+        },
+        {
+          "path": "drizzle/migrations/0001_objeto_rascunho_campos_opcionais.sql",
+          "position": 20,
+          "sha256": "47acdfd4700921f7adfaa9072463be70e677af87bb9bc8474ee4b5a2c8d5dd72"
+        },
+        {
+          "path": "drizzle/migrations/0002_cadastro_comercial_aquisicoes.sql",
+          "position": 21,
+          "sha256": "3b4696cb2c453ccf16debf96f7068a179a08fa84d1e9ab6b0721af744f281408"
+        },
+        {
+          "path": "drizzle/migrations/0003_importacao_planilha_execucao.sql",
+          "position": 22,
+          "sha256": "28ed122ff6c3c2e05f40e3eea4c499c22a54ae01cfc6661835c9110e292a2a11"
+        },
+        {
+          "path": "drizzle/migrations/0004_sequencia_permite_zero.sql",
+          "position": 23,
+          "sha256": "8c57009eaf56139e0db5ca14cc4ac3e8d58b136147070c7d3e951056b6101aa1"
+        },
+        {
+          "path": "drizzle/migrations/0005_importacao_planilha_revogar.sql",
+          "position": 24,
+          "sha256": "cbf129dfeb08ff92140ba55ef17a8d0b3963adf2a5515cdc1de693743157a30f"
+        },
+        {
+          "path": "drizzle/migrations/0006_custo_inclui_e_origem_demanda.sql",
+          "position": 25,
+          "sha256": "bca9bbd59db075dc2c7688afe3e5b222f0a4232ddc479bcad1b0ed186010e591"
+        },
+        {
+          "path": "drizzle/migrations/0007_produto_custos_inclui_trigger.sql",
+          "position": 26,
+          "sha256": "5661e1348bfcb2120a534052e52f83c2fc012f02cac6b6b84200d34be45383f9"
+        },
+        {
+          "path": "drizzle/migrations/0008_revisao_componente_custo_inclui.sql",
+          "position": 27,
+          "sha256": "7648c92c176ced914c6fe2f5942298cc69d634a333aeb76eb765d57a5708496c"
+        },
+        {
+          "path": "drizzle/migrations/0009_engenharia_emite_recebe.sql",
+          "position": 28,
+          "sha256": "f892209f4743482f4396046d0822b9cc0e440a54c6819155ff560694c06a5d51"
+        },
+        {
+          "path": "drizzle/migrations/0010_ordens_transacionais_hash_tecnico_v2.sql",
+          "position": 29,
+          "sha256": "d1081dbac9f4ddfc8284b4e516cfd556d3638e83122b51f979a68fa3bf438399"
+        },
+        {
+          "path": "drizzle/migrations/0011_ordens_idempotencia_contexto_trava_revisao.sql",
+          "position": 30,
+          "sha256": "5fd69c2daba98ef7f62af20887e3b9716ecacbcddf8b50134dc2966c89f23ea3"
+        },
+        {
+          "path": "drizzle/migrations/0012_operational_foundation.sql",
+          "position": 31,
+          "sha256": "cd87f979d6f988f31d0a6ed383c4dbd7fb3c6a51aa9f5c13eaa483e4f5ead76b"
+        },
+        {
+          "path": "drizzle/migrations/0013_clientes_operacionais.sql",
+          "position": 32,
+          "sha256": "2f9c023911e72a9baadf38a7651af1917e28396cfd5e9d793f256fd45937c085"
+        },
+        {
+          "path": "drizzle/migrations/0014_projetos_engenharia.sql",
+          "position": 33,
+          "sha256": "f7db27928134f450a65fb5d4d462547e40be83503e916d50eaa24a63edbcc6b4"
+        },
+        {
+          "path": "drizzle/migrations/0015_operational_storage.sql",
+          "position": 34,
+          "sha256": "594d2f8307dd14737c750e3e27e3aa44de8a266de02670aa39db261a072fb93d"
+        },
+        {
+          "path": "drizzle/migrations/0016_agenda_foundation.sql",
+          "position": 35,
+          "sha256": "62d6b22a6e144e366042a322adedb4ee4c7121597a17e76318caf5d822a628b2"
+        },
+        {
+          "path": "drizzle/migrations/0017_pe_arquivos.sql",
+          "position": 36,
+          "sha256": "10567774f0a34a2d48a351ceb1fe533ff153e36e587c979aed29d21bf315885d"
+        },
+        {
+          "path": "drizzle/migrations/0018_scheduler.sql",
+          "position": 37,
+          "sha256": "c1e8fa6d9766d1226f4d245691ebe4551fea6deb3ad5942775f81f0e8003f65c"
+        },
+        {
+          "path": "drizzle/migrations/0019_admin_vinculos.sql",
+          "position": 38,
+          "sha256": "70744c8a8ba2780c8bca9ce349bc8bb8cd65066d2e94e5ac1d9657ffbc6d815c"
+        },
+        {
+          "path": "drizzle/migrations/0020_anexo_confirmacao_autorizada.sql",
+          "position": 39,
+          "sha256": "0f9e80d67f56addacbb7ef305a7e2a803c622b29286e888704111bc22c87bccc"
+        },
+        {
+          "path": "drizzle/migrations/0021_levantamentos_tecnicos.sql",
+          "position": 40,
+          "sha256": "c1d415564f7ff3974655d6076be5aa61ffb75d0a7270918f1a050fc90ef80027"
+        },
+        {
+          "path": "drizzle/migrations/0022_estudos_tecnicos.sql",
+          "position": 41,
+          "sha256": "0ea1a9597eebb66f835a3d017c00d3697bff3a314522366889ffdd689d7e004b"
+        },
+        {
+          "path": "drizzle/migrations/0023_almoxarifado.sql",
+          "position": 42,
+          "sha256": "4dc7c8a98483a97c74791b46102c75099387fbcf08dca6398dcf4e25f4f9a2c8"
+        },
+        {
+          "path": "drizzle/migrations/0024_suprimentos_relacoes_univocas.sql",
+          "position": 43,
+          "sha256": "3186fcc00879dad91e02c0bf55bb6d856e69d77a12a8d1b546b7c80ae2fd5faa"
+        },
+        {
+          "path": "drizzle/migrations/0025_pessoas_autorizacao_atual.sql",
+          "position": 44,
+          "sha256": "254504d1ca8335be6f12a57c7f216eadc8d09aaa1b93001f4078917189a6f44d"
+        },
+        {
+          "path": "drizzle/migrations/0026_pessoas_identidade_conferencia.sql",
+          "position": 45,
+          "sha256": "980e98d4036027aba1e0d54e16cc363abde4ae41f004938a8fabad3cd5efa41b"
+        },
+        {
+          "path": "drizzle/migrations/0027_agenda_equipe.sql",
+          "position": 46,
+          "sha256": "21e12f1ea79d000ac240102b3062d4039363fa9d7f9f220ff0ccd15d22971c9b"
+        },
+        {
+          "path": "drizzle/migrations/0028_agenda_anexos.sql",
+          "position": 47,
+          "sha256": "793ed8fa0a682a6143cc9b9d35f10fab66a0107981efca777785f17398a60acb"
+        },
+        {
+          "path": "drizzle/migrations/0029_agenda_listagem_performance.sql",
+          "position": 48,
+          "sha256": "d59ed26ac5c351b4b11a87d96db25b65a23ec4a09f0ef9c3400624c7cd035a70"
+        },
+        {
+          "path": "drizzle/migrations/0030_pet_digital.sql",
+          "position": 49,
+          "sha256": "d2e8365cc1d32cc55456e29ae5b8eec769919239a86e7d6aaac43fa783e15317"
+        },
+        {
+          "path": "drizzle/migrations/0031_pet_anexos.sql",
+          "position": 50,
+          "sha256": "99fa268411a31fc25fde9a57a18893fa96c2ee39574e4d44e863e7442525c8ea"
+        },
+        {
+          "path": "drizzle/migrations/0032_pet_retificacoes.sql",
+          "position": 51,
+          "sha256": "28d3704be2b57dcbf082433c1bcf10cbea972505239bf3abc3c8d7411b3ecba8"
+        },
+        {
+          "path": "drizzle/migrations/0033_pet_relatorios.sql",
+          "position": 52,
+          "sha256": "4d9164d3f1766488ee8d13fc981adc0e7edb497898851abb259bdddb19eb8a2f"
+        },
+        {
+          "path": "drizzle/migrations/0034_agenda_experiencia.sql",
+          "position": 53,
+          "sha256": "9568ff9541890b584ace87541cda468d2b4cd7aaaf055f88dff0165fe8a154b6"
+        },
+        {
+          "path": "drizzle/migrations/0035_agenda_acao_contexto.sql",
+          "position": 54,
+          "sha256": "1ef478f53a4c1b7b2841e4a364e34bf7bc9265c6fe5efaa459e603a8ad11bc1b"
+        },
+        {
+          "path": "drizzle/migrations/0036_agenda_acao_versao_inicial.sql",
+          "position": 55,
+          "sha256": "4f7ac9196b97809980a058a497f4d008ab8b07e7d98fb24054c94f29ba8cdfb3"
+        },
+        {
+          "path": "drizzle/migrations/0037_pet_listagem.sql",
+          "position": 56,
+          "sha256": "1d34f65a9cb1b4ad6383c96e06ae9f4192c3f8ebe5f9df4d7a5dd88e8e2f1e44"
+        },
+        {
+          "path": "drizzle/migrations/0038_nr_base.sql",
+          "position": 57,
+          "sha256": "045d04b3bf802952ebbc34d51e25923ff572e92410e9e3a7941e0a70b8ab4b93"
+        },
+        {
+          "path": "drizzle/migrations/0039_nr_arquivos.sql",
+          "position": 58,
+          "sha256": "3f1c0b78b7dd072b6b2d19bbd4ea0e6219dba25a56edbd2b1127f77685b2a3f2"
+        },
+        {
+          "path": "drizzle/migrations/0040_nr_importacao.sql",
+          "position": 59,
+          "sha256": "9744106eef4f054e5f939fd7c52cbb34254f3ae85414cb94001292630cea1aef"
+        },
+        {
+          "path": "drizzle/migrations/0041_nr_organizacao_acervo.sql",
+          "position": 60,
+          "sha256": "a43db3c9bc94d963d38b5f953ad3067c2b824aa3ce2f43348e7d2c70ee9f458d"
+        },
+        {
+          "path": "drizzle/migrations/0042_nr_impactos.sql",
+          "position": 61,
+          "sha256": "4032771a3184096e9c4a4bdc7a34c92287ec0fff7466a5ab751838030b235077"
+        },
+        {
+          "path": "drizzle/migrations/0043_nr_retencao_vinculos.sql",
+          "position": 62,
+          "sha256": "f0105f9b696e41e769ebd262d8cf01284ea48163a49b2651d1cbdb2026751795"
+        },
+        {
+          "path": "drizzle/migrations/0044_nr_publicacao_tecnica.sql",
+          "position": 63,
+          "sha256": "c09201370357ceb9ed588384445769842e5130c95440d692549f49617b35d8bf"
+        },
+        {
+          "path": "drizzle/migrations/0045_nr_historico_paginado.sql",
+          "position": 64,
+          "sha256": "c237f3b7165586cbb4119fa9d7002ac0ecd4b72712562e0d92a921747eb52a47"
+        }
+      ],
+      "policies": [
+        {
+          "command": "SELECT",
+          "name": "nr_vinculo_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_arquivo_vinculos",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_arquivo_metadata",
+          "qual": "(pode(organization_id, 'ver_nr'::text) AND ((estado = ANY (ARRAY['vinculado'::text, 'arquivado'::text])) OR (created_by = auth.uid())))",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_arquivos",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_impactos_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_documento_impacto_revisoes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_impactos_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_documento_impactos",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_documento_relacoes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_documento_revisoes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_documentos",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'configurar_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_fontes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "(pode(organization_id, 'ver_nr'::text) AND ((recurso <> ALL (ARRAY['fontes'::text, 'recibos_storage'::text, 'import_lotes'::text, 'import_itens'::text])) OR pode(organization_id, 'configurar_nr'::text)))",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_historico",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'configurar_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_import_itens",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'configurar_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_import_lotes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_levantamentos",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_locais",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_publicacao_fontes_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_modelo_publicacao_fontes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_modelo_versoes",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_modelos",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_pastas",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_pendencias",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_respostas",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_sistemas",
+          "with_check": null
+        },
+        {
+          "command": "SELECT",
+          "name": "nr_ler",
+          "qual": "pode(organization_id, 'ver_nr'::text)",
+          "roles": [
+            "authenticated"
+          ],
+          "table": "nr_tratativas",
+          "with_check": null
+        }
+      ],
+      "postgres_version": "17.6",
+      "tables": [
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "0bba804c4a60b7e6f9d376bbcae57c07",
+          "rls": true,
+          "table": "nr_arquivo_vinculos"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "4d2a64cbe679d0525d3a639f791cb2c1",
+          "rls": true,
+          "table": "nr_arquivos"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "4457fdaadaf096e727c40d58d8da82e7",
+          "rls": true,
+          "table": "nr_documento_impacto_revisoes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "5c6e54ce8326f15eb57adeb80b3d11a5",
+          "rls": true,
+          "table": "nr_documento_impactos"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "b9038a3ba86a33e45f0be7d448a5dc6c",
+          "rls": true,
+          "table": "nr_documento_relacoes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "a0be2972a48f764093a31d18cc741ba6",
+          "rls": true,
+          "table": "nr_documento_revisoes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "2b60ad803eb8f96f21ad44b5c3d625d6",
+          "rls": true,
+          "table": "nr_documentos"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "58d89f9f3cbc367fa5e62326cf1f31c2",
+          "rls": true,
+          "table": "nr_fontes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "659854a1f8d0236dec58f57ca194ae7a",
+          "rls": true,
+          "table": "nr_historico"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "55f0029e781dba282466bfb03aafea08",
+          "rls": true,
+          "table": "nr_import_itens"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "cbe24684543d7c847deb8b123da49a8a",
+          "rls": true,
+          "table": "nr_import_lotes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "4791f922de47fe88a7d8eefb10fc54e4",
+          "rls": true,
+          "table": "nr_levantamentos"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "8b97d0c788f3be8bc93ceac23dd7b5b3",
+          "rls": true,
+          "table": "nr_locais"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "df7dd53c963803176e97005858719b44",
+          "rls": true,
+          "table": "nr_modelo_publicacao_fontes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "74bbe37bc09987bcc7aa9b21da274718",
+          "rls": true,
+          "table": "nr_modelo_versoes"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "7a4e0735b4d9f08412218751c80ddbd6",
+          "rls": true,
+          "table": "nr_modelos"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "024b0e7adaf9a94b1758ff4161f91bbd",
+          "rls": true,
+          "table": "nr_pastas"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "ba7e909aeef56a0a03eb35bc1756c7bf",
+          "rls": true,
+          "table": "nr_pendencias"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "6edf4d78dda5db62309469fed229b8b5",
+          "rls": true,
+          "table": "nr_respostas"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "7c7eb4f1dcbb283e735888da169c13fd",
+          "rls": true,
+          "table": "nr_sistemas"
+        },
+        {
+          "anon_select": false,
+          "auth_delete": false,
+          "auth_insert": false,
+          "auth_select": true,
+          "auth_update": false,
+          "columns_md5": "5f26a0d4afacc3d3935523fa6b24a8d6",
+          "rls": true,
+          "table": "nr_tratativas"
+        }
+      ]
+    }
+  ]
+}

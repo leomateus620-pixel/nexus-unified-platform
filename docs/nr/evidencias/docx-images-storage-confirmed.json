@@ -1,0 +1,61 @@
+{
+  "format": "nexus-docx-images-storage-confirmed-v1",
+  "source_message_id": "umsg_01m6768pddeccs6npcvbgr2d95",
+  "actual_get_verified": 417,
+  "actual_bytes": 59629408,
+  "canonical_sha256": "98c1cb8024eac2842ea6a3b4f11537e434f622e5115a1ce0c754b9a9f0ff802d",
+  "expected_hash_independently_matches": true,
+  "readback": {
+    "rows": [
+      {
+        "arquivos": 417,
+        "bytes": "59629408",
+        "estado": "vinculado"
+      }
+    ]
+  },
+  "confirmation_batches": [
+    {
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "rows": [
+        {
+          "confirmados": 75
+        }
+      ]
+    },
+    {
+      "rows": [
+        {
+          "confirmados": 42
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "rows": [
+    {
+      "captured_at": "2026-10-30 20:22:03.377496+00",
+      "database_bytes": 165604499,
+      "database_settings": [
+        {
+          "context": "user",
+          "name": "effective_cache_size",
+          "setting": "196608",
+          "unit": "8kB"
+        },
+        {
+          "context": "user",
+          "name": "maintenance_work_mem",
+          "setting": "131072",
+          "unit": "kB"
+        },
+        {
+          "context": "postmaster",
+          "name": "max_connections",
+          "setting": "90",
+          "unit": null
+        },
+        {
+          "context": "postmaster",
+          "name": "shared_buffers",
+          "setting": "65536",
+          "unit": "8kB"
+        },
+        {
+          "context": "user",
+          "name": "work_mem",
+          "setting": "5120",
+          "unit": "kB"
+        }
+      ],
+      "domain_contract_counts": {
+        "all_documents": 969,
+        "all_places": 112,
+        "ec_missing_pet": 0,
+        "height_places": 4,
+        "height_with_pet_link": 0,
+        "pet_atmospheric_assessments": 0,
+        "pet_permits": 0,
+        "pet_signatures": 0,
+        "pet_spaces_distinct": 108,
+        "pet_spaces_linked": 108
+      },
+      "execution_role": "postgres",
+      "nr_relations_bytes": [
+        {
+          "bytes": 37707776,
+          "table": "nr_import_itens"
+        },
+        {
+          "bytes": 33669120,
+          "table": "nr_fontes"
+        },
+        {
+          "bytes": 25296896,
+          "table": "nr_historico"
+        },
+        {
+          "bytes": 16916480,
+          "table": "nr_documento_revisoes"
+        },
+        {
+          "bytes": 3948544,
+          "table": "nr_respostas"
+        },
+        {
+          "bytes": 2981888,
+          "table": "nr_arquivos"
+        },
+        {
+          "bytes": 2228224,
+          "table": "nr_sistemas"
+        },
+        {
+          "bytes": 2220032,
+          "table": "nr_documentos"
+        },
+        {
+          "bytes": 1753088,
+          "table": "nr_arquivo_vinculos"
+        },
+        {
+          "bytes": 1515520,
+          "table": "nr_locais"
+        },
+        {
+          "bytes": 630784,
+          "table": "nr_import_lotes"
+        },
+        {
+          "bytes": 475136,
+          "table": "nr_levantamentos"
+        },
+        {
+          "bytes": 385024,
+          "table": "nr_pendencias"
+        },
+        {
+          "bytes": 253952,
+          "table": "nr_pastas"
+        },
+        {
+          "bytes": 245760,
+          "table": "nr_modelos"
+        },
+        {
+          "bytes": 212992,
+          "table": "nr_modelo_versoes"
+        },
+        {
+          "bytes": 81920,
+          "table": "nr_documento_relacoes"
+        },
+        {
+          "bytes": 65536,
+          "table": "nr_documento_impactos"
+        },
+        {
+          "bytes": 65536,
+          "table": "nr_tratativas"
+        },
+        {
+          "bytes": 40960,
+          "table": "nr_documento_impacto_revisoes"
+        }
+      ],
+      "organization_files": {
+        "bytes_confirmed": 291872274,
+        "confirmed": 1022,
+        "derived_images": 417,
+        "distinct_paths": 1022,
+        "files": 1022,
+        "original_files": 605,
+        "storage_matches": 1022,
+        "storage_missing": 0
+      },
+      "postgres_version": "17.6",
+      "storage_buckets_global": [
+        {
+          "bucket": "nexus-nr-acervo",
+          "bytes": 291872274,
+          "objects": 1022,
+          "private": true
+        },
+        {
+          "bucket": "nexus-operacional",
+          "bytes": 0,
+          "objects": 0,
+          "private": true
+        }
+      ],
+      "units_anonymized": [
+        {
+          "bytes_fisicos_medidos": 111115588,
+          "bytes_metadados": 111115588,
+          "confirmados": 533,
+          "objetos": 533,
+          "unidade_indice": 1
+        },
+        {
+          "bytes_fisicos_medidos": 180756686,
+          "bytes_metadados": 180756686,
+          "confirmados": 489,
+          "objetos": 489,
+          "unidade_indice": 2
+        }
+      ]
+    }
+  ],
+  "scope_notes": [
+    "Bucket totals are physical Storage metadata measurements; organization totals join authorized NR file identities and do not multiply bytes by secondary links.",
+    "All1022 objects match database MIME/size metadata and are confirmed; actual GET/SHA-256 readback evidence is recorded separately in original-storage-confirmed.json and docx-images-storage-confirmed.json.",
+    "pg_database_size measures this connected database on disk; Storage object bytes are separate and must not be added as database storage.",
+    "shared_buffers/work_mem/maintenance_work_mem are configured memory limits, not measurements of total/free RAM. effective_cache_size is a planner estimate, not reserved memory.",
+    "10GB storage capacity and2GB RAM were user-reported; allocation scope, available capacity and actual RAM consumption were not established by these read-only measurements."
+  ]
+}

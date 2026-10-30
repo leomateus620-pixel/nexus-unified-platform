@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components -- This isolated test entry is never shipped. */
+import { NrHarness } from "./NrHarness";
 import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -81,7 +82,9 @@ function Harness() {
   return (
     <QueryClientProvider client={client}>
       <AppShell>
-        {page === "agenda-equipe" ? (
+        {page === "nr-33" || page === "nr-35" ? (
+          <NrHarness norma={page === "nr-33" ? "NR33" : "NR35"} />
+        ) : page === "agenda-equipe" ? (
           <AgendaEquipe />
         ) : page === "almoxarifado" ? (
           <Almoxarifado />

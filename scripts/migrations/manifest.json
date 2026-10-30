@@ -227,6 +227,38 @@
     {
       "path": "drizzle/migrations/0037_pet_listagem.sql",
       "sha256": "1d34f65a9cb1b4ad6383c96e06ae9f4192c3f8ebe5f9df4d7a5dd88e8e2f1e44"
+    },
+    {
+      "path": "drizzle/migrations/0038_nr_base.sql",
+      "sha256": "045d04b3bf802952ebbc34d51e25923ff572e92410e9e3a7941e0a70b8ab4b93"
+    },
+    {
+      "path": "drizzle/migrations/0039_nr_arquivos.sql",
+      "sha256": "3f1c0b78b7dd072b6b2d19bbd4ea0e6219dba25a56edbd2b1127f77685b2a3f2"
+    },
+    {
+      "path": "drizzle/migrations/0040_nr_importacao.sql",
+      "sha256": "9744106eef4f054e5f939fd7c52cbb34254f3ae85414cb94001292630cea1aef"
+    },
+    {
+      "path": "drizzle/migrations/0041_nr_organizacao_acervo.sql",
+      "sha256": "a43db3c9bc94d963d38b5f953ad3067c2b824aa3ce2f43348e7d2c70ee9f458d"
+    },
+    {
+      "path": "drizzle/migrations/0042_nr_impactos.sql",
+      "sha256": "4032771a3184096e9c4a4bdc7a34c92287ec0fff7466a5ab751838030b235077"
+    },
+    {
+      "path": "drizzle/migrations/0043_nr_retencao_vinculos.sql",
+      "sha256": "f0105f9b696e41e769ebd262d8cf01284ea48163a49b2651d1cbdb2026751795"
+    },
+    {
+      "path": "drizzle/migrations/0044_nr_publicacao_tecnica.sql",
+      "sha256": "c09201370357ceb9ed588384445769842e5130c95440d692549f49617b35d8bf"
+    },
+    {
+      "path": "drizzle/migrations/0045_nr_historico_paginado.sql",
+      "sha256": "c237f3b7165586cbb4119fa9d7002ac0ecd4b72712562e0d92a921747eb52a47"
     }
   ]
 }

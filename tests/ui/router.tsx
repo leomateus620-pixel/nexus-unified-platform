@@ -6,6 +6,10 @@ export const Outlet = () => useContext(OutletContext);
 const listeners = new Set<() => void>();
 const routeSearchKeys = [
   "aba",
+  "nrPath",
+  "unidade",
+  "pasta",
+  "lixeira",
   "detalhe",
   "registro",
   "local",
@@ -78,6 +82,8 @@ export function useFixturePage() {
   );
 }
 const operationalPaths = {
+  "nr-33": "/nr-33",
+  "nr-35": "/nr-35",
   "agenda-equipe": "/agenda-equipe",
   almoxarifado: "/almoxarifado",
   engenharia: "/engenharia",
@@ -111,6 +117,15 @@ export function useNavigate() {
       if (opts.replace) history.replaceState({}, "", url);
       else history.pushState({}, "", url);
       listeners.forEach((l) => l());
+    }
+    if (typeof opts.to === "string" && /^\/nr-(33|35)(\/|$)/.test(opts.to)) {
+      page = opts.to.startsWith("/nr-33") ? "nr-33" : "nr-35";
+      const url = new URL(location.href);
+      url.searchParams.set("page", page);
+      url.searchParams.set("nrPath", opts.to.split("/").slice(2).join("/"));
+      history.pushState({}, "", url);
+      pageListeners.forEach((listener) => listener());
+      window.dispatchEvent(new Event("nr-lab-navigation"));
     }
     window.__nexusNavigations.push(opts);
   };
@@ -163,14 +178,20 @@ export function Link({
       .map(([key, value]) => [key, String(value)]),
   ).toString();
   const href = targetPath + (encoded ? `?${encoded}` : "");
-  const active = pathForPage(useFixturePage()) === targetPath;
+  const currentPage = useFixturePage();
+  const fixturePath =
+    pathForPage(currentPage) +
+    (currentPage.startsWith("nr-") && new URLSearchParams(location.search).get("nrPath")
+      ? "/" + new URLSearchParams(location.search).get("nrPath")
+      : "");
+  const active = fixturePath === targetPath;
   const state = active ? activeProps : inactiveProps;
   return (
     <a
       {...props}
       {...state}
       href={href}
-      aria-current={active ? "page" : undefined}
+      aria-current={props["aria-current"] ?? (active ? "page" : undefined)}
       className={[className, state?.className].filter(Boolean).join(" ")}
       onClick={(event) => {
         event.preventDefault();
@@ -180,7 +201,15 @@ export function Link({
           params: p,
           ...(encoded ? { search: targetSearch } : {}),
         });
-        if (href.includes("/revisoes/rev-fixture/")) {
+        if (/^\/nr-(33|35)(\/|$)/.test(targetPath)) {
+          page = targetPath.startsWith("/nr-33") ? "nr-33" : "nr-35";
+          const url = new URL(location.href);
+          url.searchParams.set("page", page);
+          url.searchParams.set("nrPath", targetPath.split("/").slice(2).join("/"));
+          history.pushState({}, "", url);
+          pageListeners.forEach((listener) => listener());
+          window.dispatchEvent(new Event("nr-lab-navigation"));
+        } else if (href.includes("/revisoes/rev-fixture/")) {
           page = href.split("/").at(-1);
           const url = new URL(location.href);
           url.searchParams.set("page", page);

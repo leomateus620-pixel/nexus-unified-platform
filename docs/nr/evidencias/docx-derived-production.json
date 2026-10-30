@@ -1,0 +1,29 @@
+{
+  "format": "nexus-docx-derived-production-v1",
+  "converter": "nr-docx-1.0.1",
+  "original_legacy_document_records": 736,
+  "original_docx_preserved": 233,
+  "derived_readback": {
+    "rows": [
+      {
+        "blocos": 4073,
+        "documentos_gerados": 233,
+        "identidades": 233,
+        "rascunhos": 233
+      }
+    ]
+  },
+  "total_readback": {
+    "rows": [
+      {
+        "objetos_confirmados": 1022,
+        "total_documentos": 969
+      }
+    ]
+  },
+  "transactional_batches": 80,
+  "full_original_body_text_checked": 233,
+  "missing_text_characters": 0,
+  "extra_text_characters": 0,
+  "limitations": "Editable derivatives preserve body text, tables and supported raster images. Original layout, headers/footers/signatures are not reconstructed; one EMF remains referenced in its original DOCX with a warning."
+}

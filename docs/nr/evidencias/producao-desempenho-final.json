@@ -1,0 +1,139 @@
+{
+  "captured_at": "2026-10-30 20:23:24.170969+00",
+  "read_only": true,
+  "postgres": "17.6",
+  "execution_role": "postgres",
+  "method": "EXPLAIN ANALYZE BUFFERS over nr_consultar with local claim of an existing organization member. No fixtures/data/schema writes. No cache flush or synthetic load; one sample per scenario; includes actor/context lookup and RPC JSON serialization.",
+  "volume": {
+    "documents": 969,
+    "legacy_documents": 736,
+    "editable_docx_derivatives": 233,
+    "places": 112,
+    "files_confirmed": 1022,
+    "bytes_confirmed": 291872274
+  },
+  "measurements": [
+    {
+      "scenario": "documentos_pagina_25",
+      "execution_ms": 16.522,
+      "planning_ms": 2.578,
+      "shared_hit_blocks": 1193,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "documentos_busca_ec",
+      "execution_ms": 34.061,
+      "planning_ms": 2.027,
+      "shared_hit_blocks": 1193,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "troca_unidade_documentos",
+      "execution_ms": 15.135,
+      "planning_ms": 1.612,
+      "shared_hit_blocks": 1193,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "maior_derivado_detalhe",
+      "execution_ms": 82.458,
+      "planning_ms": 3.831,
+      "shared_hit_blocks": 3414,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "locais_altura",
+      "execution_ms": 7.804,
+      "planning_ms": 0.987,
+      "shared_hit_blocks": 777,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    },
+    {
+      "scenario": "painel_nr33",
+      "execution_ms": 16.547,
+      "planning_ms": 1.672,
+      "shared_hit_blocks": 2206,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0
+    }
+  ],
+  "results": [
+    {
+      "captured_at": "2026-10-30 20:23:24.170969+00",
+      "caso": "documentos_busca_ec",
+      "distinct_returned_unit_count": 1,
+      "native_blocks": null,
+      "norma": "NR33",
+      "payload_bytes": 22305,
+      "recurso": "documentos",
+      "returned_rows": 25,
+      "total": 350
+    },
+    {
+      "captured_at": "2026-10-30 20:23:24.170969+00",
+      "caso": "documentos_pagina_25",
+      "distinct_returned_unit_count": 1,
+      "native_blocks": null,
+      "norma": "NR33",
+      "payload_bytes": 22305,
+      "recurso": "documentos",
+      "returned_rows": 25,
+      "total": 501
+    },
+    {
+      "captured_at": "2026-10-30 20:23:24.170969+00",
+      "caso": "locais_altura",
+      "distinct_returned_unit_count": 1,
+      "native_blocks": null,
+      "norma": "NR35",
+      "payload_bytes": 3211,
+      "recurso": "locais",
+      "returned_rows": 4,
+      "total": 4
+    },
+    {
+      "captured_at": "2026-10-30 20:23:24.170969+00",
+      "caso": "maior_derivado_detalhe",
+      "distinct_returned_unit_count": null,
+      "native_blocks": 788,
+      "norma": "NR33",
+      "payload_bytes": 796908,
+      "recurso": "documentos",
+      "returned_rows": null,
+      "total": null
+    },
+    {
+      "captured_at": "2026-10-30 20:23:24.170969+00",
+      "caso": "painel_nr33",
+      "distinct_returned_unit_count": null,
+      "native_blocks": null,
+      "norma": "NR33",
+      "payload_bytes": 1955,
+      "recurso": "painel",
+      "returned_rows": null,
+      "total": null
+    },
+    {
+      "captured_at": "2026-10-30 20:23:24.170969+00",
+      "caso": "troca_unidade_documentos",
+      "distinct_returned_unit_count": 1,
+      "native_blocks": null,
+      "norma": "NR33",
+      "payload_bytes": 22561,
+      "recurso": "documentos",
+      "returned_rows": 25,
+      "total": 344
+    }
+  ],
+  "limitations": [
+    "SQL owner access bypasses table RLS; the RPC uses the local member claim for its own checks. This is not a browser/session authorization test.",
+    "These samples measure database execution and serialization, excluding network/browser rendering, image/PDF loading and HTTP transfer. They are not p95/SLA values.",
+    "The largest derived-document test contains788 native blocks and returns796908 JSON bytes; ordinary list results contain25 rows and roughly22KB. The detail time includes selecting the largest record.",
+    "PL/pgSQL internals are opaque to the outer EXPLAIN. Partial search currently uses ILIKE within context; no index/schema/extension was changed during inspection."
+  ]
+}

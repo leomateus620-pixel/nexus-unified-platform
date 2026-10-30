@@ -1,0 +1,13 @@
+PASS: checkpoint45 → 46 preserves published agenda, participants, reservations, immutable revisions and old request keys without inferring new origins
+PASS: checkpoint46 → 47 preserves confirmed legacy attachment, Storage metadata and exact request hash without rewriting its parent
+PASS: checkpoint44 → 45 preserves known identity from private receipts without rebinding the operational person
+PASS: checkpoint43 → 44 hardens current authorization without changing existing records or RPC signatures
+PASS: six direct cross-tenant supply writes remain rejected by real composite FKs after removing redundant relationships
+PASS: checkpoint42 → 43 reproduces duplicate relationships before correction and retains one composite relationship afterwards
+PASS: checkpoint41 receipt and accumulator preserved on upgrade; no stock balance or conference inferred
+PASS: operational checkpoint 40 → 62; canonical person and audit retained
+PASS: pre-0022 frozen PE snapshot/hash preserved; legacy source rejected by selector and command; reviewed new version freezes canonical IDs and links correctly
+PASS: historical baseline (30) → upgrade (32); existing client preserved; retry executes no migration SQL
+PASS: failed DDL rolls back objects and ledger; altered historical checksum blocks execution
+PASS: clean installation (62) and private ledger; preexisting schema without reconciliation rejected
+PASS: connector single-DO envelopes validate native ledgers/schema, register provenance, apply once and roll back failed DDL with ledger

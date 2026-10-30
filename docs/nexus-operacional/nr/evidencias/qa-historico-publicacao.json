@@ -1,0 +1,39 @@
+{
+  "format": "nexus-nr-ui-history-qa-v1",
+  "environment": "tests/ui isolated synthetic fixtures in Chrome",
+  "production_writes": false,
+  "desktop_viewport": { "width": 1470, "height": 686 },
+  "revision_dialog": {
+    "opened_with_keyboard": true,
+    "read_only_editable_inputs": 0,
+    "bounds_after_fix": { "x": 285, "y": 34.296875, "width": 900, "height": 597.78125 },
+    "inside_viewport": true,
+    "visual_issue_fixed": "Removed combined shadcn/Tailwind and NR transforms by using raw Radix dialog content with the NR position styles.",
+    "screenshot": "laboratorio-revisao-sob-demanda.jpg"
+  },
+  "event_list": {
+    "first_page_metadata_rows": 25,
+    "after_next_page_rows": 28,
+    "has_next_page_after_28": false,
+    "full_event_opened_on_demand": true,
+    "tab_focus_contained": true,
+    "escape_closes": true,
+    "focus_returns_to_opener": true,
+    "screenshot": "laboratorio-evento-sob-demanda.jpg"
+  },
+  "dedicated_schema_tests": { "technical_publication": 9, "history": 5, "passed": true },
+  "new_mobile_attempt": {
+    "requested_width": 390,
+    "requested_height": 844,
+    "verified": false,
+    "reason": "Chrome extension stopped responding during viewport request; subsequent reconnection and reset requests also timed out.",
+    "viewport_reset_confirmed": false
+  },
+  "not_verified_in_this_run": [
+    "New technical-publication panel visual flow and mobile layout",
+    "New import-inspection panel visual flow and mobile layout",
+    "New history flow mobile layout",
+    "Authenticated production UI flows",
+    "Complete assistive-technology and WCAG evaluation"
+  ]
+}

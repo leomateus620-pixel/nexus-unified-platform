@@ -1,0 +1,28 @@
+{
+  "capturado_em": "2026-10-30T19:41:42.238Z",
+  "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "ledger_verified": 62,
+  "historical_revision_metadata": {
+    "persisted": 550,
+    "terminal_state": "indisponivel",
+    "historical_binary_downloads": 0
+  },
+  "source_events": {
+    "audited": 9,
+    "conciliated": 9,
+    "auth_accounts_created": 0,
+    "historical_date_interpretation": "raw original preserved; no timezone inference"
+  },
+  "file_junctions": {
+    "total": 718,
+    "document_links": 130,
+    "documents_with_word_pdf": 65,
+    "exact_drive_identity_and_hash": true,
+    "source_path_evidence": true
+  },
+  "source_image_paths": {
+    "left_pending": 490
+  },
+  "post_storage_reference_plan": "NOT executed; requires actual Storage confirmation",
+  "scope": "Authorized real migration data via Lovable owner query_database. No fixtures or disposable writes in production."
+}

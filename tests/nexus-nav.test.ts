@@ -77,6 +77,8 @@ describe("navegação por papel", () => {
       "/execucao",
       "/almoxarifado",
       "/equipe",
+      "/nr-33",
+      "/nr-35",
     ]);
     expect(destinoInicial(["engenharia"])).toBe("/comercial");
     expect(podeVerRota(["engenharia"], "/")).toBe(true);
@@ -127,10 +129,32 @@ describe("navegação por papel", () => {
     ["comercial", ["/", "/comercial", "/clientes", "/produtos"]],
     [
       "compras",
-      ["/", "/agenda-equipe", "/clientes", "/produtos", "/projetos", "/compras", "/almoxarifado"],
+      [
+        "/",
+        "/agenda-equipe",
+        "/clientes",
+        "/produtos",
+        "/projetos",
+        "/compras",
+        "/almoxarifado",
+        "/nr-33",
+        "/nr-35",
+      ],
     ],
     ["financeiro", ["/", "/projetos", "/financeiro", "/relatorios"]],
-    ["campo", ["/", "/agenda-equipe", "/levantamentos", "/execucao", "/almoxarifado", "/equipe"]],
+    [
+      "campo",
+      [
+        "/",
+        "/agenda-equipe",
+        "/levantamentos",
+        "/execucao",
+        "/almoxarifado",
+        "/equipe",
+        "/nr-33",
+        "/nr-35",
+      ],
+    ],
   ])("o papel %s recebe somente seu contexto atual", (role, paths) => {
     const actual = menusVisiveis([role as string]).flatMap((g) => g.items.map((i) => i.to));
     expect(actual).toEqual(paths);
@@ -187,5 +211,23 @@ describe("navegação por papel", () => {
     for (const role of ["comercial", "financeiro", "compras", "desconhecido"])
       expect(podeVerRota([role], "/execucao/pets/pet-autorizada")).toBe(false);
     expect(podeVerRota([], "/execucao/ordens/os", ["coordenar_operacao"])).toBe(true);
+  });
+});
+
+// Concessões explícitas dos módulos NR; controles de ação continuam no servidor.
+describe("módulos NR-33 e NR-35", () => {
+  it("concede menus e acesso direto somente aos papéis operacionais autorizados", () => {
+    for (const role of ["admin", "engenharia", "campo", "compras"]) {
+      const menus = menusVisiveis([role]).flatMap((g) => g.items.map((item) => item.to));
+      for (const norma of ["/nr-33", "/nr-35"]) {
+        expect(menus).toContain(norma);
+        expect(podeVerRota([role], norma + "/locais/local-autorizado")).toBe(true);
+      }
+    }
+    for (const roles of [[], ["comercial"], ["financeiro"], ["constructor"], ["desconhecido"]])
+      for (const norma of ["/nr-33", "/nr-35"])
+        expect(podeVerRota(roles, norma + "/documentos/id")).toBe(false);
+    expect(podeVerRota([], "/nr-33", ["coordenar_operacao"])).toBe(false);
+    expect(podeVerRota(["admin"], "/nr-33-futuro")).toBe(false);
   });
 });

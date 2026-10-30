@@ -1,0 +1,86 @@
+{
+  "format": "nexus-post-manifest64-integrity-v1",
+  "rows": [
+    {
+      "buckets": [
+        {
+          "bucket": "nexus-nr-acervo",
+          "objects": 1022,
+          "physical_bytes": 291872274,
+          "private": true
+        },
+        {
+          "bucket": "nexus-operacional",
+          "objects": 0,
+          "physical_bytes": 0,
+          "private": true
+        }
+      ],
+      "captured_at": "2026-10-30 20:57:18.275598+00",
+      "contracts": {
+        "durable_http_receipts": 2,
+        "height_pet_links": 0,
+        "pet_canonical_links": 108,
+        "places": 112,
+        "technical_drafts": 15,
+        "technical_models": 15,
+        "technical_publication_sources": 0,
+        "source_context_audit_events": 0,
+        "source_context_records": 4,
+        "source_context_records_measured_at": "2026-10-30 21:00:12.696294+00"
+      },
+      "database_bytes": 169086099,
+      "derived": {
+        "blocks": 4073,
+        "content_hash": "486f8a70fcecf702342d2c17fbf7e8c8027d9ea2159094f9fcc68af495f523fb",
+        "metadata_hash": "358a6e5a5227f78f670c8071a60cac6c8303fb9a3c3de4e3e5528faf4202c5ce",
+        "n": 233,
+        "snapshot_hash": "15093394963201b08d451b1d4fc77348320a6907401268f8c83e68811472125b",
+        "source_hash": "70e8986af0dbb78bd6ca02064d5a44aaafa0bf274768cec0d0415dfc773e2318"
+      },
+      "execution_role": "postgres",
+      "files": {
+        "bytes": 291872274,
+        "confirmed": 1022,
+        "files": 1022,
+        "missing_storage": 0,
+        "storage_matches": 1022
+      },
+      "original": {
+        "aggregate_hash": "831b63ddd14c28dc34e354c18691d98afb9983f31ec08c9417e3cbb0f5fe8ab3",
+        "n": 736
+      },
+      "revision_stability": {
+        "content_matches_imported_revision": 969,
+        "document_versions_unchanged": 969,
+        "documents": 969,
+        "revision_hashes_unchanged": 969,
+        "revision_pointers_unchanged": 969
+      }
+    }
+  ],
+  "expected_frozen_hashes": {
+    "derived": {
+      "n": 233,
+      "source_hash": "70e8986af0dbb78bd6ca02064d5a44aaafa0bf274768cec0d0415dfc773e2318",
+      "content_hash": "486f8a70fcecf702342d2c17fbf7e8c8027d9ea2159094f9fcc68af495f523fb",
+      "snapshot_hash": "15093394963201b08d451b1d4fc77348320a6907401268f8c83e68811472125b",
+      "metadata_hash": "358a6e5a5227f78f670c8071a60cac6c8303fb9a3c3de4e3e5528faf4202c5ce"
+    },
+    "original": {
+      "n": 736,
+      "aggregate_hash": "831b63ddd14c28dc34e354c18691d98afb9983f31ec08c9417e3cbb0f5fe8ab3"
+    }
+  },
+  "comparisons": {
+    "derived_sha256_all_components_match": true,
+    "original_sha256_and_snapshot_match": true,
+    "all969_current_versions_and_content_match_import_snapshot": true
+  },
+  "notes": [
+    "Read-only owner queries, no fixture/publication/data/schema writes.",
+    "Source context records are in nr_fontes(tipo=contexto_origem), with4 imported items; receipts are in nr_historico(recurso=recibos_storage).",
+    "All15 technical rules/criteria remain draft and the publication-source table is empty. No normative approval was fabricated.",
+    "Physical Storage bytes are metadata measurements, supported independently by prior actual GET/SHA-256 receipts; these SQL queries do not download file bytes."
+  ]
+}

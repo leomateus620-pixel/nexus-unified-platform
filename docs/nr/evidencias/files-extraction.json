@@ -1,0 +1,47 @@
+{
+  "format": "nexus-nr-files-reconciliation-v1",
+  "capturado_em": "2026-10-30T19:15:48.041Z",
+  "files_identified": 605,
+  "head_files_validated": 605,
+  "bytes_validated": 232242866,
+  "known_issued_links": 130,
+  "known_issued_bytes_validated": 130,
+  "source_direct_files": 465,
+  "folders": 60,
+  "folder_children": 140,
+  "empty_folders": 0,
+  "folder_cycles": 0,
+  "child_folders": 0,
+  "formats": {
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 233,
+    "application/pdf": 232,
+    "image/jpeg": 140
+  },
+  "photo_mapping": {
+    "candidata_extensao_jpeg": 299,
+    "sem_correspondencia": 603
+  },
+  "pending_source_image_paths": 490,
+  "limitations": [
+    "Drive parent_ids were not exposed; only confirmed list_folder edges are asserted.",
+    "Folder names alone never prove parentage.",
+    "Current head bytes are distinct from Drive historical revision bytes.",
+    "A .jpg/.jpeg candidate is not an automatic decision or proof that a source image was preserved."
+  ],
+  "byte_capture_window": {
+    "inicio": "2026-10-30T17:42:52.144Z",
+    "fim": "2026-10-30T19:07:05.306Z",
+    "fonte": "mtime dos sidecars de recebimento; autoria histórica e modificação no Drive permanecem separadas"
+  },
+  "unique_physical_hashes": 604,
+  "photo_mapping_count_unit": "associações de campo da origem, não arquivos ou locais",
+  "source_image_paths": {
+    "originals": 245,
+    "thumbnails": 245
+  },
+  "photo_mapping_unique_paths": {
+    "candidata_extensao_jpeg": 190,
+    "sem_correspondencia": 300
+  },
+  "candidate_drive_photo_files": 95
+}

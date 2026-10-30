@@ -1,0 +1,41 @@
+{
+  "capturado_em": "2026-10-30T20:00:36.997Z",
+  "isolated": true,
+  "checks": [
+    {
+      "query": "storage_preflight",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "storage_mismatches",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "source_baseline_per_unit",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "terminal_outcomes_per_unit_category",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "terminal_outcomes_global",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "derivative_documents",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "measured_disk_and_storage",
+      "parsed_and_executed_in_isolation": true
+    },
+    {
+      "query": "retained_issues",
+      "parsed_and_executed_in_isolation": true
+    }
+  ],
+  "closeout_blocks_without_confirmed_assets": true,
+  "no_production_closeout_executed": true,
+  "note": "Query syntax validated against real PostgreSQL62schema; no local disk values were used as production measurements."
+}

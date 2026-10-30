@@ -1,0 +1,41 @@
+{
+  "format": "nexus-nr-migrations-applied-v1",
+  "project_ref": "yhtgijtllvgzoqtfcgal",
+  "prefix_62_exact_before_application": true,
+  "transactional_connector_envelopes": true,
+  "isolated_clean_upgrade_replay_rollback_and_contracts_passed": true,
+  "applied": [
+    {
+      "position": 63,
+      "path": "drizzle/migrations/0044_nr_publicacao_tecnica.sql",
+      "sha256": "c09201370357ceb9ed588384445769842e5130c95440d692549f49617b35d8bf",
+      "response": {
+        "rows": []
+      }
+    },
+    {
+      "position": 64,
+      "path": "drizzle/migrations/0045_nr_historico_paginado.sql",
+      "sha256": "c237f3b7165586cbb4119fa9d7002ac0ecd4b72712562e0d92a921747eb52a47",
+      "response": {
+        "rows": []
+      }
+    }
+  ],
+  "ledger_readback": {
+    "rows": [
+      {
+        "applied_at": "2026-10-30 20:54:39.93561+00",
+        "path": "drizzle/migrations/0045_nr_historico_paginado.sql",
+        "position": 64,
+        "sha256": "c237f3b7165586cbb4119fa9d7002ac0ecd4b72712562e0d92a921747eb52a47"
+      },
+      {
+        "applied_at": "2026-10-30 20:54:32.733792+00",
+        "path": "drizzle/migrations/0044_nr_publicacao_tecnica.sql",
+        "position": 63,
+        "sha256": "c09201370357ceb9ed588384445769842e5130c95440d692549f49617b35d8bf"
+      }
+    ]
+  }
+}

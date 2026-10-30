@@ -1,0 +1,36 @@
+
+ RUN  v3.2.7 <PROJETO>
+
+ ✓ tests/clientes-operacionais.test.ts (5 tests) 7ms
+ ✓ tests/projetos-engenharia.test.ts (6 tests) 4ms
+ ✓ tests/operacao-files.test.ts (4 tests) 8ms
+ ✓ tests/operacao-permissions.test.ts (11 tests) 2ms
+ ✓ tests/session-access.test.ts (8 tests) 5ms
+ ✓ tests/nexus-nav.test.ts (21 tests) 22ms
+
+ Test Files  6 passed (6)
+      Tests  55 passed (55)
+   Start at  16:14:36
+   Duration  466ms (transform 501ms, setup 0ms, collect 975ms, tests 49ms, environment 0ms, prepare 320ms)
+
+✔ manifesto real contém 18 Supabase antes de 12 Drizzle históricas (120.33525ms)
+✔ hash é igual para checkout CRLF e LF, e muda com SQL diferente (0.157083ms)
+✔ edição de migração publicada é rejeitada (80.157417ms)
+✔ SQL novo não pode ser aplicado sem inscrição explícita (7.995083ms)
+✔ manifesto rejeita duplicação e caminhos fora das pastas SQL (11.283959ms)
+✔ migração não pode terminar a transação do ledger (4.594334ms)
+✔ upgrade retorna apenas sufixo pendente; retry não retorna SQL (26.811ms)
+✔ drift, lacuna, reordenação e migração desconhecida no ledger bloqueiam upgrade (12.974041ms)
+✔ arquivos históricos permanecem fora de duplicação nas duas trilhas (0.323958ms)
+✔ generation requires an explicit ephemeral flag and a loopback port (0.519333ms)
+✔ generator receives only public metadata and cannot inherit production credentials (0.108792ms)
+✔ format verification ignores layout/trailing commas but rejects changed types and constants (4.116041ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.758042
+{"protectedFiles":134,"changed":[],"declaredExceptions":[{"path":"src/features/propostas/propostas.functions.ts","scope":"acceptance branch only","sha256":"7f2f1097e2ea8c683c78038a5638520fa353bb03137acfd2a98c30ffa3f61ca7","restUnchanged":true}],"unexpected":[]}

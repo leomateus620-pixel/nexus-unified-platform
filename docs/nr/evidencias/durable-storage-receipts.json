@@ -1,0 +1,45 @@
+{
+  "format": "nexus-nr-durable-storage-receipts-v1",
+  "recorded_at": "2026-10-30T20:31:19.669Z",
+  "production_owner_execution": true,
+  "receipts": [
+    {
+      "request_sha256": "0c5a937631959b8d6d3bba058095f49c169f61aec9ff337e233005e3ece17d23",
+      "canonical_sha256": "e847a61300694e121a25bb5dd5767833c2511beac3d2adfa1c285d142a5e445a",
+      "created_at": "2026-10-30 20:18:07.608769+00",
+      "get_summary": {
+        "bytes": 232242866,
+        "errors": 0,
+        "files": 605,
+        "manifest_mismatches": 0,
+        "method": "Authenticated GET of full bytes; compare exact size, real response MIME and SHA-256 with each declared target. Aggregate canonical metadata receipt independently matches prepared targets.",
+        "unfinished": 0
+      },
+      "id": 4776,
+      "registro_id": "3060f29f-560e-5839-aa5d-70f18b0e97e9",
+      "scope": "originais_capturados"
+    },
+    {
+      "request_sha256": "0a99a65d2abff13cf678c5826b5eb458ed63c55469673b589b9812bd563221c4",
+      "canonical_sha256": "98c1cb8024eac2842ea6a3b4f11537e434f622e5115a1ce0c754b9a9f0ff802d",
+      "created_at": "2026-10-30 20:18:11.848954+00",
+      "get_summary": {
+        "bytes": 59629408,
+        "errors": 0,
+        "files": 417,
+        "manifest_mismatches": 0,
+        "method": "Authenticated GET of full bytes; compare exact size, real response MIME and SHA-256 with each declared target. Aggregate canonical metadata receipt independently matches prepared targets.",
+        "unfinished": 0
+      },
+      "id": 4777,
+      "registro_id": "b9778bdc-6a14-5070-8494-9bd54c862eff",
+      "scope": "imagens_docx_derivadas"
+    }
+  ],
+  "expected_metadata_recordsets_persisted_in_private_database_audit": true,
+  "per_file_database_confirmation_audit_preserved": 1022,
+  "original_verbose_HTTP_report_loss_explicitly_recorded": true,
+  "per_file_HTTP_timestamp_reconstruction": false,
+  "source_HTTP_GET_times_distinct_from_database_confirmation_times": true,
+  "technical_only_no_signature_or_certification": true
+}

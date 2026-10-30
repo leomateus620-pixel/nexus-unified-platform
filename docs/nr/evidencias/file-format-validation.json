@@ -1,0 +1,8 @@
+{
+  "capturado_em": "2026-10-30T19:12:54.884Z",
+  "files": 605,
+  "passed": 605,
+  "failures": 0,
+  "validator": "src/features/nr/files.ts validarBinarioNr",
+  "scope": "Re-read original staged bytes; SHA256,exactsize,extension/MIME,OfficeZIPCRC/expansion/activecontentpolicy and format signatures. Does not prove Storage upload or normative correctness."
+}

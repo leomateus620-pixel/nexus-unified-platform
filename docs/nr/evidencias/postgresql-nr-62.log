@@ -1,0 +1,6 @@
+{"suite":"NR core PostgreSQL","assertions":33,"passed":true,"scope":"isolated fixtures; real PostgreSQL constraints/RLS/RPC/locks; no Storage HTTP proof"}
+{"suite":"NR files PostgreSQL","assertions":22,"passed":true,"scope":"isolated SQL metadata/RLS/permissions; does not prove Storage HTTP or actual blob bytes"}
+{"suite":"NR import PostgreSQL","assertions":17,"passed":true,"scope":"private staging, canonical CNPJ identity, no fabricated Auth actor, resume,idempotence,three-way conflict,partial failure rollback,original historical status"}
+{"suite":"NR archive organization PostgreSQL","assertions":33,"passed":true,"scope":"isolated SQL; global model context, scoped history, file identity/version/replay/trash/move/RLS, manual field reason, physical consumption deduplication; no Storage HTTP proof"}
+{"suite":"NR impactos PostgreSQL","assertions":25,"passed":true,"scope":"isolated real constraints/RLS/RPC/locks; preserves issued content/snapshot; review is not emission or signature"}
+{"suite":"NR retention PostgreSQL","assertions":19,"passed":true,"scope":"isolated SQL: primary/secondary issued and superseded retention; owner-only junction; pending staging; archive replay and two-session association races; no Storage HTTP claim"}

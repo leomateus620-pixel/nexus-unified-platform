@@ -1,0 +1,21 @@
+{
+  "format": "nexus-nr-drive-revisions-v1",
+  "capturado_em": "2026-10-30T19:12:04.752Z",
+  "head_files": 605,
+  "files_revision_metadata": 605,
+  "metadata_failures": 0,
+  "revisions_exposed": 1155,
+  "head_revisions": 605,
+  "historical_revisions": 550,
+  "historical_binary_downloads": 0,
+  "states": {
+    "head_obtido": 605,
+    "bloqueado_api_retencao": 550
+  },
+  "official_download_policy": "https://developers.google.com/workspace/drive/api/guides/manage-downloads",
+  "sampled_historical_download": "403 FORBIDDEN from fetch_file_revision; evidence retained privately",
+  "limitations": [
+    "Metadata enumeration does not constitute historical binary preservation.",
+    "Keep Forever was not changed: the authorized Drive workflow is read-only."
+  ]
+}

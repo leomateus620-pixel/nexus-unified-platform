@@ -39,6 +39,7 @@ import { Route as AuthenticatedSegurancaRouteImport } from './routes/_authentica
 import { Route as Mapas3dSiloEngolfamentoRouteImport } from './routes/mapas-3d_.silo-engolfamento'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as AuthenticatedComercialIndexRouteImport } from './routes/_authenticated/comercial.index'
 import { Route as AuthenticatedComprasIndexRouteImport } from './routes/_authenticated/compras.index'
 import { Route as AuthenticatedComprasDemandasRouteImport } from './routes/_authenticated/compras.demandas'
@@ -231,6 +232,11 @@ const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
 const Mapas3dUnidadesRoute = Mapas3dUnidadesRouteImport.update({
   id: '/mapas-3d_/unidades',
   path: '/mapas-3d/unidades',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedComercialIndexRoute =
@@ -509,6 +515,7 @@ export interface FileRoutesByFullPath {
   '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -568,6 +575,7 @@ export interface FileRoutesByTo {
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/': typeof AuthenticatedIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -637,6 +645,7 @@ export interface FileRoutesById {
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/_authenticated/compras/demandas': typeof AuthenticatedComprasDemandasRoute
   '/_authenticated/compras/fornecedores': typeof AuthenticatedComprasFornecedoresRoute
   '/_authenticated/configuracoes/orcamentos': typeof AuthenticatedConfiguracoesOrcamentosRoute
@@ -707,6 +716,7 @@ export interface FileRouteTypes {
     | '/mapas-3d/silo-engolfamento'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
+    | '/.lovable/oauth/consent'
     | '/compras/demandas'
     | '/compras/fornecedores'
     | '/configuracoes/orcamentos'
@@ -766,6 +776,7 @@ export interface FileRouteTypes {
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/'
+    | '/.lovable/oauth/consent'
     | '/compras/demandas'
     | '/compras/fornecedores'
     | '/configuracoes/orcamentos'
@@ -834,6 +845,7 @@ export interface FileRouteTypes {
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
     | '/_authenticated/'
+    | '/.lovable/oauth/consent'
     | '/_authenticated/compras/demandas'
     | '/_authenticated/compras/fornecedores'
     | '/_authenticated/configuracoes/orcamentos'
@@ -883,6 +895,7 @@ export interface RootRouteChildren {
   Mapas3dSiloEngolfamentoRoute: typeof Mapas3dSiloEngolfamentoRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1095,6 +1108,13 @@ declare module '@tanstack/react-router' {
       path: '/mapas-3d/unidades'
       fullPath: '/mapas-3d/unidades'
       preLoaderRoute: typeof Mapas3dUnidadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/comercial/': {
@@ -1624,6 +1644,7 @@ const rootRouteChildren: RootRouteChildren = {
   Mapas3dSiloEngolfamentoRoute: Mapas3dSiloEngolfamentoRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

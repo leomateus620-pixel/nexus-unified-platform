@@ -65,8 +65,10 @@ As evidências de banco e as capturas sintéticas têm escopos diferentes. Os te
 ## Pendências de encerramento
 
 - Preservar como indisponíveis as 550 revisões históricas até existir acesso autorizado aos bytes, sem reconstruir originais.
-- Concluir a conferência das 245 fotos próprias do aplicativo e das 245 miniaturas, além da leitura final da origem, registrando a janela temporal e mudanças identificadas. A navegação no Chrome aguarda a disponibilização da sessão do Mac, atualmente bloqueada.
-- Concluir a publicação coordenada da branch/PR, o merge e o deploy após as verificações, além da homologação em sessão autenticada no ambiente conectado. Esses marcos de publicação não são declarados concluídos neste recorte.
+- Concluir a conferência das 245 fotos próprias do aplicativo e das 245 miniaturas, além da leitura final da origem, registrando a janela temporal e mudanças identificadas. A origem continua com o aplicativo incorporado em branco; em nova tentativa às 21:52 UTC, um caminho de foto observado retornou HTTP 403. Nenhum byte desse recurso foi declarado importado.
+- A PR #17 foi integrada pelo proprietário em `0d3d4c459efd4a92c1dd2f0b2416b17440912d9f`, e o Lovable confirmou o build da prévia desse commit às 21:48 UTC. O deploy foi solicitado; seu estado final e o SHA efetivamente publicado não foram expostos pelo conector. A conta do Chrome não tem acesso ao projeto privado no editor Lovable. A homologação autenticada de produção permanece pendente. Veja a [evidência de publicação](evidencias/publicacao-pos-merge.json).
 - Manter regras e critérios sem ativação normativa automática até a revisão profissional das fontes aplicáveis. Emissão, assinatura e liberação PET continuam dependentes dos mecanismos reais do Nexus.
 
 Os procedimentos de retomada estão em [importação e recuperação](importacao-recuperacao.md). Payloads, decisões com dados de clientes, originais e pacotes permanecem em armazenamento privado; o repositório conserva somente código, migrações, checksums e evidências sanitizadas.
+
+A [conferência somente de leitura após o merge](evidencias/pos-merge-banco.json), concluída às 21:53:24 UTC, confirmou novamente o manifesto de 64 entradas, os hashes dos 736 originais e 233 derivados, os 969 ponteiros/revisões e os 1.022 objetos correspondentes no Storage. O banco mediu 169.110.675 bytes em disco; isso não confirma quota, memória RAM ou espaço livre contratado.

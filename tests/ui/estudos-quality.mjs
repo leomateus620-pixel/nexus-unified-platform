@@ -295,11 +295,11 @@ try {
         events: window.__nexusAgenda.events.length,
       }));
       await page.getByRole("link", { name: "Abrir ação", exact: true }).click();
+      // Agenda details are modal: Radix hides the background heading until the user returns.
+      const actionDetail = page.getByRole("dialog", { name: "Detalhes da atividade", exact: true });
+      await expect(actionDetail).toBeVisible();
       await expect(
-        page.getByRole("heading", { level: 1, name: "Agenda Equipe", exact: true }),
-      ).toBeVisible();
-      await expect(
-        page.getByRole("heading", {
+        actionDetail.getByRole("heading", {
           level: 2,
           name: "Instrução liberada exclusivamente na fixture",
           exact: true,
@@ -320,14 +320,13 @@ try {
           { exact: true },
         ),
       ).toHaveCount(0);
-      await page.getByRole("button", { name: "Iniciar ação", exact: true }).click();
-      await page
-        .getByRole("dialog")
-        .getByRole("button", { name: "Iniciar ação", exact: true })
-        .click();
-      await expect(page.getByRole("dialog")).toHaveCount(0);
+      await actionDetail.getByRole("button", { name: "Iniciar ação", exact: true }).click();
+      const transition = page.getByRole("dialog", { name: "Iniciar ação", exact: true });
+      await transition.getByRole("button", { name: "Iniciar ação", exact: true }).click();
+      await expect(transition).toHaveCount(0);
+      await expect(actionDetail).toBeVisible();
       await expect(
-        page.getByText("Em execução · Ação operacional · V2", { exact: true }),
+        actionDetail.getByText("Em execução · Ação operacional · V2", { exact: true }),
       ).toBeVisible();
       const afterNavigation = await page.evaluate(
         (id) => ({
@@ -344,6 +343,14 @@ try {
       expect(afterNavigation.action.version).toBe(2);
       expect(afterNavigation.action.descricao).toBe("");
       expect(afterNavigation.ownCopy).toBe(false);
+      await actionDetail
+        .getByRole("button", { name: "Voltar à agenda", exact: true })
+        .last()
+        .click();
+      await expect(actionDetail).toHaveCount(0);
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Compromissos da equipe", exact: true }),
+      ).toBeVisible();
     },
   );
   await check("file query revocation hides cached original and upload controls", async () => {

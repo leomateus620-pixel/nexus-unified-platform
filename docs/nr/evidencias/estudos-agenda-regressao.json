@@ -1,0 +1,30 @@
+{
+  "format": "nexus-estudos-agenda-regression-v1",
+  "antecedent_commit": "f7b9acd",
+  "cause": "The canonical Agenda action detail is a Radix modal, making the background heading inaccessible; the current H1 is Compromissos da equipe. The previous UI assertions expected an obsolete heading and zero dialogs while the action detail intentionally stays open.",
+  "application_behavior_changed": false,
+  "assertions": [
+    "The canonical action opens as the Detalhes da atividade modal with the exact released instruction and stable action ID.",
+    "The Iniciar ação confirmation is scoped and closes after success, while the action detail remains visible with Em execução and V2.",
+    "Navigation does not create an action, alter source content or lose the source action identity.",
+    "Voltar à agenda closes the action detail and exposes the current accessible H1."
+  ],
+  "focused_runner": "tests/ui/run.mjs --estudos",
+  "focused_result": {
+    "success": true,
+    "estudos_checks": 14,
+    "responsive_layouts": 61,
+    "linked_actions_checks": 3,
+    "page_errors": []
+  },
+  "data": "Synthetic laboratory fixtures only; no production writes.",
+  "full_runner": {
+    "command": "tests/ui/run.mjs",
+    "result": "passed",
+    "exit_code": 0,
+    "subscripts": 25,
+    "captured_at": "2026-10-30T22:02:16.558761+00:00",
+    "scope": "Merge da PR17 mais correção deste teste; antes das ampliações funcionais posteriores de modelos, cálculos e validação de levantamentos.",
+    "evidence": "Relatórios sintéticos locais preservados em /tmp/nexus-presentation-followup; GitHub CI publica seus próprios artefatos."
+  }
+}

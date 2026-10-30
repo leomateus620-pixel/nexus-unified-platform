@@ -1,5 +1,7 @@
 # Roadmap — orçamento integrado NEXUS
 
+- [ ] Integrações de agentes: OAuth, MCP de consulta com permissões existentes, ferramentas locais e validação
+
 - [x] Acesso da Engenharia sem Dashboard/Configurações, destino inicial no Comercial, moldura visual única e logo NEXUS monocromática
 - [x] Login, organização, papéis e remoção dos dados fictícios
 - [x] Cadastros: clientes/unidades/contatos, fornecedores, catálogo com histórico de custos, importação da planilha

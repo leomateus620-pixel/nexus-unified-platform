@@ -1,0 +1,38 @@
+[
+  {
+    "state": "emitted",
+    "small": []
+  },
+  {
+    "state": "expired",
+    "small": []
+  },
+  {
+    "state": "interrupted",
+    "small": []
+  },
+  {
+    "state": "closing-preparation",
+    "small": []
+  },
+  {
+    "state": "closing",
+    "small": []
+  },
+  {
+    "state": "closed",
+    "small": []
+  },
+  {
+    "state": "cancelled",
+    "small": []
+  },
+  {
+    "state": "readonly",
+    "small": []
+  },
+  {
+    "state": "draft",
+    "small": []
+  }
+]

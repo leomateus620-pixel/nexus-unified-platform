@@ -1,0 +1,9 @@
+{
+  "method": "Actual components; controlled paginated read responses in the disposable local UI lab. No writes or certified operations.",
+  "checks": [
+    "OS → PET → OS restores search, page, matching rows and captured scroll",
+    "changing search resets the zero-based page",
+    "an obsolete restored page waits for its actual response, then clamps to the current last page"
+  ],
+  "errors": []
+}

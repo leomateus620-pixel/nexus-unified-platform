@@ -60,6 +60,7 @@ describe("PET: contrato autenticado do relatório", () => {
         organizationId: id(1),
         petId: id(3),
         userId: id(2),
+        renderVersao: "1",
         carregarAdmin: undefined,
       }),
     );
@@ -87,6 +88,25 @@ describe("PET: contrato autenticado do relatório", () => {
       call({ organization_id: id(1), id: id(3), expected_version: 0 }),
     ).rejects.toThrow();
     expect(mocked.generate).not.toHaveBeenCalled();
+  });
+  it("fixa formato explícito V2 sem alterar a chave de solicitação recebida", async () => {
+    await call({
+      organization_id: id(1),
+      id: id(3),
+      chave: id(4),
+      expected_version: 8,
+      render_versao: "2",
+    });
+    expect(mocked.generate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        chave: id(4),
+        expectedVersion: 8,
+        renderVersao: "2",
+        userId: id(2),
+      }),
+    );
+    await expect(call({ organization_id: id(1), id: id(3), render_versao: "3" })).rejects.toThrow();
+    expect(mocked.generate).toHaveBeenCalledOnce();
   });
 });
 

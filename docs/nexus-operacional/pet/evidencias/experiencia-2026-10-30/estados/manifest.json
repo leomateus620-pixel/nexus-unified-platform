@@ -1,0 +1,64 @@
+{
+  "scope": "Actual PET components with synthetic presentation-only fixtures; no database mutations or certified issuance validation.",
+  "report": "presentation-ui-results.json",
+  "checks": 7,
+  "layouts": 100,
+  "pageErrors": 0,
+  "viewports": [
+    360,
+    390,
+    430,
+    768,
+    1366,
+    1920
+  ],
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "states": [
+    "emitted",
+    "expired",
+    "interrupted",
+    "closing-preparation",
+    "closing",
+    "closed",
+    "cancelled",
+    "readonly"
+  ],
+  "screenshots": [
+    "emitted-dark-1366.png",
+    "emitted-light-390.png",
+    "expired-dark-390.png",
+    "interrupted-light-390.png",
+    "closing-preparation-dark-390.png",
+    "closing-light-1366.png",
+    "closed-dark-1366.png",
+    "closed-light-390.png",
+    "cancelled-light-390.png",
+    "readonly-dark-390.png",
+    "atmosphere-modal-light-390.png",
+    "atmosphere-readings-modal-dark-390.png",
+    "cancel-draft-dark-390.png",
+    "cancel-draft-failure-light-1366.png",
+    "concurrent-closing-comparison-light-390.png"
+  ],
+  "contactSheets": [
+    "contact-390-dark.jpg",
+    "contact-390-light.jpg",
+    "contact-1366-dark.jpg",
+    "contact-1366-light.jpg"
+  ],
+  "visualInspection": "Contact sheets for mobile/desktop and both modes inspected; primary hierarchy, statuses and exit action remain visible. Atmospheric portal and reading inputs inspected at 390px. Full 100-layout capture remains in /tmp/nexus-pet-experience-stateqa.",
+  "additionalRegressionChecks": {
+    "report": "cancel-ui-results.json",
+    "checks": 4,
+    "pageErrors": 0,
+    "scope": [
+      "Draft cancellation uses canonical manage-operation access rather than PET operate permission.",
+      "Failure preserves motive and explicit confirmation.",
+      "Unavailable for non-managers, issued and already cancelled PETs.",
+      "Concurrent finalization keeps unsent local closing text read-only until explicit discard."
+    ]
+  }
+}

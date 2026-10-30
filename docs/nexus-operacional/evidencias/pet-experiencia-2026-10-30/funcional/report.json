@@ -1,0 +1,395 @@
+{
+  "method": "Real PET JSX/hooks and canonical PostgreSQL functions through tests/pet-ui. Browser timezone Tokyo; PET timezone São Paulo. No real Supabase Auth, private Storage HTTP or signature provider.",
+  "limitations": [
+    "The laboratory useBlocker is a stub: navigation-discard guards are not claimed as exercised.",
+    "Network loss is injected only at the local browser transport.",
+    "All new records belong to the explicit disposable laboratory and remain available for inspection."
+  ],
+  "checks": [
+    "OS creation picker supports keyboard, returns focus, and double-click creates one real PET",
+    "preparation navigation and responsive resize retain the same unsaved draft",
+    "one searchable people picker adds an ID once in its role and persists it",
+    "hazard fields stay inline; changing a control choice retains its justification",
+    "network failure retains inputs and retry confirms one real write",
+    "a committed write with lost response retries with the same idempotency key",
+    "pending links open the canonical preparation field and focus it",
+    "SQL version conflicts preserve local edits and never overwrite another device",
+    "Opening a PET from filtered page two and returning to its OS restores search, page and scroll",
+    "Changing the OS scope from page two resets search and pagination to the new OS",
+    "OS PET search and real pagination use the server's full result count"
+  ],
+  "createdPetIds": [
+    "45e515de-bb6e-4884-9b74-491f05abbd2c",
+    "7f062723-5113-4c93-a90a-eb14259cfacb",
+    "eaeb5993-b817-483f-a497-87dffb31eefc",
+    "f7663d68-f010-4753-9aac-24bf3fdf15fa",
+    "fea8ecc6-9bda-4f96-b330-907e96ab7da8",
+    "76bc33e8-9369-4731-96ca-d587aeb62afe",
+    "172e9aef-a662-4579-9014-e806aba77a72",
+    "31f852fe-0d81-4e2c-97d1-127dde8a6d7c",
+    "c11c401d-666b-4b84-9416-3943345d0ddb",
+    "42a87d39-d1fb-4272-9537-0f16ec0d6003",
+    "3b00f527-3c05-4991-b21e-9c6dbaba1dfc",
+    "8bf06017-6183-47b6-adab-e7889b25ae25",
+    "4dfbcd87-2817-41d3-9962-921941aff877",
+    "41095611-3f1a-4f0d-ae66-7bcdc23ea442",
+    "62adeafe-3164-4629-9a06-301fe65e2c82",
+    "849f5a91-29ac-4563-87c3-64ba1c7d24ed",
+    "29773c4d-7f20-4435-8a85-4961c7ed6327",
+    "18a0939b-bc61-41d4-9842-43679e5fb3d4",
+    "93f29534-da3b-4097-abe3-a7e4338edf89",
+    "95313379-1c00-4830-8cb7-4cf61d4f93fb",
+    "55f8dd65-a23c-46e7-9dc1-bb5ac48bd483",
+    "6e56f83b-f4a5-4253-b5d0-43d082901782"
+  ],
+  "createdOsIds": [
+    "3d28fdfe-214a-40a9-a62c-24486f56b1db"
+  ],
+  "errors": [],
+  "commands": [
+    {
+      "comando": "criar_pet",
+      "dados": {
+        "os_id": "237d9b93-4457-4b3c-96b1-9c182de43de2",
+        "espaco_id": "b576c972-0cd1-42ff-b89c-61e9cfe257b4",
+        "atividade": "PET UI 1793340551739",
+        "termino_previsto": "2026-10-30T09:09:00.000Z",
+        "timezone": "America/Sao_Paulo"
+      },
+      "chave": "68f0e3f6-da78-439a-a559-4b67d7b0b2af"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 1,
+        "atividade": "PET UI 1793340551739 · navegação",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [],
+        "respostas": [],
+        "conteudo": {
+          "perigos": [],
+          "procedimentos": {},
+          "monitoramento_continuo": {
+            "confirmado": false,
+            "equipamento": "",
+            "registro": ""
+          },
+          "contatos_emergencia": "",
+          "outras_informacoes": "",
+          "modelo_id": ""
+        },
+        "modelo_id": null
+      },
+      "chave": "e5150e7e-d76d-43f7-bd64-0dbe20dc7be1"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 2,
+        "atividade": "PET UI 1793340551739 · navegação",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [],
+        "conteudo": {
+          "perigos": [],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "51e2e6ba-bffa-4157-97ba-88d636d4d979"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 3,
+        "atividade": "PET UI 1793340551739 · navegação",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [
+          {
+            "item": "isolamento",
+            "resposta": "sim",
+            "justificativa": "Observação preservada ao alternar a resposta"
+          }
+        ],
+        "conteudo": {
+          "perigos": [
+            {
+              "grupo": "Químicos",
+              "perigo": "Poeiras",
+              "medida": "Medida informada na verificação de campo",
+              "evidencia": "Referência preservada no item selecionado"
+            }
+          ],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "70b521a4-2a95-481f-bfcc-aaf0e9155dc9"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 4,
+        "atividade": "PET UI 1793340551739 · rede",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [
+          {
+            "item": "isolamento",
+            "resposta": "sim",
+            "justificativa": "Observação preservada ao alternar a resposta"
+          }
+        ],
+        "conteudo": {
+          "perigos": [
+            {
+              "grupo": "Químicos",
+              "medida": "Medida informada na verificação de campo",
+              "perigo": "Poeiras",
+              "evidencia": "Referência preservada no item selecionado"
+            }
+          ],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "6180cf8c-63e4-406a-a3cd-f8830d4b302f"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 4,
+        "atividade": "PET UI 1793340551739 · rede",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [
+          {
+            "item": "isolamento",
+            "resposta": "sim",
+            "justificativa": "Observação preservada ao alternar a resposta"
+          }
+        ],
+        "conteudo": {
+          "perigos": [
+            {
+              "grupo": "Químicos",
+              "medida": "Medida informada na verificação de campo",
+              "perigo": "Poeiras",
+              "evidencia": "Referência preservada no item selecionado"
+            }
+          ],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "6180cf8c-63e4-406a-a3cd-f8830d4b302f"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 5,
+        "atividade": "PET UI 1793340551739 · resposta perdida",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [
+          {
+            "item": "isolamento",
+            "resposta": "sim",
+            "justificativa": "Observação preservada ao alternar a resposta"
+          }
+        ],
+        "conteudo": {
+          "perigos": [
+            {
+              "grupo": "Químicos",
+              "medida": "Medida informada na verificação de campo",
+              "perigo": "Poeiras",
+              "evidencia": "Referência preservada no item selecionado"
+            }
+          ],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "0d571665-c9cd-463a-bc71-eb924152a830"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 5,
+        "atividade": "PET UI 1793340551739 · resposta perdida",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [
+          {
+            "item": "isolamento",
+            "resposta": "sim",
+            "justificativa": "Observação preservada ao alternar a resposta"
+          }
+        ],
+        "conteudo": {
+          "perigos": [
+            {
+              "grupo": "Químicos",
+              "medida": "Medida informada na verificação de campo",
+              "perigo": "Poeiras",
+              "evidencia": "Referência preservada no item selecionado"
+            }
+          ],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "0d571665-c9cd-463a-bc71-eb924152a830"
+    },
+    {
+      "comando": "salvar_rascunho",
+      "dados": {
+        "pet_id": "45e515de-bb6e-4884-9b74-491f05abbd2c",
+        "expected_version": 6,
+        "atividade": "PET UI 1793340551739 · edição local em conflito",
+        "termino_previsto": "2026-10-30T06:09:00-03:00",
+        "participantes": [
+          {
+            "pessoa_id": "a0300000-0000-4000-8000-000000000005",
+            "funcao": "trabalhador",
+            "classificacao": "interno",
+            "empresa": ""
+          }
+        ],
+        "respostas": [
+          {
+            "item": "isolamento",
+            "resposta": "sim",
+            "justificativa": "Observação preservada ao alternar a resposta"
+          }
+        ],
+        "conteudo": {
+          "perigos": [
+            {
+              "grupo": "Químicos",
+              "medida": "Medida informada na verificação de campo",
+              "perigo": "Poeiras",
+              "evidencia": "Referência preservada no item selecionado"
+            }
+          ],
+          "modelo_id": "",
+          "procedimentos": {},
+          "outras_informacoes": "",
+          "contatos_emergencia": "Canal real descrito no procedimento de laboratório",
+          "monitoramento_continuo": {
+            "registro": "",
+            "confirmado": false,
+            "equipamento": ""
+          }
+        },
+        "modelo_id": null
+      },
+      "chave": "03c2a6c7-c5a9-4243-b344-1c8a76f24985"
+    }
+  ],
+  "listReturn": {
+    "search": "PET UI 1793340551739",
+    "page": 2,
+    "scrollBeforeOpen": 203,
+    "scrollAfterReturn": 203
+  }
+}

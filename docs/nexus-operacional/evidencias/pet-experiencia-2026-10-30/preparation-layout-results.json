@@ -1,0 +1,557 @@
+{
+  "errors": [],
+  "themeChecks": [
+    {
+      "theme": "dark",
+      "persisted": true,
+      "globalUnchanged": true
+    },
+    {
+      "theme": "light",
+      "persisted": true,
+      "globalUnchanged": true
+    }
+  ],
+  "results": [
+    {
+      "state": "contexto",
+      "theme": "dark",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "dark",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "dark",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "dark",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "dark",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "dark",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "dark",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "dark",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "dark",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "dark",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "dark",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "dark",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "dark",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "dark",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "dark",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "dark",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "dark",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "dark",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "dark",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "dark",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "light",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "light",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "light",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "light",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "light",
+      "width": 360,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "light",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "light",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "light",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "light",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "light",
+      "width": 430,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "light",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "light",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "light",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "light",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "light",
+      "width": 1366,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "contexto",
+      "theme": "light",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "equipe",
+      "theme": "light",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "segurança",
+      "theme": "light",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "atmosfera",
+      "theme": "light",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    },
+    {
+      "state": "conferencia",
+      "theme": "light",
+      "width": 1920,
+      "overflow": false,
+      "fonts": true,
+      "smallInputs": [],
+      "smallTargets": []
+    }
+  ]
+}

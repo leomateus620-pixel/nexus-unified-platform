@@ -1,44 +1,55 @@
-# Agenda Equipe — revisão visual de 30/10/2026
+# PET — revisão Product Design
 
 **final result: passed**
 
-Alvo: a Agenda existente, o briefing e as imagens fornecidas; a Dashboard Fenasoja orienta hierarquia, gráficos e rankings. A revisão final incorpora as duas correções de direção do usuário: preservar o verde com qualidade e usar fundo grafite neutro ou branco suave esverdeado. Não se trata de uma cópia de pixels da Fenasoja.
+## Fontes e normalização
 
-## Fontes e comparação
+A referência visual é a identidade aprovada da Agenda, adaptada à jornada da PET, sem pretender copiar os mesmos campos ou a densidade de um editor de evento.
 
-- Fonte móvel: `/Users/leonardo/Downloads/Imagem do ChatGPT 30 de out. de 2026, 00_55_19.png` (1179 × 2556, inclui navegador).
-- Fonte Dashboard: `/Users/leonardo/Downloads/Imagem do ChatGPT 30 de out. de 2026, 00_55_26.png` (2474 × 1362).
-- Implementação: `docs/nexus-operacional/evidencias/agenda-experiencia-2026-10-30/` — lista, editor, filtros, detalhe e Dashboard.
-- Comparação conjunta móvel: `/Users/leonardo/.codex/visualizations/2026/10/30/01a18af5-56a1-7c32-a267-7a5862839204/agenda-qa/comparacao-mobile.png`.
-- Comparação conjunta Dashboard: `/Users/leonardo/.codex/visualizations/2026/10/30/01a18af5-56a1-7c32-a267-7a5862839204/agenda-qa/comparacao-dashboard.png`.
+- Fonte: `docs/nexus-operacional/evidencias/agenda-experiencia-2026-10-30/editor-390.png` e `editor-claro-390.png` (390px de largura, fonte de direção visual).
+- Baseline PET: capturado antes de editar, no laboratório SQL em `http://127.0.0.1:4193/execucao/pets/...`; originais em `/tmp/nexus-pet-before/` e recorte incorporado à comparação.
+- Implementação: `docs/nexus-operacional/evidencias/pet-experiencia-2026-10-30/`, estados emitida/encerrada em `docs/nexus-operacional/pet/evidencias/experiencia-2026-10-30/estados/`.
+- Comparação conjunta: `docs/nexus-operacional/evidencias/pet-experiencia-2026-10-30/comparacao-preparacao.jpg` (1200×1950). Agenda dia/noite, PET anterior e implementação estão no mesmo input visual e foram inspecionadas juntas.
+- Recorte focado: `campos-foco-390.png` (390×800), além dos portais atmosféricos e do cancelamento e dos quatro contact sheets dos estados.
 
-As comparações foram abertas e inspecionadas no mesmo input visual. O navegador da fonte móvel foi recortado e a região foi normalizada para 390 px; a fonte não define a escala CSS. Capturas implementadas usam deviceScaleFactor 1, viewports CSS 390 × 844 e 1366 × 900. Capturas de página inteira são mais altas que o viewport; filtros/detalhe usam apenas o viewport. Os estados e dados das fontes são diferentes dos dados sintéticos isolados usados nos testes. Não se infere correspondência de conteúdo ou estatística entre eles.
+Capturas PET usam CSS 360/390/430/768/1366/1920px, altura950 na preparação e altura900 na matriz de estados, deviceScaleFactor1. As imagens de página inteira têm a altura do conteúdo. A comparação móvel recorta os primeiros950px e mantém largura390, sem navegador ou moldura. A Agenda é outro fluxo e outra composição; não se infere igualdade de conteúdo. A faixa de laboratório é identificada como teste e não faz parte da interface de produção.
 
-## Superfícies verificadas
+## Findings e iterações
 
-- **Tipografia:** Saira e Barlow existentes, números tabulares, títulos compactos e descrições legíveis. Títulos extensos quebram linha sem cortar controles. Campos móveis usam 16 px.
-- **Ritmo e composição:** primeira dobra dedicada aos eventos, comandos em duas linhas no celular, três zonas nos cards desktop. Editor e detalhe têm uma região de rolagem e ações acessíveis. Nenhuma coluna lateral vazia foi adicionada.
-- **Cores:** fundo grafite neutro; esmeralda nas ações e gráficos; verdes claros legíveis nos apoios. Versão clara usa branco esverdeado e verde profundo. A navegação global conserva sua identidade. Status possui texto além da cor.
-- **Imagens/ícones:** Lucide existente, iniciais derivadas dos nomes reais. Não foram criadas fotografias, logos ou avatares fictícios. Não há imagem decorativa que exija comparação de recorte.
-- **Conteúdo:** uma entrada de criação, sem título interno repetido, sem IANA/visibilidade/preferências no editor cotidiano, sem paginação de lista vazia. Categoria e natureza permanecem distintas.
+1. **P2 — excesso de superfície auxiliar e lateral inconsistente.** O baseline mostrava fatos herdados como inputs, textos repetidos e contexto com inversão de abertura por breakpoint. Substituídos por fatos legíveis e acesso secundário explícito; fases e etapas agora têm funções distintas. Comparação final: `comparacao-preparacao.jpg` e capturas contexto390/1366 nos dois modos.
+2. **P2 — campos e seleções pouco legíveis.** Campos agora usam16px, bordas verdes distinguíveis, rótulos associados, busca única e estados de foco. Portais recebem os mesmos tokens. Evidências: `campos-foco-390.png`, capturas de equipe e `atmosphere-*-390.png` nos estados.
+3. **P2 — segurança extensa sem orientação de progresso.** EPC/EPI agora mostram respostas reais/total; EPI começa recolhido, pendência abre seus ancestrais antes de focar o campo. Não se omitem verificações ou instruções de segurança. Evidência: captura segurança390 e teste de destino de pendências.
+4. **P2 — controles secundários ocupavam outra linha no cabeçalho móvel.** Contexto/opções passou a um ícone com nome acessível; cancelamento fica dentro desse acesso, preservando sua disponibilidade e confirmação. Capturas finais substituem a versão anterior. O teste de cancelamento foi reexecutado após a mudança.
+5. **P1 — encerramento perdia texto ao trocar de fase ou finalizar em outra sessão.** Etapa permanece montada enquanto necessário; transição terminal prioriza a situação confirmada e oferece comparação local somente leitura. Evidência: `concurrent-closing-comparison-light-390.png` e teste sem escrita durante a comparação.
+6. **P2 — ações de conferência e retorno de lista.** Guardas por estado removem ações inválidas em consulta final. OS, busca, página e scroll são restaurados no retorno; outra OS tem escopo próprio. Testes de navegador confirmaram203→203px e retorno em lista longa.
 
-O recorte focado do editor móvel e do painel de filtros foi inspecionado separadamente, além da composição inteira: data/hora, responsabilidade, seleção relacional, foco e footer. A Dashboard foi verificada também em versão clara.
+7. **P2 — tempos individuais exigiam rolagem lateral no celular.** Na revisão da PET encerrada, a tabela escondia saída/permanência fora da primeira coluna visível. As linhas agora se recompõem em duas colunas com rótulos, mantendo a tabela no desktop. A matriz e a captura `closed-light-390.png` foram refeitas.
 
-## Iterações e correções
+Após os ajustes, a matriz e as comparações foram repetidas. Não restam achados visuais P0/P1/P2 identificados.
 
-1. **P2 — overflow de 4 px:** margens da Agenda não correspondiam ao padding operacional. Corrigidas conforme `nx-main`; verificações nas seis larguras passaram.
-2. **P2 — mês cortado:** input mensal estreito cortava o ano. Substituído visualmente por mês/ano compactos, mantendo o input nativo acessível; captura final mostra o ano completo.
-3. **P1 — direção de cor:** primeiro acento índigo foi rejeitado pelo usuário. Substituído por esmeralda, fundo grafite e textos em verdes graduados; comparações finais e capturas registram a direção corrigida.
-4. **P2 — foco/retorno:** filtros não retornavam ao acionador e detalhe substituía a lista. Foco restaurado; detalhe agora modal preserva lista e posição. Teste confirma Escape, foco e scroll exatos.
-5. **P2 — redução de movimento:** incluído o próprio painel no seletor de `prefers-reduced-motion`, além dos descendentes. Menus e ícones mantêm alvos mínimos de 44 px.
+## Superfícies de fidelidade
 
-6. **P2 — contraste de campos claros:** bordas de input passaram de 2,14:1 para 3,81:1 contra o fundo claro; texto de botão claro tem 5:1 e ação esmeralda escura 8,02:1. Medição sRGB dos tokens, sem alegar auditoria integral de WCAG.
-7. **Preferência solicitada — dois modos:** controle acessível, cores correspondentes nos campos/gráficos/portais e persistência após recarga foram adicionados e validados.
+- **Tipografia:** Saira em títulos e Barlow em texto/controles, locais e verificadas com document.fonts. Pesos e tamanhos diferenciam etapa, assunto e apoio; nomes extensos quebram sem cortar ações. PDF incorpora as mesmas famílias.
+- **Ritmo:** conteúdo amplo no desktop, duas colunas quando cabem, empilhamento móvel. A operação começa pela presença; encerramento e consulta têm composição própria. Footer permanece acessível e não cria uma área principal com scroll aninhado.
+- **Cores:** grafite e branco esverdeado, esmeralda para ações e hierarquia; estados de atenção/cancelamento têm rótulo e cor. Inputs têm bordas mais fortes que os cards. A navegação e a Agenda mantêm tokens próprios; teste confirma html/rail inalterados ao alternar tema.
+- **Imagens:** logo e ícones Lucide existentes preservados. Iniciais vêm dos nomes de teste/reais disponíveis, sem retratos inventados. Fotos no PDF são pipeline de demonstração explicitamente identificado; não são evidências de campo em produção.
+- **Conteúdo:** contexto herdado compacto; medições e confirmações explícitas; ausência de provedor visível junto da ação impedida. UUIDs/hashes ficam em integridade/documentos. Cancelada tem linguagem própria, sem aparência de conclusão bem-sucedida.
 
-Após as correções, não foram encontrados problemas visuais P0/P1/P2 nas capturas finais. Não há pendência estética relevante identificada.
+## Evidência e limites
 
-## Evidência funcional e limites
+60 layouts de preparação/conferência, 100 de estados/portais, ambos os modos e seis larguras; nenhum overflow, campo visível abaixo de16px ou erro de página. A preparação também mede alvos de toque >=44px e persistência do tema. Foco/teclado do picker, Escape/retorno do diálogo e movimento reduzido foram exercitados. A auditoria de console abriu18 páginas de estados/temas, sem erros de console ou de página (`console-audit.json`). Os testes SQL e navegador de persistência são separados da matriz de apresentação.
 
-Relatórios `agenda-ui-results.json` e `dashboard-ui-results.json`: 34 + 36 verificações de layout; 19 + 12 grupos de comportamento; nenhum erro de página ou console. Larguras: 360, 390, 430, 768, 1366 e 1920. Incluem temas, filtros cancelar/aplicar, foco, retorno de recorte, erro recuperável, concorrência de versão, idempotência, legado temporal e fuso do dispositivo Asia/Tokyo. Capturas usam dados sintéticos somente no laboratório de testes.
+PDF: 11 páginas V2 renderizadas, inspecionadas e testadas quanto a margens; capa, fotografia e quebras de tabela preservadas no diretório pdf. V1 tem golden e replays próprios.
 
-SQL e DTOs têm testes separados em PostgreSQL descartável. A revisão visual não comprova teclado físico/virtual de iPhone, VoiceOver ou Auth/Storage HTTP conectado. Um smoke SQL separado no servidor real confirmou leitura autorizada dos contratos, sem substituir esses testes. Esses cenários não foram executados em dispositivo físico. Há alternância explícita Modo claro/Modo noite apenas na Agenda. A preferência é persistida por organização/usuário; os portais recebem o mesmo tema por contexto. Os testes confirmam que o html/body e a navegação global não mudam. Anexos e séries acrescentam 12 medições de layout e 10 verificações funcionais, totalizando 82/41 no runner completo.
+Não foram exercitados VoiceOver, iPhone físico, teclado virtual real, certificação externa ou Storage privado HTTP. O laboratório tem roteador controlado; seu bloqueio de navegação é stub. Não se afirma conclusão de emissão certificada real. Esses limites estão no relatório técnico e não constituem comparação visual pendente.
+
+## Implementation checklist
+
+- [x] Dois temas isolados, fontes, contraste e campos.
+- [x] Preparação/conferência, operação, encerramento e consulta.
+- [x] Preservação de preenchimento, pendências, retry e retorno.
+- [x] Capturas revisadas em conjunto e recortes legíveis.
+- [x] Estados vazios, bloqueados, somente leitura e cancelados.
+- [x] PDF derivado V2 e compatibilidade histórica.
+
+**Follow-up polish:** sem refinamento P3 obrigatório identificado. Validação em dispositivo físico continua fora da evidência executada.

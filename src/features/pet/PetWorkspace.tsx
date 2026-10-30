@@ -2,15 +2,14 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useBlocker } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, Clock3, Save } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Ellipsis, Save } from "lucide-react";
 import { ActionButton, ErrorState, LoadingState } from "@/components/nexus/Page";
 import { useOrg } from "@/features/org/session";
-import { useCommandKey } from "@/features/operacao/components";
+import { PetCommandIntents } from "./command-intents";
 import { RecordFiles } from "@/features/operacao/RecordFiles";
 import { petExecutar, petObter, petOpcoes } from "./pet.functions";
 import {
   PET_ETAPAS,
-  PET_FUNCOES,
   optionName,
   petSnapshotOption,
   petDate,
@@ -27,6 +26,11 @@ import { PetContingencia } from "./PetContingencia";
 import type { Json } from "./schemas";
 import "./pet.css";
 import { retainPetDraftView } from "./draft-recovery";
+import { PetAppearanceProvider, PetThemeToggle, usePetAppearance } from "./PetAppearance";
+import { PET_PHASES, initialPetStage, petStageAvailable } from "./presentation";
+import { PetEncerramento } from "./PetEncerramento";
+import { PetResumoConsulta } from "./PetResumo";
+import { PetCancelarRascunho } from "./PetCancelarRascunho";
 
 export function PetWorkspace({ petId }: { petId: string }) {
   const session = useOrg();
@@ -39,12 +43,14 @@ export function PetWorkspace({ petId }: { petId: string }) {
       />
     );
   return (
-    <PetConnected
-      key={`${session.data.orgId}:${session.data.userId}:${session.data.roles.join(",")}:${JSON.stringify(session.data.capabilities)}:${petId}`}
-      organizationId={session.data.orgId}
-      userId={session.data.userId}
-      petId={petId}
-    />
+    <PetAppearanceProvider organizationId={session.data.orgId} userId={session.data.userId}>
+      <PetConnected
+        key={`${session.data.orgId}:${session.data.userId}:${session.data.roles.join(",")}:${JSON.stringify(session.data.capabilities)}:${petId}`}
+        organizationId={session.data.orgId}
+        userId={session.data.userId}
+        petId={petId}
+      />
+    </PetAppearanceProvider>
   );
 }
 function PetConnected({
@@ -60,7 +66,7 @@ function PetConnected({
     getOptions = useServerFn(petOpcoes),
     execute = useServerFn(petExecutar),
     client = useQueryClient();
-  const keyFor = useCommandKey(),
+  const intents = useRef(new PetCommandIntents()),
     lock = useRef(false),
     alive = useRef(true);
   const [busy, setBusy] = useState(false),
@@ -99,11 +105,15 @@ function PetConnected({
     setError(null);
     try {
       await execute({
-        data: { organization_id: organizationId, comando: { ...value, chave: keyFor(value) } },
+        data: {
+          organization_id: organizationId,
+          comando: { ...value, chave: intents.current.key(value) },
+        },
       });
       if (!alive.current) return false;
       await client.invalidateQueries({ queryKey: ["pet", organizationId] });
       if (!alive.current) return false;
+      intents.current.confirmed(value);
       setNotice(
         value.comando === "registrar_saida"
           ? "Saída registrada no servidor. Confira a pendência individual de assinatura."
@@ -214,29 +224,67 @@ export function PetFicha({
   const readOnly =
     !detail.permissoes["editar"] ||
     !["rascunho", "em_conferencia"].includes(detail.pet.estado_documental);
-  const [stage, setStage] = useState(detail.pet.emitida_em ? 5 : 0);
+  const { theme } = usePetAppearance();
+  const [stage, setStage] = useState(() => initialPetStage(detail));
+  const [closureDirty, setClosureDirty] = useState(false);
+  const [showLocalClosure, setShowLocalClosure] = useState(false);
+  const goTo = (next: number, item?: string) => {
+    if (!petStageAvailable(detail, next)) return;
+    setStage(next);
+    if (item)
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const group = Array.from(document.querySelectorAll<HTMLElement>("[data-pet-field]")).find(
+            (node) => node.dataset["petField"] === item,
+          );
+          let parent = group?.parentElement;
+          while (parent) {
+            if (parent instanceof HTMLDetailsElement) parent.open = true;
+            parent = parent.parentElement;
+          }
+          group?.scrollIntoView({
+            block: "center",
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "instant"
+              : "smooth",
+          });
+          group
+            ?.querySelector<HTMLElement>("input,select,textarea,button")
+            ?.focus({ preventScroll: true });
+        }),
+      );
+  };
   const mainRef = useRef<HTMLElement>(null);
   const previousStage = useRef(stage);
   useEffect(() => {
     if (previousStage.current !== stage) {
       previousStage.current = stage;
       if (window.matchMedia("(max-width:850px)").matches)
-        mainRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+        mainRef.current?.scrollIntoView({
+          block: "start",
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "instant"
+            : "smooth",
+        });
     }
   }, [stage]);
   const [draft, setDraft] = useState<PetDraft>(() => petDraft(detail));
   const [saved, setSaved] = useState(() => JSON.stringify(petDraft(detail)));
   const [localError, setLocalError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ atividade?: string; termino_previsto?: string }>(
+    {},
+  );
   const [contextOpen, setContextOpen] = useState(false);
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    const media = window.matchMedia("(max-width:850px)");
-    const update = () => setMobile(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
   const dirty = JSON.stringify(draft) !== saved;
+  const serverStage = initialPetStage(detail);
+  const previousServerStage = useRef(serverStage);
+  useEffect(() => {
+    if (serverStage !== previousServerStage.current) {
+      if (serverStage === 7 || (!dirty && !closureDirty && stage === previousServerStage.current))
+        setStage(serverStage);
+      previousServerStage.current = serverStage;
+    }
+  }, [serverStage, stage, dirty, closureDirty]);
   const currentVersion = useRef(detail.pet.version);
   const [localVersion, setLocalVersion] = useState(detail.pet.version);
   useEffect(() => {
@@ -252,8 +300,8 @@ export function PetFicha({
   }, [detail, dirty]);
   const blocker = useBlocker({
     withResolver: true,
-    shouldBlockFn: () => dirty,
-    enableBeforeUnload: () => dirty,
+    shouldBlockFn: () => dirty || closureDirty,
+    enableBeforeUnload: () => dirty || closureDirty,
   });
   const supervisor = detail.participantes.find(
     (p) => p.funcao === "supervisor" && !(p as unknown as { fim?: string }).fim,
@@ -269,14 +317,30 @@ export function PetFicha({
     Date.now() >= Date.parse(detail.pet.termino_previsto);
   async function save(advance = false) {
     setLocalError("");
+    setFieldErrors({});
     if (!draft.atividade.trim()) {
-      setLocalError("Informe o objetivo e a descrição do trabalho na etapa Contexto.");
-      setStage(0);
+      setFieldErrors({ atividade: "Descreva a atividade a realizar." });
+      goTo(0, "atividade");
       return;
     }
     if (!draft.termino_previsto || Number.isNaN(Date.parse(draft.termino_previsto))) {
-      setLocalError("Informe um término previsto válido na etapa Contexto.");
-      setStage(0);
+      setFieldErrors({ termino_previsto: "Informe uma validade prevista válida." });
+      goTo(0, "termino_previsto");
+      return;
+    }
+    let payload: Record<string, Json>;
+    try {
+      payload = draftPayload(
+        draft,
+        detail.pet.timezone,
+        detail.pet.conteudo,
+        detail.pet.termino_previsto,
+      );
+    } catch (e) {
+      setFieldErrors({
+        termino_previsto: e instanceof Error ? e.message : "Confira a validade prevista.",
+      });
+      goTo(0, "termino_previsto");
       return;
     }
     const ok = await onCommand({
@@ -284,7 +348,7 @@ export function PetFicha({
       dados: {
         pet_id: detail.pet.id,
         expected_version: localVersion,
-        ...draftPayload(draft, detail.pet.timezone),
+        ...payload,
         modelo_id: draft.modelo_id || null,
       },
     });
@@ -295,7 +359,7 @@ export function PetFicha({
     }
   }
   return (
-    <div className="nx-pet">
+    <div className="nx-pet pet-workspace" data-pet-theme={theme}>
       <Link
         className="nx-pet-link mb-4"
         to="/execucao/ordens/$ordemId"
@@ -305,7 +369,7 @@ export function PetFicha({
       </Link>
       <header className="nx-pet-header">
         <div>
-          <p className="nx-pet-kicker">PET Digital Nexus · Permissão de Entrada e Trabalho</p>
+          <p className="nx-pet-kicker">Permissão de Entrada e Trabalho</p>
           <h1 className="nx-pet-title">
             {detail.pet.numero} <span className="font-normal text-muted-foreground">/</span>{" "}
             {optionName(petSnapshotOption(detail, "espaco") || detail.espaco)}
@@ -313,15 +377,19 @@ export function PetFicha({
           <p className="nx-pet-description">{detail.pet.atividade}</p>
         </div>
         <div className="nx-pet-actions">
+          <PetThemeToggle />
           <PetStatus value={detail.pet.estado_documental} />
           {expired && <PetStatus value="expirada" />}
           <ActionButton
             variant="ghost"
             className="nx-pet-summary-toggle"
             onClick={() => setContextOpen(!contextOpen)}
-            aria-expanded={mobile ? contextOpen : !contextOpen}
+            aria-expanded={contextOpen}
+            aria-controls="pet-context"
+            aria-label="Detalhes e opções da PET"
+            title="Detalhes e opções da PET"
           >
-            Contexto <ChevronDown size={14} className="ml-2 inline" aria-hidden />
+            <Ellipsis size={18} aria-hidden />
           </ActionButton>
         </div>
       </header>
@@ -345,6 +413,28 @@ export function PetFicha({
           )}
         </div>
       )}
+      {serverStage === 7 && closureDirty && (
+        <div role="alert" className="nx-pet-notice mb-4" data-tone="attention">
+          <p>
+            A PET foi finalizada em outra atualização. Seu preenchimento local de encerramento não
+            foi enviado.
+          </p>
+          <div className="nx-pet-actions mt-3">
+            <ActionButton variant="ghost" onClick={() => setShowLocalClosure((value) => !value)}>
+              {showLocalClosure ? "Ocultar comparação" : "Comparar preenchimento local"}
+            </ActionButton>
+            <ActionButton
+              variant="ghost"
+              onClick={() => {
+                setShowLocalClosure(false);
+                setClosureDirty(false);
+              }}
+            >
+              Descartar preenchimento local
+            </ActionButton>
+          </div>
+        </div>
+      )}
       {dirty && localVersion !== detail.pet.version && (
         <p role="alert" className="nx-pet-notice mb-4" data-tone="attention">
           Há uma versão mais recente no servidor. O preenchimento local foi preservado para
@@ -364,27 +454,86 @@ export function PetFicha({
           </div>
         </div>
       )}
-      <nav className="nx-pet-steps" aria-label="Etapas da PET">
-        {PET_ETAPAS.map((label, index) => (
+      {contextOpen && (
+        <section
+          id="pet-context"
+          className="nx-pet-panel pet-context-drawer"
+          aria-label="Contexto da permissão"
+        >
+          <dl className="nx-pet-facts">
+            <div>
+              <dt>OS vinculada</dt>
+              <dd>{detail.os?.numero}</dd>
+            </div>
+            <div>
+              <dt>Supervisor de entrada</dt>
+              <dd>{person(supervisor)}</dd>
+            </div>
+            <div>
+              <dt>Vigia</dt>
+              <dd>{person(vigia)}</dd>
+            </div>
+            <div>
+              <dt>Validade</dt>
+              <dd>{petDate(detail.pet.termino_previsto, detail.pet.timezone)}</dd>
+            </div>
+            <div>
+              <dt>Versão documental</dt>
+              <dd>{detail.pet.version}</dd>
+            </div>
+          </dl>
+          <div className="nx-pet-actions mt-4">
+            <PetCancelarRascunho
+              detail={detail}
+              onCommand={onCommand}
+              busy={busy}
+              errorMessage={error?.message}
+            />
+          </div>
+        </section>
+      )}
+      <nav className="pet-phases" aria-label="Fases da PET">
+        {PET_PHASES.filter((phase) =>
+          phase.stages.some((index) => petStageAvailable(detail, index)),
+        ).map((phase, index) => (
           <button
-            key={label}
             type="button"
-            aria-current={stage === index ? "step" : undefined}
-            onClick={() => setStage(index)}
+            key={phase.name}
+            aria-current={(phase.stages as readonly number[]).includes(stage) ? "step" : undefined}
+            onClick={() => goTo(phase.stages[0]!)}
           >
             <span>{String(index + 1).padStart(2, "0")}</span>
-            {label}
+            {phase.name}
           </button>
         ))}
       </nav>
-      <div className="nx-pet-layout" data-context-toggled={contextOpen}>
+      {stage < 4 && (
+        <nav className="pet-preparation-steps" aria-label="Etapas da preparação">
+          {PET_ETAPAS.slice(0, 4).map((label, index) => (
+            <button
+              type="button"
+              key={label}
+              aria-current={stage === index ? "step" : undefined}
+              onClick={() => goTo(index)}
+            >
+              <span>{index + 1}</span>
+              {label}
+            </button>
+          ))}
+        </nav>
+      )}
+      <div className="pet-content-layout">
         <main ref={mainRef} className="nx-pet-main">
           {stage < 4 && (
             <>
               <PetDraftStage
                 stage={stage}
                 draft={draft}
-                onChange={setDraft}
+                onChange={(value) => {
+                  setDraft(value);
+                  setFieldErrors({});
+                }}
+                fieldErrors={fieldErrors}
                 detail={detail}
                 options={options}
                 readOnly={readOnly}
@@ -423,7 +572,7 @@ export function PetFicha({
                       onClick={() => save(false)}
                     >
                       <Save size={15} aria-hidden />
-                      <span className="sr-only">Salvar rascunho</span>
+                      <span>Salvar</span>
                     </ActionButton>
                   )}
                   <ActionButton
@@ -464,7 +613,7 @@ export function PetFicha({
                     : onCommand
                 }
                 busy={busy}
-                onPending={setStage}
+                onPending={goTo}
               />
             </>
           )}
@@ -478,81 +627,39 @@ export function PetFicha({
               documentos={documentos}
               contingencia={contingencia}
               evidences={evidences}
+              onEncerramento={() => goTo(6)}
+            />
+          )}
+          {(petStageAvailable(detail, 6) || closureDirty) && (
+            <div
+              hidden={stage !== 6 && !showLocalClosure}
+              aria-label={
+                serverStage === 7 ? "Comparação do preenchimento local não enviado" : undefined
+              }
+            >
+              <PetEncerramento
+                detail={detail}
+                options={options}
+                onCommand={onCommand}
+                busy={busy}
+                errorMessage={error?.message}
+                evidences={evidences}
+                documentos={documentos}
+                contingencia={contingencia}
+                onDirtyChange={setClosureDirty}
+                onOperation={() => goTo(5)}
+              />
+            </div>
+          )}
+          {stage === 7 && (
+            <PetResumoConsulta
+              detail={detail}
+              options={options}
+              documentos={documentos}
+              evidences={evidences}
             />
           )}
         </main>
-        <aside
-          className={`nx-pet-aside${contextOpen ? " nx-pet-context-open" : ""}`}
-          aria-label="Contexto da permissão"
-        >
-          <section className="nx-pet-panel nx-pet-context">
-            <p className="nx-pet-kicker">Nesta permissão</p>
-            <dl className="nx-pet-facts">
-              <div>
-                <dt>Espaço confinado</dt>
-                <dd>{optionName(petSnapshotOption(detail, "espaco") || detail.espaco)}</dd>
-              </div>
-              <div>
-                <dt>OS vinculada</dt>
-                <dd>{detail.os?.numero || "Não informada"}</dd>
-              </div>
-              <div>
-                <dt>Supervisor de entrada</dt>
-                <dd>{person(supervisor)}</dd>
-              </div>
-              <div>
-                <dt>Vigia atual</dt>
-                <dd>{person(vigia)}</dd>
-              </div>
-              <div>
-                <dt>
-                  Término previsto <Clock3 size={12} className="inline ml-1" aria-hidden />
-                </dt>
-                <dd>{petDate(detail.pet.termino_previsto, detail.pet.timezone)}</dd>
-              </div>
-              <div>
-                <dt>Fuso</dt>
-                <dd>{detail.pet.timezone}</dd>
-              </div>
-              <div>
-                <dt>Identidade documental</dt>
-                <dd>
-                  Versão {detail.pet.version} ·{" "}
-                  {petDate(detail.pet.emitida_em, detail.pet.timezone)}
-                </dd>
-              </div>
-            </dl>
-          </section>
-          <section className="nx-pet-panel">
-            <h3>Conferência e presença</h3>
-            <dl className="nx-pet-facts">
-              <div>
-                <dt>Sem saída registrada</dt>
-                <dd className="font-semibold">
-                  {detail.intervalos.filter((i) => !i.saida_em).length} pessoa(s)
-                </dd>
-              </div>
-              <div>
-                <dt>Pendências retornadas</dt>
-                <dd>{detail.pendencias?.length || 0} pendência(s)</dd>
-              </div>
-              <div>
-                <dt>Assinaturas</dt>
-                <dd>{detail.assinaturas.length} registro(s)</dd>
-              </div>
-            </dl>
-            <button className="nx-pet-link mt-3" onClick={() => setStage(4)}>
-              Conferir pendências <ArrowRight size={14} aria-hidden />
-            </button>
-            <button className="nx-pet-link" onClick={() => setStage(5)}>
-              Acompanhar operação <ArrowRight size={14} aria-hidden />
-            </button>
-          </section>
-          <p className="nx-pet-hint px-1">
-            A PET autoriza uma atividade específica. A conferência técnica e a liberação são
-            responsabilidades das pessoas habilitadas no procedimento.
-          </p>
-        </aside>
       </div>
     </div>
   );

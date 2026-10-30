@@ -1,0 +1,454 @@
+@font-face {
+  font-family: "Nexus PET Barlow";
+  src: url("./assets/fonts/Barlow-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nexus PET Barlow";
+  src: url("./assets/fonts/Barlow-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nexus PET Saira";
+  src: url("./assets/fonts/Saira-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+}
+/* Workspace tokens also travel into PET portals; the application rail keeps its identity. */
+.pet-workspace[data-pet-theme],
+.pet-section[data-pet-theme],
+.nx-pet[data-pet-theme],
+.pet-picker-popup[data-pet-theme],
+.nx-operational-dialog:has([data-pet-theme]) {
+  --font-heading: "Nexus PET Saira", "Saira", sans-serif;
+  --font-text: "Nexus PET Barlow", "Barlow", sans-serif;
+  --background: #101716;
+  --foreground: #ecf7f0;
+  --card: #1a2421;
+  --card-foreground: #ecf7f0;
+  --popover: #1a2421;
+  --popover-foreground: #ecf7f0;
+  --muted: #253b32;
+  --muted-foreground: #b5cdbf;
+  --border: #3f594c;
+  --input: #638570;
+  --primary: #40d8a1;
+  --primary-foreground: #082c21;
+  --accent: #2c4237;
+  --accent-foreground: #ecf7f0;
+  --ring: #6be8bb;
+  --warning: #f2c776;
+  --destructive: #ff9c9c;
+  --pet-accent: var(--primary);
+  --pet-line: var(--border);
+  font-family: "Nexus PET Barlow", "Barlow", sans-serif;
+  color: var(--foreground);
+  color-scheme: dark;
+}
+.pet-workspace[data-pet-theme="light"],
+.pet-section[data-pet-theme="light"],
+.nx-pet[data-pet-theme="light"],
+.pet-picker-popup[data-pet-theme="light"],
+.nx-operational-dialog:has([data-pet-theme="light"]) {
+  --background: #f0f5ef;
+  --foreground: #173e2c;
+  --card: #fbfdfb;
+  --card-foreground: #173e2c;
+  --popover: #fbfdfb;
+  --popover-foreground: #173e2c;
+  --muted: #e3ece4;
+  --muted-foreground: #456550;
+  --border: #c0d1c4;
+  --input: #63836f;
+  --primary: #087f5b;
+  --primary-foreground: #fff;
+  --accent: #d8eee1;
+  --accent-foreground: #173e2c;
+  --ring: #087f5b;
+  --warning: #845307;
+  --destructive: #ad2929;
+  color-scheme: light;
+}
+.pet-workspace {
+  background:
+    radial-gradient(
+      ellipse at 95% 0,
+      color-mix(in srgb, var(--primary) 8%, transparent),
+      transparent 45%
+    ),
+    var(--background);
+  margin: -1.25rem -1.5rem;
+  padding: 1.25rem 1.5rem 2rem;
+  min-height: calc(100dvh - 4.5rem);
+}
+.pet-workspace .nx-pet-header {
+  margin: 6px 0 20px;
+  align-items: flex-start;
+}
+.pet-workspace .nx-pet-header > div:first-child {
+  flex: 1 1 330px;
+  min-width: 0;
+}
+.pet-workspace .nx-pet-title,
+.pet-section h2,
+.nx-pet[data-pet-theme] h2,
+.nx-pet[data-pet-theme] h3 {
+  font-family: "Nexus PET Saira", "Saira", sans-serif;
+}
+.pet-workspace .nx-pet-title {
+  font-size: clamp(23px, 2.5vw, 34px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.pet-workspace .nx-pet-description {
+  font-size: 15px;
+  max-width: 80ch;
+}
+.pet-workspace .nx-pet-kicker {
+  color: var(--primary);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+.pet-workspace .nx-pet-panel,
+.pet-section,
+.nx-pet[data-pet-theme] .nx-pet-card {
+  box-shadow: 0 4px 18px #0000000a;
+  border-radius: 16px;
+}
+.pet-workspace .nx-pet-panel h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+.pet-workspace .nx-pet-panel h3 {
+  font-size: 17px;
+}
+.pet-workspace .nx-pet-field,
+.nx-pet[data-pet-theme] .nx-pet-field {
+  font-size: 14px;
+  gap: 8px;
+}
+.pet-workspace .nx-pet-subtitle,
+.pet-workspace .nx-pet-hint,
+.nx-pet[data-pet-theme] small {
+  font-size: 13px;
+}
+.pet-workspace .nx-pet-facts dt {
+  font-size: 12px;
+}
+.pet-workspace .nx-pet-facts dd {
+  font-size: 15px;
+}
+.pet-workspace .nx-pet-field input,
+.pet-workspace .nx-pet-field textarea,
+.pet-workspace .nx-pet-field select,
+.nx-pet[data-pet-theme] input,
+.nx-pet[data-pet-theme] select,
+.nx-pet[data-pet-theme] textarea {
+  font-size: 16px;
+  border-radius: 9px;
+}
+.pet-workspace .nx-pet-field input:focus,
+.pet-workspace .nx-pet-field textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+.pet-workspace button,
+.pet-section button,
+.pet-picker-popup button {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.pet-workspace button:not(:disabled),
+.pet-section button:not(:disabled) {
+  cursor: pointer;
+}
+.pet-workspace :is(button, a, input, select, textarea, summary):focus-visible,
+.nx-pet[data-pet-theme] :is(button, a, input, select, textarea, summary):focus-visible,
+.pet-picker-popup :focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.pet-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--input);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+.pet-theme-toggle:hover {
+  background: var(--accent);
+}
+.pet-phases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  border-bottom: 1px solid var(--border);
+  margin: 12px 0 20px;
+  gap: 4px;
+}
+.pet-phases button {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  padding: 10px 14px;
+  border-bottom: 3px solid transparent;
+  color: var(--muted-foreground);
+  border-radius: 9px 9px 0 0;
+}
+.pet-phases button span {
+  font-family: "Nexus PET Saira", "Saira", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  opacity: 0.8;
+}
+.pet-phases button[aria-current="step"] {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--background));
+  font-weight: 600;
+}
+.pet-phases button:hover {
+  background: var(--muted);
+}
+.pet-preparation-steps {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 20px;
+}
+.pet-preparation-steps button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: var(--muted-foreground);
+}
+.pet-preparation-steps button span {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  font-size: 12px;
+}
+.pet-preparation-steps button[aria-current="step"] {
+  color: var(--foreground);
+  background: var(--card);
+  border-color: var(--input);
+}
+.pet-preparation-steps button[aria-current="step"] span {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+.pet-content-layout {
+  display: block;
+  min-width: 0;
+}
+.pet-context-drawer {
+  margin-bottom: 20px;
+}
+.pet-context-drawer .nx-pet-facts {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  margin: 0;
+}
+.pet-workspace .nx-pet-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 6;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 18px #0000000a;
+  margin: 0;
+}
+.pet-workspace .nx-pet-save-state {
+  font-size: 13px;
+}
+.pet-workspace .nx-pet-status {
+  border-radius: 7px;
+  font-size: 12px;
+}
+.pet-workspace .nx-pet-notice {
+  font-size: 14px;
+}
+.pet-section {
+  background: var(--background);
+  padding: 22px;
+  border: 1px solid var(--border);
+}
+.pet-section .nx-pet-card {
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+}
+.pet-section .nx-pet-card-title {
+  font-family: "Nexus PET Saira", "Saira", sans-serif;
+  font-size: 20px;
+}
+.pet-section .nx-pet-card-code {
+  font-family: "Nexus PET Barlow", "Barlow", sans-serif;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 13px;
+}
+.pet-section .nx-pet-card-meta,
+.pet-section .nx-pet-card-bottom {
+  font-size: 14px;
+}
+.pet-section .nx-pet-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr));
+  align-items: start;
+}
+.pet-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nx-operational-dialog:has([data-pet-theme]) {
+  background: var(--card);
+  color: var(--foreground);
+}
+.nx-operational-dialog:has([data-pet-theme]) h2 {
+  font-family: "Nexus PET Saira", "Saira", sans-serif;
+}
+.nx-pet[data-pet-theme] .pet-create-context {
+  padding: 12px 14px;
+  background: var(--muted);
+  border-radius: 10px;
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+@media (max-width: 850px) {
+  .pet-workspace .nx-pet-main {
+    scroll-margin-top: 20px;
+  }
+}
+@media (max-width: 600px) {
+  .pet-workspace {
+    margin: -1rem -0.75rem;
+    padding: 1rem 0.75rem 1.5rem;
+  }
+  .pet-workspace .nx-pet-header {
+    gap: 12px;
+  }
+  .pet-workspace .nx-pet-header > div:first-child {
+    flex-basis: 100%;
+  }
+  .pet-workspace .nx-pet-header .nx-pet-actions {
+    gap: 8px;
+  }
+  .pet-workspace .nx-pet-panel {
+    padding: 17px 15px;
+    border-radius: 13px;
+  }
+  .pet-workspace .nx-pet-panel h2 {
+    font-size: 21px;
+  }
+  .pet-phases {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .pet-phases button {
+    flex: 1 1 92px;
+    justify-content: center;
+    padding: 8px;
+    gap: 6px;
+    font-size: 14px;
+  }
+  .pet-preparation-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .pet-preparation-steps button {
+    padding: 8px;
+    font-size: 13px;
+    text-align: left;
+  }
+  .pet-preparation-steps button span {
+    flex-shrink: 0;
+  }
+  .pet-workspace .nx-pet-footer {
+    flex-wrap: wrap;
+    padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+    gap: 6px;
+  }
+  .pet-workspace .nx-pet-footer .nx-pet-save-state {
+    font-size: 12px;
+    max-width: none;
+  }
+  .pet-workspace .nx-pet-footer > div:first-child {
+    width: 100%;
+  }
+  .pet-workspace .nx-pet-footer > .nx-pet-actions {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .pet-workspace .nx-pet-footer .nx-button {
+    padding-inline: 10px;
+  }
+  .pet-section {
+    padding: 16px 12px;
+  }
+  .pet-section .nx-pet-card-bottom {
+    align-items: start;
+  }
+  .pet-section .nx-pet-card-bottom > span {
+    flex: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pet-workspace *,
+  .pet-section *,
+  .pet-picker-popup *,
+  .nx-operational-dialog:has([data-pet-theme]) * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* Touch size wins over the shared rail's 40px controls only inside PET. */
+.nx-pet.pet-workspace button,
+.nx-pet[data-pet-theme] button,
+.pet-section[data-pet-theme] button,
+.pet-picker-popup[data-pet-theme] button {
+  min-height: 44px;
+  min-width: 44px;
+}
+.nx-pet.pet-workspace .nx-button:disabled,
+.nx-pet[data-pet-theme] .nx-button:disabled {
+  border-style: solid;
+}
+
+.pet-workspace .nx-pet-summary-toggle {
+  min-width: 44px;
+  padding: 9px;
+}

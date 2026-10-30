@@ -21,6 +21,7 @@ export const listarInput = orgInput.extend({
       os_id: z.string().uuid().optional(),
       busca: z.string().trim().max(120).optional(),
       pagina: z.number().int().min(0).optional(),
+      limite: z.number().int().min(1).max(100).optional(),
     })
     .strict()
     .optional(),

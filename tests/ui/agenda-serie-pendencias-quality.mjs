@@ -5,7 +5,12 @@ import { evidenceRoot } from "./evidence.mjs";
 const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4209";
 const directory = `${evidenceRoot}/agenda-serie-pendencias`;
 await mkdir(directory, { recursive: true });
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  headless: true,
+  ...(process.env.NEXUS_UI_BROWSER_EXECUTABLE
+    ? { executablePath: process.env.NEXUS_UI_BROWSER_EXECUTABLE }
+    : {}),
+});
 const page = await browser.newPage({
   locale: "pt-BR",
   reducedMotion: "reduce",
@@ -26,6 +31,7 @@ page.on("console", (m) => {
   if (m.type() === "error") report.consoleErrors.push(m.text());
 });
 const event = "a6000000-0000-4000-8000-000000000001";
+const editor = () => page.getByRole("dialog").filter({ has: page.locator(".agenda-composer") });
 const region = page.getByRole("region", {
   name: "Ocorrências da série",
   exact: true,
@@ -35,12 +41,9 @@ async function go() {
     waitUntil: "networkidle",
   });
   await page.getByRole("button", { name: "Repetir compromisso", exact: true }).click();
-  await page.getByRole("dialog").getByLabel("Quantidade de ocorrências", { exact: true }).fill("3");
-  await page
-    .getByRole("dialog")
-    .getByRole("button", { name: "Repetir compromisso", exact: true })
-    .click();
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await editor().getByLabel("Quantidade de ocorrências", { exact: true }).fill("3");
+  await editor().getByRole("button", { name: "Repetir compromisso", exact: true }).click();
+  await expect(editor()).toHaveCount(0);
   await expect(region.getByText("Ocorrências a conferir", { exact: true })).toBeVisible();
   await expect(region.getByRole("listitem")).toHaveCount(2);
 }
@@ -56,7 +59,7 @@ async function calls(name) {
   );
 }
 try {
-  for (const width of [360, 390, 768, 1024, 1366, 1440]) {
+  for (const width of [360, 390, 430, 768, 1366, 1920]) {
     await page.setViewportSize({ width, height: width < 768 ? 844 : 900 });
     await go();
     await expect(region.getByRole("listitem").filter({ hasText: "23P01" })).toContainText(

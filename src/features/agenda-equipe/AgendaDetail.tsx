@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { ActionButton, ErrorState, LoadingState, Section } from "@/components/nexus/Page";
 import { fieldClass } from "@/features/operacao/components";
-import { acessoAgendaNegado, periodoEvento, estadoLabels, tipoLabels } from "./domain";
+import {
+  acessoAgendaNegado,
+  eventForSave,
+  inputFromDetail,
+  periodoEvento,
+  estadoLabels,
+  tipoLabels,
+} from "./domain";
 import { formatInstant, supportsTimezone } from "./calendar-domain";
 import { useAgendaHistory } from "./queries";
 import type { ComandoBody, DetalheAgenda } from "./types";
@@ -67,22 +74,51 @@ export function AgendaDetail({
           </ActionButton>
         }
       >
-        <p className="break-words text-sm font-medium">{periodoEvento(e)}</p>
-        <p className="mt-1 break-words text-xs text-muted-foreground">
-          Fuso: {e.timezone} ·{" "}
-          {e.visibilidade === "participantes"
-            ? "Participantes e coordenação"
-            : "Organização conforme acesso"}
-        </p>
+        <p className="break-words text-sm font-medium">{periodoEvento(e, "America/Sao_Paulo")}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <label className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground">
+            <span>Categoria</span>
+            <select
+              aria-label="Categoria do evento"
+              className="min-h-11 max-w-full rounded-lg border border-border bg-card px-3 text-sm text-foreground"
+              value={e.tipo}
+              disabled={busy || !p.editar}
+              onChange={(event) => {
+                const tipo = event.target.value as typeof e.tipo;
+                if (tipo !== e.tipo)
+                  void onCommand({
+                    comando: "salvar_evento",
+                    dados: {
+                      evento_id: e.id,
+                      expected_version: e.version,
+                      evento: eventForSave({ ...inputFromDetail(detail), tipo }, detail),
+                    },
+                  });
+              }}
+            >
+              {Object.entries(tipoLabels).map(([value, label]) => (
+                <option
+                  key={value}
+                  value={value}
+                  disabled={!e.bloqueia_recursos && value !== "reuniao"}
+                >
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
         <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-xs text-muted-foreground">Responsável</dt>
             <dd className="break-words">{e.responsavel_nome}</dd>
           </div>
-          <div>
-            <dt className="text-xs text-muted-foreground">Local</dt>
-            <dd className="whitespace-pre-wrap break-words">{e.local || "Não informado"}</dd>
-          </div>
+          {e.local && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Local</dt>
+              <dd className="whitespace-pre-wrap break-words">{e.local}</dd>
+            </div>
+          )}
           {e.cliente_nome && (
             <div>
               <dt className="text-xs text-muted-foreground">Cliente e unidade</dt>
@@ -90,6 +126,12 @@ export function AgendaDetail({
                 {e.cliente_nome}
                 {e.unidade_nome ? " · " + e.unidade_nome : ""}
               </dd>
+            </div>
+          )}
+          {e.projeto_nome && e.projeto_nome !== e.cliente_nome && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Projeto</dt>
+              <dd>{e.projeto_nome}</dd>
             </div>
           )}
           <div>
@@ -517,27 +559,29 @@ function AgendaHistory({
                 ))}
               </ol>
             )}
-            <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-              <span>
-                {q.data.total} registros · Página {page + 1}
-              </span>
-              <div className="flex gap-2">
-                <ActionButton
-                  variant="ghost"
-                  disabled={!page}
-                  onClick={() => setPage((p) => p - 1)}
-                >
-                  Anterior
-                </ActionButton>
-                <ActionButton
-                  variant="ghost"
-                  disabled={(page + 1) * q.data.limite >= q.data.total}
-                  onClick={() => setPage((p) => p + 1)}
-                >
-                  Próxima
-                </ActionButton>
+            {q.data.total > q.data.limite && (
+              <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                <span>
+                  {q.data.total} registros · Página {page + 1}
+                </span>
+                <div className="flex gap-2">
+                  <ActionButton
+                    variant="ghost"
+                    disabled={!page}
+                    onClick={() => setPage((p) => p - 1)}
+                  >
+                    Anterior
+                  </ActionButton>
+                  <ActionButton
+                    variant="ghost"
+                    disabled={(page + 1) * q.data.limite >= q.data.total}
+                    onClick={() => setPage((p) => p + 1)}
+                  >
+                    Próxima
+                  </ActionButton>
+                </div>
               </div>
-            </div>
+            )}
           </>
         )
       )}

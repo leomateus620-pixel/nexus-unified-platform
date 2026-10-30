@@ -4,6 +4,7 @@ import { ActionButton, Section } from "@/components/nexus/Page";
 import { RecordFiles } from "@/features/operacao/RecordFiles";
 import { OperationalDialog, fieldClass } from "@/features/operacao/components";
 import { formatCivil } from "./calendar-domain";
+import { useAgendaAppearance } from "./AgendaAppearance";
 import type { AcaoAgenda, ComandoBody, PendenteAgenda } from "./types";
 type Transition = "em_execucao" | "aguardando_verificacao" | "concluida" | "cancelada";
 const labels: Record<Transition, string> = {
@@ -34,6 +35,7 @@ export function AgendaActionPanel({
   onSchedule: (source: PendenteAgenda) => void;
   onCommand: (body: ComandoBody) => Promise<boolean>;
 }) {
+  const { theme } = useAgendaAppearance();
   const a = data.acao,
     p = data.permissoes;
   const [decision, setDecision] = useState<{
@@ -92,7 +94,54 @@ export function AgendaActionPanel({
           </ActionButton>
         }
       >
+        <div className="mb-4">
+          <p className="text-xs text-muted-foreground">Pessoas</p>
+          <ul className="mt-2 flex flex-wrap gap-2" aria-label="Pessoas da ação">
+            {(data.pessoas?.length
+              ? data.pessoas
+              : [{ pessoa_id: a.responsavel_id, nome: data.responsavel_nome }]
+            ).map((person) => (
+              <li key={person.pessoa_id} className="agenda-person-chip">
+                <span className="agenda-person-initials" aria-hidden="true">
+                  {person.nome
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((word) => word[0])
+                    .join("")}
+                </span>
+                <span className="min-w-0">
+                  <span className="block break-words font-medium">{person.nome}</span>
+                  <span className="block text-xs text-muted-foreground">
+                    {person.pessoa_id === a.responsavel_id ? "Responsável" : "Participante"}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
         <dl className="grid gap-3 text-sm sm:grid-cols-2">
+          {data.cliente_nome && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Cliente</dt>
+              <dd className="break-words">
+                {data.cliente_nome}
+                {data.unidade_nome ? " · " + data.unidade_nome : ""}
+              </dd>
+            </div>
+          )}
+          {data.projeto_nome && data.projeto_nome !== data.cliente_nome && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Projeto</dt>
+              <dd className="break-words">{data.projeto_nome}</dd>
+            </div>
+          )}
+          {a.local && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Local</dt>
+              <dd className="whitespace-pre-wrap break-words">{a.local}</dd>
+            </div>
+          )}
           <div>
             <dt className="text-xs text-muted-foreground">Prazo</dt>
             <dd>{a.prazo ? formatCivil(a.prazo) : "Sem prazo definido"}</dd>
@@ -151,8 +200,15 @@ export function AgendaActionPanel({
                   responsavel_id: a.responsavel_id,
                   responsavel_nome: data.responsavel_nome,
                   prazo: a.prazo,
-                  cliente_id: null,
-                  unidade_id: null,
+                  cliente_id: a.cliente_id ?? null,
+                  unidade_id: a.unidade_id ?? null,
+                  projeto_id: a.projeto_id ?? null,
+                  local: a.local ?? "",
+                  cliente_nome: data.cliente_nome ?? null,
+                  projeto_nome: data.projeto_nome ?? null,
+                  pessoas: data.pessoas ?? [
+                    { pessoa_id: a.responsavel_id, nome: data.responsavel_nome },
+                  ],
                 })
               }
             >
@@ -184,7 +240,8 @@ export function AgendaActionPanel({
           }}
         >
           <form
-            className="grid gap-4"
+            className="agenda-composer grid gap-4"
+            data-agenda-theme={theme}
             aria-busy={busy}
             data-dirty={motivo ? "true" : "false"}
             onSubmit={(e) => {

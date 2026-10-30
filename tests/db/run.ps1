@@ -139,7 +139,7 @@ try {
   Invoke-TestSql "$PSScriptRoot\almoxarifado-arquivos.sql"
   node "$PSScriptRoot\almoxarifado-concurrency.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Warehouse / acceptance concurrency test failed' }
-  foreach ($scenario in @('equipe-disponibilidade.mjs', 'agenda-basic.mjs', 'agenda-safety.mjs', 'agenda-jobs.mjs', 'agenda-temporal-edge.mjs', 'agenda-series-edge.mjs', 'agenda-edge-concurrency.mjs', 'agenda-anexos.mjs', 'agenda-anexos-concurrency.mjs', 'agenda-list-performance.mjs', 'pet.mjs', 'pet-retificacoes.mjs', 'pet-relatorios.mjs')) {
+  foreach ($scenario in @('equipe-disponibilidade.mjs', 'agenda-basic.mjs', 'agenda-safety.mjs', 'agenda-jobs.mjs', 'agenda-temporal-edge.mjs', 'agenda-series-edge.mjs', 'agenda-edge-concurrency.mjs', 'agenda-anexos.mjs', 'agenda-anexos-concurrency.mjs', 'agenda-list-performance.mjs', 'agenda-dashboard.mjs', 'pet.mjs', 'pet-retificacoes.mjs', 'pet-relatorios.mjs')) {
     node (Join-Path $PSScriptRoot $scenario)
     if ($LASTEXITCODE -ne 0) { throw "Agenda / team test failed: $scenario" }
   }

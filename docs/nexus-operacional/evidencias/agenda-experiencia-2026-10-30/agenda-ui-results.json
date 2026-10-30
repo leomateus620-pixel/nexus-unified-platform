@@ -1,0 +1,289 @@
+{
+  "method": "Actual source route/components/hooks with synthetic mutable transport fixtures. No connected Auth, SQL/RLS, Storage HTTP, real recurrence/concurrent reservations, production persistence, deployment or physical-device proof.",
+  "layouts": [
+    {
+      "name": "calendario-semana",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 430,
+      "scrollWidth": 430,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "calendario-semana",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 430,
+      "scrollWidth": 430,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "calendario-mes",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 430,
+      "scrollWidth": 430,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "calendario-lista",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 360,
+      "scrollWidth": 360,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 430,
+      "scrollWidth": 430,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 430,
+      "scrollWidth": 430,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 768,
+      "scrollWidth": 768,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "ficha",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "overflow": false
+    },
+    {
+      "name": "formulario",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "overflow": false
+    },
+    {
+      "name": "agenda-clara",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "agenda-clara",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    },
+    {
+      "name": "agenda-noite",
+      "width": 390,
+      "scrollWidth": 390,
+      "overflow": false
+    },
+    {
+      "name": "agenda-noite",
+      "width": 1366,
+      "scrollWidth": 1366,
+      "overflow": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "invalid required fields focus correctly, dirty close preserves draft and Escape restores trigger",
+      "pass": true
+    },
+    {
+      "name": "new whole-day event uses a valid exclusive end and canonical person",
+      "pass": true
+    },
+    {
+      "name": "unscheduled action persists context and explicit scheduling reuses source people and project",
+      "pass": true
+    },
+    {
+      "name": "new action and scheduled event share one source and the visible principal",
+      "pass": true
+    },
+    {
+      "name": "relational project selection and people preserve canonical IDs and explicit address choice",
+      "pass": true
+    },
+    {
+      "name": "daily composer hides technical defaults and filters use apply/cancel",
+      "pass": true
+    },
+    {
+      "name": "existing pending source schedules a visit without duplicating the action",
+      "pass": true
+    },
+    {
+      "name": "lost response preserves input and retries the same key with one persisted fixture effect",
+      "pass": true
+    },
+    {
+      "name": "version conflict keeps local input until explicit current-version adoption",
+      "pass": true
+    },
+    {
+      "name": "text edit preserves legacy instants, hidden relations, visibility, observers and reservations",
+      "pass": true
+    },
+    {
+      "name": "recurrence keeps anchor weekday, series version and explicit future scope/reason",
+      "pass": true
+    },
+    {
+      "name": "cancellation requires a reason and confirmation of presence does not conclude an event",
+      "pass": true
+    },
+    {
+      "name": "notifications keep authenticated commands and preferences remain internal",
+      "pass": true
+    },
+    {
+      "name": "empty and network error states differ and a failed lookup can recover",
+      "pass": true
+    },
+    {
+      "name": "unsupported legacy zone preserves original instants while list displays São Paulo",
+      "pass": true
+    },
+    {
+      "name": "denial erases the open private editor and recovery reloads the current authorized data",
+      "pass": true
+    },
+    {
+      "name": "late successful transport response after source denial cannot reopen detail or overwrite URL context",
+      "pass": true
+    },
+    {
+      "name": "opening and returning preserves calendar context, URL state and a usable focus target",
+      "pass": true
+    },
+    {
+      "name": "Agenda appearance persists per workspace and themes editor and picker portals without global changes",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": []
+}

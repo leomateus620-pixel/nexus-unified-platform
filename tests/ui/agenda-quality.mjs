@@ -2,7 +2,12 @@
 import { chromium, expect } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { evidenceRoot } from "./evidence.mjs";
-const browser = await chromium.launch({ headless: true }),
+const browser = await chromium.launch({
+    headless: true,
+    ...(process.env.NEXUS_UI_BROWSER_EXECUTABLE
+      ? { executablePath: process.env.NEXUS_UI_BROWSER_EXECUTABLE }
+      : {}),
+  }),
   page = await browser.newPage({ locale: "pt-BR", reducedMotion: "reduce" });
 const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4208",
   root = `${evidenceRoot}/agenda-equipe`;
@@ -33,10 +38,11 @@ async function go(extra = "") {
   await page.goto(`${base}/?${query}`, {
     waitUntil: "networkidle",
   });
-  await page.getByRole("heading", { name: "Agenda Equipe", exact: true, level: 1 }).waitFor();
+  await page.locator(".agenda-page").waitFor();
   await page.evaluate(() => document.fonts.ready);
 }
-const dialog = () => page.getByRole("dialog");
+const dialog = () =>
+  page.getByRole("dialog").filter({ has: page.locator(".agenda-composer, .agenda-filter-fields") });
 async function commands() {
   return page.evaluate(() =>
     window.__nexusCalls.filter((c) => c.name === "executarAgenda").map((c) => c.payload.data),
@@ -58,17 +64,32 @@ async function width(name, value) {
   report.layouts.push({ name, ...metrics });
   if ([390, 1366].includes(value)) await page.screenshot({ path: `${root}/${name}-${value}.png` });
 }
+async function pick(label, name) {
+  await dialog().getByRole("button", { name: label, exact: true }).click();
+  await page.getByRole("option", { name: new RegExp(name) }).click();
+}
+async function ensurePerson() {
+  if (!(await dialog().getByText("Responsável", { exact: true }).count()))
+    await pick("Selecionar pessoas", "Responsável técnico do laboratório");
+}
 async function create(title) {
   await page.getByRole("button", { name: "Novo evento", exact: true }).click();
   await dialog()
-    .getByRole("textbox", { name: /^Título do compromisso/ })
+    .getByRole("textbox", { name: /^O que vamos fazer/ })
     .fill(title);
-  await dialog()
-    .getByRole("combobox", { name: /^Responsável principal/ })
-    .selectOption(person);
+  await ensurePerson();
 }
-async function submit(name = "Salvar rascunho") {
-  await dialog().getByRole("button", { name, exact: true }).click();
+async function submit(name) {
+  await dialog()
+    .getByRole("button", {
+      name:
+        name ||
+        ((await dialog().getByRole("button", { name: "Salvar alterações", exact: true }).count())
+          ? "Salvar alterações"
+          : "Agendar"),
+      exact: true,
+    })
+    .click();
 }
 async function discard() {
   await page.keyboard.press("Escape");
@@ -85,10 +106,7 @@ async function refresh(patch = {}) {
 async function agendaSearch() {
   const search = page.getByRole("searchbox", { name: "Buscar na agenda", exact: true });
   if (!(await search.isVisible()))
-    await page
-      .locator("summary")
-      .filter({ hasText: /Buscar e filtrar|Filtros/ })
-      .click();
+    await page.getByRole("button", { name: "Filtros da agenda", exact: true }).click();
   return search;
 }
 async function detail() {
@@ -97,19 +115,28 @@ async function detail() {
 }
 try {
   for (const view of ["semana", "mes", "lista"]) {
-    for (const value of [360, 390, 768, 1024, 1366, 1440]) {
+    for (const value of [360, 390, 430, 768, 1366, 1920]) {
       await page.setViewportSize({ width: value, height: value < 768 ? 844 : 900 });
       await go(`&vista=${view}`);
       await expect(page.getByText(/3 compromissos/)).toBeVisible();
       await width(`calendario-${view}`, value);
     }
   }
-  for (const value of [360, 390, 768, 1024, 1366, 1440]) {
+  for (const value of [360, 390, 430, 768, 1366, 1920]) {
     await page.setViewportSize({ width: value, height: value < 768 ? 844 : 900 });
     await detail();
     await width("ficha", value);
     await page.getByRole("button", { name: "Editar compromisso", exact: true }).click();
     await width("formulario", value);
+    if (value < 768) {
+      expect(
+        await dialog()
+          .locator('input:not([type="checkbox"]):not([type="radio"])')
+          .evaluateAll((inputs) =>
+            inputs.every((input) => parseFloat(getComputedStyle(input).fontSize) >= 16),
+          ),
+      ).toBe(true);
+    }
     await discard();
   }
   await page.setViewportSize({ width: 390, height: 844 });
@@ -120,23 +147,24 @@ try {
       const trigger = page.getByRole("button", { name: "Novo evento", exact: true });
       await trigger.click();
       await submit();
-      await expect(dialog().getByRole("textbox", { name: /^Título do compromisso/ })).toBeFocused();
-      await expect(
-        dialog().getByRole("textbox", { name: /^Título do compromisso/ }),
-      ).toHaveAttribute("aria-invalid", "true");
+      await expect(dialog().getByRole("textbox", { name: /^O que vamos fazer/ })).toBeFocused();
+      await expect(dialog().getByRole("textbox", { name: /^O que vamos fazer/ })).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
       await expect(dialog().getByRole("alert")).toContainText(
         "Informe ao menos três caracteres para o título.",
       );
-      await expect(dialog().getByRole("alert")).toContainText("Selecione um cadastro válido.");
+
       await expect(dialog().getByRole("alert")).not.toContainText(
         /String must contain|Invalid uuid|Required|Invalid input/i,
       );
       await dialog()
-        .getByRole("textbox", { name: /^Título do compromisso/ })
+        .getByRole("textbox", { name: /^O que vamos fazer/ })
         .fill("Draft retained until explicit discard");
       await page.keyboard.press("Escape");
       await page.getByRole("button", { name: "Continuar editando", exact: true }).click();
-      await expect(dialog().getByRole("textbox", { name: /^Título do compromisso/ })).toHaveValue(
+      await expect(dialog().getByRole("textbox", { name: /^O que vamos fazer/ })).toHaveValue(
         "Draft retained until explicit discard",
       );
       await discard();
@@ -148,11 +176,11 @@ try {
     await create("Evento de dia inteiro do laboratório");
     await dialog().getByRole("checkbox", { name: "Dia inteiro", exact: true }).check();
     await expect(dialog().getByLabel(/^Primeiro dia/)).toHaveValue("2026-11-10");
-    await expect(dialog().getByLabel(/^Fim exclusivo/)).toHaveValue("2026-11-11");
+    await expect(dialog().getByLabel(/^Último dia/)).toHaveValue("2026-11-10");
     await submit();
     await expect(dialog()).toHaveCount(0);
     const c = (await commands()).at(-1);
-    expect(c.comando).toBe("salvar_evento");
+    expect(c.comando).toBe("agendar");
     expect(c.dados.evento.data_fim).toBe("2026-11-11");
     expect(
       c.dados.evento.participantes
@@ -161,44 +189,78 @@ try {
     ).toEqual([person]);
   });
   await check(
-    "action without schedule stays canonical without inventing a calendar event",
+    "unscheduled action persists context and explicit scheduling reuses source people and project",
     async () => {
       await go();
       const count = await page.evaluate(() => window.__nexusAgenda.events.length);
-      await page.getByRole("button", { name: "Nova ação", exact: true }).click();
+      await page.getByRole("button", { name: "Novo evento", exact: true }).click();
+      await dialog().getByRole("button", { name: "Ação", exact: true }).click();
       await dialog()
-        .getByRole("textbox", { name: /^Título da ação/ })
+        .getByRole("textbox", { name: /^O que vamos fazer/ })
         .fill("Ação criada sem horário");
-      await dialog()
-        .getByRole("combobox", { name: /^Responsável pela ação/ })
-        .selectOption(person);
+      await ensurePerson();
+      await pick("Adicionar pessoa", "Pessoa de apoio do laboratório");
+      await pick("Cliente / projeto", "Projeto operacional do laboratório");
+      await dialog().getByLabel("Local", { exact: true }).fill("Contexto de ação sem horário");
       await submit("Criar ação");
       await expect(dialog()).toHaveCount(0);
       await expect(
         page.getByText("Ação confirmada no servidor, sem horário reservado.", { exact: true }),
       ).toBeVisible();
-      expect((await commands()).at(-1).dados.evento).toBeUndefined();
+      const sent = (await commands()).at(-1);
+      expect(sent.dados.evento).toBeUndefined();
+      expect(sent.dados.acao.projeto_id).toBe("40000000-0000-4000-8000-000000000009");
+      expect(sent.dados.acao.cliente_id).toBe("20000000-0000-4000-8000-000000000001");
+      expect(sent.dados.acao.participantes).toHaveLength(2);
+      expect(sent.dados.acao.local).toBe("Contexto de ação sem horário");
+      const stored = await page.evaluate(() =>
+        window.__nexusAgenda.actions.find((a) => a.titulo === "Ação criada sem horário"),
+      );
+      expect(stored.projeto_id).toBe(sent.dados.acao.projeto_id);
+      expect(stored.local).toBe(sent.dados.acao.local);
       expect(await page.evaluate(() => window.__nexusAgenda.events.length)).toBe(count);
+      await expect(page.getByText("Contexto de ação sem horário", { exact: true })).toBeVisible();
+      await expect(
+        page.getByText("Projeto operacional do laboratório", { exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("list", { name: "Pessoas da ação" }).getByRole("listitem"),
+      ).toHaveCount(2);
+      await page.getByRole("button", { name: "Agendar esta ação", exact: true }).click();
+      await expect(dialog().getByLabel("Local", { exact: true })).toHaveValue(
+        sent.dados.acao.local,
+      );
+      await submit();
+      await expect(dialog()).toHaveCount(0);
+      const scheduled = (await commands()).at(-1).dados.evento;
+      expect(scheduled.acao_id).toBe(stored.id);
+      expect(scheduled.projeto_id).toBe(stored.projeto_id);
+      expect(scheduled.cliente_id).toBe(stored.cliente_id);
+      expect(scheduled.participantes).toHaveLength(2);
+      expect(
+        await page.evaluate(
+          () =>
+            window.__nexusAgenda.actions.filter((a) => a.titulo === "Ação criada sem horário")
+              .length,
+        ),
+      ).toBe(1);
     },
   );
   await check(
     "new action and scheduled event share one source and the visible principal",
     async () => {
       await go();
-      await page.getByRole("button", { name: "Nova ação", exact: true }).click();
+      await page.getByRole("button", { name: "Novo evento", exact: true }).click();
+      await dialog().getByRole("button", { name: "Ação", exact: true }).click();
       await dialog()
-        .getByRole("textbox", { name: /^Título da ação/ })
+        .getByRole("textbox", { name: /^O que vamos fazer/ })
         .fill("Ação criada com horário");
-      await dialog()
-        .getByRole("combobox", { name: /^Responsável pela ação/ })
-        .selectOption(person);
-      await dialog()
-        .getByRole("checkbox", { name: "Reservar um horário para esta ação", exact: true })
-        .check();
+      await ensurePerson();
+      await dialog().getByRole("checkbox", { name: "Definir horário", exact: true }).check();
       await expect(dialog().getByRole("combobox", { name: /^Responsável principal/ })).toHaveCount(
         0,
       );
-      await submit("Criar ação e agendar");
+      await submit("Agendar");
       await expect(dialog()).toHaveCount(0);
       const c = (await commands()).at(-1);
       expect(c.comando).toBe("criar_acao");
@@ -212,54 +274,48 @@ try {
     },
   );
   await check(
-    "changing the principal preserves one responsible role and changing client clears the previous project",
+    "relational project selection and people preserve canonical IDs and explicit address choice",
     async () => {
       await go();
       await create("Troca explícita de pessoa e contexto");
+      await pick("Adicionar pessoa", "Pessoa de apoio do laboratório");
       await dialog()
-        .getByRole("combobox", { name: /^Responsável principal/ })
-        .selectOption("30000000-0000-4000-8000-000000000002");
-      await dialog().getByText("Origem e contexto", { exact: true }).click();
+        .getByRole("button", {
+          name: "Definir Pessoa de apoio do laboratório como responsável",
+          exact: true,
+        })
+        .click();
+      await pick("Cliente / projeto", "Projeto operacional do laboratório");
+      await expect(dialog().getByLabel("Local", { exact: true })).toHaveValue("");
       await dialog()
-        .getByRole("combobox", { name: "Cliente", exact: true })
-        .selectOption("20000000-0000-4000-8000-000000000001");
-      await dialog()
-        .getByRole("combobox", { name: "Projeto operacional", exact: true })
-        .selectOption("40000000-0000-4000-8000-000000000009");
-      await dialog()
-        .getByRole("combobox", { name: "Cliente", exact: true })
-        .selectOption("20000000-0000-4000-8000-000000000002");
-      await expect(
-        dialog().getByRole("combobox", { name: "Projeto operacional", exact: true }),
-      ).toHaveValue("");
+        .getByRole("button", { name: /^Usar endereço do projeto:/ })
+        .click();
       await submit();
       await expect(dialog()).toHaveCount(0);
       const sent = (await commands()).at(-1).dados.evento;
       expect(sent.responsavel_id).toBe("30000000-0000-4000-8000-000000000002");
       expect(sent.participantes.filter((p) => p.funcao === "responsavel")).toHaveLength(1);
-      expect(sent.projeto_id).toBeNull();
-      expect(sent.cliente_id).toBe("20000000-0000-4000-8000-000000000002");
+      expect(sent.projeto_id).toBe("40000000-0000-4000-8000-000000000009");
+      expect(sent.cliente_id).toBe("20000000-0000-4000-8000-000000000001");
+      expect(sent.local).toBe("Rua de validação, 100 · Unidade norte");
+      expect(sent.timezone).toBe("America/Sao_Paulo");
+      expect(sent.tipo).toBe("sem_categoria");
     },
   );
-  await check(
-    "choosing an existing origin requires its identity and reuses that canonical action",
-    async () => {
-      await go();
-      await create("Visita da ação existente");
-      await dialog().getByText("Origem e contexto", { exact: true }).click();
-      await dialog().getByRole("combobox", { name: "Agendar", exact: true }).selectOption("acao");
-      await submit();
-      expect(await commands()).toHaveLength(0);
-      await expect(dialog()).toBeVisible();
-      await dialog()
-        .getByRole("combobox", { name: /^Ação de origem/ })
-        .selectOption(action);
-      await submit();
-      await expect(dialog()).toHaveCount(0);
-      expect((await commands()).at(-1).dados.evento.acao_id).toBe(action);
-      expect(await page.evaluate(() => window.__nexusAgenda.actions.length)).toBe(1);
-    },
-  );
+  await check("daily composer hides technical defaults and filters use apply/cancel", async () => {
+    await go();
+    await create("Criação cotidiana compacta");
+    await expect(
+      dialog().getByLabel(/Visibilidade|Fuso|Prioridade|Tipo de atividade|Origem técnica/),
+    ).toHaveCount(0);
+    await discard();
+    await (await agendaSearch()).fill("Não aplicar");
+    await dialog().getByRole("button", { name: "Cancelar", exact: true }).click();
+    expect(new URL(page.url()).searchParams.get("busca") || "").toBe("");
+    await (await agendaSearch()).fill("Visita");
+    await dialog().getByRole("button", { name: "Aplicar", exact: true }).click();
+    expect(new URL(page.url()).searchParams.get("busca")).toBe("Visita");
+  });
   await check(
     "existing pending source schedules a visit without duplicating the action",
     async () => {
@@ -268,7 +324,7 @@ try {
         .locator("li")
         .filter({ has: page.getByText("Ação sem horário permanece canônica", { exact: true }) });
       await card.getByRole("button", { name: "Agendar registro existente", exact: true }).click();
-      await expect(dialog().getByRole("textbox", { name: /^Título do compromisso/ })).toHaveValue(
+      await expect(dialog().getByRole("textbox", { name: /^O que vamos fazer/ })).toHaveValue(
         "Ação sem horário permanece canônica",
       );
       await submit();
@@ -285,7 +341,7 @@ try {
       await page.evaluate(() => (window.__agendaCommitThenFail = true));
       await submit();
       await expect(dialog().getByRole("alert")).toContainText("resposta de rede foi perdida");
-      await expect(dialog().getByRole("textbox", { name: /^Título do compromisso/ })).toHaveValue(
+      await expect(dialog().getByRole("textbox", { name: /^O que vamos fazer/ })).toHaveValue(
         "Retry idempotente após perda de resposta",
       );
       await submit();
@@ -308,7 +364,7 @@ try {
     async () => {
       await detail();
       await page.getByRole("button", { name: "Editar compromisso", exact: true }).click();
-      const title = dialog().getByRole("textbox", { name: /^Título do compromisso/ });
+      const title = dialog().getByRole("textbox", { name: /^O que vamos fazer/ });
       await title.fill("Texto local preservado no conflito");
       await page.evaluate(() => (window.__agendaConflictNext = true));
       await submit();
@@ -326,6 +382,63 @@ try {
       await submit();
       await expect(dialog()).toHaveCount(0);
       expect((await commands()).at(-1).dados.expected_version).toBe(2);
+    },
+  );
+  await check(
+    "text edit preserves legacy instants, hidden relations, visibility, observers and reservations",
+    async () => {
+      await detail();
+      await page.evaluate(() => {
+        const e = window.__nexusAgenda.events[0],
+          ids = window.__agendaIds;
+        Object.assign(e, {
+          titulo: "Registro legado preservado",
+          timezone: "America/New_York",
+          inicio: "2026-11-01T05:45:00Z",
+          fim: "2026-11-01T06:15:00Z",
+          descricao: "Descrição extensa existente preservada",
+          competencias: [ids.skill],
+          ferramentas: [{ ferramenta_id: ids.tool, pessoa_id: ids.person }],
+          cliente_id: "20000000-0000-4000-8000-000000000001",
+          projeto_id: "40000000-0000-4000-8000-000000000009",
+          visibilidade: "participantes",
+        });
+        const principal = window.__nexusAgenda.participants[e.id][0];
+        window.__nexusAgenda.participants[e.id].push({
+          ...principal,
+          id: "a6100000-0000-4000-8000-000000000002",
+          pessoa_id: ids.other,
+          pessoa_nome: "Pessoa de apoio do laboratório",
+          funcao: "observador",
+          pode_confirmar: false,
+        });
+        window.dispatchEvent(new Event("visibilitychange"));
+      });
+      await expect(
+        page.getByRole("heading", { name: "Registro legado preservado", exact: true }),
+      ).toBeVisible();
+      await page.getByRole("button", { name: "Editar compromisso", exact: true }).click();
+      await dialog()
+        .getByRole("textbox", { name: /^O que vamos fazer/ })
+        .fill("Texto atualizado sem mudar a reserva");
+      await submit();
+      await expect(dialog()).toHaveCount(0);
+      const sent = (await commands()).at(-1).dados.evento;
+      expect([sent.inicio, sent.fim, sent.timezone]).toEqual([
+        "2026-11-01T05:45:00Z",
+        "2026-11-01T06:15:00Z",
+        "America/New_York",
+      ]);
+      expect(sent.inicio_local).toBeUndefined();
+      expect(sent.descricao).toBe("Descrição extensa existente preservada");
+      expect(
+        sent.participantes.find((p) => p.pessoa_id === "30000000-0000-4000-8000-000000000002")
+          .funcao,
+      ).toBe("observador");
+      expect(sent.competencias).toHaveLength(1);
+      expect(sent.ferramentas).toHaveLength(1);
+      expect(sent.visibilidade).toBe("participantes");
+      expect(sent.projeto_id).toBe("40000000-0000-4000-8000-000000000009");
     },
   );
   await check(
@@ -351,7 +464,7 @@ try {
       await page.getByRole("button", { name: "Editar série futura", exact: true }).click();
       await dialog().getByLabel("Toda a série futura", { exact: true }).check();
       await dialog()
-        .getByRole("textbox", { name: /^Título do compromisso/ })
+        .getByRole("textbox", { name: /^O que vamos fazer/ })
         .fill("Série futura revisada explicitamente");
       await dialog()
         .getByRole("textbox", { name: /^Motivo/ })
@@ -383,7 +496,6 @@ try {
       await expect(dialog()).toHaveCount(0);
       expect(await page.evaluate(() => window.__nexusAgenda.events[0].estado)).toBe("cancelado");
       await go("&evento=a6000000-0000-4000-8000-000000000002&scenario=restricted");
-      await expect(page.getByRole("button", { name: "Novo evento", exact: true })).toHaveCount(0);
       await page.getByRole("button", { name: "Confirmar presença", exact: true }).click();
       await expect(page.getByText(/Participação confirmada/)).toBeVisible();
       expect(
@@ -391,22 +503,29 @@ try {
           () => window.__nexusAgenda.events.find((e) => e.id.endsWith("0002")).estado,
         ),
       ).toBe("publicado");
+      await page.keyboard.press("Escape");
+      await expect(
+        page.getByRole("dialog", { name: "Detalhes da atividade", exact: true }),
+      ).toHaveCount(0);
+      await expect(page.getByRole("button", { name: "Novo evento", exact: true })).toHaveCount(0);
     },
   );
-  await check("notifications and preferences use explicit authenticated commands", async () => {
-    await go("&foco=notificacoes");
-    await expect(page.getByText("1 não lidas", { exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Marcar como lida", exact: true }).click();
-    await expect(page.getByText("0 não lidas", { exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Preferências", exact: true }).click();
-    await dialog().getByLabel("Antecedência do lembrete (minutos)", { exact: true }).fill("90");
-    await submit("Salvar preferências");
-    await expect(dialog()).toHaveCount(0);
-    expect((await commands()).at(-1).dados.antecedencia_minutos).toBe(90);
-  });
+  await check(
+    "notifications keep authenticated commands and preferences remain internal",
+    async () => {
+      await go("&foco=notificacoes");
+      await expect(page.getByText("1 não lidas", { exact: true })).toBeVisible();
+      await page.getByRole("button", { name: "Marcar como lida", exact: true }).click();
+      await expect(page.getByText("0 não lidas", { exact: true })).toBeVisible();
+      await expect(page.getByRole("button", { name: "Preferências", exact: true })).toHaveCount(0);
+      expect((await commands()).at(-1).comando).toBe("marcar_lida");
+    },
+  );
   await check("empty and network error states differ and a failed lookup can recover", async () => {
     await go("&scenario=empty");
     await expect(page.getByText(/0 compromissos/)).toBeVisible();
+    await expect(page.getByRole("button", { name: "Anterior", exact: true })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Próxima", exact: true })).toHaveCount(0);
     await go("&scenario=error");
     await expect(
       page.getByRole("button", { name: "Tentar novamente", exact: true }).first(),
@@ -419,32 +538,9 @@ try {
     await expect(page.getByText(/3 compromissos/)).toBeVisible();
   });
   await check(
-    "unsupported legacy response timezone preserves ISO instants, blocks civil edits and recovers by explicit display timezone",
+    "unsupported legacy zone preserves original instants while list displays São Paulo",
     async () => {
       await go(`&scenario=unsupported-timezone&evento=${id}`);
-      await expect(
-        page
-          .getByRole("alert")
-          .filter({ hasText: "O fuso Unsupported/Legacy não é suportado neste navegador." }),
-      ).toBeVisible();
-      await expect(page.getByText(/Instante original: 2026-11-10T11:00:00Z/).first()).toBeVisible();
-      await expect(page.getByText(/2026-11-10T12:00:00Z/).first()).toBeVisible();
-      await expect(
-        page.getByRole("button", { name: "Editar compromisso", exact: true }),
-      ).toHaveCount(0);
-      expect(
-        await page.evaluate(() =>
-          window.__nexusCalls.filter((call) => call.name === "listarAgenda"),
-        ),
-      ).toHaveLength(0);
-      expect(await commands()).toHaveLength(0);
-      await page
-        .getByRole("textbox", { name: "Fuso de exibição", exact: true })
-        .fill("America/Sao_Paulo");
-      await page.getByRole("button", { name: "Aplicar fuso de exibição", exact: true }).click();
-      await expect(
-        page.getByRole("button", { name: "Voltar à agenda", exact: true }).first(),
-      ).toBeVisible();
       await expect(
         page
           .getByRole("status")
@@ -453,13 +549,15 @@ try {
       await expect(
         page.getByRole("button", { name: "Editar compromisso", exact: true }),
       ).toHaveCount(0);
+      await expect(
+        page.getByRole("textbox", { name: "Fuso de exibição", exact: true }),
+      ).toHaveCount(0);
       const original = await page.evaluate(() => window.__nexusAgenda.events[0]);
       expect([original.inicio, original.fim, original.timezone]).toEqual([
         "2026-11-10T11:00:00Z",
         "2026-11-10T12:00:00Z",
         "Unsupported/Legacy",
       ]);
-      expect(new URL(page.url()).searchParams.get("fuso")).toBe("America/Sao_Paulo");
       const lists = await page.evaluate(() =>
         window.__nexusCalls.filter((call) => call.name === "listarAgenda"),
       );
@@ -474,7 +572,7 @@ try {
       await detail();
       await page.getByRole("button", { name: "Editar compromisso", exact: true }).click();
       await dialog()
-        .getByRole("textbox", { name: /^Título do compromisso/ })
+        .getByRole("textbox", { name: /^O que vamos fazer/ })
         .fill("Rascunho privado removido pela negação");
       await refresh({ __agendaDenied: true });
       await expect(dialog()).toHaveCount(0);
@@ -528,12 +626,22 @@ try {
       const event = page
         .getByRole("button", { name: /^Visita de validação da unidade norte\./ })
         .last();
+      await event.scrollIntoViewIfNeeded();
+      const previousScroll = await page.evaluate(() => window.scrollY);
       await event.click();
       await expect(
         page.getByRole("button", { name: "Editar compromisso", exact: true }),
       ).toBeVisible();
-      await page.getByRole("button", { name: "Voltar à agenda", exact: true }).first().click();
+      await page.keyboard.press("Escape");
+      await expect(
+        page.getByRole("dialog", { name: "Detalhes da atividade", exact: true }),
+      ).toHaveCount(0);
+      await expect(event).toBeFocused();
+      expect(
+        Math.abs((await page.evaluate(() => window.scrollY)) - previousScroll),
+      ).toBeLessThanOrEqual(1);
       await expect(await agendaSearch()).toHaveValue("Visita");
+      await dialog().getByRole("button", { name: "Cancelar", exact: true }).click();
       expect(new URL(page.url()).searchParams.get("vista")).toBe("mes");
       expect(new URL(page.url()).searchParams.get("data")).toBe("2026-11-10");
       await expect
@@ -541,6 +649,67 @@ try {
         .toBe(true);
       await page.reload({ waitUntil: "networkidle" });
       await expect(await agendaSearch()).toHaveValue("Visita");
+    },
+  );
+  await check(
+    "Agenda appearance persists per workspace and themes editor and picker portals without global changes",
+    async () => {
+      await go("&vista=lista");
+      const globalBefore = await page.evaluate(() => ({
+        html: document.documentElement.className,
+        body: document.body.className,
+        background: getComputedStyle(document.body).backgroundColor,
+      }));
+      await page.getByRole("button", { name: "Ativar modo claro", exact: true }).click();
+      await expect(page.locator(".agenda-page")).toHaveAttribute("data-theme", "light");
+      await page.reload({ waitUntil: "networkidle" });
+      await expect(page.locator(".agenda-page")).toHaveAttribute("data-theme", "light");
+      for (const value of [390, 1366]) {
+        await width("agenda-clara", value);
+        await page.getByRole("button", { name: "Novo evento", exact: true }).click();
+        await expect(dialog().locator("form.agenda-composer")).toHaveAttribute(
+          "data-agenda-theme",
+          "light",
+        );
+        expect(await dialog().evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(
+          "rgb(251, 253, 251)",
+        );
+        await page.screenshot({ path: `${root}/tema-claro-editor-${value}.png` });
+        await dialog().getByRole("button", { name: "Adicionar pessoa", exact: true }).click();
+        const popup = page.locator(".agenda-picker-popup");
+        await expect(popup).toHaveAttribute("data-theme", "light");
+        await expect(popup.getByRole("option").first()).toBeVisible();
+        expect(await popup.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(
+          "rgb(251, 253, 251)",
+        );
+        await page.screenshot({ path: `${root}/tema-claro-pessoas-${value}.png` });
+        await page.keyboard.press("Escape");
+        await expect(dialog()).toBeVisible();
+        await discard();
+      }
+      expect(
+        await page.evaluate(() => ({
+          html: document.documentElement.className,
+          body: document.body.className,
+          background: getComputedStyle(document.body).backgroundColor,
+        })),
+      ).toEqual(globalBefore);
+      await page.getByRole("button", { name: "Ativar modo noite", exact: true }).click();
+      await page.reload({ waitUntil: "networkidle" });
+      await expect(page.locator(".agenda-page")).toHaveAttribute("data-theme", "dark");
+      for (const value of [390, 1366]) {
+        await width("agenda-noite", value);
+        await page.getByRole("button", { name: "Novo evento", exact: true }).click();
+        await expect(dialog().locator("form.agenda-composer")).toHaveAttribute(
+          "data-agenda-theme",
+          "dark",
+        );
+        expect(await dialog().evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(
+          "rgb(26, 33, 36)",
+        );
+        await page.screenshot({ path: `${root}/tema-noite-editor-${value}.png` });
+        await discard();
+      }
     },
   );
   expect(report.errors).toEqual([]);

@@ -99,6 +99,7 @@ const localInstant = z
     }
   });
 export const tiposEvento = z.enum([
+  "sem_categoria",
   "visita_tecnica",
   "levantamento",
   "execucao",
@@ -284,6 +285,10 @@ export const eventoRow = z.object({
   responsavel_nome: z.string(),
   cliente_nome: z.string().nullable(),
   unidade_nome: z.string().nullable(),
+  projeto_nome: z.string().nullable().optional(),
+  pessoas: z
+    .array(z.object({ pessoa_id: uuid, nome: z.string(), funcao, confirmacao }))
+    .default([]),
   minha_confirmacao: confirmacao.nullable(),
   dias_visiveis: date.array(),
   origem: z.object({
@@ -406,6 +411,7 @@ export const preferencias = z
   .strict();
 export const configuracaoAgenda = z.object({
   minha_pessoa_id: uuid.nullable(),
+  minha_pessoa_nome: z.string().nullable().optional(),
   permissoes: permissoesAgenda,
   preferencias,
   jobs: z
@@ -440,6 +446,8 @@ export const opcaoRow = z.object({
   nome: z.string(),
   contexto: z.string(),
   cliente_id: uuid.optional(),
+  cliente_nome: z.string().optional(),
+  endereco: z.string().optional(),
   unidade_id: uuid.optional(),
   pessoa_id: uuid.optional(),
 });
@@ -457,6 +465,11 @@ export const pendenteRow = z.object({
   prazo: date.nullable(),
   cliente_id: uuid.nullable(),
   unidade_id: uuid.nullable(),
+  projeto_id: uuid.nullable().optional(),
+  local: z.string().optional(),
+  cliente_nome: z.string().nullable().optional(),
+  projeto_nome: z.string().nullable().optional(),
+  pessoas: z.array(z.object({ pessoa_id: uuid, nome: z.string() })).optional(),
 });
 export const pendentesPage = z.object({
   ...pageFields,
@@ -483,12 +496,21 @@ export const agendaSearchSchema = z.object({
     z.boolean().catch(false),
   ),
   data: date.or(z.literal("")).catch(""),
-  vista: z.enum(["semana", "mes", "lista"]).catch("semana"),
+  vista: z.enum(["semana", "mes", "lista"]).catch("lista"),
   foco: z.enum(["minha", "equipe", "pendentes", "notificacoes"]).catch("minha"),
   busca: z.string().max(120).catch(""),
   estado: estadosEvento.or(z.literal("")).catch(""),
   tipo: tiposEvento.or(z.literal("")).catch(""),
   equipe: uuid.or(z.literal("")).catch(""),
+  pessoa: uuid.or(z.literal("")).catch(""),
+  cliente: uuid.or(z.literal("")).catch(""),
+  projeto: uuid.or(z.literal("")).catch(""),
+  natureza: z.enum(["evento", "acao", ""]).catch(""),
+  hora: z.coerce.number().int().min(-1).max(23).catch(-1),
+  painel: z.enum(["agenda", "dashboard"]).catch("agenda"),
+  demanda: z.preprocess((v) => v === true || v === "true", z.boolean()).catch(false),
+  inicio: date.or(z.literal("")).catch(""),
+  fim: date.or(z.literal("")).catch(""),
   pagina: z.coerce.number().int().nonnegative().catch(0),
   evento: uuid.or(z.literal("")).catch(""),
   acao: uuid.or(z.literal("")).catch(""),
@@ -502,10 +524,16 @@ export const listarInput = z
     fim: date,
     timezone,
     minha: z.boolean().default(false),
+    demanda: z.boolean().default(false),
     busca: z.string().trim().max(120).default(""),
     estado: estadosEvento.nullable().default(null),
     tipo: tiposEvento.nullable().default(null),
     equipe_id: uuid.nullable().default(null),
+    pessoa_id: uuid.nullable().default(null),
+    cliente_id: uuid.nullable().default(null),
+    projeto_id: uuid.nullable().default(null),
+    natureza: z.enum(["evento", "acao"]).nullable().default(null),
+    hora: z.number().int().min(0).max(23).nullable().default(null),
     pagina: z.number().int().nonnegative().default(0),
     limite: z.number().int().min(1).max(100).default(50),
   })
@@ -545,6 +573,15 @@ export const pendentesInput = z
   .object({
     ...orgFields,
     minhas: z.boolean().default(true),
+    demanda: z.boolean().default(false),
+    estado: estadosEvento.nullable().default(null),
+    tipo: tiposEvento.nullable().default(null),
+    equipe_id: uuid.nullable().default(null),
+    pessoa_id: uuid.nullable().default(null),
+    cliente_id: uuid.nullable().default(null),
+    projeto_id: uuid.nullable().default(null),
+    natureza: z.enum(["evento", "acao"]).nullable().default(null),
+    hora: z.number().int().min(0).max(23).nullable().default(null),
     busca: z.string().trim().max(120).default(""),
     pagina: z.number().int().nonnegative().default(0),
     limite: z.number().int().min(1).max(100).default(25),
@@ -577,9 +614,18 @@ const actionInput = z
     prazo: date.nullable().optional(),
     prioridade: z.enum(["baixa", "normal", "alta", "critica"]),
     exige_verificacao: z.boolean(),
+    participantes: z
+      .array(z.object({ pessoa_id: uuid, funcao }))
+      .max(100)
+      .optional(),
+    cliente_id: uuid.nullable().optional(),
+    projeto_id: uuid.nullable().optional(),
+    unidade_id: uuid.nullable().optional(),
+    local: z.string().trim().max(1000).optional(),
   })
   .strict();
 export const comandoBody = z.discriminatedUnion("comando", [
+  z.object({ comando: z.literal("agendar"), dados: z.object({ evento: eventoInput }).strict() }),
   z.object({
     comando: z.literal("salvar_evento"),
     dados: z
@@ -749,7 +795,16 @@ export const reciboAgenda = z.discriminatedUnion("tipo", [
 ]);
 export const acaoAgenda = z.object({
   responsavel_nome: z.string(),
-  acao: acaoRow,
+  cliente_nome: z.string().nullable().optional(),
+  projeto_nome: z.string().nullable().optional(),
+  unidade_nome: z.string().nullable().optional(),
+  pessoas: z.array(z.object({ pessoa_id: uuid, nome: z.string() })).optional(),
+  acao: acaoRow.extend({
+    cliente_id: uuid.nullable().optional(),
+    projeto_id: uuid.nullable().optional(),
+    unidade_id: uuid.nullable().optional(),
+    local: z.string().optional(),
+  }),
   permissoes: z.object({
     iniciar: z.boolean(),
     devolver: z.boolean(),
@@ -758,4 +813,56 @@ export const acaoAgenda = z.object({
     cancelar: z.boolean(),
     agendar: z.boolean(),
   }),
+});
+
+export const dashboardInput = z
+  .object({
+    organization_id: uuid,
+    inicio: date,
+    fim: date,
+    minha: z.boolean().default(false),
+    busca: z.string().trim().max(120).default(""),
+    estado: estadosEvento.nullable().default(null),
+    tipo: tiposEvento.nullable().default(null),
+    equipe_id: uuid.nullable().default(null),
+    pessoa_id: uuid.nullable().default(null),
+    cliente_id: uuid.nullable().default(null),
+    projeto_id: uuid.nullable().default(null),
+    natureza: z.enum(["evento", "acao"]).nullable().default(null),
+    hora: z.number().int().min(0).max(23).nullable().default(null),
+  })
+  .strict()
+  .superRefine((v, c) => {
+    try {
+      daysInWindow(v.inicio, v.fim);
+    } catch {
+      c.addIssue({ code: "custom", path: ["fim"], message: "Consulte um período de até 93 dias." });
+    }
+  });
+const dashboardPerson = z.object({
+  pessoa_id: uuid,
+  nome: z.string(),
+  total: z.number().int().nonnegative(),
+});
+export const dashboardAgenda = z.object({
+  inicio: date,
+  fim: date,
+  timezone: z.literal("America/Sao_Paulo"),
+  total: z.number().int().nonnegative(),
+  pessoas: dashboardPerson.array(),
+  dias: z.object({ data: date, total: z.number().int().nonnegative() }).array(),
+  horas: z
+    .object({ hora: z.number().int().min(0).max(23), total: z.number().int().nonnegative() })
+    .array(),
+  categorias: z.object({ tipo: tiposEvento, total: z.number().int().nonnegative() }).array(),
+  semanas: z
+    .object({
+      inicio: date,
+      fim: date,
+      parcial: z.boolean(),
+      pessoas: z
+        .object({ pessoa_id: uuid, nome: z.string(), minutos: z.number().nonnegative() })
+        .array(),
+    })
+    .array(),
 });

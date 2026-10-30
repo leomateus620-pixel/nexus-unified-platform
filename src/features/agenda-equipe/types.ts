@@ -27,8 +27,20 @@ export type AgendaSearch = {
   estado: EventoAgenda["estado"] | "";
   tipo: EventoAgenda["tipo"] | "";
   equipe: string;
+  pessoa: string;
+  cliente: string;
+  projeto: string;
+  natureza: "evento" | "acao" | "";
+  hora: number;
+  painel: "agenda" | "dashboard";
+  demanda: boolean;
+  inicio: string;
+  fim: string;
   pagina: number;
   evento: string;
   acao: string;
   dia: string;
 };
+
+export type DashboardAgenda = z.infer<typeof s.dashboardAgenda>;
+export type AgendaDashboardInput = z.input<typeof s.dashboardInput>;

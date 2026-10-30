@@ -54,16 +54,11 @@ export const listarAgenda = createServerFn({ method: "GET" })
     s.listaAgenda.parse(
       agendaResult(
         await client(context.supabase)
-          .rpc("ag_listar", {
+          .rpc("ag_listar_v2", {
             _org: data.organization_id,
             _inicio: data.inicio,
             _fim: data.fim,
-            _timezone: data.timezone,
-            _minha: data.minha,
-            _busca: data.busca,
-            _estado: data.estado,
-            _tipo: data.tipo,
-            _equipe: data.equipe_id,
+            _filtros: agendaFilters(data),
             _pagina: data.pagina,
             _limite: data.limite,
           })
@@ -121,10 +116,10 @@ export const listarPendentesAgenda = createServerFn({ method: "GET" })
     s.pendentesPage.parse(
       agendaResult(
         await client(context.supabase)
-          .rpc("ag_pendentes", {
+          .rpc("ag_pendentes_v2", {
             _org: data.organization_id,
             _minhas: data.minhas,
-            _busca: data.busca,
+            _filtros: agendaFilters({ ...data, minha: data.minhas }),
             _pagina: data.pagina,
             _limite: data.limite,
           })
@@ -179,6 +174,51 @@ export const executarAgenda = createServerFn({ method: "POST" })
             _chave: data.chave,
             _comando: data.comando,
             _dados: data.dados,
+          })
+          .abortSignal(getRequest().signal),
+      ),
+    ),
+  );
+
+function agendaFilters(data: {
+  demanda?: boolean;
+  minha: boolean;
+  busca: string;
+  estado: string | null;
+  tipo: string | null;
+  equipe_id: string | null;
+  pessoa_id: string | null;
+  cliente_id: string | null;
+  projeto_id: string | null;
+  natureza: string | null;
+  hora: number | null;
+}) {
+  return {
+    demanda: data.demanda,
+    minha: data.minha,
+    busca: data.busca,
+    estado: data.estado,
+    tipo: data.tipo,
+    equipe_id: data.equipe_id,
+    pessoa_id: data.pessoa_id,
+    cliente_id: data.cliente_id,
+    projeto_id: data.projeto_id,
+    natureza: data.natureza,
+    hora: data.hora,
+  };
+}
+export const obterDashboardAgenda = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(s.dashboardInput)
+  .handler(async ({ context, data }) =>
+    s.dashboardAgenda.parse(
+      agendaResult(
+        await client(context.supabase)
+          .rpc("ag_dashboard", {
+            _org: data.organization_id,
+            _inicio: data.inicio,
+            _fim: data.fim,
+            _filtros: agendaFilters(data),
           })
           .abortSignal(getRequest().signal),
       ),

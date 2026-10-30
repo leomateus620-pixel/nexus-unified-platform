@@ -1,0 +1,104 @@
+{
+  "database": "postgres",
+  "host": "127.0.0.1",
+  "port": 55440,
+  "checks": [
+    {
+      "label": "admin: exact list, counts, pagination and current permissions unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "assigned field: exact list, counts, pagination and current permissions unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "other field: exact list, counts, pagination and current permissions unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "roleless member: exact list, counts, pagination and current permissions unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "cross-tenant admin: exact list, counts, pagination and current permissions unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "explicit coordination capability: exact list, counts, pagination and current permissions unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "manager own-agenda filter remains canonical",
+      "result": "passed"
+    },
+    {
+      "label": "field own-agenda filter remains canonical",
+      "result": "passed"
+    },
+    {
+      "label": "second page retains complete authorized daily totals",
+      "result": "passed"
+    },
+    {
+      "label": "source search and title projection remain unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "empty type filter remains an explicit zero",
+      "result": "passed"
+    },
+    {
+      "label": "display timezone and whole-day civil dates are unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "overnight half-open window and days are unchanged",
+      "result": "passed"
+    },
+    {
+      "label": "other organization never receives the first organization records",
+      "result": "passed"
+    },
+    {
+      "label": "action reassignment revokes original participant source access identically",
+      "result": "passed"
+    },
+    {
+      "label": "actual canonical action ACL filters the retained invitation after reassignment",
+      "result": "passed"
+    },
+    {
+      "label": "lev context reassignment retains current parent ACL in both implementations",
+      "result": "passed"
+    },
+    {
+      "label": "actual canonical levantamento ACL filters the retained invitation after reassignment",
+      "result": "passed"
+    },
+    {
+      "label": "engenharia: reduced manager role is re-evaluated without cached permission",
+      "result": "passed"
+    },
+    {
+      "label": "compras: reduced manager role is re-evaluated without cached permission",
+      "result": "passed"
+    },
+    {
+      "label": "campo: reduced manager role is re-evaluated without cached permission",
+      "result": "passed"
+    },
+    {
+      "label": "full role revocation denies list before fast-path evaluation",
+      "result": "passed"
+    },
+    {
+      "label": "revoked current access is actually denied",
+      "result": "passed"
+    }
+  ],
+  "passed": 23,
+  "allPassed": true,
+  "restored": true,
+  "baseline": "Frozen migration27; independently applied in each comparison even when29 is installed",
+  "classification": "Exact before/after JSON via real authenticated SQL RPCs in disposable database; not remote E2E"
+}

@@ -22,6 +22,7 @@ try {
     ["autosave-checks.mjs"],
   ];
   const features = {
+    "--nr-modelos": [["nr-models-quality.mjs"]],
     "--pessoas": [["pessoas-quality.mjs"], ["equipes-quality.mjs"], ["qualificacoes-quality.mjs"]],
     "--levantamentos": [["levantamentos-quality.mjs"]],
     "--estudos": [["estudos-quality.mjs"], ["acoes-vinculadas.mjs"]],

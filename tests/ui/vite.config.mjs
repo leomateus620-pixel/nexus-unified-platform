@@ -64,7 +64,7 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
-          /\/features\/nr\/(?:nr|files|documents|impactos|history|technical-publication|import-inspection)\.functions(?:\.ts)?$/.test(
+          /\/features\/nr\/(?:nr|files|documents|impactos|history|technical-publication|import-inspection|document-models|calculos|import-queue|folders)\.functions(?:\.ts)?$/.test(
             id,
           ) ||
           ([
@@ -75,6 +75,10 @@ export default defineConfig({
             "./history.functions",
             "./technical-publication.functions",
             "./import-inspection.functions",
+            "./document-models.functions",
+            "./calculos.functions",
+            "./import-queue.functions",
+            "./folders.functions",
           ].includes(id) &&
             /\/features\/nr\//.test(importer || ""))
         )

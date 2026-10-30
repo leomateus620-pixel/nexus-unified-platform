@@ -9,6 +9,8 @@ import { petOpcoes } from "@/features/pet/pet.functions";
 import { buscarOpcoesLevantamento } from "@/features/levantamentos/levantamentos.functions";
 import { useCommandKey } from "@/features/operacao/components";
 import { nrConsultar, nrExecutar } from "./nr.functions";
+import { nrDocumentoDeModelo } from "./document-models.functions";
+import { NrDocumentModelSelector, type NrDocumentModelSelection } from "./NrDocumentModelSelector";
 import type { Norma, NrContexto, NrJson, NrRecord, NrRecurso } from "./domain";
 import { NrContentEditor } from "./NrContentEditor";
 import { parseNative, type NativeContent } from "./native-content";
@@ -29,6 +31,7 @@ type TemplateBlock = {
   codigo: string;
   titulo: string;
   aplicabilidade?: string | string[];
+  aplica_se?: { familias?: string[]; tipos_local?: string[] };
   campos: TemplateField[];
 };
 const object = (v: unknown): Record<string, unknown> =>
@@ -200,6 +203,42 @@ function TemplateEditor({
                 maxLength={2000}
                 onChange={(e) => patch(block.id, { aplicabilidade: e.target.value })}
               />
+            </label>
+            <label>
+              Famílias às quais o bloco se aplica, uma por linha
+              <textarea
+                rows={3}
+                value={(block.aplica_se?.familias ?? []).join("\n")}
+                onChange={(e) =>
+                  patch(block.id, {
+                    aplica_se: {
+                      ...block.aplica_se,
+                      familias: e.target.value.split("\n").filter(Boolean),
+                    },
+                  })
+                }
+              />
+              <small className="nr-muted">
+                Use os valores cadastrados no local. Vazio conserva o bloco sem esta restrição.
+              </small>
+            </label>
+            <label>
+              Tipos de local aos quais o bloco se aplica, um por linha
+              <textarea
+                rows={3}
+                value={(block.aplica_se?.tipos_local ?? []).join("\n")}
+                onChange={(e) =>
+                  patch(block.id, {
+                    aplica_se: {
+                      ...block.aplica_se,
+                      tipos_local: e.target.value.split("\n").filter(Boolean),
+                    },
+                  })
+                }
+              />
+              <small className="nr-muted">
+                A aplicabilidade é conferida pelo servidor antes do envio à revisão.
+              </small>
             </label>
           </div>
           {block.campos.map((field, fi) => (
@@ -479,6 +518,9 @@ export function NrEditor({
   const [content, setContent] = useState<NativeContent>(
     originalNative ?? { schema_version: 1, blocos: [] },
   );
+  const [fromModel, setFromModel] = useState(false);
+  const [documentModel, setDocumentModel] = useState<NrDocumentModelSelection | null>(null);
+  const [acceptModelDraft, setAcceptModelDraft] = useState(false);
   const [blocks, setBlocks] = useState<TemplateBlock[]>(
     Array.isArray(row?.dados["blocos"]) ? (row.dados["blocos"] as TemplateBlock[]) : [],
   );
@@ -492,6 +534,7 @@ export function NrEditor({
   const guard = useRef(false);
   const commandKey = useCommandKey();
   const execute = useServerFn(nrExecutar);
+  const createFromModel = useServerFn(nrDocumentoDeModelo);
   const consult = useServerFn(nrConsultar);
   const blocker = useBlocker({
     withResolver: true,
@@ -550,6 +593,38 @@ export function NrEditor({
     setBusy(true);
     setError(null);
     try {
+      if (recurso === "documentos" && !row && fromModel) {
+        if (!documentModel || !acceptModelDraft)
+          throw new Error(
+            "Selecione um modelo e sua versão e confirme a criação de um rascunho sem aprovação herdada.",
+          );
+        if (normas.some((selected) => !documentModel.normas.includes(selected)))
+          throw new Error("As normas do documento precisam estar no escopo do modelo selecionado.");
+        const input = {
+          organization_id: org,
+          norma,
+          dados: {
+            cliente_id: clientId,
+            unidade_id: unitId,
+            local_id: values["local_id"] || null,
+            pasta_id: values["pasta_id"] || null,
+            titulo: values["titulo"] || "",
+            descricao: values["descricao"] || "",
+            tipo: values["tipo"] || "documento",
+            normas,
+            modelo_id: documentModel.modelo_id,
+            modelo_expected_version: documentModel.modelo_expected_version,
+            ...(documentModel.modelo_versao_id
+              ? { modelo_versao_id: documentModel.modelo_versao_id }
+              : {}),
+            usar_rascunho: acceptModelDraft,
+          },
+        };
+        const response = await createFromModel({ data: { ...input, chave: commandKey(input) } });
+        setDirty(false);
+        onSaved(response.registro as NrRecord);
+        return;
+      }
       const payload: Record<string, unknown> = {
         titulo: values["titulo"],
         descricao: values["descricao"],
@@ -716,6 +791,30 @@ export function NrEditor({
             onChange={() => setDirty(true)}
           >
             <fieldset disabled={busy}>
+              {recurso === "documentos" && !row && (
+                <div className="nr-panel">
+                  <label>
+                    Conteúdo inicial
+                    <select
+                      value={fromModel ? "modelo" : "vazio"}
+                      onChange={(e) => {
+                        setFromModel(e.target.value === "modelo");
+                        setDocumentModel(null);
+                        setAcceptModelDraft(false);
+                      }}
+                    >
+                      <option value="vazio">Documento em branco</option>
+                      <option value="modelo">Criar a partir de um modelo</option>
+                    </select>
+                  </label>
+                  {fromModel && (
+                    <p className="nr-muted">
+                      Escolha cliente e unidade abaixo. O modelo e a versão serão preservados no
+                      documento criado.
+                    </p>
+                  )}
+                </div>
+              )}
               <div className="nr-field-grid">
                 <label className="nr-wide">
                   {recurso === "locais" ? "Nome do local" : "Título"} *
@@ -981,46 +1080,72 @@ export function NrEditor({
                     </label>
                     {recurso === "documentos" && (
                       <>
-                        <label>
-                          Situação histórica na origem
-                          <input
-                            value={values["estado_origem"]}
-                            maxLength={100}
-                            onChange={(e) => set("estado_origem", e.target.value)}
-                            placeholder="Conforme registro efetivamente recebido"
-                          />
-                        </label>
-                        <label>
-                          Recebimento
-                          <select
-                            value={values["recebimento"] || "nativo"}
-                            onChange={(e) => set("recebimento", e.target.value)}
-                          >
-                            <option value="nativo">Conteúdo nativo</option>
-                            <option value="referencia">Referência externa</option>
-                            <option value="indisponivel">Original indisponível</option>
-                            <option value="pendente">Original pendente</option>
-                            <option value="recebido">Recebido</option>
-                          </select>
-                        </label>
-                        <label>
-                          Referência permanente da origem
-                          <input
-                            type="url"
-                            value={values["origem_url"]}
-                            maxLength={2000}
-                            onChange={(e) => set("origem_url", e.target.value)}
-                          />
-                          <small className="nr-muted">
-                            Uma referência não comprova download ou integridade dos bytes.
-                          </small>
-                        </label>
+                        {!fromModel && (
+                          <label>
+                            Situação histórica na origem
+                            <input
+                              value={values["estado_origem"]}
+                              maxLength={100}
+                              onChange={(e) => set("estado_origem", e.target.value)}
+                              placeholder="Conforme registro efetivamente recebido"
+                            />
+                          </label>
+                        )}
+                        {!fromModel && (
+                          <label>
+                            Recebimento
+                            <select
+                              value={values["recebimento"] || "nativo"}
+                              onChange={(e) => set("recebimento", e.target.value)}
+                            >
+                              <option value="nativo">Conteúdo nativo</option>
+                              <option value="referencia">Referência externa</option>
+                              <option value="indisponivel">Original indisponível</option>
+                              <option value="pendente">Original pendente</option>
+                              <option value="recebido">Recebido</option>
+                            </select>
+                          </label>
+                        )}
+                        {!fromModel && (
+                          <label>
+                            Referência permanente da origem
+                            <input
+                              type="url"
+                              value={values["origem_url"]}
+                              maxLength={2000}
+                              onChange={(e) => set("origem_url", e.target.value)}
+                            />
+                            <small className="nr-muted">
+                              Uma referência não comprova download ou integridade dos bytes.
+                            </small>
+                          </label>
+                        )}
                         {picker("local_id", "locais", "Local")}
                         {picker("pasta_id", "pastas", "Pasta")}
                       </>
                     )}
                   </div>
-                  {isModelSurvey ? (
+                  {recurso === "documentos" && !row && fromModel ? (
+                    <>
+                      <NrDocumentModelSelector
+                        org={org}
+                        norma={norma}
+                        clienteId={clientId}
+                        unidadeId={unitId}
+                        onSelection={setDocumentModel}
+                      />
+                      <label className="nr-checks mt-3">
+                        <input
+                          type="checkbox"
+                          required
+                          checked={acceptModelDraft}
+                          onChange={(e) => setAcceptModelDraft(e.target.checked)}
+                        />
+                        Compreendo que será criado um rascunho para conferência. A aprovação ou
+                        emissão do modelo não aprova este documento.
+                      </label>
+                    </>
+                  ) : isModelSurvey ? (
                     <TemplateEditor
                       blocks={blocks}
                       onChange={(v) => {
@@ -1038,6 +1163,18 @@ export function NrEditor({
                       <h3>Conteúdo editável</h3>
                       <NrContentEditor
                         value={content}
+                        org={org}
+                        modelTemplate={recurso === "modelos"}
+                        fieldContext={
+                          recurso === "documentos"
+                            ? {
+                                norma,
+                                clienteId: clientId,
+                                unidadeId: unitId,
+                                localId: values["local_id"] || "",
+                              }
+                            : undefined
+                        }
                         onChange={(v) => {
                           setContent(v);
                           setDirty(true);
@@ -1189,7 +1326,11 @@ export function NrEditor({
                 <ActionButton variant="ghost" disabled={busy} onClick={close}>
                   Cancelar
                 </ActionButton>
-                <ActionButton type="submit" loading={busy} disabled={!normas.length}>
+                <ActionButton
+                  type="submit"
+                  loading={busy}
+                  disabled={!normas.length || (fromModel && (!documentModel || !acceptModelDraft))}
+                >
                   Salvar {recurso === "levantamentos" ? "parcialmente" : "registro"}
                 </ActionButton>
               </div>

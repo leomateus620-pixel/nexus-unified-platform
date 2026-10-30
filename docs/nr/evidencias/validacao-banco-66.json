@@ -1,0 +1,76 @@
+{
+  "capturado_em": "2026-10-30T22:41:49.244Z",
+  "postgres": "17.10",
+  "migrationCount": 66,
+  "manifestSha256": "c3d18907e1ecf90bc2d4c2e718582d55b3dc075efa474d0e5ebc6280e83385bf",
+  "results": [
+    {
+      "name": "installation",
+      "passed": true,
+      "elapsedMs": 2029,
+      "outputLines": 13,
+      "tail": [
+        "PASS: failed DDL rolls back objects and ledger; altered historical checksum blocks execution",
+        "PASS: clean installation (66) and private ledger; preexisting schema without reconciliation rejected",
+        "PASS: connector single-DO envelopes validate native ledgers/schema, register provenance, apply once and roll back failed DDL with ledger"
+      ]
+    },
+    {
+      "name": "flows",
+      "passed": true,
+      "elapsedMs": 161,
+      "outputLines": 1,
+      "tail": [
+        "{\"suite\":\"NR workflows/model/capture/folder order\",\"assertions\":61,\"passed\":true,\"scope\":\"isolated synthetic fixtures rolled back; no production data, approval, emission or safety conclusion\"}"
+      ]
+    },
+    {
+      "name": "queue",
+      "passed": true,
+      "elapsedMs": 227,
+      "outputLines": 1,
+      "tail": [
+        "{\"suite\":\"NR durable import queue PostgreSQL\",\"assertions\":91,\"passed\":true,\"scope\":\"isolated synthetic data; real RLS/RPC/transaction rollback/dependency retries/three-way conflict/role-lock concurrency; pg_cron intentionally absent, manual worker only; no Storage bytes claimed\"}"
+      ]
+    }
+  ],
+  "envelopes": [
+    {
+      "position": 65,
+      "path": "drizzle/migrations/0046_nr_fluxos_completos.sql",
+      "sourceSha256": "7505bb32fcb3e4101b48d5525b0345fdd799da1404a7bf4b551939d903279cfa",
+      "envelopeSha256": "be7912adee3f433500065cdefc576d6707c8bb85bf7cd9c021d6a565d52c339e",
+      "bytes": 54605
+    },
+    {
+      "position": 66,
+      "path": "drizzle/migrations/0047_nr_fila_importacao.sql",
+      "sourceSha256": "16b1d71bd71a483962a2b2494bc56b0e5d1d6da9f02d7253ff077a57044bae02",
+      "envelopeSha256": "c2e69f72e68947f349f0534ce700c5745eb1da390f73f162fcdd510309110105",
+      "bytes": 32690
+    }
+  ],
+  "scope": "disposable loopback database; actual full installation+upgrade+connector harness, scenarios against combined65+66; no production fixtures; pg_cron absent locally",
+  "manifestSerialization": "JSON.stringify([{path,sha256,position},...]) in application order; LF-normalized SQL checksums",
+  "upgrade64to66": {
+    "suite": "tests/db/nr-upgrade-66.mjs",
+    "assertions": 25,
+    "passed": true,
+    "scope": "Individual injected failure after complete0046/0047 DDL rolls back tables, columns, functions and ledger together; actual connector envelopes replay without writes; prior source/snapshots/versions/issued body/PET definitions unchanged; corrupted prefix rejected."
+  },
+  "installationLog": [
+    "PASS: checkpoint45 → 46 preserves published agenda, participants, reservations, immutable revisions and old request keys without inferring new origins",
+    "PASS: checkpoint46 → 47 preserves confirmed legacy attachment, Storage metadata and exact request hash without rewriting its parent",
+    "PASS: checkpoint44 → 45 preserves known identity from private receipts without rebinding the operational person",
+    "PASS: checkpoint43 → 44 hardens current authorization without changing existing records or RPC signatures",
+    "PASS: six direct cross-tenant supply writes remain rejected by real composite FKs after removing redundant relationships",
+    "PASS: checkpoint42 → 43 reproduces duplicate relationships before correction and retains one composite relationship afterwards",
+    "PASS: checkpoint41 receipt and accumulator preserved on upgrade; no stock balance or conference inferred",
+    "PASS: operational checkpoint 40 → 66; canonical person and audit retained",
+    "PASS: pre-0022 frozen PE snapshot/hash preserved; legacy source rejected by selector and command; reviewed new version freezes canonical IDs and links correctly",
+    "PASS: historical baseline (30) → upgrade (36); existing client preserved; retry executes no migration SQL",
+    "PASS: failed DDL rolls back objects and ledger; altered historical checksum blocks execution",
+    "PASS: clean installation (66) and private ledger; preexisting schema without reconciliation rejected",
+    "PASS: connector single-DO envelopes validate native ledgers/schema, register provenance, apply once and roll back failed DDL with ledger"
+  ]
+}

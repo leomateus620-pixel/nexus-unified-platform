@@ -1,0 +1,103 @@
+{
+  "format": "nexus-nr-synthetic-ui-qa/1",
+  "captured_at": "2026-10-30T22:40:44.430092+00:00",
+  "scope": "Source React components with isolated synthetic transport; never production Auth/SQL/Storage/cron",
+  "modelos": {
+    "method": "Actual source UI with synthetic laboratory transport; no real persistence claim",
+    "checks": [
+      {
+        "name": "model creation chooses an exact version and previews it without resolving fields in the browser",
+        "pass": true
+      },
+      {
+        "name": "captured source can be refreshed but manual replacement requires a reason and preserves its source",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "success": true
+  },
+  "calculos_e_fila": {
+    "method": "Actual source UI; synthetic isolated transport only. No connected Auth, SQL, cron or Storage persistence proof.",
+    "checks": [
+      {
+        "name": "partial calculation saves and reopens confirmed synthetic parameters; unknown diameter remains blank",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "name": "two synthetic references stage, start, pause, resume and cancel without losing staging or confirmed counts; declined cancellation preserves state",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "name": "partial calculation saves and reopens confirmed synthetic parameters; unknown diameter remains blank",
+        "width": 1280,
+        "pass": true
+      },
+      {
+        "name": "two synthetic references stage, start, pause, resume and cancel without losing staging or confirmed counts; declined cancellation preserves state",
+        "width": 1280,
+        "pass": true
+      }
+    ],
+    "page_errors": [],
+    "console_errors": [],
+    "success": true
+  },
+  "unitarios_modelos": {
+    "command": "node node_modules/vitest/vitest.mjs run --config tests/vitest.nr.config.ts tests/nr-document-models.test.ts",
+    "passed": 6,
+    "failed": 0
+  },
+  "own_typescript_and_eslint": {
+    "passed": true
+  },
+  "presentation_before_new_features": {
+    "command": "node tests/ui/run.mjs",
+    "exit_code": 0,
+    "scope": "Before the subsequent model/calculation/import queue additions; later complete CI must validate the final release"
+  },
+  "observed_fix": {
+    "problem": "NR desktop gutter exceeded the operational shell gutter by 8px",
+    "change": "Retain the shell-aligned 24px gutter on tablet and desktop",
+    "assertions": "390px and 1280px document scroll width does not exceed viewport; bounded calculation dialog and contained keyboard focus"
+  },
+  "artifacts": [
+    {
+      "path": "docs/nexus-operacional/nr/evidencias/laboratorio-modelo-versionado-390.png",
+      "bytes": 57275,
+      "sha256": "16ec555cbe4839a245f477ebb46967426d542b385e81acbcad96c42cae20f855"
+    },
+    {
+      "path": "docs/nexus-operacional/nr/evidencias/laboratorio-campo-substituicao-390.png",
+      "bytes": 51129,
+      "sha256": "dcec635259c7c9ac771f5f63a9148e2c3e6674710d022d310146084969a1cbb0"
+    },
+    {
+      "path": "docs/nexus-operacional/nr/evidencias/laboratorio-calculo-parcial-390.png",
+      "bytes": 65529,
+      "sha256": "e93a03ba144fefc0a137e0e2bb0d1adfccaed3c575e99b5e50bd62fa6ed16386"
+    },
+    {
+      "path": "docs/nexus-operacional/nr/evidencias/laboratorio-calculo-parcial-1280.png",
+      "bytes": 122427,
+      "sha256": "0a7935ddb6747dfb96ed7d896a28b7712817b2d65a0d596ad23652a8c9119a42"
+    },
+    {
+      "path": "docs/nexus-operacional/nr/evidencias/laboratorio-fila-preservada-390.png",
+      "bytes": 70179,
+      "sha256": "c44534a3fe42a9534ea5380043f03146cafaad7abd61d29fd28c5d06c1cd4f08"
+    },
+    {
+      "path": "docs/nexus-operacional/nr/evidencias/laboratorio-fila-preservada-1280.png",
+      "bytes": 121166,
+      "sha256": "a58315e589d347961f2386c990e27ebffdf5855f6fe4670fae50bd3d2ccc3c52"
+    }
+  ],
+  "limitations": [
+    "Synthetic transport demonstrates UI behavior only; connected persistence, authorization and worker execution are validated separately.",
+    "Model UI reports page errors; console errors were independently captured in calculation and queue QA.",
+    "Screenshots contain only authored synthetic fixtures and no customer payloads."
+  ]
+}

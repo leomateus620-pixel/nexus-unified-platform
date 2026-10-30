@@ -1,5 +1,6 @@
 // Synthetic presentation fixtures, isolated from Supabase and never imported by production builds.
 import { scenario } from "./data";
+import { calcularSnapshotNr, nrSalvarCalculosSchema } from "../../src/features/nr/calculos.schemas";
 const org = "10000000-0000-4000-8000-000000000001",
   client = "20000000-0000-4000-8000-000000000001",
   unit = "21000000-0000-4000-8000-000000000001";
@@ -112,6 +113,23 @@ const rows = {
   modelos: [
     {
       ...common,
+      id: "33000000-0000-4000-8000-000000000007",
+      modelo_versao_id: "34000000-0000-4000-8000-000000000007",
+      titulo: "Modelo documental sintético com campos reais de teste",
+      tipo: "documento",
+      cliente_id: null,
+      unidade_id: null,
+      conteudo: {
+        schema_version: 1,
+        blocos: [
+          { id: "model-heading", tipo: "titulo", texto: "Conteúdo copiado do modelo sintético" },
+          { id: "model-tag", tipo: "campo", chave: "local.tag", modo: "vinculado" },
+          { id: "model-unit", tipo: "campo", chave: "unidade.nome", modo: "snapshot" },
+        ],
+      },
+    },
+    {
+      ...common,
       id: ruleId,
       titulo: "Regra sintética para revisão da interface",
       tipo: "regra",
@@ -201,6 +219,7 @@ export async function nrConsultar({ data }) {
       (r.titulo + " " + (r.tag || "")).toLowerCase().includes(data.busca.toLowerCase()),
     );
   if (data.estado) list = list.filter((r) => r.estado === data.estado);
+  if (data.tipo) list = list.filter((r) => r.tipo === data.tipo);
   return {
     rows: structuredClone(list),
     total: list.length,
@@ -384,7 +403,7 @@ function revisionFor(data) {
   const row = rows[data.recurso].find((record) => record.id === data.registro_id);
   if (!row) throw new Error("Versão sintética indisponível.");
   return {
-    id: row.revisao_atual_id || modelId,
+    id: row.modelo_versao_id || row.revisao_atual_id || modelId,
     numero: row.revisao_numero || 1,
     estado: row.estado,
     vigencia: "vigente",
@@ -478,6 +497,101 @@ export async function nrModeloPublicarTecnico({ data }) {
   return { registro: structuredClone(row) };
 }
 
+export async function nrDocumentoCampos({ data }) {
+  window.__nexusCalls.push({ name: "nrDocumentoCampos", data });
+  await new Promise((resolve) => setTimeout(resolve, 90));
+  if (data.organization_id !== org || data.cliente_id !== client || data.unidade_id !== unit)
+    throw new Error("Contexto sintético indisponível.");
+  const local = data.local_id ? rows.locais.find((row) => row.id === data.local_id) : null;
+  if (data.local_id && !local) throw new Error("Local sintético indisponível.");
+  const source = (tipo, id, version) => ({
+    tipo,
+    id,
+    version,
+    sha256: "a".repeat(64),
+    updated_at: common.updated_at,
+  });
+  return {
+    contexto: { cliente_id: client, unidade_id: unit, local_id: local?.id ?? null },
+    campos: [
+      {
+        chave: "cliente.razao_social",
+        rotulo: "Razão social do cliente",
+        valor: "Cliente sintético — laboratório isolado",
+        fonte: source("cliente", client, 1),
+      },
+      {
+        chave: "cliente.nome_exibicao",
+        rotulo: "Nome de exibição do cliente",
+        valor: "Cliente sintético",
+        fonte: source("cliente", client, 1),
+      },
+      {
+        chave: "unidade.nome",
+        rotulo: "Nome da unidade",
+        valor: "Unidade de testes de apresentação",
+        fonte: source("unidade", unit, 1),
+      },
+      {
+        chave: "unidade.endereco",
+        rotulo: "Endereço da unidade",
+        valor: null,
+        fonte: source("unidade", unit, 1),
+      },
+      ...(local
+        ? ["tag", "titulo", "descricao", "tipo", "familia"].map((key) => ({
+            chave: `local.${key}`,
+            rotulo: key,
+            valor: local[key] ?? null,
+            fonte: source("local", local.id, local.version),
+          }))
+        : []),
+    ],
+  };
+}
+const documentModelRequests = new Map();
+export async function nrDocumentoDeModelo({ data }) {
+  window.__nexusCalls.push({ name: "nrDocumentoDeModelo", data });
+  if (documentModelRequests.has(data.chave))
+    return structuredClone(documentModelRequests.get(data.chave));
+  const model = rows.modelos.find(
+    (row) => row.id === data.dados.modelo_id && row.tipo === "documento",
+  );
+  if (!model || model.version !== data.dados.modelo_expected_version)
+    throw new Error("Modelo alterado no laboratório.");
+  const resolved = await nrDocumentoCampos({
+    data: { ...data.dados, organization_id: data.organization_id, norma: data.norma },
+  });
+  const content = structuredClone(model.conteudo);
+  content.blocos = content.blocos.map((block) => {
+    if (block.tipo !== "campo") return block;
+    const field = resolved.campos.find((row) => row.chave === block.chave);
+    if (!field) throw new Error("Campo do modelo sem contexto no laboratório.");
+    return { ...block, valor_snapshot: field.valor, fonte_snapshot: field.fonte };
+  });
+  const row = {
+    ...structuredClone(common),
+    ...data.dados,
+    id: crypto.randomUUID(),
+    estado: "rascunho",
+    conteudo: content,
+    recebimento: "nativo",
+    revisao_numero: 1,
+    revisao_atual_id: crypto.randomUUID(),
+    dados: {
+      modelo_origem: {
+        id: model.id,
+        versao_id: data.dados.modelo_versao_id || model.modelo_versao_id,
+        version: model.version,
+      },
+    },
+  };
+  rows.documentos.push(row);
+  const response = { registro: structuredClone(row) };
+  documentModelRequests.set(data.chave, response);
+  return response;
+}
+
 export async function nrImportacaoInspecionar({ data }) {
   const lot = {
     id: "38000000-0000-4000-8000-000000000001",
@@ -524,4 +638,49 @@ export async function nrImportacaoInspecionar({ data }) {
     limite: 25,
     por_resultado: items.map((row) => ({ resultado: row.resultado, quantidade: 1 })),
   };
+}
+
+// Synthetic calculation boundary: never contacts a production service.
+export async function nrSalvarCalculos({ data }) {
+  if (scenario === "restricted") throw new Error("Sem permissão na fixture.");
+  const input = nrSalvarCalculosSchema.parse(data);
+  const row = rows.locais.find((local) => local.id === input.local_id);
+  if (!row || input.organization_id !== org) throw new Error("Contexto indisponível.");
+  const snapshot = calcularSnapshotNr(input.entrada, "40000000-0000-4000-8000-000000000001", input.expected_version, input.chave);
+  return nrExecutar({data:{organization_id:org,norma:input.norma,recurso:"locais",comando:"salvar",id:row.id,expected_version:input.expected_version,chave:input.chave,dados:{dados:{...row.dados,calculos:JSON.parse(JSON.stringify(snapshot))}}}});
+}
+const importQueues = new Map<string, { row: Record<string, any>; items: Map<number, any>; key: string }>();
+export async function nrImportFilaPreparar({ data }) {
+  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
+  const existing = [...importQueues.values()].find(q => q.key === data.chave);
+  if (existing) return structuredClone(existing.row);
+  const row = {id:crypto.randomUUID(),lote_id:crypto.randomUUID(),norma:data.norma,origem:data.origem,estado:"preparando",total:data.total,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+  importQueues.set(row.id,{row,items:new Map(),key:data.chave}); return structuredClone(row);
+}
+export async function nrImportFilaStaging({ data }) {
+  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
+  const queue=importQueues.get(data.fila_id); if(!queue||queue.row.estado!=="preparando")throw new Error("Fila indisponível.");
+  for(const item of data.itens)queue.items.set(item.sequencia,structuredClone({...item,id:crypto.randomUUID(),estado:"fila",tentativas:0}));
+  return {confirmados:data.itens.length,recebidos:queue.items.size};
+}
+export async function nrImportFilaComandar({ data }) {
+  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
+  const queue=importQueues.get(data.fila_id);if(!queue)throw new Error("Fila indisponível.");
+  if(data.acao==="iniciar"&&queue.items.size!==queue.row.total)throw new Error("Staging incompleto.");
+  queue.row.estado={iniciar:"fila",pausar:"pausado",retomar:"fila",cancelar:"cancelado"}[data.acao];return structuredClone(queue.row);
+}
+export async function nrImportFilaConsultar({ data }) {
+  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
+  const page=data.pagina||0;
+  if(!data.id)return {rows:[...importQueues.values()].map(q=>({...q.row,recebidos:q.items.size,processados:0})).slice(page*25,(page+1)*25),total:importQueues.size,pagina:page,agendador_ativo:true};
+  const queue=importQueues.get(data.id);if(!queue)throw new Error("Fila indisponível.");
+  return {fila:structuredClone(queue.row),rows:[...queue.items.values()].slice(page*25,(page+1)*25).map(({payload,destino,...metadata})=>metadata),total:queue.row.total,pagina:page,agendador_ativo:true,recebidos:queue.items.size,processados:0,erros:0};
+}
+export async function nrPastaOrdenar({data}) {
+  if(scenario==="restricted"||data.organization_id!==org)throw new Error("Sem permissão na fixture.");
+  const row=rows.pastas.find(folder=>folder.id===data.id);if(!row||row.version!==data.expected_version)throw new Error("Conflito de versão da pasta.");
+  const siblings=rows.pastas.filter(folder=>folder.parent_id===row.parent_id&&!folder.arquivado_em);
+  const index=siblings.findIndex(folder=>folder.id===row.id),next=index+(data.direcao==="subir"?-1:1);
+  if(next<0||next>=siblings.length)throw new Error("A pasta já está nesta extremidade.");
+  row.version++; return {registro:structuredClone(row)};
 }

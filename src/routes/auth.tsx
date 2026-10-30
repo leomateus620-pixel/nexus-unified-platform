@@ -13,7 +13,7 @@ import { NexusLogo } from "@/components/nexus/NexusLogo";
 import { oauthReturnPath } from "@/lib/oauth-return-path";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({ next: oauthReturnPath(s.next) }),
+  validateSearch: (s: Record<string, unknown>): { next?: string } => ({ next: oauthReturnPath(s['next']) }),
   head: () => ({
     meta: [
       { title: "Entrar — Sistema Nexus" },
@@ -42,7 +42,8 @@ const fieldInput =
 
 function AuthPage() {
   const navigate = useNavigate();
-  const { next } = Route.useSearch();
+  const { next: returnPath } = Route.useSearch();
+  const next = returnPath ?? "/";
   const [modo, setModo] = useState<"entrar" | "cadastrar">("entrar");
   const [msg, setMsg] = useState<string | null>(null);
   const [erro, setErro] = useState<string | null>(null);

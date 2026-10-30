@@ -6,7 +6,7 @@ import { NexusLogo } from "@/components/nexus/NexusLogo";
 
 export const Route = createFileRoute("/.lovable/oauth/consent")({
   ssr: false,
-  validateSearch: (s: Record<string, unknown>) => ({ authorization_id: typeof s.authorization_id === "string" ? s.authorization_id : "" }),
+  validateSearch: (s: Record<string, unknown>) => ({ authorization_id: typeof s['authorization_id'] === "string" ? s['authorization_id'] : "" }),
   head: () => ({ meta: [
     { title: "Autorizar agente — Nexus" },
     { name: "description", content: "Autorize um agente a consultar o Nexus com as permissões da sua conta." },
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
     return { details: data, email: session.session?.user.email };
   },
   pendingComponent: () => <main className="p-8 text-foreground">Verificando autorização…</main>,
-  errorComponent: ({ error }) => <main className="mx-auto flex min-h-screen max-w-lg flex-col justify-center gap-6 px-6"><NexusLogo /><h1 className="font-display text-2xl">Conexão não disponível</h1><p role="alert">{error.message}</p><Button asChild variant="outline"><Link to="/auth" search={{ next: "/" }}>Voltar ao acesso</Link></Button></main>,
+  errorComponent: ({ error }) => <main className="mx-auto flex min-h-screen max-w-lg flex-col justify-center gap-6 px-6"><NexusLogo /><h1 className="font-display text-2xl">Conexão não disponível</h1><p role="alert">{error instanceof Error ? error.message : "Não foi possível verificar a autorização."}</p><Button asChild variant="outline"><Link to="/auth" search={{ next: "/" }}>Voltar ao acesso</Link></Button></main>,
   component: Consent,
 });
 

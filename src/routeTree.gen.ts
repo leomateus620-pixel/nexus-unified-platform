@@ -13,6 +13,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EscadaLc02RouteImport } from './routes/escada-lc02'
 import { Route as Mapas3dRouteImport } from './routes/mapas-3d'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedAgendaEquipeRouteImport } from './routes/_authenticated/agenda-equipe'
 import { Route as AuthenticatedAlmoxarifadoRouteImport } from './routes/_authenticated/almoxarifado'
@@ -94,6 +96,17 @@ const Mapas3dRoute = Mapas3dRouteImport.update({
   path: '/mapas-3d',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -471,6 +484,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
@@ -536,6 +551,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/clientes': typeof AuthenticatedClientesRoute
@@ -594,6 +611,8 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/escada-lc02': typeof EscadaLc02Route
   '/mapas-3d': typeof Mapas3dRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/agenda-equipe': typeof AuthenticatedAgendaEquipeRoute
   '/_authenticated/almoxarifado': typeof AuthenticatedAlmoxarifadoRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
@@ -663,6 +682,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/agenda-equipe'
     | '/almoxarifado'
     | '/clientes'
@@ -728,6 +749,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/agenda-equipe'
     | '/almoxarifado'
     | '/clientes'
@@ -785,6 +808,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/escada-lc02'
     | '/mapas-3d'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/_authenticated/agenda-equipe'
     | '/_authenticated/almoxarifado'
     | '/_authenticated/clientes'
@@ -853,6 +878,8 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   EscadaLc02Route: typeof EscadaLc02Route
   Mapas3dRoute: typeof Mapas3dRoute
+  McpRoute: typeof McpRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   Mapas3dSiloEngolfamentoRoute: typeof Mapas3dSiloEngolfamentoRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
@@ -886,6 +913,20 @@ declare module '@tanstack/react-router' {
       path: '/mapas-3d'
       fullPath: '/mapas-3d'
       preLoaderRoute: typeof Mapas3dRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/': {
@@ -1577,6 +1618,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   EscadaLc02Route: EscadaLc02Route,
   Mapas3dRoute: Mapas3dRoute,
+  McpRoute: McpRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   Mapas3dSiloEngolfamentoRoute: Mapas3dSiloEngolfamentoRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,

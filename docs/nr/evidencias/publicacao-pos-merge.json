@@ -1,0 +1,40 @@
+{
+  "format": "nexus-nr-publicacao-pos-merge-v1",
+  "captured_at": "2026-10-30T21:57:28.194222+00:00",
+  "repository": "leomateus620-pixel/nexus-unified-platform",
+  "merged_pr": 17,
+  "merged_commit": "0d3d4c459efd4a92c1dd2f0b2416b17440912d9f",
+  "merged_by": "proprietario",
+  "lovable_synced_merge_confirmed": true,
+  "preview_build": {
+    "commit": "0d3d4c459efd4a92c1dd2f0b2416b17440912d9f",
+    "completed_at": "2026-10-30T21:48:21Z",
+    "result": "success",
+    "source": "Lovable official build status, read-only inspection"
+  },
+  "later_lovable_commits": [
+    "17b30d732b0edf6adea614120576923f7839ce18",
+    "fbed44b517a918bf47995d3e9ee272594c01ec40"
+  ],
+  "later_change_paths": [
+    "src/integrations/supabase/types.ts"
+  ],
+  "production_deployment": {
+    "id": "3f521cff-f9ff-4aa2-bd1d-55008b25b20b",
+    "result_returned": "pending",
+    "requested_url": "https://nexus-gestao-industrial.lovable.app",
+    "observed_final_url": "https://nexusgestao.app/auth",
+    "final_deployment_state": "unverified",
+    "exact_published_commit": "unverified",
+    "reason": "Connector exposes deploy request but no deployment-status query; connected Chrome account has no access to private Lovable project. The available auth screen may belong to a prior publication."
+  },
+  "production_ui": "Authentication requested; Google login remained in loading state. No credentials collected or bypass attempted.",
+  "source_photo_probe": {
+    "at": "2026-10-30T21:52:39.188320+00:00",
+    "strategy": "observed photo path resolved against observed source app.js origin",
+    "status": 403,
+    "body_was_file": false,
+    "bytes_imported": 0
+  },
+  "source_ui": "Embedded application remains blank; no change asserted for source data beyond recorded snapshot window."
+}

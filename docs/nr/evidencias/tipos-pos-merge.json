@@ -1,0 +1,39 @@
+{
+  "format": "nexus-types-postmerge-audit-v1",
+  "base_commit": "0d3d4c459efd4a92c1dd2f0b2416b17440912d9f",
+  "observed_commit": "fbed44b517a918bf47995d3e9ee272594c01ec40",
+  "file": "src/integrations/supabase/types.ts",
+  "file_sha256": "3a2cf7a2398d013071eb8e83ce1bd981951885415acae90bc7d494078cb11e73",
+  "method": "TypeScript AST semantic comparison and virtual compiler host loading the exact new generated file across 409 root files.",
+  "typecheck": {
+    "diagnostics": 0,
+    "elapsed_seconds": 11.3,
+    "roots": 409
+  },
+  "preserved": {
+    "tables": 162,
+    "functions": 276,
+    "enums": 4,
+    "nr_tables": 21,
+    "nr_generated_rpc_signatures_unchanged": 34,
+    "relationships_unchanged": true,
+    "columns_and_optionality_preserved": true
+  },
+  "generator_differences": {
+    "postgrest_version": [
+      "14.5",
+      "14.17"
+    ],
+    "computed_fields_never_removed_tables": 162,
+    "nonnull_json_to_json_columns": 58,
+    "nonnull_json_to_json_slots": 174,
+    "generated_column_never_to_column_type_columns": 5,
+    "generated_column_insert_update_slots": 10,
+    "agenda_zero_args": [
+      "Record<PropertyKey, never>",
+      "never"
+    ]
+  },
+  "scope": "Static generated TypeScript changed; this does not alter database constraints, RLS, RPC implementation or permission grants. No migration or production write performed.",
+  "resolution": "Preserve the normally published Lovable commits and validated generated file; no history rewrite."
+}

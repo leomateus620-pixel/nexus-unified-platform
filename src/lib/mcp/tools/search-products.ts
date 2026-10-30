@@ -12,7 +12,7 @@ export default defineTool({
       let query = db.from("produtos").select("id,codigo,descricao,unidade,modalidade,ativo").eq("organization_id", organization_id).order("codigo").limit(30);
       if (search) {
         // No PostgREST filter grammar is accepted from callers.
-        const term = search.replace(/[%_*(),.\\]/g, " ").trim();
+        const term = search.replace(/[^\p{L}\p{N}\s-]/gu, " ").trim();
         if (term) query = query.or(`codigo.ilike.%${term}%,descricao.ilike.%${term}%`);
       }
       const { data, error } = await query;

@@ -31,6 +31,8 @@ export const Route = createFileRoute("/_authenticated/comercial/propostas/")({
       { name: "description", content: "Lista de propostas comerciais e suas revisões." },
       { property: "og:title", content: "Propostas — Sistema Nexus" },
       { property: "og:description", content: "Propostas comerciais e revisões." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Propostas,

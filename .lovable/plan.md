@@ -1,16 +1,9 @@
-# Read-only answer for PR draft #13 (no changes proposed)
+Inspeção somente leitura (nada alterado)
 
-Nothing in this plan edits code, changes branches, installs packages, touches the database or publishes anything. Approving it does nothing.
-
-## 1. Regenerating `src/integrations/supabase/types.ts`
-- Official way: the Lovable tool `supabase--get_types`. It reads the live schema of the project's Cloud database and **overwrites `src/integrations/supabase/types.ts` in the project's code changes**. The file is auto-generated and must not be edited by hand.
-- Limit: there is no way to run it without writing to files. Its output becomes a commit on the branch the Lovable project is synced to. So it cannot run without editing the connected branch (`codex/nexus-operacao-integrada-agenda-equipe`, if that is the synced branch), and it would break the rule that Codex is the only editor.
-- Also: it generates types from the schema that is **live** in the Cloud database. Migrations that exist only in the PR and were never applied will not appear in the output.
-- Read-only option: the schema can be read with read-only queries (such as `information_schema`) and handed to Codex so Codex can update the file. No Lovable operation writes the file anywhere other than the project's code.
-
-## 2. Are SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY present?
-- Checked in the Lovable sandbox with `test -n`. No values were read or printed:
-  - SUPABASE_URL: present
-  - SUPABASE_SERVICE_ROLE_KEY: present
-- Boundary: this proves the variables exist in the **sandbox/dev-server environment** that Lovable injects. It does not directly inspect the **published Worker runtime** (nexusgestao.app). From here, the only way to check production would be to call a server function or deploy code, and both are outside this read-only task. That is not evidence the Cloud is unavailable. It is simply a part of the setup this check cannot see.
-- Neither value can be shown on Lovable Cloud. If the variables are missing in a runtime, the fix is `supabase--rebind_secrets`. That tool changes state, so it was not run.
+- Projeto: Lovable Cloud ref yhtgijtllvgzoqtfcgal (o .env do cliente e as ferramentas usam o mesmo). Instância Small, ativa.
+- Bucket nexus-nr-acervo: existe, privado, limite de 50 MB (52428800 bytes) por arquivo. Hoje tem 0 objetos (0 bytes).
+- Configuração do servidor: SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY estão presentes. Os valores não foram exibidos. Não falta nenhuma configuração para enviar arquivos pela API de Storage.
+- Banco PostgreSQL: cerca de 36,5 MB (36457619 bytes, valor de pg_database_size).
+- Franquia de 10 GB: não consegui confirmar daqui a qual recurso ela se aplica, nem se é GB ou GiB. Também não consegui ver a quota efetiva. Nenhuma ferramenta disponível mostra uma quota de storage ou de disco. Não fiz deduções a partir da RAM nem do limite por arquivo.
+- Transferência: dá para fazer aqui com um script de manutenção no servidor, usando a chave de serviço e a API de Storage. O script pode manter os paths já preparados no banco. Limites: cada arquivo precisa ter no máximo 50 MB, a não ser que o limite do bucket seja aumentado (o limite geral do projeto pode ir até 5 GB). Os arquivos de origem precisam estar acessíveis nesta sandbox. Os IDs de storage.objects são gerados pelo Storage e não podem ser fixados. Se o banco referencia o ID do objeto, e não o path, essa referência precisa ser revista.
+- Nada foi enviado.

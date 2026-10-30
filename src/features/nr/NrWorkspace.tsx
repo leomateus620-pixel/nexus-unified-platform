@@ -44,6 +44,15 @@ const NrStorageUsage = lazy(() =>
 const NrImportInspection = lazy(() =>
   import("./NrImportInspection").then((module) => ({ default: module.NrImportInspection })),
 );
+const NrCalculations = lazy(() =>
+  import("./NrCalculations").then((module) => ({ default: module.NrCalculations })),
+);
+const NrImportQueue = lazy(() =>
+  import("./NrImportQueue").then((module) => ({ default: module.NrImportQueue })),
+);
+const NrFolderOrder = lazy(() =>
+  import("./NrFolderOrder").then((module) => ({ default: module.NrFolderOrder })),
+);
 const NrDocumentImpacts = lazy(() =>
   import("./NrDocumentImpacts").then((module) => ({ default: module.NrDocumentImpacts })),
 );
@@ -524,6 +533,20 @@ function NrScope({
                   </Suspense>
                 )}
                 {section === "configuracoes" && contexto.permissoes.configurar && (
+                  <Suspense
+                    fallback={<LoadingState label="Consultando processamento de importações…" />}
+                  >
+                    <NrImportQueue
+                      key={`${org}-${norma}`}
+                      org={org}
+                      norma={norma}
+                      onInspect={(loteId) =>
+                        onSearch({ ...search, importLote: loteId, importItem: "", importPagina: 0 })
+                      }
+                    />
+                  </Suspense>
+                )}
+                {section === "configuracoes" && contexto.permissoes.configurar && (
                   <Suspense fallback={<LoadingState label="Consultando lotes de importação…" />}>
                     <NrImportInspection org={org} search={search} onSearch={onSearch} />
                   </Suspense>
@@ -591,6 +614,37 @@ function NrScope({
                                 path={path}
                                 search={search}
                               />
+                              {recurso === "locais" && (
+                                <Suspense fallback={<LoadingState label="Carregando cálculos…" />}>
+                                  <NrCalculations
+                                    key={`${org}-${norma}-${row.id}`}
+                                    norma={norma}
+                                    registro={row}
+                                    canEdit={contexto.permissoes.editar}
+                                    onSaved={async () => {
+                                      setNotice("Cálculo salvo e confirmado no servidor.");
+                                      await qc.invalidateQueries({ queryKey: ["nr", org] });
+                                    }}
+                                  />
+                                </Suspense>
+                              )}
+                              {recurso === "pastas" &&
+                                !row.arquivado_em &&
+                                contexto.permissoes.editar &&
+                                contexto.permissoes.mover && (
+                                  <Suspense
+                                    fallback={
+                                      <LoadingState label="Carregando ordenação da pasta…" />
+                                    }
+                                  >
+                                    <NrFolderOrder
+                                      key={`${org}-${norma}-${row.id}`}
+                                      org={org}
+                                      norma={norma}
+                                      row={row}
+                                    />
+                                  </Suspense>
+                                )}
                               {recurso === "modelos" &&
                                 ["regra", "criterio"].includes(row.tipo ?? "") && (
                                   <Suspense

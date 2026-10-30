@@ -1,0 +1,869 @@
+{
+  "format": "nexus-nr-post-manifest66-readonly-v1",
+  "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "project_ref": "yhtgijtllvgzoqtfcgal",
+  "catalog_captured_at": "2026-10-30 22:45:17.265181+00",
+  "integrity_captured_at": "2026-10-30T22:46:51.24516+00:00",
+  "execution_role": "postgres",
+  "method": "Two read-only Lovable query_database inspections; production catalog compared with fresh isolated manifest66 PostgreSQL catalog at 127.0.0.1:55766; no production fixtures, DDL, application-data writes, extra worker invocation or HTTP downloads",
+  "ledger": {
+    "entries": 66,
+    "exact_manifest_match": true,
+    "all_positions_paths_checksums_checked": true,
+    "historical_prefix64_exact": true,
+    "differences": [],
+    "new_entries": [
+      {
+        "path": "drizzle/migrations/0046_nr_fluxos_completos.sql",
+        "position": 65,
+        "sha256": "7505bb32fcb3e4101b48d5525b0345fdd799da1404a7bf4b551939d903279cfa"
+      },
+      {
+        "path": "drizzle/migrations/0047_nr_fila_importacao.sql",
+        "position": 66,
+        "sha256": "16b1d71bd71a483962a2b2494bc56b0e5d1d6da9f02d7253ff077a57044bae02"
+      }
+    ]
+  },
+  "catalog": {
+    "fresh_isolated_manifest_entries": 66,
+    "tables": 25,
+    "columns": 379,
+    "constraints": 264,
+    "indexes": 116,
+    "policies": 25,
+    "nr_functions": 61,
+    "all_rls": true,
+    "all_anon_table_select_denied": true,
+    "all_auth_direct_mutations_denied": true,
+    "all_constraints_validated": true,
+    "all_indexes_valid": true,
+    "all_definer_search_path_empty": true,
+    "nr_differences": {
+      "tables": [],
+      "columns": [],
+      "constraints": [],
+      "indexes": [],
+      "policies": [],
+      "functions": []
+    },
+    "function_definition_and_acl_summary": [
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_expected_version integer, p_chave uuid, p_comando text, p_dados jsonb",
+        "auth_execute": true,
+        "definition_md5": "682a0ce1a7d4d2de4d7f466283c5b351",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_alterar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_motivo text, p_chave uuid",
+        "auth_execute": true,
+        "definition_md5": "f1dd18f2c5320cab433f8ce687e06bf9",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_cancelar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_autor uuid, p_sha256 text, p_tamanho bigint, p_mime text",
+        "auth_execute": false,
+        "definition_md5": "60ebcabcbcf424f69b5d25764828bdbe",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_confirmar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_sha256 text, p_tamanho bigint, p_mime text, p_autor uuid, p_importacao boolean",
+        "auth_execute": false,
+        "definition_md5": "96496443d5775c3609ea75dc46177e0a",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_confirmar_interno",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid",
+        "auth_execute": true,
+        "definition_md5": "bc763a71f9be051c993040955ce32919",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_consumo",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_importacao boolean",
+        "auth_execute": false,
+        "definition_md5": "37e4018e69442eb2a35d442e5c7b289a",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_destino",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_autor uuid, p_motivo text",
+        "auth_execute": false,
+        "definition_md5": "bf397b18aad80300980ffb06a73d3c23",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_falhar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "befbe0bdbdfcdf03efd41f00230f9c23",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_guard",
+        "prosecdef": false,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_sha256 text, p_tamanho bigint, p_mime text",
+        "auth_execute": false,
+        "definition_md5": "3c2c00ac74745f22687e8021c387e4ce",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_importar_confirmar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_chave uuid, p_dados jsonb",
+        "auth_execute": false,
+        "definition_md5": "c1f8fe924acfb5e75c64677b48cc9325",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_importar_preparar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_arquivo uuid, p_chave text, p_destino jsonb, p_evidencia jsonb",
+        "auth_execute": false,
+        "definition_md5": "5993493e2cd43834b183de601a18c8e1",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_importar_vinculo",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid",
+        "auth_execute": true,
+        "definition_md5": "56316fc69dcb6f547879ac10a97ed7e1",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_ler",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid",
+        "auth_execute": true,
+        "definition_md5": "79df58250bb2dc659e3ce8d6899bba14",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_limites",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_filtros jsonb",
+        "auth_execute": true,
+        "definition_md5": "e204dfd7812994b15598514e74089250",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_listar",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid",
+        "auth_execute": true,
+        "definition_md5": "051492e7c503895d293ebb78dc820b24",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_pode_enviar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_chave uuid, p_dados jsonb",
+        "auth_execute": true,
+        "definition_md5": "ca4335ef1ca12054ce71989a70157ad7",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_preparar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_chave uuid, p_dados jsonb, p_autor uuid, p_importacao boolean",
+        "auth_execute": false,
+        "definition_md5": "563f9a28776977ca6ea12fce7c23c913",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_arquivo_preparar_interno",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_lote uuid",
+        "auth_execute": false,
+        "definition_md5": "4c9ff5d2f8547b4121d01d365476c71b",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_concluir_importacao",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_condicao jsonb, p_respostas jsonb, p_local jsonb",
+        "auth_execute": false,
+        "definition_md5": "15f07bff214fc5120053e10d1ce68182",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_condicao_levantamento",
+        "prosecdef": false,
+        "provolatile": "i",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_recurso text, p_filtros jsonb",
+        "auth_execute": true,
+        "definition_md5": "e3730c03ee7ace234ba207db3d2fcca6",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_consultar",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "4d47b44af7dd2423b8a5c592302dd9e8",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_conteudo_arquivos_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_cliente uuid, p_unidade uuid, p_local uuid",
+        "auth_execute": true,
+        "definition_md5": "dace4e3eabcfbbf0e80788b23cf54bb3",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_documento_campos",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "0b676b77510128ea392484580a28d00c",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_documento_campos_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_cliente uuid, p_unidade uuid, p_local uuid",
+        "auth_execute": false,
+        "definition_md5": "b62775e9fd5f3fd17f02df1e55473351",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_documento_campos_interno",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_chave uuid, p_dados jsonb",
+        "auth_execute": true,
+        "definition_md5": "8fea9a1f86cbf333a1a2f290ecb6d622",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_documento_de_modelo",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "9135a49c8459bff167612010c2c5220c",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_documento_local_campos_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_documento uuid, p_revisao uuid, p_expected_version integer, p_base_expected_version integer, p_chave uuid, p_motivo text",
+        "auth_execute": true,
+        "definition_md5": "6e551fafb540ee19a357ed52b591a09d",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_documento_revisar_impactos",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_recurso text, p_comando text, p_id uuid, p_expected_version integer, p_chave text, p_dados jsonb",
+        "auth_execute": true,
+        "definition_md5": "a0599b3cb63210922ee44498a5720bb3",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_executar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_url text, p_norma text",
+        "auth_execute": false,
+        "definition_md5": "c269758bef3137fb3b20f999b2468036",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_fonte_oficial_valida",
+        "prosecdef": false,
+        "provolatile": "i",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "398d33db0d750c6cc6ee5c5ccb92dfd4",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_id bigint",
+        "auth_execute": true,
+        "definition_md5": "3d73a264196190240e6ebf3c2068e26c",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_historico_detalhe",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "6befafb1edebb27a4caf2cf3e11d710f",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_historico_incluir_contexto",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_recurso text, p_registro uuid, p_pagina integer, p_limite integer",
+        "auth_execute": true,
+        "definition_md5": "fae0091470512d6e90b9995696697148",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_historico_listar",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "e094c86b7638e67d5a8fff950028fcc2",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_impacto_vinculo_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_fila uuid, p_acao text",
+        "auth_execute": true,
+        "definition_md5": "25ebed60681a761edb6c5ac0f8e84ac7",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_import_fila_comandar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_id uuid, p_pagina integer",
+        "auth_execute": true,
+        "definition_md5": "ba4080eb97c96f8f08c0ba65d3e3a125",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_import_fila_consultar",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_origem text, p_chave text, p_inicio timestamp with time zone, p_fim timestamp with time zone, p_manifesto jsonb, p_total integer",
+        "auth_execute": true,
+        "definition_md5": "eceb52cb7495afa83a83d9e50cb32f82",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_import_fila_criar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_fila uuid, p_itens jsonb",
+        "auth_execute": true,
+        "definition_md5": "937c4d48989bcea238ef74f6f9e5c332",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_import_fila_staging",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_limite integer",
+        "auth_execute": false,
+        "definition_md5": "712b27cff483f0beb6ce25b73817df2e",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_import_processar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_entidade text, p_id uuid",
+        "auth_execute": false,
+        "definition_md5": "795058152fb73b78db1897a4100959dc",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_import_snapshot",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_lote uuid, p_item uuid, p_filtros jsonb",
+        "auth_execute": true,
+        "definition_md5": "03c5267da1b6a86b1e664cb7622e4262",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_importacao_inspecionar",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_lote uuid, p_tipo text, p_externo_id text, p_payload jsonb, p_destino jsonb, p_hash text, p_capturado_em timestamp with time zone",
+        "auth_execute": false,
+        "definition_md5": "e071a5df48d7860361c723ed967da596",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_importar_item",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_origem text, p_chave text, p_snapshot_inicio timestamp with time zone, p_snapshot_fim timestamp with time zone, p_manifesto jsonb",
+        "auth_execute": false,
+        "definition_md5": "a29a2a17ebc090859f10bcae5b7f0b22",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_iniciar_importacao",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_modelo jsonb, p_respostas jsonb, p_local jsonb",
+        "auth_execute": false,
+        "definition_md5": "3132d818e794c6089c8367d307ad2d21",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_levantamento_diagnostico",
+        "prosecdef": false,
+        "provolatile": "i",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "007fb3c7bf2892cb0cd8cb3be99b993b",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_levantamento_modelo_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "5727af7a5729ae75f648ed190c7a4782",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_levantamento_revisao_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_id uuid",
+        "auth_execute": true,
+        "definition_md5": "e54efd616698e853be88b297a3a8b17b",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_levantamento_validacao",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_recurso text, p_linha jsonb",
+        "auth_execute": false,
+        "definition_md5": "f4056008b5eb65ef5d20714074b18700",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_linha",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "257e6a3cd90930e96aab64881ea23aa2",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_modelo_dados_publicacao_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "67d171b8dc29bd8999acf998c3f33b26",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_modelo_fonte_retencao_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_id uuid",
+        "auth_execute": true,
+        "definition_md5": "9046854c10e30284e932eefb39e3ed05",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_modelo_publicacao_contexto",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "d9280de0772aafbbfa0a1e6aa4d90aea",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_modelo_publicacao_fonte_guard",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_id uuid, p_expected_version integer, p_chave uuid, p_evidencia jsonb",
+        "auth_execute": true,
+        "definition_md5": "a4abed2ba98767e5306b13c94291d11e",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_modelo_publicar_tecnico",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_id uuid, p_expected_version integer, p_direcao text, p_chave uuid",
+        "auth_execute": true,
+        "definition_md5": "8826d0611f12b5ab485638f4812e6477",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_pasta_ordenar",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "87865242a2f96abfc1ab635b43ef454a",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_registrar_impactos_local",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_recurso text, p_registro uuid",
+        "auth_execute": false,
+        "definition_md5": "df8b774ae7c31e049680af3f348670ce",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_registro_visivel",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_recurso text, p_registro uuid, p_revisao uuid",
+        "auth_execute": true,
+        "definition_md5": "31252a96ebec46afc9efff56a6f66580",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_revisao_detalhe",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "",
+        "auth_execute": false,
+        "definition_md5": "75b15da3a32e6cf0a3252369e6874baa",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_revisao_guard",
+        "prosecdef": false,
+        "provolatile": "v",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_norma text, p_recurso text, p_registro uuid, p_pagina integer, p_limite integer",
+        "auth_execute": true,
+        "definition_md5": "c943abda20050889a5f00e151bf8391b",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_revisoes_listar",
+        "prosecdef": true,
+        "provolatile": "s",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_valor jsonb",
+        "auth_execute": false,
+        "definition_md5": "52ee7ead56229d09453462d8cc52bd03",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_valor_preenchido",
+        "prosecdef": false,
+        "provolatile": "i",
+        "service_execute": false
+      },
+      {
+        "anon_execute": false,
+        "arguments": "p_org uuid, p_origem text, p_tipo text, p_externo_de text, p_externo_para text, p_relacao text, p_evidencia jsonb",
+        "auth_execute": false,
+        "definition_md5": "ae8d86bf5fbe8eaeb3fba80cd16c3207",
+        "proconfig": ["search_path=\"\""],
+        "proname": "nr_vincular_documentos_importados",
+        "prosecdef": true,
+        "provolatile": "v",
+        "service_execute": true
+      }
+    ],
+    "supporting_authorization_function": {
+      "name": "pode(_org uuid, _acao text)",
+      "definition_md5": "5d3136789dedb7835f296178453fe085",
+      "definition_matches": true,
+      "anon_execute": false,
+      "authenticated_execute": true,
+      "service_execute_production": true,
+      "service_execute_isolated": false,
+      "observed_difference": "Production service_role retains EXECUTE on this existing supporting function; fresh local bootstrap does not. Definition, anonymous and authenticated grants match. Migrations65/66 do not change its grant. This is reported explicitly rather than hidden in the NR-only comparison."
+    }
+  },
+  "scheduler": {
+    "extension": [
+      {
+        "name": "pg_cron",
+        "version": "1.6.4"
+      }
+    ],
+    "jobs": [
+      {
+        "active": true,
+        "command": "select public.nr_import_processar(10);",
+        "database": "postgres",
+        "jobid": 2,
+        "jobname": "nexus-nr-import-worker",
+        "schedule": "* * * * *"
+      }
+    ],
+    "recent_natural_runs": [
+      {
+        "end_time": "2026-10-30T22:45:00.029333+00:00",
+        "jobid": 2,
+        "return_message": "1 row",
+        "runid": 12341,
+        "start_time": "2026-10-30T22:45:00.023885+00:00",
+        "status": "succeeded"
+      },
+      {
+        "end_time": "2026-10-30T22:44:00.031601+00:00",
+        "jobid": 2,
+        "return_message": "1 row",
+        "runid": 12339,
+        "start_time": "2026-10-30T22:44:00.024242+00:00",
+        "status": "succeeded"
+      }
+    ],
+    "queue_lots": 0,
+    "queue_items": 0,
+    "active_default10_every_minute": true,
+    "actual_empty_queue_runs_succeeded": true,
+    "extra_manual_invocation": false,
+    "note": "Natural scheduler executions with an empty queue are confirmed. Processing nonempty production queues was not simulated; actual processing and negative cases were exercised separately in isolated PostgreSQL."
+  },
+  "integrity": {
+    "buckets": [
+      {
+        "bucket": "nexus-nr-acervo",
+        "objects": 1022,
+        "physical_bytes": 291872274,
+        "private": true
+      },
+      {
+        "bucket": "nexus-operacional",
+        "objects": 0,
+        "physical_bytes": 0,
+        "private": true
+      }
+    ],
+    "captured_at": "2026-10-30T22:46:51.24516+00:00",
+    "contracts": {
+      "durable_http_receipts": 2,
+      "height_pet_links": 0,
+      "pet_canonical_links": 108,
+      "places": 112,
+      "source_context_records": 4,
+      "technical_drafts": 15,
+      "technical_models": 15,
+      "technical_publication_sources": 0
+    },
+    "database_bytes": 169421971,
+    "derived": {
+      "blocks": 4073,
+      "content_hash": "486f8a70fcecf702342d2c17fbf7e8c8027d9ea2159094f9fcc68af495f523fb",
+      "metadata_hash": "358a6e5a5227f78f670c8071a60cac6c8303fb9a3c3de4e3e5528faf4202c5ce",
+      "n": 233,
+      "snapshot_hash": "15093394963201b08d451b1d4fc77348320a6907401268f8c83e68811472125b",
+      "source_hash": "70e8986af0dbb78bd6ca02064d5a44aaafa0bf274768cec0d0415dfc773e2318"
+    },
+    "execution_role": "postgres",
+    "files": {
+      "bytes": 291872274,
+      "confirmed": 1022,
+      "files": 1022,
+      "missing_storage": 0,
+      "storage_matches": 1022
+    },
+    "lot": {
+      "items": 4300,
+      "resumo": {
+        "importado": 3260,
+        "indisponivel": 550,
+        "sem_correspondencia": 490
+      },
+      "state": "com_pendencias",
+      "updated_at": "2026-10-30T20:29:52.989097+00:00"
+    },
+    "original": {
+      "aggregate_hash": "831b63ddd14c28dc34e354c18691d98afb9983f31ec08c9417e3cbb0f5fe8ab3",
+      "n": 736
+    },
+    "revision_stability": {
+      "content_matches_imported_revision": 969,
+      "document_versions_unchanged": 969,
+      "documents": 969,
+      "revision_hashes_unchanged": 969,
+      "revision_pointers_unchanged": 969
+    }
+  },
+  "notes": [
+    "Source records, native derivatives and physical files are distinct categories: 736 originals, 233 editable drafts, 969 current logical documents and 1,022 confirmed objects.",
+    "The 15 imported rules/criteria remain draft; 0 technical publication-source records. No professional approval, document/PET emission or certification is inferred.",
+    "Current file checks compare retained SHA-256/MIME/size metadata with 1,022 Storage objects. Prior actual full GET/SHA-256 receipts remain separate and durable; no new binary downloads were made by this inspection.",
+    "Measured database disk bytes are distinct from Storage physical bytes and reported RAM. No 10 GB quota, free-space or utilization percentage is assumed.",
+    "The captured lot remains com_pendencias with 4,300 terminal items; 550 historical revisions and 490 source-image references remain explicit unresolved resources."
+  ],
+  "expected_frozen_hashes": {
+    "derived": {
+      "n": 233,
+      "source_hash": "70e8986af0dbb78bd6ca02064d5a44aaafa0bf274768cec0d0415dfc773e2318",
+      "content_hash": "486f8a70fcecf702342d2c17fbf7e8c8027d9ea2159094f9fcc68af495f523fb",
+      "snapshot_hash": "15093394963201b08d451b1d4fc77348320a6907401268f8c83e68811472125b",
+      "metadata_hash": "358a6e5a5227f78f670c8071a60cac6c8303fb9a3c3de4e3e5528faf4202c5ce"
+    },
+    "original": {
+      "n": 736,
+      "aggregate_hash": "831b63ddd14c28dc34e354c18691d98afb9983f31ec08c9417e3cbb0f5fe8ab3"
+    }
+  },
+  "comparisons": {
+    "ledger66_exact": true,
+    "nr_catalog_all_definitions_scopes_and_grants_match_fresh66": true,
+    "all_source_and_derived_sha256_aggregates_match_frozen": true,
+    "all969_current_revisions_and_content_unchanged": true,
+    "all1022_confirmed_files_have_matching_storage_metadata": true,
+    "auxiliary_service_role_grant_difference_explicitly_disclosed": true
+  }
+}

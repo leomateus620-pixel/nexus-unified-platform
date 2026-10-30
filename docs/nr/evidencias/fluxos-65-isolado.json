@@ -1,0 +1,28 @@
+{
+  "format": "nexus-nr-workflows-isolated-v1",
+  "captured_at": "2026-10-30T22:41:01.933Z",
+  "migration": {
+    "path": "drizzle/migrations/0046_nr_fluxos_completos.sql",
+    "sha256": "7505bb32fcb3e4101b48d5525b0345fdd799da1404a7bf4b551939d903279cfa",
+    "intended_manifest_position": 65
+  },
+  "postgres": "17.10 isolated loopback",
+  "checks": 362,
+  "suites": 11,
+  "new_workflow_checks": 61,
+  "all_passed": true,
+  "log": "postgresql-nr-65.log",
+  "independent_review": "Separate backend agent reviewed final scopes, auth, immutable provenance, conditional requiredness and preserved query contracts",
+  "covered": [
+    "Frozen fifteen/sixteen-block survey versions, partial save, requiredness on actual applicable fields, false and zero values, unknown legacy schema blocker",
+    "New surveys freeze newly edited model body; existing surveys retain their prior snapshot",
+    "Document creation from explicit model version, copied native body, explicit draft acknowledgement and no inherited approval",
+    "Server resolution of nine permitted source keys; local UUID/version/hash provenance and stale/forged value rejection",
+    "Unchanged captured fields remain frozen after a base change; existing impact workflow marks dependent documents",
+    "Justified manual override, immutable prior revision and relational model provenance",
+    "Manual folder order with context locks, expected versions, idempotency and preserved parents",
+    "Prior301 PostgreSQL assertions preserved"
+  ],
+  "production_application": "Not executed by this isolated verification; root applies canonical envelopes only after combined manifest validation",
+  "production_fixtures": false
+}

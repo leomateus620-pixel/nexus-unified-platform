@@ -35,7 +35,7 @@ test("generator receives only public metadata and cannot inherit production cred
   );
   assert.equal(new URL(env.PG_META_DB_URL).hostname, "127.0.0.1");
   assert.equal(env.PG_META_GENERATE_TYPES_INCLUDED_SCHEMAS, "public");
-  assert.equal(env.PG_META_POSTGREST_VERSION, "14.5");
+  assert.equal(env.PG_META_POSTGREST_VERSION, "14.17");
   assert.equal(env.PG_META_GENERATE_TYPES_DETECT_ONE_TO_ONE_RELATIONSHIPS, "true");
   assert.equal(env.SUPABASE_SERVICE_ROLE_KEY, undefined);
   assert.equal(env.LOVABLE_DB_MIGRATION_URL, undefined);

@@ -284,13 +284,19 @@ try {
   restored = await change(trash, "restaurar", {});
   assert.equal(restored.estado, "vinculado");
   assertions++;
+  const technicalLocal = await cmd(
+    "locais",
+    "salvar",
+    scoped("Local da captura técnica", { tag: "EC TESTE", tipo: "EC" }),
+  );
   const doc = await cmd(
     "documentos",
     "salvar",
     scoped("Documento com campo técnico", {
+      local_id: technicalLocal.id,
       conteudo: {
         schema_version: 1,
-        blocos: [{ id: "campo1", tipo: "campo", chave: "local.volume", modo: "vinculado" }],
+        blocos: [{ id: "campo1", tipo: "campo", chave: "local.tag", modo: "vinculado" }],
       },
     }),
   );
@@ -306,7 +312,7 @@ try {
               {
                 id: "campo1",
                 tipo: "campo",
-                chave: "local.volume",
+                chave: "local.tag",
                 modo: "livre",
                 valor_snapshot: 123,
               },
@@ -328,7 +334,7 @@ try {
           {
             id: "campo1",
             tipo: "campo",
-            chave: "local.volume",
+            chave: "local.tag",
             modo: "livre",
             valor_snapshot: 123,
             motivo_substituicao: "Correção explícita da transcrição",

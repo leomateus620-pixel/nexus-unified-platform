@@ -75,6 +75,7 @@ export const conteudoNrSchema = z
             chave: text(200).optional(),
             modo: z.enum(["vinculado", "snapshot", "livre"]).optional(),
             valor_snapshot: nrJsonSchema.optional(),
+            fonte_snapshot: nrJsonSchema.optional(),
             motivo_substituicao: text(4000).optional(),
           })
           .strict(),

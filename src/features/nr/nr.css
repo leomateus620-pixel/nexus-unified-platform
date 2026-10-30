@@ -468,14 +468,9 @@
 }
 @media (min-width: 768px) {
   .nx-nr-workspace {
+    /* The operational shell keeps a 24px gutter on tablet and desktop. */
     margin-inline: -1.5rem;
     padding-inline: 1.5rem;
-  }
-}
-@media (min-width: 1024px) {
-  .nx-nr-workspace {
-    margin-inline: -2rem;
-    padding-inline: 2rem;
   }
 }
 @media (max-width: 700px) {

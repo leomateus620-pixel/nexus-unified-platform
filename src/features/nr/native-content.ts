@@ -10,6 +10,7 @@ export type ContentBlock = {
   chave?: string;
   modo?: "vinculado" | "snapshot" | "livre";
   valor_snapshot?: NrJson;
+  fonte_snapshot?: NrJson;
   motivo_substituicao?: string;
 };
 export type NativeContent = { schema_version: 1; blocos: ContentBlock[] };

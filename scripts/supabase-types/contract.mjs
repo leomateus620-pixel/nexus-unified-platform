@@ -1,7 +1,7 @@
 import path from "node:path";
 
 export const generatorVersion = "0.100.0";
-export const postgrestContract = "14.5";
+export const postgrestContract = "14.17";
 
 export function astSignature(ts, source) {
   const file = ts.createSourceFile("types.ts", source, ts.ScriptTarget.Latest, true);

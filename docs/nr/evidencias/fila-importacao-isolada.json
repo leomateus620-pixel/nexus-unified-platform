@@ -1,0 +1,29 @@
+{
+  "capturado_em": "2026-10-30T22:17:01.135342+00:00",
+  "suite": "tests/db/nr-fila-importacao.mjs",
+  "postgres": "17.10",
+  "isolado": true,
+  "base_aplicada": 64,
+  "migracao_sob_teste": "drizzle/migrations/0047_nr_fila_importacao.sql",
+  "sha256": "16b1d71bd71a483962a2b2494bc56b0e5d1d6da9f02d7253ff077a57044bae02",
+  "verificacoes": 91,
+  "resultado": "PASS",
+  "inclui": [
+    "RLS e grants negativos",
+    "staging parcial, repetição e digest derivado do payload",
+    "compatibilidade com digest histórico de outro serializador",
+    "rollback de interrupção e worker limitado a um item",
+    "dependências e retomada",
+    "conflito de três vias sem sobrescrever edição Nexus",
+    "limite de dez tentativas",
+    "cancelamento sem exclusão de dados",
+    "mutex do worker",
+    "revogação concorrente real de papel com bloqueio de autorização"
+  ],
+  "limites": [
+    "pg_cron ausente neste ambiente; somente worker manual executado",
+    "0046 não foi incluída nesta verificação preliminar; instalação combinada cabe ao fechamento do manifesto",
+    "Nenhuma escrita de teste ou fixture em produção",
+    "Nenhum upload binário ou execução do serviço Storage foi simulado como concluído"
+  ]
+}

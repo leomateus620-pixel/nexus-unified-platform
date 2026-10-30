@@ -1,21 +1,110 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { nrArquivoBaixar } from "./files.functions";
+import { nrDocumentoCampos } from "./document-models.functions";
+import { nrDocumentFieldLabels } from "./document-models.schemas";
+import {
+  capturarCampoDocumento,
+  selecionarCampoDocumento,
+  substituirCampoDocumento,
+} from "./document-fields";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { ActionButton } from "@/components/nexus/Page";
 
 import type { ContentBlock, NativeContent } from "./native-content";
+import type { Norma } from "./domain";
 export function NrContentEditor({
   value,
   onChange,
   readOnly = false,
   org,
+  fieldContext,
+  modelTemplate = false,
 }: {
   value: NativeContent;
   onChange?: (value: NativeContent) => void;
   readOnly?: boolean;
   org?: string | undefined;
+  fieldContext?:
+    { norma: Norma; clienteId: string; unidadeId: string; localId: string } | undefined;
+  modelTemplate?: boolean;
 }) {
+  const resolveFields = useServerFn(nrDocumentoCampos);
+  const [capturing, setCapturing] = useState<string | null>(null);
+  const [captureError, setCaptureError] = useState("");
+  const contextKey = JSON.stringify([
+    org,
+    fieldContext?.norma,
+    fieldContext?.clienteId,
+    fieldContext?.unidadeId,
+    fieldContext?.localId,
+  ]);
+  const live = useRef({ value, contextKey });
+  live.current = { value, contextKey };
+  const fields = useQuery({
+    queryKey: [
+      "nr",
+      org,
+      fieldContext?.norma,
+      "documento-campos",
+      fieldContext?.clienteId,
+      fieldContext?.unidadeId,
+      fieldContext?.localId,
+    ],
+    enabled:
+      !readOnly &&
+      !modelTemplate &&
+      !!org &&
+      !!fieldContext?.clienteId &&
+      !!fieldContext?.unidadeId &&
+      value.blocos.some((b) => b.tipo === "campo"),
+    queryFn: ({ signal }) =>
+      resolveFields({
+        data: {
+          organization_id: org ?? "",
+          norma: fieldContext?.norma ?? "NR33",
+          cliente_id: fieldContext?.clienteId ?? "",
+          unidade_id: fieldContext?.unidadeId ?? "",
+          local_id: fieldContext?.localId || null,
+        },
+        signal,
+      }),
+    retry: false,
+  });
+  async function capture(block: ContentBlock) {
+    const requestedContext = contextKey;
+    const requestedBlock = JSON.stringify(block);
+    setCapturing(block.id);
+    setCaptureError("");
+    try {
+      const result = await fields.refetch({ throwOnError: true });
+      const current = live.current.value.blocos.find((b) => b.id === block.id);
+      if (
+        !current ||
+        live.current.contextKey !== requestedContext ||
+        current.chave !== block.chave ||
+        JSON.stringify(current) !== requestedBlock
+      )
+        throw new Error(
+          "O contexto ou o preenchimento mudou. Sua edição foi preservada; capture novamente se necessário.",
+        );
+      const field = result.data?.campos.find((item) => item.chave === block.chave);
+      if (!field)
+        throw new Error("Campo indisponível neste contexto. Confirme cliente, unidade e local.");
+      const captured = capturarCampoDocumento(current, field);
+      onChange?.({
+        ...live.current.value,
+        blocos: live.current.value.blocos.map((b) => (b.id === block.id ? captured : b)),
+      });
+    } catch (error) {
+      setCaptureError(
+        error instanceof Error ? error.message : "Não foi possível capturar o campo.",
+      );
+    } finally {
+      setCapturing(null);
+    }
+  }
   function update(id: string, patch: Partial<ContentBlock>) {
     onChange?.({
       ...value,
@@ -33,6 +122,11 @@ export function NrContentEditor({
   }
   return (
     <div className="nr-content-editor">
+      {captureError && (
+        <p role="alert" className="nr-feedback">
+          {captureError}
+        </p>
+      )}
       {!value["blocos"].length && (
         <p className="nr-muted">
           Nenhum bloco de conteúdo. Adicione títulos, texto, tabelas ou referências.
@@ -160,17 +254,32 @@ export function NrContentEditor({
               <div>
                 <p className="nr-muted">
                   {block.chave} ·{" "}
-                  {block.modo === "vinculado"
-                    ? "Vínculo declarado"
-                    : block.modo === "snapshot"
-                      ? "Snapshot preservado"
-                      : "Texto livre"}
+                  {modelTemplate && block.modo !== "livre"
+                    ? "Campo do modelo · captura ao criar documento"
+                    : block.modo === "vinculado"
+                      ? "Vínculo com a base · valor desta revisão"
+                      : block.modo === "snapshot"
+                        ? "Snapshot preservado"
+                        : "Texto livre"}
                 </p>
                 <p className="nr-prewrap">
-                  {typeof block.valor_snapshot === "object"
-                    ? JSON.stringify(block.valor_snapshot, null, 2)
-                    : String(block.valor_snapshot ?? block.texto ?? "Valor ainda não capturado")}
+                  {block.valor_snapshot === null
+                    ? "Não informado no cadastro"
+                    : typeof block.valor_snapshot === "object"
+                      ? JSON.stringify(block.valor_snapshot, null, 2)
+                      : String(block.valor_snapshot ?? block.texto ?? "Valor ainda não capturado")}
                 </p>
+                {block.fonte_snapshot &&
+                  typeof block.fonte_snapshot === "object" &&
+                  !Array.isArray(block.fonte_snapshot) && (
+                    <p className="nr-source">
+                      Fonte: {String(block.fonte_snapshot["tipo"] ?? "cadastro")} · versão{" "}
+                      {String(block.fonte_snapshot["version"] ?? "não informada")} · hash{" "}
+                      <span className="break-all">
+                        {String(block.fonte_snapshot["sha256"] ?? "não informado")}
+                      </span>
+                    </p>
+                  )}
                 {block.motivo_substituicao && (
                   <p className="nr-source">Substituição manual: {block.motivo_substituicao}</p>
                 )}
@@ -178,32 +287,40 @@ export function NrContentEditor({
             ) : (
               <div className="nr-field-grid">
                 <label>
-                  Campo de referência *
-                  <input
+                  Campo da base *
+                  <select
                     value={block.chave ?? ""}
                     required
-                    maxLength={200}
-                    placeholder="Ex.: local.tag"
-                    onChange={(e) => update(block.id, { chave: e.target.value })}
-                  />
-                </label>
-                <label>
-                  Natureza do valor
-                  <select
-                    value={block.modo ?? "snapshot"}
-                    onChange={(e) =>
-                      update(block.id, {
-                        modo: e.target.value as NonNullable<ContentBlock["modo"]>,
-                      })
-                    }
+                    onChange={(e) => {
+                      const selected = selecionarCampoDocumento(block, e.target.value);
+                      onChange?.({
+                        ...value,
+                        blocos: value.blocos.map((b) => (b.id === block.id ? selected : b)),
+                      });
+                    }}
                   >
-                    <option value="snapshot">Snapshot capturado</option>
-                    <option value="vinculado">Vínculo declarado</option>
-                    <option value="livre">Substituição manual</option>
+                    <option value="">Selecione um campo suportado</option>
+                    {block.chave && !(block.chave in nrDocumentFieldLabels) && (
+                      <option value={block.chave}>{block.chave} · referência preservada</option>
+                    )}
+                    {Object.entries(nrDocumentFieldLabels).map(([key, label]) => (
+                      <option key={key} value={key}>
+                        {label}
+                      </option>
+                    ))}
                   </select>
                 </label>
+                <p className="nr-muted">
+                  {block.modo === "livre"
+                    ? "Substituição manual, com justificativa"
+                    : block.chave?.startsWith("local.")
+                      ? "Vínculo versionado com o local"
+                      : "Snapshot de cadastro · sem atualização automática"}
+                </p>
                 <label className="nr-wide">
-                  Valor preservado nesta revisão
+                  {modelTemplate
+                    ? "Valor a capturar na criação do documento"
+                    : "Valor preservado nesta revisão"}
                   <textarea
                     value={
                       typeof block.valor_snapshot === "object"
@@ -211,16 +328,62 @@ export function NrContentEditor({
                         : String(block.valor_snapshot ?? "")
                     }
                     rows={3}
+                    readOnly={modelTemplate || block.modo !== "livre"}
                     onChange={(e) =>
-                      update(block.id, {
-                        valor_snapshot: e.target.value,
-                        ...(block.modo === "vinculado"
-                          ? { modo: "livre" as const, motivo_substituicao: "" }
-                          : {}),
-                      })
+                      update(block.id, substituirCampoDocumento(block, e.target.value))
                     }
                   />
                 </label>
+                {!modelTemplate && (
+                  <div className="nr-actions nr-wide">
+                    <ActionButton
+                      variant="ghost"
+                      loading={capturing === block.id}
+                      disabled={
+                        !!capturing ||
+                        !org ||
+                        !fieldContext?.clienteId ||
+                        !fieldContext?.unidadeId ||
+                        !block.chave ||
+                        !(block.chave in nrDocumentFieldLabels)
+                      }
+                      onClick={() => void capture(block)}
+                    >
+                      Capturar valor da base
+                    </ActionButton>
+                    {block.modo !== "livre" && (
+                      <ActionButton
+                        variant="ghost"
+                        disabled={!!capturing || !block.chave}
+                        onClick={() =>
+                          update(
+                            block.id,
+                            substituirCampoDocumento(
+                              block,
+                              typeof block.valor_snapshot === "string"
+                                ? block.valor_snapshot
+                                : JSON.stringify(block.valor_snapshot ?? ""),
+                            ),
+                          )
+                        }
+                      >
+                        Substituir manualmente
+                      </ActionButton>
+                    )}
+                  </div>
+                )}
+                {!modelTemplate &&
+                  block.fonte_snapshot &&
+                  typeof block.fonte_snapshot === "object" &&
+                  !Array.isArray(block.fonte_snapshot) && (
+                    <p className="nr-source nr-wide">
+                      Captura preservada: {String(block.fonte_snapshot["tipo"] ?? "cadastro")} ·
+                      versão {String(block.fonte_snapshot["version"] ?? "não informada")} · hash{" "}
+                      <span className="break-all">
+                        {String(block.fonte_snapshot["sha256"] ?? "não informado")}
+                      </span>
+                    </p>
+                  )}
                 {block.modo === "livre" && (
                   <label className="nr-wide">
                     Motivo da substituição manual *
@@ -234,8 +397,9 @@ export function NrContentEditor({
                   </label>
                 )}
                 <p className="nr-muted nr-wide">
-                  A chave documenta a referência. O valor capturado não é atualizado
-                  automaticamente; alterações de base exigem nova revisão e conferência.
+                  {modelTemplate
+                    ? "O modelo guarda a chave. O servidor captura valor, versão e hash do cadastro ao criar o documento. Nenhum dado é inventado para campos vazios."
+                    : "A captura consulta a base autorizada e conserva sua versão e hash. Alterações do local geram necessidade de revisão; documentos emitidos preservam seu snapshot."}
                 </p>
               </div>
             )

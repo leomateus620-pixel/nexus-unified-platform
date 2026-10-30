@@ -259,6 +259,14 @@
     {
       "path": "drizzle/migrations/0045_nr_historico_paginado.sql",
       "sha256": "c237f3b7165586cbb4119fa9d7002ac0ecd4b72712562e0d92a921747eb52a47"
+    },
+    {
+      "path": "drizzle/migrations/0046_nr_fluxos_completos.sql",
+      "sha256": "7505bb32fcb3e4101b48d5525b0345fdd799da1404a7bf4b551939d903279cfa"
+    },
+    {
+      "path": "drizzle/migrations/0047_nr_fila_importacao.sql",
+      "sha256": "16b1d71bd71a483962a2b2494bc56b0e5d1d6da9f02d7253ff077a57044bae02"
     }
   ]
 }

@@ -1,0 +1,44 @@
+{
+  "format": "nexus-nr-code-closeout-66-v1",
+  "captured_at": "2026-10-30T22:48:06.185045+00:00",
+  "base_commit": "c4baebe18bd723d627886eab241350a8c6c87418",
+  "base_contains_pr16": true,
+  "base_contains_pr17": true,
+  "base_contains_pr18": true,
+  "webmcp_updates_preserved": true,
+  "dependencies": "bun install --frozen-lockfile --ignore-scripts; no package or lockfile modifications",
+  "checks": {
+    "typecheck_exit": 0,
+    "nr_eslint_exit": 0,
+    "production_build_exit": 0,
+    "nr_unit_tests": 77,
+    "nr_unit_exit": 0,
+    "migration_type_contract_tests": 12,
+    "migration_type_contract_exit": 0
+  },
+  "postgresql": {
+    "clean_install_manifest": 66,
+    "upgrade_64_to_66_assertions": 25,
+    "new_flow_assertions": 61,
+    "new_queue_assertions": 91,
+    "previous_nr_assertions": 301,
+    "synthetic_fixtures_production": false
+  },
+  "ui": {
+    "new_focused_checks": 6,
+    "widths": [
+      390,
+      1280
+    ],
+    "page_errors": 0,
+    "console_errors": 0,
+    "horizontal_overflows": 0,
+    "scope": "Real components in an isolated laboratory with synthetic fixtures; does not prove an authenticated production session."
+  },
+  "git_history": "Normal fast-forward integration and merge commits; no force push, rebase, amendment or baseline rewrite.",
+  "remaining_functional_scope": [
+    "Broad configurable states, automatic internal alerts, technical code patterns and additional permission restrictions are not complete.",
+    "Formal document approval/emission and signatures retain existing professional/integration blocks.",
+    "Full authenticated production homologation and final deployment SHA remain unverified."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "captured_at": "2026-10-31T01:10:59.166Z",
+  "executed_head_local": "ec282a801093eb6f03e369ed2ce19affc56b04dc",
+  "executed_tree_local": "178f04d95677926599a194afab92ccd78f593c36",
+  "source_nr_commit": "3a5305f69210aa1b31c19d06f2d4f6c200b3b92e",
+  "source_nr_directory_tree": {
+    "before": "837a25c980261d1d347b3a5212980fea53733694",
+    "after": "837a25c980261d1d347b3a5212980fea53733694",
+    "byte_equivalent": true
+  },
+  "generated_types": {
+    "path": "src/integrations/supabase/types.ts",
+    "sha256": "ad09f13eba9ebc4008aba27dad5f2214616a03efb99f2025e4e4a66faff8f020",
+    "formatted": false,
+    "worktree_unchanged": true
+  },
+  "checks_this_execution": {
+    "typecheck": {
+      "passed": true,
+      "output_bytes": 0
+    },
+    "manifest_and_type_generation_contracts": {
+      "tests": 12,
+      "passed": true
+    },
+    "production_build": {
+      "passed": true,
+      "reader_assets_passed": true,
+      "deployed": false,
+      "warnings": [
+        "Large chunks above 500kB",
+        "NrFilesPanel and NrRecordHistory have both static and dynamic imports"
+      ]
+    }
+  },
+  "not_repeated": {
+    "full_nr": {
+      "tests": 152,
+      "receipt": "docs/nr/evidencias/frontend-final-2026-10-30.json",
+      "reason": "Runtime NR directory tree unchanged after types-only merge"
+    },
+    "contracts_134": {
+      "reason": "Previous root receipt preserved; no regeneration performed"
+    }
+  },
+  "sql_or_manifest_mutations": false,
+  "log": "docs/nr/evidencias/frontend-pos-merge-2026-10-30.txt",
+  "log_sha256": "a31eab8c70290696f1556aafffa835db70e8bf66d5c50150eaacaa07516f5c08",
+  "validated_remote_merge_commit": "0a577ecca33c604707648db35e912042e9cab17b",
+  "remote_tree_equals_executed_local_tree": true,
+  "merged_main_commit": "991bf4d305f779df8596d7812279d2e657f95fb9",
+  "log_normalization": "Trailing spaces and terminal empty lines removed for repository whitespace checks; command text/results unchanged."
+}

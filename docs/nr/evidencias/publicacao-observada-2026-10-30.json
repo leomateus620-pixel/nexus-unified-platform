@@ -1,0 +1,16 @@
+{
+  "capturado_em_utc": "2026-10-31T01:10:38.400223+00:00",
+  "url": "https://nexusgestao.app/",
+  "autenticacao": "Public index and entry asset only; no session headers or cookies copied.",
+  "deployment_id": "psr2.c8b7b344-3040-4fbe-a888-18b14f058f9e.1794013729.fcC9DW6VHb1CpePKOWTHt3_5h0RjHA_QixhES_KkOH0",
+  "html_sha256": "b16f8f3d61907bf193e8907c66f9cc722fc8492c44d5bb6167518c62f7ea1a8b",
+  "entry_asset": "/assets/index-CYxFeDSz.js",
+  "entry_asset_sha256": "e28bc62ac05fdef724607495343a249693babd381d929a7d7e7f1f272ef1c6d6",
+  "entry_asset_bytes": 743937,
+  "entry_unchanged_from_initial_observation": true,
+  "mapping_to_git_commit_verified": false,
+  "main_rechecked_commit": "991bf4d305f779df8596d7812279d2e657f95fb9",
+  "main_change_since_initial_check": "Supabase generated types only, integrated through a merge preserving history.",
+  "new_frontend_published_by_this_task": false,
+  "limit": "A deployment header or successful PR merge does not establish which Git commit is actually served."
+}

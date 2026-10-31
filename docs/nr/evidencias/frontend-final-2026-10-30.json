@@ -1,0 +1,71 @@
+{
+  "captured_at": "2026-10-31T01:01:43.895Z",
+  "started_at": "2026-10-31T01:00:39.627Z",
+  "code_revision": "6edec792dd19cfdbdedba0298b497caf2db2996d",
+  "source_fingerprint": {
+    "files": 49,
+    "scope": "Changed task TS/TSX/CSS files, including untracked source",
+    "sha256": "1573ebc29d1f4db3595d905209441f66be284457f0cef89b1674b7cec213d80b",
+    "unchanged_through_run": true
+  },
+  "formatting": {
+    "files": 49,
+    "passed": true
+  },
+  "lint": {
+    "files": 44,
+    "scope": "Changed application and unit-test TS/TSX; isolated UI transport excluded",
+    "errors": 0,
+    "warnings": 3,
+    "warning_scope": "Fast Refresh helper exports in technical-display.tsx"
+  },
+  "nr": {
+    "vitest_files": 21,
+    "vitest_tests": 121,
+    "node_package_tests": 21,
+    "extra_source_literal_parser_tests": 10,
+    "total_tests_this_execution": 152,
+    "passed": true
+  },
+  "typecheck": {
+    "passed": true,
+    "output_bytes": 0
+  },
+  "production_build": {
+    "passed": true,
+    "deployed": false,
+    "asset_preparation_passed": true,
+    "warnings": [
+      "Large chunks above 500kB",
+      "Dynamic imports also have static imports (NrFilesPanel, NrRecordHistory)"
+    ]
+  },
+  "previous_regressions_not_repeated": {
+    "pet": {
+      "tests": 74,
+      "passed": true,
+      "log_source": "/tmp/nr-final-pet.log"
+    },
+    "navigation_authorization": {
+      "tests": 46,
+      "passed": true,
+      "log_source": "/tmp/nr-final-access.log"
+    },
+    "reason": "No PET changes; earlier successful runs are included separately in the consolidated log"
+  },
+  "environment": {
+    "node": "v24.22.1",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "authenticated_browser_tests": {
+    "owner": "root through CUA",
+    "scope": "Recorded separately; no browser automation in this test execution"
+  },
+  "log": "docs/nr/evidencias/frontend-final-2026-10-30.txt",
+  "local_log": "docs/nr/evidencias/frontend-final-2026-10-30.log",
+  "log_sha256": "020b16ed73a5c22d21f843ba11d5702eb0f49fefe2a80ebad603aa8fab8d4743",
+  "validated_sources_commit": "3a5305f69210aa1b31c19d06f2d4f6c200b3b92e",
+  "execution_worktree_note": "The test execution used the recorded base HEAD plus the stable source fingerprint. Those exact source files were subsequently committed as validated_sources_commit; later commits contain evidence only.",
+  "log_normalization": "Trailing spaces and terminal empty lines removed for repository whitespace checks; command text/results unchanged."
+}

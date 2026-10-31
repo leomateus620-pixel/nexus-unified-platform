@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "capturado_em_utc": "2026-10-31 01:17:47.214084+00",
+  "consulta": "Somente leitura no conector Lovable, sem definir JWT e sem alterar conteúdo ou SQL.",
+  "arquivo_word_origem": {
+    "arquivo_id": "6a558ab1-d888-4195-8da6-e03d3f6a9140",
+    "sha256": "9ec17cbbc1f99f225909014cc5541d6ce468e3ee6be3be79d073c30a03a12a09",
+    "tamanho": 323732,
+    "midias_embutidas": 3,
+    "documento_emitido_id": "db58237b-7994-47ca-9d41-d1dfe5384e54",
+    "revisao_emitida_id": "b8ef8b67-439f-4be1-9b9b-86b1876e1a33",
+    "revisao_numero": 3,
+    "estado_revisao": "emitido_origem",
+    "vigencia": "vigente",
+    "revisao_atual": true,
+    "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  },
+  "copia": {
+    "documento_id": "3f114e10-cc01-4b53-81de-d8041da6ca5d",
+    "revisao_id": "12884b71-6e06-417f-8a4b-fa23bda39ddf",
+    "blocos_por_tipo": [
+      {
+        "quantidade": 1,
+        "tipo": "tabela"
+      },
+      {
+        "quantidade": 2,
+        "tipo": "imagem"
+      }
+    ],
+    "assets_preservados": [
+      {
+        "arquivo_id": "9b64b0c3-dd03-43c0-9335-b3e16b640040",
+        "chave_ooxml": "word/media/image1.jpeg",
+        "mime": "image/jpeg",
+        "sha256": "5fe236bd90f9845d3f1759ee3b2d8b7cce4e3207aa29cd291b42d9c895905e4c",
+        "tamanho": 131300
+      },
+      {
+        "arquivo_id": "8bba91e9-843a-467d-b464-56744336d09d",
+        "chave_ooxml": "word/media/image2.jpeg",
+        "mime": "image/jpeg",
+        "sha256": "02feb54ec3b5eaaaf5471081ae3e1f4f55075459cd0b83cda25d0db1a684a0eb",
+        "tamanho": 121456
+      }
+    ],
+    "avisos_conversao": [
+      "Conversão estrutural: preserva texto, títulos, tabelas e imagens raster suportadas. O original continua disponível; layout, tipografia, quebras, cabeçalhos, rodapés, campos Word, comentários, assinaturas e posicionamento de desenhos não são reproduzidos fielmente.",
+      "Células mescladas foram linearizadas em uma tabela editável; confira a correspondência com o original.",
+      "Imagens em tabelas foram deslocadas para blocos após a tabela."
+    ],
+    "conteudo_atual_igual_manifesto": true,
+    "linhas_tabela": 93,
+    "revisao_numero": 1,
+    "quantidade_blocos_imagem": 2,
+    "quantidade_snapshot_assets": 2
+  },
+  "imagens_confirmadas": [
+    {
+      "arquivo_id": "9b64b0c3-dd03-43c0-9335-b3e16b640040",
+      "tamanho": 131300,
+      "sha256": "5fe236bd90f9845d3f1759ee3b2d8b7cce4e3207aa29cd291b42d9c895905e4c",
+      "mime": "image/jpeg",
+      "estado": "vinculado",
+      "bytes_verificados": true,
+      "papel": "derivado",
+      "extracao_da_fonte_confirmada": [
+        {
+          "arquivo_docx_id": "6a558ab1-d888-4195-8da6-e03d3f6a9140",
+          "chave_ooxml": "word/media/image1.jpeg",
+          "image_sha256": "5fe236bd90f9845d3f1759ee3b2d8b7cce4e3207aa29cd291b42d9c895905e4c",
+          "source_id": "163QdD_fvGXoxqCBPnfssDJsh43yyaFUR",
+          "source_sha256": "9ec17cbbc1f99f225909014cc5541d6ce468e3ee6be3be79d073c30a03a12a09"
+        }
+      ],
+      "vinculos_exatos_na_revisao": [
+        {
+          "documento_id": "3f114e10-cc01-4b53-81de-d8041da6ca5d",
+          "evidencia": {
+            "arquivo_original_id": "6a558ab1-d888-4195-8da6-e03d3f6a9140",
+            "chave_ooxml": "word/media/image1.jpeg",
+            "image_sha256": "5fe236bd90f9845d3f1759ee3b2d8b7cce4e3207aa29cd291b42d9c895905e4c",
+            "source_sha256": "9ec17cbbc1f99f225909014cc5541d6ce468e3ee6be3be79d073c30a03a12a09",
+            "tipo": "imagem_extraida_do_docx_fonte"
+          },
+          "local_id": "dd9917a1-167d-467c-b687-e3f5926e85ee",
+          "revisao_id": "12884b71-6e06-417f-8a4b-fa23bda39ddf"
+        }
+      ]
+    },
+    {
+      "arquivo_id": "8bba91e9-843a-467d-b464-56744336d09d",
+      "tamanho": 121456,
+      "sha256": "02feb54ec3b5eaaaf5471081ae3e1f4f55075459cd0b83cda25d0db1a684a0eb",
+      "mime": "image/jpeg",
+      "estado": "vinculado",
+      "bytes_verificados": true,
+      "papel": "derivado",
+      "extracao_da_fonte_confirmada": [
+        {
+          "arquivo_docx_id": "6a558ab1-d888-4195-8da6-e03d3f6a9140",
+          "chave_ooxml": "word/media/image2.jpeg",
+          "image_sha256": "02feb54ec3b5eaaaf5471081ae3e1f4f55075459cd0b83cda25d0db1a684a0eb",
+          "source_id": "163QdD_fvGXoxqCBPnfssDJsh43yyaFUR",
+          "source_sha256": "9ec17cbbc1f99f225909014cc5541d6ce468e3ee6be3be79d073c30a03a12a09"
+        }
+      ],
+      "vinculos_exatos_na_revisao": [
+        {
+          "documento_id": "3f114e10-cc01-4b53-81de-d8041da6ca5d",
+          "evidencia": {
+            "arquivo_original_id": "6a558ab1-d888-4195-8da6-e03d3f6a9140",
+            "chave_ooxml": "word/media/image2.jpeg",
+            "image_sha256": "02feb54ec3b5eaaaf5471081ae3e1f4f55075459cd0b83cda25d0db1a684a0eb",
+            "source_sha256": "9ec17cbbc1f99f225909014cc5541d6ce468e3ee6be3be79d073c30a03a12a09",
+            "tipo": "imagem_extraida_do_docx_fonte"
+          },
+          "local_id": "dd9917a1-167d-467c-b687-e3f5926e85ee",
+          "revisao_id": "12884b71-6e06-417f-8a4b-fa23bda39ddf"
+        }
+      ]
+    }
+  ],
+  "posicoes_no_docx_original": [
+    {
+      "part": "word/document.xml",
+      "rid": "rId7",
+      "asset": "word/media/image1.jpeg",
+      "sha256": "5fe236bd90f9845d3f1759ee3b2d8b7cce4e3207aa29cd291b42d9c895905e4c",
+      "bytes": 131300,
+      "xml_path": "/w:document/w:body/w:tbl/w:tr[10]/w:tc/w:p/w:r[1]/w:drawing/wp:inline/a:graphic/a:graphicData/pic:pic/pic:blipFill/a:blip",
+      "table_row_1based": 10,
+      "cell_1based": 1
+    },
+    {
+      "part": "word/document.xml",
+      "rid": "rId8",
+      "asset": "word/media/image2.jpeg",
+      "sha256": "02feb54ec3b5eaaaf5471081ae3e1f4f55075459cd0b83cda25d0db1a684a0eb",
+      "bytes": 121456,
+      "xml_path": "/w:document/w:body/w:tbl/w:tr[10]/w:tc/w:p/w:r[4]/w:drawing/wp:inline/a:graphic/a:graphicData/pic:pic/pic:blipFill/a:blip",
+      "table_row_1based": 10,
+      "cell_1based": 1
+    },
+    {
+      "part": "word/header1.xml",
+      "rid": "rId1",
+      "asset": "word/media/image3.png",
+      "sha256": "87651a2e60160b6d63b47084a47e0cb70dc02cc16361a91baa8dc1c822cda1dc",
+      "bytes": 32295,
+      "xml_path": "/w:hdr/w:tbl/w:tr/w:tc[1]/w:p/w:r/w:drawing/wp:inline/a:graphic/a:graphicData/pic:pic/pic:blipFill/a:blip",
+      "table_row_1based": 1,
+      "cell_1based": 1
+    }
+  ],
+  "posicoes_persistidas_no_conteudo_nativo": false,
+  "evidencia_posicional": "As duas fotografias pertencem a word/document.xml, tabela1, linha10, célula1, relações rId7/rId8 e runs1/4. A terceira mídia é o logotipo em word/header1.xml. As posições foram verificadas diretamente no DOCX cujo hash corresponde ao banco; snapshot/assets preservam chave OOXML/hash/arquivo_id, sem locator de célula.",
+  "diagnostico": "O conteúdo nativo preserva dois blocos de imagem após a tabela e informa explicitamente o deslocamento. Zero elementos HTML img na visualização inicial não demonstra ausência dos arquivos; a UI exige abrir as imagens. A galeria da cópia deve respeitar os dois vínculos desta revisão e identificar as imagens como derivadas do Word.",
+  "contagens_globais": {
+    "assets_no_snapshot_amostra": 2,
+    "blocos_imagem_amostra": 2,
+    "capturado_em": "2026-10-31 01:17:47.214084+00",
+    "conteudo_atual_igual_manifesto_de_origem": true,
+    "imagens_com_vinculo_documento_revisao": 417,
+    "imagens_extraidas_cadastradas": 417,
+    "imagens_extraidas_confirmadas": 417,
+    "imagens_sem_vinculo_documento_revisao": 0,
+    "linhas_tabela_amostra": 93
+  },
+  "limites": [
+    "A associação posicional não deve ser imposta a uma cópia posteriormente editada sem conferir sua correspondência. A amostra atual é JSONB idêntica ao manifesto.",
+    "As 417 imagens extraídas confirmadas possuem vínculo documental/revisão; o critério consultado não resultou em 413.",
+    "O logotipo do cabeçalho não integra os dois assets de corpo convertidos. O original preserva as três mídias.",
+    "As imagens e o DOCX original permanecem privados; este arquivo contém somente metadados de identidade e posicionamento.",
+    "Nenhum binário novo de lacuna foi recuperado; estas imagens já faziam parte do acervo e não comprovam recuperação das fotos próprias da aplicação."
+  ],
+  "galeria_de_leitura": {
+    "finalidade": "Expor as duas imagens comprovadas da revisão convertida. A visibilidade não altera sua posição/célula.",
+    "original_preservado": true,
+    "reconstrucao_de_celula_aplicada": false,
+    "alteracao_conteudo_ou_sql": false,
+    "registro_fotografico_proprio_da_aplicacao_recuperado": false,
+    "novos_binarios_de_lacuna": 0
+  }
+}

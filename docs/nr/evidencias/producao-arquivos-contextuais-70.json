@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "consulta": "SELECT agregado pelo conector Lovable do projeto Nexus; sem JWT, personificação ou mutação.",
+  "projeto_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "supabase_projeto": "yhtgijtllvgzoqtfcgal",
+  "comprovacao_banco": {
+    "capturado_em_utc": "2026-10-31T01:36:04.045253+00:00",
+    "files": {
+      "quantity": 1022,
+      "records_md5": "543702cc98c40722c2aeaa5336bc2e1f",
+      "unchanged_from_before": true
+    },
+    "ledger": {
+      "last_position": 70,
+      "path": "drizzle/migrations/0051_nr_arquivos_contextuais.sql",
+      "position70_exact": true,
+      "positions": 70,
+      "prefix70_matches_manifest": true,
+      "prefix70_md5": "ffe7200d9ce5e988ac92d496c303bb01",
+      "source_sha256": "1ddab7f1e30776c921862408f25f5c9fe3693283c58d796898b6d7d572a26117"
+    },
+    "postgres": "PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit",
+    "relationships": {
+      "quantity": 1556,
+      "records_md5": "bd3f38222bdd885cf7300ae868360502",
+      "unchanged_from_before": true
+    },
+    "rpc": {
+      "body_matches_frozen_source": true,
+      "body_md5": "90505972907c73c15135dae68ffde075",
+      "bounded_identity_filter": true,
+      "context_scope_keys": true,
+      "identity_filter_before_page": true,
+      "search_path": [
+        "search_path=\"\""
+      ],
+      "security_definer": true,
+      "volatility": "s"
+    },
+    "sample_copy_assets": {
+      "expected": 2,
+      "found": 2,
+      "physical_identity_confirmed": 2,
+      "same_relationship_confirmed": 2
+    }
+  },
+  "aplicacao_e_reexecucao": {
+    "executadas_por": "Agente principal (root), diretamente por Lovable query_database",
+    "aplicacao_reportada": "PASS",
+    "reexecucao_envelope_exato_reportada": "PASS",
+    "codigo_commit": "2e0486c8941c5a9e736e8768fd659c85980e0310",
+    "codigo_tree": "9a16af9d43aa60bffd000a2caf880b3f97debda2",
+    "posicao": 70,
+    "migration_path": "drizzle/migrations/0051_nr_arquivos_contextuais.sql",
+    "source_sha256": "1ddab7f1e30776c921862408f25f5c9fe3693283c58d796898b6d7d572a26117",
+    "envelope_sha256": "4fdf200b524c5e7b53016bcd8cff540b5f6410585f26d59d260bee379e3e776a",
+    "envelope_bytes": 17430,
+    "observacao": "A leitura independente posterior confirmou prefixo do ledger, corpo exato da função e hashes integrais dos registros preservados. A execução do envelope e seu replay foram feitos e relatados pelo agente principal."
+  },
+  "teste_isolado": "docs/nr/evidencias/arquivos-contextuais-isolada.json",
+  "consulta_artefato": "docs/nr/evidencias/consulta-arquivos-contextuais-70.sql",
+  "roundtrip_conector_ms": 3648,
+  "limites": [
+    "O tempo inclui comunicação MCP/Lovable e não mede SQL isolado, HTTP da aplicação ou desempenho da interface.",
+    "A consulta por conector privilegiado verifica catálogo e associações existentes. Não executa a RPC autenticada nem substitui a navegação autorizada na interface.",
+    "Os dois assets são imagens derivadas de DOCX já existentes, com identidade e vínculo documental comprovados. Não representam recuperação das fotos próprias da origem nem obtenção de novos binários.",
+    "A FK composta continua impedindo vínculos secundários de um físico com outra unidade. Esta migração não amplia escopo de autorização nem altera essa restrição."
+  ]
+}

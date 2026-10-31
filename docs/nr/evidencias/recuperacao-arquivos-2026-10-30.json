@@ -1,0 +1,135 @@
+{
+  "format": "nexus-nr-file-recovery-attempts/1",
+  "reference_date_local": "2026-10-30",
+  "timezone": "America/Sao_Paulo",
+  "scope": "Tentativas autorizadas da rodada de recuperação da experiência; não é revalidação integral dos binários já migrados.",
+  "new_binaries_recovered": 0,
+  "new_recovered_files": [],
+  "photo_reference_baseline": {
+    "distinct_original_paths": 245,
+    "distinct_thumbnail_paths": 245,
+    "total_distinct_references": 490,
+    "photo_occurrences": 322,
+    "associations_preserved": true,
+    "basis": "Retrato informado e staging preservado; caminhos reutilizados não foram fundidos nem associados por nome."
+  },
+  "source_application_attempts": [
+    {
+      "method": "Imagens renderizadas na interface autorizada da origem",
+      "kind": "thumbnail",
+      "observed_loaded_count": 3,
+      "natural_dimensions": {
+        "width": 225,
+        "height": 300
+      },
+      "complete": true,
+      "binary_downloaded": false,
+      "scope": "Miniaturas observadas; não comprova download dos originais."
+    },
+    {
+      "method": "Abertura do link original pela interface autorizada",
+      "kind": "original",
+      "result": "preview_context_required",
+      "observed_message": "Open this preview again from Perplexity",
+      "binary_downloaded": false
+    },
+    {
+      "method": "Download de mídia do navegador",
+      "result": "timeout",
+      "binary_downloaded": false
+    },
+    {
+      "method": "Exportação HTML oficial da origem",
+      "result": "timeout",
+      "binary_downloaded": false
+    }
+  ],
+  "drive_historical_revision_attempt": {
+    "revalidated_revision_count": 1,
+    "preserved_metadata_baseline": 550,
+    "result": "http_403",
+    "historical_binary_downloaded": false,
+    "retention_modified": false,
+    "current_revision_used_as_historical": false,
+    "scope": "Uma revisão específica identificada no manifesto privado; as 550 revisões não foram individualmente revalidadas nesta rodada."
+  },
+  "existing_storage": {
+    "objects_baseline": 1022,
+    "bytes_baseline": 291872274,
+    "all_objects_redownloaded_and_rehashed_this_round": false,
+    "existing_objects_deleted": false,
+    "existing_confirmed_records_removed": false,
+    "existing_docx_sample_download": {
+      "completed": true,
+      "bytes": 323732,
+      "hash_checked_privately": true,
+      "download_event_hook_timeout_seconds": 15,
+      "completion_basis": "Arquivo privado observado após o timeout do hook; existência, tamanho e hash conferidos pelo executor.",
+      "new_acervo_object": false,
+      "new_gap_recovered": false,
+      "visual_fidelity_validation": "sample_inspected_with_limits",
+      "qa_evidence": "word-emitido-amostra-2026-10-30.json",
+      "rendered_pages": 5,
+      "png_pages_inspected": 5,
+      "original_unchanged_after_render": true,
+      "native_word_typography_equivalence_proven": false,
+      "complete_original_pdf_visual_comparison": false,
+      "sample_omath_objects": 0,
+      "scope_limits": [
+        "Fontes substitutas incorporadas; sem comprovação de equivalência com Word nativo.",
+        "A estrutura original não marca repetição de cabeçalho nem bloqueio de divisão; a divisão observada no render foi registrada sem alterar o original.",
+        "Amostra sem OMath não comprova fidelidade de equações complexas em outros documentos.",
+        "Objeto já existente; nenhum novo objeto do acervo nem lacuna recuperada."
+      ]
+    },
+    "converted_docx_images_sample": {
+      "evidence": "docx-imagens-amostra-2026-10-30.json",
+      "preserved_native_image_blocks": 2,
+      "confirmed_body_assets": 2,
+      "confirmed_private_files": 2,
+      "source_word_media": 3,
+      "third_media": "Header logo, outside the converted body assets",
+      "source_ooxml_position_proven": true,
+      "native_model_preserves_images_inside_cells": false,
+      "presentation_fix": "Read-only gallery of existing blocks, exact original/hash/asset/document/revision/context proof; no cell association by name.",
+      "new_gap_recovered": false,
+      "new_acervo_object": false,
+      "database_scope_evidence": "producao-arquivos-contextuais-70.json",
+      "canonical_listing_migration_applied": 70,
+      "private_file_and_relationship_records_preserved": true,
+      "new_binary_download_claim": false,
+      "authenticated_local_gallery": {
+        "existing_images_loaded": 2,
+        "viewports_verified": [
+          {
+            "width": 1366,
+            "height": 900
+          },
+          {
+            "width": 390,
+            "height": 844
+          }
+        ],
+        "initial_full_image_fit": true,
+        "mobile_page_horizontal_overflow": false,
+        "zoom_percent_verified": [100, 150],
+        "arrow_navigation_verified": true,
+        "escape_closes_verified": true,
+        "focus_returns_to_exact_trigger": true,
+        "original_captions_preserved": true,
+        "missing_date_and_author_not_inferred": true,
+        "original_table_cell_position_restored": false,
+        "scope": "Leitura autenticada na instância local conectada; não é publicação, novo binário ou equivalência integral da conversão.",
+        "evidence": "ui-galeria-docx-2026-10-30.json",
+        "application_commit": "8731b52a594a2d854f2a7cd0bbac74dd8fe4671a"
+      }
+    }
+  },
+  "interpretation": [
+    "A limitação do mecanismo de acesso usado não comprova indisponibilidade permanente das fotos.",
+    "Screenshots não foram usados como substitutos de arquivos originais.",
+    "As imagens Drive e as extraídas de DOCX não foram apresentadas como recuperação das fotos próprias da aplicação.",
+    "Uma revisão antiga não recebeu bytes da revisão atual.",
+    "Identificadores privados, autoria pessoal, URLs assinadas e binários não estão incluídos neste manifesto público."
+  ]
+}

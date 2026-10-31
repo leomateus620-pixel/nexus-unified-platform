@@ -1,0 +1,82 @@
+{
+  "captured_at": "2026-10-31T01:34:37.192Z",
+  "started_at": "2026-10-31T01:32:43.914Z",
+  "executed_head_local": "0a577ecca33c604707648db35e912042e9cab17b",
+  "executed_tree_local": "178f04d95677926599a194afab92ccd78f593c36",
+  "code_state": "Local commit base plus frozen working-tree complement; not a deployment assertion",
+  "fingerprint": {
+    "scope": "NR runtime/routes/unit tests/scripts/package, including new files; excludes isolated UI transport",
+    "files": 128,
+    "before_sha256": "6b365e08c135dbe0433d8180e260ba0616a0d71ad7ae8ba1c189994c0e8ed289",
+    "after_sha256": "6b365e08c135dbe0433d8180e260ba0616a0d71ad7ae8ba1c189994c0e8ed289",
+    "unchanged": true
+  },
+  "formatting": {
+    "files": 53,
+    "passed": true,
+    "check_only": true
+  },
+  "lint": {
+    "files": 48,
+    "scope": "Changed application/unit-test TS/TSX; isolated UI transport excluded",
+    "passed": true,
+    "errors": 0,
+    "warnings": 3,
+    "warning_scope": "Fast Refresh helper exports in technical-display.tsx"
+  },
+  "typecheck": {
+    "passed": true,
+    "output_bytes": 0
+  },
+  "tests_this_run": {
+    "vitest_files": 22,
+    "vitest_tests": 134,
+    "package_node_scripts": 4,
+    "package_node_tests": 21,
+    "extra_source_literal_parser_tests": 10,
+    "total": 165,
+    "all_passed": true,
+    "included_gallery_projection_tests": 10,
+    "included_file_function_tests": 8,
+    "earlier_test_totals_added": false
+  },
+  "production_build": {
+    "passed": true,
+    "reader_assets_passed": true,
+    "deployed": false,
+    "warnings": [
+      "Large chunks above500kB",
+      "NrFilesPanel/NrRecordHistory have both static and dynamic imports"
+    ]
+  },
+  "ui_transport_adaptation": {
+    "file": "tests/ui/nr-server.ts",
+    "owner": "root",
+    "change": "Explicit empty authorized-row response for the new document-image endpoint in PDF-only synthetic fixture",
+    "sha256": "118b5c92548f9ae5ac904ad1ab3c651711a4d5901143b921e22874b71d2450e5",
+    "formatting_passed": true,
+    "in_runtime_fingerprint": false,
+    "boot_report": {
+      "owner": "root through CUA",
+      "result": "Context and survey with15 blocks loaded after reload; no new missing-export failure",
+      "automated_by_validation_agent": false,
+      "note": "Pre-existing createRoot/HMR console entry predates this execution"
+    }
+  },
+  "generated_types": {
+    "sha256_before": "ad09f13eba9ebc4008aba27dad5f2214616a03efb99f2025e4e4a66faff8f020",
+    "sha256_after": "ad09f13eba9ebc4008aba27dad5f2214616a03efb99f2025e4e4a66faff8f020",
+    "formatted": false
+  },
+  "prior_regressions_not_repeated": {
+    "pet_tests": 74,
+    "navigation_authorization_tests": 46,
+    "receipt": "docs/nr/evidencias/frontend-final-2026-10-30.json"
+  },
+  "sql_or_manifest_mutated": false,
+  "log": "docs/nr/evidencias/frontend-complemento-2026-10-30.txt",
+  "log_sha256": "1669f3ba8694cd1883079e225d666e965f841560d4b4749ebc480c751f8dacf3",
+  "validated_sources_commit": "2e0486c8941c5a9e736e8768fd659c85980e0310",
+  "validated_sources_note": "A execução partiu da base Git registrada mais o complemento congelado com fingerprint idêntico antes/depois; essas fontes foram depois incorporadas byte a byte ao commit indicado. Não é prova de publicação.",
+  "log_normalization": "Trailing spaces and terminal empty lines removed for repository whitespace checks; command text/results unchanged."
+}

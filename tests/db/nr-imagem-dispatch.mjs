@@ -13,7 +13,7 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     "dispatch fixtures require a PostgreSQL cluster without real net/Vault",
   );
   const token = randomUUID().replaceAll("-", "") + randomUUID().replaceAll("-", "");
-  const endpoint = "https://isolated-fixture.supabase.co/functions/v1/nr-image-worker";
+  const endpoint = "https://yhtgijtllvgzoqtfcgal.supabase.co/functions/v1/nr-image-worker";
   const reject = async (work, code) => {
     await assert.rejects(work, (error) => error.code === code);
     assertions++;
@@ -29,12 +29,13 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
       insert into net.http_request_queue(url,body,headers,timeout_milliseconds)
       values(http_post.url,http_post.body,http_post.headers,http_post.timeout_milliseconds)returning id into result;return result;end$$;
     grant usage on schema net,vault to anon,authenticated;
-    revoke all on all tables in schema net,vault from public,anon,authenticated;`);
+    revoke all on all tables in schema net,vault from public,anon,authenticated;
+    grant select on net.http_request_queue,net._http_response to public;`);
   try {
     await sql`insert into vault.decrypted_secrets values('nexus_nr_image_worker_url',${endpoint}),('nexus_nr_image_worker_token',${token})`;
     assert.equal(
       (await service((tx) => tx`select public.nr_imagem_worker_validar(${token}) valid`))[0].valid,
-      true,
+      false,
     );
     assert.equal(
       (
@@ -59,7 +60,7 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
       ]) {
         assert.equal(
           (await sql`select has_table_privilege(${role},${relation},'select') allowed`)[0].allowed,
-          false,
+          relation !== "vault.decrypted_secrets",
         );
         assertions++;
       }
@@ -95,9 +96,27 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     );
     assert.equal(requests[0].url, endpoint);
     assert.deepEqual(requests[0].body, { processador: "nexus-storage-transform-v1", limite: 1 });
-    assert.equal(requests[0].headers["X-Nexus-Job-Token"], token);
+    const ticket = requests[0].headers["X-Nexus-Job-Token"];
+    assert.match(ticket, /^[a-f0-9]{64}$/);
+    assert.notEqual(ticket, token);
+    assert.equal(
+      (await service((tx) => tx`select public.nr_imagem_worker_validar(${ticket}) valid`))[0].valid,
+      true,
+    );
+    assert.equal(
+      (await service((tx) => tx`select public.nr_imagem_worker_validar(${ticket}) valid`))[0].valid,
+      false,
+    );
+    const persistedTicket = (
+      await sql`select *,extract(epoch from(expira_em-criado_em))::float8 ttl from public.nr_imagem_worker_tickets`
+    )[0];
+    assert.equal(
+      persistedTicket.ticket_sha256,
+      (await sql`select encode(sha256(convert_to(${ticket},'UTF8')),'hex') hash`)[0].hash,
+    );
+    assert.equal(persistedTicket.ttl > 119 && persistedTicket.ttl < 121, true);
     assert.equal(requests[0].timeout_milliseconds, 60000);
-    assertions += 5;
+    assertions += 10;
     const responses = await sql.begin(async (tx) => [
       (await tx`select public.nr_imagem_worker_disparar() r`)[0].r,
       (await tx`select public.nr_imagem_worker_disparar() r`)[0].r,
@@ -105,8 +124,9 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     assert.equal(responses[0].estado, "solicitado");
     assert.equal(responses[1].estado, "ja_solicitado_na_transacao");
     assert.equal(JSON.stringify(responses).includes(token), false);
+    assert.equal(JSON.stringify(responses).includes(ticket), false);
     assert.equal((await sql`select count(*)::int n from net.http_request_queue`)[0].n, 2);
-    assertions += 4;
+    assertions += 5;
     await sql`update vault.decrypted_secrets set decrypted_secret='https://external.invalid/functions/v1/nr-image-worker'where name='nexus_nr_image_worker_url'`;
     assert.equal(
       (await sql`select public.nr_imagem_worker_disparar() r`)[0].r.estado,
@@ -121,19 +141,23 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     });
     assert.deepEqual(failure, { estado: "falha_no_disparo", sqlstate: "08006" });
     assert.equal(
+      (await sql`select count(*)::int n from public.nr_imagem_worker_tickets`)[0].n,
+      2,
+      "An unsuccessful HTTP enqueue rolls back the newly generated ticket",
+    );
+    assert.equal(
       (
         await sql`select count(*)::int n from public.nr_imagem_representacoes where arquivo_id=${file.id} and estado='fila'`
       )[0].n,
       2,
     );
-    assertions += 2;
+    assertions += 3;
     await sql`update vault.decrypted_secrets set decrypted_secret=''where name='nexus_nr_image_worker_token'`;
     assert.equal(
       (await sql`select public.nr_imagem_worker_disparar() r`)[0].r.estado,
-      "configuracao_privada_ausente",
+      "solicitado",
     );
     assertions++;
-    await sql`update vault.decrypted_secrets set decrypted_secret=${token} where name='nexus_nr_image_worker_token'`;
     const result = {
       estado: "disponivel",
       mime: "image/webp",
@@ -152,14 +176,14 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
       (await sql`select public.nr_imagem_worker_disparar() r`)[0].r.estado,
       "processamento_em_andamento",
     );
-    assert.equal((await sql`select count(*)::int n from net.http_request_queue`)[0].n, 2);
+    assert.equal((await sql`select count(*)::int n from net.http_request_queue`)[0].n, 3);
     await service(
       (tx) =>
         tx`select public.nr_imagem_trabalho_concluir(${first.id},${first.lease},${tx.json(result)})`,
     );
     assert.equal(
       (await sql`select count(*)::int n from net.http_request_queue`)[0].n,
-      3,
+      4,
       "Concluding the first native variant immediately invokes the next without waiting for cron",
     );
     const second = (
@@ -175,7 +199,7 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     );
     assert.equal(
       (await sql`select count(*)::int n from net.http_request_queue`)[0].n,
-      3,
+      4,
       "No HTTP invocation is added once both native variants have completed",
     );
     assert.equal(
@@ -185,6 +209,15 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
       2,
     );
     assertions += 8;
+    const allRequests = await sql`select headers from net.http_request_queue order by id`;
+    const tickets = allRequests.map((request) => request.headers["X-Nexus-Job-Token"]);
+    assert.equal(new Set(tickets).size, tickets.length);
+    assert.equal(JSON.stringify(allRequests).includes(token), false);
+    assert.equal(
+      (await sql`select count(*)::int n from public.nr_imagem_worker_tickets`)[0].n,
+      tickets.length,
+    );
+    assertions += 3;
   } finally {
     // These schemas were verified absent before creating this synthetic external boundary.
     await sql.unsafe("drop schema net cascade;drop schema vault cascade;");

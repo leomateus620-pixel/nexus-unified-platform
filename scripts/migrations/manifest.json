@@ -311,6 +311,10 @@
     {
       "path": "drizzle/migrations/0058_nr_imagem_processamento_automatico.sql",
       "sha256": "18060798aec33038f88146185f80f0807f62d17195f03f789a1edbdbf88b2ca9"
+    },
+    {
+      "path": "drizzle/migrations/0059_nr_imagem_tickets_descartaveis.sql",
+      "sha256": "d9f8862e914638f03f38d033a8dd5b197c06b73b57d7eb70561632149005cd1a"
     }
   ]
 }

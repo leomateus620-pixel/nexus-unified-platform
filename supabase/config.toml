@@ -1,6 +1,6 @@
 project_id = "yhtgijtllvgzoqtfcgal"
 
 [functions.nr-image-worker]
-# pg_net invokes with the narrow Vault token. The handler rejects every call before
-# claiming work unless the service-only validation RPC confirms that token.
+# pg_net invokes with a short-lived, single-use ticket. The handler rejects every
+# call before claiming work unless the service-only RPC consumes that ticket.
 verify_jwt = false

@@ -5,12 +5,12 @@ Executor do processador `nexus-storage-transform-v1`, dentro do mesmo Supabase d
 ## Contrato
 
 - O POST não aceita organização, cliente, unidade, caminho, URL ou limite pelo corpo. O consumidor solicita exatamente um trabalho da fila, da versão explícita, e usa somente os caminhos retornados pelo banco. A origem HTTPS permitida é exclusivamente a do projeto Supabase Nexus; configuração divergente falha antes de transmitir a credencial.
-- `X-Nexus-Job-Token` deve conter 64 caracteres hexadecimais. A RPC `nr_imagem_worker_validar` verifica o token por hash, com acesso restrito a `service_role`. O token permanece apenas em Vault; a Edge recebe a credencial padrão do próprio runtime, sem uma cópia do token em secrets de ambiente.
-- `verify_jwt=false` aplica-se somente a esta função. Isso permite o disparo privado do `pg_net`; o handler rejeita a chamada antes do claim se a RPC não confirmar o token. Não há CORS nem rotas de leitura de arquivos neste endpoint.
+- `X-Nexus-Job-Token` deve conter um ticket aleatório de 64 caracteres hexadecimais, com validade de 120 segundos e uso único. A RPC `nr_imagem_worker_validar`, restrita a `service_role`, compara seu hash e o consome atomicamente. Somente o hash fica na tabela privada; nenhum segredo permanente é aceito para invocação ou enviado pela fila HTTP. A Edge recebe apenas a credencial padrão do próprio runtime.
+- `verify_jwt=false` aplica-se somente a esta função. Isso permite o disparo privado do `pg_net`; o handler rejeita a chamada antes do claim se a RPC não consumir o ticket. Não há CORS nem rotas de leitura de arquivos neste endpoint.
 - Os GETs privados de original e representação usam o endpoint autenticado. Chaves modernas `sb_*` ficam em `apikey`; a forma JWT legada também usa `Authorization`. Nenhum desses valores é registrado em logs.
 - O original é lido com tamanho limitado, comparado por tamanho/SHA-256/MIME real e inspecionado por cabeçalho. O motor interno Storage decodifica a imagem e gera WebP com `contain`, qualidade 88 e box quadrado de lado `min(384 ou 768, maior lado do original)`. A inspeção do resultado rejeita ampliação, mudança de proporção ou rotação EXIF incompatível.
 - O upload do derivado usa `x-upsert:false`. Um GET integral precisa coincidir em MIME, tamanho e SHA-256 antes da conclusão da RPC. Arquivo existente divergente é uma falha, nunca um overwrite.
-- A migração `0058` controla exclusão por lease, disparo imediato, encadeamento após conclusão e cron de recuperação. A Edge não se auto-invoca e processa somente uma variante por request. Falhas deixam o original intacto e usam o contrato de tentativas limitadas da fila.
+- A migração `0058` controla exclusão por lease, disparo imediato, encadeamento após conclusão e cron de recuperação; `0059` substitui a autenticação de invocação por tickets descartáveis. A Edge não se auto-invoca e processa somente uma variante por request. Falhas deixam o original intacto e usam o contrato de tentativas limitadas da fila.
 
 ## Limites e verificação
 
@@ -31,4 +31,4 @@ Os 15 testes cobrem autorização estreita, host e escopo fixos, original imutá
 
 ## Aplicação
 
-A aplicação é feita pelo conector Lovable após revisão do código, testes e migração versionada. O valor do token deve ser gerado e mantido dentro de Vault, sem retorná-lo em consultas, conversas, arquivos ou logs. A URL do worker é restrita ao endpoint HTTPS do próprio projeto. Aplicar a migração não publica o frontend; publicar a função não comprova seu funcionamento até uma execução real e seus GETs serem confirmados.
+As migrações são aplicadas pelo conector Lovable após revisão do código e testes. O primeiro deploy desta nova função está pendente de uma via administrativa suportada: o conector recusou criar uma função Edge nova neste projeto TanStack Start. O dispatcher gera cada ticket dentro do banco, guarda somente seu hash e o envia à função pelo `pg_net`; ele nunca deve ser devolvido em consultas, conversas, arquivos ou logs. O dispatcher lê de Vault somente a URL restrita ao endpoint HTTPS do próprio projeto; o segredo fixo anterior não é consultado nem aceito pela validação. Aplicar as migrações não publica o frontend; publicar a função não comprova seu funcionamento até uma execução real e seus GETs serem confirmados.

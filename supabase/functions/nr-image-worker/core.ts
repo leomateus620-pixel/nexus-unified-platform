@@ -161,8 +161,8 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
       return body.length ? JSON.parse(new TextDecoder().decode(body)) : null;
     };
     try {
-      // The random invocation token is stored only in Vault. This RPC returns a boolean,
-      // never the stored token; only the standard server runtime credential may call it.
+      // A short-lived invocation ticket is consumed atomically by this service-only RPC.
+      // Only its hash is stored; the RPC never returns a ticket or a persistent secret.
       try {
         if ((await rpc("nr_imagem_worker_validar", { p_token: token })) !== true)
           return json({ error: "acesso_negado" }, 403);

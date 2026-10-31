@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import postgres from "postgres";
 import { randomUUID } from "node:crypto";
 import { testImageDispatch } from "./nr-imagem-dispatch.mjs";
+import { testImageTickets } from "./nr-imagem-tickets.mjs";
 if (
   process.env.PGTEST_EPHEMERAL !== "1" ||
   process.env.PGTEST_HOST !== "127.0.0.1" ||
@@ -417,6 +418,7 @@ try {
   );
   assertions += 2;
   assertions += await testImageDispatch({ sql, org, eng, client, unit, local, as, service });
+  assertions += await testImageTickets({ sql, eng, as, service });
   const occurrence = {
     local_id: local,
     origem: "isolated",

@@ -1,0 +1,20 @@
+{
+  "capturado_em_utc": "2026-10-31T01:07:03.582685+00:00",
+  "implementation_commit": "3a5305f69210aa1b31c19d06f2d4f6c200b3b92e",
+  "checks": [
+    {
+      "command": "node --test scripts/migrations/manifest.test.mjs scripts/supabase-types/contract.test.mjs",
+      "exit_code": 0,
+      "tests": 12,
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/nexus-operacional/contracts.mjs",
+      "exit_code": 0,
+      "protected_files": 134,
+      "unexpected_changes": 0
+    }
+  ],
+  "scope": "Existing migration manifest, generated-type safety contract and preservation of other operational modules; no production credentials or schema generation."
+}

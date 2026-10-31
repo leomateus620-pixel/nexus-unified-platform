@@ -1,0 +1,95 @@
+{
+  "captured_at": "2026-10-31T01:40:13.971Z",
+  "started_at": "2026-10-31T01:39:00.793Z",
+  "base_nr_complement_commit": "2e0486c8941c5a9e736e8768fd659c85980e0310",
+  "executed_head_local": "2e0486c8941c5a9e736e8768fd659c85980e0310",
+  "executed_tree_local": "9a16af9d43aa60bffd000a2caf880b3f97debda2",
+  "code_state": "Base commit plus final working-tree visual adjustment",
+  "changed_runtime_files": [
+    "src/features/nr/NrPhotoGallery.tsx"
+  ],
+  "fingerprint": {
+    "scope": "NR source and authenticated NR routes",
+    "files": 76,
+    "before_sha256": "5c4f2b4e757765b591e246e40c38b4eb4e76e8e5307bedaa61028dcfa3b2c7a3",
+    "after_sha256": "5c4f2b4e757765b591e246e40c38b4eb4e76e8e5307bedaa61028dcfa3b2c7a3",
+    "unchanged": true,
+    "gallery_sha256": "3f5826cf1e266f3336faa4245fd465acffbdf0bc2161a148b953579c54824cbf"
+  },
+  "checks_by_validation_agent": {
+    "typecheck": {
+      "passed": true,
+      "output_bytes": 0
+    },
+    "production_build": {
+      "passed": true,
+      "reader_assets_passed": true,
+      "deployed": false,
+      "warnings": [
+        "Large chunks above500kB",
+        "NrFilesPanel/NrRecordHistory static and dynamic imports"
+      ]
+    }
+  },
+  "checks_reported_by_root": {
+    "session": 76144,
+    "prettier_passed": true,
+    "lint_passed": true,
+    "typecheck_passed": true,
+    "targeted_gallery_tests": 10,
+    "all_commands_exit": 0
+  },
+  "ui_reported_by_root": {
+    "tool": "CUA",
+    "database_ledger": 70,
+    "zoom_percent": [
+      100,
+      150
+    ],
+    "arrow_left_moves_2_to_1": true,
+    "changing_image_resets_zoom_to_100": true,
+    "escape_closes": true,
+    "focus_returns_to": {
+      "tag": "BUTTON",
+      "accessible_name": "Abrir foto 2: Imagem 5"
+    },
+    "accepted_captures": [
+      "44-nexus-real-docx-imagem-ajustada-1366.jpg",
+      "45-nexus-real-docx-imagem-2-1366.jpg",
+      "46-nexus-real-docx-galeria-1366.jpg",
+      "47-nexus-real-docx-imagem-390.jpg"
+    ],
+    "viewports": [
+      {
+        "width": 1366,
+        "height": 900,
+        "page_horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "page_horizontal_overflow": false
+      }
+    ],
+    "automated_by_validation_agent": false,
+    "two_docx_extracted_images_rendered_complete": true,
+    "image_scope": "Previously stored raster images extracted from DOCX; this check does not claim recovery of application field-photo originals",
+    "natural_dimensions_px": {
+      "width": 455,
+      "height": 607,
+      "source": "CUA read-only DOM naturalWidth/naturalHeight, both loaded images; displayed box varies by viewport"
+    }
+  },
+  "prior_full_suite": {
+    "tests": 165,
+    "repeated": false,
+    "receipt": "docs/nr/evidencias/frontend-complemento-2026-10-30.json",
+    "receipt_preserved": true
+  },
+  "sql_or_manifest_mutated": false,
+  "log": "docs/nr/evidencias/galeria-ajustes-visuais-2026-10-30.txt",
+  "log_sha256": "4d825eff7b703c8ff629eb0a6568a5515412f424d19b048452c878058307cec1",
+  "validated_sources_commit": "8731b52a594a2d854f2a7cd0bbac74dd8fe4671a",
+  "validated_sources_tree": "cea3c79b9ab941215148e36db4e2c7f239b24227",
+  "log_normalization": "Trailing spaces and terminal empty lines removed for repository whitespace checks; command text/results unchanged."
+}

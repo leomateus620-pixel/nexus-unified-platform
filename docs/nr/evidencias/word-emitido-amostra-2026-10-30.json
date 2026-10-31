@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "capturado_em_utc": "2026-10-31 01:02:33.322265+00",
+  "timezone_referencia": "America/Sao_Paulo",
+  "amostra": {
+    "contexto": "Fábrica EC 01",
+    "tipo_documental": "Cadastro de EC",
+    "revisao_origem": "03",
+    "download": "Arquivo original obtido pela interface autenticada Nexus; fluxo observado pelo agente principal.",
+    "nome_arquivo": "EC 01 - SILO 1 SC01.docx",
+    "tamanho_bytes": 323732,
+    "sha256": "9ec17cbbc1f99f225909014cc5541d6ce468e3ee6be3be79d073c30a03a12a09",
+    "mtime_local": "2026-10-30T22:00:43-03:00"
+  },
+  "integridade": {
+    "tamanho_local_confere": true,
+    "sha256_local_confere": true,
+    "tamanho_banco_confere": true,
+    "sha256_banco_confere": true,
+    "estado_banco": "vinculado",
+    "bytes_verificados_cadastrados": true,
+    "original_inalterado_apos_render": true
+  },
+  "vinculo_confirmado": {
+    "arquivo_id": "6a558ab1-d888-4195-8da6-e03d3f6a9140",
+    "documento_estado": "emitido_origem",
+    "documento_id": "db58237b-7994-47ca-9d41-d1dfe5384e54",
+    "local_fabrica_ec01": true,
+    "local_id": "dd9917a1-167d-467c-b687-e3f5926e85ee",
+    "origem_vinculo": "secundario",
+    "revisao_atual": true,
+    "revisao_estado": "emitido_origem",
+    "revisao_id": "b8ef8b67-439f-4be1-9b9b-86b1876e1a33",
+    "revisao_numero": 3,
+    "tipo_documental": "Cadastro de EC",
+    "vigencia": "vigente",
+    "copia_editavel_relacionada_separadamente": [
+      {
+        "documento_id": "3f114e10-cc01-4b53-81de-d8041da6ca5d",
+        "revisao_id": "12884b71-6e06-417f-8a4b-fa23bda39ddf",
+        "revisao_numero": 1,
+        "documento_estado": "rascunho"
+      }
+    ]
+  },
+  "renderizacao": {
+    "skill": "documents:documents",
+    "versao_skill": "26.1026.10807",
+    "workflow": "SKILL.md + tasks/read_review.md; render_docx.py; inspeção visual de todas as páginas.",
+    "runtime_python": "Bundled Codex workspace dependencies",
+    "libreoffice": "Bundled headless; override/soffice. Não foi utilizado LibreOffice desktop.",
+    "paginas": 5,
+    "imagens_png": 5,
+    "dimensoes_png": [1414, 2000],
+    "todas_paginas_inspecionadas": true,
+    "qa_privada": true,
+    "pngs_ou_conteudo_publicados_no_repositorio": false,
+    "avisos": [
+      "Avisos Fontconfig sobre cachedir; renderização terminou e produziu PDF/PNG completos."
+    ]
+  },
+  "estrutura": {
+    "tabelas": 1,
+    "linhas_tabela": 93,
+    "cabecalhos_coluna_com_repeticao_marcada": 0,
+    "linhas_com_proibicao_de_divisao": 0,
+    "midias_embutidas": 3,
+    "referencias_imagem_partes": 3,
+    "comentarios": 0,
+    "insercoes_revisadas": 0,
+    "exclusoes_revisadas": 0,
+    "objetos_matematicos_omath": 0
+  },
+  "fontes": {
+    "declaradas_diretamente_no_corpo": ["Arial", "Cambria", "Cambria Math"],
+    "incorporadas_no_pdf_qa": [
+      "LiberationSans-Bold",
+      "LiberationSans",
+      "Caladea-Bold",
+      "Caladea-Regular",
+      "LiberationSerif",
+      "LinuxLibertineG",
+      "OpenSymbol"
+    ],
+    "todas_fontes_pdf_incorporadas": true,
+    "substituicao_de_fontes_observada": true,
+    "paginas_com_caractere_substituicao_unicode": [],
+    "equivalencia_tipografica_com_word_nativo_comprovada": false
+  },
+  "inspecao_paginas": [
+    {
+      "pagina": 1,
+      "resultado": "Legível",
+      "observacoes": [
+        "Cabeçalho com revisão e data, identificação e geometria organizados em tabela.",
+        "Logotipo e duas fotografias aparecem com proporções adequadas.",
+        "Dimensões, unidades, acentos e símbolo de diâmetro legíveis.",
+        "Matriz de riscos inicia no final da página e continua na página seguinte."
+      ]
+    },
+    {
+      "pagina": 2,
+      "resultado": "Legível com continuidade de tabela",
+      "observacoes": [
+        "Continuação da matriz de riscos da página anterior, sem repetir a linha de títulos de colunas.",
+        "Aviso destacado em vermelho e quadro da atividade seguinte aparecem completos.",
+        "Algumas palavras são quebradas nas colunas estreitas; não foi observado texto lateralmente cortado.",
+        "Linha final da tabela continua na página 3."
+      ]
+    },
+    {
+      "pagina": 3,
+      "resultado": "Legível com continuidade de tabela",
+      "observacoes": [
+        "Matriz de riscos continua com bordas alinhadas e sem sobreposição.",
+        "Textos longos nas células permanecem contidos.",
+        "Último item continua na página 4; exige leitura conjunta das páginas."
+      ]
+    },
+    {
+      "pagina": 4,
+      "resultado": "Legível",
+      "observacoes": [
+        "Primeira linha completa a célula vinda da página 3.",
+        "Medidas gerais, ventilação, requisitos e tabela de EPI renderizados.",
+        "Valores apresentados no documento e unidades com sobrescrito são legíveis.",
+        "Tabela de EPI continua na página 5."
+      ]
+    },
+    {
+      "pagina": 5,
+      "resultado": "Legível",
+      "observacoes": [
+        "Conclusão da tabela de EPI, resgate, emergência, bloqueio e responsáveis renderizados.",
+        "Grade do histórico operacional do equipamento está vazia no documento; a tabela de revisões está preenchida.",
+        "Histórico de revisões alcança a revisão 03.",
+        "Espaço branco final corresponde ao encerramento do documento; não há página em branco adicional."
+      ]
+    }
+  ],
+  "achados_layout": [
+    {
+      "classificacao": "limite_observado",
+      "descricao": "Linhas de uma única tabela são divididas entre páginas e não possuem repetição de cabeçalho colunar. A estrutura OOXML contém zero flags tblHeader/cantSplit. A continuidade está visível, sem comprovação de perda de texto."
+    },
+    {
+      "classificacao": "limite_tipografico",
+      "descricao": "O renderizador utilizou fontes substitutas incorporadas. A leitura ficou íntegra nesta inspeção, mas não se afirma equivalência exata com o Word nativo ou com o PDF original."
+    }
+  ],
+  "limites": [
+    "A revisão cobre uma amostra DOCX emitida, não todas as 233 cópias ou todos os originais.",
+    "As cinco páginas foram inspecionadas visualmente. Não se observaram sobreposições, páginas vazias, imagens ausentes ou cortes laterais no render; divisões de linhas e ausência de cabeçalhos repetidos foram registradas.",
+    "Não foi executada comparação visual completa, página a página, com os bytes do PDF original; o agente principal observou PDF original de cinco páginas e inspecionou páginas no leitor.",
+    "A amostra não contém objetos OMath e não comprova fidelidade de equações complexas em outras conversões.",
+    "Não se revisou a validade normativa ou profissional do conteúdo, nem se validaram assinaturas criptográficas.",
+    "Nenhum arquivo original, retenção, dado do banco ou revisão foi alterado.",
+    "O download confirma acesso a um arquivo já armazenado. Novos binários recuperados para lacunas: zero."
+  ]
+}

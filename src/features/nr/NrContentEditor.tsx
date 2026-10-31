@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { nrArquivoBaixar } from "./files.functions";
@@ -14,6 +14,10 @@ import { ActionButton } from "@/components/nexus/Page";
 
 import type { ContentBlock, NativeContent } from "./native-content";
 import type { Norma } from "./domain";
+import { NrStructuredValue } from "./NrStructuredValue";
+const NrFilesPanel = lazy(() =>
+  import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
+);
 export function NrContentEditor({
   value,
   onChange,
@@ -33,6 +37,7 @@ export function NrContentEditor({
   const resolveFields = useServerFn(nrDocumentoCampos);
   const [capturing, setCapturing] = useState<string | null>(null);
   const [captureError, setCaptureError] = useState("");
+  const [imagePicker, setImagePicker] = useState<string | null>(null);
   const contextKey = JSON.stringify([
     org,
     fieldContext?.norma,
@@ -262,13 +267,9 @@ export function NrContentEditor({
                         ? "Snapshot preservado"
                         : "Texto livre"}
                 </p>
-                <p className="nr-prewrap">
-                  {block.valor_snapshot === null
-                    ? "Não informado no cadastro"
-                    : typeof block.valor_snapshot === "object"
-                      ? JSON.stringify(block.valor_snapshot, null, 2)
-                      : String(block.valor_snapshot ?? block.texto ?? "Valor ainda não capturado")}
-                </p>
+                <NrStructuredValue
+                  value={block.valor_snapshot ?? block.texto ?? "Valor ainda não capturado"}
+                />
                 {block.fonte_snapshot &&
                   typeof block.fonte_snapshot === "object" &&
                   !Array.isArray(block.fonte_snapshot) && (
@@ -317,23 +318,30 @@ export function NrContentEditor({
                       ? "Vínculo versionado com o local"
                       : "Snapshot de cadastro · sem atualização automática"}
                 </p>
-                <label className="nr-wide">
-                  {modelTemplate
-                    ? "Valor a capturar na criação do documento"
-                    : "Valor preservado nesta revisão"}
-                  <textarea
-                    value={
-                      typeof block.valor_snapshot === "object"
-                        ? JSON.stringify(block.valor_snapshot, null, 2)
-                        : String(block.valor_snapshot ?? "")
-                    }
-                    rows={3}
-                    readOnly={modelTemplate || block.modo !== "livre"}
-                    onChange={(e) =>
-                      update(block.id, substituirCampoDocumento(block, e.target.value))
-                    }
-                  />
-                </label>
+                {typeof block.valor_snapshot === "object" && block.modo !== "livre" ? (
+                  <div className="nr-wide">
+                    <p className="text-sm font-medium">Valor preservado nesta revisão</p>
+                    <NrStructuredValue value={block.valor_snapshot} />
+                  </div>
+                ) : (
+                  <label className="nr-wide">
+                    {modelTemplate
+                      ? "Valor a capturar na criação do documento"
+                      : "Valor preservado nesta revisão"}
+                    <textarea
+                      value={
+                        typeof block.valor_snapshot === "object"
+                          ? JSON.stringify(block.valor_snapshot, null, 2)
+                          : String(block.valor_snapshot ?? "")
+                      }
+                      rows={3}
+                      readOnly={modelTemplate || block.modo !== "livre"}
+                      onChange={(e) =>
+                        update(block.id, substituirCampoDocumento(block, e.target.value))
+                      }
+                    />
+                  </label>
+                )}
                 {!modelTemplate && (
                   <div className="nr-actions nr-wide">
                     <ActionButton
@@ -409,16 +417,39 @@ export function NrContentEditor({
                 <NrContentImage org={org} arquivoId={block.arquivo_id} legenda={block.legenda} />
               ) : (
                 <>
-                  <label>
-                    ID do arquivo verificado
-                    <input
-                      value={block.arquivo_id ?? ""}
-                      placeholder="UUID do original preservado"
-                      pattern="[0-9a-fA-F-]{36}"
-                      required
-                      onChange={(e) => update(block.id, { arquivo_id: e.target.value })}
-                    />
-                  </label>
+                  <div>
+                    <p className="text-sm font-medium">Imagem do acervo</p>
+                    {block.arquivo_id ? (
+                      <NrContentImage
+                        org={org}
+                        arquivoId={block.arquivo_id}
+                        legenda={block.legenda}
+                      />
+                    ) : (
+                      <p className="nr-muted">Nenhuma imagem selecionada.</p>
+                    )}
+                    <ActionButton
+                      variant="ghost"
+                      disabled={!org || !fieldContext?.clienteId || !fieldContext?.unidadeId}
+                      onClick={() => setImagePicker(imagePicker === block.id ? null : block.id)}
+                    >
+                      {imagePicker === block.id ? "Fechar seleção" : "Selecionar imagem autorizada"}
+                    </ActionButton>
+                    <details className="mt-2 text-sm">
+                      <summary className="nr-muted cursor-pointer">
+                        Referência avançada do arquivo
+                      </summary>
+                      <label>
+                        Identificador do vínculo preservado
+                        <input
+                          value={block.arquivo_id ?? ""}
+                          pattern="[0-9a-fA-F-]{36}"
+                          required
+                          onChange={(e) => update(block.id, { arquivo_id: e.target.value })}
+                        />
+                      </label>
+                    </details>
+                  </div>
                   <label>
                     Legenda
                     <input
@@ -428,9 +459,31 @@ export function NrContentEditor({
                     />
                   </label>
                   <p className="nr-muted nr-wide">
-                    O vínculo é uma referência ao acervo. A prévia de bytes depende do armazenamento
-                    configurado.
+                    Selecione um arquivo do contexto autorizado. O original permanece preservado.
                   </p>
+                  {imagePicker === block.id && org && fieldContext && (
+                    <div className="nr-wide">
+                      <Suspense fallback={<p role="status">Carregando acervo…</p>}>
+                        <NrFilesPanel
+                          org={org}
+                          norma={fieldContext.norma}
+                          clienteId={fieldContext.clienteId}
+                          unidadeId={fieldContext.unidadeId}
+                          localId={fieldContext.localId || undefined}
+                          canUpload={false}
+                          onFileSelected={(file) => {
+                            if (!file.mime.startsWith("image/")) {
+                              setCaptureError("Selecione um arquivo de imagem para este bloco.");
+                              return;
+                            }
+                            update(block.id, { arquivo_id: file.id });
+                            setImagePicker(null);
+                            setCaptureError("");
+                          }}
+                        />
+                      </Suspense>
+                    </div>
+                  )}
                 </>
               )}
             </div>
@@ -556,7 +609,11 @@ function NrContentImage({
         />
       ) : (
         <div>
-          <p className="nr-muted">Imagem vinculada: {arquivoId || "Arquivo pendente"}</p>
+          <p className="nr-muted">
+            {arquivoId
+              ? "Imagem preservada no acervo autorizado"
+              : "Arquivo pendente de associação"}
+          </p>
           {org && arquivoId && (
             <ActionButton variant="ghost" loading={busy} onClick={() => void show()}>
               Carregar imagem autorizada

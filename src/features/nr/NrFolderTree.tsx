@@ -20,7 +20,7 @@ export function NrFolderTree({
     <details className="nr-panel">
       <summary className="cursor-pointer font-semibold min-h-11">Árvore de pastas</summary>
       <p className="nr-muted my-3">
-        Expanda somente os ramos necessários. Nomes e vínculos usam IDs estáveis.
+        Explore as pastas para consultar documentos, fotos e anexos do acervo.
       </p>
       <FolderBranch org={org} norma={norma} search={search} parentId={null} ancestors={[]} />
     </details>
@@ -137,6 +137,14 @@ function FolderNode({
         >
           <Folder size={17} aria-hidden />
           {row.titulo}
+          {row.resumo_pasta && (
+            <span className="nr-muted">
+              {row.resumo_pasta.subpastas > 0 && `${row.resumo_pasta.subpastas} pastas · `}
+              {row.resumo_pasta.documentos} documentos · {row.resumo_pasta.imagens} imagens
+              {row.resumo_pasta.arquivos > row.resumo_pasta.imagens &&
+                ` · ${row.resumo_pasta.arquivos - row.resumo_pasta.imagens} outros arquivos`}
+            </span>
+          )}
         </Link>
       </div>
       {cycle && <p className="nr-muted">Hierarquia limitada para revisão de integridade.</p>}

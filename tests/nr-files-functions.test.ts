@@ -23,7 +23,11 @@ vi.mock("@tanstack/react-start", () => ({
     return chain;
   },
 }));
-import { nrArquivoBaixar, nrArquivoConfirmar } from "../src/features/nr/files.functions";
+import {
+  nrArquivoBaixar,
+  nrArquivoConfirmar,
+  nrDocumentoImagensVinculadas,
+} from "../src/features/nr/files.functions";
 const id = (n: number) => `c7330000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const bytes = new TextEncoder().encode("%PDF-1.7\n1 0 obj <</Type/Catalog>> endobj\n%%EOF");
 async function setup(mode: "ok" | "denied" | "revoked" | "invalid" = "ok") {
@@ -106,6 +110,83 @@ const call = (fn: unknown, client: unknown) =>
     data: { organization_id: id(1), id: id(4) },
     context: { supabase: client, userId: id(5) },
   });
+describe("document image identity adapter", () => {
+  const input = (arquivo_ids: string[]) => ({
+    organization_id: id(1),
+    norma: "NR35",
+    documento_id: id(6),
+    revisao_id: id(7),
+    arquivo_ids,
+  });
+  const invoke = (data: unknown, client: unknown) =>
+    (nrDocumentoImagensVinculadas as unknown as (input: unknown) => Promise<{ rows: unknown[] }>)({
+      data,
+      context: { supabase: client, userId: id(5) },
+    });
+  it("uses the canonical authorized RPC with bounded IDs before paging and preserves relationship scopes", async () => {
+    const { a } = await setup();
+    const row = {
+      ...a,
+      mime: "image/jpeg",
+      estado: "vinculado",
+      bytes_verificados: true,
+      contextos: [
+        {
+          organization_id: id(1),
+          cliente_id: id(2),
+          unidade_id: id(3),
+          documento_id: id(6),
+          revisao_id: id(7),
+          local_id: id(8),
+        },
+      ],
+    };
+    const abortSignal = vi.fn(async () => ({
+      data: { rows: [row, { ...row, id: id(9) }], total: 2, pagina: 0, limite: 100 },
+      error: null,
+    }));
+    const rpc = vi.fn(() => ({ abortSignal })),
+      client = { rpc, from: vi.fn() };
+    const result = await invoke(input([id(4), id(4)]), client);
+    expect(rpc).toHaveBeenCalledWith("nr_arquivo_listar", {
+      p_org: id(1),
+      p_norma: "NR35",
+      p_filtros: {
+        documento_id: id(6),
+        revisao_id: id(7),
+        arquivo_ids: [id(4)],
+        pagina: 0,
+        limite: 100,
+      },
+    });
+    expect(abortSignal).toHaveBeenCalledWith(mock.signal);
+    expect(client.from).not.toHaveBeenCalled();
+    expect(result.rows).toHaveLength(1);
+    expect((result.rows[0] as typeof row).contextos).toEqual(row.contextos);
+  });
+  it("rejects more than one hundred IDs and makes no reads for an empty manifest", async () => {
+    const client = { rpc: vi.fn(), from: vi.fn() };
+    await expect(invoke(input(Array.from({ length: 101 }, () => id(4))), client)).rejects.toThrow();
+    expect(await invoke(input([]), client)).toEqual({ rows: [] });
+    expect(client.rpc).not.toHaveBeenCalled();
+    expect(client.from).not.toHaveBeenCalled();
+  });
+  it("propagates canonical authorization failures without a privileged fallback", async () => {
+    const client = {
+      rpc: vi.fn(() => ({
+        abortSignal: async () => ({
+          data: null,
+          error: { code: "42501", message: "Acesso negado." },
+        }),
+      })),
+      from: vi.fn(),
+    };
+    await expect(invoke(input([id(4)]), client)).rejects.toThrow(
+      "Registro indisponível ou sem permissão",
+    );
+    expect(client.from).not.toHaveBeenCalled();
+  });
+});
 beforeEach(() => {
   vi.clearAllMocks();
   vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", "isolated-test-sentinel");

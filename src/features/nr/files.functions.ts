@@ -66,6 +66,59 @@ export const nrArquivosListar = createServerFn({ method: "GET" })
       ),
     );
   });
+/** Identidades documentais comprovadas, consultadas pela mesma RPC autorizada das listas. */
+export const nrDocumentoImagensVinculadas = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(s.nrDocumentImagesInput)
+  .handler(async ({ context, data }) => {
+    if (!data.arquivo_ids.length) return { rows: [] };
+    const result = s.nrFileListResult.parse(
+      nrResult(
+        await db(context.supabase)
+          .rpc("nr_arquivo_listar", {
+            p_org: data.organization_id,
+            p_norma: data.norma,
+            p_filtros: {
+              documento_id: data.documento_id,
+              revisao_id: data.revisao_id,
+              arquivo_ids: [...new Set(data.arquivo_ids)],
+              pagina: 0,
+              limite: 100,
+            },
+          })
+          .abortSignal(getRequest().signal),
+      ),
+    );
+    const requested = new Set(data.arquivo_ids);
+    return {
+      rows: result.rows.filter(
+        (row) =>
+          requested.has(row.id) &&
+          row.mime.startsWith("image/") &&
+          row.estado === "vinculado" &&
+          row.bytes_verificados,
+      ),
+    };
+  });
+/** Histórico de bytes externos por identidade comprovada; jamais usa a revisão atual como antiga. */
+export const nrArquivoVersoesListar = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(s.nrFileHistoricalInput)
+  .handler(async ({ context, data }) =>
+    s.nrFileHistoricalPage.parse(
+      nrResult(
+        await db(context.supabase)
+          .rpc("nr_arquivo_versoes_listar", {
+            p_org: data.organization_id,
+            p_norma: data.norma,
+            p_arquivo: data.id,
+            p_pagina: data.pagina,
+            p_limite: data.limite,
+          })
+          .abortSignal(getRequest().signal),
+      ),
+    ),
+  );
 export const nrArquivoPreparar = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(s.nrFilePrepare)

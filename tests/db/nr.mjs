@@ -19,13 +19,14 @@ try{
  await sql`insert into public.user_roles(organization_id,user_id,role)values(${org},${engineer},'engenharia'),(${org},${field},'campo'),(${org},${finance},'financeiro'),(${otherOrg},${outsider},'engenharia')`;
  await sql`insert into public.clientes(id,organization_id,razao_social)values(${client},${org},'NR canonical client'),(${otherClient},${otherOrg},'NR other client')`;
  await sql`insert into public.unidades(id,organization_id,cliente_id,nome)values(${unit},${org},${client},'NR canonical unit'),(${otherUnit},${otherOrg},${otherClient},'NR other unit')`;
- const ctx=await query('contexto');assert.equal(ctx.clientes.length,1);assert.equal(ctx.unidades.length,1);assert.equal(ctx.permissoes.emitir,false);count++;
+ const ctx=await query('contexto');assert.equal(ctx.clientes.length,0);assert.equal(ctx.unidades.length,0);assert.equal(ctx.permissoes.emitir,false);count++;
  await rejects(()=>query('locais',{},'NR33',outsider),'42501');
  await rejects(()=>query('locais',{},'NR33',finance),'42501');
  await rejects(()=>cmd('locais','salvar',scoped('Forbidden role'),null,null,randomUUID(),'NR33',field),'42501');
  await rejects(()=>cmd('locais','salvar',scoped('Cross org unit',{unidade_id:otherUnit})),'23503');
  const chave=randomUUID(),local=await cmd('locais','salvar',scoped('Local técnico',{tag:'EC 13A',aliases:['13 A','61 EFGHIJ'],normas:['NR33','NR35']}),null,null,chave);
  assert.equal(local.tag,'EC 13A');assert.deepEqual(local.aliases,['13 A','61 EFGHIJ']);assert.equal(local.pet_espaco_id,null);count++;
+ assert.equal((await query('contexto')).clientes.length,1);assert.equal((await query('contexto')).unidades.length,1);count++;
  const retry=await cmd('locais','salvar',scoped('Local técnico',{tag:'EC 13A',aliases:['13 A','61 EFGHIJ'],normas:['NR33','NR35']}),null,null,chave);assert.equal(retry.id,local.id);assert.equal((await query('locais')).total,1);assert.equal((await query('locais',{},'NR35')).rows[0].id,local.id);count++;
  await rejects(()=>cmd('locais','salvar',scoped('Changed intent'),null,null,chave),'23505');
  const changed=await cmd('locais','salvar',{titulo:'Local atualizado'},local.id,local.version);assert.equal(changed.version,local.version+1);count++;

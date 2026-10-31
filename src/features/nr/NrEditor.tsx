@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -15,29 +15,20 @@ import type { Norma, NrContexto, NrJson, NrRecord, NrRecurso } from "./domain";
 import { NrContentEditor } from "./NrContentEditor";
 import { parseNative, type NativeContent } from "./native-content";
 import { resourceLabels } from "./ui-labels";
+import { NrSurveyEditor } from "./NrSurveyEditor";
+import { NrLocalTechnicalEditor } from "./NrLocalTechnicalEditor";
+import { NrSurveyValue } from "./NrSurveyFields";
+import { NrFilesPanel, type NrSelectableFile } from "./NrFilesPanel";
+import {
+  normalizeSurveyBlocks,
+  projectSurvey,
+  surveyObject,
+  type SurveyFieldDefinition as TemplateField,
+  type SurveyBlockDefinition as TemplateBlock,
+} from "./survey-projection";
 
-type TemplateField = {
-  id: string;
-  nome: string;
-  tipo: "texto" | "texto_longo" | "numero" | "data" | "selecao" | "foto" | "lista";
-  mostrar_se?: { campo: string; valor: unknown[] };
-  destino?: string;
-  tipo_origem?: string;
-  obrigatorio: boolean;
-  opcoes?: string[];
-};
-type TemplateBlock = {
-  id: string;
-  codigo: string;
-  titulo: string;
-  aplicabilidade?: string | string[];
-  aplica_se?: { familias?: string[]; tipos_local?: string[] };
-  campos: TemplateField[];
-};
 const object = (v: unknown): Record<string, unknown> =>
   v !== null && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : {};
-const scalar = (v: unknown) =>
-  typeof v === "number" || typeof v === "boolean" ? String(v) : text(v);
 const text = (v: unknown) => (typeof v === "string" ? v : "");
 const blockNames = [
   "Identificação",
@@ -68,6 +59,7 @@ export function NrPicker({
   exclude,
   label,
   required,
+  tipo,
 }: {
   org: string;
   norma: Norma;
@@ -79,6 +71,7 @@ export function NrPicker({
   exclude?: string | undefined;
   label: string;
   required?: boolean;
+  tipo?: string | undefined;
 }) {
   const consult = useServerFn(nrConsultar);
   const [search, setSearch] = useState("");
@@ -88,7 +81,7 @@ export function NrPicker({
     return () => clearTimeout(timer);
   }, [search]);
   const query = useQuery({
-    queryKey: ["nr", org, norma, "opcoes", recurso, clienteId, unidadeId, term],
+    queryKey: ["nr", org, norma, "opcoes", recurso, clienteId, unidadeId, tipo, term],
     enabled: !!org,
     queryFn: ({ signal }) =>
       consult({
@@ -100,6 +93,7 @@ export function NrPicker({
           cliente_id: clienteId || undefined,
           unidade_id: unidadeId || undefined,
           busca: term,
+          tipo,
           pagina: 0,
           limite: 25,
         },
@@ -108,6 +102,21 @@ export function NrPicker({
     retry: false,
   });
   const rows = (query.data as { rows?: NrRecord[] } | undefined)?.rows ?? [];
+  const selected = useQuery({
+    queryKey: ["nr", org, norma, "opcao-selecionada", recurso, value],
+    enabled: !!org && !!value && !rows.some((option) => option.id === value),
+    queryFn: ({ signal }) =>
+      consult({
+        data: { organization_id: org, norma, recurso, operacao: "detalhe", id: value },
+        signal,
+      }),
+    retry: false,
+  });
+  const selectedRow =
+    selected.data &&
+    (("registro" in selected.data ? selected.data["registro"] : selected.data) as
+      NrRecord | undefined);
+
   return (
     <div className="nr-picker">
       <label>
@@ -116,8 +125,11 @@ export function NrPicker({
           type="search"
           value={search}
           maxLength={120}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Busca no servidor"
+          onChange={(e) => {
+            e.stopPropagation();
+            setSearch(e.target.value);
+          }}
+          placeholder={`TAG ou nome de ${label.toLowerCase()}`}
         />
       </label>
       <label>
@@ -126,7 +138,13 @@ export function NrPicker({
         <select value={value} required={required} onChange={(e) => onChange(e.target.value)}>
           <option value="">{required ? "Selecione" : "Sem vínculo"}</option>
           {value && !rows.some((r) => r.id === value) && (
-            <option value={value}>Vínculo atual: {value}</option>
+            <option value={value}>
+              {selectedRow
+                ? `${selectedRow.tag ? `${selectedRow.tag} · ` : ""}${selectedRow.titulo}`
+                : selected.isFetching
+                  ? "Carregando vínculo atual…"
+                  : "Vínculo atual indisponível neste recorte"}
+            </option>
           )}
           {rows
             .filter((r) => r.id !== exclude)
@@ -160,6 +178,16 @@ function TemplateEditor({
 }) {
   const patch = (id: string, value: Partial<TemplateBlock>) =>
     onChange(blocks.map((b) => (b.id === id ? { ...b, ...value } : b)));
+  const patchCondition = (block: TemplateBlock, key: "familias" | "tipos_local", input: string) => {
+    const condition = { ...block.aplica_se };
+    const values = input
+      .split("\n")
+      .map((value) => value.trim())
+      .filter(Boolean);
+    if (values.length) condition[key] = values;
+    else delete condition[key];
+    patch(block.id, { aplica_se: condition });
+  };
   return (
     <div className="nr-block-library">
       <p className="nr-muted">
@@ -209,14 +237,7 @@ function TemplateEditor({
               <textarea
                 rows={3}
                 value={(block.aplica_se?.familias ?? []).join("\n")}
-                onChange={(e) =>
-                  patch(block.id, {
-                    aplica_se: {
-                      ...block.aplica_se,
-                      familias: e.target.value.split("\n").filter(Boolean),
-                    },
-                  })
-                }
+                onChange={(e) => patchCondition(block, "familias", e.target.value)}
               />
               <small className="nr-muted">
                 Use os valores cadastrados no local. Vazio conserva o bloco sem esta restrição.
@@ -227,14 +248,7 @@ function TemplateEditor({
               <textarea
                 rows={3}
                 value={(block.aplica_se?.tipos_local ?? []).join("\n")}
-                onChange={(e) =>
-                  patch(block.id, {
-                    aplica_se: {
-                      ...block.aplica_se,
-                      tipos_local: e.target.value.split("\n").filter(Boolean),
-                    },
-                  })
-                }
+                onChange={(e) => patchCondition(block, "tipos_local", e.target.value)}
               />
               <small className="nr-muted">
                 A aplicabilidade é conferida pelo servidor antes do envio à revisão.
@@ -267,22 +281,121 @@ function TemplateEditor({
                       patch(block.id, {
                         campos: block.campos.map((f) =>
                           f.id === field.id
-                            ? { ...f, tipo: e.target.value as TemplateField["tipo"] }
+                            ? {
+                                ...f,
+                                tipo: e.target.value as TemplateField["tipo"],
+                                tipo_origem: e.target.value,
+                              }
                             : f,
                         ),
                       })
                     }
                   >
                     <option value="texto">Texto</option>
+                    {field.tipo === "nao_suportado" && (
+                      <option value="nao_suportado">Tipo histórico sem editor compatível</option>
+                    )}
                     <option value="texto_longo">Texto longo</option>
                     <option value="lista">Lista estruturada</option>
                     <option value="foto">Foto / referência</option>
                     <option value="numero">Número</option>
                     <option value="data">Data</option>
                     <option value="selecao">Seleção</option>
+                    <option value="multipla">Múltipla escolha</option>
+                    <option value="checklist">Matriz de avaliações</option>
+                    <option value="calculado">Valor calculado preservado</option>
                   </select>
                 </label>
-                {field.tipo === "selecao" && (
+                <label>
+                  Unidade de medida
+                  <input
+                    value={field.unidade ?? ""}
+                    maxLength={40}
+                    placeholder="m, m³, m³/h…"
+                    onChange={(event) =>
+                      patch(block.id, {
+                        campos: block.campos.map((current) =>
+                          current.id === field.id
+                            ? { ...current, unidade: event.target.value }
+                            : current,
+                        ),
+                      })
+                    }
+                  />
+                </label>
+                <label>
+                  Ajuda para preenchimento
+                  <input
+                    value={field.ajuda ?? ""}
+                    maxLength={2000}
+                    onChange={(event) =>
+                      patch(block.id, {
+                        campos: block.campos.map((current) =>
+                          current.id === field.id
+                            ? { ...current, ajuda: event.target.value }
+                            : current,
+                        ),
+                      })
+                    }
+                  />
+                </label>
+                <label>
+                  Exibir conforme resposta de
+                  <select
+                    value={field.mostrar_se?.campo ?? ""}
+                    onChange={(event) =>
+                      patch(block.id, {
+                        campos: block.campos.map((current) => {
+                          if (current.id !== field.id) return current;
+                          if (event.target.value)
+                            return {
+                              ...current,
+                              mostrar_se: {
+                                campo: event.target.value,
+                                valor: field.mostrar_se?.valor ?? [],
+                              },
+                            };
+                          const { mostrar_se: _condition, ...unconditional } = current;
+                          return unconditional;
+                        }),
+                      })
+                    }
+                  >
+                    <option value="">Sempre exibir</option>
+                    {block.campos
+                      .filter((candidate) => candidate.id !== field.id)
+                      .map((candidate) => (
+                        <option key={candidate.id} value={candidate.id}>
+                          {candidate.nome}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                {field.mostrar_se?.campo && (
+                  <label>
+                    Respostas que exibem este campo, uma por linha
+                    <textarea
+                      rows={2}
+                      value={(field.mostrar_se.valor ?? []).map(String).join("\n")}
+                      onChange={(event) =>
+                        patch(block.id, {
+                          campos: block.campos.map((current) =>
+                            current.id === field.id
+                              ? {
+                                  ...current,
+                                  mostrar_se: {
+                                    ...current.mostrar_se,
+                                    valor: event.target.value.split("\n").filter(Boolean),
+                                  },
+                                }
+                              : current,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                )}
+                {(field.tipo === "selecao" || field.tipo === "multipla") && (
                   <label className="nr-wide">
                     Opções, uma por linha
                     <textarea
@@ -301,6 +414,18 @@ function TemplateEditor({
                   </label>
                 )}
               </div>
+              {field.tipo === "lista" && (
+                <TemplateSubfields
+                  fields={field.subcampos ?? []}
+                  onChange={(subcampos) =>
+                    patch(block.id, {
+                      campos: block.campos.map((current) =>
+                        current.id === field.id ? { ...current, subcampos } : current,
+                      ),
+                    })
+                  }
+                />
+              )}
               <div className="nr-actions mt-3">
                 <label className="nr-checks">
                   <input
@@ -439,20 +564,104 @@ function TemplateEditor({
     </div>
   );
 }
-const axes = {
-  existencia: ["nao_verificado", "presente", "ausente"],
-  aplicabilidade: ["nao_verificado", "aplicavel", "nao_aplicavel"],
-  condicao: ["nao_verificado", "conforme", "nao_conforme"],
-  acao: ["nao_definida", "manter", "adequar", "instalar", "remover"],
-  validacao: ["nao_validado", "em_revisao", "validado", "rejeitado"],
-} as const;
-const axisLabels = {
-  existencia: "Existência",
-  aplicabilidade: "Aplicabilidade",
-  condicao: "Condição",
-  acao: "Ação",
-  validacao: "Validação",
-};
+
+function TemplateSubfields({
+  fields,
+  onChange,
+}: {
+  fields: TemplateField[];
+  onChange: (fields: TemplateField[]) => void;
+}) {
+  const patch = (id: string, values: Partial<TemplateField>) =>
+    onChange(fields.map((field) => (field.id === id ? { ...field, ...values } : field)));
+  return (
+    <fieldset className="nr-survey-field mt-3">
+      <legend>Campos de cada registro da lista</legend>
+      {fields.map((field, index) => (
+        <div className="nr-survey-row" key={field.id}>
+          <div className="nr-field-grid">
+            <label>
+              Nome do subcampo
+              <input
+                required
+                maxLength={200}
+                value={field.nome}
+                onChange={(event) => patch(field.id, { nome: event.target.value })}
+              />
+            </label>
+            <label>
+              Tipo
+              <select
+                value={field.tipo}
+                onChange={(event) =>
+                  patch(field.id, {
+                    tipo: event.target.value as TemplateField["tipo"],
+                    tipo_origem: event.target.value,
+                  })
+                }
+              >
+                <option value="texto">Texto</option>
+                <option value="texto_longo">Texto longo</option>
+                <option value="numero">Número</option>
+                <option value="selecao">Seleção</option>
+                <option value="data">Data</option>
+                <option value="foto">Foto</option>
+              </select>
+            </label>
+            {field.tipo === "selecao" && (
+              <label className="nr-wide">
+                Opções, uma por linha
+                <textarea
+                  rows={2}
+                  value={(field.opcoes ?? []).join("\n")}
+                  onChange={(event) =>
+                    patch(field.id, { opcoes: event.target.value.split("\n").filter(Boolean) })
+                  }
+                />
+              </label>
+            )}
+          </div>
+          <div className="nr-actions mt-2">
+            <ActionButton
+              variant="ghost"
+              disabled={index === 0}
+              onClick={() => {
+                const reordered = [...fields];
+                const before = reordered[index - 1];
+                if (!before) return;
+                reordered[index - 1] = field;
+                reordered[index] = before;
+                onChange(reordered);
+              }}
+            >
+              <ArrowUp size={15} />
+              Subcampo
+            </ActionButton>
+            <ActionButton
+              variant="ghost"
+              onClick={() => onChange(fields.filter((current) => current.id !== field.id))}
+            >
+              <Trash2 size={15} />
+              Remover subcampo
+            </ActionButton>
+          </div>
+        </div>
+      ))}
+      <ActionButton
+        variant="ghost"
+        onClick={() =>
+          onChange([
+            ...fields,
+            { id: crypto.randomUUID(), nome: "", tipo: "texto", obrigatorio: false },
+          ])
+        }
+      >
+        <Plus size={15} />
+        Adicionar subcampo
+      </ActionButton>
+    </fieldset>
+  );
+}
 const human = (v: string) => v["replaceAll"]("_", " ");
 
 export function NrEditor({
@@ -521,11 +730,31 @@ export function NrEditor({
   const [fromModel, setFromModel] = useState(false);
   const [documentModel, setDocumentModel] = useState<NrDocumentModelSelection | null>(null);
   const [acceptModelDraft, setAcceptModelDraft] = useState(false);
-  const [blocks, setBlocks] = useState<TemplateBlock[]>(
-    Array.isArray(row?.dados["blocos"]) ? (row.dados["blocos"] as TemplateBlock[]) : [],
-  );
+  const [blocks, setBlocks] = useState<TemplateBlock[]>(normalizeSurveyBlocks(row?.dados));
   const [answers, setAnswers] = useState<Record<string, unknown>>(object(row?.respostas));
-  const [answerErrors, setAnswerErrors] = useState<Record<string, boolean>>({});
+  const [attachmentTarget, setAttachmentTarget] = useState<{
+    token: string;
+    capturedState: string;
+    field: TemplateField;
+    value: unknown;
+    apply: (value: unknown) => void;
+  } | null>(null);
+  const attachmentTargetRef = useRef(attachmentTarget);
+  attachmentTargetRef.current = attachmentTarget;
+  const evidenceStateRef = useRef("");
+  evidenceStateRef.current = JSON.stringify({
+    answers,
+    clientId,
+    unitId,
+    localId: values["local_id"],
+    modelId: values["modelo_id"],
+  });
+  useEffect(
+    () => () => {
+      attachmentTargetRef.current = null;
+    },
+    [],
+  );
   const contentElement = useRef<HTMLDivElement>(null);
   const [dirty, setDirty] = useState(false);
   const [discard, setDiscard] = useState(false);
@@ -566,11 +795,40 @@ export function NrEditor({
     (("registro" in model.data ? model.data["registro"] : model.data) as NrRecord | undefined);
   const snapshot = object(Reflect.get(row ?? {}, "modelo_snapshot"));
   const fixedModel = !!row && values["modelo_id"] === (row.modelo_id ?? "");
-  const modelData = fixedModel ? object(snapshot["dados"]) : modelRow?.dados;
-  const surveyBlocks = useMemo(
-    () => (Array.isArray(modelData?.["blocos"]) ? (modelData["blocos"] as TemplateBlock[]) : []),
-    [modelData],
-  );
+  const projection = projectSurvey({
+    snapshot,
+    presentation: Reflect.get(row ?? {}, "modelo_apresentacao"),
+    historicalData: row?.dados,
+    answers,
+  });
+  const surveyBlocks = fixedModel ? projection.blocks : normalizeSurveyBlocks(modelRow?.dados);
+  const selectedLocal = useQuery({
+    queryKey: ["nr", org, norma, "local-formulario", values["local_id"]],
+    enabled:
+      recurso === "levantamentos" &&
+      !!values["local_id"] &&
+      (!row || values["local_id"] !== row.local_id),
+    queryFn: ({ signal }) =>
+      consult({
+        data: {
+          organization_id: org,
+          norma,
+          recurso: "locais",
+          operacao: "detalhe",
+          id: values["local_id"],
+        },
+        signal,
+      }),
+    retry: false,
+  });
+  const selectedLocalRow =
+    selectedLocal.data &&
+    (("registro" in selectedLocal.data ? selectedLocal.data["registro"] : selectedLocal.data) as
+      NrRecord | undefined);
+  const surveyLocal =
+    row && values["local_id"] === row.local_id
+      ? surveyObject(Reflect.get(row, "local_contexto"))
+      : { tipo: selectedLocalRow?.tipo, familia: selectedLocalRow?.familia };
   const isModelSurvey = recurso === "modelos" && values["tipo"] === "levantamento";
   function close() {
     if (!busy) {
@@ -581,14 +839,6 @@ export function NrEditor({
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (guard.current) return;
-    if (Object.values(answerErrors).some(Boolean)) {
-      setError(
-        new Error(
-          "Corrija os campos estruturados indicados antes de salvar. O preenchimento foi preservado.",
-        ),
-      );
-      return;
-    }
     guard.current = true;
     setBusy(true);
     setError(null);
@@ -694,6 +944,41 @@ export function NrEditor({
       setBusy(false);
     }
   }
+  function attachEvidence(file: NrSelectableFile, targetToken: string) {
+    const target = attachmentTargetRef.current;
+    if (!target || target.token !== targetToken) return;
+    if (target.capturedState !== evidenceStateRef.current) {
+      setError(
+        new Error(
+          "O preenchimento ou o contexto mudou durante a seleção. Nenhuma resposta foi substituída. O arquivo confirmado permanece no acervo; escolha a evidência novamente.",
+        ),
+      );
+      setAttachmentTarget(null);
+      return;
+    }
+    if (!file.mime.startsWith("image/")) {
+      setError(new Error("Selecione um arquivo de imagem para esta evidência."));
+      return;
+    }
+    const previous = Array.isArray(target.value)
+      ? target.value
+      : target.value == null || target.value === ""
+        ? []
+        : [target.value];
+    target.apply([
+      ...previous,
+      {
+        arquivo_id: file.id,
+        nome: file.nome,
+        legenda: target.field.legenda || target.field.nome,
+        categoria:
+          file.papel === "derivado" ? "Imagem extraída de documento" : "Evidência anexada na Nexus",
+        origem: "Anexado na Nexus",
+      },
+    ]);
+    setDirty(true);
+    setAttachmentTarget(null);
+  }
   const picker = (name: string, resource: NrRecurso, label: string, required = false) => (
     <NrPicker
       org={org}
@@ -706,6 +991,7 @@ export function NrEditor({
       onChange={(v) => set(name, v)}
       label={label}
       required={required}
+      tipo={resource === "modelos" && recurso === "levantamentos" ? "levantamento" : undefined}
     />
   );
   return (
@@ -720,15 +1006,21 @@ export function NrEditor({
         <Dialog.Content
           ref={contentElement}
           onOpenAutoFocus={(event) => {
-            const field = contentElement.current?.querySelector<HTMLElement>(
-              "input:not([type=checkbox]):not(:disabled),select:not(:disabled),textarea:not(:disabled)",
-            );
+            const field = Array.from(
+              contentElement.current?.querySelectorAll<HTMLElement>(
+                "input:not([type=checkbox]):not(:disabled),select:not(:disabled),textarea:not(:disabled)",
+              ) ?? [],
+            ).find((element) => element.getClientRects().length > 0);
             if (field) {
               event.preventDefault();
-              field.focus();
+              field.focus({ preventScroll: true });
             }
           }}
-          className="nr-dialog"
+          className={
+            recurso === "levantamentos" || recurso === "locais"
+              ? "nr-dialog nr-dialog-technical"
+              : "nr-dialog"
+          }
           aria-describedby="nr-editor-description"
           onEscapeKeyDown={(e) => {
             if (busy || dirty) {
@@ -740,23 +1032,40 @@ export function NrEditor({
             if (busy || dirty) e.preventDefault();
           }}
         >
-          <Dialog.Title className="nr-dialog-title">
-            {duplicating ? "Duplicar" : row ? "Editar" : "Criar"}{" "}
-            {resourceLabels[recurso].toLowerCase()}
-          </Dialog.Title>
-          <Dialog.Description id="nr-editor-description" className="nr-muted mt-2">
-            {row
-              ? `Versão ${row.version} carregada. Uma alteração concorrente exige comparação.`
-              : "O registro será salvo na organização ativa, com autoria e histórico."}
-          </Dialog.Description>
-          <button
-            className="nr-dialog-close"
-            type="button"
-            onClick={close}
-            aria-label="Fechar formulário"
-          >
-            <X size={19} />
-          </button>
+          <div className="nr-editor-header">
+            <Dialog.Title className="nr-dialog-title">
+              {duplicating ? "Duplicar" : row ? "Editar" : "Criar"}{" "}
+              {resourceLabels[recurso].toLowerCase()}
+            </Dialog.Title>
+            {recurso === "levantamentos" && (
+              <p className="nr-muted nr-editor-context">
+                {contexto.clientes.find((item) => item.id === clientId)?.nome} ·{" "}
+                {contexto.unidades.find((item) => item.id === unitId)?.nome}
+                {text(Reflect.get(row ?? {}, "local_titulo"))
+                  ? ` · ${text(Reflect.get(row ?? {}, "local_tag"))} ${text(Reflect.get(row ?? {}, "local_titulo"))}`
+                  : ""}
+              </p>
+            )}
+            {recurso === "locais" && (
+              <p className="nr-muted nr-editor-context">
+                {values["tag"]} · {values["titulo"]} ·{" "}
+                {contexto.unidades.find((item) => item.id === unitId)?.nome}
+              </p>
+            )}
+            <Dialog.Description id="nr-editor-description" className="nr-muted mt-2">
+              {row
+                ? `Versão ${row.version} carregada. Uma alteração concorrente exige comparação.`
+                : "O registro será salvo na organização ativa, com autoria e histórico."}
+            </Dialog.Description>
+            <button
+              className="nr-dialog-close"
+              type="button"
+              onClick={close}
+              aria-label="Fechar formulário"
+            >
+              <X size={19} />
+            </button>
+          </div>
           {(discard || blocker.status === "blocked") && (
             <div className="nr-feedback" role="alert">
               <p>Há alterações ainda não salvas. Descartar perde o preenchimento desta tela.</p>
@@ -790,7 +1099,7 @@ export function NrEditor({
             aria-busy={busy}
             onChange={() => setDirty(true)}
           >
-            <fieldset disabled={busy}>
+            <fieldset disabled={busy} className="nr-editor-scroll">
               {recurso === "documentos" && !row && (
                 <div className="nr-panel">
                   <label>
@@ -815,87 +1124,101 @@ export function NrEditor({
                   )}
                 </div>
               )}
-              <div className="nr-field-grid">
-                <label className="nr-wide">
-                  {recurso === "locais" ? "Nome do local" : "Título"} *
-                  <input
-                    value={values["titulo"]}
-                    required
-                    minLength={2}
-                    maxLength={240}
-                    onChange={(e) => set("titulo", e.target.value)}
-                  />
-                </label>
-                <label>
-                  Cliente{!["modelos"].includes(recurso) && " *"}
-                  <select
-                    value={clientId}
-                    required={recurso !== "modelos"}
-                    disabled={!!row}
-                    onChange={(e) => {
-                      setClientId(e.target.value);
-                      setUnitId("");
-                    }}
-                  >
-                    <option value="">
-                      {recurso === "modelos" ? "Biblioteca da organização" : "Selecione"}
-                    </option>
-                    {contexto.clientes.map((c) => (
-                      <option value={c.id} key={c.id}>
-                        {c.nome}
+              <details
+                className={
+                  recurso === "levantamentos" ? "nr-editor-meta nr-survey-meta" : "nr-editor-meta"
+                }
+                open={recurso !== "levantamentos" || !row}
+              >
+                <summary>Contexto, identificação e roteiro</summary>
+                <div className="nr-field-grid">
+                  <label className="nr-wide">
+                    {recurso === "locais" ? "Nome do local" : "Título"} *
+                    <input
+                      value={values["titulo"]}
+                      required
+                      minLength={2}
+                      maxLength={240}
+                      onChange={(e) => set("titulo", e.target.value)}
+                    />
+                  </label>
+                  <label>
+                    Cliente{!["modelos"].includes(recurso) && " *"}
+                    <select
+                      value={clientId}
+                      required={recurso !== "modelos"}
+                      disabled={!!row}
+                      onChange={(e) => {
+                        setClientId(e.target.value);
+                        setUnitId("");
+                      }}
+                    >
+                      <option value="">
+                        {recurso === "modelos" ? "Biblioteca da organização" : "Selecione"}
                       </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  Unidade{recurso !== "modelos" ? " *" : ""}
-                  <select
-                    required={recurso !== "modelos"}
-                    value={unitId}
-                    disabled={!clientId || !!row}
-                    onChange={(e) => setUnitId(e.target.value)}
-                  >
-                    <option value="">Sem unidade definida</option>
-                    {contexto.unidades
-                      .filter((u) => u.cliente_id === clientId)
-                      .map((u) => (
-                        <option value={u.id} key={u.id}>
-                          {u.nome}
+                      {contexto.clientes.map((c) => (
+                        <option value={c.id} key={c.id}>
+                          {c.nome}
                         </option>
                       ))}
-                  </select>
-                </label>
-                <div className="nr-wide">
-                  <p className="nr-muted mb-2">Normas vinculadas</p>
-                  <div className="nr-checks">
-                    {(["NR33", "NR35"] as const).map((n) => (
-                      <label key={n}>
-                        <input
-                          type="checkbox"
-                          disabled={n === norma}
-                          checked={normas.includes(n)}
-                          onChange={(e) =>
-                            setNormas(
-                              e.target.checked ? [...normas, n] : normas.filter((v) => v !== n),
-                            )
-                          }
-                        />
-                        {n === "NR33" ? "NR-33" : "NR-35"}
-                      </label>
-                    ))}
+                    </select>
+                  </label>
+                  <label>
+                    Unidade{recurso !== "modelos" ? " *" : ""}
+                    <select
+                      required={recurso !== "modelos"}
+                      value={unitId}
+                      disabled={!clientId || !!row}
+                      onChange={(e) => setUnitId(e.target.value)}
+                    >
+                      <option value="">Sem unidade definida</option>
+                      {contexto.unidades
+                        .filter((u) => u.cliente_id === clientId)
+                        .map((u) => (
+                          <option value={u.id} key={u.id}>
+                            {u.nome}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                  <div className="nr-wide">
+                    <p className="nr-muted mb-2">Normas vinculadas</p>
+                    <div className="nr-checks">
+                      {(["NR33", "NR35"] as const).map((n) => (
+                        <label key={n}>
+                          <input
+                            type="checkbox"
+                            disabled={n === norma}
+                            checked={normas.includes(n)}
+                            onChange={(e) =>
+                              setNormas(
+                                e.target.checked ? [...normas, n] : normas.filter((v) => v !== n),
+                              )
+                            }
+                          />
+                          {n === "NR33" ? "NR-33" : "NR-35"}
+                        </label>
+                      ))}
+                    </div>
+                    {!normas.length && <p role="alert">Selecione pelo menos uma norma.</p>}
                   </div>
-                  {!normas.length && <p role="alert">Selecione pelo menos uma norma.</p>}
+                  <label className="nr-wide">
+                    Descrição e observações
+                    <textarea
+                      rows={3}
+                      value={values["descricao"]}
+                      maxLength={20000}
+                      onChange={(e) => set("descricao", e.target.value)}
+                    />
+                  </label>
                 </div>
-                <label className="nr-wide">
-                  Descrição e observações
-                  <textarea
-                    rows={3}
-                    value={values["descricao"]}
-                    maxLength={20000}
-                    onChange={(e) => set("descricao", e.target.value)}
-                  />
-                </label>
-              </div>
+                {recurso === "levantamentos" && (
+                  <div className="nr-field-grid">
+                    {picker("local_id", "locais", "Local", true)}
+                    {picker("modelo_id", "modelos", "Roteiro de levantamento")}
+                  </div>
+                )}
+              </details>
               {recurso === "locais" && (
                 <div className="nr-field-grid">
                   <label>
@@ -963,6 +1286,15 @@ export function NrEditor({
                     />
                   </label>
                 </div>
+              )}
+              {recurso === "locais" && (
+                <NrLocalTechnicalEditor
+                  value={data}
+                  onChange={(next) => {
+                    setData(next);
+                    setDirty(true);
+                  }}
+                />
               )}
               {recurso === "pastas" && picker("parent_id", "pastas", "Pasta superior")}
               {recurso === "sistemas" && (
@@ -1206,101 +1538,98 @@ export function NrEditor({
               )}
               {recurso === "levantamentos" && (
                 <>
-                  <div className="nr-field-grid">
-                    {picker("local_id", "locais", "Local", true)}
-                    {picker("modelo_id", "modelos", "Modelo de levantamento")}
-                  </div>
                   {model.isError && (
                     <ErrorState error={model.error} onRetry={() => model.refetch()} />
                   )}
-                  {!surveyBlocks.length && (
-                    <p className="nr-source">
-                      Selecione um roteiro com blocos e campos configurados. O salvamento parcial
-                      permanece disponível.
-                    </p>
-                  )}
+                  <div className="nr-survey-states">
+                    <span>
+                      Estado histórico:{" "}
+                      <strong>
+                        {text(data["estado_historico"]) ||
+                          text(data["situacao"]) ||
+                          "Não informado"}
+                      </strong>
+                    </span>
+                    <span>
+                      Revisão Nexus:{" "}
+                      <strong>{row?.estado.replaceAll("_", " ") || "Novo rascunho"}</strong>
+                    </span>
+                  </div>
                   {fixedModel && (
                     <p className="nr-source">
-                      Modelo fixado na versão{" "}
-                      {String(snapshot["numero"] ?? "histórica sem campos estruturados")}. A
-                      publicação de modelos novos não altera este levantamento.
+                      {projection.usesAdapter
+                        ? "As respostas preservadas estão organizadas pelo roteiro de apresentação compatível. O modelo e o snapshot históricos não serão substituídos ao salvar."
+                        : `Roteiro fixado na versão ${String(snapshot["numero"] ?? "histórica")}. Alterações da biblioteca não modificam esta versão.`}
                     </p>
                   )}
-                  <div className="nr-block-library">
-                    {surveyBlocks.map((block) => (
-                      <details key={block.id}>
-                        <summary>
-                          {block.codigo} — {block.titulo}
-                        </summary>
-                        {block.aplicabilidade && (
-                          <p className="nr-source">
-                            {Array.isArray(block.aplicabilidade)
-                              ? block.aplicabilidade.join(" · ")
-                              : block.aplicabilidade}
-                          </p>
+                  <NrSurveyEditor
+                    blocks={surveyBlocks}
+                    answers={answers}
+                    local={surveyLocal}
+                    evidence={{
+                      org,
+                      context: values["titulo"] || "Levantamento",
+                      onAttach: (field, value, apply) =>
+                        setAttachmentTarget({
+                          token: crypto.randomUUID(),
+                          capturedState: evidenceStateRef.current,
+                          field,
+                          value,
+                          apply,
+                        }),
+                    }}
+                    onChange={(id, value) => {
+                      setAnswers((current) => ({ ...current, [id]: value }));
+                      setDirty(true);
+                    }}
+                  />
+                  {attachmentTarget && (
+                    <section
+                      className="nr-panel"
+                      aria-label={`Anexar evidência: ${attachmentTarget.field.nome}`}
+                    >
+                      <div className="nr-panel-header">
+                        <h3>Anexar evidência · {attachmentTarget.field.nome}</h3>
+                        <ActionButton variant="ghost" onClick={() => setAttachmentTarget(null)}>
+                          Cancelar seleção
+                        </ActionButton>
+                      </div>
+                      <p className="nr-muted">
+                        Escolha uma imagem comprovada do mesmo local ou envie o original. A
+                        associação será gravada com o salvamento parcial.
+                      </p>
+                      <NrFilesPanel
+                        org={org}
+                        norma={norma}
+                        clienteId={clientId}
+                        unidadeId={unitId}
+                        localId={values["local_id"] || undefined}
+                        canUpload={contexto.permissoes.anexar && !!values["local_id"]}
+                        onFileSelected={(file) => attachEvidence(file, attachmentTarget.token)}
+                        onFileConfirmed={(file) => attachEvidence(file, attachmentTarget.token)}
+                      />
+                    </section>
+                  )}
+                  {projection.unmapped.length > 0 && (
+                    <details className="nr-survey-preserved">
+                      <summary>Outras respostas preservadas ({projection.unmapped.length})</summary>
+                      <NrSurveyValue
+                        value={Object.fromEntries(
+                          projection.unmapped.map((key) => [key, answers[key]]),
                         )}
-                        <div className="nr-field-grid">
-                          {block.campos
-                            .filter((field) => {
-                              const condition = field.mostrar_se;
-                              return (
-                                !condition ||
-                                !Array.isArray(condition.valor) ||
-                                condition.valor.some(
-                                  (value) =>
-                                    String(value) === String(answers[condition.campo] ?? ""),
-                                )
-                              );
-                            })
-                            .map((field) => (
-                              <SurveyField
-                                key={field.id}
-                                field={field}
-                                value={answers[field.id]}
-                                onChange={(value) =>
-                                  setAnswers((current) => ({ ...current, [field.id]: value }))
-                                }
-                                onInvalid={(invalid) =>
-                                  setAnswerErrors((current) => ({
-                                    ...current,
-                                    [field.id]: invalid,
-                                  }))
-                                }
-                              />
-                            ))}
-                        </div>
-                      </details>
-                    ))}
-                  </div>
-                  <fieldset>
-                    <legend>Cinco dimensões independentes de avaliação</legend>
-                    <div className="nr-field-grid">
-                      {Object.entries(axes).map(([key, choices]) => (
-                        <label key={key}>
-                          {axisLabels[key as keyof typeof axes]}
-                          <select
-                            value={text(object(data["avaliacao"])[key]) || choices[0]}
-                            onChange={(e) =>
-                              setData((v) => ({
-                                ...v,
-                                avaliacao: { ...object(v["avaliacao"]), [key]: e.target.value },
-                              }))
-                            }
-                          >
-                            {choices.map((v) => (
-                              <option value={v} key={v}>
-                                {human(v)}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                      ))}
-                    </div>
-                    <p className="nr-muted">
-                      Uma dimensão não altera as outras. A falta de evidência não comprova ausência
-                      física.
-                    </p>
-                  </fieldset>
+                      />
+                    </details>
+                  )}
+                  {Array.isArray(data["blocos"]) && (
+                    <details className="nr-survey-preserved">
+                      <summary>Estados dos blocos históricos na origem</summary>
+                      <NrSurveyValue value={data["blocos"]} />
+                      <p className="nr-muted">
+                        A numeração e a organização dos blocos históricos podem diferir do roteiro
+                        de apresentação. Estes estados não geram aprovação na Nexus.
+                      </p>
+                    </details>
+                  )}
                 </>
               )}
             </fieldset>
@@ -1339,90 +1668,6 @@ export function NrEditor({
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
-  );
-}
-
-function SurveyField({
-  field,
-  value,
-  onChange,
-  onInvalid,
-}: {
-  field: TemplateField;
-  value: unknown;
-  onChange: (value: unknown) => void;
-  onInvalid: (invalid: boolean) => void;
-}) {
-  const structured = field.tipo === "lista" || (typeof value === "object" && value !== null);
-  const [raw, setRaw] = useState(() =>
-    structured ? JSON.stringify(value ?? [], null, 2) : scalar(value),
-  );
-  const [invalid, setInvalid] = useState(false);
-  const help =
-    field.tipo === "foto"
-      ? "Metadados ou referência do acervo; um caminho de origem não comprova os bytes da foto."
-      : structured
-        ? "Estrutura JSON preservada. O servidor valida o conteúdo ao salvar."
-        : field.destino
-          ? `Campo de origem: ${field.destino}`
-          : "";
-  return (
-    <label className={field.tipo === "texto_longo" || structured ? "nr-wide" : ""}>
-      {field.nome || field.id}
-      {field.obrigatorio ? " · necessário para revisão" : ""}
-      {structured ? (
-        <textarea
-          value={raw}
-          rows={5}
-          aria-invalid={invalid}
-          onChange={(event) => {
-            const next = event.target.value;
-            setRaw(next);
-            try {
-              const parsed: unknown = JSON.parse(next);
-              if (!parsed || typeof parsed !== "object") throw new Error();
-              setInvalid(false);
-              onInvalid(false);
-              onChange(parsed);
-            } catch {
-              setInvalid(true);
-              onInvalid(true);
-            }
-          }}
-        />
-      ) : field.tipo === "texto_longo" ? (
-        <textarea
-          rows={4}
-          value={scalar(value)}
-          onChange={(event) => onChange(event.target.value)}
-        />
-      ) : field.tipo === "selecao" ? (
-        <select value={scalar(value)} onChange={(event) => onChange(event.target.value)}>
-          <option value="">Não informado</option>
-          {scalar(value) && !(field.opcoes ?? []).includes(scalar(value)) && (
-            <option value={scalar(value)}>{scalar(value)} · valor histórico</option>
-          )}
-          {(field.opcoes ?? []).map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          type={field.tipo === "numero" ? "number" : field.tipo === "data" ? "date" : "text"}
-          step={field.tipo === "numero" ? "any" : undefined}
-          value={scalar(value)}
-          onChange={(event) => onChange(event.target.value)}
-        />
-      )}
-      {help && <small className="nr-muted">{help}</small>}
-      {invalid && (
-        <small role="alert">
-          JSON inválido. Corrija a estrutura para salvar; o texto digitado continua preservado.
-        </small>
-      )}
-    </label>
   );
 }
 

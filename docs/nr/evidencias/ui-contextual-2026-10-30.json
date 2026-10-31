@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "capturado_em_utc": "2026-10-31T01:03:49.794587+00:00",
+  "implementacao_commit": "3a5305f69210aa1b31c19d06f2d4f6c200b3b92e",
+  "ambiente": "Chrome autenticado, app em desenvolvimento local conectado ao Supabase Nexus existente; não é publicação",
+  "origem_url": "https://www.perplexity.ai/computer/a/ebbeeabb-f55b-4b45-b218-87ab8a412422",
+  "diretorio_privado": "/Users/leonardo/.codex/private/nr-experiencia-2026-10-30",
+  "imagens_publicadas_no_repositorio": false,
+  "dados_sinteticos_nos_pares_aceitos": false,
+  "pares_aceitos": [
+    {
+      "viewport_css": {
+        "largura": 1366,
+        "altura": 900,
+        "dpr": 1
+      },
+      "estado": "Histórico carregado",
+      "contexto": "COTRIROSA / Fábrica / EC 01",
+      "acontecimentos": 7,
+      "capturas": [
+        {
+          "arquivo_privado": "32-origem-historico-1366.jpg",
+          "papel": "origem",
+          "largura_px": 1366,
+          "altura_px": 900,
+          "sha256": "4d2b93406092fbb8f490d7987db4270b9dd45b0c958208cdb7a58fbeb6d18af3"
+        },
+        {
+          "arquivo_privado": "33-nexus-real-historico-1366.jpg",
+          "papel": "nexus_local_autenticada",
+          "largura_px": 1366,
+          "altura_px": 900,
+          "sha256": "16c360eed0a1e855c403ff2a3c7e276b0fde63b7ee1db151b1e8d24f75f96903"
+        }
+      ],
+      "overflow_horizontal_pagina_nexus": false
+    },
+    {
+      "viewport_css": {
+        "largura": 1920,
+        "altura": 1080,
+        "dpr": 1
+      },
+      "estado": "Histórico carregado",
+      "contexto": "COTRIROSA / Fábrica / EC 01",
+      "acontecimentos": 7,
+      "capturas": [
+        {
+          "arquivo_privado": "34-origem-historico-1920.jpg",
+          "papel": "origem",
+          "largura_px": 1920,
+          "altura_px": 1080,
+          "sha256": "9720b4f750ac7e1be3959e958417334d502a43a1e564a655054901171a31c0e1"
+        },
+        {
+          "arquivo_privado": "35-nexus-real-historico-1920.jpg",
+          "papel": "nexus_local_autenticada",
+          "largura_px": 1920,
+          "altura_px": 1080,
+          "sha256": "f4b116c1648557c14eb8f1f79dedd80cd1047eb0cb55adcf652ca1c6599cfbdd"
+        }
+      ],
+      "overflow_horizontal_pagina_nexus": false
+    },
+    {
+      "viewport_css": {
+        "largura": 390,
+        "altura": 844,
+        "dpr": 1
+      },
+      "estado": "Histórico carregado",
+      "contexto": "COTRIROSA / Fábrica / EC 01",
+      "acontecimentos": 7,
+      "capturas": [
+        {
+          "arquivo_privado": "36-origem-historico-390.jpg",
+          "papel": "origem",
+          "largura_px": 390,
+          "altura_px": 844,
+          "sha256": "4dfb5e2d40791ca736624d1c48d68e0a2dfea28d46fe681e0f320003e373df2b"
+        },
+        {
+          "arquivo_privado": "37-nexus-real-historico-390.jpg",
+          "papel": "nexus_local_autenticada",
+          "largura_px": 390,
+          "altura_px": 844,
+          "sha256": "22cfd990b600956d5b56adede92247ab7db5365cb987ea17f91aef61322051e2"
+        }
+      ],
+      "overflow_horizontal_pagina_nexus": false
+    }
+  ],
+  "capturas_rejeitadas": {
+    "intervalo": "22–30",
+    "motivo": "recorte do mecanismo de captura e/ou dimensões de bitmap incompatíveis com o viewport solicitado"
+  },
+  "captura_31": "intermediária anterior à compactação final; substituída pela 33",
+  "leituras_autenticadas": {
+    "ec01_areas": 8,
+    "ec01_historico": 7,
+    "ec01_documentos_nr33_logicos": 12,
+    "ec01_documentos_nr33_linhas_principais": 10,
+    "ec01_copias_aninhadas_comprovadas": 2,
+    "ec01_copias_correspondencia_pendente": 3,
+    "ec01_documentos_nr35": 1,
+    "levantamento_ec01_blocos": 16,
+    "definicoes_de_campos": 104,
+    "b07_respostas_registradas": 7,
+    "b07_campos_apresentados": 8,
+    "b16_respostas_registradas": 4,
+    "b16_campos_apresentados": 5,
+    "pdf_original_revisao": 3,
+    "pdf_paginas": 5,
+    "pdf_paginas_percorridas": [1, 2],
+    "camera_balanca_tag_preservada": "01",
+    "camera_balanca_historico": 2,
+    "camera_balanca_fotos_referenciadas": 2,
+    "matriz_documentos": 1,
+    "matriz_pendencias": 2,
+    "sementeiro_documentos": 1,
+    "sementeiro_pendencias": 1,
+    "camera_locais_exclusivos_altura": 4,
+    "camera_pendencias_nr35": 4,
+    "biblioteca_regras": 9,
+    "biblioteca_criterios": 6,
+    "biblioteca_familias": 12,
+    "ec13_nota_substituicao_e_divergencia_visiveis": true,
+    "ec28_historico": 9,
+    "ec28_pendencias_encerradas_relacionadas": 3,
+    "ec28_tratativa_amostra_data_sem_hora": "11/10/2026",
+    "conferencia_tag_nome_unidade_verificada_sem_importar": true
+  },
+  "limites": [
+    "Sem escrita de teste nos registros reais da produção.",
+    "Edição parcial demonstrada com fixtures isoladas e persistência/concorrência nos testes PostgreSQL artificiais.",
+    "As capturas comprovam as vistas indicadas, não todos os estados das 13 jornadas.",
+    "Publicação da nova UI e homologação completa de CRUD em outra sessão permanecem pendentes."
+  ],
+  "pares_adicionais_aceitos": [
+    {
+      "estado": "Identificação carregada",
+      "contexto": "COTRIROSA / Fábrica / EC 01",
+      "viewport_css": {
+        "largura": 1366,
+        "altura": 900,
+        "dpr": 1
+      },
+      "capturas": [
+        {
+          "arquivo_privado": "39-origem-identificacao-1366.jpg",
+          "papel": "origem",
+          "largura_px": 1366,
+          "altura_px": 900,
+          "sha256": "d7ddabd85e324139c21115b99efe2f0e42e719f2ff1776e9897293b599901346"
+        },
+        {
+          "arquivo_privado": "40-nexus-real-identificacao-1366.jpg",
+          "papel": "nexus_local_autenticada",
+          "largura_px": 1366,
+          "altura_px": 900,
+          "sha256": "2e734e5f072ab920a10a964a47bee5de12d3c222f1fa03fbc34889d66c5fe8c2"
+        }
+      ],
+      "limite": "Mesmos dados em consulta; a origem oferece campos editáveis e a Nexus abre a leitura com ação de edição explícita.",
+      "overflow_horizontal_pagina_nexus": false
+    },
+    {
+      "estado": "Geometria carregada",
+      "contexto": "COTRIROSA / Fábrica / EC 01",
+      "viewport_css": {
+        "largura": 1366,
+        "altura": 900,
+        "dpr": 1
+      },
+      "capturas": [
+        {
+          "arquivo_privado": "41-origem-geometria-1366.jpg",
+          "papel": "origem",
+          "largura_px": 1366,
+          "altura_px": 900,
+          "sha256": "2eed21e6e0776745e0808b2b3eb1a622fbd809e752eb09adb43e969a819a8141"
+        },
+        {
+          "arquivo_privado": "42-nexus-real-geometria-1366.jpg",
+          "papel": "nexus_local_autenticada",
+          "largura_px": 1366,
+          "altura_px": 900,
+          "sha256": "ecfc7d1b68d81deab91095f0f537007f7a7d53b949707d37c3337a8e7ac8d7f7"
+        }
+      ],
+      "limite": "Dimensões e volumes preservados; valores documentais/placa divergentes destacados na Nexus, sem novo cálculo ou aprovação.",
+      "overflow_horizontal_pagina_nexus": false
+    }
+  ]
+}

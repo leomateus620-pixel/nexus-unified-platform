@@ -267,6 +267,22 @@
     {
       "path": "drizzle/migrations/0047_nr_fila_importacao.sql",
       "sha256": "16b1d71bd71a483962a2b2494bc56b0e5d1d6da9f02d7253ff077a57044bae02"
+    },
+    {
+      "path": "drizzle/migrations/0048_nr_experiencia_contextual.sql",
+      "sha256": "f2a75125e65adf7475b99414082272a9137576911063a73cd432531f3a328c9a"
+    },
+    {
+      "path": "drizzle/migrations/0049_nr_aplicabilidade_documental.sql",
+      "sha256": "ed8ce1780dffc792bbda161ea4d6351fe51f30b9a0bc11662a67fe219a012d21"
+    },
+    {
+      "path": "drizzle/migrations/0050_nr_totais_linhagem.sql",
+      "sha256": "7c91843e0ca9722322758b13b217ec4749b02131789ca327eebe619a5a75b22b"
+    },
+    {
+      "path": "drizzle/migrations/0051_nr_arquivos_contextuais.sql",
+      "sha256": "1ddab7f1e30776c921862408f25f5c9fe3693283c58d796898b6d7d572a26117"
     }
   ]
 }

@@ -202,7 +202,13 @@ export const nrConsultaSchema = z
   .object({
     organization_id: uuid,
     norma: normaSchema,
-    recurso: z.enum(["contexto", "painel", "historico", ...recursoSchema.options]),
+    recurso: z.enum([
+      "contexto",
+      "painel",
+      "historico",
+      "historico_tecnico",
+      ...recursoSchema.options,
+    ]),
     operacao: z.enum(["listar", "detalhe"]).default("listar"),
     id: uuid.optional(),
     cliente_id: optionalId,
@@ -211,6 +217,13 @@ export const nrConsultaSchema = z
     parent_id: optionalId,
     local_id: optionalId,
     tipo: z.string().max(100).optional(),
+    familia: z.string().max(100).optional(),
+    copias_editaveis: z.boolean().optional(),
+    revisao_aplicabilidade: z.boolean().optional(),
+    somente_unidade: z.boolean().optional(),
+    grupo_documental: z
+      .enum(["", "vigentes", "emitidos", "recebidos", "em_revisao", "anteriores"])
+      .optional(),
     busca: z.string().max(200).default(""),
     estado: z.string().max(80).default(""),
     pagina: z.number().int().min(0).max(1_000_000).default(0),
@@ -288,6 +301,55 @@ export const nrExecutarSchema = z
       });
   });
 
+export const nrResumoDocumentalSchema = z.object({
+  vigencia: z.string().nullable(),
+  vigencia_apresentacao: z.string(),
+  motivo_substituicao: z.string().nullable(),
+  data_origem: z.string().nullable(),
+  data_origem_texto: z.string().nullable().optional(),
+  autor_historico: z.string().nullable(),
+  revisao_numero: z.number().int().nullable(),
+  arquivos_word: z.number().int().nonnegative(),
+  arquivos_pdf: z.number().int().nonnegative(),
+  arquivos_total: z.number().int().nonnegative(),
+  copia_editavel: z.boolean(),
+  linhagem_comprovada: z.boolean().optional(),
+  correspondencia_pendente: z.boolean().optional(),
+  documento_origem_id: uuid.nullable(),
+  originais_comprovados: z.array(nrJsonSchema),
+  copias_editaveis: z.array(
+    z.object({
+      id: uuid,
+      titulo: z.string(),
+      estado: z.string(),
+      revisao_atual_id: uuid.nullable(),
+      normas: z.array(normaSchema),
+    }),
+  ),
+  disponibilidade: z.enum(["arquivos_confirmados", "sem_arquivo_confirmado"]),
+});
+export const nrResumoTecnicoSchema = z.object({
+  setor: z.string().nullable(),
+  enquadramento: nrJsonSchema.nullable(),
+  situacao_levantamento: z.string().nullable(),
+  memorial: z.string().nullable(),
+  avaliacoes_total: z.number().int().nonnegative(),
+  documentos_total: z.number().int().nonnegative(),
+  documentos_origem: z.number().int().nonnegative().optional(),
+  copias_editaveis: z.number().int().nonnegative().optional(),
+  copias_correspondencia_pendente: z.number().int().nonnegative().optional(),
+  imagens_total: z.number().int().nonnegative(),
+  historico_tecnico_total: z.number().int().nonnegative(),
+});
+export const nrAssociarContextoSchema = z
+  .object({
+    organization_id: uuid,
+    cliente_id: uuid,
+    unidade_id: uuid,
+    normas,
+    chave: uuid,
+  })
+  .strict();
 export const nrRowSchema = z.object({
   id: uuid,
   organization_id: uuid,
@@ -319,6 +381,23 @@ export const nrRowSchema = z.object({
   conteudo: nrJsonSchema.optional(),
   respostas: nrJsonSchema.optional(),
   modelo_snapshot: nrJsonSchema.optional(),
+  modelo_apresentacao: nrJsonSchema.optional(),
+  local_contexto: nrJsonSchema.optional(),
+  local_titulo: z.string().nullable().optional(),
+  local_tag: z.string().nullable().optional(),
+  unidade_nome: z.string().nullable().optional(),
+  resumo_documental: nrResumoDocumentalSchema.optional(),
+  resumo_tecnico: nrResumoTecnicoSchema.optional(),
+  revisao_aplicabilidade: nrJsonSchema.optional(),
+  decisoes_aplicabilidade: z.array(nrJsonSchema).optional(),
+  resumo_pasta: z
+    .object({
+      subpastas: z.number().int().nonnegative(),
+      documentos: z.number().int().nonnegative(),
+      arquivos: z.number().int().nonnegative(),
+      imagens: z.number().int().nonnegative(),
+    })
+    .optional(),
   estado_origem: z.string().nullable().optional(),
   recebimento: z.string().optional(),
   origem_url: z.string().nullable().optional(),
@@ -349,9 +428,29 @@ export const nrContextoSchema = z.object({
       nome: z.string().optional(),
       razao_social: z.string().optional(),
       nome_exibicao: z.string().nullable().optional(),
+      cnpj: z.string().nullable().optional(),
     }),
   ),
-  unidades: z.array(z.object({ id: uuid, cliente_id: uuid, nome: z.string() })),
+  unidades: z.array(
+    z.object({
+      id: uuid,
+      cliente_id: uuid,
+      nome: z.string(),
+      endereco: z.string().nullable().optional(),
+      cnpj: z.string().nullable().optional(),
+      escopo: z.string().nullable().optional(),
+      situacao: z.string().nullable().optional(),
+      responsavel_cliente: z.string().nullable().optional(),
+      documentacao: nrJsonSchema.optional(),
+      normas: z.array(normaSchema).optional(),
+      locais: z.number().int().nonnegative().optional(),
+      documentos: z.number().int().nonnegative().optional(),
+      documentos_origem: z.number().int().nonnegative().optional(),
+      copias_editaveis: z.number().int().nonnegative().optional(),
+      copias_correspondencia_pendente: z.number().int().nonnegative().optional(),
+      pendencias_abertas: z.number().int().nonnegative().optional(),
+    }),
+  ),
   permissoes: z.object({
     visualizar: z.boolean(),
     cadastrar: z.boolean(),
@@ -370,6 +469,10 @@ const nrPainelItemSchema = z.object({
   id: uuid,
   titulo: z.string(),
   estado: z.string(),
+  normas: z.array(normaSchema).optional(),
+  cliente_id: uuid.nullable().optional(),
+  unidade_id: uuid.nullable().optional(),
+  local_id: uuid.nullable().optional(),
   tag: z.string().nullable().optional(),
   tipo: z.string().optional(),
   criticidade: z.string().optional(),
@@ -379,6 +482,15 @@ const nrPainelItemSchema = z.object({
   revisao_numero: z.number().int().optional(),
 });
 export const nrPainelSchema = z.object({
+  documentos_logicos: z.number().int().nonnegative().optional(),
+  documentos_principais: z.number().int().nonnegative().optional(),
+  copias_correspondencia_pendente: z.number().int().nonnegative().optional(),
+  documentos_origem: z.number().int().nonnegative().optional(),
+  copias_editaveis: z.number().int().nonnegative().optional(),
+  arquivos_fisicos: z.number().int().nonnegative().optional(),
+  historico_tecnico: z.array(z.record(nrJsonSchema)).optional(),
+  historico_tecnico_total: z.number().int().nonnegative().optional(),
+  eventos_globais: z.array(z.record(nrJsonSchema)).optional(),
   documentos_revisao_necessaria: z.number().int().nonnegative().optional(),
   locais: z.number().int().nonnegative(),
   documentos: z.number().int().nonnegative(),

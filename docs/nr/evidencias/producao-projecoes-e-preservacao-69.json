@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "timezone_referencia": "America/Sao_Paulo",
+  "capturado_em_utc": "2026-10-31 00:42:16.110854+00",
+  "ambiente": {
+    "projeto_lovable": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+    "supabase_ref": "yhtgijtllvgzoqtfcgal",
+    "postgres_versao": "17.6",
+    "acesso": "Conector Lovable, consulta proprietária somente leitura. Não se definiu JWT nem se simulou identidade.",
+    "escopo": "Consultas de banco, helpers de projeção, catálogo de permissões e EXPLAIN. A validação autenticada da interface é evidência separada."
+  },
+  "preservacao": {
+    "campos_alterados": ["normas", "updated_at", "version"],
+    "capturado_em": "2026-10-31 00:22:53.464898+00",
+    "decisoes": {
+      "aplicada": 8,
+      "mantida": 65,
+      "pendente_analise": 7
+    },
+    "encerradas": 29,
+    "estados_alterados": 0,
+    "eventos_conciliacao": 8,
+    "incrementos_versao_incorretos": 0,
+    "ledger": 68,
+    "nr35": 8,
+    "nr35_encerradas": 2,
+    "pendencias": 80,
+    "registros_com_mudanca_tecnica": 0,
+    "tratativas": 35
+  },
+  "hashes_e_tratativas": {
+    "capturado_em": "2026-10-31 00:24:06.170561+00",
+    "hash_anterior_campos_preservados": "dffa1f86c65894f6ef5a50926809f43b",
+    "hash_anterior_exclusao_versao": "b04acfbe0ec748c9ee0b85eb8d4665c1",
+    "hash_atual_campos_preservados": "dffa1f86c65894f6ef5a50926809f43b",
+    "hash_atual_exclusao_versao": "214492c65e02ecb6e791a151beb2c040",
+    "tratativas_com_autor_original": 35,
+    "tratativas_com_texto_original": 35,
+    "tratativas_esperadas_na_fonte": 35,
+    "versoes_decisao": ["nr-aplicabilidade-2026-10-30-v1"]
+  },
+  "datas_tratativas": {
+    "capturado_em": "2026-10-31 00:44:09.364337+00",
+    "datas_armazenadas_correspondem_a_fonte": 35,
+    "datas_origem_sem_hora": 35,
+    "timezone_sessao": "UTC",
+    "tratativas_com_fonte": 35
+  },
+  "prova_datas_tratativas_por_estado": [
+    {
+      "capturado_em": "2026-10-31 00:46:27.707771+00",
+      "correspondencia_exata_date_only_utc": 6,
+      "estado": "aberta",
+      "tratativas": 6
+    },
+    {
+      "capturado_em": "2026-10-31 00:46:27.707866+00",
+      "correspondencia_exata_date_only_utc": 29,
+      "estado": "encerrada",
+      "tratativas": 29
+    }
+  ],
+  "projecao_todos_levantamentos": {
+    "capturado_em": "2026-10-31 00:42:16.110854+00",
+    "ledger_recente": [
+      {
+        "path": "drizzle/migrations/0048_nr_experiencia_contextual.sql",
+        "position": 67,
+        "sha256": "f2a75125e65adf7475b99414082272a9137576911063a73cd432531f3a328c9a"
+      },
+      {
+        "path": "drizzle/migrations/0049_nr_aplicabilidade_documental.sql",
+        "position": 68,
+        "sha256": "ed8ce1780dffc792bbda161ea4d6351fe51f30b9a0bc11662a67fe219a012d21"
+      },
+      {
+        "path": "drizzle/migrations/0050_nr_totais_linhagem.sql",
+        "position": 69,
+        "sha256": "7c91843e0ca9722322758b13b217ec4749b02131789ca327eebe619a5a75b22b"
+      }
+    ],
+    "levantamentos_importados": 112,
+    "max_blocos_definidos": 16,
+    "max_campos_definidos": 104,
+    "min_blocos_definidos": 16,
+    "min_campos_definidos": 104,
+    "projecoes_comprovadas": 112,
+    "respostas_em_levantamentos_com_projecao": 8685,
+    "sem_projecao_comprovada": 0
+  },
+  "projecoes_documentais_v69": {
+    "acervo_global": {
+      "editaveis": 233,
+      "linhagem_comprovada": 65,
+      "logicos": 969,
+      "origem": 736
+    },
+    "capturado_em": "2026-10-31 00:40:11.48194+00",
+    "data_origem_textual_exemplo": "2026-10-11",
+    "documentos_contextuais": [
+      {
+        "contexto": "camera_ec01",
+        "nr33": {
+          "copias_correspondencia_pendente": 2,
+          "copias_editaveis": 2,
+          "documentos_logicos": 8,
+          "documentos_origem": 6,
+          "documentos_principais": 8
+        },
+        "nr35": {
+          "copias_correspondencia_pendente": 0,
+          "copias_editaveis": 0,
+          "documentos_logicos": 1,
+          "documentos_origem": 1,
+          "documentos_principais": 1
+        }
+      },
+      {
+        "contexto": "fabrica_ec01",
+        "nr33": {
+          "copias_correspondencia_pendente": 3,
+          "copias_editaveis": 5,
+          "documentos_logicos": 12,
+          "documentos_origem": 7,
+          "documentos_principais": 10
+        },
+        "nr35": {
+          "copias_correspondencia_pendente": 0,
+          "copias_editaveis": 0,
+          "documentos_logicos": 1,
+          "documentos_origem": 1,
+          "documentos_principais": 1
+        }
+      },
+      {
+        "contexto": "fabrica_ec13",
+        "nr33": {
+          "copias_correspondencia_pendente": 2,
+          "copias_editaveis": 4,
+          "documentos_logicos": 11,
+          "documentos_origem": 7,
+          "documentos_principais": 9
+        },
+        "nr35": {
+          "copias_correspondencia_pendente": 0,
+          "copias_editaveis": 0,
+          "documentos_logicos": 1,
+          "documentos_origem": 1,
+          "documentos_principais": 1
+        }
+      },
+      {
+        "contexto": "fabrica_ec28",
+        "nr33": {
+          "copias_correspondencia_pendente": 2,
+          "copias_editaveis": 4,
+          "documentos_logicos": 11,
+          "documentos_origem": 7,
+          "documentos_principais": 9
+        },
+        "nr35": {
+          "copias_correspondencia_pendente": 0,
+          "copias_editaveis": 0,
+          "documentos_logicos": 1,
+          "documentos_origem": 1,
+          "documentos_principais": 1
+        }
+      }
+    ],
+    "ledger": 69,
+    "postgres_versao": "17.6",
+    "timestamp_armazenado_preservado": "2026-10-11 00:00:00+00",
+    "unidades_sem_locais": [
+      {
+        "contexto": "matriz",
+        "documentos_nr33": {
+          "copias_correspondencia_pendente": 0,
+          "copias_editaveis": 0,
+          "documentos_logicos": 1,
+          "documentos_origem": 1,
+          "documentos_principais": 1
+        },
+        "locais": 0
+      },
+      {
+        "contexto": "sementeiro",
+        "documentos_nr33": {
+          "copias_correspondencia_pendente": 0,
+          "copias_editaveis": 0,
+          "documentos_logicos": 1,
+          "documentos_origem": 1,
+          "documentos_principais": 1
+        },
+        "locais": 0
+      }
+    ]
+  },
+  "contagem_proveniencia_e_linhagem": {
+    "capturado_em": "2026-10-31 00:26:36.973551+00",
+    "copias_com_pai_documental_comprovado": 65,
+    "copias_por_proveniencia": 233,
+    "copias_sem_pai_documental_comprovado": 168,
+    "documentos_logicos": 969,
+    "registros_origem": 736
+  },
+  "arquivos_e_permissoes": {
+    "app_pode_executar_manifesto": false,
+    "app_pode_ler_decisoes": true,
+    "app_pode_reescrever_decisoes": false,
+    "bucket": {
+      "limite_por_arquivo": 52428800,
+      "privado": true
+    },
+    "bytes_storage": "291872274",
+    "capturado_em": "2026-10-31 00:37:02.269205+00",
+    "documentos_emitidos_fabrica": 65,
+    "metadados_revisoes_drive": 550,
+    "objetos_storage": 1022,
+    "pastas": 60,
+    "pdf_confirmados_revisao": 65,
+    "recebimento_pendente_preservado": 65,
+    "revisoes_com_contexto_de_arquivo_comprovado": 550,
+    "revisoes_historicas_indisponiveis": 550,
+    "tabelas_nr_sem_rls": 0,
+    "word_confirmados_revisao": 65
+  },
+  "prova_data_original": {
+    "tipo": "Cadastro de EC",
+    "data_origem_armazenada": "2026-10-11 00:00:00+00",
+    "data_no_snapshot": "11/10/2026",
+    "campos_textuais_da_fonte": [
+      {
+        "criado_em": "2026-10-11",
+        "data": null,
+        "emitido_em": "2026-10-11",
+        "snapshot_data": "11/10/2026",
+        "tipo": "registro_documental"
+      }
+    ],
+    "data_origem_texto_apos_69": "2026-10-11"
+  },
+  "desempenho": {
+    "metodo": "Uma execução por consulta com EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON), acervo real no projeto existente, cache aquecido observado. Não é benchmark estatístico nem medição do navegador. Índices internos de helpers não ficam expostos em todos os planos externos.",
+    "linhagem_antes_68": {
+      "sql_execution_ms": 1571.679,
+      "sql_planning_ms": 2.007,
+      "shared_hit_blocks": 289449,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "returned_copy_count": 63
+    },
+    "linhagem_depois_69": {
+      "sql_execution_ms": 130.67,
+      "sql_planning_ms": 2.34,
+      "shared_hit_blocks": 12350,
+      "shared_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "returned_copy_count": 63,
+      "connector_elapsed_ms": 3338
+    },
+    "melhora_observada_fator": 12.03,
+    "consultas": [
+      {
+        "name": "documentos_ec01_fabrica_pagina25",
+        "connector_elapsed_ms": 2921,
+        "sql_execution_ms": 65.075,
+        "sql_planning_ms": 3.844,
+        "root_rows": 10,
+        "shared_hit_blocks": 4222,
+        "shared_read_blocks": 0,
+        "temp_written_blocks": 0,
+        "index_names": [
+          "nr_fontes_organization_id_origem_tipo_externo_id_key",
+          "nr_locais_organization_id_id_key",
+          "nr_doc_contexto_local"
+        ]
+      },
+      {
+        "name": "locais_fabrica_pagina25_tag_natural",
+        "connector_elapsed_ms": 3809,
+        "sql_execution_ms": 999.062,
+        "sql_planning_ms": 2.9,
+        "root_rows": 25,
+        "shared_hit_blocks": 63732,
+        "shared_read_blocks": 0,
+        "temp_written_blocks": 0,
+        "index_names": ["nr_fontes_organization_id_origem_tipo_externo_id_key"]
+      },
+      {
+        "name": "historico_tecnico_ec01_fabrica_pagina25",
+        "connector_elapsed_ms": 2546,
+        "sql_execution_ms": 5.922,
+        "sql_planning_ms": 2.286,
+        "root_rows": 1,
+        "shared_hit_blocks": 510,
+        "shared_read_blocks": 0,
+        "temp_written_blocks": 0,
+        "index_names": [
+          "nr_fontes_organization_id_origem_tipo_externo_id_key",
+          "nr_locais_organization_id_id_key"
+        ]
+      },
+      {
+        "name": "painel_contadores_documentais_fabrica",
+        "connector_elapsed_ms": 2490,
+        "sql_execution_ms": 133.85,
+        "sql_planning_ms": 2.165,
+        "root_rows": 1,
+        "shared_hit_blocks": 12298,
+        "shared_read_blocks": 0,
+        "temp_written_blocks": 0,
+        "index_names": [
+          "nr_fontes_organization_id_origem_tipo_externo_id_key",
+          "nr_locais_organization_id_id_key"
+        ]
+      }
+    ]
+  },
+  "limites": [
+    "As contagens correspondem ao instante de captura; não são constantes da interface.",
+    "Os 12 registros NR33 do EC01 Fábrica são 7 registros de origem e 5 cópias editáveis. Duas cópias têm pai documental comprovado e três permanecem acessíveis com correspondência pendente. O registro NR35 é contado separadamente.",
+    "As 233 cópias por proveniência permanecem distintas das 65 relações documentais comprovadas. As 168 sem pai comprovado não são agrupadas por similaridade de título.",
+    "Os 1.022 objetos e tamanhos de Storage foram conferidos por metadados. Estas consultas não repetem download e SHA-256 de cada binário, nem comprovam recuperação de novos arquivos.",
+    "Todas as 550 versões Drive consultadas continuam com bytes históricos indisponíveis; cada metadado possui contexto de arquivo comprovado.",
+    "Permissões e RLS foram inspecionados no catálogo. Consultas proprietárias não substituem testes de usuário autenticado; testes negativos reais de papéis estão no PostgreSQL isolado.",
+    "A página de 25 locais com resumos consumiu aproximadamente 999 ms de SQL nesta amostra; permanece uma limitação observada.",
+    "O tempo de chamada ao conector inclui transporte e processamento Lovable/MCP; não representa latência HTTP da aplicação nem tempo de interação da UI.",
+    "RAM e quota total informadas pelo proprietário não foram medidas por estas consultas; o limite efetivo de 50 MiB por arquivo do bucket privado foi conferido.",
+    "Estas evidências não confirmam a versão efetivamente publicada do frontend."
+  ]
+}

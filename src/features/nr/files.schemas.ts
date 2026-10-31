@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { NR_ARQUIVO_MAX_BYTES } from "./files";
+import { nrJsonSchema } from "./schemas";
 const uuid = z.string().uuid();
 const optionalId = uuid.optional();
 export const nrFileOrg = z.object({ organization_id: uuid }).strict();
@@ -49,6 +50,15 @@ export const nrFilePrepare = nrFileOrg
     papel: z.enum(["original", "derivado", "foto", "anexo", "representacao"]).default("original"),
   })
   .strict();
+/** Resolve apenas identidades do manifesto; a autorização permanece na listagem canônica. */
+export const nrDocumentImagesInput = nrFileOrg
+  .extend({
+    norma: z.enum(["NR33", "NR35"]),
+    documento_id: uuid,
+    revisao_id: uuid,
+    arquivo_ids: z.array(uuid).max(100),
+  })
+  .strict();
 export const nrFileList = nrFileOrg
   .extend({
     norma: z.enum(["NR33", "NR35"]),
@@ -56,7 +66,9 @@ export const nrFileList = nrFileOrg
     unidade_id: optionalId,
     pasta_id: optionalId,
     documento_id: optionalId,
+    revisao_id: optionalId,
     local_id: optionalId,
+    arquivo_ids: z.array(uuid).max(100).optional(),
     pagina: z.number().int().min(0).max(1000000).default(0),
     limite: z.number().int().min(1).max(100).default(25),
     lixeira: z.boolean().default(false),
@@ -75,6 +87,8 @@ export const nrFileRow = z.object({
   pasta_id: uuid.nullable(),
   documento_id: uuid.nullable(),
   revisao_id: uuid.nullable(),
+  revisao_numero: z.number().int().positive().nullable().optional(),
+  documento_titulo: z.string().nullable().optional(),
   local_id: uuid.nullable(),
   nome: z.string(),
   nome_exibicao: z.string().nullable().default(null),
@@ -91,6 +105,8 @@ export const nrFileRow = z.object({
   confirmado_em: z.string().nullable(),
   erro: z.string().nullable(),
   version: z.number().int().positive(),
+  origem_metadata: z.record(nrJsonSchema).optional(),
+  contextos: z.array(z.record(nrJsonSchema)).optional(),
 });
 export const nrFileLimits = z.object({
   bucket: z.literal("nexus-nr-acervo"),
@@ -100,6 +116,36 @@ export const nrFileLimits = z.object({
 });
 export const nrFileListResult = z.object({
   rows: z.array(nrFileRow),
+  total: z.number().int().nonnegative(),
+  pagina: z.number().int().nonnegative(),
+  limite: z.number().int().positive(),
+});
+export const nrFileHistoricalInput = nrFileId
+  .extend({
+    norma: z.enum(["NR33", "NR35"]),
+    pagina: z.number().int().min(0).max(1_000_000).default(0),
+    limite: z.number().int().min(1).max(100).default(25),
+  })
+  .strict();
+export const nrFileHistoricalPage = z.object({
+  rows: z.array(
+    z.object({
+      id: uuid,
+      arquivo_id: uuid,
+      versao_origem: z.string(),
+      nome_original: z.string().nullable(),
+      mime: z.string().nullable(),
+      tamanho_declarado: z.string().nullable(),
+      modificado_em: z.string().nullable(),
+      autor_historico: z.string().nullable(),
+      estado: z.string(),
+      bytes_disponiveis: z.boolean(),
+      arquivo_historico_id: uuid.nullable(),
+      motivo: z.string().nullable(),
+      retencao_origem: z.boolean().nullable(),
+      capturado_em: z.string(),
+    }),
+  ),
   total: z.number().int().nonnegative(),
   pagina: z.number().int().nonnegative(),
   limite: z.number().int().positive(),

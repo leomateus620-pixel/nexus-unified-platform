@@ -1,0 +1,12 @@
+{
+  "kind": "nr-legacy-snapshot-reader-reconciliation",
+  "reference_date": "2026-10-30",
+  "adapter": "nr-legacy-snapshot-reader-1",
+  "method": "Read-only replay of exact prepare-import.mjs content compiler against private source; recursively reordered object keys to model JSONB serialization; arrays unchanged.",
+  "documents_with_snapshot": 724,
+  "complete_signature_matches": 724,
+  "cotrirosa_fabrica_ec13_annex_match": true,
+  "snapshots_or_contents_mutated": false,
+  "private_payloads_in_report": false,
+  "production_ui_proof": false
+}

@@ -15,6 +15,7 @@ import {
 import { nrArquivoBaixar } from "./files.functions";
 import { parseNative } from "./native-content";
 import { NrContentEditor } from "./NrContentEditor";
+import { sourceDate, technicalEvents } from "./technical-evidence";
 const object = (value: unknown): Record<string, NrJson> =>
   value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, NrJson>)
@@ -22,12 +23,7 @@ const object = (value: unknown): Record<string, NrJson> =>
 const text = (value: unknown) => (typeof value === "string" ? value : "");
 const human = (value: unknown) =>
   typeof value === "string" && value ? value.replaceAll("_", " ") : "Não informado";
-const when = (value: unknown) => {
-  const date = new Date(text(value));
-  return Number.isNaN(date.valueOf())
-    ? "Data não informada"
-    : new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(date);
-};
+const when = sourceDate;
 function ReadOnlyDialogContent({ children }: { children: ReactNode }) {
   const returnFocus = useRef<HTMLElement | null>(null);
   return (
@@ -337,11 +333,15 @@ export function NrRecordHistory({
   norma,
   recurso,
   registroId,
+  dados,
+  showTechnical = true,
 }: {
   org: string;
   norma: Norma;
   recurso: NrRecurso;
   registroId: string;
+  dados?: Record<string, NrJson> | undefined;
+  showTechnical?: boolean;
 }) {
   const historyFn = useServerFn(nrHistoricoListar),
     revisionsFn = useServerFn(nrRevisoesListar);
@@ -409,7 +409,10 @@ export function NrRecordHistory({
     ];
   return (
     <section aria-label="Histórico e revisões do registro" className="my-5">
-      <h3 className="font-semibold mb-3">Histórico e revisões</h3>
+      {showTechnical && recurso === "locais" && dados && (
+        <NrTechnicalTimeline value={dados["historico"]} />
+      )}
+      <h3 className="font-semibold mb-3">Revisões e auditoria da Nexus</h3>
       {hasRevisions && (
         <details
           className="nr-panel"
@@ -473,7 +476,7 @@ export function NrRecordHistory({
       )}
       <details className="nr-panel" onToggle={(event) => setHistoryOpen(event.currentTarget.open)}>
         <summary className="cursor-pointer font-medium">
-          <Clock3 size={16} className="inline mr-2" aria-hidden="true" /> Eventos recentes
+          <Clock3 size={16} className="inline mr-2" aria-hidden="true" /> Operações da Nexus
         </summary>
         {historyOpen &&
           (history.isPending ? (
@@ -482,6 +485,10 @@ export function NrRecordHistory({
             <ErrorState error={history.error} onRetry={() => history.refetch()} />
           ) : (
             <>
+              <p className="nr-muted mt-3">
+                Importação, edição e outras operações registradas na Nexus. A data de importação é
+                independente da data dos acontecimentos técnicos da origem.
+              </p>
               <ul className="nr-record-list">
                 {events.map((event) => (
                   <li className="py-3" key={String(event["id"])}>
@@ -540,6 +547,82 @@ export function NrRecordHistory({
           revisionId={revisionId}
           onClose={() => setRevisionId(null)}
         />
+      )}
+    </section>
+  );
+}
+
+/** The source's narratives are technical history, independent from equipment-operation records. */
+export function NrTechnicalTimeline({
+  value,
+  compact = false,
+}: {
+  value: unknown;
+  compact?: boolean;
+}) {
+  const entries = technicalEvents(value);
+  return (
+    <section
+      aria-label="Histórico técnico da origem"
+      className={compact ? "nr-technical-timeline nr-technical-timeline-compact" : "mb-6"}
+    >
+      <div className="nr-panel-header">
+        <h3 className="font-semibold">Histórico técnico</h3>
+        <span className="nr-badge">
+          {entries.length} {entries.length === 1 ? "acontecimento" : "acontecimentos"}
+        </span>
+      </div>
+      <p className={compact ? "nr-muted nr-technical-timeline-intro" : "nr-muted my-3"}>
+        {compact
+          ? "Datas e autoria da origem; não equivalem a assinaturas na Nexus."
+          : "Atualizações do cadastro preservadas da origem. Autores e datas históricos não constituem assinaturas na Nexus."}
+      </p>
+      {entries.length ? (
+        <ol className={compact ? "nr-technical-events" : "border-l-2 border-border pl-5 space-y-5"}>
+          {entries.map((entry) => (
+            <li key={entry.key} className="relative">
+              <div
+                className={
+                  compact
+                    ? "nr-technical-event-dot"
+                    : "absolute -left-[1.7rem] top-1.5 size-3 rounded-full border-2 border-white bg-emerald-700"
+                }
+                aria-hidden
+              />
+              {compact && (
+                <>
+                  <p className="nr-technical-event-action">{human(entry.action)}</p>
+                  {entry.text && <p className="nr-prewrap">{entry.text}</p>}
+                </>
+              )}
+              <p className={compact ? "nr-technical-event-meta" : "text-sm nr-muted"}>
+                {entry.date ? (
+                  <time dateTime={entry.date}>{sourceDate(entry.date)}</time>
+                ) : (
+                  "Data não informada"
+                )}
+                {entry.author && ` · ${entry.author}${compact ? "" : " (autoria histórica)"}`}
+              </p>
+              {!compact && (
+                <>
+                  <h4 className="font-semibold mt-1">{human(entry.action)}</h4>
+                  {entry.text && <p className="nr-prewrap mt-1">{entry.text}</p>}
+                </>
+              )}
+              {Object.keys(entry.extra).length > 0 && (
+                <NrReadOnlyValue
+                  title="Informações complementares preservadas"
+                  value={entry.extra as NrJson}
+                />
+              )}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="nr-source">
+          Nenhum acontecimento técnico preservado neste registro. A auditoria de operações da Nexus
+          é consultada separadamente abaixo.
+        </p>
       )}
     </section>
   );

@@ -1,0 +1,178 @@
+{
+  "capturado_em": "2026-10-31T01:30:47.843Z",
+  "postgres": "17.10",
+  "migrationCount": 70,
+  "results": [
+    {
+      "file": "scripts/migrations/test-installation.mjs",
+      "passed": true,
+      "elapsedMs": 1636,
+      "tail": [
+        "PASS: clean installation (70) and private ledger; preexisting schema without reconciliation rejected",
+        "PASS: connector single-DO envelopes validate native ledgers/schema, register provenance, apply once and roll back failed DDL with ledger"
+      ]
+    },
+    {
+      "file": "tests/db/nr.mjs",
+      "passed": true,
+      "elapsedMs": 178,
+      "tail": [
+        "{\"suite\":\"NR core PostgreSQL\",\"assertions\":34,\"passed\":true,\"scope\":\"isolated fixtures; real PostgreSQL constraints/RLS/RPC/locks; no Storage HTTP proof\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-arquivos.mjs",
+      "passed": true,
+      "elapsedMs": 83,
+      "tail": [
+        "{\"suite\":\"NR files PostgreSQL\",\"assertions\":22,\"passed\":true,\"scope\":\"isolated SQL metadata/RLS/permissions; does not prove Storage HTTP or actual blob bytes\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-importacao.mjs",
+      "passed": true,
+      "elapsedMs": 78,
+      "tail": [
+        "{\"suite\":\"NR import PostgreSQL\",\"assertions\":17,\"passed\":true,\"scope\":\"private staging, canonical CNPJ identity, no fabricated Auth actor, resume,idempotence,three-way conflict,partial failure rollback,original historical status\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-acervo.mjs",
+      "passed": true,
+      "elapsedMs": 152,
+      "tail": [
+        "{\"suite\":\"NR archive organization PostgreSQL\",\"assertions\":33,\"passed\":true,\"scope\":\"isolated SQL; global model context, scoped history, file identity/version/replay/trash/move/RLS, manual field reason, physical consumption deduplication; no Storage HTTP proof\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-impactos.mjs",
+      "passed": true,
+      "elapsedMs": 204,
+      "tail": [
+        "{\"suite\":\"NR impactos PostgreSQL\",\"assertions\":25,\"passed\":true,\"scope\":\"isolated real constraints/RLS/RPC/locks; preserves issued content/snapshot; review is not emission or signature\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-retencao.mjs",
+      "passed": true,
+      "elapsedMs": 283,
+      "tail": [
+        "{\"suite\":\"NR retention PostgreSQL\",\"assertions\":19,\"passed\":true,\"scope\":\"isolated SQL: primary/secondary issued and superseded retention; owner-only junction; pending staging; archive replay and two-session association races; no Storage HTTP claim\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-storage-confirmation.mjs",
+      "passed": true,
+      "elapsedMs": 101,
+      "tail": [
+        "{\"suite\":\"NR Storage confirmation plans\",\"checks\":10,\"passed\":true,\"scope\":\"isolated PostgreSQL and synthetic Storage metadata; does not prove HTTP bytes; fixtures rolled back\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-docx-derived.mjs",
+      "passed": true,
+      "elapsedMs": 105,
+      "tail": [
+        "{\"suite\":\"DOCX derived import envelopes PostgreSQL\",\"assertions\":17,\"passed\":true,\"scope\":\"Synthetic fixtures inside disposable local transaction rolled back; exact original/revision/image guards, separate derivatives, native images, retry, later edit/new revision, three-way conflict and issued-source immutability. No Storage HTTP or source-document conversion claim.\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-publicacao-tecnica.mjs",
+      "passed": true,
+      "elapsedMs": 292,
+      "tail": [
+        "{\"suite\":\"NR internal technical publication PostgreSQL\",\"assertions\":46,\"passed\":true,\"scope\":\"isolated fixtures only; professional authority, official NR references/date/version/confrontation, licensed evidence context, server-derived publication snapshots, immutable history, retention, idempotence, stale versions, RLS and generic bypass rejection; no normative certification or document/PET emission\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-historico.mjs",
+      "passed": true,
+      "elapsedMs": 362,
+      "tail": [
+        "{\"suite\":\"nr-historico-paginado\",\"assertions\":79,\"result\":\"passed\",\"fixtures\":\"synthetic isolated rollback\",\"production_writes\":false}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-fluxos.mjs",
+      "passed": true,
+      "elapsedMs": 170,
+      "tail": [
+        "{\"suite\":\"NR workflows/model/capture/folder order\",\"assertions\":61,\"passed\":true,\"scope\":\"isolated synthetic fixtures rolled back; no production data, approval, emission or safety conclusion\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-fila-importacao.mjs",
+      "passed": true,
+      "elapsedMs": 224,
+      "tail": [
+        "{\"suite\":\"NR durable import queue PostgreSQL\",\"assertions\":91,\"passed\":true,\"scope\":\"isolated synthetic data; real RLS/RPC/transaction rollback/dependency retries/three-way conflict/role-lock concurrency; pg_cron intentionally absent, manual worker only; no Storage bytes claimed\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-upgrade-66.mjs",
+      "passed": true,
+      "elapsedMs": 661,
+      "tail": [
+        "{\"suite\":\"Manifest64→66 PostgreSQL upgrade\",\"assertions\":25,\"passed\":true,\"migrationCount\":66,\"scope\":\"disposable database; both actual connector envelopes; per-migration DDL/ledger rollback; exact64 source/snapshot/version/PET preservation; runner+connector replay; checksum-prefix rejection; pg_cron absent locally\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-experiencia.mjs",
+      "passed": true,
+      "elapsedMs": 666,
+      "tail": [
+        "{\"suite\":\"NR contextual projections upgrade67\",\"assertions\":89,\"passed\":true,\"scope\":\"Synthetic disposable PostgreSQL; upgrade/replay/rollback/RLS/relational context/lineage/natural order/narrative history/source model proof/concurrent association. Storage metadata fixtures do not claim binary retrieval.\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-aplicabilidade.mjs",
+      "passed": true,
+      "elapsedMs": 850,
+      "tail": [
+        "{\"suite\":\"NR applicability reviewed manifest upgrade68\",\"assertions\":47,\"passed\":true,\"scope\":\"Synthetic isolated PostgreSQL only; exact source identity/hash/excerpt, no normative inference, whole-snapshot conflicts, historical closed state/treatments, RLS, owner-only execution, migration failure/replay, import replay, concurrent duplicate and concurrent edit preservation; no production writes or operational approval.\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-totais.mjs",
+      "passed": true,
+      "elapsedMs": 472,
+      "tail": [
+        "{\"suite\":\"NR factual document totals upgrade69\",\"assertions\":34,\"passed\":true,\"scope\":\"Synthetic disposable PostgreSQL; classification separate from parent-proof, indexed UUID relationship equivalence, sparse panel DTO scopes, no snapshots in panel, auth/RLS, complete DDL rollback and replay without data writes. Performance requires separate real-acervo measurement.\"}"
+      ]
+    },
+    {
+      "file": "tests/db/nr-arquivos-contextuais.mjs",
+      "passed": true,
+      "elapsedMs": 494,
+      "tail": [
+        "{\"suite\":\"NR canonical file relationship projection upgrade70\",\"assertions\":48,\"passed\":true,\"scope\":\"Synthetic disposable PostgreSQL: upgrade/rollback/replay, RLS/permissions, same-binding norm and relational filters, full context DTO, bounded IDs before pagination, concurrent reads, unchanged FK rejection of cross-unit secondary links; no bytes obtained or production changes.\"}"
+      ]
+    }
+  ],
+  "envelope": {
+    "position": 70,
+    "path": "drizzle/migrations/0051_nr_arquivos_contextuais.sql",
+    "sourceSha256": "1ddab7f1e30776c921862408f25f5c9fe3693283c58d796898b6d7d572a26117",
+    "envelopeSha256": "4fdf200b524c5e7b53016bcd8cff540b5f6410585f26d59d260bee379e3e776a",
+    "bytes": 17430,
+    "local": "/tmp/nexus-nr-validation-70/70_0051_nr_arquivos_contextuais.sql.envelope.sql"
+  },
+  "scope": "Disposable loopback PostgreSQL; synthetic data only; no Storage bytes obtained or production changes made by this runner.",
+  "assertions": 697,
+  "nr_suites": 17,
+  "frontend_targeted": {
+    "test_files": [
+      "tests/nr-files-functions.test.ts",
+      "tests/nr-docx-image-projection.test.ts"
+    ],
+    "passed_tests": 16,
+    "tsc_no_emit": true,
+    "eslint_scoped": true
+  },
+  "manifest_tests_passed": 9,
+  "limitations": [
+    "Disposable PostgreSQL17.10 with synthetic metadata; no external Storage HTTP proof in this test.",
+    "Current composite FK rejects physical-file secondary associations across units; FK unchanged. Full relationship DTO is restored without expanding authorization.",
+    "Migration0051 was not yet applied remotely when this isolated report was generated."
+  ]
+}

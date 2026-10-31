@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "capturado_em_utc": "2026-10-31T01:40:58.486401+00:00",
+  "implementacao_commit": "8731b52a594a2d854f2a7cd0bbac74dd8fe4671a",
+  "ambiente": "Chrome autenticado; aplicação local4184 conectada ao Supabase Nexus; leitura sem escrita no acervo",
+  "ledger": 70,
+  "documento_id": "3f114e10-cc01-4b53-81de-d8041da6ca5d",
+  "revisao_id": "12884b71-6e06-417f-8a4b-fa23bda39ddf",
+  "contexto": "COTRIROSA / Fábrica / EC01 / cópia editável do Word R03",
+  "novos_binarios_recuperados": 0,
+  "imagens_extraidas_ja_preservadas_exibidas": 2,
+  "imagens_publicadas_no_repositorio": false,
+  "diretorio_privado": "/Users/leonardo/.codex/private/nr-experiencia-2026-10-30",
+  "capturas_aceitas": [
+    {
+      "arquivo_privado": "44-nexus-real-docx-imagem-ajustada-1366.jpg",
+      "estado": "Primeira imagem integral a100%, acesso ao original com contraste",
+      "largura_px": 1366,
+      "altura_px": 900,
+      "sha256": "1daaec4e3558ac8fbd0423ad8da59acf012015477f8cb02f69c6f07412d177d7"
+    },
+    {
+      "arquivo_privado": "45-nexus-real-docx-imagem-2-1366.jpg",
+      "estado": "Segunda imagem integral a100%",
+      "largura_px": 1366,
+      "altura_px": 900,
+      "sha256": "af60ebab905cb8a403030d273166616ee5e231ac625eb71c187ecccd69ffdfc3"
+    },
+    {
+      "arquivo_privado": "46-nexus-real-docx-galeria-1366.jpg",
+      "estado": "Duas miniaturas e retorno de foco apósEscape",
+      "largura_px": 1366,
+      "altura_px": 900,
+      "sha256": "606ac125a1989ed2a80b4f8d65dc364ac2a3271fd1d374bab9dadd6436162e58"
+    },
+    {
+      "arquivo_privado": "47-nexus-real-docx-imagem-390.jpg",
+      "estado": "Imagem ampliada no celular",
+      "largura_px": 390,
+      "altura_px": 844,
+      "sha256": "d0bbd1e805431a981f311c10f0160053484f774f7b974417a420061b4491507e"
+    }
+  ],
+  "interacoes": {
+    "ambas_imagens_complete": true,
+    "dimensoes_naturais_px": [
+      {
+        "largura": 455,
+        "altura": 607
+      },
+      {
+        "largura": 455,
+        "altura": 607
+      }
+    ],
+    "legendas_preservadas": ["Imagem 5", "Imagem 5"],
+    "datas_e_autoria_ausentes_na_ocorrencia_rotuladas_sem_inferencia": true,
+    "zoom_percentual": [100, 150],
+    "seta_esquerda": "2 de2 →1 de2; zoom retornou a100%",
+    "escape_fecha_modal": true,
+    "foco_apos_escape": {
+      "elemento": "BUTTON",
+      "aria_label": "Abrir foto 2: Imagem 5"
+    },
+    "overflow_horizontal_pagina_1366_e_390": false
+  },
+  "capturas_rejeitadas": [
+    {
+      "arquivo": "43-nexus-real-docx-imagem-1-1366.jpg",
+      "motivo": "Estado anterior:100% ampliava a imagem até a largura e exigia rolagem inicial. Substituída pela44."
+    },
+    {
+      "arquivo": "primeira versão transitória de46 (substituída no mesmo caminho)",
+      "motivo": "Animação de fechamento Radix ainda em curso. A46 aceita foi recapturada após o modal desaparecer."
+    }
+  ],
+  "limites": [
+    "As imagens são derivadas do Word já armazenado; não recuperam as245 fotos próprias da aplicação.",
+    "O formato editável atual não representa imagens nas células da tabela; posições originais não reconstruídas.",
+    "A autoria/data não foi copiada do documento para a foto sem evidência de equivalência.",
+    "Navegação de leitura real não comprova CRUD persistente em homologação ou publicação.",
+    "O navegador comprovou carregamento/renderização dos objetos autorizados; esta prova não representa novo download/hash de todo o bucket."
+  ]
+}

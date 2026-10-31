@@ -5,6 +5,7 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import {
   nrConsultaSchema,
+  nrAssociarContextoSchema,
   nrContextoSchema,
   nrExecutarSchema,
   nrHistoricoSchema,
@@ -65,7 +66,7 @@ export const nrConsultar = createServerFn({ method: "GET" })
       return {
         ...parsed,
         clientes: parsed.clientes.map((cliente) => ({
-          id: cliente.id,
+          ...cliente,
           nome:
             cliente.nome ??
             cliente.nome_exibicao ??
@@ -75,13 +76,32 @@ export const nrConsultar = createServerFn({ method: "GET" })
       };
     }
     if (recurso === "painel") return nrPainelSchema.parse(response);
-    if (recurso === "historico") return nrHistoricoSchema.parse(response);
+    if (recurso === "historico" || recurso === "historico_tecnico")
+      return nrHistoricoSchema.parse(response);
     if (data.id) {
       const wrapped = z.object({ registro: nrRowSchema }).safeParse(response);
       return wrapped.success ? wrapped.data : { registro: nrRowSchema.parse(response) };
     }
     return nrListaSchema.parse(response);
   });
+
+/** Associa um cadastro existente ao módulo, sem alterar o cadastro global. */
+export const nrAssociarContexto = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(nrAssociarContextoSchema)
+  .handler(async ({ context, data }) =>
+    z.object({ cliente_id: z.string().uuid(), unidade_id: z.string().uuid() }).parse(
+      nrResult(
+        await client(context.supabase).rpc("nr_contexto_associar", {
+          p_org: data.organization_id,
+          p_cliente: data.cliente_id,
+          p_unidade: data.unidade_id,
+          p_normas: data.normas,
+          p_chave: data.chave,
+        }),
+      ),
+    ),
+  );
 
 export const nrExecutar = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

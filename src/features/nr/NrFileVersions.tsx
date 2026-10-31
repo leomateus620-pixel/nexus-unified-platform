@@ -6,6 +6,7 @@ import { ActionButton, ErrorState, LoadingState } from "@/components/nexus/Page"
 import { nrArquivoBaixar, nrArquivoVersoesListar } from "./files.functions";
 import { sourceDate } from "./technical-evidence";
 import type { Norma } from "./domain";
+import { NrCard, NrCardActions } from "./NrCards";
 
 /** Drive revision metadata never falls back to the current binary. */
 export function NrFileVersions({
@@ -65,68 +66,73 @@ export function NrFileVersions({
         </p>
       )}
       {query.data.rows.length ? (
-        <ul className="nr-record-list">
+        <ul className="nr-card-grid" aria-label="Versões históricas do arquivo">
           {query.data.rows.map((version) => (
-            <li key={version.id} className="py-3">
-              <div className="nr-panel-header">
-                <div>
-                  <strong>Versão da origem {version.versao_origem}</strong>
-                  <p>{version.nome_original || "Nome original não informado"}</p>
-                  <p className="nr-muted">
-                    {sourceDate(version.modificado_em)}
-                    {version.autor_historico && ` · ${version.autor_historico} (autoria histórica)`}
-                  </p>
-                  <p className="text-sm">
-                    {version.bytes_disponiveis
-                      ? "Binário histórico obtido e identificado"
-                      : version.estado === "pendente"
-                        ? "Recuperação pendente"
-                        : "Binário histórico indisponível"}
-                  </p>
-                  {version.motivo && <p className="nr-muted mt-1">{version.motivo}</p>}
-                </div>
+            <li key={version.id}>
+              <NrCard kind="documento">
+                <header className="nr-card-heading">
+                  <div>
+                    <h4>Versão da origem {version.versao_origem}</h4>
+                    <p>{version.nome_original || "Nome original não informado"}</p>
+                    <p className="nr-card-context">
+                      {sourceDate(version.modificado_em)}
+                      {version.autor_historico &&
+                        ` · ${version.autor_historico} (autoria histórica)`}
+                    </p>
+                    <p className="text-sm">
+                      {version.bytes_disponiveis
+                        ? "Binário histórico obtido e identificado"
+                        : version.estado === "pendente"
+                          ? "Recuperação pendente"
+                          : "Binário histórico indisponível"}
+                    </p>
+                    {version.motivo && <p className="nr-muted mt-1">{version.motivo}</p>}
+                  </div>
+                </header>
+                <details className="text-sm">
+                  <summary className="nr-muted cursor-pointer">Metadados da versão</summary>
+                  <dl className="nr-facts mt-2">
+                    <div>
+                      <dt>Formato declarado</dt>
+                      <dd>{version.mime || "Não informado"}</dd>
+                    </div>
+                    <div>
+                      <dt>Tamanho declarado na origem</dt>
+                      <dd>
+                        {version.tamanho_declarado ?? "Não informado"}
+                        {version.tamanho_declarado && " bytes"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Retenção informada pela origem</dt>
+                      <dd>
+                        {version.retencao_origem === null
+                          ? "Não informada"
+                          : version.retencao_origem
+                            ? "Sim"
+                            : "Não"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Captura dos metadados</dt>
+                      <dd>{sourceDate(version.capturado_em)}</dd>
+                    </div>
+                  </dl>
+                </details>
                 {version.bytes_disponiveis && version.arquivo_historico_id && (
-                  <ActionButton
-                    variant="ghost"
-                    loading={busy === version.arquivo_historico_id}
-                    disabled={!!busy}
-                    onClick={() => void historical(version.arquivo_historico_id!)}
-                  >
-                    <Download size={15} />
-                    Baixar esta versão histórica
-                  </ActionButton>
+                  <NrCardActions>
+                    <ActionButton
+                      variant="ghost"
+                      loading={busy === version.arquivo_historico_id}
+                      disabled={!!busy}
+                      onClick={() => void historical(version.arquivo_historico_id!)}
+                    >
+                      <Download size={15} aria-hidden="true" />
+                      Baixar esta versão histórica
+                    </ActionButton>
+                  </NrCardActions>
                 )}
-              </div>
-              <details className="text-sm">
-                <summary className="nr-muted cursor-pointer">Metadados da versão</summary>
-                <dl className="nr-facts mt-2">
-                  <div>
-                    <dt>Formato declarado</dt>
-                    <dd>{version.mime || "Não informado"}</dd>
-                  </div>
-                  <div>
-                    <dt>Tamanho declarado na origem</dt>
-                    <dd>
-                      {version.tamanho_declarado ?? "Não informado"}
-                      {version.tamanho_declarado && " bytes"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Retenção informada pela origem</dt>
-                    <dd>
-                      {version.retencao_origem === null
-                        ? "Não informada"
-                        : version.retencao_origem
-                          ? "Sim"
-                          : "Não"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Captura dos metadados</dt>
-                    <dd>{sourceDate(version.capturado_em)}</dd>
-                  </div>
-                </dl>
-              </details>
+              </NrCard>
             </li>
           ))}
         </ul>

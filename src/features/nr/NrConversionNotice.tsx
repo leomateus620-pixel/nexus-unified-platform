@@ -6,6 +6,8 @@ import { ActionButton } from "@/components/nexus/Page";
 import { nrArquivoBaixar } from "./files.functions";
 import type { Norma, NrRecord } from "./domain";
 import { sourceDate } from "./technical-evidence";
+import { nrLabel } from "./technical-display";
+import { NrCard, NrCardActions } from "./NrCards";
 
 function dictionary(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" && !Array.isArray(value)
@@ -61,7 +63,7 @@ export function NrConversionNotice({ row, norma }: { row: NrRecord; norma?: Norm
                 <dt>Revisão preservada</dt>
                 <dd>
                   {summary.revisao_numero ?? "Não informada"} ·{" "}
-                  {summary.vigencia_apresentacao.replaceAll("_", " ")}
+                  {nrLabel(summary.vigencia_apresentacao)}
                 </dd>
               </div>
               <div>
@@ -125,25 +127,32 @@ export function NrConversionNotice({ row, norma }: { row: NrRecord; norma?: Norm
             {summary.copias_editaveis.length > 0 && (
               <div className="mt-4">
                 <h4 className="font-medium">Cópias editáveis ligadas ao original</h4>
-                <ul className="nr-record-list">
+                <ul className="nr-card-grid" aria-label="Cópias editáveis ligadas ao original">
                   {summary.copias_editaveis.map((copy) => (
-                    <li key={copy.id} className="py-2">
-                      <Link
-                        className="underline"
-                        to={String(`${base}/documentos/${copy.id}`)}
-                        search={(current) => ({
-                          ...current,
-                          cliente: row.cliente_id || "",
-                          unidade: row.unidade_id || "",
-                          pagina: 0,
-                        })}
-                      >
-                        {copy.titulo}
-                      </Link>
-                      <p className="nr-muted">
-                        {copy.estado.replaceAll("_", " ")} · derivada do DOCX original, com
-                        identidade própria
-                      </p>
+                    <li key={copy.id}>
+                      <NrCard kind="documento">
+                        <header className="nr-card-heading">
+                          <h5>{copy.titulo}</h5>
+                          <span className="nr-badge">{nrLabel(copy.estado)}</span>
+                        </header>
+                        <p className="nr-card-context">
+                          Cópia editável derivada do DOCX original, com identidade própria
+                        </p>
+                        <NrCardActions>
+                          <Link
+                            className="nr-inline-action"
+                            to={String(`${base}/documentos/${copy.id}`)}
+                            search={(current) => ({
+                              ...current,
+                              cliente: row.cliente_id || "",
+                              unidade: row.unidade_id || "",
+                              pagina: 0,
+                            })}
+                          >
+                            Abrir cópia editável
+                          </Link>
+                        </NrCardActions>
+                      </NrCard>
                     </li>
                   ))}
                 </ul>

@@ -110,8 +110,23 @@ export type PhotoOccurrence = {
   sourcePath: string;
   thumbnailPath: string;
   fileId: string | null;
+  thumbnailFileId: string | null;
   extra: EvidenceRecord;
 };
+/** Links must come from the authorized, single-local batch. A subset can change its array index,
+ * so an exact reference can resolve only when it identifies one preserved occurrence. */
+export function findPhotoOccurrenceLink<
+  T extends { campo: string; ordem: number; referencia_original: string },
+>(links: readonly T[], reference: string, order: number): T | undefined {
+  if (!reference) return undefined;
+  const matches = links.filter(
+    (entry) => entry.campo === "fotos" && entry.referencia_original === reference,
+  );
+  return (
+    matches.find((entry) => entry.ordem === order) ||
+    (matches.length === 1 ? matches[0] : undefined)
+  );
+}
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export function photoOccurrences(value: unknown): PhotoOccurrence[] {
   const entries = Array.isArray(value)
@@ -136,6 +151,8 @@ export function photoOccurrences(value: unknown): PhotoOccurrence[] {
     "tipo",
     "arquivo_id",
     "nr_arquivo_id",
+    "miniatura_arquivo_id",
+    "ocorrencia_id",
     "caminho",
     "path",
     "url",
@@ -149,7 +166,9 @@ export function photoOccurrences(value: unknown): PhotoOccurrence[] {
     const data = record(item),
       fileId = firstText(data, ["arquivo_id", "nr_arquivo_id"]);
     return {
-      key,
+      key: firstText(data, ["ocorrencia_id", "id"])
+        ? `${firstText(data, ["ocorrencia_id", "id"])}:${key}`
+        : key,
       caption: firstText(data, ["legenda", "caption", "descricao", "titulo", "nome"]),
       date: firstText(data, ["data", "data_foto", "data_origem", "criado_em"]),
       author: firstText(data, ["autor", "autor_historico", "criado_por"]),
@@ -161,6 +180,9 @@ export function photoOccurrences(value: unknown): PhotoOccurrence[] {
       thumbnailPath: firstText(data, ["miniatura", "thumbnail", "thumb"]),
       // Only a proved, explicit Nexus relation can authorize a binary. Paths/names never imply one.
       fileId: uuid.test(fileId) ? fileId : null,
+      thumbnailFileId: uuid.test(firstText(data, ["miniatura_arquivo_id"]))
+        ? firstText(data, ["miniatura_arquivo_id"])
+        : null,
       extra: Object.fromEntries(Object.entries(data).filter(([name]) => !keys.includes(name))),
     };
   });

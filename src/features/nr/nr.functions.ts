@@ -1,3 +1,4 @@
+import { assinarMarcas } from "@/features/clientes/marca.server";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -63,10 +64,29 @@ export const nrConsultar = createServerFn({ method: "GET" })
     );
     if (recurso === "contexto") {
       const parsed = nrContextoSchema.parse(response);
+      // Contexto já delimita os IDs autorizados. Consulta única, sem detalhe por card.
+      let brandRows: { id: string; marca?: unknown }[] = [];
+      if (parsed.clientes.length) {
+        try {
+          const responseBrands = await client(context.supabase)
+            .from("clientes")
+            .select("id,marca")
+            .eq("organization_id", organization_id)
+            .in(
+              "id",
+              parsed.clientes.map((row) => row.id),
+            );
+          if (!responseBrands.error) brandRows = responseBrands.data as typeof brandRows;
+        } catch {
+          // Sem prévia de marca, o contexto e o nome do cadastro continuam disponíveis.
+        }
+      }
+      const marcas = await assinarMarcas(client(context.supabase), brandRows);
       return {
         ...parsed,
         clientes: parsed.clientes.map((cliente) => ({
           ...cliente,
+          marca: marcas.find((row) => row.id === cliente.id)?.marca ?? null,
           nome:
             cliente.nome ??
             cliente.nome_exibicao ??

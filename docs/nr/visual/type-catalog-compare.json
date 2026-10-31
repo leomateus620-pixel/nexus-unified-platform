@@ -1,0 +1,43 @@
+{
+  "method": "Names and column identities hashed from actual read-only production catalog, compared with isolated manifest-76 introspection. No operational records read.",
+  "checks": [
+    {
+      "kind": "tables",
+      "sha256": "a30ad0251b707e2a8bba92a5933a550501a11722e57f5cd9b528ed8380e1092b",
+      "matches_remote": true
+    },
+    {
+      "kind": "columns",
+      "sha256": "65521e23eca9b839933b37b21e00fb9b39c3279cf12d2f546b04175d2f77299b",
+      "matches_remote": true
+    },
+    {
+      "kind": "functions",
+      "sha256": "a613c417909f01fa128cb7adcf357f4730cd31094ff3254f333ca0feb3867a63",
+      "matches_remote": true
+    },
+    {
+      "kind": "enums",
+      "sha256": "e8b7c4b965d996fde8ed59f75e3ce2f9f9b980d7e8ad227dbd11706c1cf4dbfe",
+      "matches_remote": true
+    }
+  ],
+  "contract_checks": [
+    {
+      "kind": "column_contract",
+      "sha256": "9d344fff2b7914d7081a46c4ed30159270bbf96a97a7a6fd017cfcfa7db427d9",
+      "matches_remote": true
+    },
+    {
+      "kind": "function_contract",
+      "sha256": "f0141e457c090deff15eecf98a3a654659b18c4870fc6bd4366f2d6b24965c6f",
+      "matches_remote": true
+    },
+    {
+      "kind": "enum_contract",
+      "sha256": "39c46966739d9e63966f5eea9da27bc39e96c9dd16bacf28a2fdf169df39d683",
+      "matches_remote": true
+    }
+  ],
+  "contract_method": "Actual column SQL types/nullability/identity/generated flags; complete function arguments including defaults and return types; enum labels/order. Compared by SHA-256 between isolated manifest-76 catalog and the connected production catalog."
+}

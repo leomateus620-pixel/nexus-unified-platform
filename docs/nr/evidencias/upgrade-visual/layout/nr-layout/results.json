@@ -1,0 +1,4841 @@
+{
+  "method": "Eight existing destinations in NR33 and NR35, real components, synthetic local transport. CSS width 720 represents the layout width of 200% at 1440; it is not native zoom. Separate manual Safari evidence verifies one native 200% journey.",
+  "checks": [
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        489,
+        1028,
+        1028,
+        1028,
+        1028,
+        1028,
+        1028,
+        1028
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        489,
+        1028
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        526,
+        1102,
+        1102,
+        1102,
+        1102,
+        1102,
+        1102,
+        1102
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        526,
+        1102
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        375,
+        1582,
+        1582,
+        1582,
+        1582,
+        1582,
+        1582,
+        1582
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        375,
+        1582
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        439,
+        1838,
+        1838,
+        1838,
+        1838,
+        1838,
+        1838,
+        1838
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        439,
+        1838
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        318,
+        686,
+        686,
+        686,
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        318,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        306,
+        662,
+        662,
+        662,
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        306,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332,
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Full 120-character TAG remains readable",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Full 120-character TAG remains readable",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        489,
+        1028,
+        1028,
+        1028,
+        1028,
+        1028,
+        1028,
+        1028
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        489,
+        1028
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        506,
+        506,
+        506,
+        506
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        526,
+        1102,
+        1102,
+        1102,
+        1102,
+        1102,
+        1102,
+        1102
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        526,
+        1102
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        357,
+        357,
+        357,
+        357
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        375,
+        1582,
+        1582,
+        1582,
+        1582,
+        1582,
+        1582,
+        1582
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        375,
+        1582
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        384,
+        384,
+        384,
+        384
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        439,
+        1838,
+        1838,
+        1838,
+        1838,
+        1838,
+        1838,
+        1838
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        439,
+        1838
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        355,
+        355,
+        355,
+        355
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        318,
+        686,
+        686,
+        686,
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        318,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        686,
+        686,
+        686,
+        686
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        306,
+        662,
+        662,
+        662,
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        306,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        662,
+        662,
+        662,
+        662
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Painel",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 8,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332,
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Clientes",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Locais",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Documentos",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Pendências",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR33",
+      "name": "Conferência",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Painel",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Clientes",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Levantamento",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 1,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Locais",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Documentos",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 3,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Pendências",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 2,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Regras e biblioteca",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 4,
+      "cardsOutside": 0,
+      "cardWidths": [
+        332,
+        332,
+        332,
+        332
+      ],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "norm": "NR35",
+      "name": "Conferência",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": 0,
+      "frameSurface": "oklch(0.29 0.037 163)",
+      "clientSurface": "oklch(0.9 0.028 155)",
+      "unitSurface": "oklch(0.9 0.028 155)",
+      "selectedTransform": "none",
+      "cardCount": 0,
+      "cardsOutside": 0,
+      "cardWidths": [],
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Full 120-character TAG remains readable",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Full 120-character TAG remains readable",
+      "width": 390,
+      "pass": true
+    }
+  ],
+  "browsers": [
+    {
+      "engine": "chromium",
+      "version": "156.0.8078.76"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.6"
+    }
+  ],
+  "limitations": [],
+  "screenshots": [
+    "chromium-nr33-painel-1440.png",
+    "chromium-nr33-clientes-1440.png",
+    "chromium-nr33-levantamentos-1440.png",
+    "chromium-nr33-locais-1440.png",
+    "chromium-nr33-documentos-1440.png",
+    "chromium-nr33-pendencias-1440.png",
+    "chromium-nr33-biblioteca-1440.png",
+    "chromium-nr33-conferencia-1440.png",
+    "chromium-nr35-painel-1440.png",
+    "chromium-nr35-clientes-1440.png",
+    "chromium-nr35-levantamentos-1440.png",
+    "chromium-nr35-locais-1440.png",
+    "chromium-nr35-documentos-1440.png",
+    "chromium-nr35-pendencias-1440.png",
+    "chromium-nr35-biblioteca-1440.png",
+    "chromium-nr35-conferencia-1440.png",
+    "chromium-nr33-painel-390.png",
+    "chromium-nr33-clientes-390.png",
+    "chromium-nr33-levantamentos-390.png",
+    "chromium-nr33-locais-390.png",
+    "chromium-nr33-documentos-390.png",
+    "chromium-nr33-pendencias-390.png",
+    "chromium-nr33-biblioteca-390.png",
+    "chromium-nr33-conferencia-390.png"
+  ],
+  "errors": []
+}

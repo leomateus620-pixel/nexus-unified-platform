@@ -10,13 +10,33 @@ import {
   nrImportFilaComandar,
   nrImportFilaConsultar,
 } from "./import-queue.functions";
+import { NrCard, NrCardMeta, NrCardActions } from "./NrCards";
+import { nrLabel } from "./technical-display";
 
 const size = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
 const message = (error: unknown) =>
   error instanceof Error ? error.message : "Não foi possível concluir a etapa.";
 const text = (value: unknown) =>
   typeof value === "string" || typeof value === "number" ? String(value) : "—";
-const stateLabel = (value: unknown) => text(value).replaceAll("_", " ");
+const stateLabels: Record<string, string> = {
+  preparando: "Preparando staging",
+  fila: "Na fila",
+  processando: "Processando",
+  pausado: "Pausado",
+  com_pendencias: "Com pendências",
+  concluido: "Concluído",
+  cancelado: "Cancelado",
+  identificado: "Identificado",
+  extraido: "Extraído",
+  importado: "Importado",
+  ja_existente: "Já existente",
+  duplicado_legitimo: "Duplicado legítimo",
+  conflito: "Conflito",
+  indisponivel: "Indisponível",
+  erro: "Erro",
+  sem_correspondencia: "Sem correspondência",
+};
+const stateLabel = (value: unknown) => stateLabels[text(value)] ?? text(value);
 type Preview = { plan: ImportQueuePlan; hash: string; name: string; bytes: number };
 export function NrImportQueue({
   org,
@@ -233,36 +253,40 @@ export function NrImportQueue({
             Destino: organização ativa · {norma}. A seleção de cliente/unidade do painel não altera
             as correspondências explícitas deste manifesto.
           </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <caption className="text-left py-2">
-                Primeiros 25 de {preview.plan.itens.length} mapeamentos declarados
-              </caption>
-              <thead>
-                <tr>
-                  <th className="text-left p-2">Origem</th>
-                  <th className="text-left p-2">Destino</th>
-                </tr>
-              </thead>
-              <tbody>
-                {preview.plan.itens.slice(0, 25).map((item) => (
-                  <tr key={item.sequencia}>
-                    <td className="p-2 break-all">
-                      {item.tipo} · {item.externo_id}
-                    </td>
-                    <td className="p-2">
-                      {item.destino.entidade} ·{" "}
-                      {text(
-                        item.destino.registro["titulo"] ??
-                          item.destino.registro["nome"] ??
-                          item.destino.registro["razao_social"],
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <p className="nr-card-context">
+            Prévia: {Math.min(25, preview.plan.itens.length)} de {preview.plan.itens.length}{" "}
+            mapeamentos declarados
+          </p>
+          <ol className="nr-card-grid" aria-label="Prévia dos mapeamentos declarados">
+            {preview.plan.itens.slice(0, 25).map((item) => (
+              <li key={item.sequencia}>
+                <NrCard>
+                  <header className="nr-card-heading">
+                    <div>
+                      <h3>{nrLabel(item.tipo)}</h3>
+                      <p className="nr-card-context break-all">{item.externo_id}</p>
+                    </div>
+                  </header>
+                  <NrCardMeta>
+                    <div>
+                      <dt>Destino declarado</dt>
+                      <dd>{nrLabel(item.destino.entidade)}</dd>
+                    </div>
+                    <div>
+                      <dt>Registro de destino</dt>
+                      <dd>
+                        {text(
+                          item.destino.registro["titulo"] ??
+                            item.destino.registro["nome"] ??
+                            item.destino.registro["razao_social"],
+                        )}
+                      </dd>
+                    </div>
+                  </NrCardMeta>
+                </NrCard>
+              </li>
+            ))}
+          </ol>
           <ActionButton disabled={busy} onClick={() => void send()}>
             Confirmar destino e enviar para staging privado
           </ActionButton>
@@ -358,29 +382,40 @@ export function NrImportQueue({
           {rows.length === 0 ? (
             <p className="p-4 border rounded-xl">Nenhuma fila recebida neste contexto.</p>
           ) : (
-            <ul className="space-y-2">
+            <ul
+              className="nr-card-grid"
+              aria-label={fila ? "Itens da fila selecionada" : "Filas de importação"}
+            >
               {rows.map((row, index) => (
-                <li key={text(row["id"]) || index} className="border rounded-xl p-3 min-w-0">
-                  <p className="break-all">
-                    {fila
-                      ? `${text(row["sequencia"])} · ${text(row["tipo"])} · ${text(row["externo_id"])}`
-                      : text(row["origem"])}
-                  </p>
-                  <p className="text-sm">{stateLabel(row["resultado"] ?? row["estado"])}</p>
-                  {Boolean(row["motivo"]) && (
-                    <p className="text-sm break-words">{text(row["motivo"])}</p>
-                  )}
-                  {!fila && (
-                    <button
-                      className="min-h-11 underline"
-                      onClick={() => {
-                        setSelected(text(row["id"]));
-                        setPage(0);
-                      }}
-                    >
-                      Abrir fila
-                    </button>
-                  )}
+                <li key={text(row["id"]) || index}>
+                  <NrCard>
+                    <header className="nr-card-heading">
+                      <h3 className="break-all">
+                        {fila
+                          ? `${text(row["sequencia"])} · ${text(row["tipo"])} · ${text(row["externo_id"])}`
+                          : text(row["origem"])}
+                      </h3>
+                      <span className="nr-badge">
+                        {stateLabel(row["resultado"] ?? row["estado"])}
+                      </span>
+                    </header>
+                    {Boolean(row["motivo"]) && (
+                      <p className="text-sm break-words">{text(row["motivo"])}</p>
+                    )}
+                    {!fila && (
+                      <NrCardActions>
+                        <button
+                          className="nr-inline-action"
+                          onClick={() => {
+                            setSelected(text(row["id"]));
+                            setPage(0);
+                          }}
+                        >
+                          Abrir fila
+                        </button>
+                      </NrCardActions>
+                    )}
+                  </NrCard>
                 </li>
               ))}
             </ul>

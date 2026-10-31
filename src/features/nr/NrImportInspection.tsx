@@ -7,6 +7,7 @@ import { ActionButton, ErrorState, LoadingState } from "@/components/nexus/Page"
 import type { NrSearch } from "./NrWorkspace";
 import { importResults, type NrImportMeta } from "./import-inspection.schemas";
 import { nrImportacaoInspecionar } from "./import-inspection.functions";
+import { NrCard, NrCardActions } from "./NrCards";
 
 const labels: Record<string, string> = {
   identificado: "Identificado",
@@ -185,60 +186,71 @@ export function NrImportInspection({
               </ActionButton>
             </form>
           )}
-          <ul className="nr-record-list">
+          <ul
+            className="nr-card-grid"
+            aria-label={lotId ? "Itens do lote de importação" : "Lotes de importação"}
+          >
             {rows.map((row) => (
-              <li key={text(row, "id")} className="py-4">
-                {lotId ? (
-                  <>
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <strong>
-                        {text(row, "tipo")} ·{" "}
-                        {labels[text(row, "resultado")] || text(row, "resultado")}
-                      </strong>
-                      <ActionButton
-                        variant="ghost"
-                        onClick={(event) => {
-                          opener.current = event.currentTarget;
-                          onSearch({ importItem: text(row, "id") });
-                        }}
-                      >
-                        Inspecionar item
-                      </ActionButton>
-                    </div>
-                    <p className="text-sm break-all mt-1">{text(row, "externo_id")}</p>
-                    {text(row, "motivo") && (
-                      <p className="nr-muted nr-prewrap mt-2">
-                        {text(row, "motivo")}
-                        {row["motivo_resumido"] === true
-                          ? "… Abra o item para ler o motivo integral."
-                          : ""}
+              <li key={text(row, "id")}>
+                <NrCard>
+                  {lotId ? (
+                    <>
+                      <header className="nr-card-heading">
+                        <h3>{text(row, "tipo")}</h3>
+                        <span className="nr-badge">
+                          {labels[text(row, "resultado")] || text(row, "resultado")}
+                        </span>
+                      </header>
+                      <p className="text-sm break-all mt-1">{text(row, "externo_id")}</p>
+                      {text(row, "motivo") && (
+                        <p className="nr-muted nr-prewrap mt-2">
+                          {text(row, "motivo")}
+                          {row["motivo_resumido"] === true
+                            ? "… Abra o item para ler o motivo integral."
+                            : ""}
+                        </p>
+                      )}
+                      <NrCardActions>
+                        <ActionButton
+                          variant="ghost"
+                          onClick={(event) => {
+                            opener.current = event.currentTarget;
+                            onSearch({ importItem: text(row, "id") });
+                          }}
+                        >
+                          Inspecionar item
+                        </ActionButton>
+                      </NrCardActions>
+                    </>
+                  ) : (
+                    <>
+                      <header className="nr-card-heading">
+                        <h3 className="break-all">{text(row, "origem")}</h3>
+                        <span className="nr-badge">
+                          {labels[text(row, "estado")] || text(row, "estado")}
+                        </span>
+                      </header>
+                      <p className="nr-card-context">
+                        Atualizado em {date(text(row, "updated_at"))}
                       </p>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <strong className="break-all">{text(row, "origem")}</strong>
-                      <ActionButton
-                        onClick={() =>
-                          onSearch({
-                            importLote: text(row, "id"),
-                            importPagina: 0,
-                            importItem: "",
-                            importResultado: "",
-                            importBusca: "",
-                          })
-                        }
-                      >
-                        Inspecionar lote
-                      </ActionButton>
-                    </div>
-                    <p className="nr-muted mt-2">
-                      {labels[text(row, "estado")] || text(row, "estado")} · Atualizado em{" "}
-                      {date(text(row, "updated_at"))}
-                    </p>
-                  </>
-                )}
+                      <NrCardActions>
+                        <ActionButton
+                          onClick={() =>
+                            onSearch({
+                              importLote: text(row, "id"),
+                              importPagina: 0,
+                              importItem: "",
+                              importResultado: "",
+                              importBusca: "",
+                            })
+                          }
+                        >
+                          Inspecionar lote
+                        </ActionButton>
+                      </NrCardActions>
+                    </>
+                  )}
+                </NrCard>
               </li>
             ))}
           </ul>

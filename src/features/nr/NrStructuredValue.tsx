@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ActionButton } from "@/components/nexus/Page";
+import { nrLabel } from "./technical-display";
 
-const label = (key: string) => key.replaceAll("_", " ").replace(/([a-z])([A-Z])/g, "$1 $2");
 /** Human-readable projection; unknown properties remain visible without editing or coercing them. */
 export function NrStructuredValue({
   value,
@@ -34,7 +34,7 @@ export function NrStructuredValue({
         <dl className="grid gap-2">
           {entries.slice(0, limit).map(([key, item]) => (
             <div key={key} className="border-b border-border pb-2 min-w-0">
-              <dt className="text-sm nr-muted capitalize">{label(key)}</dt>
+              <dt className="text-sm nr-muted">{nrLabel(key)}</dt>
               <dd className="mt-1 break-words">
                 <NrStructuredValue value={item} depth={depth + 1} />
               </dd>

@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useRef } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { ActionButton } from "@/components/nexus/Page";
 import {
@@ -8,10 +8,12 @@ import {
   type SurveyFieldDefinition,
 } from "./survey-projection";
 import { NrPhotoGallery } from "./NrPhotoGallery";
+import { nrLabel } from "./technical-display";
 
 export type NrSurveyEvidenceContext = {
   org: string;
   context: string;
+  localId?: string | null | undefined;
   onAttach?: (
     field: SurveyFieldDefinition,
     value: unknown,
@@ -60,8 +62,7 @@ const labels: Record<string, string> = {
   proposta: "Proposta",
   validada: "Validada",
 };
-const surveyLabel = (value: string) =>
-  labels[value] ?? value.replaceAll("_", " ").replace(/^./, (letter) => letter.toUpperCase());
+const surveyLabel = (value: string) => labels[value] ?? nrLabel(value);
 
 /** Unknown properties stay visible and are never removed by editing a known field. */
 export function NrSurveyValue({ value }: { value: unknown }) {
@@ -224,17 +225,32 @@ export function NrSurveyField({
     );
   const current = scalar(value);
   const numeric = field.tipo === "numero";
-  const supportedNumber = current === "" || Number.isFinite(Number(current));
+  const supportedNumber = !numeric || current === "" || Number.isFinite(Number(current));
+  const labelId = `${id}-label`;
+  const descriptions =
+    [
+      helpId,
+      field.unidade ? `${id}-unit` : undefined,
+      !supportedNumber ? `${id}-historic` : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ") || undefined;
   return (
-    <label className={field.tipo === "texto_longo" ? "nr-wide" : ""} htmlFor={id}>
-      {label}
+    <label
+      className={`nr-survey-control${field.tipo === "texto_longo" ? " nr-wide" : ""}`}
+      htmlFor={id}
+      data-filled={surveyHasValue(value) || undefined}
+      data-readonly={disabled || undefined}
+    >
+      <span id={labelId}>{label}</span>
       {field.tipo === "texto_longo" ? (
         <textarea
           id={id}
           disabled={disabled}
           rows={3}
           value={current}
-          aria-describedby={helpId}
+          aria-describedby={descriptions}
+          aria-labelledby={labelId}
           placeholder={field.placeholder}
           onChange={(event) => onChange(event.target.value)}
         />
@@ -243,7 +259,8 @@ export function NrSurveyField({
           id={id}
           disabled={disabled}
           value={current}
-          aria-describedby={helpId}
+          aria-describedby={descriptions}
+          aria-labelledby={labelId}
           onChange={(event) => onChange(event.target.value)}
         >
           <option value="">Não informado</option>
@@ -272,7 +289,8 @@ export function NrSurveyField({
             inputMode={numeric ? "decimal" : undefined}
             value={numeric && !supportedNumber ? "" : current}
             placeholder={field.placeholder}
-            aria-describedby={helpId ?? (!supportedNumber ? `${id}-historic` : undefined)}
+            aria-describedby={descriptions}
+            aria-labelledby={labelId}
             onChange={(event) =>
               onChange(
                 numeric && event.target.value !== ""
@@ -289,7 +307,11 @@ export function NrSurveyField({
           )}
         </>
       )}
-      {field.unidade && <small className="nr-muted">Unidade: {field.unidade}</small>}
+      {field.unidade && (
+        <small id={`${id}-unit`} className="nr-muted">
+          Unidade: {field.unidade}
+        </small>
+      )}
       {help && (
         <small id={helpId} className="nr-muted">
           {help}
@@ -312,6 +334,7 @@ function SurveyList({
   disabled: boolean;
   evidence?: NrSurveyEvidenceContext | undefined;
 }) {
+  const container = useRef<HTMLFieldSetElement>(null);
   if (value != null && !Array.isArray(value))
     return (
       <fieldset className="nr-wide nr-survey-field">
@@ -329,56 +352,63 @@ function SurveyList({
       <section className="nr-wide nr-survey-field">
         <h4>{field.nome}</h4>
         {rows.length ? (
-          <div className="nr-table-scroll" tabIndex={0} role="region" aria-label={field.nome}>
-            <table className="nr-survey-list-table">
-              <thead>
-                <tr>
-                  <th scope="col">Registro</th>
-                  {fields.map((definition) => (
-                    <th scope="col" key={definition.id}>
-                      {definition.nome}
-                    </th>
-                  ))}
-                  <th scope="col">Outras informações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((entry, index) => {
-                  const row = surveyObject(entry);
-                  const extra = Object.fromEntries(
-                    Object.entries(row).filter(
-                      ([key]) => !fields.some((definition) => definition.id === key),
-                    ),
-                  );
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      {fields.map((definition) => (
-                        <td key={definition.id}>
-                          <NrSurveyValue
-                            value={
-                              definition.tipo === "selecao" &&
-                              typeof row[definition.id] === "string"
-                                ? (definition.rotulos_opcoes?.[String(row[definition.id])] ??
-                                  row[definition.id])
-                                : row[definition.id]
-                            }
-                          />
-                          {surveyApplicability(definition.mostrar_se, row) === false &&
-                            surveyHasValue(row[definition.id]) && (
-                              <small className="nr-muted">
-                                Valor histórico fora da condição atual
-                              </small>
-                            )}
-                        </td>
-                      ))}
-                      <td>{Object.keys(extra).length ? <NrSurveyValue value={extra} /> : "—"}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <ol className="nr-survey-records">
+            {rows.map((entry, index) => {
+              const row = surveyObject(entry);
+              const extra = Object.fromEntries(
+                Object.entries(row).filter(
+                  ([key]) => !fields.some((definition) => definition.id === key),
+                ),
+              );
+              return (
+                <li key={index}>
+                  <article
+                    className="nr-survey-row"
+                    aria-label={`${field.nome}, registro ${index + 1}`}
+                  >
+                    <h5>Registro {index + 1}</h5>
+                    {entry !== null && typeof entry === "object" && !Array.isArray(entry) ? (
+                      <dl className="nr-survey-record-facts">
+                        {fields.map((definition) => (
+                          <div key={definition.id}>
+                            <dt>{definition.nome}</dt>
+                            <dd>
+                              <NrSurveyValue
+                                value={
+                                  definition.tipo === "selecao" &&
+                                  typeof row[definition.id] === "string"
+                                    ? (definition.rotulos_opcoes?.[String(row[definition.id])] ??
+                                      row[definition.id])
+                                    : row[definition.id]
+                                }
+                              />
+                              {definition.unidade && (
+                                <small className="nr-muted">{definition.unidade}</small>
+                              )}
+                              {surveyApplicability(definition.mostrar_se, row) === false &&
+                                surveyHasValue(row[definition.id]) && (
+                                  <small className="nr-muted">
+                                    Valor histórico fora da condição atual
+                                  </small>
+                                )}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    ) : (
+                      <NrSurveyValue value={entry} />
+                    )}
+                    {Object.keys(extra).length > 0 && (
+                      <details>
+                        <summary>Outras informações preservadas</summary>
+                        <NrSurveyValue value={extra} />
+                      </details>
+                    )}
+                  </article>
+                </li>
+              );
+            })}
+          </ol>
         ) : (
           <p className="nr-muted">{field.vazio || "Nenhum registro."}</p>
         )}
@@ -389,7 +419,7 @@ function SurveyList({
       rows.map((entry, i) => (i === index ? { ...surveyObject(entry), [key]: next } : entry)),
     );
   return (
-    <fieldset className="nr-wide nr-survey-field">
+    <fieldset className="nr-wide nr-survey-field" ref={container}>
       <legend>
         {field.nome}
         {field.obrigatorio ? " · necessário para revisão" : ""}
@@ -414,7 +444,18 @@ function SurveyList({
               {!disabled && (
                 <ActionButton
                   variant="ghost"
-                  onClick={() => onChange(rows.filter((_, i) => i !== index))}
+                  data-survey-remove
+                  onClick={() => {
+                    onChange(rows.filter((_, i) => i !== index));
+                    requestAnimationFrame(() => {
+                      const remaining =
+                        container.current?.querySelectorAll<HTMLElement>("[data-survey-remove]");
+                      const next =
+                        remaining?.[Math.min(index, remaining.length - 1)] ??
+                        container.current?.querySelector<HTMLElement>("[data-survey-add]");
+                      next?.focus();
+                    });
+                  }}
                 >
                   <Trash2 size={15} />
                   Remover registro {index + 1}
@@ -467,7 +508,11 @@ function SurveyList({
         );
       })}
       {!disabled && (
-        <ActionButton variant="ghost" onClick={() => onChange([...rows, fields.length ? {} : ""])}>
+        <ActionButton
+          data-survey-add
+          variant="ghost"
+          onClick={() => onChange([...rows, fields.length ? {} : ""])}
+        >
           <Plus size={15} />
           {field.rotulo_adicionar || "Adicionar registro"}
         </ActionButton>
@@ -509,6 +554,7 @@ function SurveyPhotos({
       {evidence ? (
         <NrPhotoGallery
           org={evidence.org}
+          localId={evidence.localId ?? null}
           value={photos}
           context={`${evidence.context} · ${field.nome}`}
         />
@@ -572,6 +618,7 @@ function SurveyAssessment({
   onChange: (value: unknown) => void;
   disabled: boolean;
 }) {
+  const id = useId();
   if (value != null && (typeof value !== "object" || Array.isArray(value)))
     return (
       <div className="nr-wide">
@@ -610,6 +657,7 @@ function SurveyAssessment({
             <tbody>
               {Object.entries(rows).map(([family, raw]) => {
                 const row = surveyObject(raw);
+                const justificationId = `${id}-just-${encodeURIComponent(family)}`;
                 if (!Object.keys(row).length)
                   return (
                     <tr key={family}>
@@ -661,7 +709,7 @@ function SurveyAssessment({
                         : "Não informada"}
                     </td>
                     <td>
-                      <label className="sr-only" htmlFor={`survey-just-${family}`}>
+                      <label className="sr-only" htmlFor={justificationId}>
                         {family}: justificativa
                       </label>
                       {disabled ? (
@@ -670,7 +718,7 @@ function SurveyAssessment({
                         </p>
                       ) : (
                         <textarea
-                          id={`survey-just-${family}`}
+                          id={justificationId}
                           rows={3}
                           disabled={disabled}
                           value={scalar(row["justificativa"])}

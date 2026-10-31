@@ -1,0 +1,17 @@
+{
+  "method": "Fresh disposable PostgreSQL17 on loopback55856, Supabase bootstrap and ordered repository migrations; no production records or Storage bytes",
+  "migration_count": 75,
+  "last_migration": "drizzle/migrations/0056_nr_imagem_lease_final.sql",
+  "sha256": "6aaf3f2c01758fb41e5d985834df77f2f57ecedd738195a0f32e18d8a27d535f",
+  "suite": "NR image representations and occurrences",
+  "assertions": 40,
+  "passed": true,
+  "storage_bytes_proven": false,
+  "cases": [
+    "active final lease unchanged",
+    "expired third attempt becomes failed",
+    "expired earlier attempt receives a new lease",
+    "available representation and original hash preserved"
+  ],
+  "cluster_stopped": true
+}

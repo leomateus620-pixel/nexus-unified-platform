@@ -1,0 +1,90 @@
+{
+  "format": "nexus-nr-photo-recovery-receipt/1",
+  "captured_at": "2026-10-31T03:59:27.969129+00:00",
+  "code_baseline": "476cd7ecde56aae5a235af906157d39e4072a40c",
+  "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "supabase_ref": "yhtgijtllvgzoqtfcgal",
+  "database": {
+    "migration": {
+      "applied_at": "2026-10-31T03:11:45.532303+00:00",
+      "path": "drizzle/migrations/0053_nr_imagem_representacoes.sql",
+      "position": 72,
+      "sha256": "092665765bdb91ee37f5facac5320929afda48132cfe6ce57a4add5eefeccd22"
+    },
+    "ocorrencias_registradas": 15,
+    "variantes_por_estado": {
+      "disponivel": 1114,
+      "fila": 0,
+      "processando": 0,
+      "falhou": 0
+    },
+    "variantes_bytes": 52513516,
+    "media_confirmation": {
+      "source_thumbnail_files": 8,
+      "storage_verified_bytes": 85406,
+      "occurrences_with_verified_thumbnail": 15,
+      "occurrences_with_pending_original": 15,
+      "context_mismatches": 0,
+      "private_bucket": true,
+      "anonymous_read_rpc": false,
+      "browser_import_rpc": false
+    },
+    "latest_verified_ledger_position": 75
+  },
+  "scope": "Eight source thumbnails have actual private Storage GET/SHA/MIME/size proof and 15 canonical occurrences. The initial 1114 variants have a final authenticated GET/bytes/MIME/SHA worker receipt. Source originals are not yet confirmed in Nexus.",
+  "isolated_validation": {
+    "postgresql": "17",
+    "migrations_clean_install": 75,
+    "replay_pending": 0,
+    "sql_assertions": 40,
+    "python_image_tests": 3,
+    "frontend_targeted_tests": 20,
+    "shared_folder_reconciliation_tests": 1,
+    "sql_brand_assertions": 18,
+    "source_plan_tests": 5
+  },
+  "recovery_acquisition": {
+    "source_thumbnail_files_distinct": 8,
+    "bytes": 85406,
+    "source_originals_verified": 0,
+    "private_occurrence_manifest": 322,
+    "private_expected_originals": 245,
+    "private_expected_source_thumbnails": 245,
+    "source_originals_locally_verified": 1,
+    "source_originals_storage_verified": 0,
+    "source_thumbnails_storage_verified": 8,
+    "canonical_occurrences_registered": 15,
+    "source_thumbnails_remaining": 237,
+    "source_originals_remaining_in_nexus": 245,
+    "native_download_proof": "Private per-file observed reference, dimensions, acquisition method, SHA and size; source arrays compared with the current owner-session archive."
+  },
+  "source_thumbnail_storage_receipt": {
+    "format": "nexus-storage-readback-receipt-v1",
+    "project_ref": "yhtgijtllvgzoqtfcgal",
+    "bucket": "nexus-nr-acervo",
+    "verified": 8,
+    "bytes": 85406,
+    "errors": 0,
+    "manifest_mismatches": 0,
+    "unfinished": 0,
+    "canonical_sha256": "a53c750aa4f7df1e8bc0e04ace7dee5f519139765dd21435b19b8e9e71685b9d",
+    "source_message_id": "umsg_01m67zfzw3f85bq4n26rfa2g5b",
+    "response_message_id": "main:agent#00000000009636#don:CPBV2TGP"
+  },
+  "initial_variant_worker_readback_receipt": {
+    "format": "nexus-image-worker-readback-v1",
+    "projeto": "yhtgijtllvgzoqtfcgal",
+    "processados_total": 1114,
+    "falhas_total": 0,
+    "bytes_derivados_verificados": 52513516,
+    "disponiveis_banco": 1114,
+    "fila_banco": 0,
+    "processando_banco": 0,
+    "falhou_banco": 0,
+    "worker_exit": 0,
+    "metodo_readback": "GET integral autenticado do bucket privado; tamanho e MIME conferidos, igualdade byte a byte com o derivado cujo SHA-256 foi calculado e registrado; totais dos logs piloto+lote coincidem com a tabela.",
+    "supervisor_permanente": false,
+    "source_message_id": "umsg_01m681pm6zeggvzr7nyrnr8t91",
+    "response_message_id": "main:agent#00000000009700#don:JFCOHQVW"
+  }
+}

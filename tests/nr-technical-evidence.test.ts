@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  findPhotoOccurrenceLink,
   photoOccurrences,
   sourceDate,
   technicalEvents,
@@ -7,6 +8,20 @@ import {
 } from "../src/features/nr/technical-evidence";
 
 describe("projeção das evidências históricas NR", () => {
+  it("resolve uma fotografia em subconjunto pela referência exata única, sem depender do novo índice", () => {
+    const exact = { campo: "fotos", ordem: 2, referencia_original: "fotos/teste/acesso.jpg" };
+    expect(findPhotoOccurrenceLink([exact], exact.referencia_original, 0)).toBe(exact);
+    expect(findPhotoOccurrenceLink([exact], "acesso.jpg", 0)).toBeUndefined();
+    expect(findPhotoOccurrenceLink([exact], "", 0)).toBeUndefined();
+  });
+  it("preserva a identidade de ocorrências repetidas e não escolhe uma ocorrência ambígua", () => {
+    const first = { campo: "fotos", ordem: 1, referencia_original: "fotos/teste/acesso.jpg" };
+    const second = { ...first, ordem: 2 };
+    const otherField = { ...first, campo: "outro_bloco" };
+    expect(findPhotoOccurrenceLink([first, second], first.referencia_original, 2)).toBe(second);
+    expect(findPhotoOccurrenceLink([first, second], first.referencia_original, 0)).toBeUndefined();
+    expect(findPhotoOccurrenceLink([otherField], first.referencia_original, 0)).toBeUndefined();
+  });
   it("recupera data sem hora de tratativa somente com a prova da própria conversão UTC", () => {
     const imported = { tipo: "historico_importado", data_origem: "2026-10-11T00:00:00+00:00" };
     expect(treatmentOriginDate(imported, { encerrada_em: "2026-10-11" })).toBe("2026-10-11");
@@ -107,6 +122,15 @@ describe("projeção das evidências históricas NR", () => {
       { arquivo: "EC_01.jpg", arquivo_id: id },
     ]);
     expect(images.map((image) => image.fileId)).toEqual([null, null, id]);
+  });
+  it("a mesma identidade de fotografia pode aparecer em duas ocorrências sem colisão de chave", () => {
+    const images = photoOccurrences([
+      { id: "origem-foto-1", arquivo: "fotos/compartilhada.jpg", legenda: "Primeiro contexto" },
+      { id: "origem-foto-1", arquivo: "fotos/compartilhada.jpg", legenda: "Segundo contexto" },
+    ]);
+    expect(images).toHaveLength(2);
+    expect(images[0]?.key).not.toBe(images[1]?.key);
+    expect(images.map((image) => image.caption)).toEqual(["Primeiro contexto", "Segundo contexto"]);
   });
   it("conserva propriedades não reconhecidas e narrativas textuais", () => {
     expect(technicalEvents(["Narrativa sem metadados"])[0]).toMatchObject({

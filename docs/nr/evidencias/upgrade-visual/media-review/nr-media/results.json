@@ -1,0 +1,110 @@
+{
+  "method": "Real NR gallery/media components with deterministic synthetic PNGs, local-only transport and intercepted HTTP failures. No customer media or production authorization/storage claim.",
+  "checks": [
+    {
+      "engine": "chromium",
+      "name": "Recognizable thumbnails load with lateral captions, preserved repeated occurrences and no full originals requested",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "An expired signed image renews once; persistent HTTP403 and authorization failures remain distinct without loops",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Processing and failed derivatives keep their real status without declaring recovered originals",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "A preview with no recovered original enlarges and navigates without offering an original download",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Original download is authorized at click time and repeated clicks create one fresh request",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "A denied full image cannot advertise a confirmed original or offer its download",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "The existing file grid distinguishes an unconfirmed upload from a preserved image",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "At390px captions stack below uncropped images and gallery enlargement keeps all controls reachable",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "At DPR2 photo and file grids sign only768 when visible; source previews and full originals retain their variants",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Authorized pending derivatives show a labeled source preview until Nexus is ready; authorization errors never fall back and source HTTP errors renew only once",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Recognizable thumbnails load with lateral captions, preserved repeated occurrences and no full originals requested",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "An expired signed image renews once; persistent HTTP403 and authorization failures remain distinct without loops",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Processing and failed derivatives keep their real status without declaring recovered originals",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "A preview with no recovered original enlarges and navigates without offering an original download",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Original download is authorized at click time and repeated clicks create one fresh request",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "A denied full image cannot advertise a confirmed original or offer its download",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "The existing file grid distinguishes an unconfirmed upload from a preserved image",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "At390px captions stack below uncropped images and gallery enlargement keeps all controls reachable",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "At DPR2 photo and file grids sign only768 when visible; source previews and full originals retain their variants",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Authorized pending derivatives show a labeled source preview until Nexus is ready; authorization errors never fall back and source HTTP errors renew only once",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "WebKit is not the Safari application; physical devices were not exercised."
+  ],
+  "success": true
+}

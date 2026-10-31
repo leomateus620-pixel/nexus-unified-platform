@@ -12,6 +12,7 @@ import { NrTechnicalTimeline } from "./NrRecordHistory";
 import { NrPhotoGallery } from "./NrPhotoGallery";
 import { NrLocalProposedChanges } from "./NrLocalProposedChanges";
 import { nrLocalProposalAffects } from "./local-technical";
+import { NrCard, NrCardMeta, NrCardActions } from "./NrCards";
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((m) => ({ default: m.NrFilesPanel })),
 );
@@ -28,11 +29,26 @@ const areas = [
   ["documentos", "Documentos"],
   ["historico", "Histórico"],
 ] as const;
-function TechnicalSection({ title, value }: { title: string; value: unknown }) {
+function TechnicalSection({
+  title,
+  value,
+  complementary = false,
+}: {
+  title: string;
+  value: unknown;
+  complementary?: boolean;
+}) {
   return (
     <section className="nr-technical-section">
       <h3>{title}</h3>
-      <NrFacts value={value} />
+      {complementary ? (
+        <details>
+          <summary>Consultar informações históricas preservadas</summary>
+          <NrFacts value={value} />
+        </details>
+      ) : (
+        <NrFacts value={value} />
+      )}
     </section>
   );
 }
@@ -159,7 +175,8 @@ export function NrLocalDetail({
       <section aria-label={areas.find(([key]) => key === area)?.[1]} className="nr-detail-area">
         {area === "identificacao" && (
           <>
-            <NrFacts
+            <TechnicalSection
+              title="Identificação e contexto do local"
               value={{
                 tag: row.tag,
                 nome: row.titulo,
@@ -174,7 +191,11 @@ export function NrLocalDetail({
             />
             <TechnicalSection title="Aberturas e acessos" value={{ aberturas: d["aberturas"] }} />
             <TechnicalSection title="Cadastro técnico e sinalização" value={cadastro} />
-            <TechnicalSection title="Levantamento histórico" value={d["levantamento"]} />
+            <TechnicalSection
+              title="Levantamento histórico"
+              value={d["levantamento"]}
+              complementary
+            />
             <p className="nr-source">
               A conclusão e a validação registradas na origem são informações históricas. A revisão
               técnica na Nexus permanece independente.
@@ -374,9 +395,9 @@ export function NrLocalDetail({
         )}
         {area === "fotos" && (
           <>
-            <h3>Fotos de campo</h3>
             <NrPhotoGallery
               org={row.organization_id}
+              localId={row.id}
               value={d["fotos"]}
               context={`${row.tag ?? row.titulo} · ${unitName}`}
             />
@@ -491,34 +512,54 @@ function NrRelatedRecords({
       ) : (
         <>
           <p className="nr-muted">{result?.total ?? 0} registros neste recorte normativo.</p>
-          <ul className="nr-record-list">
+          <ul className="nr-card-grid" aria-label={title}>
             {result?.rows.map((r) => (
               <li key={r.id}>
-                <Link
-                  className="nr-record-link"
-                  to={String(`${base}/${resource}/${r.id}`)}
-                  search={search}
-                >
-                  <span>
-                    <strong>{r.titulo}</strong>
-                    <small>
-                      {nrLabel(r.estado)}
-                      {r.revisao_numero ? ` · Revisão ${r.revisao_numero}` : ""}
-                      {r.resumo_documental?.vigencia_apresentacao
-                        ? ` · ${nrLabel(r.resumo_documental.vigencia_apresentacao)}`
-                        : ""}
-                    </small>
-                    {r.resumo_documental?.correspondencia_pendente && (
-                      <small>Cópia editável · correspondência documental pendente</small>
+                <NrCard kind={resource === "documentos" ? "documento" : "generic"}>
+                  <header className="nr-card-heading">
+                    <div>
+                      {r.tag && <span className="nr-card-tag">{r.tag}</span>}
+                      <h4>{r.titulo}</h4>
+                    </div>
+                    <span className="nr-badge">{nrLabel(r.estado)}</span>
+                  </header>
+                  <NrCardMeta>
+                    {r.revisao_numero != null && (
+                      <div>
+                        <dt>Revisão</dt>
+                        <dd>{r.revisao_numero}</dd>
+                      </div>
+                    )}
+                    {r.resumo_documental?.vigencia_apresentacao && (
+                      <div>
+                        <dt>Vigência documental</dt>
+                        <dd>{nrLabel(r.resumo_documental.vigencia_apresentacao)}</dd>
+                      </div>
                     )}
                     {!!r.resumo_documental?.copias_editaveis.length && (
-                      <small>
-                        {r.resumo_documental.copias_editaveis.length} cópia(s) editável(is) na ficha
-                      </small>
+                      <div>
+                        <dt>Cópias editáveis na ficha</dt>
+                        <dd>{r.resumo_documental.copias_editaveis.length}</dd>
+                      </div>
                     )}
-                  </span>
-                  <ArrowRight size={16} />
-                </Link>
+                  </NrCardMeta>
+                  {r.resumo_documental?.correspondencia_pendente && (
+                    <p className="nr-notice">
+                      Cópia editável · correspondência documental pendente
+                    </p>
+                  )}
+                  <NrCardActions>
+                    <Link
+                      className="nr-inline-action"
+                      to={String(`${base}/${resource}/${r.id}`)}
+                      search={search}
+                      aria-label={`Abrir ${r.titulo}`}
+                    >
+                      Abrir {resource === "documentos" ? "documento" : "registro"}
+                      <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                  </NrCardActions>
+                </NrCard>
               </li>
             ))}
           </ul>

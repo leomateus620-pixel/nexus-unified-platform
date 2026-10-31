@@ -172,7 +172,7 @@ const rows: Record<string, any[]> = {
   sistemas: [],
 };
 // A distinct scenario exercises contextual recovery. Every value here is artificial.
-const contextual = scenario === "nr-contextual";
+const contextual = ["nr-contextual", "nr-brand", "nr-media"].includes(scenario);
 const secondClient = "20000000-0000-4000-8000-000000000002";
 const secondUnit = "21000000-0000-4000-8000-000000000002";
 const emptyUnit = "21000000-0000-4000-8000-000000000003";
@@ -628,6 +628,77 @@ if (contextual) {
   });
   rows.pastas[0].resumo_pasta = { subpastas: 0, documentos: 1, arquivos: 1, imagens: 0 };
 }
+// Optional long collection for pagination/return-focus checks. Never part of app data.
+if (contextual && new URLSearchParams(location.search).get("nrLongTag") === "1") {
+  rows["locais"]![0]!.tag = "EC-" + "IDENTIFICADOR-TECNICO-".repeat(6).slice(0, 117);
+}
+if (contextual && new URLSearchParams(location.search).get("nrExtraLocals") === "40") {
+  for (let index = 1; index <= 40; index++) {
+    rows.locais.push({
+      ...structuredClone(rows.locais[0]),
+      id: `33100000-0000-4000-8000-${String(index).padStart(12, "0")}`,
+      tag: `EC ${100 + index}`,
+      titulo: `Local sintético de retorno ${index}`,
+    });
+  }
+}
+const mediaFixtureId = (index: number) =>
+  `33300000-0000-4000-8000-${String(index).padStart(12, "0")}`;
+const mediaFallback =
+  scenario === "nr-media" && new URLSearchParams(location.search).get("nrMediaFallback") === "1";
+if (scenario === "nr-media") {
+  rows.locais[0].dados.fotos = [
+    {
+      id: "same-source",
+      arquivo: "fotos/isolado/media-a.jpg",
+      arquivo_id: mediaFixtureId(1),
+      miniatura_arquivo_id: mediaFixtureId(9),
+      legenda: "Imagem horizontal sintética para conferir legenda lateral",
+      data: "2026-10-30",
+      autor: "Autor sintético",
+    },
+    {
+      arquivo: "fotos/isolado/media-b.jpg",
+      miniatura_arquivo_id: mediaFixtureId(2),
+      legenda: "Prévia vertical sintética sem original recuperado",
+    },
+    {
+      arquivo: "fotos/isolado/media-c.jpg",
+      arquivo_id: mediaFixtureId(3),
+      legenda: "Assinatura expirada sintética recuperada uma vez",
+    },
+    {
+      arquivo: "fotos/isolado/media-d.jpg",
+      arquivo_id: mediaFixtureId(4),
+      legenda: "Imagem sintética sem autorização",
+    },
+    {
+      arquivo: "fotos/isolado/media-e.jpg",
+      arquivo_id: mediaFixtureId(5),
+      legenda: "Imagem sintética com falha HTTP persistente",
+    },
+    {
+      arquivo: "fotos/isolado/media-f.jpg",
+      arquivo_id: mediaFixtureId(6),
+      legenda: "Miniatura sintética em processamento",
+    },
+    {
+      arquivo: "fotos/isolado/media-g.jpg",
+      arquivo_id: mediaFixtureId(7),
+      legenda: "Miniatura sintética com falha de processamento",
+    },
+    {
+      id: "same-source",
+      arquivo: "fotos/isolado/media-a.jpg",
+      arquivo_id: mediaFixtureId(1),
+      legenda: "Mesma imagem sintética com uma segunda legenda preservada",
+    },
+  ];
+  if (mediaFallback) {
+    for (const index of [2, 3, 5, 6])
+      rows.locais[0].dados.fotos[index].miniatura_arquivo_id = mediaFixtureId(index + 11);
+  }
+}
 const associatedContexts = contextual
   ? [...contextualUnits]
   : [{ id: unit, cliente_id: client, nome: "Unidade de testes de apresentação" }];
@@ -660,9 +731,43 @@ export async function nrConsultar({ data }) {
   if (scenario === "nr-error") throw new Error("Falha de conexão simulada no laboratório isolado.");
   if (data.recurso === "contexto")
     return {
-      clientes: contextual
-        ? contextualClients
-        : [{ id: client, nome: "Cliente sintético — laboratório isolado" }],
+      clientes:
+        scenario === "nr-brand"
+          ? [
+              {
+                ...contextualClients[0],
+                marca: {
+                  caminho: "/brands/cotrirosa.png",
+                  origem: "Ativo oficial usado somente para teste de apresentação",
+                  sha256: "8acbb5f230bc5da747005f4440c8dd28d976e0b6a84ac25da2b8308d55f944b7",
+                  mime: "image/png",
+                  largura: 211,
+                  altura: 40,
+                  tamanho: 8349,
+                  superficie: "escura",
+                },
+              },
+              {
+                ...contextualClients[1],
+                marca: {
+                  caminho: "/brands/camera.svg",
+                  origem: "Ativo oficial corporativo usado somente para teste de apresentação",
+                  sha256: "a7965c6dc0d707d83d4320f2ea5e8119ec6cbbdb216999c4b033b73dabb2d917",
+                  mime: "image/svg+xml",
+                  largura: 258,
+                  altura: 42,
+                  tamanho: 4023,
+                  superficie: "clara",
+                },
+              },
+              ...Array.from({ length: 25 }, (_, index) => ({
+                id: `20000000-0000-4000-8000-${String(index + 3).padStart(12, "0")}`,
+                nome: `Cliente Z ${index + 3} — laboratório isolado`,
+              })),
+            ]
+          : contextual
+            ? contextualClients
+            : [{ id: client, nome: "Cliente sintético — laboratório isolado" }],
       unidades: associatedContexts,
       permissoes: Object.fromEntries(
         [
@@ -832,6 +937,49 @@ const fixtureFile = {
   unidade_id: unit,
 };
 export async function nrArquivosListar({ data }) {
+  if (scenario === "nr-media") {
+    const mediaRows = [
+      {
+        ...structuredClone(fixtureFile),
+        id: mediaFixtureId(10),
+        nome_exibicao: null,
+        nome: "Imagem sintética vinculada.png",
+        mime: "image/png",
+        extensao: "png",
+        papel: "foto",
+        local_id: localId,
+      },
+      {
+        ...structuredClone(fixtureFile),
+        id: mediaFixtureId(8),
+        nome_exibicao: null,
+        nome: "Imagem sintética com envio pendente.png",
+        mime: "image/png",
+        extensao: "png",
+        papel: "foto",
+        local_id: localId,
+        estado: "preparado",
+        bytes_verificados: false,
+      },
+      {
+        ...structuredClone(fixtureFile),
+        id: mediaFixtureId(2),
+        nome_exibicao: null,
+        nome: "Miniatura sintética da origem.png",
+        mime: "image/png",
+        extensao: "png",
+        papel: "foto",
+        local_id: localId,
+        origem_metadata: { tipo: "miniatura_origem" },
+      },
+    ];
+    return {
+      rows: data.lixeira ? [] : mediaRows,
+      total: data.lixeira ? 0 : mediaRows.length,
+      pagina: 0,
+      limite: 20,
+    };
+  }
   const records =
     !!data.lixeira === (fixtureFile.estado === "arquivado") ? [structuredClone(fixtureFile)] : [];
   return { rows: records, total: records.length, pagina: 0, limite: 20 };
@@ -842,7 +990,79 @@ export async function nrDocumentoImagensVinculadas({ data }) {
   // This fixture contains a PDF, no converted DOCX image assets.
   return { rows: [] };
 }
-export async function nrArquivoBaixar() {
+export async function nrFotoOcorrenciasLer() {
+  return [];
+}
+export async function nrArquivoImagem({ data }) {
+  window.__nexusCalls.push({ name: "nrArquivoImagem", data });
+  if (data.organization_id !== org) throw new Error("Contexto sintético indisponível.");
+  if (scenario === "nr-media") {
+    const index = Number(data.id.slice(-12));
+    if (index === 4) throw new Error("Acesso não autorizado à imagem.");
+    const count = window.__nexusCalls.filter(
+      (call) =>
+        call.name === "nrArquivoImagem" &&
+        call.data.id === data.id &&
+        call.data.variante === data.variante,
+    ).length;
+    const state =
+      mediaFallback && data.variante !== "original" && index === 3
+        ? "sem_representacao"
+        : mediaFallback &&
+            data.variante !== "original" &&
+            index === 6 &&
+            sessionStorage.getItem("nrMediaDerivativesReady") === "1"
+          ? "disponivel"
+          : data.variante !== "original" && index === 6
+            ? "processando"
+            : data.variante !== "original" && index === 7
+              ? "falhou"
+              : "disponivel";
+    return {
+      estado: state,
+      original_disponivel: ![2, 9, 13, 14, 16, 17].includes(index),
+      variante: data.variante,
+      versao: "synthetic-media-fixture-1",
+      url:
+        state === "disponivel"
+          ? `/fixtures/nr-photo-${index === 2 ? "portrait" : "landscape"}.png?id=${index}&attempt=${count}&error=${index === 5 || index === 17 || ((index === 3 || index === 16) && count === 1) ? "403" : "none"}`
+          : null,
+      expira_em: state === "disponivel" ? new Date(Date.now() + 60000).toISOString() : null,
+      largura: index === 2 ? 320 : 600,
+      altura: index === 2 ? 560 : 400,
+    };
+  }
+  return {
+    estado: "sem_representacao",
+    original_disponivel: true,
+    variante: data.variante,
+    versao: "isolated-unavailable",
+    url: null,
+    expira_em: null,
+    largura: null,
+    altura: null,
+  };
+}
+export async function nrArquivoBaixar({
+  data,
+}: { data?: { id: string; organization_id?: string; visualizar?: boolean } } = {}) {
+  if (scenario === "nr-media") {
+    if (!data) throw new Error("Arquivo sintético não informado.");
+    window.__nexusCalls.push({ name: "nrArquivoBaixar", data });
+    await new Promise((resolve) => setTimeout(resolve, 80));
+    const index = Number(data.id.slice(-12));
+    return {
+      url: `/fixtures/nr-photo-landscape.png?download=${Date.now()}`,
+      expira_em: new Date(Date.now() + 60000).toISOString(),
+      arquivo: {
+        ...structuredClone(fixtureFile),
+        id: data.id,
+        nome: "synthetic-test-fixture.png",
+        mime: "image/png",
+        origem_metadata: index === 2 ? { tipo: "miniatura_origem" } : {},
+      },
+    };
+  }
   return {
     url: "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf?token=nr-isolated",
     expira_em: new Date(Date.now() + 60000).toISOString(),

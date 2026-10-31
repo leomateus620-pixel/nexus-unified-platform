@@ -51,6 +51,12 @@ const input = {
   actualRevisionId: "revision-one",
 };
 describe("leitura tipada somente do snapshot legado comprovado", () => {
+  it("rótulos técnicos usam termos explícitos sem reescrever chaves desconhecidas", () => {
+    expect(nrLabel("condicao_espaco")).toBe("Condição do espaço");
+    expect(nrLabel("responsavel_declarado")).toBe("Responsável declarado");
+    expect(nrLabel("inspecao_em")).toBe("Data da inspeção");
+    expect(nrLabel("campo_futuro_de_origem")).toBe("campo_futuro_de_origem");
+  });
   it("apresenta a cota de 6 m como Altura (m), sem mudar o rótulo da classificação altura", () => {
     expect(legacySnapshotFieldLabel("geometria", "altura")).toBe("Altura (m)");
     expect(legacySnapshotFieldLabel("geometria", "diametro")).toBe("Diâmetro (m)");

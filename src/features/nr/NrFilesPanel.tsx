@@ -1,3 +1,4 @@
+import { NrMediaImage } from "./NrMediaImage";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -138,7 +139,7 @@ export function NrFilesPanel({
   const picker = useRef<HTMLInputElement>(null);
   const [page, setPage] = useState(0);
   const [trash, setTrash] = useState(false);
-  const [view, setView] = useState<"list" | "grid">("list");
+  const [view, setView] = useState<"list" | "grid">("grid");
   const [allRevisions, setAllRevisions] = useState(false);
   const [search, setSearch] = useState("");
   const [appliedSearch, setAppliedSearch] = useState("");
@@ -154,6 +155,7 @@ export function NrFilesPanel({
   const guard = useRef(false);
   const uploadKeys = useRef(new Map<string, { chave: string; id?: string }>());
   const [preview, setPreview] = useState<{ url: string; arquivo: FileRow } | null>(null);
+  const previewOpener = useRef<HTMLElement | null>(null);
   const [paper, setPaper] = useState<"original" | "derivado" | "foto" | "anexo" | "representacao">(
     "original",
   );
@@ -327,6 +329,16 @@ export function NrFilesPanel({
     setError(null);
     const requestedScope = scopeKey;
     try {
+      if (!file.bytes_verificados || file.estado !== "vinculado")
+        throw new Error("A transferência deste arquivo ainda não foi confirmada.");
+      if (previewOnly) {
+        previewOpener.current =
+          document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        if (file.mime.startsWith("image/")) {
+          setPreview({ url: "", arquivo: file });
+          return;
+        }
+      }
       const result = await download({
         data: { organization_id: org, id: file.id, visualizar: previewOnly },
       });
@@ -521,15 +533,10 @@ export function NrFilesPanel({
         <ErrorState error={list.error} onRetry={() => list.refetch()} />
       ) : (
         <>
-          <ul
-            className={
-              view === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
-                : "nr-record-list"
-            }
-          >
+          <ul className={view === "grid" ? "nr-file-grid" : "nr-record-list"}>
             {(rows ?? []).map((file) => {
               const confirmed = file.estado === "vinculado" && file.bytes_verificados === true;
+              const sourceThumbnail = file.origem_metadata?.["tipo"] === "miniatura_origem";
               const associations = nrFileContextSummaries(file, {
                 documentoId,
                 revisaoId: selectedRevision,
@@ -537,12 +544,7 @@ export function NrFilesPanel({
                 pastaId,
               });
               return (
-                <li
-                  key={file.id}
-                  className={
-                    view === "grid" ? "p-3 border border-border rounded-lg min-w-0" : "py-3"
-                  }
-                >
+                <li key={file.id} className={view === "grid" ? "nr-file-card" : "py-3"}>
                   {view === "grid" && (
                     <NrFileThumbnail org={org} file={file} onOpen={() => void open(file, true)} />
                   )}
@@ -560,18 +562,24 @@ export function NrFilesPanel({
                               : "Arquivo"}{" "}
                         ·{" "}
                         {file.papel === "representacao"
-                          ? "Representação Word/PDF"
+                          ? sourceThumbnail
+                            ? "Miniatura da origem"
+                            : file.mime.startsWith("image/")
+                              ? "Representação de imagem"
+                              : "Representação Word/PDF"
                           : file.papel === "foto"
                             ? "Foto / evidência"
                             : (file.papel ?? "Arquivo")}
                       </p>
                       <p className="text-sm">
                         {confirmed
-                          ? file.papel === "derivado"
-                            ? "Derivado armazenado e verificado"
-                            : file.papel === "original"
-                              ? "Original armazenado e verificado"
-                              : "Arquivo armazenado e verificado"
+                          ? sourceThumbnail
+                            ? "Miniatura da origem verificada · original não comprovado por este arquivo"
+                            : file.papel === "derivado"
+                              ? "Derivado armazenado e verificado"
+                              : file.papel === "original"
+                                ? "Original armazenado e verificado"
+                                : "Arquivo armazenado e verificado"
                           : file.estado === "arquivado"
                             ? "Arquivado"
                             : file.estado === "falhou"
@@ -695,8 +703,14 @@ export function NrFilesPanel({
                             Baixar
                           </ActionButton>
                           {(file.mime === "application/pdf" || file.mime.startsWith("image/")) && (
-                            <ActionButton variant="ghost" onClick={() => void open(file, true)}>
-                              Abrir original
+                            <ActionButton
+                              variant="ghost"
+                              onClick={(event) => {
+                                event.currentTarget.focus({ preventScroll: true });
+                                void open(file, true);
+                              }}
+                            >
+                              {sourceThumbnail ? "Abrir prévia da origem" : "Abrir original"}
                             </ActionButton>
                           )}
                         </>
@@ -787,20 +801,29 @@ export function NrFilesPanel({
         />
       )}
       {preview && (
-        <section className="nr-panel mt-4">
+        <section className="nr-panel nr-file-preview mt-4">
           <div className="nr-panel-header">
             <h3>{preview.arquivo.nome}</h3>
-            <ActionButton variant="ghost" onClick={() => setPreview(null)}>
+            <ActionButton
+              variant="ghost"
+              onClick={() => {
+                setPreview(null);
+                if (previewOpener.current?.isConnected)
+                  previewOpener.current.focus({ preventScroll: true });
+              }}
+            >
               <X size={15} />
               Fechar prévia
             </ActionButton>
           </div>
           {preview.arquivo.mime.startsWith("image/") ? (
-            <img
-              src={preview.url}
+            <NrMediaImage
+              key={`${org}:${preview.arquivo.id}:${preview.arquivo.sha256}`}
+              org={org}
+              fileId={preview.arquivo.id}
+              version={preview.arquivo.sha256}
               alt={preview.arquivo.nome}
-              referrerPolicy="no-referrer"
-              className="max-h-[70vh] max-w-full object-contain"
+              full
             />
           ) : (
             <Suspense fallback={<LoadingState label="Preparando leitor do original…" />}>
@@ -813,15 +836,16 @@ export function NrFilesPanel({
             </Suspense>
           )}
           {preview.arquivo.mime.startsWith("image/") && (
-            <a
-              className="inline-flex min-h-11 items-center gap-2 underline mt-2"
-              href={preview.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              referrerPolicy="no-referrer"
+            <ActionButton
+              className="mt-2"
+              variant="ghost"
+              onClick={() => void open(preview.arquivo, false)}
             >
-              Abrir ou baixar imagem original
-            </a>
+              <Download size={16} aria-hidden />
+              {preview.arquivo.origem_metadata?.["tipo"] === "miniatura_origem"
+                ? "Baixar prévia da origem"
+                : "Baixar imagem original"}
+            </ActionButton>
           )}
         </section>
       )}
@@ -866,56 +890,40 @@ function NrFileThumbnail({
   file: FileRow;
   onOpen: () => void;
 }) {
-  const load = useServerFn(nrArquivoBaixar);
-  const ref = useRef<HTMLButtonElement>(null);
-  const [visible, setVisible] = useState(false);
-  const image =
-    file.mime.startsWith("image/") &&
-    file.estado === "vinculado" &&
-    file.bytes_verificados === true;
-  useEffect(() => {
-    if (!ref.current || !image) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "100px" },
-    );
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [image]);
-  const query = useQuery({
-    queryKey: ["nr", org, "miniatura-arquivo", file.id],
-    enabled: visible && image,
-    queryFn: () => load({ data: { organization_id: org, id: file.id, visualizar: true } }),
-    staleTime: 30_000,
-    gcTime: 30_000,
-    retry: false,
-  });
+  const confirmed = file.estado === "vinculado" && file.bytes_verificados;
+  const image = file.mime.startsWith("image/") && confirmed;
   return (
     <button
-      ref={ref}
       type="button"
-      onClick={onOpen}
-      disabled={!image && file.mime !== "application/pdf"}
+      onClick={(event) => {
+        event.currentTarget.focus({ preventScroll: true });
+        onOpen();
+      }}
+      disabled={!confirmed || (!image && file.mime !== "application/pdf")}
       aria-label={`Abrir ${file.nome_exibicao || file.nome}`}
-      className="aspect-[4/3] mb-3 w-full flex items-center justify-center bg-neutral-50 border border-border rounded overflow-hidden"
+      className="nr-file-thumbnail"
     >
-      {query.data ? (
-        <img
-          src={query.data.url}
+      {image ? (
+        <NrMediaImage
+          key={`${org}:${file.id}:${file.sha256}`}
+          org={org}
+          fileId={file.id}
+          version={file.sha256}
+          variant={file.origem_metadata?.["tipo"] === "miniatura_origem" ? "original" : undefined}
           alt={file.nome_exibicao || file.nome}
-          referrerPolicy="no-referrer"
-          loading="lazy"
-          className="w-full h-full object-cover"
         />
       ) : (
-        <span className="nr-muted">
-          {image ? <Image size={32} aria-hidden /> : <FileText size={32} aria-hidden />}
-          {query.isError && <span className="block mt-1">Prévia indisponível</span>}
+        <span className="nr-media-state">
+          <FileText size={24} aria-hidden />
+          <span>
+            {file.estado !== "vinculado" || !file.bytes_verificados
+              ? file.estado === "falhou"
+                ? "Falha no envio"
+                : "Transferência não confirmada"
+              : file.mime === "application/pdf"
+                ? "Ler PDF"
+                : "Arquivo preservado"}
+          </span>
         </span>
       )}
     </button>

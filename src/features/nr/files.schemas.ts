@@ -5,6 +5,11 @@ const uuid = z.string().uuid();
 const optionalId = uuid.optional();
 export const nrFileOrg = z.object({ organization_id: uuid }).strict();
 export const nrFileId = nrFileOrg.extend({ id: uuid }).strict();
+export const nrFileImage = nrFileId
+  .extend({
+    variante: z.enum(["miniatura_384", "previa_768", "original"]).default("miniatura_384"),
+  })
+  .strict();
 export const nrFileDownload = nrFileId.extend({ visualizar: z.boolean().default(false) }).strict();
 export const nrFileChange = nrFileId
   .extend({
@@ -186,3 +191,17 @@ export const nrFileConsumption = z.object({
   lotes_em_andamento: z.number().int().nonnegative().optional(),
   lotes_com_pendencias: z.number().int().nonnegative().optional(),
 });
+
+export const nrPhotoScope = nrFileOrg.extend({ local_id: uuid }).strict();
+export const nrPhotoOccurrenceLinks = z.array(
+  z.object({
+    id: uuid,
+    ordem: z.number().int().nonnegative(),
+    campo: z.string(),
+    referencia_original: z.string(),
+    referencia_miniatura: z.string().nullable(),
+    arquivo_id: uuid.nullable(),
+    miniatura_arquivo_id: uuid.nullable(),
+    miniatura_proveniencia: z.enum(["origem", "nexus"]).nullable(),
+  }),
+);

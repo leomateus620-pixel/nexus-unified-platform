@@ -1,0 +1,29 @@
+{
+  "kind": "nr-survey-presentation-reconciliation",
+  "capturedAt": "2026-10-30T23:53:47.609Z",
+  "adapter": "nr-levantamento-apresentacao-1",
+  "evidence": "Replays the extraction mapping in scripts/nr/prepare-import.mjs against the private source snapshot; read-only, not a production query or UI journey.",
+  "model": {
+    "id": "MLT-EC-R00",
+    "version": 2,
+    "blocks": 16,
+    "fields": 104,
+    "sha256": "4cfe03eb1dbe817f349e110667c18b5177c4ca37d5610b290e2ae140157ebfb7"
+  },
+  "totals": {
+    "surveys": 112,
+    "answers": 8685,
+    "mapped": 8685,
+    "unmapped": 0,
+    "blocksWith15Applicable": 72,
+    "blocksWith16Applicable": 40,
+    "historicalBlocks11": 82,
+    "historicalBlocks0": 30
+  },
+  "snapshotAndAnswersMutated": false,
+  "limitations": [
+    "This verifies projection against captured source data; live PostgreSQL authorization/provenance is verified separately.",
+    "Repeated source photo arrays in multiple fields remain repeated with an explicit context warning; no photo category inferred.",
+    "Field completeness is contextual and does not change the historical completed mark or grant approval."
+  ]
+}

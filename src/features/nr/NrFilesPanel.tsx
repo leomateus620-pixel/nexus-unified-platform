@@ -1,9 +1,30 @@
-import { lazy, Suspense, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Archive, Download, FileUp, FolderInput, Pencil, RotateCcw, X } from "lucide-react";
+import {
+  Archive,
+  Download,
+  FileUp,
+  FolderInput,
+  MoreHorizontal,
+  Pencil,
+  RotateCcw,
+  X,
+  Image,
+  FileText,
+  Grid2X2,
+  List,
+} from "lucide-react";
 import { ActionButton, EmptyState, ErrorState, LoadingState } from "@/components/nexus/Page";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { sourceDate } from "./technical-evidence";
+import { nrFileContextSummaries } from "./file-context";
 import { NrFileManageDialog, type ManagedNrFile, type NrFileOperation } from "./NrFileManageDialog";
 import type { Norma } from "./domain";
 import {
@@ -19,8 +40,14 @@ import {
 const NrDocxConvertButton = lazy(() =>
   import("./NrDocumentActions").then((module) => ({ default: module.NrDocxConvertButton })),
 );
+const NrOriginalPreview = lazy(() =>
+  import("./NrOriginalPreview").then((module) => ({ default: module.NrOriginalPreview })),
+);
+const NrFileVersions = lazy(() =>
+  import("./NrFileVersions").then((module) => ({ default: module.NrFileVersions })),
+);
 
-type FileRow = {
+export type NrSelectableFile = {
   id: string;
   nome: string;
   nome_exibicao?: string | null;
@@ -32,7 +59,15 @@ type FileRow = {
   estado: string;
   papel?: string;
   bytes_verificados?: boolean;
+  origem_metadata?: Record<string, unknown> | undefined;
+  contextos?: Record<string, unknown>[] | undefined;
+  documento_id?: string | null | undefined;
+  documento_titulo?: string | null | undefined;
+  revisao_id?: string | null | undefined;
+  revisao_numero?: number | null | undefined;
+  local_id?: string | null | undefined;
 };
+type FileRow = NrSelectableFile;
 const size = (bytes: number) => {
   const format = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
   return bytes < 1024
@@ -61,6 +96,7 @@ export function NrFilesPanel({
   clienteId,
   unidadeId,
   documentoId,
+  revisaoId,
   pastaId,
   localId,
   canUpload,
@@ -70,12 +106,15 @@ export function NrFilesPanel({
   canMove = false,
   canArchive = false,
   canRestore = false,
+  onFileSelected,
+  onFileConfirmed,
 }: {
   org: string;
   norma: Norma;
   clienteId: string;
   unidadeId: string;
   documentoId?: string | undefined;
+  revisaoId?: string | undefined;
   pastaId?: string | undefined;
   localId?: string | undefined;
   canUpload: boolean;
@@ -85,6 +124,8 @@ export function NrFilesPanel({
   canMove?: boolean;
   canArchive?: boolean;
   canRestore?: boolean;
+  onFileSelected?: ((file: NrSelectableFile) => void) | undefined;
+  onFileConfirmed?: ((file: NrSelectableFile) => void) | undefined;
 }) {
   const limitsFn = useServerFn(nrArquivoLimites),
     listFn = useServerFn(nrArquivosListar),
@@ -97,6 +138,10 @@ export function NrFilesPanel({
   const picker = useRef<HTMLInputElement>(null);
   const [page, setPage] = useState(0);
   const [trash, setTrash] = useState(false);
+  const [view, setView] = useState<"list" | "grid">("list");
+  const [allRevisions, setAllRevisions] = useState(false);
+  const [search, setSearch] = useState("");
+  const [appliedSearch, setAppliedSearch] = useState("");
   const [management, setManagement] = useState<{
     row: ManagedNrFile;
     comando: NrFileOperation;
@@ -112,6 +157,30 @@ export function NrFilesPanel({
   const [paper, setPaper] = useState<"original" | "derivado" | "foto" | "anexo" | "representacao">(
     "original",
   );
+  const scopeKey = JSON.stringify([
+    org,
+    norma,
+    clienteId,
+    unidadeId,
+    documentoId,
+    revisaoId,
+    pastaId,
+    localId,
+  ]);
+  const currentScope = useRef(scopeKey);
+  currentScope.current = scopeKey;
+  const selectedRevision = documentoId && !allRevisions ? revisaoId : undefined;
+  useEffect(() => {
+    setPage(0);
+    setPreview(null);
+    setSearch("");
+    setAppliedSearch("");
+    setPending(null);
+    setManagement(null);
+    setError(null);
+    setNotice("");
+    setAllRevisions(false);
+  }, [scopeKey]);
   const limits = useQuery({
     queryKey: ["nr", org, "arquivo-limites"],
     queryFn: ({ signal }) => limitsFn({ data: { organization_id: org }, signal }),
@@ -126,24 +195,28 @@ export function NrFilesPanel({
       clienteId,
       unidadeId,
       documentoId,
+      selectedRevision,
       pastaId,
       localId,
       trash,
       page,
+      appliedSearch,
     ],
     queryFn: ({ signal }) =>
       listFn({
         data: {
           organization_id: org,
           norma,
-          cliente_id: clienteId,
-          unidade_id: unidadeId,
+          cliente_id: clienteId || undefined,
+          unidade_id: unidadeId || undefined,
           documento_id: documentoId,
+          revisao_id: selectedRevision,
           pasta_id: pastaId,
           local_id: localId,
           pagina: page,
           limite: 20,
           lixeira: trash,
+          busca: appliedSearch,
         },
         signal,
       }),
@@ -155,6 +228,7 @@ export function NrFilesPanel({
     setBusy(true);
     setError(null);
     setNotice("");
+    const requestedScope = scopeKey;
     try {
       if (!clienteId || !unidadeId)
         throw new Error("Selecione cliente e unidade antes de enviar arquivos.");
@@ -162,6 +236,8 @@ export function NrFilesPanel({
         throw new Error(`O arquivo precisa conter bytes e ter até ${size(limits.data.max_bytes)}.`);
       setPhase("Preparação: calculando a integridade dos bytes…");
       const checksum = await hash(file);
+      if (currentScope.current !== requestedScope)
+        throw new Error("O contexto mudou. Selecione o arquivo novamente no vínculo correto.");
       if (pending && (pending.sha256 !== checksum || pending.tamanho !== file.size))
         throw new Error(
           "Selecione o mesmo arquivo original para retomar este envio. Os bytes escolhidos têm outro tamanho ou hash.",
@@ -174,6 +250,7 @@ export function NrFilesPanel({
         clienteId,
         unidadeId,
         documentoId,
+        revisaoId,
         pastaId,
         localId,
         file.name,
@@ -193,6 +270,7 @@ export function NrFilesPanel({
               cliente_id: clienteId,
               unidade_id: unidadeId,
               documento_id: documentoId,
+              revisao_id: revisaoId,
               pasta_id: pastaId,
               local_id: localId,
               nome: file.name,
@@ -203,6 +281,10 @@ export function NrFilesPanel({
               papel: paper,
             },
           });
+      if (currentScope.current !== requestedScope)
+        throw new Error(
+          "O contexto mudou durante a preparação. O envio anterior permanece recuperável no seu contexto.",
+        );
       knownKey.id = prepared.arquivo.id;
       setPending(prepared.arquivo);
       if (prepared.token) {
@@ -222,14 +304,18 @@ export function NrFilesPanel({
           throw response.error;
       }
       setPhase("Verificação: conferindo MIME, tamanho, hash e vínculo no servidor…");
-      await confirm({ data: { organization_id: org, id: prepared.arquivo.id } });
+      const confirmed = await confirm({ data: { organization_id: org, id: prepared.arquivo.id } });
       uploadKeys.current.delete(payloadKey);
+      await qc.invalidateQueries({ queryKey: ["nr", org] });
+      if (currentScope.current !== requestedScope) return;
       setPending(null);
       setNotice("Arquivo confirmado: bytes, tamanho e SHA-256 verificados no servidor.");
-      await qc.invalidateQueries({ queryKey: ["nr", org] });
+      onFileConfirmed?.(confirmed);
     } catch (e) {
-      setError(e instanceof Error ? e : new Error("Não foi possível confirmar o arquivo."));
-      await list.refetch();
+      if (currentScope.current === requestedScope) {
+        setError(e instanceof Error ? e : new Error("Não foi possível confirmar o arquivo."));
+        await list.refetch();
+      }
     } finally {
       setBusy(false);
       setPhase("");
@@ -239,10 +325,12 @@ export function NrFilesPanel({
   }
   async function open(file: FileRow, previewOnly: boolean) {
     setError(null);
+    const requestedScope = scopeKey;
     try {
       const result = await download({
         data: { organization_id: org, id: file.id, visualizar: previewOnly },
       });
+      if (currentScope.current !== requestedScope) return;
       if (previewOnly) setPreview({ url: result.url, arquivo: file });
       else {
         const link = document.createElement("a");
@@ -255,7 +343,8 @@ export function NrFilesPanel({
         link.remove();
       }
     } catch (e) {
-      setError(e instanceof Error ? e : new Error("Download indisponível."));
+      if (currentScope.current === requestedScope)
+        setError(e instanceof Error ? e : new Error("Download indisponível."));
     }
   }
   async function cancelPending(file: FileRow) {
@@ -286,9 +375,32 @@ export function NrFilesPanel({
           <p className="nr-muted">
             Originais privados e derivados são identificados separadamente.
           </p>
+          {documentoId && revisaoId && (
+            <p className="nr-muted mt-1">
+              {allRevisions
+                ? "Todas as revisões: cada arquivo mantém a revisão de seu vínculo."
+                : "Arquivos vinculados à revisão em consulta. As versões anteriores ficam disponíveis pelo seletor abaixo."}
+            </p>
+          )}
         </div>
       </div>
       <div className="nr-actions mb-4">
+        {documentoId && revisaoId && (
+          <label>
+            Revisões do documento
+            <select
+              value={allRevisions ? "all" : "current"}
+              onChange={(event) => {
+                setAllRevisions(event.target.value === "all");
+                setPage(0);
+                setPreview(null);
+              }}
+            >
+              <option value="current">Revisão em consulta</option>
+              <option value="all">Todas as revisões · histórico</option>
+            </select>
+          </label>
+        )}
         <ActionButton
           variant="ghost"
           onClick={() => {
@@ -298,6 +410,50 @@ export function NrFilesPanel({
         >
           {trash ? <RotateCcw size={15} /> : <Archive size={15} />}
           {trash ? "Arquivos ativos" : "Lixeira de arquivos"}
+        </ActionButton>
+        <ActionButton
+          variant="ghost"
+          aria-pressed={view === "list"}
+          onClick={() => setView("list")}
+        >
+          <List size={16} />
+          Lista
+        </ActionButton>
+        <ActionButton
+          variant="ghost"
+          aria-pressed={view === "grid"}
+          onClick={() => setView("grid")}
+        >
+          <Grid2X2 size={16} />
+          Grade
+        </ActionButton>
+      </div>
+      <div className="nr-actions mb-4">
+        <label className="flex-1">
+          Buscar neste acervo
+          <input
+            type="search"
+            value={search}
+            maxLength={200}
+            onChange={(event) => setSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                setPage(0);
+                setAppliedSearch(search.trim());
+              }
+            }}
+            placeholder="Nome do arquivo"
+          />
+        </label>
+        <ActionButton
+          variant="ghost"
+          onClick={() => {
+            setPage(0);
+            setAppliedSearch(search.trim());
+          }}
+        >
+          Buscar
         </ActionButton>
       </div>
       {limits.isError && <ErrorState error={limits.error} onRetry={() => limits.refetch()} />}
@@ -365,60 +521,149 @@ export function NrFilesPanel({
         <ErrorState error={list.error} onRetry={() => list.refetch()} />
       ) : (
         <>
-          <ul className="nr-record-list">
+          <ul
+            className={
+              view === "grid"
+                ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
+                : "nr-record-list"
+            }
+          >
             {(rows ?? []).map((file) => {
               const confirmed = file.estado === "vinculado" && file.bytes_verificados === true;
+              const associations = nrFileContextSummaries(file, {
+                documentoId,
+                revisaoId: selectedRevision,
+                localId,
+                pastaId,
+              });
               return (
-                <li key={file.id} className="py-4">
+                <li
+                  key={file.id}
+                  className={
+                    view === "grid" ? "p-3 border border-border rounded-lg min-w-0" : "py-3"
+                  }
+                >
+                  {view === "grid" && (
+                    <NrFileThumbnail org={org} file={file} onOpen={() => void open(file, true)} />
+                  )}
                   <div className="nr-panel-header">
                     <div>
-                      <strong>{file.nome_exibicao || file.nome}</strong>
+                      <strong className="break-words">{file.nome_exibicao || file.nome}</strong>
                       <p className="nr-muted">
-                        {size(file.tamanho)} · {file.mime} · {file.papel ?? "arquivo"} ·{" "}
-                        {file.estado}
+                        {size(file.tamanho)} ·{" "}
+                        {file.mime === "application/pdf"
+                          ? "PDF"
+                          : file.mime.includes("wordprocessingml")
+                            ? "Word"
+                            : file.mime.startsWith("image/")
+                              ? "Imagem"
+                              : "Arquivo"}{" "}
+                        ·{" "}
+                        {file.papel === "representacao"
+                          ? "Representação Word/PDF"
+                          : file.papel === "foto"
+                            ? "Foto / evidência"
+                            : (file.papel ?? "Arquivo")}
                       </p>
+                      <p className="text-sm">
+                        {confirmed
+                          ? file.papel === "derivado"
+                            ? "Derivado armazenado e verificado"
+                            : file.papel === "original"
+                              ? "Original armazenado e verificado"
+                              : "Arquivo armazenado e verificado"
+                          : file.estado === "arquivado"
+                            ? "Arquivado"
+                            : file.estado === "falhou"
+                              ? "Falha no envio · transferência pendente"
+                              : "Transferência ainda não confirmada"}
+                      </p>
+                      {associations.map((association, index) => (
+                        <div key={`${association.revisionId}:${index}`} className="mt-2 text-sm">
+                          {association.revisionId && (
+                            <p className="nr-badge">
+                              {association.documentTitle && `${association.documentTitle} · `}
+                              {association.revisionNumber === null
+                                ? "Revisão preservada · número não informado"
+                                : `Revisão ${association.revisionNumber}`}
+                              {revisaoId && association.revisionId !== revisaoId
+                                ? " · outra revisão do documento"
+                                : ""}
+                            </p>
+                          )}
+                          {association.caption && <p className="mt-1">{association.caption}</p>}
+                          {(association.date || association.author) && (
+                            <p className="nr-muted">
+                              {sourceDate(association.date)}
+                              {association.author && ` · ${association.author} (autoria histórica)`}
+                            </p>
+                          )}
+                          {association.category && (
+                            <p className="nr-muted">{association.category}</p>
+                          )}
+                        </div>
+                      ))}
                     </div>
                     <div className="nr-actions">
-                      {file.estado === "arquivado" ? (
-                        canRestore && (
-                          <ActionButton
-                            variant="ghost"
-                            onClick={() => setManagement({ row: file, comando: "restaurar" })}
-                          >
-                            <RotateCcw size={15} />
-                            Restaurar
-                          </ActionButton>
-                        )
-                      ) : (
-                        <>
-                          {canEdit && (
+                      {(file.estado === "arquivado"
+                        ? canRestore
+                        : canEdit || canMove || canArchive) && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
                             <ActionButton
                               variant="ghost"
-                              onClick={() => setManagement({ row: file, comando: "renomear" })}
+                              aria-label={`Organizar ${file.nome_exibicao || file.nome}`}
                             >
-                              <Pencil size={15} />
-                              Nome de exibição
+                              <MoreHorizontal size={18} />
+                              Organizar
                             </ActionButton>
-                          )}
-                          {canMove && (
-                            <ActionButton
-                              variant="ghost"
-                              onClick={() => setManagement({ row: file, comando: "mover" })}
-                            >
-                              <FolderInput size={15} />
-                              Mover
-                            </ActionButton>
-                          )}
-                          {canArchive && (
-                            <ActionButton
-                              variant="ghost"
-                              onClick={() => setManagement({ row: file, comando: "arquivar" })}
-                            >
-                              <Archive size={15} />
-                              Arquivar
-                            </ActionButton>
-                          )}
-                        </>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            {file.estado === "arquivado" ? (
+                              canRestore && (
+                                <DropdownMenuItem
+                                  onSelect={() =>
+                                    setManagement({ row: file, comando: "restaurar" })
+                                  }
+                                >
+                                  <RotateCcw size={15} />
+                                  Restaurar
+                                </DropdownMenuItem>
+                              )
+                            ) : (
+                              <>
+                                {canEdit && (
+                                  <DropdownMenuItem
+                                    onSelect={() =>
+                                      setManagement({ row: file, comando: "renomear" })
+                                    }
+                                  >
+                                    <Pencil size={15} />
+                                    Renomear
+                                  </DropdownMenuItem>
+                                )}
+                                {canMove && (
+                                  <DropdownMenuItem
+                                    onSelect={() => setManagement({ row: file, comando: "mover" })}
+                                  >
+                                    <FolderInput size={15} />
+                                    Mover
+                                  </DropdownMenuItem>
+                                )}
+                                {canArchive && (
+                                  <DropdownMenuItem
+                                    onSelect={() =>
+                                      setManagement({ row: file, comando: "arquivar" })
+                                    }
+                                  >
+                                    <Archive size={15} />
+                                    Arquivar
+                                  </DropdownMenuItem>
+                                )}
+                              </>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       )}
                       {confirmed &&
                         canConvert &&
@@ -440,13 +685,18 @@ export function NrFilesPanel({
                         )}
                       {confirmed ? (
                         <>
+                          {onFileSelected && (
+                            <ActionButton variant="ghost" onClick={() => onFileSelected(file)}>
+                              Usar este arquivo
+                            </ActionButton>
+                          )}
                           <ActionButton variant="ghost" onClick={() => void open(file, false)}>
                             <Download size={15} />
                             Baixar
                           </ActionButton>
                           {(file.mime === "application/pdf" || file.mime.startsWith("image/")) && (
                             <ActionButton variant="ghost" onClick={() => void open(file, true)}>
-                              Pré-visualizar
+                              Abrir original
                             </ActionButton>
                           )}
                         </>
@@ -486,6 +736,7 @@ export function NrFilesPanel({
                       SHA-256: {file.sha256}
                     </p>
                   </details>
+                  <NrFileVersionsDisclosure org={org} norma={norma} file={file} />
                 </li>
               );
             })}
@@ -497,7 +748,7 @@ export function NrFilesPanel({
                   ? "Nenhum arquivo na lixeira deste vínculo"
                   : "Nenhum arquivo confirmado neste vínculo"
               }
-              hint="Um link de origem não é contado como arquivo migrado. A confirmação exige os bytes e a verificação de integridade."
+              hint="As referências da origem e os arquivos ainda não obtidos permanecem preservados em seus contextos."
             />
           )}
           <div className="nr-pagination">
@@ -552,17 +803,121 @@ export function NrFilesPanel({
               className="max-h-[70vh] max-w-full object-contain"
             />
           ) : (
-            <iframe
-              title={`Prévia PDF: ${preview.arquivo.nome}`}
-              sandbox=""
+            <Suspense fallback={<LoadingState label="Preparando leitor do original…" />}>
+              <NrOriginalPreview
+                key={preview.arquivo.id}
+                org={org}
+                file={preview.arquivo}
+                url={preview.url}
+              />
+            </Suspense>
+          )}
+          {preview.arquivo.mime.startsWith("image/") && (
+            <a
+              className="inline-flex min-h-11 items-center gap-2 underline mt-2"
+              href={preview.url}
+              target="_blank"
+              rel="noopener noreferrer"
               referrerPolicy="no-referrer"
-              loading="lazy"
-              src={preview.url}
-              className="w-full min-h-[65vh] border border-border"
-            />
+            >
+              Abrir ou baixar imagem original
+            </a>
           )}
         </section>
       )}
     </section>
+  );
+}
+
+function NrFileVersionsDisclosure({
+  org,
+  norma,
+  file,
+}: {
+  org: string;
+  norma: Norma;
+  file: FileRow;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <details className="mt-2" onToggle={(event) => setOpen(event.currentTarget.open)}>
+      <summary className="nr-muted cursor-pointer">Versões históricas do arquivo na origem</summary>
+      {open && (
+        <Suspense
+          fallback={
+            <p className="nr-muted" role="status">
+              Consultando versões preservadas…
+            </p>
+          }
+        >
+          <NrFileVersions org={org} norma={norma} fileId={file.id} />
+        </Suspense>
+      )}
+    </details>
+  );
+}
+
+function NrFileThumbnail({
+  org,
+  file,
+  onOpen,
+}: {
+  org: string;
+  file: FileRow;
+  onOpen: () => void;
+}) {
+  const load = useServerFn(nrArquivoBaixar);
+  const ref = useRef<HTMLButtonElement>(null);
+  const [visible, setVisible] = useState(false);
+  const image =
+    file.mime.startsWith("image/") &&
+    file.estado === "vinculado" &&
+    file.bytes_verificados === true;
+  useEffect(() => {
+    if (!ref.current || !image) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "100px" },
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [image]);
+  const query = useQuery({
+    queryKey: ["nr", org, "miniatura-arquivo", file.id],
+    enabled: visible && image,
+    queryFn: () => load({ data: { organization_id: org, id: file.id, visualizar: true } }),
+    staleTime: 30_000,
+    gcTime: 30_000,
+    retry: false,
+  });
+  return (
+    <button
+      ref={ref}
+      type="button"
+      onClick={onOpen}
+      disabled={!image && file.mime !== "application/pdf"}
+      aria-label={`Abrir ${file.nome_exibicao || file.nome}`}
+      className="aspect-[4/3] mb-3 w-full flex items-center justify-center bg-neutral-50 border border-border rounded overflow-hidden"
+    >
+      {query.data ? (
+        <img
+          src={query.data.url}
+          alt={file.nome_exibicao || file.nome}
+          referrerPolicy="no-referrer"
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <span className="nr-muted">
+          {image ? <Image size={32} aria-hidden /> : <FileText size={32} aria-hidden />}
+          {query.isError && <span className="block mt-1">Prévia indisponível</span>}
+        </span>
+      )}
+    </button>
   );
 }

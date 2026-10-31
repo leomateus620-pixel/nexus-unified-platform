@@ -48,6 +48,17 @@ const routeSearchKeys = [
   "hora",
   "natureza",
   "demanda",
+  "ficha",
+  "escopo",
+  "familia",
+  "vinculo",
+  "importLote",
+  "importItem",
+  "importPagina",
+  "importResultado",
+  "importBusca",
+  "grupo",
+  "copias",
 ];
 let search = Object.fromEntries(
   [...new URLSearchParams(location.search)].filter(([key]) => routeSearchKeys.includes(key)),
@@ -206,8 +217,18 @@ export function Link({
           const url = new URL(location.href);
           url.searchParams.set("page", page);
           url.searchParams.set("nrPath", targetPath.split("/").slice(2).join("/"));
+          for (const key of routeSearchKeys) {
+            if (key === "nrPath") continue;
+            const value = targetSearch[key];
+            if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
+            else url.searchParams.delete(key);
+          }
+          search = Object.fromEntries(
+            [...url.searchParams].filter(([key]) => routeSearchKeys.includes(key)),
+          );
           history.pushState({}, "", url);
           pageListeners.forEach((listener) => listener());
+          listeners.forEach((listener) => listener());
           window.dispatchEvent(new Event("nr-lab-navigation"));
         } else if (href.includes("/revisoes/rev-fixture/")) {
           page = href.split("/").at(-1);

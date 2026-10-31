@@ -4,6 +4,39 @@ export type Norma = "NR33" | "NR35";
 export type NrJson = null | boolean | number | string | NrJson[] | { [key: string]: NrJson };
 export type NrRecurso =
   "locais" | "pastas" | "documentos" | "pendencias" | "modelos" | "levantamentos" | "sistemas";
+export type NrResumoDocumental = {
+  vigencia: string | null;
+  vigencia_apresentacao: string;
+  motivo_substituicao: string | null;
+  data_origem: string | null;
+  data_origem_texto?: string | null;
+  autor_historico: string | null;
+  revisao_numero: number | null;
+  arquivos_word: number;
+  arquivos_pdf: number;
+  arquivos_total: number;
+  copia_editavel: boolean;
+  documento_origem_id: string | null;
+  originais_comprovados: NrJson[];
+  copias_editaveis: {
+    id: string;
+    titulo: string;
+    estado: string;
+    revisao_atual_id: string | null;
+    normas: Norma[];
+  }[];
+  disponibilidade: "arquivos_confirmados" | "sem_arquivo_confirmado";
+};
+export type NrResumoTecnico = {
+  setor: string | null;
+  enquadramento: NrJson;
+  situacao_levantamento: string | null;
+  memorial: string | null;
+  avaliacoes_total: number;
+  documentos_total: number;
+  imagens_total: number;
+  historico_tecnico_total: number;
+};
 export type NrRecord = {
   id: string;
   organization_id: string;
@@ -35,6 +68,16 @@ export type NrRecord = {
   conteudo?: NrJson;
   respostas?: NrJson;
   modelo_snapshot?: NrJson;
+  modelo_apresentacao?: NrJson;
+  local_contexto?: NrJson;
+  local_titulo?: string | null;
+  local_tag?: string | null;
+  unidade_nome?: string | null;
+  resumo_documental?: NrResumoDocumental;
+  resumo_tecnico?: NrResumoTecnico;
+  revisao_aplicabilidade?: NrJson;
+  decisoes_aplicabilidade?: NrJson[];
+  resumo_pasta?: { subpastas: number; documentos: number; arquivos: number; imagens: number };
   estado_origem?: string | null;
   recebimento?: string;
   origem_url?: string | null;
@@ -54,8 +97,28 @@ export type NrRecord = {
 };
 export type NrConsulta = { rows: NrRecord[]; total: number; pagina: number; limite: number };
 export type NrContexto = {
-  clientes: { id: string; nome: string }[];
-  unidades: { id: string; cliente_id: string; nome: string }[];
+  clientes: {
+    id: string;
+    nome: string;
+    razao_social?: string;
+    nome_exibicao?: string | null;
+    cnpj?: string | null;
+  }[];
+  unidades: {
+    id: string;
+    cliente_id: string;
+    nome: string;
+    endereco?: string | null;
+    cnpj?: string | null;
+    escopo?: string | null;
+    situacao?: string | null;
+    responsavel_cliente?: string | null;
+    documentacao?: NrJson;
+    normas?: Norma[];
+    locais?: number;
+    documentos?: number;
+    pendencias_abertas?: number;
+  }[];
   permissoes: {
     visualizar: boolean;
     cadastrar: boolean;

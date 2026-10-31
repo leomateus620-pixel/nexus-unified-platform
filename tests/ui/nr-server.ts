@@ -24,7 +24,7 @@ const common = {
   updated_at: "2026-10-30T12:00:00Z",
   arquivado_em: null,
 };
-const rows = {
+const rows: Record<string, any[]> = {
   locais: [
     {
       ...common,
@@ -171,13 +171,499 @@ const rows = {
   levantamentos: [],
   sistemas: [],
 };
+// A distinct scenario exercises contextual recovery. Every value here is artificial.
+const contextual = scenario === "nr-contextual";
+const secondClient = "20000000-0000-4000-8000-000000000002";
+const secondUnit = "21000000-0000-4000-8000-000000000002";
+const emptyUnit = "21000000-0000-4000-8000-000000000003";
+const seedUnit = "21000000-0000-4000-8000-000000000004";
+const surveyId = "33000000-0000-4000-8000-000000000008";
+const historicalModelId = "33000000-0000-4000-8000-000000000009";
+const alternateLocalId = "33000000-0000-4000-8000-000000000010";
+const contextualClients = [
+  { id: client, nome: "Cliente Alfa — laboratório isolado", cnpj: "Identificação sintética" },
+  { id: secondClient, nome: "Cliente Beta — laboratório isolado", cnpj: "Identificação sintética" },
+];
+const contextualUnits = [
+  {
+    id: unit,
+    cliente_id: client,
+    nome: "Fábrica sintética",
+    endereco: "Endereço fictício de homologação",
+    escopo: "Espaços confinados e documentos de altura",
+    cnpj: "Identificação de teste",
+    locais_total: 3,
+    documentos_total: 3,
+    documentacao: { situacao: "Em revisão", responsavel: "Responsável histórico sintético" },
+  },
+  {
+    id: secondUnit,
+    cliente_id: secondClient,
+    nome: "Unidade Beta sintética",
+    endereco: "Outro endereço fictício",
+    escopo: "Espaços confinados",
+    locais_total: 1,
+    documentos_total: 1,
+  },
+  {
+    id: emptyUnit,
+    cliente_id: client,
+    nome: "Matriz sintética",
+    endereco: "Endereço fictício da matriz",
+    escopo: "Documental",
+    locais_total: 0,
+    documentos_total: 1,
+  },
+  {
+    id: seedUnit,
+    cliente_id: client,
+    nome: "Sementeiro sintético",
+    endereco: "Endereço fictício do sementeiro",
+    escopo: "Documental",
+    locais_total: 0,
+    documentos_total: 1,
+  },
+];
+const technicalFixtureEvents = Array.from({ length: 7 }, (_, index) => ({
+  data: `2026-10-${String(10 + index).padStart(2, "0")}`,
+  autor: "Autor histórico sintético",
+  acao: `Atualização técnica de teste ${index + 1}`,
+  texto: `Narrativa integral sintética ${index + 1}: evidência de apresentação, sem conclusão de engenharia real.`,
+}));
+const contextualBlocks = [
+  "Identificação",
+  "Enquadramento e descrição",
+  "Acessos e bocas de visita",
+  "Fotos",
+  "Sinalização",
+  "Atividades e riscos",
+  "Geometria e volume",
+  "Ventilação",
+  "Aeração fixa",
+  "Requisitos e EPI",
+  "Resgate",
+  "Emergência",
+  "Energias e bloqueio",
+  "Itens de avaliação",
+  "Histórico e fechamento",
+  "Ancoragens, linhas de vida e laudos",
+].map((titulo, index) => ({
+  id: `B${String(index + 1).padStart(2, "0")}`,
+  codigo: `B${String(index + 1).padStart(2, "0")}`,
+  titulo,
+  campos: [
+    {
+      id: `B${String(index + 1).padStart(2, "0")}.observacao`,
+      nome: "Observação de teste",
+      tipo: "texto_longo",
+      obrigatorio: false,
+    },
+  ],
+}));
+contextualBlocks[0].campos = [
+  { id: "B01.tag", nome: "TAG do espaço", tipo: "texto", obrigatorio: true },
+  { id: "B01.setor", nome: "Área / setor", tipo: "texto", obrigatorio: true },
+];
+Object.assign(contextualBlocks[6], {
+  campos: [
+    {
+      id: "B07.forma",
+      nome: "Forma do espaço",
+      tipo: "selecao",
+      opcoes: ["cilindrica", "prismatica", "informada"],
+      rotulos_opcoes: {
+        cilindrica: "Cilíndrica",
+        prismatica: "Prismática",
+        informada: "Volume informado em documento",
+      },
+      obrigatorio: true,
+    },
+    {
+      id: "B07.diametro",
+      nome: "Diâmetro (m)",
+      tipo: "numero",
+      obrigatorio: true,
+      mostrar_se: { campo: "B07.forma", valor: ["cilindrica"] },
+    },
+    {
+      id: "B07.comprimento",
+      nome: "Comprimento (m)",
+      tipo: "numero",
+      mostrar_se: { campo: "B07.forma", valor: ["prismatica"] },
+    },
+    { id: "B07.altura", nome: "Altura (m)", tipo: "numero", obrigatorio: true },
+    { id: "B07.volume", nome: "Volume preservado (m³)", tipo: "lista", tipo_origem: "calculado" },
+  ],
+});
+Object.assign(contextualBlocks[8], { aplica_se: { familias: ["Silos e armazéns"] } });
+Object.assign(contextualBlocks[13], {
+  campos: [
+    {
+      id: "B14.itens",
+      nome: "Itens avaliados",
+      tipo: "lista",
+      tipo_origem: "checklist",
+      obrigatorio: true,
+    },
+  ],
+});
+Object.assign(contextualBlocks[15], {
+  campos: [
+    {
+      id: "B16.sistemas",
+      nome: "Sistemas levantados",
+      tipo: "lista",
+      obrigatorio: true,
+      rotulo_adicionar: "Adicionar sistema",
+      subcampos: [
+        {
+          id: "categoria",
+          nome: "Categoria",
+          tipo: "selecao",
+          opcoes: ["Ancoragem individual", "Sistema de resgate"],
+        },
+        { id: "sistema", nome: "Descrição do sistema", tipo: "texto" },
+        {
+          id: "existencia",
+          nome: "Existência",
+          tipo: "selecao",
+          opcoes: ["Presente", "Não identificado"],
+        },
+        { id: "quantidade", nome: "Quantidade", tipo: "numero" },
+        {
+          id: "uso",
+          nome: "Situação de uso",
+          tipo: "selecao",
+          opcoes: ["A instalar", "Uso condicionado"],
+        },
+      ],
+    },
+    {
+      id: "B16.documentos_apresentados",
+      nome: "Documentos apresentados pela unidade",
+      tipo: "lista",
+      tipo_origem: "multipla",
+      opcoes: ["Projeto", "Memorial de cálculo", "ART", "Registro de inspeção"],
+    },
+    { id: "B16.exigencias", nome: "Documentação exigida", tipo: "texto_longo", obrigatorio: true },
+  ],
+});
+if (contextual) {
+  const first = rows.locais[0];
+  Object.assign(first, {
+    titulo: "Reservatório sintético Alfa",
+    tag: "EC 01",
+    tipo: "EC",
+    familia: "Tanques",
+    normas: ["NR33"],
+    dados: {
+      setor: "Setor fictício Alfa",
+      enquadramento: "confirmado_ec",
+      acesso: "Acesso superior sintético",
+      geometria: {
+        forma: "cilindrica",
+        diametro: 2.5,
+        altura: 4,
+        volume: 19.63,
+        volume_informado: 21,
+        metodo: "Medição sintética",
+      },
+      cadastro: {
+        material: "Aço",
+        sinalizacao_existe: "Sim",
+        historico_equipamento: "Nenhuma ocorrência operacional registrada na fixture.",
+        emergencia: "Plano sintético a revisar",
+        energias: ["Elétrica"],
+        pontos_bloqueio: "Ponto fictício",
+      },
+      aberturas: [{ modelo: "Tampa", formato: "Circular", diametro: 0.7, posicao: "Superior" }],
+      itens: {
+        ANC: {
+          existencia: "ausente",
+          aplicabilidade: "aplicavel",
+          condicao: "nao_avaliada",
+          acao: "instalar",
+          validacao: "proposta",
+          justificativa: "Justificativa exclusivamente sintética",
+        },
+      },
+      fotos: [
+        {
+          arquivo: "fotos/isolado/ec01.jpg",
+          miniatura: "fotos/isolado/thumb/ec01.jpg",
+          legenda: "Acesso sintético sem bytes recuperados",
+          data: "2026-10-10",
+          autor: "Autor histórico sintético",
+        },
+      ],
+      historico: technicalFixtureEvents,
+      resgate: { cenario: "Cenário fictício", rota: "Rota sintética" },
+      levantamento: {
+        modelo: "Modelo histórico sintético",
+        situacao: "concluido",
+        autor: "Autor histórico sintético",
+      },
+    },
+    resumo_tecnico: {
+      setor: "Setor fictício Alfa",
+      enquadramento: "confirmado_ec",
+      situacao_levantamento: "concluido",
+      memorial: "Em revisão",
+      avaliacoes_total: 1,
+      documentos_total: 2,
+      imagens_total: 0,
+      historico_tecnico_total: 7,
+    },
+  });
+  rows.locais.push({
+    ...structuredClone(first),
+    id: alternateLocalId,
+    cliente_id: secondClient,
+    unidade_id: secondUnit,
+    titulo: "Reservatório sintético Beta",
+    dados: {
+      ...structuredClone(first.dados),
+      setor: "Setor fictício Beta",
+      historico: [
+        {
+          data: "2026-10-19",
+          autor: "Outro autor sintético",
+          acao: "Acontecimento exclusivo Beta",
+          texto: "Este evento pertence somente à unidade Beta.",
+        },
+      ],
+      fotos: [],
+    },
+  });
+  for (const [suffix, tag] of [
+    ["011", "EC 13"],
+    ["012", "EC 28"],
+  ])
+    rows.locais.push({
+      ...structuredClone(first),
+      id: `33000000-0000-4000-8000-000000000${suffix}`,
+      tag,
+      titulo: `Local sintético ${tag}`,
+      dados: {
+        ...structuredClone(first.dados),
+        historico: [
+          {
+            data: "2026-10-20",
+            autor: "Autor sintético",
+            acao: "Divergência de documento",
+            texto: "Divergência da origem preservada na fixture.",
+          },
+        ],
+        fotos: [],
+      },
+    });
+  rows.modelos.push({
+    ...structuredClone(common),
+    id: historicalModelId,
+    titulo: "Roteiro histórico preservado",
+    tipo: "levantamento",
+    cliente_id: null,
+    unidade_id: null,
+    dados: { blocos: [] },
+    conteudo: { schema_version: 1, blocos: [] },
+  });
+  Object.assign(
+    rows.modelos.find((r) => r.id === modelId),
+    {
+      titulo: "MLT-EC-R00 — roteiro sintético de apresentação",
+      dados: { blocos: contextualBlocks },
+    },
+  );
+  rows.levantamentos.push({
+    ...structuredClone(common),
+    id: surveyId,
+    titulo: "Levantamento sintético EC 01",
+    local_id: localId,
+    modelo_id: historicalModelId,
+    dados: {
+      modelo_legado: true,
+      respostas_extraidas_por_caminho: true,
+      estado_historico: "concluido",
+      blocos: [{ id: "B07", titulo: "Matriz histórica de teste", estado: "concluido" }],
+    },
+    modelo_snapshot: { numero: 1, dados: { blocos: [] } },
+    modelo_apresentacao: {
+      id: modelId,
+      numero: 2,
+      projecao_versao: "nr-levantamento-apresentacao-1",
+      origem: "DTO comprovado de teste, sem acesso à produção",
+      dados: { blocos: contextualBlocks },
+    },
+    local_contexto: { tipo: "EC", familia: "Tanques" },
+    local_titulo: first.titulo,
+    local_tag: first.tag,
+    respostas: {
+      "B01.tag": "EC 01",
+      "B01.setor": "Setor fictício Alfa",
+      "B07.forma": "cilindrica",
+      "B07.diametro": 2.5,
+      "B07.altura": 4,
+      "B07.volume": 19.63,
+      "B14.itens": first.dados.itens,
+      "B16.sistemas": [
+        {
+          categoria: "Ancoragem individual",
+          sistema: "Sistema fictício",
+          existencia: "Não identificado",
+          quantidade: 0,
+          uso: "A instalar",
+          fonte_futura: "Propriedade desconhecida preservada",
+        },
+      ],
+      "B16.documentos_apresentados": ["Projeto"],
+      "B16.exigencias": "Conferir documentos e responsável técnico na homologação.",
+    },
+  });
+  Object.assign(rows.documentos[0], {
+    local_id: localId,
+    local_tag: "EC 01",
+    local_titulo: first.titulo,
+    titulo: "Cadastro sintético EC 01 — documento emitido",
+    estado: "emitido_origem",
+    estado_origem: "Emitido na fonte sintética",
+    recebimento: "pendente",
+    resumo_documental: {
+      vigencia: "vigente",
+      vigencia_apresentacao: "vigente",
+      motivo_substituicao: null,
+      data_origem: "2026-10-10",
+      autor_historico: "Responsável sintético",
+      revisao_numero: 1,
+      arquivos_word: 0,
+      arquivos_pdf: 1,
+      arquivos_total: 1,
+      copia_editavel: false,
+      documento_origem_id: null,
+      originais_comprovados: [],
+      copias_editaveis: [
+        {
+          id: "33000000-0000-4000-8000-000000000013",
+          titulo: "Cópia editável sintética do cadastro",
+          estado: "rascunho",
+          revisao_atual_id: null,
+          normas: ["NR33", "NR35"],
+        },
+      ],
+      disponibilidade: "arquivos_confirmados",
+    },
+  });
+  rows.documentos.push(
+    {
+      ...structuredClone(rows.documentos[0]),
+      id: "33000000-0000-4000-8000-000000000013",
+      titulo: "Cópia editável sintética do cadastro",
+      tipo: "derivado_docx",
+      estado: "rascunho",
+      resumo_documental: {
+        ...structuredClone(rows.documentos[0].resumo_documental),
+        copia_editavel: true,
+        documento_origem_id: docId,
+        copias_editaveis: [],
+      },
+    },
+    {
+      ...structuredClone(rows.documentos[0]),
+      id: "33000000-0000-4000-8000-000000000014",
+      titulo: "Procedimento sintético de altura EC 01",
+      normas: ["NR35"],
+      resumo_documental: {
+        ...structuredClone(rows.documentos[0].resumo_documental),
+        copias_editaveis: [],
+      },
+    },
+  );
+  for (const [id, u, title] of [
+    ["015", unit, "Documento geral sintético da fábrica"],
+    ["016", emptyUnit, "Documento sintético da matriz"],
+    ["017", seedUnit, "Documento sintético do sementeiro"],
+  ])
+    rows.documentos.push({
+      ...structuredClone(rows.documentos[0]),
+      id: `33000000-0000-4000-8000-000000000${id}`,
+      unidade_id: u,
+      local_id: null,
+      local_tag: null,
+      local_titulo: null,
+      titulo: title,
+    });
+  rows.documentos.push({
+    ...structuredClone(rows.documentos[0]),
+    id: "33000000-0000-4000-8000-000000000018",
+    cliente_id: secondClient,
+    unidade_id: secondUnit,
+    local_id: alternateLocalId,
+    titulo: "Documento exclusivo EC 01 Beta",
+  });
+  rows.pendencias.push({
+    ...structuredClone(rows.pendencias[0]),
+    id: "33000000-0000-4000-8000-000000000019",
+    titulo: "Tratativa histórica sintética encerrada",
+    estado: "encerrada",
+    tratativa: "Encerramento sintético preservado",
+    dados: {
+      diagnostico: "Diagnóstico de teste",
+      encerrada_em: "2026-10-18",
+      encerrada_por: "Responsável histórico sintético",
+      justificativa: "Justificativa integral de teste",
+    },
+    tratativas: [
+      {
+        texto: "Tratativa de teste preservada",
+        autor_historico: "Responsável histórico sintético",
+        data_origem: "2026-10-18",
+      },
+    ],
+  });
+  rows.pendencias.push({
+    ...structuredClone(rows.pendencias[0]),
+    id: "33000000-0000-4000-8000-000000000020",
+    titulo: "Conferir documentação da matriz sintética",
+    unidade_id: emptyUnit,
+    local_id: null,
+  });
+  rows.pastas[0].resumo_pasta = { subpastas: 0, documentos: 1, arquivos: 1, imagens: 0 };
+}
+const associatedContexts = contextual
+  ? [...contextualUnits]
+  : [{ id: unit, cliente_id: client, nome: "Unidade de testes de apresentação" }];
+const scopedRows = (records, data) =>
+  records.filter(
+    (row) =>
+      (!data.norma || row.normas.includes(data.norma)) &&
+      (!data.cliente_id || !row.cliente_id || row.cliente_id === data.cliente_id) &&
+      (!data.unidade_id || !row.unidade_id || row.unidade_id === data.unidade_id),
+  );
+export async function nrAssociarContexto({ data }) {
+  if (scenario === "restricted" || data.organization_id !== org)
+    throw new Error("Associação não autorizada na fixture.");
+  if (
+    !associatedContexts.some(
+      (unit) => unit.id === data.unidade_id && unit.cliente_id === data.cliente_id,
+    )
+  )
+    associatedContexts.push({
+      id: data.unidade_id,
+      cliente_id: data.cliente_id,
+      nome: "Nova unidade associada de teste",
+    });
+  window.__nexusCalls.push({ name: "nrAssociarContexto", data });
+  return { cliente_id: data.cliente_id, unidade_id: data.unidade_id };
+}
 export async function nrConsultar({ data }) {
+  window.__nexusCalls.push({ name: "nrConsultar", data });
   await new Promise((resolve) => setTimeout(resolve, 90));
   if (scenario === "nr-error") throw new Error("Falha de conexão simulada no laboratório isolado.");
   if (data.recurso === "contexto")
     return {
-      clientes: [{ id: client, nome: "Cliente sintético — laboratório isolado" }],
-      unidades: [{ id: unit, cliente_id: client, nome: "Unidade de testes de apresentação" }],
+      clientes: contextual
+        ? contextualClients
+        : [{ id: client, nome: "Cliente sintético — laboratório isolado" }],
+      unidades: associatedContexts,
       permissoes: Object.fromEntries(
         [
           "visualizar",
@@ -196,22 +682,80 @@ export async function nrConsultar({ data }) {
     };
   if (data.recurso === "painel")
     return {
-      locais: rows.locais.length,
-      documentos: rows.documentos.length,
-      pendencias_abertas: rows.pendencias.filter((r) => r.estado === "aberta").length,
-      levantamentos: rows.levantamentos.length,
+      locais: scopedRows(rows.locais, data).length,
+      documentos: scopedRows(rows.documentos, data).filter((r) => r.tipo !== "derivado_docx")
+        .length,
+      documentos_origem: scopedRows(rows.documentos, data).filter((r) => r.tipo !== "derivado_docx")
+        .length,
+      copias_editaveis: scopedRows(rows.documentos, data).filter((r) => r.tipo === "derivado_docx")
+        .length,
+      arquivos_fisicos: 1,
+      historico_tecnico: contextual
+        ? scopedRows(rows.locais, data)
+            .flatMap((local) =>
+              (local.dados.historico || []).map((event) => ({
+                ...event,
+                autor_historico: event.autor,
+                local_id: local.id,
+                local_tag: local.tag,
+                local_titulo: local.titulo,
+              })),
+            )
+            .slice(0, 6)
+        : [],
+      eventos_globais: contextual
+        ? [
+            {
+              escopo: "global_origem",
+              acao: "Evento global sintético",
+              data: "2026-10-10",
+              texto: "Sem relação comprovada com unidade específica.",
+            },
+          ]
+        : [],
+      pendencias_abertas: scopedRows(rows.pendencias, data).filter((r) => r.estado === "aberta")
+        .length,
+      levantamentos: scopedRows(rows.levantamentos, data).length,
       em_revisao: 0,
       documentos_revisao_necessaria: rows.documentos.filter((row) => row.revisao_necessaria).length,
-      pendencias_prioritarias: rows.pendencias,
+      pendencias_prioritarias: scopedRows(rows.pendencias, data).filter(
+        (r) => r.estado === "aberta",
+      ),
       documentos_revisao: [],
     };
   if (data.recurso === "historico") return pagedEvents(data);
+  if (data.recurso === "historico_tecnico") {
+    const records = scopedRows(rows.locais, data).flatMap((local) =>
+      (local.dados.historico || []).map((event, index) => ({
+        ...event,
+        id: `${local.id}:${index}`,
+        autor_historico: event.autor,
+        local_id: local.id,
+        local_tag: local.tag,
+        local_titulo: local.titulo,
+      })),
+    );
+    const page = data.pagina || 0,
+      limit = data.limite || 25;
+    return {
+      rows: records.slice(page * limit, (page + 1) * limit),
+      total: records.length,
+      pagina: page,
+      limite: limit,
+    };
+  }
   if (data.id) {
-    const row = rows[data.recurso].find((r) => r.id === data.id);
+    const row = scopedRows(rows[data.recurso], data).find((r) => r.id === data.id);
     if (!row) throw new Error("Registro indisponível no laboratório.");
     return { registro: structuredClone(row) };
   }
-  let list = rows[data.recurso].filter((r) => !!r.arquivado_em === !!data.lixeira);
+  let list = scopedRows(rows[data.recurso], data).filter(
+    (r) => !!r.arquivado_em === !!data.lixeira,
+  );
+  if (data.local_id) list = list.filter((row) => row.local_id === data.local_id);
+  if (data.somente_unidade) list = list.filter((row) => !row.local_id);
+  if (data.recurso === "documentos" && data.copias_editaveis === false)
+    list = list.filter((row) => row.tipo !== "derivado_docx");
   if (data.recurso === "pastas" && Object.hasOwn(data, "pasta_id"))
     list = list.filter((row) => row.parent_id === (data.pasta_id || null));
   if (data.busca)
@@ -220,11 +764,18 @@ export async function nrConsultar({ data }) {
     );
   if (data.estado) list = list.filter((r) => r.estado === data.estado);
   if (data.tipo) list = list.filter((r) => r.tipo === data.tipo);
+  const limit = data.limite || 25,
+    page = data.pagina || 0;
+  list.sort(
+    (a, b) =>
+      new Intl.Collator("pt-BR", { numeric: true }).compare(a.tag || a.titulo, b.tag || b.titulo) ||
+      a.id.localeCompare(b.id),
+  );
   return {
-    rows: structuredClone(list),
+    rows: structuredClone(list.slice(page * limit, (page + 1) * limit)),
     total: list.length,
-    pagina: data.pagina || 0,
-    limite: data.limite || 25,
+    pagina: page,
+    limite: limit,
   };
 }
 export async function nrExecutar({ data }) {
@@ -290,6 +841,35 @@ export async function nrArquivoBaixar() {
     url: "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf?token=nr-isolated",
     expira_em: new Date(Date.now() + 60000).toISOString(),
     arquivo: structuredClone(fixtureFile),
+  };
+}
+export async function nrArquivoVersoesListar({ data }) {
+  window.__nexusCalls.push({ name: "nrArquivoVersoesListar", data });
+  return {
+    rows: contextual
+      ? [
+          {
+            id: "34000000-0000-4000-8000-000000000009",
+            arquivo_id: data.id,
+            versao_origem: "historica-sintetica-1",
+            nome_original: "original-historico-de-teste.pdf",
+            modificado_em: "2026-09-10",
+            autor_historico: "Autor histórico sintético",
+            bytes_disponiveis: false,
+            arquivo_historico_id: null,
+            estado: "indisponivel",
+            motivo:
+              "Metadados sintéticos preservados; bytes históricos não disponibilizados no laboratório.",
+            mime: "application/pdf",
+            tamanho_declarado: "1234",
+            retencao_origem: false,
+            capturado_em: "2026-10-30T12:00:00Z",
+          },
+        ]
+      : [],
+    total: contextual ? 1 : 0,
+    pagina: data.pagina || 0,
+    limite: data.limite || 25,
   };
 }
 export async function nrArquivoCancelar() {
@@ -646,41 +1226,111 @@ export async function nrSalvarCalculos({ data }) {
   const input = nrSalvarCalculosSchema.parse(data);
   const row = rows.locais.find((local) => local.id === input.local_id);
   if (!row || input.organization_id !== org) throw new Error("Contexto indisponível.");
-  const snapshot = calcularSnapshotNr(input.entrada, "40000000-0000-4000-8000-000000000001", input.expected_version, input.chave);
-  return nrExecutar({data:{organization_id:org,norma:input.norma,recurso:"locais",comando:"salvar",id:row.id,expected_version:input.expected_version,chave:input.chave,dados:{dados:{...row.dados,calculos:JSON.parse(JSON.stringify(snapshot))}}}});
+  const snapshot = calcularSnapshotNr(
+    input.entrada,
+    "40000000-0000-4000-8000-000000000001",
+    input.expected_version,
+    input.chave,
+  );
+  return nrExecutar({
+    data: {
+      organization_id: org,
+      norma: input.norma,
+      recurso: "locais",
+      comando: "salvar",
+      id: row.id,
+      expected_version: input.expected_version,
+      chave: input.chave,
+      dados: { dados: { ...row.dados, calculos: JSON.parse(JSON.stringify(snapshot)) } },
+    },
+  });
 }
-const importQueues = new Map<string, { row: Record<string, any>; items: Map<number, any>; key: string }>();
+const importQueues = new Map<
+  string,
+  { row: Record<string, any>; items: Map<number, any>; key: string }
+>();
 export async function nrImportFilaPreparar({ data }) {
-  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
-  const existing = [...importQueues.values()].find(q => q.key === data.chave);
+  if (scenario === "restricted" || data.organization_id !== org)
+    throw new Error("Sem permissão na fixture.");
+  const existing = [...importQueues.values()].find((q) => q.key === data.chave);
   if (existing) return structuredClone(existing.row);
-  const row = {id:crypto.randomUUID(),lote_id:crypto.randomUUID(),norma:data.norma,origem:data.origem,estado:"preparando",total:data.total,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
-  importQueues.set(row.id,{row,items:new Map(),key:data.chave}); return structuredClone(row);
+  const row = {
+    id: crypto.randomUUID(),
+    lote_id: crypto.randomUUID(),
+    norma: data.norma,
+    origem: data.origem,
+    estado: "preparando",
+    total: data.total,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  importQueues.set(row.id, { row, items: new Map(), key: data.chave });
+  return structuredClone(row);
 }
 export async function nrImportFilaStaging({ data }) {
-  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
-  const queue=importQueues.get(data.fila_id); if(!queue||queue.row.estado!=="preparando")throw new Error("Fila indisponível.");
-  for(const item of data.itens)queue.items.set(item.sequencia,structuredClone({...item,id:crypto.randomUUID(),estado:"fila",tentativas:0}));
-  return {confirmados:data.itens.length,recebidos:queue.items.size};
+  if (scenario === "restricted" || data.organization_id !== org)
+    throw new Error("Sem permissão na fixture.");
+  const queue = importQueues.get(data.fila_id);
+  if (!queue || queue.row.estado !== "preparando") throw new Error("Fila indisponível.");
+  for (const item of data.itens)
+    queue.items.set(
+      item.sequencia,
+      structuredClone({ ...item, id: crypto.randomUUID(), estado: "fila", tentativas: 0 }),
+    );
+  return { confirmados: data.itens.length, recebidos: queue.items.size };
 }
 export async function nrImportFilaComandar({ data }) {
-  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
-  const queue=importQueues.get(data.fila_id);if(!queue)throw new Error("Fila indisponível.");
-  if(data.acao==="iniciar"&&queue.items.size!==queue.row.total)throw new Error("Staging incompleto.");
-  queue.row.estado={iniciar:"fila",pausar:"pausado",retomar:"fila",cancelar:"cancelado"}[data.acao];return structuredClone(queue.row);
+  if (scenario === "restricted" || data.organization_id !== org)
+    throw new Error("Sem permissão na fixture.");
+  const queue = importQueues.get(data.fila_id);
+  if (!queue) throw new Error("Fila indisponível.");
+  if (data.acao === "iniciar" && queue.items.size !== queue.row.total)
+    throw new Error("Staging incompleto.");
+  queue.row.estado = { iniciar: "fila", pausar: "pausado", retomar: "fila", cancelar: "cancelado" }[
+    data.acao
+  ];
+  return structuredClone(queue.row);
 }
 export async function nrImportFilaConsultar({ data }) {
-  if (scenario === "restricted" || data.organization_id !== org) throw new Error("Sem permissão na fixture.");
-  const page=data.pagina||0;
-  if(!data.id)return {rows:[...importQueues.values()].map(q=>({...q.row,recebidos:q.items.size,processados:0})).slice(page*25,(page+1)*25),total:importQueues.size,pagina:page,agendador_ativo:true};
-  const queue=importQueues.get(data.id);if(!queue)throw new Error("Fila indisponível.");
-  return {fila:structuredClone(queue.row),rows:[...queue.items.values()].slice(page*25,(page+1)*25).map(({payload,destino,...metadata})=>metadata),total:queue.row.total,pagina:page,agendador_ativo:true,recebidos:queue.items.size,processados:0,erros:0};
+  if (scenario === "restricted" || data.organization_id !== org)
+    throw new Error("Sem permissão na fixture.");
+  const page = data.pagina || 0;
+  if (!data.id)
+    return {
+      rows: [...importQueues.values()]
+        .map((q) => ({ ...q.row, recebidos: q.items.size, processados: 0 }))
+        .slice(page * 25, (page + 1) * 25),
+      total: importQueues.size,
+      pagina: page,
+      agendador_ativo: true,
+    };
+  const queue = importQueues.get(data.id);
+  if (!queue) throw new Error("Fila indisponível.");
+  return {
+    fila: structuredClone(queue.row),
+    rows: [...queue.items.values()]
+      .slice(page * 25, (page + 1) * 25)
+      .map(({ payload, destino, ...metadata }) => metadata),
+    total: queue.row.total,
+    pagina: page,
+    agendador_ativo: true,
+    recebidos: queue.items.size,
+    processados: 0,
+    erros: 0,
+  };
 }
-export async function nrPastaOrdenar({data}) {
-  if(scenario==="restricted"||data.organization_id!==org)throw new Error("Sem permissão na fixture.");
-  const row=rows.pastas.find(folder=>folder.id===data.id);if(!row||row.version!==data.expected_version)throw new Error("Conflito de versão da pasta.");
-  const siblings=rows.pastas.filter(folder=>folder.parent_id===row.parent_id&&!folder.arquivado_em);
-  const index=siblings.findIndex(folder=>folder.id===row.id),next=index+(data.direcao==="subir"?-1:1);
-  if(next<0||next>=siblings.length)throw new Error("A pasta já está nesta extremidade.");
-  row.version++; return {registro:structuredClone(row)};
+export async function nrPastaOrdenar({ data }) {
+  if (scenario === "restricted" || data.organization_id !== org)
+    throw new Error("Sem permissão na fixture.");
+  const row = rows.pastas.find((folder) => folder.id === data.id);
+  if (!row || row.version !== data.expected_version)
+    throw new Error("Conflito de versão da pasta.");
+  const siblings = rows.pastas.filter(
+    (folder) => folder.parent_id === row.parent_id && !folder.arquivado_em,
+  );
+  const index = siblings.findIndex((folder) => folder.id === row.id),
+    next = index + (data.direcao === "subir" ? -1 : 1);
+  if (next < 0 || next >= siblings.length) throw new Error("A pasta já está nesta extremidade.");
+  row.version++;
+  return { registro: structuredClone(row) };
 }

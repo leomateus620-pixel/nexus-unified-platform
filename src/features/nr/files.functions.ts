@@ -66,6 +66,25 @@ export const nrArquivosListar = createServerFn({ method: "GET" })
       ),
     );
   });
+/** Histórico de bytes externos por identidade comprovada; jamais usa a revisão atual como antiga. */
+export const nrArquivoVersoesListar = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(s.nrFileHistoricalInput)
+  .handler(async ({ context, data }) =>
+    s.nrFileHistoricalPage.parse(
+      nrResult(
+        await db(context.supabase)
+          .rpc("nr_arquivo_versoes_listar", {
+            p_org: data.organization_id,
+            p_norma: data.norma,
+            p_arquivo: data.id,
+            p_pagina: data.pagina,
+            p_limite: data.limite,
+          })
+          .abortSignal(getRequest().signal),
+      ),
+    ),
+  );
 export const nrArquivoPreparar = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(s.nrFilePrepare)

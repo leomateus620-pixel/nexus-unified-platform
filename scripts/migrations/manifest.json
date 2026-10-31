@@ -267,6 +267,10 @@
     {
       "path": "drizzle/migrations/0047_nr_fila_importacao.sql",
       "sha256": "16b1d71bd71a483962a2b2494bc56b0e5d1d6da9f02d7253ff077a57044bae02"
+    },
+    {
+      "path": "drizzle/migrations/0048_nr_experiencia_contextual.sql",
+      "sha256": "f2a75125e65adf7475b99414082272a9137576911063a73cd432531f3a328c9a"
     }
   ]
 }

@@ -37,6 +37,7 @@ export function NrCatchall({ norma }: { norma: Norma }) {
   const section = segments[1];
   const permitted = [
     "clientes",
+    "conferencia",
     "locais",
     "levantamentos",
     "documentos",

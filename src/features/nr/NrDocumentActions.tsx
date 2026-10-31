@@ -60,7 +60,9 @@ export function NrDocumentActions({
   return (
     <div className="nr-source">
       <p className="nr-muted mb-3">
-        Exportar o conteúdo nativo desta revisão como derivado de consulta.
+        Exportar o conteúdo desta revisão como cópia de consulta. Laudos e procedimentos emitidos
+        são abertos pelos arquivos originais vinculados; esta exportação não substitui sua
+        apresentação completa.
       </p>
       <div className="nr-actions">
         <ActionButton
@@ -70,7 +72,7 @@ export function NrDocumentActions({
           onClick={() => void exportFile("pdf")}
         >
           <Download size={15} />
-          Gerar PDF
+          Exportar consulta PDF
         </ActionButton>
         <ActionButton
           variant="ghost"
@@ -79,7 +81,7 @@ export function NrDocumentActions({
           onClick={() => void exportFile("docx")}
         >
           <Download size={15} />
-          Gerar DOCX
+          Exportar consulta DOCX
         </ActionButton>
       </div>
       {notice && (

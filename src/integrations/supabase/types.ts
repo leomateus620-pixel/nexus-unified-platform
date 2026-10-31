@@ -1543,6 +1543,7 @@ export type Database = {
           created_by: string | null
           id: string
           identificador_normalizado: string | null
+          marca: Json | null
           motivo_arquivo: string | null
           nome_exibicao: string | null
           observacoes: string | null
@@ -1562,6 +1563,7 @@ export type Database = {
           created_by?: string | null
           id?: string
           identificador_normalizado?: string | null
+          marca?: Json | null
           motivo_arquivo?: string | null
           nome_exibicao?: string | null
           observacoes?: string | null
@@ -1581,6 +1583,7 @@ export type Database = {
           created_by?: string | null
           id?: string
           identificador_normalizado?: string | null
+          marca?: Json | null
           motivo_arquivo?: string | null
           nome_exibicao?: string | null
           observacoes?: string | null
@@ -4875,6 +4878,112 @@ export type Database = {
           },
         ]
       }
+      nr_aplicabilidade_decisoes: {
+        Row: {
+          aprovacao_profissional: boolean
+          autoriza_operacao: boolean
+          created_at: string
+          decisao: string
+          evidencias: Json
+          executor: string
+          externo_id: string
+          fonte_id: string | null
+          fonte_sha256: string
+          fonte_sha256_encontrado: string | null
+          id: string
+          justificativa: string
+          motivo_resultado: string
+          normas_anteriores: string[] | null
+          normas_aplicadas: string[] | null
+          normas_decididas: string[]
+          organization_id: string
+          pendencia_esperada_id: string
+          pendencia_id: string | null
+          registro_sha256_antes: string | null
+          registro_sha256_apos: string | null
+          request_sha256: string
+          resultado: string
+          sistema_origem: string
+          versao: string
+        }
+        Insert: {
+          aprovacao_profissional?: boolean
+          autoriza_operacao?: boolean
+          created_at?: string
+          decisao: string
+          evidencias: Json
+          executor?: string
+          externo_id: string
+          fonte_id?: string | null
+          fonte_sha256: string
+          fonte_sha256_encontrado?: string | null
+          id?: string
+          justificativa: string
+          motivo_resultado: string
+          normas_anteriores?: string[] | null
+          normas_aplicadas?: string[] | null
+          normas_decididas: string[]
+          organization_id: string
+          pendencia_esperada_id: string
+          pendencia_id?: string | null
+          registro_sha256_antes?: string | null
+          registro_sha256_apos?: string | null
+          request_sha256: string
+          resultado: string
+          sistema_origem: string
+          versao: string
+        }
+        Update: {
+          aprovacao_profissional?: boolean
+          autoriza_operacao?: boolean
+          created_at?: string
+          decisao?: string
+          evidencias?: Json
+          executor?: string
+          externo_id?: string
+          fonte_id?: string | null
+          fonte_sha256?: string
+          fonte_sha256_encontrado?: string | null
+          id?: string
+          justificativa?: string
+          motivo_resultado?: string
+          normas_anteriores?: string[] | null
+          normas_aplicadas?: string[] | null
+          normas_decididas?: string[]
+          organization_id?: string
+          pendencia_esperada_id?: string
+          pendencia_id?: string | null
+          registro_sha256_antes?: string | null
+          registro_sha256_apos?: string | null
+          request_sha256?: string
+          resultado?: string
+          sistema_origem?: string
+          versao?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nr_aplicabilidade_decisoes_fonte_id_fkey"
+            columns: ["fonte_id"]
+            isOneToOne: false
+            referencedRelation: "nr_fontes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nr_aplicabilidade_decisoes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nr_aplicabilidade_decisoes_organization_id_pendencia_id_fkey"
+            columns: ["organization_id", "pendencia_id"]
+            isOneToOne: false
+            referencedRelation: "nr_pendencias"
+            referencedColumns: ["organization_id", "id"]
+          },
+        ]
+      }
       nr_arquivo_vinculos: {
         Row: {
           arquivo_id: string
@@ -5158,6 +5267,48 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "nr_import_lotes"
             referencedColumns: ["organization_id", "id"]
+          },
+        ]
+      }
+      nr_contextos: {
+        Row: {
+          cliente_id: string
+          created_at: string
+          created_by: string
+          normas: string[]
+          organization_id: string
+          unidade_id: string
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string
+          created_by?: string
+          normas: string[]
+          organization_id: string
+          unidade_id: string
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string
+          created_by?: string
+          normas?: string[]
+          organization_id?: string
+          unidade_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nr_contextos_organization_id_cliente_id_unidade_id_fkey"
+            columns: ["organization_id", "cliente_id", "unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["organization_id", "cliente_id", "id"]
+          },
+          {
+            foreignKeyName: "nr_contextos_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -5668,6 +5819,122 @@ export type Database = {
           },
         ]
       }
+      nr_foto_ocorrencias: {
+        Row: {
+          arquivo_id: string | null
+          autoria_historica: string | null
+          campo: string
+          categoria_origem: string | null
+          cliente_id: string
+          created_at: string
+          data_origem: string | null
+          evidencia: Json
+          id: string
+          legenda_origem: string
+          local_id: string
+          miniatura_arquivo_id: string | null
+          miniatura_proveniencia: string | null
+          ocorrencia_origem: string
+          ordem: number
+          organization_id: string
+          origem: string
+          referencia_miniatura: string | null
+          referencia_original: string
+          unidade_id: string
+        }
+        Insert: {
+          arquivo_id?: string | null
+          autoria_historica?: string | null
+          campo?: string
+          categoria_origem?: string | null
+          cliente_id: string
+          created_at?: string
+          data_origem?: string | null
+          evidencia: Json
+          id?: string
+          legenda_origem?: string
+          local_id: string
+          miniatura_arquivo_id?: string | null
+          miniatura_proveniencia?: string | null
+          ocorrencia_origem: string
+          ordem: number
+          organization_id: string
+          origem: string
+          referencia_miniatura?: string | null
+          referencia_original: string
+          unidade_id: string
+        }
+        Update: {
+          arquivo_id?: string | null
+          autoria_historica?: string | null
+          campo?: string
+          categoria_origem?: string | null
+          cliente_id?: string
+          created_at?: string
+          data_origem?: string | null
+          evidencia?: Json
+          id?: string
+          legenda_origem?: string
+          local_id?: string
+          miniatura_arquivo_id?: string | null
+          miniatura_proveniencia?: string | null
+          ocorrencia_origem?: string
+          ordem?: number
+          organization_id?: string
+          origem?: string
+          referencia_miniatura?: string | null
+          referencia_original?: string
+          unidade_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nr_foto_ocorrencias_organization_id_cliente_id_unidade_id__fkey"
+            columns: ["organization_id", "cliente_id", "unidade_id", "local_id"]
+            isOneToOne: false
+            referencedRelation: "nr_locais"
+            referencedColumns: [
+              "organization_id",
+              "cliente_id",
+              "unidade_id",
+              "id",
+            ]
+          },
+          {
+            foreignKeyName: "nr_foto_ocorrencias_organization_id_cliente_id_unidade_id_fkey1"
+            columns: [
+              "organization_id",
+              "cliente_id",
+              "unidade_id",
+              "arquivo_id",
+            ]
+            isOneToOne: false
+            referencedRelation: "nr_arquivos"
+            referencedColumns: [
+              "organization_id",
+              "cliente_id",
+              "unidade_id",
+              "id",
+            ]
+          },
+          {
+            foreignKeyName: "nr_foto_ocorrencias_organization_id_cliente_id_unidade_id_fkey2"
+            columns: [
+              "organization_id",
+              "cliente_id",
+              "unidade_id",
+              "miniatura_arquivo_id",
+            ]
+            isOneToOne: false
+            referencedRelation: "nr_arquivos"
+            referencedColumns: [
+              "organization_id",
+              "cliente_id",
+              "unidade_id",
+              "id",
+            ]
+          },
+        ]
+      }
       nr_historico: {
         Row: {
           antes: Json | null
@@ -5724,6 +5991,83 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      nr_imagem_representacoes: {
+        Row: {
+          altura: number | null
+          arquivo_id: string
+          caminho: string | null
+          created_at: string
+          erro: string | null
+          estado: string
+          id: string
+          largura: number | null
+          lease: string | null
+          lease_ate: string | null
+          mime: string | null
+          organization_id: string
+          original_sha256: string
+          processado_em: string | null
+          processador: string
+          proveniencia: string
+          sha256: string | null
+          tamanho: number | null
+          tentativas: number
+          variante: string
+        }
+        Insert: {
+          altura?: number | null
+          arquivo_id: string
+          caminho?: string | null
+          created_at?: string
+          erro?: string | null
+          estado?: string
+          id?: string
+          largura?: number | null
+          lease?: string | null
+          lease_ate?: string | null
+          mime?: string | null
+          organization_id: string
+          original_sha256: string
+          processado_em?: string | null
+          processador?: string
+          proveniencia?: string
+          sha256?: string | null
+          tamanho?: number | null
+          tentativas?: number
+          variante: string
+        }
+        Update: {
+          altura?: number | null
+          arquivo_id?: string
+          caminho?: string | null
+          created_at?: string
+          erro?: string | null
+          estado?: string
+          id?: string
+          largura?: number | null
+          lease?: string | null
+          lease_ate?: string | null
+          mime?: string | null
+          organization_id?: string
+          original_sha256?: string
+          processado_em?: string | null
+          processador?: string
+          proveniencia?: string
+          sha256?: string | null
+          tamanho?: number | null
+          tentativas?: number
+          variante?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nr_imagem_representacoes_organization_id_arquivo_id_fkey"
+            columns: ["organization_id", "arquivo_id"]
+            isOneToOne: false
+            referencedRelation: "nr_arquivos"
+            referencedColumns: ["organization_id", "id"]
           },
         ]
       }
@@ -11651,6 +11995,15 @@ export type Database = {
         Args: { _id: string; _org: string }
         Returns: undefined
       }
+      nr_aplicabilidade_manifesto_aplicar: {
+        Args: {
+          p_manifesto: Json
+          p_org: string
+          p_sistema: string
+          p_versao: string
+        }
+        Returns: Json
+      }
       nr_arquivo_alterar: {
         Args: {
           p_chave: string
@@ -11749,6 +12102,16 @@ export type Database = {
         }
         Returns: Json
       }
+      nr_arquivo_versoes_listar: {
+        Args: {
+          p_arquivo: string
+          p_limite?: number
+          p_norma: string
+          p_org: string
+          p_pagina?: number
+        }
+        Returns: Json
+      }
       nr_concluir_importacao: {
         Args: { p_lote: string; p_org: string }
         Returns: Json
@@ -11765,6 +12128,33 @@ export type Database = {
           p_recurso: string
         }
         Returns: Json
+      }
+      nr_consultar_base_68: {
+        Args: {
+          p_filtros?: Json
+          p_norma: string
+          p_org: string
+          p_recurso: string
+        }
+        Returns: Json
+      }
+      nr_contexto_associar: {
+        Args: {
+          p_chave: string
+          p_cliente: string
+          p_normas: string[]
+          p_org: string
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      nr_contextos_acervo: {
+        Args: { p_org: string }
+        Returns: {
+          cliente_id: string
+          normas: string[]
+          unidade_id: string
+        }[]
       }
       nr_documento_campos: {
         Args: {
@@ -11786,8 +12176,24 @@ export type Database = {
         }
         Returns: Json
       }
+      nr_documento_copia_comprovada: {
+        Args: { p_dados: Json; p_org: string }
+        Returns: boolean
+      }
       nr_documento_de_modelo: {
         Args: { p_chave: string; p_dados: Json; p_norma: string; p_org: string }
+        Returns: Json
+      }
+      nr_documento_e_copia: {
+        Args: { p_dados: Json; p_tipo: string }
+        Returns: boolean
+      }
+      nr_documento_resumo: {
+        Args: { p_id: string; p_norma: string; p_org: string }
+        Returns: Json
+      }
+      nr_documento_resumo_base_68: {
+        Args: { p_id: string; p_norma: string; p_org: string }
         Returns: Json
       }
       nr_documento_revisar_impactos: {
@@ -11820,6 +12226,14 @@ export type Database = {
         Args: { p_norma: string; p_url: string }
         Returns: boolean
       }
+      nr_foto_ocorrencia_importar: {
+        Args: { p_dados: Json; p_org: string }
+        Returns: string
+      }
+      nr_foto_ocorrencias_ler: {
+        Args: { p_local: string; p_org: string }
+        Returns: Json
+      }
       nr_historico_detalhe: {
         Args: { p_id: number; p_norma: string; p_org: string }
         Returns: Json
@@ -11835,6 +12249,19 @@ export type Database = {
         }
         Returns: Json
       }
+      nr_historico_tecnico_consultar: {
+        Args: { p_filtros: Json; p_norma: string; p_org: string }
+        Returns: Json
+      }
+      nr_imagem_representacao_ler: {
+        Args: { p_arquivo: string; p_org: string; p_variante: string }
+        Returns: Json
+      }
+      nr_imagem_trabalho_concluir: {
+        Args: { p_id: string; p_lease: string; p_resultado: Json }
+        Returns: undefined
+      }
+      nr_imagem_trabalho_obter: { Args: { p_limite?: number }; Returns: Json }
       nr_import_fila_comandar: {
         Args: { p_acao: string; p_fila: string; p_org: string }
         Returns: Json
@@ -11898,6 +12325,10 @@ export type Database = {
         }
         Returns: string
       }
+      nr_levantamento_apresentacao: {
+        Args: { p_id: string; p_norma: string; p_org: string }
+        Returns: Json
+      }
       nr_levantamento_diagnostico: {
         Args: { p_local: Json; p_modelo: Json; p_respostas: Json }
         Returns: Json
@@ -11907,6 +12338,18 @@ export type Database = {
         Returns: Json
       }
       nr_linha: { Args: { p_linha: Json; p_recurso: string }; Returns: Json }
+      nr_linha_base_67: {
+        Args: { p_linha: Json; p_recurso: string }
+        Returns: Json
+      }
+      nr_local_resumo: {
+        Args: { p_id: string; p_norma: string; p_org: string }
+        Returns: Json
+      }
+      nr_local_resumo_base_68: {
+        Args: { p_id: string; p_norma: string; p_org: string }
+        Returns: Json
+      }
       nr_modelo_publicacao_contexto: {
         Args: { p_id: string; p_norma: string; p_org: string }
         Returns: Json
@@ -11922,6 +12365,10 @@ export type Database = {
         }
         Returns: Json
       }
+      nr_painel_contadores_documentos: {
+        Args: { p_filtros?: Json; p_norma: string; p_org: string }
+        Returns: Json
+      }
       nr_pasta_ordenar: {
         Args: {
           p_chave: string
@@ -11931,6 +12378,10 @@ export type Database = {
           p_norma: string
           p_org: string
         }
+        Returns: Json
+      }
+      nr_pendencia_aplicabilidade_candidata: {
+        Args: { p_id: string; p_org: string }
         Returns: Json
       }
       nr_registro_visivel: {
@@ -11963,6 +12414,8 @@ export type Database = {
         }
         Returns: Json
       }
+      nr_tag_ordem: { Args: { p_tag: string }; Returns: string[] }
+      nr_uuid_seguro: { Args: { p_valor: string }; Returns: string }
       nr_valor_preenchido: { Args: { p_valor: Json }; Returns: boolean }
       nr_vincular_documentos_importados: {
         Args: {

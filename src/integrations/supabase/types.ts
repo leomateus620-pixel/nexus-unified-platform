@@ -6071,6 +6071,33 @@ export type Database = {
           },
         ]
       }
+      nr_imagem_worker_tickets: {
+        Row: {
+          consumido_em: string | null
+          criado_em: string
+          expira_em: string
+          finalidade: string
+          processador: string
+          ticket_sha256: string
+        }
+        Insert: {
+          consumido_em?: string | null
+          criado_em?: string
+          expira_em: string
+          finalidade?: string
+          processador?: string
+          ticket_sha256: string
+        }
+        Update: {
+          consumido_em?: string | null
+          criado_em?: string
+          expira_em?: string
+          finalidade?: string
+          processador?: string
+          ticket_sha256?: string
+        }
+        Relationships: []
+      }
       nr_import_fila_eventos: {
         Row: {
           acao: string

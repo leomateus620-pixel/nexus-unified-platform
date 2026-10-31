@@ -12269,7 +12269,11 @@ export type Database = {
         Args: { p_id: string; p_lease: string; p_resultado: Json }
         Returns: undefined
       }
-      nr_imagem_trabalho_obter: { Args: { p_limite?: number }; Returns: Json }
+      nr_imagem_trabalho_obter:
+        | { Args: { p_limite?: number }; Returns: Json }
+        | { Args: { p_limite: number; p_processador: string }; Returns: Json }
+      nr_imagem_worker_disparar: { Args: never; Returns: Json }
+      nr_imagem_worker_validar: { Args: { p_token: string }; Returns: boolean }
       nr_import_fila_comandar: {
         Args: { p_acao: string; p_fila: string; p_org: string }
         Returns: Json

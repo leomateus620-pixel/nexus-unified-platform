@@ -12230,6 +12230,10 @@ export type Database = {
         Args: { p_norma: string; p_url: string }
         Returns: boolean
       }
+      nr_foto_ocorrencia_completar: {
+        Args: { p_dados: Json; p_org: string }
+        Returns: string
+      }
       nr_foto_ocorrencia_importar: {
         Args: { p_dados: Json; p_org: string }
         Returns: string

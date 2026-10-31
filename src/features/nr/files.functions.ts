@@ -273,6 +273,7 @@ export const nrArquivoImagem = createServerFn({ method: "POST" })
       altura?: number;
       sha256?: string;
       caminho?: string;
+      processador?: string;
     };
     let representacao: Representacao | null = null;
     if (data.variante !== "original") {
@@ -306,7 +307,9 @@ export const nrArquivoImagem = createServerFn({ method: "POST" })
       estado: "disponivel",
       original_disponivel: originalDisponivel,
       variante: data.variante,
-      versao: representacao?.sha256 || arquivo.sha256,
+      versao: representacao?.sha256
+        ? `${representacao.processador || "nexus-pillow-v1"}:${representacao.sha256}`
+        : arquivo.sha256,
       url: signed.signedUrl,
       expira_em: new Date(Date.now() + 60000).toISOString(),
       largura: representacao?.largura || null,

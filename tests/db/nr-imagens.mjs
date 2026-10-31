@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import postgres from "postgres";
 import { randomUUID } from "node:crypto";
+import { testImageDispatch } from "./nr-imagem-dispatch.mjs";
 if (
   process.env.PGTEST_EPHEMERAL !== "1" ||
   process.env.PGTEST_HOST !== "127.0.0.1" ||
@@ -70,11 +71,15 @@ try {
     (tx) =>
       tx`select public.nr_arquivo_confirmar(${org},${file.id},${eng},${file.sha256},${file.tamanho},${file.mime})`,
   );
+  // Simulate pre0058 rows alongside the new processor; the legacy worker must keep its queue.
+  await sql`insert into public.nr_imagem_representacoes(organization_id,arquivo_id,original_sha256,variante,processador)
+    select ${org},${file.id},${file.sha256},v,'nexus-pillow-v1'
+    from unnest(array['miniatura_384','previa_768'])v`;
   assert.equal(
     (
       await sql`select count(*)::int n from public.nr_imagem_representacoes where arquivo_id=${file.id}`
     )[0].n,
-    2,
+    4,
   );
   assertions++;
   await reject(() => as(eng, (tx) => tx`select public.nr_imagem_trabalho_obter(1)`), "42501");
@@ -212,6 +217,206 @@ try {
     "disponivel",
   );
   assertions += 7;
+  const newJobsBefore =
+    await sql`select id,estado,lease,lease_ate,tentativas,caminho from public.nr_imagem_representacoes
+    where arquivo_id=${file.id} and processador='nexus-storage-transform-v1' order by id`;
+  assert.equal(newJobsBefore.length, 2);
+  assert.equal(
+    newJobsBefore.every((job) => job.estado === "fila" && job.tentativas === 0),
+    true,
+  );
+  assert.equal(
+    newJobsBefore.every((job) => job.caminho.includes("/nexus-storage-transform-v1/")),
+    true,
+  );
+  assert.equal(ready.caminho.includes("/nexus-pillow-v1/"), true);
+  assertions += 4;
+  await reject(
+    () =>
+      as(eng, (tx) => tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1')`),
+    "42501",
+  );
+  await reject(
+    () => service((tx) => tx`select public.nr_imagem_trabalho_obter(1,'unknown-worker')`),
+    "23514",
+  );
+  await reject(
+    () =>
+      service((tx) => tx`select public.nr_imagem_trabalho_obter(2,'nexus-storage-transform-v1')`),
+    "23514",
+  );
+  await reject(
+    () =>
+      as(
+        eng,
+        (tx) => tx`select lease from public.nr_imagem_representacoes where arquivo_id=${file.id}`,
+      ),
+    "42501",
+  );
+  await reject(
+    () =>
+      as(
+        eng,
+        (tx) =>
+          tx`select tentativas from public.nr_imagem_representacoes where arquivo_id=${file.id}`,
+      ),
+    "42501",
+  );
+  const nativeJobs = [];
+  for (let index = 0; index < 2; index++) {
+    const claimed = (
+      await service(
+        (tx) => tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1') r`,
+      )
+    )[0].r;
+    assert.equal(claimed.length, 1);
+    assert.equal(claimed[0].processador, "nexus-storage-transform-v1");
+    assert.equal(claimed[0].original_sha256, file.sha256);
+    assert.equal(
+      (
+        await service(
+          (tx) => tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1') r`,
+        )
+      )[0].r.length,
+      0,
+      "A second invocation cannot claim work while a native lease is active",
+    );
+    assertions += 4;
+    await service(
+      (tx) =>
+        tx`select public.nr_imagem_trabalho_concluir(${claimed[0].id},${claimed[0].lease},${tx.json(result)})`,
+    );
+    nativeJobs.push(claimed[0]);
+  }
+  const nativeReady = (
+    await as(
+      eng,
+      (tx) => tx`select public.nr_imagem_representacao_ler(${org},${file.id},'miniatura_384') r`,
+    )
+  )[0].r;
+  assert.equal(nativeReady.processador, "nexus-storage-transform-v1");
+  assert.equal(
+    "tentativas" in nativeReady || "lease" in nativeReady || "erro" in nativeReady,
+    false,
+  );
+  assert.equal(nativeReady.caminho.includes("/nexus-storage-transform-v1/"), true);
+  assert.equal(
+    (await sql`select lease from public.nr_imagem_representacoes where id=${previewJob.id}`)[0]
+      .lease,
+    resumed[0].lease,
+  );
+  assertions += 4;
+  await sql`insert into storage.objects(bucket_id,name)values('nexus-nr-acervo',${nativeReady.caminho})`;
+  assert.equal(
+    (
+      await as(
+        eng,
+        (tx) => tx`select count(*)::int n from storage.objects where name=${nativeReady.caminho}`,
+      )
+    )[0].n,
+    1,
+  );
+  assert.equal(
+    (
+      await as(
+        outsider,
+        (tx) => tx`select count(*)::int n from storage.objects where name=${nativeReady.caminho}`,
+      )
+    )[0].n,
+    0,
+  );
+  assertions += 2;
+  const nativeSnapshot =
+    await sql`select * from public.nr_imagem_representacoes where arquivo_id=${file.id} order by id`;
+  await sql`update public.nr_arquivos set estado='vinculado',bytes_verificados=true where id=${file.id}`;
+  assert.deepEqual(
+    await sql`select * from public.nr_imagem_representacoes where arquivo_id=${file.id} order by id`,
+    nativeSnapshot,
+  );
+  assertions++;
+  await sql`insert into public.nr_imagem_representacoes(organization_id,arquivo_id,original_sha256,variante,processador)
+    values(${org},${file.id},${"0".repeat(64)},'miniatura_384','nexus-storage-transform-v1')`;
+  assert.equal(
+    (
+      await service(
+        (tx) => tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1') r`,
+      )
+    )[0].r.length,
+    0,
+  );
+  assert.equal(
+    (
+      await as(
+        eng,
+        (tx) => tx`select public.nr_imagem_representacao_ler(${org},${file.id},'miniatura_384') r`,
+      )
+    )[0].r.id,
+    nativeReady.id,
+  );
+  assertions += 2;
+  const concurrentMeta = { ...meta, nome: "concurrent-native.jpg", sha256: "d".repeat(64) };
+  const concurrentFile = (
+    await as(
+      eng,
+      (tx) =>
+        tx`select public.nr_arquivo_preparar(${org},${randomUUID()},${tx.json(concurrentMeta)}) r`,
+    )
+  )[0].r;
+  await sql`insert into storage.objects(bucket_id,name,metadata)values('nexus-nr-acervo',${concurrentFile.caminho},${sql.json({ size: concurrentMeta.tamanho, mimetype: concurrentMeta.mime })})`;
+  await service(
+    (tx) =>
+      tx`select public.nr_arquivo_confirmar(${org},${concurrentFile.id},${eng},${concurrentFile.sha256},${concurrentFile.tamanho},${concurrentFile.mime})`,
+  );
+  let markNativeHeld, releaseNative;
+  const nativeHeld = new Promise((resolve) => {
+    markNativeHeld = resolve;
+  });
+  const nativeGate = new Promise((resolve) => {
+    releaseNative = resolve;
+  });
+  const nativeWriter = service(async (tx) => {
+    const claimed = (
+      await tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1') r`
+    )[0].r;
+    markNativeHeld(claimed);
+    await nativeGate;
+    return claimed;
+  });
+  const writerJobs = await nativeHeld;
+  try {
+    assert.equal(writerJobs.length, 1);
+    assert.equal(writerJobs[0].arquivo_id, concurrentFile.id);
+    assert.deepEqual(
+      (
+        await service(
+          (tx) => tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1') r`,
+        )
+      )[0].r,
+      [],
+      "A concurrent transaction cannot claim before the first native claim commits",
+    );
+    assertions += 3;
+  } finally {
+    releaseNative();
+  }
+  await nativeWriter;
+  await service(
+    (tx) =>
+      tx`select public.nr_imagem_trabalho_concluir(${writerJobs[0].id},${writerJobs[0].lease},${tx.json(result)})`,
+  );
+  const remainingNative = (
+    await service(
+      (tx) => tx`select public.nr_imagem_trabalho_obter(1,'nexus-storage-transform-v1') r`,
+    )
+  )[0].r;
+  assert.equal(remainingNative.length, 1);
+  assert.equal(remainingNative[0].arquivo_id, concurrentFile.id);
+  await service(
+    (tx) =>
+      tx`select public.nr_imagem_trabalho_concluir(${remainingNative[0].id},${remainingNative[0].lease},${tx.json(result)})`,
+  );
+  assertions += 2;
+  assertions += await testImageDispatch({ sql, org, eng, client, unit, local, as, service });
   const occurrence = {
     local_id: local,
     origem: "isolated",
@@ -293,6 +498,13 @@ try {
   const wrongSource = await importedImage({ source: "other-source" });
   const pendingOriginal = await importedImage({ confirmed: false });
   const falseOriginal = await importedImage({ tipo: "miniatura_origem" });
+  assert.equal(
+    (
+      await sql`select count(*)::int n from public.nr_imagem_representacoes where arquivo_id=${falseOriginal.id}`
+    )[0].n,
+    0,
+  );
+  assertions++;
   const foreignUnit = randomUUID();
   await sql`insert into public.unidades(id,organization_id,cliente_id,nome)values(${foreignUnit},${org},${client},'Other image unit')`;
   const foreignImage = await importedImage({ targetUnit: foreignUnit });

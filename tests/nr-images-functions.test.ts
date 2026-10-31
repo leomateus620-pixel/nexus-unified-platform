@@ -21,7 +21,12 @@ vi.mock("@tanstack/react-start", () => ({
 }));
 import { nrArquivoImagem } from "../src/features/nr/files.functions";
 const id = (n: number) => `c7330000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-function setup({ permission = true, revoked = false, state = "disponivel" } = {}) {
+function setup({
+  permission = true,
+  revoked = false,
+  state = "disponivel",
+  processor = "nexus-pillow-v1",
+} = {}) {
   const file = {
     id: id(4),
     organization_id: id(1),
@@ -66,6 +71,7 @@ function setup({ permission = true, revoked = false, state = "disponivel" } = {}
             sha256: "b".repeat(64),
             largura: 288,
             altura: 384,
+            processador: processor,
           },
     error: null,
   }));
@@ -96,8 +102,17 @@ describe("representações privadas de imagem NR", () => {
       original_disponivel: true,
       largura: 288,
       altura: 384,
-      versao: "b".repeat(64),
+      versao: `nexus-pillow-v1:${"b".repeat(64)}`,
     });
+  });
+  it("distingue a versão do processador mesmo quando o hash do derivado é igual", async () => {
+    const test = setup({ processor: "nexus-storage-transform-v1" });
+    const result = await invoke({
+      context: test.context,
+      data: { organization_id: id(1), id: id(4), variante: "miniatura_384" },
+    });
+    expect(result.versao).toBe(`nexus-storage-transform-v1:${"b".repeat(64)}`);
+    expect(test.sign).toHaveBeenCalledWith("org/representacoes/confirmed.webp", 60);
   });
   it("mantém original disponível sem baixar bytes quando miniatura está pendente", async () => {
     const test = setup({ state: "processando" });

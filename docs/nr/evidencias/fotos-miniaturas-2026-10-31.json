@@ -1,6 +1,6 @@
 {
   "format": "nexus-nr-photo-recovery-receipt/1",
-  "captured_at": "2026-10-31T03:59:27.969129+00:00",
+  "captured_at": "2026-10-31T04:31:40.796459+00:00",
   "code_baseline": "476cd7ecde56aae5a235af906157d39e4072a40c",
   "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
   "supabase_ref": "yhtgijtllvgzoqtfcgal",
@@ -11,52 +11,75 @@
       "position": 72,
       "sha256": "092665765bdb91ee37f5facac5320929afda48132cfe6ce57a4add5eefeccd22"
     },
-    "ocorrencias_registradas": 15,
+    "ocorrencias_registradas": 322,
     "variantes_por_estado": {
       "disponivel": 1114,
-      "fila": 0,
+      "fila": 490,
       "processando": 0,
       "falhou": 0
     },
     "variantes_bytes": 52513516,
     "media_confirmation": {
-      "source_thumbnail_files": 8,
-      "storage_verified_bytes": 85406,
-      "occurrences_with_verified_thumbnail": 15,
-      "occurrences_with_pending_original": 15,
-      "context_mismatches": 0,
+      "source_original_files": 245,
+      "source_thumbnail_files": 245,
+      "storage_verified_bytes": 27596155,
+      "occurrences_with_verified_original": 322,
+      "occurrences_with_verified_thumbnail": 322,
+      "occurrences_with_pending_original": 0,
+      "context_reference_mismatches": 0,
+      "existing_historical_rows_preserved": 15,
       "private_bucket": true,
       "anonymous_read_rpc": false,
-      "browser_import_rpc": false
+      "browser_import_rpc": false,
+      "authenticated_read_rpc": true,
+      "browser_completer_rpc": false,
+      "service_completer_rpc": false,
+      "bucket_file_size_limit_bytes": 52428800
     },
-    "latest_verified_ledger_position": 75
+    "latest_verified_ledger_position": 76
   },
-  "scope": "Eight source thumbnails have actual private Storage GET/SHA/MIME/size proof and 15 canonical occurrences. The initial 1114 variants have a final authenticated GET/bytes/MIME/SHA worker receipt. Source originals are not yet confirmed in Nexus.",
+  "scope": "All 245 source photographs and 245 source thumbnails have full authenticated private Storage GET/SHA/MIME/size proof, with 322 canonical occurrences and preserved source fields. The initial 1114 variants have a separate final worker receipt; the 490 new derivatives are processing and require their own final receipt.",
   "isolated_validation": {
     "postgresql": "17",
-    "migrations_clean_install": 75,
+    "migrations_clean_install": 76,
     "replay_pending": 0,
-    "sql_assertions": 40,
+    "sql_assertions": 82,
     "python_image_tests": 3,
     "frontend_targeted_tests": 20,
     "shared_folder_reconciliation_tests": 1,
     "sql_brand_assertions": 18,
-    "source_plan_tests": 5
+    "source_plan_tests": 8
   },
   "recovery_acquisition": {
-    "source_thumbnail_files_distinct": 8,
-    "bytes": 85406,
-    "source_originals_verified": 0,
+    "source_thumbnail_files_distinct": 245,
+    "bytes": 27596155,
+    "source_originals_verified": 245,
     "private_occurrence_manifest": 322,
     "private_expected_originals": 245,
     "private_expected_source_thumbnails": 245,
-    "source_originals_locally_verified": 1,
-    "source_originals_storage_verified": 0,
-    "source_thumbnails_storage_verified": 8,
-    "canonical_occurrences_registered": 15,
-    "source_thumbnails_remaining": 237,
-    "source_originals_remaining_in_nexus": 245,
-    "native_download_proof": "Private per-file observed reference, dimensions, acquisition method, SHA and size; source arrays compared with the current owner-session archive."
+    "source_originals_locally_verified": 245,
+    "source_originals_storage_verified": 245,
+    "source_thumbnails_storage_verified": 245,
+    "canonical_occurrences_registered": 322,
+    "source_thumbnails_remaining": 0,
+    "source_originals_remaining_in_nexus": 0,
+    "native_download_proof": "Earlier native Chrome and owner-project acquisitions retained independently. The final full source package exactly matches an existing authorized source report and all 490 snapshot paths; each ZIP entry, decoded JPEG, SHA, size and dimensions were verified locally before upload.",
+    "source_exact_paths_verified": 490,
+    "source_assets_distinct": 245,
+    "source_unique_binary_hashes": 484,
+    "full_source_archive": {
+      "bytes": 32641129,
+      "sha256": "0e984002ed901a8f2c0595ae25b11220dd713f2bb1b6f2ad7f14dc8e63b05d1f",
+      "files": 526,
+      "photo_entries": 491,
+      "originals": 245,
+      "source_thumbnails": 245,
+      "metadata_maps": 1,
+      "missing_expected_paths": 0,
+      "alias_matches": 0
+    },
+    "source_original_bytes": 23519752,
+    "source_thumbnail_bytes": 4076403
   },
   "source_thumbnail_storage_receipt": {
     "format": "nexus-storage-readback-receipt-v1",
@@ -86,5 +109,123 @@
     "supervisor_permanente": false,
     "source_message_id": "umsg_01m681pm6zeggvzr7nyrnr8t91",
     "response_message_id": "main:agent#00000000009700#don:JFCOHQVW"
+  },
+  "full_source_storage_receipt": {
+    "format": "nexus-storage-readback-receipt-v1",
+    "project_ref": "yhtgijtllvgzoqtfcgal",
+    "bucket": "nexus-nr-acervo",
+    "verified": 490,
+    "bytes": 27596155,
+    "errors": 0,
+    "manifest_mismatches": 0,
+    "unfinished": 0,
+    "canonical_sha256": "1345a024fa2065dfa4d5048044aa036c7f3edfe7ae65bbbfe4df45d5ab05eab5",
+    "total_targets": 490,
+    "each_get_size_mime_sha_checked": true,
+    "exit_codes": {
+      "part_0001": 0,
+      "part_0002": 0
+    },
+    "source_message_id": "umsg_01m6831b64fxvvg4das9nvmqax",
+    "response_message_id": "main:agent#00000000009793#don:JGFWTHWH"
+  },
+  "new_source_variant_worker": {
+    "source_message_id": "umsg_01m683txygfcgvqxexn357e85t",
+    "expected_jobs": 490,
+    "state": "running",
+    "final_receipt": null,
+    "bounded": true,
+    "supervisor_installed_by_this_run": false,
+    "initial_preflight_message_id": "umsg_01m683htmefqz8gfjdnw61s78y",
+    "initial_preflight": "temporary runtime absent; no jobs consumed",
+    "runtime_restore": "attached unchanged worker SHA and pinned Pillow11.3.0 requested",
+    "actual_runtime": {
+      "python": "3.13.12",
+      "pillow": "11.3.0",
+      "libwebp": "1.5.0",
+      "worker_sha256": "3b8771ba6f0d970a7d9d7666d57a99d43e4aee3f47fea9a3922d0ff79489bc86",
+      "processador": "nexus-pillow-v1"
+    },
+    "initial_checkpoint": {
+      "processed": 26,
+      "failed": 0,
+      "get_verified_bytes": 1461764,
+      "terminal": false
+    }
+  },
+  "native_storage_transform_probe": {
+    "native_transform_probe": {
+      "original_authorized": true,
+      "original_status": 200,
+      "original_sha_matches": true,
+      "original_size_matches": true,
+      "transform_success": true,
+      "status": 200,
+      "error_category": null,
+      "error_message_sanitized": null,
+      "mime": "image/jpeg",
+      "bytes": 21671,
+      "width": 288,
+      "height": 384,
+      "sha256": "6233d7a873f78a944d7a89d9eb527e145a5648620dbe0328dcb6ca33728db106"
+    },
+    "runtime_inventory": {
+      "cwd": "/dev-server",
+      "repository_worker": {
+        "exists": false,
+        "sha256": null
+      },
+      "temporary_worker": {
+        "exists": false,
+        "sha256": null
+      },
+      "temporary_venv_python": {
+        "exists": false,
+        "sha256": null
+      },
+      "base_python": "3.13.12",
+      "pillow": "12.1.1",
+      "libwebp": "1.6.0"
+    },
+    "native_transform_observed": true,
+    "derivative_jobs_executed": 0,
+    "output_uploaded": false,
+    "state_changed": false,
+    "source_message_id": "umsg_01m683pg1vfztv2gbcasepxj0h",
+    "response_message_id": "main:agent#00000000009889#don:RKFMKJEY"
+  },
+  "native_storage_webp_probe": {
+    "native_webp_probe": {
+      "original_authorized": true,
+      "original_status": 200,
+      "original_sha_matches": true,
+      "original_size_matches": true,
+      "accept": "image/webp",
+      "transform_success": true,
+      "status": 200,
+      "mime": "image/webp",
+      "decoded_format": "WEBP",
+      "width": 288,
+      "height": 384,
+      "bytes": 17344,
+      "sha256": "e95b18392ededea16213a0f2389a0cf9b50718a5776c2ef965d4911ef31a3037",
+      "error_category": null,
+      "error_message_sanitized": null,
+      "persisted": false
+    },
+    "bounded_worker_checkpoint": {
+      "status": "running",
+      "processados_total": 75,
+      "falhas_total": 0,
+      "bytes_derivados_verificados": 4330024,
+      "exit_exists": false,
+      "worker_exit": null,
+      "terminal_resource_metrics": null,
+      "previous_1114_included": false,
+      "process_unchanged": true,
+      "supervisor_permanente": false
+    },
+    "source_message_id": "umsg_01m6840smwfeev48m0sz50sqme",
+    "response_message_id": "main:agent#00000000010064#don:U32GXD6D"
   }
 }

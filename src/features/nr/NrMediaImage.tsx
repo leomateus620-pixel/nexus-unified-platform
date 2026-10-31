@@ -142,7 +142,9 @@ export function NrMediaImage({
               ? "Miniatura em processamento"
               : query.isFetching && renewal.current
                 ? "Renovando acesso à imagem…"
-                : "Carregando miniatura…";
+                : full
+                  ? "Carregando imagem…"
+                  : "Carregando miniatura…";
   const showSourcePreview =
     !full &&
     !!fallbackFileId &&

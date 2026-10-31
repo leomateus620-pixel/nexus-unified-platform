@@ -11529,6 +11529,10 @@ export type Database = {
         Args: { _operacao?: string; _rev: string }
         Returns: Json
       }
+      cliente_marca_pode_enviar: {
+        Args: { p_caminho: string }
+        Returns: boolean
+      }
       concluir_revisao: {
         Args: {
           _calculo: Json

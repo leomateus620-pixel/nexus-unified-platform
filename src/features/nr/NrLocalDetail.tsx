@@ -36,6 +36,53 @@ function TechnicalSection({ title, value }: { title: string; value: unknown }) {
     </section>
   );
 }
+const geometryDimensions = ["forma", "comprimento", "largura", "diametro", "altura"];
+const geometryVolumes = [
+  "volume_bruto",
+  "volume",
+  "deducoes",
+  "volume_documento",
+  "volume_placa",
+  "volume_informado",
+];
+const geometrySource = ["metodo", "fonte_volume", "autor", "data", "validacao", "nota_validacao"];
+
+function GeometryFacts({ value, proposed }: { value: Record<string, unknown>; proposed: boolean }) {
+  const known = [...geometryDimensions, ...geometryVolumes, ...geometrySource];
+  const differs =
+    typeof value["volume"] === "number" &&
+    [value["volume_documento"], value["volume_placa"], value["volume_informado"]].some(
+      (v) => typeof v === "number" && v !== value["volume"],
+    );
+  return (
+    <>
+      <div className="nr-geometry-summary">
+        <NrFacts value={value} keys={geometryDimensions} />
+        <NrFacts value={value} keys={geometryVolumes} />
+      </div>
+      {differs && (
+        <p className="nr-notice" role="note">
+          Existem volumes diferentes no cálculo, nos documentos ou na placa. Os valores e a
+          justificativa da origem foram preservados; confira as medições e a revisão antes de adotar
+          uma alteração.
+        </p>
+      )}
+      <NrFacts value={value} keys={proposed ? ["metodo", "fonte_volume"] : geometrySource} />
+      {proposed && (
+        <details>
+          <summary>Autoria, data e validação históricas · não aprovam a proposta</summary>
+          <NrFacts value={value} keys={["autor", "data", "validacao", "nota_validacao"]} />
+        </details>
+      )}
+      {Object.keys(value).some((key) => !known.includes(key)) && (
+        <details>
+          <summary>Outros dados geométricos preservados</summary>
+          <NrFacts value={value} omit={known} />
+        </details>
+      )}
+    </>
+  );
+}
 
 export function NrLocalDetail({
   row,
@@ -170,39 +217,13 @@ export function NrLocalDetail({
         {area === "geometria" && (
           <>
             <h3>Geometria e dimensões registradas</h3>
-            {nrLocalProposalAffects(d, ["geometria"]) ? (
-              <>
-                <p className="nr-notice">
-                  Há dimensões ou valores declarados propostos na Nexus, aguardando revisão. Os
-                  metadados históricos abaixo não validam estes valores.
-                </p>
-                <NrFacts
-                  value={geometria}
-                  omit={["autor", "data", "validacao", "nota_validacao"]}
-                />
-                <details>
-                  <summary>Autoria, data e validação históricas · não aprovam a proposta</summary>
-                  <NrFacts
-                    value={geometria}
-                    keys={["autor", "data", "validacao", "nota_validacao"]}
-                  />
-                </details>
-              </>
-            ) : (
-              <NrFacts value={geometria} />
+            {nrLocalProposalAffects(d, ["geometria"]) && (
+              <p className="nr-notice">
+                Há dimensões ou valores declarados propostos na Nexus, aguardando revisão. Os
+                metadados históricos abaixo não validam estes valores.
+              </p>
             )}
-            {typeof geometria["volume"] === "number" &&
-              [
-                geometria["volume_documento"],
-                geometria["volume_placa"],
-                geometria["volume_informado"],
-              ].some((v) => typeof v === "number" && v !== geometria["volume"]) && (
-                <p className="nr-notice" role="note">
-                  Existem volumes diferentes no cálculo, nos documentos ou na placa. Os valores e a
-                  justificativa da origem foram preservados; confira as medições e a revisão antes
-                  de adotar uma alteração.
-                </p>
-              )}
+            <GeometryFacts value={geometria} proposed={nrLocalProposalAffects(d, ["geometria"])} />
           </>
         )}
         {area === "avaliacao" && (

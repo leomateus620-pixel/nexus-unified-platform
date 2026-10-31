@@ -50,6 +50,15 @@ export const nrFilePrepare = nrFileOrg
     papel: z.enum(["original", "derivado", "foto", "anexo", "representacao"]).default("original"),
   })
   .strict();
+/** Resolve apenas identidades do manifesto; a autorização permanece na listagem canônica. */
+export const nrDocumentImagesInput = nrFileOrg
+  .extend({
+    norma: z.enum(["NR33", "NR35"]),
+    documento_id: uuid,
+    revisao_id: uuid,
+    arquivo_ids: z.array(uuid).max(100),
+  })
+  .strict();
 export const nrFileList = nrFileOrg
   .extend({
     norma: z.enum(["NR33", "NR35"]),
@@ -59,6 +68,7 @@ export const nrFileList = nrFileOrg
     documento_id: optionalId,
     revisao_id: optionalId,
     local_id: optionalId,
+    arquivo_ids: z.array(uuid).max(100).optional(),
     pagina: z.number().int().min(0).max(1000000).default(0),
     limite: z.number().int().min(1).max(100).default(25),
     lixeira: z.boolean().default(false),

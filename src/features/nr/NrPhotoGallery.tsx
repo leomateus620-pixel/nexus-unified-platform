@@ -18,10 +18,14 @@ export function NrPhotoGallery({
   org,
   value,
   context,
+  title = "Fotos de campo",
+  description,
 }: {
   org: string;
   value: unknown;
   context: string;
+  title?: string;
+  description?: string;
 }) {
   const photos = photoOccurrences(value);
   const [selected, setSelected] = useState<number | null>(null);
@@ -34,16 +38,21 @@ export function NrPhotoGallery({
     setZoom(1);
   }
   return (
-    <section aria-label={`Fotos de campo · ${context}`}>
+    <section aria-label={`${title} · ${context}`}>
       <div className="nr-panel-header mb-3">
-        <h3 className="font-semibold">Fotos de campo</h3>
+        <h3 className="font-semibold">{title}</h3>
         <span className="nr-badge">
           {photos.length} {photos.length === 1 ? "vínculo" : "vínculos"}
         </span>
       </div>
       <p className="nr-muted mb-4">
-        {context}. Legendas e associações de cada ocorrência são preservadas, inclusive quando um
-        arquivo é compartilhado. Imagens extraídas de documentos aparecem separadamente no acervo.
+        {description ?? (
+          <>
+            {context}. Legendas e associações de cada ocorrência são preservadas, inclusive quando
+            um arquivo é compartilhado. Imagens extraídas de documentos aparecem separadamente no
+            acervo.
+          </>
+        )}
       </p>
       {photos.length ? (
         <div className="grid grid-cols-1 min-[600px]:grid-cols-2 xl:grid-cols-3 gap-4">

@@ -836,6 +836,12 @@ export async function nrArquivosListar({ data }) {
     !!data.lixeira === (fixtureFile.estado === "arquivado") ? [structuredClone(fixtureFile)] : [];
   return { rows: records, total: records.length, pagina: 0, limite: 20 };
 }
+export async function nrDocumentoImagensVinculadas({ data }) {
+  window.__nexusCalls.push({ name: "nrDocumentoImagensVinculadas", data });
+  if (data.organization_id !== org) throw new Error("Contexto sintético indisponível.");
+  // This fixture contains a PDF, no converted DOCX image assets.
+  return { rows: [] };
+}
 export async function nrArquivoBaixar() {
   return {
     url: "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf?token=nr-isolated",

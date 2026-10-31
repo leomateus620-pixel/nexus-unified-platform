@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { LoadingState } from "@/components/nexus/Page";
+import { ActionButton, LoadingState } from "@/components/nexus/Page";
 import { nrRevisaoDetalhe } from "./history.functions";
 import {
   hasLegacySnapshotSignature,
@@ -10,6 +10,7 @@ import {
 } from "./legacy-snapshot";
 import { NrContentEditor } from "./NrContentEditor";
 import { NrPhotoGallery } from "./NrPhotoGallery";
+import { NrConvertedDocxContent } from "./NrConvertedDocxContent";
 import { nrLabel, nrObject, NrValue } from "./technical-display";
 import type { NativeContent } from "./native-content";
 import type { Norma, NrRecord } from "./domain";
@@ -190,7 +191,7 @@ export function NrDocumentContentReader({
       row.revisao_atual_id,
       row.version,
     ],
-    enabled: candidate,
+    enabled: (candidate || converted) && !!row.revisao_atual_id,
     queryFn: ({ signal }) =>
       fetch({
         data: {
@@ -216,8 +217,23 @@ export function NrDocumentContentReader({
           converted,
         })
       : null;
-  if (candidate && revision.isPending)
+  if ((candidate || converted) && revision.isPending)
     return <LoadingState label="Organizando o snapshot preservado desta revisão…" />;
+  if ((candidate || converted) && revision.isError)
+    return (
+      <>
+        <p className="nr-feedback" role="alert">
+          Não foi possível carregar os dados preservados desta revisão para organizar a leitura. O
+          conteúdo já carregado continua disponível abaixo.
+          <ActionButton variant="ghost" onClick={() => void revision.refetch()}>
+            Tentar novamente
+          </ActionButton>
+        </p>
+        <NrContentEditor org={row.organization_id} value={value} readOnly />
+      </>
+    );
+  if (converted && revision.data)
+    return <NrConvertedDocxContent row={row} norma={norma} value={value} revision={data} />;
   return projection ? (
     <LegacySnapshotView
       snapshot={projection.snapshot}

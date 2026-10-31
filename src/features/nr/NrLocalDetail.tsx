@@ -487,6 +487,14 @@ function NrRelatedRecords({
                       {nrLabel(r.estado)}
                       {r.revisao_numero ? ` · Revisão ${r.revisao_numero}` : ""}
                     </small>
+                    {r.resumo_documental?.correspondencia_pendente && (
+                      <small>Cópia editável · correspondência documental pendente</small>
+                    )}
+                    {!!r.resumo_documental?.copias_editaveis.length && (
+                      <small>
+                        {r.resumo_documental.copias_editaveis.length} cópia(s) editável(is) na ficha
+                      </small>
+                    )}
                   </span>
                   <ArrowRight size={16} />
                 </Link>

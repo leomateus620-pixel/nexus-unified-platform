@@ -50,7 +50,22 @@ export function NrSurveyEditor({
     );
   const move = (next: string) => {
     setSelected(next);
-    requestAnimationFrame(() => document.getElementById(`${id}-title-${next}`)?.focus());
+    requestAnimationFrame(() => {
+      const heading = document.getElementById(`${id}-title-${next}`);
+      heading?.focus({ preventScroll: true });
+      const editor = heading?.closest<HTMLElement>(".nr-editor-scroll");
+      const survey = heading?.closest<HTMLElement>(".nr-survey");
+      if (editor && survey)
+        editor.scrollTo({
+          top: Math.max(
+            0,
+            editor.scrollTop +
+              survey.getBoundingClientRect().top -
+              editor.getBoundingClientRect().top,
+          ),
+          behavior: "instant",
+        });
+    });
   };
   return (
     <div className="nr-survey">

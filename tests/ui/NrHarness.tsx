@@ -7,6 +7,7 @@ const parseSearch = (params: URLSearchParams) =>
     ...Object.fromEntries(params),
     lixeira: params.get("lixeira") === "true",
     copias: params.get("copias") === "true",
+    aplicabilidade: params.get("aplicabilidade") === "true",
   });
 export function NrHarness({ norma }: { norma: "NR33" | "NR35" }) {
   const params = new URLSearchParams(location.search);

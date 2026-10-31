@@ -1006,12 +1006,14 @@ export function NrEditor({
         <Dialog.Content
           ref={contentElement}
           onOpenAutoFocus={(event) => {
-            const field = contentElement.current?.querySelector<HTMLElement>(
-              "input:not([type=checkbox]):not(:disabled),select:not(:disabled),textarea:not(:disabled)",
-            );
+            const field = Array.from(
+              contentElement.current?.querySelectorAll<HTMLElement>(
+                "input:not([type=checkbox]):not(:disabled),select:not(:disabled),textarea:not(:disabled)",
+              ) ?? [],
+            ).find((element) => element.getClientRects().length > 0);
             if (field) {
               event.preventDefault();
-              field.focus();
+              field.focus({ preventScroll: true });
             }
           }}
           className={
@@ -1030,32 +1032,40 @@ export function NrEditor({
             if (busy || dirty) e.preventDefault();
           }}
         >
-          <Dialog.Title className="nr-dialog-title">
-            {duplicating ? "Duplicar" : row ? "Editar" : "Criar"}{" "}
-            {resourceLabels[recurso].toLowerCase()}
-          </Dialog.Title>
-          {recurso === "levantamentos" && (
-            <p className="nr-muted">
-              {contexto.clientes.find((item) => item.id === clientId)?.nome} ·{" "}
-              {contexto.unidades.find((item) => item.id === unitId)?.nome}
-              {text(Reflect.get(row ?? {}, "local_titulo"))
-                ? ` · ${text(Reflect.get(row ?? {}, "local_tag"))} ${text(Reflect.get(row ?? {}, "local_titulo"))}`
-                : ""}
-            </p>
-          )}
-          <Dialog.Description id="nr-editor-description" className="nr-muted mt-2">
-            {row
-              ? `Versão ${row.version} carregada. Uma alteração concorrente exige comparação.`
-              : "O registro será salvo na organização ativa, com autoria e histórico."}
-          </Dialog.Description>
-          <button
-            className="nr-dialog-close"
-            type="button"
-            onClick={close}
-            aria-label="Fechar formulário"
-          >
-            <X size={19} />
-          </button>
+          <div className="nr-editor-header">
+            <Dialog.Title className="nr-dialog-title">
+              {duplicating ? "Duplicar" : row ? "Editar" : "Criar"}{" "}
+              {resourceLabels[recurso].toLowerCase()}
+            </Dialog.Title>
+            {recurso === "levantamentos" && (
+              <p className="nr-muted nr-editor-context">
+                {contexto.clientes.find((item) => item.id === clientId)?.nome} ·{" "}
+                {contexto.unidades.find((item) => item.id === unitId)?.nome}
+                {text(Reflect.get(row ?? {}, "local_titulo"))
+                  ? ` · ${text(Reflect.get(row ?? {}, "local_tag"))} ${text(Reflect.get(row ?? {}, "local_titulo"))}`
+                  : ""}
+              </p>
+            )}
+            {recurso === "locais" && (
+              <p className="nr-muted nr-editor-context">
+                {values["tag"]} · {values["titulo"]} ·{" "}
+                {contexto.unidades.find((item) => item.id === unitId)?.nome}
+              </p>
+            )}
+            <Dialog.Description id="nr-editor-description" className="nr-muted mt-2">
+              {row
+                ? `Versão ${row.version} carregada. Uma alteração concorrente exige comparação.`
+                : "O registro será salvo na organização ativa, com autoria e histórico."}
+            </Dialog.Description>
+            <button
+              className="nr-dialog-close"
+              type="button"
+              onClick={close}
+              aria-label="Fechar formulário"
+            >
+              <X size={19} />
+            </button>
+          </div>
           {(discard || blocker.status === "blocked") && (
             <div className="nr-feedback" role="alert">
               <p>Há alterações ainda não salvas. Descartar perde o preenchimento desta tela.</p>
@@ -1089,7 +1099,7 @@ export function NrEditor({
             aria-busy={busy}
             onChange={() => setDirty(true)}
           >
-            <fieldset disabled={busy}>
+            <fieldset disabled={busy} className="nr-editor-scroll">
               {recurso === "documentos" && !row && (
                 <div className="nr-panel">
                   <label>

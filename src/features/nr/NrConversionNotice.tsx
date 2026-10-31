@@ -99,7 +99,14 @@ export function NrConversionNotice({ row, norma }: { row: NrRecord; norma?: Norm
                 o original emitido.
               </p>
             )}
-            {summary.documento_origem_id && (
+            {summary.correspondencia_pendente && (
+              <p className="nr-notice mt-3">
+                Cópia editável com correspondência documental pendente. O arquivo de origem e os
+                vínculos existentes estão preservados; esta cópia permanece acessível sem ser
+                agrupada por semelhança de título.
+              </p>
+            )}
+            {summary.linhagem_comprovada && summary.documento_origem_id && (
               <p className="mt-3">
                 <Link
                   className="underline"

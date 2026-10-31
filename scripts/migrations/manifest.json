@@ -275,6 +275,10 @@
     {
       "path": "drizzle/migrations/0049_nr_aplicabilidade_documental.sql",
       "sha256": "ed8ce1780dffc792bbda161ea4d6351fe51f30b9a0bc11662a67fe219a012d21"
+    },
+    {
+      "path": "drizzle/migrations/0050_nr_totais_linhagem.sql",
+      "sha256": "7c91843e0ca9722322758b13b217ec4749b02131789ca327eebe619a5a75b22b"
     }
   ]
 }

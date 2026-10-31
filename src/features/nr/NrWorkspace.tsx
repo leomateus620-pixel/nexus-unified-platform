@@ -39,6 +39,7 @@ import { NrFacts, NrValue, nrLabel, nrObject } from "./technical-display";
 import { NrConference } from "./NrConference";
 import { NrClientsWorkspace } from "./NrClients";
 import { NrFolderTree, NrFolderBreadcrumbs } from "./NrFolderTree";
+import { NrApplicabilityDecisions } from "./NrApplicabilityDecisions";
 import "./nr.css";
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
@@ -153,6 +154,7 @@ const hum = (value?: string | null) => (value ? value.replaceAll("_", " ") : "N�
 const date = (value?: string | null) => {
   if (!value) return "Não informado";
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value.split("-").reverse().join("/");
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value)) return value;
   const parsed = new Date(value);
   return Number.isNaN(parsed.valueOf())
     ? value
@@ -1501,6 +1503,9 @@ function RecordList({
                         {summary.copias_editaveis.length} cópia(s) editável(is) na ficha
                       </small>
                     ) : null}
+                    {summary?.correspondencia_pendente && (
+                      <small>Cópia editável · correspondência documental pendente</small>
+                    )}
                   </th>
                   <td>
                     {row.tipo === "derivado_docx"
@@ -1550,7 +1555,7 @@ function RecordList({
           <Link
             className="nr-record-link"
             to={String(
-              `${resource === "pendencias" && !row.normas.includes(base === "/nr-33" ? "NR33" : "NR35") ? (row.normas.includes("NR33") ? "/nr-33" : "/nr-35") : base}/${section === "configuracoes" ? "biblioteca" : resource === "modelos" ? "biblioteca" : resource}/${row.id}`,
+              `${resource === "pendencias" && row.normas?.length && !row.normas.includes(base === "/nr-33" ? "NR33" : "NR35") ? (row.normas.includes("NR33") ? "/nr-33" : "/nr-35") : base}/${section === "configuracoes" ? "biblioteca" : resource === "modelos" ? "biblioteca" : resource}/${row.id}`,
             )}
             search={search}
           >
@@ -1561,6 +1566,9 @@ function RecordList({
               </strong>
               <small>
                 {[
+                  resource === "pendencias"
+                    ? `Normas registradas: ${row.normas?.map((norm) => (norm === "NR33" ? "NR-33" : "NR-35")).join(" · ") || "não informadas no resumo"}`
+                    : null,
                   row.tipo,
                   row.revisao_numero ? `Revisão ${row.revisao_numero}` : null,
                   row.criticidade ? `Criticidade ${hum(row.criticidade)}` : null,
@@ -1576,7 +1584,7 @@ function RecordList({
                 Revisão necessária
               </span>
             )}
-            {resource === "pendencias" && base === "/nr-35" && !row.normas.includes("NR35") && (
+            {resource === "pendencias" && base === "/nr-35" && row.normas?.length && !row.normas.includes("NR35") && (
               <span className="nr-badge">Aplicabilidade em revisão · abrir na NR-33</span>
             )}
             <Badge value={row.arquivado_em ? "arquivado" : row.estado} />
@@ -1628,7 +1636,10 @@ function NrOverview({
     pendencias_prioritarias: NrRecord[];
     documentos_revisao: NrRecord[];
     documentos_origem?: number;
+    documentos_logicos?: number;
+    documentos_principais?: number;
     copias_editaveis?: number;
+    copias_correspondencia_pendente?: number;
     arquivos_fisicos?: number;
     historico_tecnico?: Record<string, NrJson>[];
     eventos_globais?: Record<string, NrJson>[];
@@ -1649,7 +1660,7 @@ function NrOverview({
       <div className="nr-metrics">
         {[
           ["Locais no inventário", panel.locais, "locais"],
-          ["Documentos da origem", panel.documentos_origem ?? panel.documentos, "documentos"],
+          ["Documentos no acervo", panel.documentos_logicos ?? panel.documentos, "documentos"],
           ["Pendências abertas", panel.pendencias_abertas, "pendencias"],
         ].map(([label, total, area]) => (
           <Link
@@ -1679,6 +1690,12 @@ function NrOverview({
           {panel.levantamentos} levantamentos
         </Link>
       </p>
+      {!!panel.copias_correspondencia_pendente && (
+        <p className="nr-muted">
+          {panel.copias_correspondencia_pendente} cópias editáveis aguardam correspondência
+          documental comprovada e continuam acessíveis na lista.
+        </p>
+      )}
       {unit?.documentacao && (
         <section className="nr-panel">
           <h2 className="font-semibold">Documentação registrada da unidade</h2>
@@ -2084,6 +2101,7 @@ function NrDetail({
           <NrFacts value={row.revisao_aplicabilidade} />
         </section>
       )}
+      {recurso === "pendencias" && <NrApplicabilityDecisions value={row.decisoes_aplicabilidade} />}
       {row.pet_espaco_id && (
         <p className="nr-source">
           Vínculo confirmado com o cadastro operacional PET. A emissão permanece no fluxo canônico

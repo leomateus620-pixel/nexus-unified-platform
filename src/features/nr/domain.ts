@@ -16,6 +16,8 @@ export type NrResumoDocumental = {
   arquivos_pdf: number;
   arquivos_total: number;
   copia_editavel: boolean;
+  linhagem_comprovada?: boolean;
+  correspondencia_pendente?: boolean;
   documento_origem_id: string | null;
   originais_comprovados: NrJson[];
   copias_editaveis: {
@@ -34,6 +36,9 @@ export type NrResumoTecnico = {
   memorial: string | null;
   avaliacoes_total: number;
   documentos_total: number;
+  documentos_origem?: number;
+  copias_editaveis?: number;
+  copias_correspondencia_pendente?: number;
   imagens_total: number;
   historico_tecnico_total: number;
 };
@@ -117,6 +122,9 @@ export type NrContexto = {
     normas?: Norma[];
     locais?: number;
     documentos?: number;
+    documentos_origem?: number;
+    copias_editaveis?: number;
+    copias_correspondencia_pendente?: number;
     pendencias_abertas?: number;
   }[];
   permissoes: {

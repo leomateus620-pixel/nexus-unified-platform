@@ -332,6 +332,9 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
+.nr-field-grid > * {
+  min-width: 0;
+}
 .nr-wide {
   grid-column: 1/-1;
 }
@@ -478,7 +481,7 @@
   .nr-two-columns,
   .nr-facts,
   .nr-field-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .nr-context {
     gap: 0.75rem;

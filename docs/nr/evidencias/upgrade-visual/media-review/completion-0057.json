@@ -1,0 +1,22 @@
+{
+  "method": "Fresh disposable PostgreSQL17 on loopback55857, Supabase bootstrap and ordered repository migrations; real concurrent SQL sessions, no production records or Storage bytes",
+  "migration_count": 76,
+  "last_migration": "drizzle/migrations/0057_nr_foto_complementar_midia.sql",
+  "sha256": "b2dc891854e72b86db99684c8069b10467ed8a8528fb1b031b1bf172b95b508f",
+  "suite": "NR image representations and occurrences",
+  "assertions": 82,
+  "passed": true,
+  "storage_bytes_proven": false,
+  "cases": [
+    "all anonymous, authenticated and service-role calls denied",
+    "source type/system/reference and context/verified-bytes guards",
+    "original rejects source thumbnail even with forged original reference",
+    "only absent media IDs filled, source fields and snapshots unchanged",
+    "repeated identical call preserves the whole row and one receipt",
+    "a different media identity fails with23505 instead of replacement",
+    "source thumbnail completion preserves the existing original",
+    "Nexus provenance and a divergent source snapshot rejected",
+    "real FOR UPDATE wait observed through pg_stat_activity",
+    "concurrent equal calls yield one receipt; conflicting calls preserve the first identity"
+  ]
+}

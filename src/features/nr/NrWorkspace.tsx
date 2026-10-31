@@ -41,6 +41,9 @@ import { NrClientsWorkspace } from "./NrClients";
 import { NrFolderTree, NrFolderBreadcrumbs } from "./NrFolderTree";
 import { NrApplicabilityDecisions } from "./NrApplicabilityDecisions";
 import { treatmentOriginDate } from "./technical-evidence";
+import { RecordList } from "./NrRecordCards";
+import { NrCard } from "./NrCards";
+import { NrClientSelect } from "./NrClientSelect";
 import "./nr.css";
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
@@ -156,7 +159,7 @@ const tabs = [
   ["biblioteca", BookOpen],
   ["conferencia", ShieldCheck],
 ] as const;
-const hum = (value?: string | null) => (value ? value.replaceAll("_", " ") : "Não informado");
+const hum = (value?: string | null) => (value ? nrLabel(value) : "Não informado");
 const date = (value?: string | null) => {
   if (!value) return "Não informado";
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value.split("-").reverse().join("/");
@@ -287,6 +290,7 @@ function NrScope({
   const [busy, setBusy] = useState(false),
     [commandError, setCommandError] = useState<Error | null>(null);
   const guard = useRef(false);
+  const editorReturn = useRef<HTMLElement | null>(null);
   const context = useQuery({
     queryKey: ["nr", org, user, norma, "contexto"],
     queryFn: ({ signal }) =>
@@ -491,73 +495,45 @@ function NrScope({
         contexto && (
           <>
             <div className="nr-context" aria-label="Contexto de cliente e unidade">
-              <label className="nr-context-client">
-                Cliente
-                <select
+              <div className="nr-context-client">
+                <label htmlFor="nr-context-client">Cliente</label>
+                <NrClientSelect
+                  id="nr-context-client"
+                  clientes={contexto.clientes}
                   value={search.cliente}
-                  onChange={(e) =>
-                    changeContext({ cliente: e.target.value, unidade: "", escopo: "unidade" })
+                  onValueChange={(cliente) =>
+                    changeContext({ cliente, unidade: "", escopo: "unidade" })
                   }
-                >
-                  <option value="">Selecione um cliente</option>
-                  {contexto.clientes.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.nome}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                />
+              </div>
               <label className="nr-context-unit">
                 Unidade
-                <select
-                  value={search.unidade}
-                  onChange={(e) => {
-                    const unit = contexto.unidades.find((u) => u.id === e.target.value);
-                    changeContext({
-                      unidade: e.target.value,
-                      cliente: unit?.cliente_id ?? search.cliente,
-                      pagina: 0,
-                      pasta: "",
-                      escopo: "unidade",
-                    });
-                  }}
-                >
-                  <option value="">Selecione uma unidade</option>
-                  {contexto.unidades
-                    .filter((u) => !search.cliente || u.cliente_id === search.cliente)
-                    .map((u) => (
-                      <option key={u.id} value={u.id}>
-                        {u.nome}
-                      </option>
-                    ))}
-                </select>
-              </label>
-              <label className="nr-context-combined">
-                Cliente e unidade
-                <select
-                  value={search.unidade}
-                  onChange={(e) => {
-                    const unit = contexto.unidades.find((u) => u.id === e.target.value);
-                    changeContext({
-                      cliente: unit?.cliente_id ?? "",
-                      unidade: unit?.id ?? "",
-                      escopo: "unidade",
-                    });
-                  }}
-                >
-                  <option value="">Selecione a unidade de trabalho</option>
-                  {contexto.clientes.map((client) => (
-                    <optgroup label={client.nome} key={client.id}>
-                      {contexto.unidades
-                        .filter((unit) => unit.cliente_id === client.id)
-                        .map((unit) => (
-                          <option key={unit.id} value={unit.id}>
-                            {client.nome} · {unit.nome}
-                          </option>
-                        ))}
-                    </optgroup>
-                  ))}
-                </select>
+                <span className="nr-context-unit-control">
+                  <MapPin size={18} aria-hidden />
+                  <select
+                    aria-label="Unidade"
+                    value={search.unidade}
+                    onChange={(e) => {
+                      const unit = contexto.unidades.find((u) => u.id === e.target.value);
+                      changeContext({
+                        unidade: e.target.value,
+                        cliente: unit?.cliente_id ?? search.cliente,
+                        pagina: 0,
+                        pasta: "",
+                        escopo: "unidade",
+                      });
+                    }}
+                  >
+                    <option value="">Selecione uma unidade</option>
+                    {contexto.unidades
+                      .filter((u) => !search.cliente || u.cliente_id === search.cliente)
+                      .map((u) => (
+                        <option key={u.id} value={u.id}>
+                          {u.nome}
+                        </option>
+                      ))}
+                  </select>
+                </span>
               </label>
               <button
                 className="nr-aggregate"
@@ -769,7 +745,8 @@ function NrScope({
                           ? contexto.permissoes.configurar
                           : contexto.permissoes.cadastrar) && (
                           <ActionButton
-                            onClick={() => {
+                            onClick={(event) => {
+                              editorReturn.current = event.currentTarget;
                               setDuplicating(false);
                               setEditor("novo");
                               setNotice("");
@@ -934,7 +911,8 @@ function NrScope({
                                     ? contexto.permissoes.configurar
                                     : contexto.permissoes.editar) && (
                                     <ActionButton
-                                      onClick={() => {
+                                      onClick={(event) => {
+                                        editorReturn.current = event.currentTarget;
                                         setDuplicating(false);
                                         setEditor(row);
                                       }}
@@ -950,7 +928,8 @@ function NrScope({
                                   contexto.permissoes.configurar && (
                                     <ActionButton
                                       variant="ghost"
-                                      onClick={() => {
+                                      onClick={(event) => {
+                                        editorReturn.current = event.currentTarget;
                                         setDuplicating(true);
                                         setEditor(row);
                                       }}
@@ -1378,11 +1357,19 @@ function NrScope({
                 recurso={recurso}
                 row={editor === "novo" ? null : editor}
                 duplicating={duplicating}
+                returnFocus={editorReturn.current}
                 contexto={contexto}
                 clienteId={search.cliente}
                 unidadeId={search.unidade}
                 onClose={() => setEditor(null)}
-                onSaved={() => {
+                onSaved={(saved) => {
+                  qc.setQueriesData<{ registro: NrRecord }>(
+                    { queryKey: ["nr", org, user, norma, recurso, saved.id] },
+                    (current) =>
+                      current?.registro
+                        ? { ...current, registro: { ...current.registro, ...saved } }
+                        : current,
+                  );
                   setEditor(null);
                   setNotice("Registro salvo e confirmado no servidor.");
                   void qc.invalidateQueries({ queryKey: ["nr", org] });
@@ -1424,206 +1411,6 @@ function Pagination({
         </ActionButton>
       </div>
     </nav>
-  );
-}
-function RecordList({
-  rows,
-  resource,
-  base,
-  search,
-  section,
-}: {
-  rows: NrRecord[];
-  resource: NrRecurso;
-  base: string;
-  search: NrSearch;
-  section?: NrSection;
-}) {
-  if (resource === "locais" || resource === "documentos")
-    return (
-      <div
-        className="nr-table-wrap"
-        tabIndex={0}
-        aria-label={
-          resource === "locais"
-            ? "Inventário técnico; role para consultar todas as colunas"
-            : "Documentos; role para consultar todas as colunas"
-        }
-      >
-        <table className="nr-technical-table">
-          <caption>
-            {resource === "locais"
-              ? "Inventário técnico da unidade"
-              : "Documentos e representações vinculadas"}
-          </caption>
-          <thead>
-            {resource === "locais" ? (
-              <tr>
-                <th>TAG</th>
-                <th>Local / setor</th>
-                <th>Família</th>
-                <th>Enquadramento</th>
-                <th>Avaliações / levantamento</th>
-                <th>Memorial na origem</th>
-                <th>Evidências e acervo</th>
-              </tr>
-            ) : (
-              <tr>
-                <th>Documento</th>
-                <th>Tipo / contexto</th>
-                <th>Revisão</th>
-                <th>Situação e vigência</th>
-                <th>Data de origem</th>
-                <th>Word / PDF</th>
-              </tr>
-            )}
-          </thead>
-          <tbody>
-            {rows.map((row) => {
-              const technical = row.resumo_tecnico,
-                summary = row.resumo_documental;
-              const link = `${base}/${resource}/${row.id}`;
-              return resource === "locais" ? (
-                <tr key={row.id}>
-                  <th scope="row">
-                    <Link to={link} search={search}>
-                      {row.tag || "Sem TAG"}
-                    </Link>
-                  </th>
-                  <td>
-                    <Link to={link} search={search} className="nr-table-title">
-                      {row.titulo}
-                    </Link>
-                    <small>{technical?.setor || "Setor não informado"}</small>
-                  </td>
-                  <td>{row.familia || "Não informada"}</td>
-                  <td>
-                    <NrValue value={technical?.enquadramento} />
-                  </td>
-                  <td>
-                    {technical?.avaliacoes_total ?? "—"} avaliações
-                    <small>
-                      <NrValue value={technical?.situacao_levantamento} />
-                    </small>
-                  </td>
-                  <td>
-                    <NrValue value={technical?.memorial} />
-                  </td>
-                  <td>
-                    <Link to={link} search={{ ...search, ficha: "fotos" }}>
-                      {technical?.imagens_total ?? "—"} fotos
-                    </Link>
-                    <small>
-                      <Link to={link} search={{ ...search, ficha: "documentos" }}>
-                        {technical?.documentos_total ?? "—"} documentos
-                      </Link>
-                    </small>
-                  </td>
-                </tr>
-              ) : (
-                <tr key={row.id}>
-                  <th scope="row">
-                    <Link to={link} search={search} className="nr-table-title">
-                      {row.titulo}
-                    </Link>
-                    {summary?.copias_editaveis?.length ? (
-                      <small>
-                        {summary.copias_editaveis.length} cópia(s) editável(is) na ficha
-                      </small>
-                    ) : null}
-                    {summary?.correspondencia_pendente && (
-                      <small>Cópia editável · correspondência documental pendente</small>
-                    )}
-                  </th>
-                  <td>
-                    {row.tipo === "derivado_docx"
-                      ? "Cópia editável de Word"
-                      : nrLabel(row.tipo || "Documento")}
-                    <small>
-                      {row.local_tag
-                        ? `${row.local_tag} · ${row.local_titulo || ""}`
-                        : "Geral da unidade"}
-                    </small>
-                  </td>
-                  <td>{summary?.revisao_numero ?? row.revisao_numero ?? "—"}</td>
-                  <td>
-                    {nrLabel(row.estado_origem || row.estado)}
-                    <small>
-                      {nrLabel(summary?.vigencia_apresentacao || "Vigência não informada")}
-                    </small>
-                    {summary?.motivo_substituicao && (
-                      <details>
-                        <summary>Motivo</summary>
-                        <p className="nr-prewrap">{summary.motivo_substituicao}</p>
-                      </details>
-                    )}
-                  </td>
-                  <td>{date(summary?.data_origem_texto || summary?.data_origem)}</td>
-                  <td>
-                    {summary
-                      ? `${summary.arquivos_word} Word · ${summary.arquivos_pdf} PDF`
-                      : "Consultar acervo"}
-                    <small>
-                      {summary?.disponibilidade === "sem_arquivo_confirmado"
-                        ? "Sem arquivo confirmado nesta revisão"
-                        : ""}
-                    </small>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    );
-  return (
-    <ul className="nr-record-list">
-      {rows.map((row) => (
-        <li key={row.id}>
-          <Link
-            className="nr-record-link"
-            to={String(
-              `${resource === "pendencias" && row.normas?.length && !row.normas.includes(base === "/nr-33" ? "NR33" : "NR35") ? (row.normas.includes("NR33") ? "/nr-33" : "/nr-35") : base}/${section === "configuracoes" ? "biblioteca" : resource === "modelos" ? "biblioteca" : resource}/${row.id}`,
-            )}
-            search={search}
-          >
-            <span>
-              <strong>
-                {row.tag ? `${row.tag} · ` : ""}
-                {row.titulo}
-              </strong>
-              <small>
-                {[
-                  resource === "pendencias"
-                    ? `Normas registradas: ${row.normas?.map((norm) => (norm === "NR33" ? "NR-33" : "NR-35")).join(" · ") || "não informadas no resumo"}`
-                    : null,
-                  row.tipo,
-                  row.revisao_numero ? `Revisão ${row.revisao_numero}` : null,
-                  row.criticidade ? `Criticidade ${hum(row.criticidade)}` : null,
-                  row.prazo ? `Prazo ${date(row.prazo)}` : null,
-                ]
-                  .filter(Boolean)
-                  .join(" · ") || `Atualizado em ${date(row.updated_at)}`}
-              </small>
-            </span>
-            {row.revisao_necessaria && (
-              <span className="nr-badge">
-                <AlertCircle size={13} aria-hidden />
-                Revisão necessária
-              </span>
-            )}
-            {resource === "pendencias" &&
-              base === "/nr-35" &&
-              row.normas?.length &&
-              !row.normas.includes("NR35") && (
-                <span className="nr-badge">Aplicabilidade em revisão · abrir na NR-33</span>
-              )}
-            <Badge value={row.arquivado_em ? "arquivado" : row.estado} />
-            <ChevronRight size={16} aria-hidden />
-          </Link>
-        </li>
-      ))}
-    </ul>
   );
 }
 function NrOverview({
@@ -1809,22 +1596,24 @@ function NrOverview({
             Ver histórico técnico
           </Link>
         </div>
-        <ul className="nr-timeline">
+        <ul className="nr-event-cards">
           {panel.historico_tecnico?.map((event, index) => (
             <li key={String(event["id"] ?? index)}>
-              <Link
-                to={String(`${base}/locais/${String(event["local_id"])}`)}
-                search={{ ...search, ficha: "historico" }}
-              >
-                <strong>
-                  {String(event["local_tag"] ?? "Local")} · {String(event["local_titulo"] ?? "")}
-                </strong>
-              </Link>
-              <p className="nr-prewrap">{String(event["acao"] ?? "")}</p>
-              <small>
-                {String(event["data"] ?? "Data não informada")} ·{" "}
-                {String(event["autor_historico"] ?? "Autor não informado")}
-              </small>
+              <NrCard kind="evento" className="nr-event-card">
+                <Link
+                  to={String(`${base}/locais/${String(event["local_id"])}`)}
+                  search={{ ...search, ficha: "historico" }}
+                >
+                  <strong>
+                    {String(event["local_tag"] ?? "Local")} · {String(event["local_titulo"] ?? "")}
+                  </strong>
+                </Link>
+                <p className="nr-prewrap">{String(event["acao"] ?? "")}</p>
+                <small>
+                  {String(event["data"] ?? "Data não informada")} ·{" "}
+                  {String(event["autor_historico"] ?? "Autor não informado")}
+                </small>
+              </NrCard>
             </li>
           ))}
         </ul>
@@ -1835,10 +1624,12 @@ function NrOverview({
       {!!panel.eventos_globais?.length && (
         <details className="nr-panel">
           <summary>Eventos globais da origem · sem associação comprovada a esta unidade</summary>
-          <ul className="nr-timeline">
+          <ul className="nr-event-cards">
             {panel.eventos_globais.map((event, i) => (
               <li key={i}>
-                <NrFacts value={event} omit={["id", "escopo"]} />
+                <NrCard kind="evento" className="nr-event-card">
+                  <NrFacts value={event} omit={["id", "escopo"]} />
+                </NrCard>
               </li>
             ))}
           </ul>
@@ -1918,42 +1709,50 @@ function NrHistory({
           </ActionButton>
         </div>
       </div>
-      <ul className="nr-record-list">
+      <ul className="nr-event-cards">
         {history.rows.map((r, i) => (
-          <li className="py-4" key={String(r["id"] ?? i)}>
-            <strong>
-              {hum(String(r["acao"] ?? r["comando"] ?? r["evento"] ?? "Registro de alteração"))}
-            </strong>
-            <p className="nr-muted">
-              {date(String(r["data"] ?? r["created_at"] ?? r["ocorrido_em"] ?? ""))} ·{" "}
-              {String(r["autor_historico"] ?? r["recurso"] ?? r["entidade"] ?? "")}
-            </p>
-            {!!r["local_id"] && (
-              <Link
-                to={String(
-                  `${norma === "NR33" ? "/nr-33" : "/nr-35"}/locais/${String(r["local_id"])}`,
-                )}
-                search={{ ...search, ficha: "historico" }}
-                className="nr-inline-action"
-              >
-                {String(r["local_tag"] ?? "Local")} · {String(r["local_titulo"] ?? "")}
-              </Link>
-            )}
-            {typeof r["texto"] === "string" && <p className="nr-prewrap">{r["texto"]}</p>}
-            {r["escopo"] === "nao_classificado" && (
-              <p className="nr-badge">Origem · escopo não classificado</p>
-            )}
-            {!!r["motivo"] && <p className="nr-prewrap mt-2">{String(r["motivo"])}</p>}
-            {r["motivo_resumido"] === true && (
+          <li key={String(r["id"] ?? i)}>
+            <NrCard kind="evento" className="nr-event-card">
+              <strong>
+                {hum(String(r["acao"] ?? r["comando"] ?? r["evento"] ?? "Registro de alteração"))}
+              </strong>
               <p className="nr-muted">
-                Motivo resumido. Abra o evento para consultar o texto integral.
+                {date(String(r["data"] ?? r["created_at"] ?? r["ocorrido_em"] ?? ""))} ·{" "}
+                {String(r["autor_historico"] ?? r["recurso"] ?? r["entidade"] ?? "")}
               </p>
-            )}
-            {search.estado === "auditoria" && (
-              <ActionButton variant="ghost" onClick={() => setEventId(String(r["id"]))}>
-                Abrir evento completo
-              </ActionButton>
-            )}
+              {!!r["local_id"] && (
+                <Link
+                  to={String(
+                    `${norma === "NR33" ? "/nr-33" : "/nr-35"}/locais/${String(r["local_id"])}`,
+                  )}
+                  search={{ ...search, ficha: "historico" }}
+                  className="nr-inline-action"
+                >
+                  {String(r["local_tag"] ?? "Local")} · {String(r["local_titulo"] ?? "")}
+                </Link>
+              )}
+              {typeof r["texto"] === "string" && <p className="nr-prewrap">{r["texto"]}</p>}
+              {r["escopo"] === "nao_classificado" && (
+                <p className="nr-badge">Origem · escopo não classificado</p>
+              )}
+              {!!r["motivo"] && <p className="nr-prewrap mt-2">{String(r["motivo"])}</p>}
+              {r["motivo_resumido"] === true && (
+                <p className="nr-muted">
+                  Motivo resumido. Abra o evento para consultar o texto integral.
+                </p>
+              )}
+              {search.estado === "auditoria" && (
+                <ActionButton
+                  variant="ghost"
+                  onClick={(event) => {
+                    event.currentTarget.focus({ preventScroll: true });
+                    setEventId(String(r["id"]));
+                  }}
+                >
+                  Abrir evento completo
+                </ActionButton>
+              )}
+            </NrCard>
           </li>
         ))}
       </ul>

@@ -8,3 +8,9 @@ public/models/3tentos/*.glb binary linguist-generated=true
 public/textures/3tentos/*.png binary linguist-generated=true
 assets/industrial/source/*.blend binary
 tests/ui/fixtures/*.pdf binary
+# Verified official SVG bytes retain the source's CRLF line endings.
+public/brands/*.svg -text whitespace=cr-at-eol
+docs/nr/evidencias/upgrade-visual/**/*.json linguist-generated=true
+docs/nr/evidencias/upgrade-visual/**/*.png binary linguist-generated=true
+docs/ui/evidence/nr-client-brands/*.png binary linguist-generated=true
+src/integrations/supabase/types.ts linguist-generated=true

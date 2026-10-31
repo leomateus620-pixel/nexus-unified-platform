@@ -44,6 +44,9 @@
     "test:orcamento": "vitest run tests/calculo.test.ts tests/estrutura.test.ts tests/custos.test.ts tests/planilha.test.ts tests/autorizacao.test.ts tests/proposta-save-queue.test.ts tests/importacao.test.ts && vitest run --config tests/vitest.catalogo.config.ts",
     "dev:ui-lab": "npm run assets:pe-leitor && vite --config tests/ui/vite.config.mjs",
     "test:ui": "node tests/ui/run.mjs",
+    "test:ui:nr-details": "node tests/ui/run.mjs --nr-details",
+    "test:ui:nr-layout": "node tests/ui/run.mjs --nr-layout",
+    "test:ui:nr-media": "node tests/ui/run.mjs --nr-media",
     "test:ui:operacional": "node tests/ui/run.mjs --operacional",
     "test:ui:levantamentos": "node tests/ui/run.mjs --levantamentos",
     "test:ui:estudos": "node tests/ui/run.mjs --estudos",
@@ -57,7 +60,9 @@
     "test:ui:disponibilidade": "node tests/ui/run.mjs --disponibilidade",
     "test:pet": "vitest run --config tests/vitest.pet.config.ts",
     "dev:pet-lab": "vite --config tests/pet-ui/vite.config.mjs",
-    "test:nr": "vitest run --config tests/vitest.nr.config.ts && node --test tests/nr-derived-plans.test.mjs tests/nr-storage-confirmation.test.mjs tests/nr-storage-transfer.test.mjs tests/nr-applicability-manifest.test.mjs"
+    "test:nr": "vitest run --config tests/vitest.nr.config.ts && node --test tests/nr-derived-plans.test.mjs tests/nr-storage-confirmation.test.mjs tests/nr-storage-transfer.test.mjs tests/nr-applicability-manifest.test.mjs tests/nr-photo-reconciliation.test.mjs tests/nr-source-photo-plan.test.mjs",
+    "test:ui:nr-brand": "node tests/ui/run.mjs --nr-brand",
+    "test:ui:nr-photo-edit": "node tests/ui/run.mjs --nr-photo-edit"
   },
   "overrides": {
     "rolldown": "1.2.1"
@@ -107,6 +112,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "fflate": "0.8.3",
+    "image-size": "2.0.4",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.575.0",
     "pdf-lib": "1.17.1",

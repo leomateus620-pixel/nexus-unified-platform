@@ -22,6 +22,11 @@ try {
     ["autosave-checks.mjs"],
   ];
   const features = {
+    "--nr-layout": [["nr-layout-quality.mjs"]],
+    "--nr-details": [["nr-details-quality.mjs"]],
+    "--nr-media": [["nr-media-quality.mjs"]],
+    "--nr-photo-edit": [["nr-photo-edit-quality.mjs"]],
+    "--nr-brand": [["nr-client-brands-quality.mjs"]],
     "--nr-modelos": [["nr-models-quality.mjs"]],
     "--pessoas": [["pessoas-quality.mjs"], ["equipes-quality.mjs"], ["qualificacoes-quality.mjs"]],
     "--levantamentos": [["levantamentos-quality.mjs"]],

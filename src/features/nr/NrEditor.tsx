@@ -18,7 +18,9 @@ import { resourceLabels } from "./ui-labels";
 import { NrSurveyEditor } from "./NrSurveyEditor";
 import { NrLocalTechnicalEditor } from "./NrLocalTechnicalEditor";
 import { NrSurveyValue } from "./NrSurveyFields";
+import { NrPhotoMetadataEditor } from "./NrPhotoMetadataEditor";
 import { NrFilesPanel, type NrSelectableFile } from "./NrFilesPanel";
+import { nrLabel } from "./technical-display";
 import {
   normalizeSurveyBlocks,
   projectSurvey,
@@ -662,7 +664,7 @@ function TemplateSubfields({
     </fieldset>
   );
 }
-const human = (v: string) => v["replaceAll"]("_", " ");
+const human = nrLabel;
 
 export function NrEditor({
   org,
@@ -674,6 +676,7 @@ export function NrEditor({
   unidadeId,
   onClose,
   onSaved,
+  returnFocus,
   duplicating = false,
 }: {
   org: string;
@@ -685,8 +688,14 @@ export function NrEditor({
   unidadeId: string;
   onClose: () => void;
   onSaved: (row: NrRecord) => void;
+  returnFocus?: HTMLElement | null | undefined;
   duplicating?: boolean;
 }) {
+  const previousFocus = useRef<HTMLElement | null>(
+    typeof document !== "undefined" && document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null,
+  );
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(
       [
@@ -1005,6 +1014,13 @@ export function NrEditor({
         <Dialog.Overlay className="nr-overlay" />
         <Dialog.Content
           ref={contentElement}
+          onCloseAutoFocus={(event) => {
+            const target = returnFocus?.isConnected ? returnFocus : previousFocus.current;
+            if (target?.isConnected) {
+              event.preventDefault();
+              target.focus({ preventScroll: true });
+            }
+          }}
           onOpenAutoFocus={(event) => {
             const field = Array.from(
               contentElement.current?.querySelectorAll<HTMLElement>(
@@ -1288,13 +1304,23 @@ export function NrEditor({
                 </div>
               )}
               {recurso === "locais" && (
-                <NrLocalTechnicalEditor
-                  value={data}
-                  onChange={(next) => {
-                    setData(next);
-                    setDirty(true);
-                  }}
-                />
+                <>
+                  <NrLocalTechnicalEditor
+                    value={data}
+                    onChange={(next) => {
+                      setData(next);
+                      setDirty(true);
+                    }}
+                  />
+                  <NrPhotoMetadataEditor
+                    value={data["fotos"]}
+                    onChange={(photos) => {
+                      setData((current) => ({ ...current, fotos: photos }));
+                      setDirty(true);
+                    }}
+                    disabled={busy}
+                  />
+                </>
               )}
               {recurso === "pastas" && picker("parent_id", "pastas", "Pasta superior")}
               {recurso === "sistemas" && (
@@ -1545,14 +1571,12 @@ export function NrEditor({
                     <span>
                       Estado histórico:{" "}
                       <strong>
-                        {text(data["estado_historico"]) ||
-                          text(data["situacao"]) ||
+                        {nrLabel(text(data["estado_historico"]) || text(data["situacao"])) ||
                           "Não informado"}
                       </strong>
                     </span>
                     <span>
-                      Revisão Nexus:{" "}
-                      <strong>{row?.estado.replaceAll("_", " ") || "Novo rascunho"}</strong>
+                      Revisão Nexus: <strong>{row ? nrLabel(row.estado) : "Novo rascunho"}</strong>
                     </span>
                   </div>
                   {fixedModel && (
@@ -1568,6 +1592,7 @@ export function NrEditor({
                     local={surveyLocal}
                     evidence={{
                       org,
+                      localId: values["local_id"],
                       context: values["titulo"] || "Levantamento",
                       onAttach: (field, value, apply) =>
                         setAttachmentTarget({

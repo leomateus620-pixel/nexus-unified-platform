@@ -1,5 +1,24 @@
 import { z } from "zod";
 
+export const clienteMarcaSchema = z.object({
+  caminho: z.string().min(1).max(500),
+  origem: z.string().max(1000),
+  sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  mime: z.enum(["image/png", "image/jpeg", "image/svg+xml"]),
+  largura: z.number().int().positive().max(8192),
+  altura: z.number().int().positive().max(8192),
+  tamanho: z.number().int().positive().max(1048576),
+  url: z.string().optional(),
+  superficie: z.enum(["clara", "escura"]).optional(),
+});
+export type ClienteMarca = z.infer<typeof clienteMarcaSchema>;
+export const clienteMarcaUploadSchema = z.object({
+  nome: z.string().min(1).max(200),
+  mime: z.enum(["image/png", "image/jpeg"]),
+  base64: z.string().min(1).max(1398104),
+  superficie: z.enum(["clara", "escura"]).optional(),
+});
+
 export const clienteDados = z.object({
   razao_social: z
     .string()
@@ -70,6 +89,7 @@ export const clienteRow = baseRow.extend({
   cidade: z.string().nullable(),
   uf: z.string().nullable(),
   situacao: z.string(),
+  marca: clienteMarcaSchema.nullable().optional(),
 });
 export const unidadeRow = baseRow.extend({
   cliente_id: z.string().uuid(),
@@ -125,7 +145,11 @@ const saveBase = orgInput.extend({
   id: z.string().uuid().nullable().default(null),
   expected_version: z.number().int().positive().nullable().default(null),
 });
-export const salvarClienteInput = saveBase.extend({ dados: clienteDados });
+export const salvarClienteInput = saveBase.extend({
+  dados: clienteDados,
+  marca_upload: clienteMarcaUploadSchema.optional(),
+  remover_marca: z.boolean().optional(),
+});
 export const salvarUnidadeInput = saveBase.extend({
   cliente_id: z.string().uuid(),
   dados: unidadeDados,

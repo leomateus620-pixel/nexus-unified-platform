@@ -12,6 +12,7 @@ import {
   type SurveyBlockDefinition,
 } from "./survey-projection";
 import "./survey.css";
+import { nrLabel } from "./technical-display";
 
 export function NrSurveyEditor({
   blocks,
@@ -134,6 +135,14 @@ export function NrSurveyEditor({
                   {progress.answered} de {progress.total} respostas registradas
                 </span>
               </div>
+              {progress.total > 0 && (
+                <progress
+                  className="nr-survey-progress"
+                  value={progress.answered}
+                  max={progress.total}
+                  aria-label={`${block.codigo}: ${progress.answered} de ${progress.total} respostas registradas`}
+                />
+              )}
               {block.instrucao && (
                 <details className="nr-survey-instruction">
                   <summary>Orientação do roteiro de origem</summary>
@@ -302,13 +311,11 @@ export function NrSurveyReader({ row }: { row: NrRecord }) {
         <span>
           Estado histórico:{" "}
           <strong>
-            {typeof historicState === "string"
-              ? historicState.replaceAll("_", " ")
-              : "Não informado"}
+            {typeof historicState === "string" ? nrLabel(historicState) : "Não informado"}
           </strong>
         </span>
         <span>
-          Revisão Nexus: <strong>{row.estado.replaceAll("_", " ")}</strong>
+          Revisão Nexus: <strong>{nrLabel(row.estado)}</strong>
         </span>
       </div>
       <NrSurveyEditor
@@ -316,7 +323,7 @@ export function NrSurveyReader({ row }: { row: NrRecord }) {
         answers={surveyObject(row.respostas)}
         local={surveyObject(Reflect.get(row, "local_contexto"))}
         readOnly
-        evidence={{ org: row.organization_id, context: row.titulo }}
+        evidence={{ org: row.organization_id, context: row.titulo, localId: row.local_id }}
       />
       {projection.unmapped.length > 0 && (
         <details className="nr-survey-preserved">

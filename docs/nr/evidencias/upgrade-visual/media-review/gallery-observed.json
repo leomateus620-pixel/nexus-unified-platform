@@ -1,0 +1,107 @@
+{
+  "method": "Authenticated local frontend with real private Nexus storage,1440x900; no cache overrides/throttling. Single SPA opening of a real local Photos area, before enlargement. Encoded bytes from Chrome Network.loadingFinished; first response completion is network timing, visible check is an upper bound including automation.",
+  "requests": 14,
+  "imageRequests": [
+    {
+      "privateStorage": true,
+      "representation": "nexus-pillow-v1",
+      "variant": "miniatura_384",
+      "mime": "image/webp",
+      "status": 200,
+      "fromDiskCache": false,
+      "encodedBytes": 19574,
+      "startedAfterClickMs": 2328,
+      "completedAfterClickMs": 3294
+    },
+    {
+      "privateStorage": true,
+      "representation": "nexus-pillow-v1",
+      "variant": "miniatura_384",
+      "mime": "image/webp",
+      "status": 200,
+      "fromDiskCache": false,
+      "encodedBytes": 36725,
+      "startedAfterClickMs": 2527,
+      "completedAfterClickMs": 3214
+    },
+    {
+      "privateStorage": true,
+      "representation": "nexus-pillow-v1",
+      "variant": "miniatura_384",
+      "mime": "image/webp",
+      "status": 200,
+      "fromDiskCache": false,
+      "encodedBytes": 25069,
+      "startedAfterClickMs": 2627,
+      "completedAfterClickMs": 3502
+    }
+  ],
+  "visibleChecks": [
+    {
+      "elapsedMs": 912,
+      "images": []
+    },
+    {
+      "elapsedMs": 8289,
+      "images": [
+        {
+          "height": 384,
+          "loaded": true,
+          "visible": true,
+          "width": 288
+        },
+        {
+          "height": 384,
+          "loaded": true,
+          "visible": true,
+          "width": 288
+        },
+        {
+          "height": 384,
+          "loaded": true,
+          "visible": true,
+          "width": 288
+        }
+      ]
+    }
+  ],
+  "dataHidden": true,
+  "hasMore": false,
+  "truncated": false,
+  "requestsByType": {
+    "Fetch": 11,
+    "Image": 3
+  },
+  "totalEncodedBytes": 225527,
+  "thumbnailEncodedBytes": 81368,
+  "enlargement": {
+    "requests": 2,
+    "imageRequests": [
+      {
+        "representation": "original",
+        "mime": "image/jpeg",
+        "status": 200,
+        "encodedBytes": 116305,
+        "completedAfterClickMs": 4095
+      }
+    ],
+    "visibleCheck": {
+      "elapsedMs": 10752,
+      "images": [
+        {
+          "height": 900,
+          "loaded": true,
+          "width": 675
+        }
+      ]
+    },
+    "hasMore": false,
+    "truncated": false
+  },
+  "limitations": [
+    "One observed sample using a local development frontend and connected private Nexus services; not a production performance benchmark.",
+    "No cache reset or throttling. Chrome reported fromDiskCache=false for all three image responses. Browser energy saving was enabled.",
+    "First resource completion is network timing, not image paint timing. The visible-image checks are upper bounds including automation and observation delay.",
+    "Encoded byte counts are browser network transfer figures and differ from the immutable source binary length. No request URLs, headers, tokens or private record IDs are included."
+  ]
+}

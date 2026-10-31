@@ -1,0 +1,77 @@
+{
+  "method": "Real NR/client-editor components with isolated fixtures. No production writes. WebKit is not Safari-device certification.",
+  "checks": [
+    {
+      "engine": "chromium",
+      "name": "Official assets retain proportions and the white Cotrirosa lettering receives a dark surface",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Opening, searching and Escape preserve context and restore focus",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Search reaches a client beyond 25 options, Enter selects its canonical ID and never chooses a unit",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Client identity expands its existing group without navigation and exposes all unit actions",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Image failure shows a monogram while the name remains available and selectable",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Choosing a replacement brand remains local; Cancel requires explicit discard and preserves the saved record",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "390 px context, popup and complete client/unit cards remain within the viewport",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Official assets retain proportions and the white Cotrirosa lettering receives a dark surface",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Opening, searching and Escape preserve context and restore focus",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Search reaches a client beyond 25 options, Enter selects its canonical ID and never chooses a unit",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Client identity expands its existing group without navigation and exposes all unit actions",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Image failure shows a monogram while the name remains available and selectable",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Choosing a replacement brand remains local; Cancel requires explicit discard and preserves the saved record",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "390 px context, popup and complete client/unit cards remain within the viewport",
+      "pass": true
+    }
+  ],
+  "limitations": [],
+  "errors": []
+}

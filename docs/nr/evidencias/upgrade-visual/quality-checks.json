@@ -1,0 +1,84 @@
+{
+  "format": "nexus-nr-delivery-checks-v1",
+  "implementation_commit": "1ec2d60a668e6645229524747a7679dc37cd94f6",
+  "baseline_commit": "476cd7ecde56aae5a235af906157d39e4072a40c",
+  "typecheck_exit": 0,
+  "nr_unit_tests": {
+    "files": 28,
+    "passed": 177,
+    "failed": 0
+  },
+  "node_contract_tests": {
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0
+  },
+  "python_worker_tests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "ui_checks": {
+    "layout": 228,
+    "details": 28,
+    "media": 24,
+    "photo_edit": 10,
+    "brands": 14,
+    "models": 2,
+    "total": 306,
+    "errors": 0
+  },
+  "sql_media_assertions": 269,
+  "migration_count": 79,
+  "lint": {
+    "global_passed": false,
+    "baseline_errors": 11414,
+    "baseline_warnings": 28,
+    "current_errors": 1066,
+    "current_warnings": 28,
+    "changed_files_with_preexisting_diagnostics": [
+      {
+        "file": "src/features/nr/technical-display.tsx",
+        "errors": 0,
+        "warnings": 3,
+        "new_diagnostics": 0,
+        "rules": [
+          "react-refresh/only-export-components"
+        ]
+      },
+      {
+        "file": "tests/ui/nr-server.ts",
+        "errors": 3,
+        "warnings": 0,
+        "new_diagnostics": 0,
+        "rules": [
+          "@typescript-eslint/no-explicit-any"
+        ]
+      }
+    ],
+    "new_changed_diagnostics": 0
+  },
+  "public_customer_media_included": false,
+  "frontend_published": false,
+  "continuous_worker_activated": false,
+  "full_database_runner": {
+    "exit": 0,
+    "result": "TODOS PASSARAM",
+    "server": "PostgreSQL17.10",
+    "migration_count": 79,
+    "final_node_scenarios": 34,
+    "image_assertions": 212,
+    "brand_assertions": 18,
+    "receipt": "media-review/ci-postgres17-full.json",
+    "disposable_cluster_cleaned": true
+  },
+  "native_pilot": {
+    "executed": false,
+    "reason": "OWNER_PREPARATION_TIMEOUT",
+    "observed_native_jobs": 0,
+    "observed_tickets": 0,
+    "claims": 0,
+    "native_gets": 0,
+    "native_derivatives": 0,
+    "vault_url_hold": true
+  }
+}

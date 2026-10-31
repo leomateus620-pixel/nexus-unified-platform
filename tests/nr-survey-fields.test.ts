@@ -74,6 +74,44 @@ describe("campos técnicos do levantamento sem JSON digitado", () => {
     expect(render(field, 2.5)).toContain('step="any"');
     expect(render(field, 2.5)).toContain('value="2.5"');
     expect(render(field, "Não medido")).toContain("Valor histórico preservado: Não medido");
+    expect(
+      render(
+        { id: "B16.sistema", nome: "Descrição do sistema", tipo: "texto", obrigatorio: false },
+        "Sistema histórico",
+      ),
+    ).not.toContain("Uma nova medição");
+  });
+  it("a leitura dos repetidores mantém todos os campos, unidades, valores zero e conteúdos fora do formato", () => {
+    const field = {
+      id: "B16.sistemas",
+      nome: "Sistemas levantados",
+      tipo: "lista",
+      obrigatorio: false,
+      subcampos: [
+        { id: "sistema", nome: "Descrição do sistema", tipo: "texto", obrigatorio: false },
+        { id: "quantidade", nome: "Quantidade", tipo: "numero", unidade: "un", obrigatorio: false },
+      ],
+    } as const;
+    const markup = render(
+      field as SurveyFieldDefinition,
+      [
+        { sistema: "Sistema histórico", quantidade: 0, fonte_futura: "Evidência retida" },
+        "Narrativa histórica fora do formato estruturado",
+      ],
+      true,
+    );
+    for (const text of [
+      "Descrição do sistema",
+      "Quantidade",
+      "Sistema histórico",
+      ">0<",
+      "un",
+      "Evidência retida",
+      "Narrativa histórica fora do formato estruturado",
+    ])
+      expect(markup).toContain(text);
+    expect(markup).not.toContain("Remover registro");
+    expect(markup).not.toContain("Adicionar registro");
   });
   it("matriz conserva cinco eixos e não oferece validação histórica como nova aprovação", () => {
     const markup = render(

@@ -283,6 +283,42 @@
     {
       "path": "drizzle/migrations/0051_nr_arquivos_contextuais.sql",
       "sha256": "1ddab7f1e30776c921862408f25f5c9fe3693283c58d796898b6d7d572a26117"
+    },
+    {
+      "path": "drizzle/migrations/0052_clientes_marcas.sql",
+      "sha256": "7b101f807b2b22446375b1f210bc3fed0c242c993cf08deb9db313a8edf59862"
+    },
+    {
+      "path": "drizzle/migrations/0053_nr_imagem_representacoes.sql",
+      "sha256": "092665765bdb91ee37f5facac5320929afda48132cfe6ce57a4add5eefeccd22"
+    },
+    {
+      "path": "drizzle/migrations/0054_clientes_marca_superficie.sql",
+      "sha256": "d3b91ed1fc83c25f3a3242d24891390b2666c53b69efdf419523a4325828a262"
+    },
+    {
+      "path": "drizzle/migrations/0055_clientes_marca_verificacao.sql",
+      "sha256": "82d7bb73dd19a987ea5dbbc15c4f280788a59380c56186a0317418c94093f1e8"
+    },
+    {
+      "path": "drizzle/migrations/0056_nr_imagem_lease_final.sql",
+      "sha256": "6aaf3f2c01758fb41e5d985834df77f2f57ecedd738195a0f32e18d8a27d535f"
+    },
+    {
+      "path": "drizzle/migrations/0057_nr_foto_complementar_midia.sql",
+      "sha256": "b2dc891854e72b86db99684c8069b10467ed8a8528fb1b031b1bf172b95b508f"
+    },
+    {
+      "path": "drizzle/migrations/0058_nr_imagem_processamento_automatico.sql",
+      "sha256": "18060798aec33038f88146185f80f0807f62d17195f03f789a1edbdbf88b2ca9"
+    },
+    {
+      "path": "drizzle/migrations/0059_nr_imagem_tickets_descartaveis.sql",
+      "sha256": "d9f8862e914638f03f38d033a8dd5b197c06b73b57d7eb70561632149005cd1a"
+    },
+    {
+      "path": "drizzle/migrations/0060_nr_imagem_runtime_nexus.sql",
+      "sha256": "4834d45a7f7a6c56ed17beca4b267cfd0517e5b1bd136fc72f08cf53f8ca6dae"
     }
   ]
 }

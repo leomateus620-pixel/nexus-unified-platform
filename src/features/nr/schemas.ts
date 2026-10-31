@@ -1,3 +1,4 @@
+import { clienteMarcaSchema } from "@/features/clientes/schemas";
 import { z } from "zod";
 import type { NrJson } from "./domain";
 
@@ -428,6 +429,7 @@ export const nrContextoSchema = z.object({
       nome: z.string().optional(),
       razao_social: z.string().optional(),
       nome_exibicao: z.string().nullable().optional(),
+      marca: clienteMarcaSchema.nullable().optional(),
       cnpj: z.string().nullable().optional(),
     }),
   ),

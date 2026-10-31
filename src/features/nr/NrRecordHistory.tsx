@@ -16,13 +16,15 @@ import { nrArquivoBaixar } from "./files.functions";
 import { parseNative } from "./native-content";
 import { NrContentEditor } from "./NrContentEditor";
 import { sourceDate, technicalEvents } from "./technical-evidence";
+import { NrCard, NrCardActions } from "./NrCards";
+import { nrLabel } from "./technical-display";
 const object = (value: unknown): Record<string, NrJson> =>
   value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, NrJson>)
     : {};
 const text = (value: unknown) => (typeof value === "string" ? value : "");
 const human = (value: unknown) =>
-  typeof value === "string" && value ? value.replaceAll("_", " ") : "Não informado";
+  typeof value === "string" && value ? nrLabel(value) : "Não informado";
 const when = sourceDate;
 function ReadOnlyDialogContent({ children }: { children: ReactNode }) {
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -428,27 +430,46 @@ export function NrRecordHistory({
               <ErrorState error={revisions.error} onRetry={() => revisions.refetch()} />
             ) : (
               <>
-                <ul className="nr-record-list">
+                <ul className="nr-card-grid" aria-label="Versões preservadas">
                   {versions.map((version) => (
-                    <li className="py-3" key={String(version["id"])}>
-                      <div>
-                        <strong>
-                          {recurso === "modelos" ? "Versão" : "Revisão"} {String(version["numero"])}
-                        </strong>
-                        <p className="nr-muted">
-                          {human(version["estado"])} · {human(version["vigencia"])} ·{" "}
-                          {when(version["created_at"])}
-                        </p>
-                        {version["publicacao_tecnica_interna"] === true && (
-                          <p className="nr-muted">Revisão técnica interna registrada</p>
-                        )}
-                      </div>
-                      <ActionButton
-                        variant="ghost"
-                        onClick={() => setRevisionId(text(version["id"]))}
-                      >
-                        Abrir versão em leitura
-                      </ActionButton>
+                    <li key={String(version["id"])}>
+                      <NrCard kind="documento">
+                        <header className="nr-card-heading">
+                          <h4>
+                            {recurso === "modelos" ? "Versão" : "Revisão"}{" "}
+                            {String(version["numero"])}
+                          </h4>
+                          <span className="nr-badge">{human(version["estado"])}</span>
+                        </header>
+                        <div className="nr-card-context">
+                          <p>Vigência: {human(version["vigencia"])}</p>
+                          <p>{when(version["created_at"])}</p>
+                          {typeof version["data_origem"] === "string" && (
+                            <p>Data de origem: {when(version["data_origem"])}</p>
+                          )}
+                          {typeof version["autor_historico"] === "string" &&
+                            version["autor_historico"] && (
+                              <p>Autoria histórica: {version["autor_historico"]}</p>
+                            )}
+                          {typeof version["fonte"] === "string" && version["fonte"] && (
+                            <p>Fonte: {version["fonte"]}</p>
+                          )}
+                          {version["publicacao_tecnica_interna"] === true && (
+                            <p className="nr-muted">Revisão técnica interna registrada</p>
+                          )}
+                        </div>
+                        <NrCardActions>
+                          <ActionButton
+                            variant="ghost"
+                            onClick={(event) => {
+                              event.currentTarget.focus({ preventScroll: true });
+                              setRevisionId(text(version["id"]));
+                            }}
+                          >
+                            Abrir versão em leitura
+                          </ActionButton>
+                        </NrCardActions>
+                      </NrCard>
                     </li>
                   ))}
                 </ul>
@@ -489,25 +510,45 @@ export function NrRecordHistory({
                 Importação, edição e outras operações registradas na Nexus. A data de importação é
                 independente da data dos acontecimentos técnicos da origem.
               </p>
-              <ul className="nr-record-list">
+              <ul className="nr-event-cards" aria-label="Eventos de auditoria">
                 {events.map((event) => (
-                  <li className="py-3" key={String(event["id"])}>
-                    <div>
-                      <strong>{human(event["comando"])}</strong>
-                      <p className="nr-muted">{when(event["created_at"])}</p>
-                      {typeof event["motivo"] === "string" && <p>{event["motivo"]}</p>}
-                      {event["motivo_resumido"] === true && (
-                        <p className="nr-muted">
-                          Motivo resumido. O texto integral está no evento.
-                        </p>
-                      )}
-                      {event["escopo"] === "nao_classificado" && (
-                        <span className="nr-badge">Origem · escopo não classificado</span>
-                      )}
-                    </div>
-                    <ActionButton variant="ghost" onClick={() => setEventId(String(event["id"]))}>
-                      Abrir evento
-                    </ActionButton>
+                  <li key={String(event["id"])}>
+                    <NrCard kind="evento" className="nr-event-card">
+                      <header className="nr-card-heading">
+                        <div>
+                          <p className="nr-technical-event-meta">{when(event["created_at"])}</p>
+                          <h4>{human(event["comando"])}</h4>
+                          {typeof event["autor_historico"] === "string" &&
+                            event["autor_historico"] && (
+                              <p className="nr-card-context">
+                                Autoria histórica: {event["autor_historico"]}
+                              </p>
+                            )}
+                        </div>
+                      </header>
+                      <div>
+                        {typeof event["motivo"] === "string" && <p>{event["motivo"]}</p>}
+                        {event["motivo_resumido"] === true && (
+                          <p className="nr-muted">
+                            Motivo resumido. O texto integral está no evento.
+                          </p>
+                        )}
+                        {event["escopo"] === "nao_classificado" && (
+                          <span className="nr-badge">Origem · escopo não classificado</span>
+                        )}
+                      </div>
+                      <NrCardActions>
+                        <ActionButton
+                          variant="ghost"
+                          onClick={(click) => {
+                            click.currentTarget.focus({ preventScroll: true });
+                            setEventId(String(event["id"]));
+                          }}
+                        >
+                          Abrir evento
+                        </ActionButton>
+                      </NrCardActions>
+                    </NrCard>
                   </li>
                 ))}
               </ul>
@@ -564,7 +605,9 @@ export function NrTechnicalTimeline({
   return (
     <section
       aria-label="Histórico técnico da origem"
-      className={compact ? "nr-technical-timeline nr-technical-timeline-compact" : "mb-6"}
+      className={
+        compact ? "nr-technical-timeline nr-technical-timeline-compact" : "nr-technical-timeline"
+      }
     >
       <div className="nr-panel-header">
         <h3 className="font-semibold">Histórico técnico</h3>
@@ -578,43 +621,31 @@ export function NrTechnicalTimeline({
           : "Atualizações do cadastro preservadas da origem. Autores e datas históricos não constituem assinaturas na Nexus."}
       </p>
       {entries.length ? (
-        <ol className={compact ? "nr-technical-events" : "border-l-2 border-border pl-5 space-y-5"}>
+        <ol className="nr-technical-events nr-event-cards">
           {entries.map((entry) => (
-            <li key={entry.key} className="relative">
-              <div
-                className={
-                  compact
-                    ? "nr-technical-event-dot"
-                    : "absolute -left-[1.7rem] top-1.5 size-3 rounded-full border-2 border-white bg-emerald-700"
-                }
-                aria-hidden
-              />
-              {compact && (
-                <>
-                  <p className="nr-technical-event-action">{human(entry.action)}</p>
-                  {entry.text && <p className="nr-prewrap">{entry.text}</p>}
-                </>
-              )}
-              <p className={compact ? "nr-technical-event-meta" : "text-sm nr-muted"}>
-                {entry.date ? (
-                  <time dateTime={entry.date}>{sourceDate(entry.date)}</time>
-                ) : (
-                  "Data não informada"
+            <li key={entry.key}>
+              <NrCard kind="evento" className="nr-event-card">
+                <header className="nr-card-heading">
+                  <div>
+                    <p className="nr-technical-event-meta">
+                      {entry.date ? (
+                        <time dateTime={entry.date}>{sourceDate(entry.date)}</time>
+                      ) : (
+                        "Data não informada"
+                      )}
+                      {entry.author && ` · ${entry.author} (autoria histórica)`}
+                    </p>
+                    <h4 className="nr-technical-event-action">{human(entry.action)}</h4>
+                  </div>
+                </header>
+                {entry.text && <p className="nr-prewrap">{entry.text}</p>}
+                {Object.keys(entry.extra).length > 0 && (
+                  <NrReadOnlyValue
+                    title="Informações complementares preservadas"
+                    value={entry.extra as NrJson}
+                  />
                 )}
-                {entry.author && ` · ${entry.author}${compact ? "" : " (autoria histórica)"}`}
-              </p>
-              {!compact && (
-                <>
-                  <h4 className="font-semibold mt-1">{human(entry.action)}</h4>
-                  {entry.text && <p className="nr-prewrap mt-1">{entry.text}</p>}
-                </>
-              )}
-              {Object.keys(entry.extra).length > 0 && (
-                <NrReadOnlyValue
-                  title="Informações complementares preservadas"
-                  value={entry.extra as NrJson}
-                />
-              )}
+              </NrCard>
             </li>
           ))}
         </ol>

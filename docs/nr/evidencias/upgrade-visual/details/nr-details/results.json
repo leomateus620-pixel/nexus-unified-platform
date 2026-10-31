@@ -1,0 +1,320 @@
+{
+  "method": "Actual components, isolated synthetic transport; all application requests stay on the local laboratory. WebKit is not a claim of Safari-device validation. The 720×450 case exercises the CSS viewport equivalent of 200% zoom at 1440×900; native browser zoom is not claimed.",
+  "checks": [
+    {
+      "engine": "chromium",
+      "name": "Computed semantic colors meet WCAG AA text, control boundary and focus contrast",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "The eight destinations keep their exact labels, order and URLs for both standards",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Filtering and pagination return to the originating local card with context, scroll and focus and no detail query per card",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Conference preserves TAG evidence, name divergence and explicit local destination",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Local document links remain in context and technical history retains all seven narratives and authors",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "B07 values and B16 subrecords, zero quantity and unknown source fields remain readable",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "B16 repeated items restore focus after deletion and Cancel preserves the saved record",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Partial B07 save keeps B16 data and repeated clicks produce one saved version",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Survey form remains usable at desktop, tablet and mobile widths with no page overflow",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Editable copies remain separate cards with explicit original lineage",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Historic file metadata and lazy record versions keep distinct states and focus",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Audit event cards preserve pagination and load complete snapshots only on demand",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Administrative import cards preserve lot inspection, item evidence, staged mappings and actions",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "A concurrent-version error keeps the user's filling and explicit discard remains available",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Computed semantic colors meet WCAG AA text, control boundary and focus contrast",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "The eight destinations keep their exact labels, order and URLs for both standards",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Filtering and pagination return to the originating local card with context, scroll and focus and no detail query per card",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Conference preserves TAG evidence, name divergence and explicit local destination",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Local document links remain in context and technical history retains all seven narratives and authors",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "B07 values and B16 subrecords, zero quantity and unknown source fields remain readable",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "B16 repeated items restore focus after deletion and Cancel preserves the saved record",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Partial B07 save keeps B16 data and repeated clicks produce one saved version",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Survey form remains usable at desktop, tablet and mobile widths with no page overflow",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Editable copies remain separate cards with explicit original lineage",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Historic file metadata and lazy record versions keep distinct states and focus",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Audit event cards preserve pagination and load complete snapshots only on demand",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Administrative import cards preserve lot inspection, item evidence, staged mappings and actions",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "A concurrent-version error keeps the user's filling and explicit discard remains available",
+      "pass": true
+    }
+  ],
+  "contrast": [
+    {
+      "engine": "chromium",
+      "ratios": [
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 14.917975123937047
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-surface-workspace",
+          "minimum": 4.5,
+          "ratio": 13.135142566614967
+        },
+        {
+          "foreground": "--nr-text-subtle",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 7.073793113307453
+        },
+        {
+          "foreground": "--nr-text-subtle",
+          "background": "--nr-surface-workspace",
+          "minimum": 4.5,
+          "ratio": 6.228411044937511
+        },
+        {
+          "foreground": "--nr-frame-text",
+          "background": "--nr-frame",
+          "minimum": 4.5,
+          "ratio": 12.818546864674298
+        },
+        {
+          "foreground": "--nr-frame-muted",
+          "background": "--nr-frame",
+          "minimum": 4.5,
+          "ratio": 9.177422468613207
+        },
+        {
+          "foreground": "--nr-border-strong",
+          "background": "--nr-surface-field",
+          "minimum": 3,
+          "ratio": 3.1829116086488773
+        },
+        {
+          "foreground": "--nr-focus",
+          "background": "--nr-surface-field",
+          "minimum": 3,
+          "ratio": 6.812421106502052
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-selection",
+          "minimum": 4.5,
+          "ratio": 12.280522010698283
+        },
+        {
+          "foreground": "--nr-warning",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 8.269791759093831
+        },
+        {
+          "foreground": "--nr-critical",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 8.77985234454774
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-context-control",
+          "minimum": 4.5,
+          "ratio": 11.188728749189966
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-context-marker",
+          "minimum": 4.5,
+          "ratio": 8.713826069177722
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "ratios": [
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 14.917975123937047
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-surface-workspace",
+          "minimum": 4.5,
+          "ratio": 13.135142566614967
+        },
+        {
+          "foreground": "--nr-text-subtle",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 7.073793113307453
+        },
+        {
+          "foreground": "--nr-text-subtle",
+          "background": "--nr-surface-workspace",
+          "minimum": 4.5,
+          "ratio": 6.228411044937511
+        },
+        {
+          "foreground": "--nr-frame-text",
+          "background": "--nr-frame",
+          "minimum": 4.5,
+          "ratio": 12.818546864674298
+        },
+        {
+          "foreground": "--nr-frame-muted",
+          "background": "--nr-frame",
+          "minimum": 4.5,
+          "ratio": 9.177422468613207
+        },
+        {
+          "foreground": "--nr-border-strong",
+          "background": "--nr-surface-field",
+          "minimum": 3,
+          "ratio": 3.1829116086488773
+        },
+        {
+          "foreground": "--nr-focus",
+          "background": "--nr-surface-field",
+          "minimum": 3,
+          "ratio": 6.812421106502052
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-selection",
+          "minimum": 4.5,
+          "ratio": 12.280522010698283
+        },
+        {
+          "foreground": "--nr-warning",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 8.269791759093831
+        },
+        {
+          "foreground": "--nr-critical",
+          "background": "--nr-surface-card",
+          "minimum": 4.5,
+          "ratio": 8.77985234454774
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-context-control",
+          "minimum": 4.5,
+          "ratio": 11.188728749189966
+        },
+        {
+          "foreground": "--nr-text",
+          "background": "--nr-context-marker",
+          "minimum": 4.5,
+          "ratio": 8.713826069177722
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "WebKit 26.6 was exercised; the Safari application and physical devices were not tested.",
+    "A 720×450 CSS viewport represents 200% at 1440×900; native browser zoom was not automated.",
+    "Editing and staging used synthetic in-memory fixtures; this does not certify production persistence or authorization."
+  ],
+  "errors": [],
+  "success": true
+}

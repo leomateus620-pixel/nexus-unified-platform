@@ -106,6 +106,7 @@ export type NrContexto = {
     id: string;
     nome: string;
     razao_social?: string;
+    marca?: import("@/features/clientes/schemas").ClienteMarca | null | undefined;
     nome_exibicao?: string | null;
     cnpj?: string | null;
   }[];

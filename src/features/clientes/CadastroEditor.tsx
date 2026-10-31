@@ -24,6 +24,9 @@ import {
   type Contato,
 } from "./schemas";
 import { useCadastroList, useDebouncedSearch } from "./queries";
+import { CLIENTE_MARCA_MAX_BYTES, marcaImagem } from "./marca";
+import type { z } from "zod";
+import type { clienteMarcaUploadSchema } from "./schemas";
 
 type Values = Record<string, string>;
 const labels: Record<string, string> = {
@@ -41,6 +44,7 @@ const labels: Record<string, string> = {
   telefone: "Telefone",
   unidade_id: "Unidade de atuação",
   motivo: "Motivo",
+  marca: "Marca do cliente",
 };
 const fieldSets = {
   clientes: ["razao_social", "nome_exibicao", "cnpj", "cidade", "uf", "observacoes"],
@@ -88,11 +92,23 @@ export function CadastroEditor({
     archive ? { motivo: "" } : initialValues(grupo, row),
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [marcaUpload, setMarcaUpload] = useState<
+    z.infer<typeof clienteMarcaUploadSchema> | undefined
+  >();
+  const [removerMarca, setRemoverMarca] = useState(false);
+  const [marcaLendo, setMarcaLendo] = useState(false);
+  const marcaAtual = base && "marca" in base ? base.marca : null;
+  const marcaPreview = marcaUpload
+    ? `data:${marcaUpload.mime};base64,${marcaUpload.base64}`
+    : removerMarca
+      ? undefined
+      : marcaImagem(marcaAtual);
   const [discard, setDiscard] = useState(false);
   const [comparison, setComparison] = useState<Cadastro | null>(null);
   const [compareError, setCompareError] = useState<unknown>(null);
   const [comparing, setComparing] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const marcaInput = useRef<HTMLInputElement>(null);
   const allowClose = useRef(false);
   const feedback = useRef<HTMLDivElement>(null);
   const qc = useQueryClient();
@@ -103,8 +119,11 @@ export function CadastroEditor({
   const archiveCadastro = useServerFn(arquivarCadastro);
   const getCurrent = useServerFn(obterCadastro);
   const dirty =
+    !!marcaUpload ||
+    removerMarca ||
+    marcaLendo ||
     JSON.stringify(values) !==
-    JSON.stringify(archive ? { motivo: "" } : initialValues(grupo, base));
+      JSON.stringify(archive ? { motivo: "" } : initialValues(grupo, base));
   const mutation = useMutation({
     mutationFn: async (data: Values) => {
       const common = {
@@ -125,7 +144,12 @@ export function CadastroEditor({
         });
       }
       if (grupo === "clientes") {
-        const body = { ...common, dados: clienteDados.parse(data) };
+        const body = {
+          ...common,
+          dados: clienteDados.parse(data),
+          ...(marcaUpload ? { marca_upload: marcaUpload } : {}),
+          ...(removerMarca ? { remover_marca: true } : {}),
+        };
         return saveCliente({ data: { ...body, chave: requestKey(body) } });
       }
       if (grupo === "unidades") {
@@ -168,7 +192,7 @@ export function CadastroEditor({
     enableBeforeUnload: () => !allowClose.current && (dirty || mutation.isPending),
   });
   const close = () => {
-    if (mutation.isPending) return;
+    if (mutation.isPending || marcaLendo) return;
     if (dirty) setDiscard(true);
     else onClose();
   };
@@ -192,6 +216,7 @@ export function CadastroEditor({
   };
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    if (marcaLendo || mutation.isPending || errors["marca"]) return;
     const source = archive
       ? { motivo: values["motivo"] }
       : grupo === "unidades"
@@ -341,6 +366,9 @@ export function CadastroEditor({
                       setBase(comparison);
                       if (!archive) setValues(initialValues(grupo, comparison));
                       setComparison(null);
+                      setMarcaUpload(undefined);
+                      setRemoverMarca(false);
+                      if (marcaInput.current) marcaInput.current.value = "";
                       setErrors({});
                       mutation.reset();
                     }}
@@ -451,6 +479,149 @@ export function CadastroEditor({
                   </div>
                 );
               })}
+              {grupo === "clientes" && !archive && (
+                <section
+                  className="nx-client-field nx-client-field-wide nx-client-brand-field"
+                  aria-label="Identidade visual do cliente"
+                >
+                  <label htmlFor={fieldId("marca")}>Marca do cliente</label>
+                  {marcaPreview && (
+                    <img
+                      src={marcaPreview}
+                      alt="Prévia da marca do cliente"
+                      className="nx-client-brand-preview"
+                      data-surface={marcaUpload?.superficie ?? marcaAtual?.superficie ?? "clara"}
+                    />
+                  )}
+                  <input
+                    id={fieldId("marca")}
+                    ref={marcaInput}
+                    type="file"
+                    accept="image/png,image/jpeg,.png,.jpg,.jpeg"
+                    disabled={mutation.isPending || marcaLendo}
+                    aria-describedby={`${fieldId("marca")}-help${errors["marca"] ? ` ${fieldId("marca")}-error` : ""}`}
+                    aria-invalid={!!errors["marca"]}
+                    onChange={async (event) => {
+                      const file = event.target.files?.[0];
+                      if (!file) return;
+                      setMarcaLendo(true);
+                      setErrors((current) => {
+                        const next = { ...current };
+                        delete next["marca"];
+                        return next;
+                      });
+                      try {
+                        if (
+                          !["image/png", "image/jpeg"].includes(file.type) ||
+                          file.size > CLIENTE_MARCA_MAX_BYTES ||
+                          !file.size
+                        )
+                          throw new Error("Escolha uma marca PNG ou JPEG de até 1 MiB.");
+                        const url = await new Promise<string>((resolve, reject) => {
+                          const reader = new FileReader();
+                          reader.onload = () => resolve(String(reader.result));
+                          reader.onerror = () =>
+                            reject(
+                              new Error(
+                                "Não foi possível ler a marca. Tente selecionar o arquivo novamente.",
+                              ),
+                            );
+                          reader.readAsDataURL(file);
+                        });
+                        const image = new Image();
+                        image.src = url;
+                        await image.decode();
+                        if (
+                          !image.naturalWidth ||
+                          !image.naturalHeight ||
+                          image.naturalWidth > 8192 ||
+                          image.naturalHeight > 8192
+                        )
+                          throw new Error("A marca deve ter até 8192 × 8192 px.");
+                        setMarcaUpload({
+                          nome: file.name,
+                          mime: file.type as "image/png" | "image/jpeg",
+                          base64: url.slice(url.indexOf(",") + 1),
+                          superficie: marcaAtual?.superficie ?? "clara",
+                        });
+                        setRemoverMarca(false);
+                      } catch (cause) {
+                        if (marcaInput.current) marcaInput.current.value = "";
+                        setErrors((current) => ({
+                          ...current,
+                          marca: cause instanceof Error ? cause.message : "Imagem inválida.",
+                        }));
+                      } finally {
+                        setMarcaLendo(false);
+                      }
+                    }}
+                  />
+                  <p id={`${fieldId("marca")}-help`} className="text-xs text-muted-foreground">
+                    PNG ou JPEG de até 1 MiB. Preserve a proporção e a transparência da marca
+                    oficial. A alteração só é aplicada ao salvar o cadastro.
+                  </p>
+                  {marcaUpload && (
+                    <fieldset className="nx-client-brand-surface">
+                      <legend>Superfície da marca</legend>
+                      {(["clara", "escura"] as const).map((surface) => (
+                        <label key={surface}>
+                          <input
+                            type="radio"
+                            name={`${id}-marca-superficie`}
+                            checked={(marcaUpload.superficie ?? "clara") === surface}
+                            disabled={mutation.isPending}
+                            onChange={() =>
+                              setMarcaUpload((current) =>
+                                current ? { ...current, superficie: surface } : current,
+                              )
+                            }
+                          />
+                          {surface === "clara" ? "Clara" : "Escura"}
+                        </label>
+                      ))}
+                    </fieldset>
+                  )}
+                  {(marcaAtual || marcaUpload) && (
+                    <ActionButton
+                      variant="ghost"
+                      disabled={mutation.isPending || marcaLendo}
+                      onClick={() => {
+                        setMarcaUpload(undefined);
+                        if (marcaInput.current) {
+                          marcaInput.current.value = "";
+                          marcaInput.current.focus();
+                        }
+                        setRemoverMarca(marcaAtual ? !removerMarca : false);
+                        setErrors((current) => {
+                          const next = { ...current };
+                          delete next["marca"];
+                          return next;
+                        });
+                      }}
+                    >
+                      {removerMarca ? "Manter marca salva" : "Remover marca"}
+                    </ActionButton>
+                  )}
+                  <p role="status" className="text-sm text-muted-foreground">
+                    {marcaLendo
+                      ? "Verificando imagem…"
+                      : marcaUpload
+                        ? `Nova marca selecionada: ${marcaUpload.nome}`
+                        : removerMarca
+                          ? "A marca será removida ao salvar."
+                          : ""}
+                  </p>
+                  {errors["marca"] && (
+                    <p
+                      id={`${fieldId("marca")}-error`}
+                      role="alert"
+                      className="text-sm text-destructive"
+                    >
+                      {errors["marca"]}
+                    </p>
+                  )}
+                </section>
+              )}
               <div className="nx-client-form-actions">
                 <span className="mr-auto text-xs text-muted-foreground" role="status">
                   {mutation.isPending
@@ -467,6 +638,7 @@ export function CadastroEditor({
                 <ActionButton
                   type="submit"
                   loading={mutation.isPending}
+                  disabled={marcaLendo}
                   variant={archive && !replacing ? "danger" : "primary"}
                 >
                   {archive ? (replacing ? "Reativar" : "Arquivar") : "Salvar cadastro"}

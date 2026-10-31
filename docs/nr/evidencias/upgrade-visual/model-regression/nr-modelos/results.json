@@ -1,0 +1,15 @@
+{
+  "method": "Actual source UI with synthetic laboratory transport; no real persistence claim",
+  "checks": [
+    {
+      "name": "model creation chooses an exact version and previews it without resolving fields in the browser",
+      "pass": true
+    },
+    {
+      "name": "captured source can be refreshed but manual replacement requires a reason and preserves its source",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "success": true
+}

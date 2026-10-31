@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, Building2, Link2, Pencil, Plus, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Link2, Pencil, Plus, X } from "lucide-react";
 import { ActionButton, EmptyState, ErrorState, LoadingState } from "@/components/nexus/Page";
 import { CadastroEditor } from "@/features/clientes/CadastroEditor";
 import { obterCadastro } from "@/features/clientes/clientes.functions";
@@ -15,6 +15,8 @@ import type { Norma, NrContexto } from "./domain";
 import type { NrSearch } from "./NrWorkspace";
 import { NrStructuredValue } from "./NrStructuredValue";
 import { nrLabel } from "./technical-display";
+import { NrClientBrand } from "./NrClientBrand";
+import { useCollectionReturn } from "./useCollectionReturn";
 import "@/features/clientes/clientes.css";
 
 type EditorState = {
@@ -46,6 +48,39 @@ export function NrClientsWorkspace({
   const keys = useRef(new Map<string, string>());
   const [editor, setEditor] = useState<EditorState | null>(null);
   const [associationOpen, setAssociationOpen] = useState(false);
+  const collapsedKey = `nexus.nr.clients-collapsed.v1:${session.data?.userId || ""}:${org}:${norma}`;
+  const [collapsed, setCollapsed] = useState<Set<string>>(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(collapsedKey) || "null") as {
+        ids: unknown;
+        captured: number;
+      } | null;
+      if (saved && Array.isArray(saved.ids) && Date.now() - saved.captured < 30 * 60_000)
+        return new Set(saved.ids.filter((value): value is string => typeof value === "string"));
+    } catch {
+      /* Selection works without browser storage. */
+    }
+    return new Set();
+  });
+  const returnTo = useCollectionReturn<HTMLElement>(
+    `${org}:${norma}:clientes`,
+    JSON.stringify([search.cliente, search.unidade, search.busca, search.pagina]),
+  );
+  const toggleClient = (clientId: string) =>
+    setCollapsed((current) => {
+      const next = new Set(current);
+      if (next.has(clientId)) next.delete(clientId);
+      else next.add(clientId);
+      try {
+        sessionStorage.setItem(
+          collapsedKey,
+          JSON.stringify({ ids: [...next], captured: Date.now() }),
+        );
+      } catch {
+        /* Optional state persistence. */
+      }
+      return next;
+    });
   const [candidate, setCandidate] = useState<{ id: string; nome: string } | null>(null);
   const [globalSearch, setGlobalSearch] = useState("");
   const [clientPage, setClientPage] = useState(0),
@@ -166,7 +201,7 @@ export function NrClientsWorkspace({
     await qc.invalidateQueries({ queryKey: ["nr", org] });
   }
   return (
-    <section aria-label="Clientes e unidades do acervo NR" className="space-y-4">
+    <section {...returnTo} aria-label="Clientes e unidades do acervo NR" className="space-y-4">
       <div className="nr-panel-header">
         <div>
           <h2 className="font-semibold">Clientes e unidades</h2>
@@ -238,12 +273,16 @@ export function NrClientsWorkspace({
             <ErrorState error={clients.error} onRetry={() => clients.refetch()} />
           ) : (
             <>
-              <ul className="nr-record-list my-3">
+              <ul className="nr-card-grid my-3">
                 {clients.data?.rows.map((client) => (
-                  <li key={client.id} className="py-2">
+                  <li
+                    key={client.id}
+                    className="nr-card"
+                    data-selected={candidate?.id === client.id}
+                  >
                     <button
                       type="button"
-                      className="text-left min-h-11 w-full rounded px-2 focus-visible:outline-2"
+                      className="nr-client-identity-button w-full"
                       aria-pressed={candidate?.id === client.id}
                       onClick={() => {
                         setCandidate({
@@ -253,12 +292,14 @@ export function NrClientsWorkspace({
                         setUnitPage(0);
                       }}
                     >
-                      <strong>{client.nome_exibicao || client.razao_social}</strong>
-                      <span className="nr-muted ml-2">
-                        {client.cnpj || "Identificação não informada"}
-                        {candidate?.id === client.id && " · selecionado"}
-                      </span>
+                      <NrClientBrand
+                        client={{ ...client, nome: client.nome_exibicao || client.razao_social }}
+                      />
                     </button>
+                    <p className="nr-muted">
+                      {client.cnpj || "Identificação não informada"}
+                      {candidate?.id === client.id && " · selecionado"}
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -310,23 +351,24 @@ export function NrClientsWorkspace({
                 <ErrorState error={units.error} onRetry={() => units.refetch()} />
               ) : (
                 <>
-                  <ul className="nr-record-list">
+                  <ul className="nr-card-grid">
                     {units.data?.rows.map((unit) => (
-                      <li
-                        key={unit.id}
-                        className="py-2 flex items-center justify-between gap-3 flex-wrap"
-                      >
-                        <div>
-                          <strong>{unit.nome}</strong>
+                      <li key={unit.id} className="nr-card">
+                        <header className="nr-card-heading">
+                          <h5 className="nr-card-title">{unit.nome}</h5>
+                        </header>
+                        <div className="nr-card-body">
                           <p className="nr-muted">{unit.endereco || "Endereço não informado"}</p>
                         </div>
-                        <ActionButton
-                          variant="ghost"
-                          loading={busy}
-                          onClick={() => void associateExisting(unit.id)}
-                        >
-                          Associar a {norma === "NR33" ? "NR-33" : "NR-35"}
-                        </ActionButton>
+                        <footer className="nr-card-actions">
+                          <ActionButton
+                            variant="ghost"
+                            loading={busy}
+                            onClick={() => void associateExisting(unit.id)}
+                          >
+                            Associar a {norma === "NR33" ? "NR-33" : "NR-35"}
+                          </ActionButton>
+                        </footer>
                       </li>
                     ))}
                   </ul>
@@ -365,19 +407,35 @@ export function NrClientsWorkspace({
               .filter((unit) => unit.cliente_id === client.id)
               .sort((a, b) => compare.compare(a.nome, b.nome));
             return (
-              <article className="nr-panel" key={client.id}>
-                <div className="nr-panel-header">
-                  <div className="flex items-start gap-3">
-                    <Building2 size={22} className="text-emerald-800 mt-1" aria-hidden />
-                    <div>
-                      <h3 className="font-semibold text-lg">{client.nome}</h3>
-                      <p className="nr-muted">
-                        {client.razao_social &&
-                          client.razao_social !== client.nome &&
-                          `${client.razao_social} · `}
-                        {client.cnpj || "Identificação empresarial não informada"}
-                      </p>
-                    </div>
+              <article
+                className="nr-panel nr-client-group"
+                key={client.id}
+                data-selected={search.cliente === client.id}
+              >
+                <header className="nr-panel-header">
+                  <div>
+                    <h3 className="nr-card-title">
+                      <button
+                        type="button"
+                        className="nr-client-identity-button"
+                        aria-expanded={!collapsed.has(client.id)}
+                        aria-controls={`nr-client-units-${client.id}`}
+                        onClick={() => toggleClient(client.id)}
+                      >
+                        <NrClientBrand client={client} />
+                        <ChevronDown size={18} aria-hidden="true" />
+                      </button>
+                    </h3>
+                    <p className="nr-muted mt-2">
+                      {client.razao_social &&
+                        client.razao_social !== client.nome &&
+                        `${client.razao_social} · `}
+                      {client.cnpj || "Identificação empresarial não informada"}
+                    </p>
+                    <p className="nr-muted">
+                      {localUnits.length}{" "}
+                      {localUnits.length === 1 ? "unidade associada" : "unidades associadas"}
+                    </p>
                   </div>
                   <div className="nr-actions">
                     {canEditCadastro && (
@@ -407,47 +465,57 @@ export function NrClientsWorkspace({
                       </ActionButton>
                     )}
                   </div>
-                </div>
-                <div className="nr-table-wrap">
-                  <table>
-                    <caption className="sr-only">Unidades de {client.nome}</caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Unidade / identificação</th>
-                        <th scope="col">Endereço e escopo</th>
-                        <th scope="col">Situação documental</th>
-                        <th scope="col">Locais</th>
-                        <th scope="col">Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {localUnits.map((unit) => (
-                        <tr key={unit.id} aria-selected={search.unidade === unit.id}>
-                          <td>
-                            <strong>{unit.nome}</strong>
-                            <p className="nr-muted">
-                              {unit.cnpj || client.cnpj || "Identificação não informada"}
+                </header>
+                <div id={`nr-client-units-${client.id}`} hidden={collapsed.has(client.id)}>
+                  <ul className="nr-card-grid" aria-label={`Unidades de ${client.nome}`}>
+                    {localUnits.map((unit) => (
+                      <li
+                        key={unit.id}
+                        className="nr-card nr-unit-card"
+                        data-record-id={unit.id}
+                        data-selected={search.unidade === unit.id}
+                      >
+                        <header className="nr-card-heading">
+                          <div>
+                            <p className="nr-card-category">
+                              Unidade · {norma === "NR33" ? "NR-33" : "NR-35"}
                             </p>
-                          </td>
-                          <td>
-                            <p>{unit.endereco || "Endereço não informado"}</p>
-                            <p className="nr-muted">
+                            <h4 className="nr-card-title">{unit.nome}</h4>
+                          </div>
+                          {search.unidade === unit.id && (
+                            <span className="nr-badge">Contexto atual</span>
+                          )}
+                        </header>
+                        <div className="nr-card-body">
+                          <p>{unit.endereco || "Endereço não informado"}</p>
+                          <p className="nr-muted">
+                            {unit.cnpj || client.cnpj || "Identificação não informada"}
+                          </p>
+                          <div className="nr-card-section">
+                            <p className="nr-card-category">Escopo</p>
+                            <p>
                               {unit.escopo ||
                                 unit.normas
                                   ?.map((norm) => (norm === "NR33" ? "NR-33" : "NR-35"))
                                   .join(" · ") ||
                                 "Escopo em conferência"}
                             </p>
-                          </td>
-                          <td>
+                          </div>
+                          <div className="nr-card-section">
+                            <p className="nr-card-category">Situação documental</p>
                             <p>{nrLabel(unit.situacao || "Situação não informada")}</p>
-                            <p className="nr-muted">
-                              {unit.documentos === undefined
-                                ? "Quantidade documental indisponível"
-                                : `${unit.documentos} registros documentais`}
-                            </p>
+                            <dl className="nr-unit-summary mt-3">
+                              <div>
+                                <dt>Locais</dt>
+                                <dd>{unit.locais ?? "Indisponível"}</dd>
+                              </div>
+                              <div>
+                                <dt>Registros documentais</dt>
+                                <dd>{unit.documentos ?? "Indisponível"}</dd>
+                              </div>
+                            </dl>
                             {typeof unit.documentos_origem === "number" && (
-                              <p className="nr-muted">
+                              <p className="nr-muted mt-2">
                                 {unit.documentos_origem} da origem · {unit.copias_editaveis ?? "—"}{" "}
                                 cópias editáveis
                               </p>
@@ -460,58 +528,58 @@ export function NrClientsWorkspace({
                                 <NrStructuredValue value={unit.documentacao} />
                               </details>
                             )}
-                          </td>
-                          <td>{unit.locais ?? "—"}</td>
-                          <td>
-                            <div className="nr-actions">
-                              <Link
-                                to={String(base)}
-                                search={contextSearch(client.id, unit.id)}
-                                className="inline-flex items-center gap-1 underline min-h-11"
+                          </div>
+                        </div>
+                        <footer className="nr-card-actions">
+                          <Link
+                            to={String(base)}
+                            search={contextSearch(client.id, unit.id)}
+                            className="nr-card-open"
+                          >
+                            Abrir unidade
+                            <ArrowRight size={16} />
+                          </Link>
+                          <div className="nr-actions">
+                            <Link
+                              to={String(`${base}/documentos`)}
+                              search={contextSearch(client.id, unit.id)}
+                              className="nr-card-link"
+                            >
+                              Documentos
+                            </Link>
+                            <Link
+                              to={String(`${base}/pendencias`)}
+                              search={contextSearch(client.id, unit.id)}
+                              className="nr-card-link"
+                            >
+                              Pendências
+                              {unit.pendencias_abertas === undefined
+                                ? ""
+                                : ` (${unit.pendencias_abertas})`}
+                            </Link>
+                            {canEditCadastro && (
+                              <ActionButton
+                                variant="ghost"
+                                disabled={busy}
+                                onClick={() => void edit("unidades", unit.id, client.id)}
+                                aria-label={`Editar unidade ${unit.nome}`}
                               >
-                                Abrir unidade
-                                <ArrowRight size={14} />
-                              </Link>
-                              <Link
-                                to={String(`${base}/documentos`)}
-                                search={contextSearch(client.id, unit.id)}
-                                className="underline min-h-11 inline-flex items-center"
-                              >
-                                Documentos
-                              </Link>
-                              <Link
-                                to={String(`${base}/pendencias`)}
-                                search={contextSearch(client.id, unit.id)}
-                                className="underline min-h-11 inline-flex items-center"
-                              >
-                                Pendências
-                                {unit.pendencias_abertas === undefined
-                                  ? ""
-                                  : ` (${unit.pendencias_abertas})`}
-                              </Link>
-                              {canEditCadastro && (
-                                <ActionButton
-                                  variant="ghost"
-                                  disabled={busy}
-                                  onClick={() => void edit("unidades", unit.id, client.id)}
-                                  aria-label={`Editar unidade ${unit.nome}`}
-                                >
-                                  <Pencil size={15} />
-                                </ActionButton>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                                <Pencil size={15} />
+                                Editar
+                              </ActionButton>
+                            )}
+                          </div>
+                        </footer>
+                      </li>
+                    ))}
+                  </ul>
+                  {!localUnits.length && (
+                    <p className="nr-source">
+                      Nenhuma unidade associada a este cliente no módulo. Use “Associar cadastro
+                      existente” ou cadastre uma unidade.
+                    </p>
+                  )}
                 </div>
-                {!localUnits.length && (
-                  <p className="nr-source">
-                    Nenhuma unidade associada a este cliente no módulo. Use “Associar cadastro
-                    existente” ou cadastre uma unidade.
-                  </p>
-                )}
               </article>
             );
           })

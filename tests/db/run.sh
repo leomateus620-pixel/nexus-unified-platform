@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Integração com banco/RLS: Postgres vazio + migrations reais + cenários S/T/C.
-# Uso: bash tests/db/run.sh   (requer initdb/pg_ctl/psql no PATH)
+# Uso: bash tests/db/run.sh   (requer PostgreSQL 17+ com initdb/pg_ctl/psql no PATH)
+# A migração 0058 usa ALTER COLUMN SET EXPRESSION, disponível a partir do PostgreSQL 17.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 DIR="$(mktemp -d)"; PORT="${PGTEST_PORT:-55432}"
@@ -82,7 +83,7 @@ PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/estudos-concurrency.
 $P -f "$ROOT/tests/db/almoxarifado.sql"
 $P -f "$ROOT/tests/db/almoxarifado-arquivos.sql"
 PGTEST_HOST="$DIR" PGTEST_PORT="$PORT" node "$ROOT/tests/db/almoxarifado-concurrency.mjs"
-for SCENARIO in equipe-disponibilidade agenda-basic agenda-safety agenda-jobs agenda-temporal-edge agenda-series-edge agenda-edge-concurrency agenda-anexos agenda-anexos-concurrency agenda-list-performance agenda-dashboard pet pet-retificacoes pet-relatorios pet-listagem nr nr-arquivos nr-importacao nr-acervo nr-impactos nr-retencao nr-storage-confirmation nr-docx-derived nr-publicacao-tecnica nr-historico nr-fluxos nr-fila-importacao nr-upgrade-66 nr-experiencia nr-aplicabilidade nr-totais nr-arquivos-contextuais; do
+for SCENARIO in equipe-disponibilidade agenda-basic agenda-safety agenda-jobs agenda-temporal-edge agenda-series-edge agenda-edge-concurrency agenda-anexos agenda-anexos-concurrency agenda-list-performance agenda-dashboard pet pet-retificacoes pet-relatorios pet-listagem nr nr-arquivos nr-importacao nr-acervo nr-impactos nr-retencao nr-storage-confirmation nr-docx-derived nr-publicacao-tecnica nr-historico nr-fluxos nr-fila-importacao nr-upgrade-66 nr-experiencia nr-aplicabilidade nr-totais nr-arquivos-contextuais nr-imagens clientes-marcas; do
   PGTEST_HOST=127.0.0.1 PGTEST_DATABASE=postgres PGTEST_PORT="$PORT" node "$ROOT/tests/db/$SCENARIO.mjs"
 done
 echo "$OUT"

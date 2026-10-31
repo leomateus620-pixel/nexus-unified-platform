@@ -1,0 +1,194 @@
+{
+  "method": "Unmodified full tests/db/run.sh on a new disposable PostgreSQL17.10 cluster; genuine PostgreSQL17.10 psql compiled from official SHA256-verified source; fixed loopback port chosen free before launch; runner trap plus outer cleanup guard.",
+  "platform": "macOS arm64",
+  "postgres": "17.10",
+  "psql": "17.10",
+  "manifestMigrations": 79,
+  "command": "PGTEST_PORT=<exclusive> PGTEST_HOST=127.0.0.1 bash tests/db/run.sh",
+  "port": 57010,
+  "durationSeconds": 118,
+  "exitCode": 0,
+  "fullRunnerPassed": true,
+  "portClosedAfterTrap": true,
+  "temporaryClusterDirectoriesRemoved": true,
+  "finalNodeScenarios": [
+    "equipe-disponibilidade",
+    "agenda-basic",
+    "agenda-safety",
+    "agenda-jobs",
+    "agenda-temporal-edge",
+    "agenda-series-edge",
+    "agenda-edge-concurrency",
+    "agenda-anexos",
+    "agenda-anexos-concurrency",
+    "agenda-list-performance",
+    "agenda-dashboard",
+    "pet",
+    "pet-retificacoes",
+    "pet-relatorios",
+    "pet-listagem",
+    "nr",
+    "nr-arquivos",
+    "nr-importacao",
+    "nr-acervo",
+    "nr-impactos",
+    "nr-retencao",
+    "nr-storage-confirmation",
+    "nr-docx-derived",
+    "nr-publicacao-tecnica",
+    "nr-historico",
+    "nr-fluxos",
+    "nr-fila-importacao",
+    "nr-upgrade-66",
+    "nr-experiencia",
+    "nr-aplicabilidade",
+    "nr-totais",
+    "nr-arquivos-contextuais",
+    "nr-imagens",
+    "clientes-marcas"
+  ],
+  "nodeSuiteReceipts": [
+    {
+      "suite": "agenda-basic",
+      "passed": 28,
+      "allPassed": true
+    },
+    {
+      "suite": "agenda-safety",
+      "passed": 18,
+      "allPassed": true
+    },
+    {
+      "suite": "agenda-jobs",
+      "passed": 20,
+      "allPassed": true
+    },
+    {
+      "suite": "NR core PostgreSQL",
+      "assertions": 34,
+      "passed": true,
+      "scope": "isolated fixtures; real PostgreSQL constraints/RLS/RPC/locks; no Storage HTTP proof"
+    },
+    {
+      "suite": "NR files PostgreSQL",
+      "assertions": 22,
+      "passed": true,
+      "scope": "isolated SQL metadata/RLS/permissions; does not prove Storage HTTP or actual blob bytes"
+    },
+    {
+      "suite": "NR import PostgreSQL",
+      "assertions": 17,
+      "passed": true,
+      "scope": "private staging, canonical CNPJ identity, no fabricated Auth actor, resume,idempotence,three-way conflict,partial failure rollback,original historical status"
+    },
+    {
+      "suite": "NR archive organization PostgreSQL",
+      "assertions": 33,
+      "passed": true,
+      "scope": "isolated SQL; global model context, scoped history, file identity/version/replay/trash/move/RLS, manual field reason, physical consumption deduplication; no Storage HTTP proof"
+    },
+    {
+      "suite": "NR impactos PostgreSQL",
+      "assertions": 25,
+      "passed": true,
+      "scope": "isolated real constraints/RLS/RPC/locks; preserves issued content/snapshot; review is not emission or signature"
+    },
+    {
+      "suite": "NR retention PostgreSQL",
+      "assertions": 19,
+      "passed": true,
+      "scope": "isolated SQL: primary/secondary issued and superseded retention; owner-only junction; pending staging; archive replay and two-session association races; no Storage HTTP claim"
+    },
+    {
+      "suite": "NR Storage confirmation plans",
+      "checks": 10,
+      "passed": true,
+      "scope": "isolated PostgreSQL and synthetic Storage metadata; does not prove HTTP bytes; fixtures rolled back"
+    },
+    {
+      "suite": "DOCX derived import envelopes PostgreSQL",
+      "assertions": 17,
+      "passed": true,
+      "scope": "Synthetic fixtures inside disposable local transaction rolled back; exact original/revision/image guards, separate derivatives, native images, retry, later edit/new revision, three-way conflict and issued-source immutability. No Storage HTTP or source-document conversion claim."
+    },
+    {
+      "suite": "NR internal technical publication PostgreSQL",
+      "assertions": 46,
+      "passed": true,
+      "scope": "isolated fixtures only; professional authority, official NR references/date/version/confrontation, licensed evidence context, server-derived publication snapshots, immutable history, retention, idempotence, stale versions, RLS and generic bypass rejection; no normative certification or document/PET emission"
+    },
+    {
+      "suite": "nr-historico-paginado",
+      "assertions": 79,
+      "result": "passed",
+      "fixtures": "synthetic isolated rollback",
+      "production_writes": false
+    },
+    {
+      "suite": "NR workflows/model/capture/folder order",
+      "assertions": 61,
+      "passed": true,
+      "scope": "isolated synthetic fixtures rolled back; no production data, approval, emission or safety conclusion"
+    },
+    {
+      "suite": "NR durable import queue PostgreSQL",
+      "assertions": 91,
+      "passed": true,
+      "scope": "isolated synthetic data; real RLS/RPC/transaction rollback/dependency retries/three-way conflict/role-lock concurrency; pg_cron intentionally absent, manual worker only; no Storage bytes claimed"
+    },
+    {
+      "suite": "Manifest64→66 PostgreSQL upgrade",
+      "assertions": 25,
+      "passed": true,
+      "migrationCount": 66,
+      "scope": "disposable database; both actual connector envelopes; per-migration DDL/ledger rollback; exact64 source/snapshot/version/PET preservation; runner+connector replay; checksum-prefix rejection; pg_cron absent locally"
+    },
+    {
+      "suite": "NR contextual projections upgrade67",
+      "assertions": 89,
+      "passed": true,
+      "scope": "Synthetic disposable PostgreSQL; upgrade/replay/rollback/RLS/relational context/lineage/natural order/narrative history/source model proof/concurrent association. Storage metadata fixtures do not claim binary retrieval."
+    },
+    {
+      "suite": "NR applicability reviewed manifest upgrade68",
+      "assertions": 47,
+      "passed": true,
+      "scope": "Synthetic isolated PostgreSQL only; exact source identity/hash/excerpt, no normative inference, whole-snapshot conflicts, historical closed state/treatments, RLS, owner-only execution, migration failure/replay, import replay, concurrent duplicate and concurrent edit preservation; no production writes or operational approval."
+    },
+    {
+      "suite": "NR factual document totals upgrade69",
+      "assertions": 34,
+      "passed": true,
+      "scope": "Synthetic disposable PostgreSQL; classification separate from parent-proof, indexed UUID relationship equivalence, sparse panel DTO scopes, no snapshots in panel, auth/RLS, complete DDL rollback and replay without data writes. Performance requires separate real-acervo measurement."
+    },
+    {
+      "suite": "NR canonical file relationship projection upgrade70",
+      "assertions": 48,
+      "passed": true,
+      "scope": "Synthetic disposable PostgreSQL: upgrade/rollback/replay, RLS/permissions, same-binding norm and relational filters, full context DTO, bounded IDs before pagination, concurrent reads, unchanged FK rejection of cross-unit secondary links; no bytes obtained or production changes."
+    },
+    {
+      "suite": "NR image representations and occurrences",
+      "assertions": 212,
+      "passed": true,
+      "storage_bytes_proven": false
+    },
+    {
+      "suite": "Client brand RLS, version and idempotency",
+      "assertions": 18,
+      "passed": true,
+      "storage_bytes_proven": false
+    }
+  ],
+  "selectedOutput": [
+    "PASS: clean installation (79) and private ledger; preexisting schema without reconciliation rejected",
+    "RESULTADO: TODOS PASSARAM"
+  ],
+  "fullLogSha256": "da51c26d1a51c11616bf117848a6e21db2fa1ea5ffc799767a7c12b400a03c4c",
+  "fullLogBytes": 207815,
+  "limitations": [
+    "The Ubuntu PGDG apt installation was checked against primary documentation and parsed as YAML; it was not executed on this macOS host.",
+    "Local PostgreSQL has no pg_cron/pg_net service; their absence and synthetic external boundaries are explicit in the scenario receipts.",
+    "No production connection, original Storage bytes, real scheduler firing or publication is certified by this runner."
+  ]
+}

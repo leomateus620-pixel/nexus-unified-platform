@@ -6,6 +6,7 @@ import { ActionButton, ErrorState, LoadingState } from "@/components/nexus/Page"
 import { nrConsultar } from "./nr.functions";
 import type { Norma, NrRecord } from "./domain";
 import type { NrSearch } from "./NrWorkspace";
+import { NrCard, NrCardActions } from "./NrCards";
 
 /** A search candidate is never an association or an engineering approval. */
 export function NrConference({
@@ -88,48 +89,50 @@ export function NrConference({
           <ErrorState error={query.error} onRetry={() => query.refetch()} />
         ) : (
           <>
-            <div className="nr-table-wrap" tabIndex={0}>
-              <table className="nr-technical-table">
-                <caption>
-                  Referência externa: {submitted.tag} · {submitted.name || "Nome não informado"}
-                </caption>
-                <thead>
-                  <tr>
-                    <th>TAG cadastrada</th>
-                    <th>Nome cadastrado</th>
-                    <th>Evidência de correspondência</th>
-                    <th>Conferir</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data?.rows.map((row) => (
-                    <tr key={row.id}>
-                      <th scope="row">{row.tag}</th>
-                      <td>{row.titulo}</td>
-                      <td>
-                        {submitted.tag && normalize(row.tag ?? "") === normalize(submitted.tag)
-                          ? "TAG igual nesta unidade"
-                          : row.aliases?.some((a) => normalize(a) === normalize(submitted.tag))
-                            ? "Alias igual nesta unidade"
-                            : "Candidato da busca; vínculo não comprovado"}
-                        {submitted.name && normalize(row.titulo) !== normalize(submitted.name)
-                          ? " · Nome divergente"
-                          : ""}
-                      </td>
-                      <td>
-                        <Link
-                          to={String(`${norma === "NR33" ? "/nr-33" : "/nr-35"}/locais/${row.id}`)}
-                          search={{ ...search, ficha: "identificacao" }}
-                          className="nr-inline-action"
-                        >
-                          Abrir ficha
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <p className="nr-card-context">
+              Referência externa: {submitted.tag || "TAG não informada"} ·{" "}
+              {submitted.name || "Nome não informado"}
+            </p>
+            <ul className="nr-card-grid" aria-label="Candidatos de correspondência">
+              {data?.rows.map((row) => (
+                <li key={row.id}>
+                  <NrCard kind="candidato">
+                    <header className="nr-card-heading">
+                      <div>
+                        <span className="nr-card-tag">{row.tag || "Sem TAG cadastrada"}</span>
+                        <h3>{row.titulo}</h3>
+                        <p className="nr-card-context">Unidade selecionada no contexto</p>
+                      </div>
+                    </header>
+                    <div className="nr-card-evidence">
+                      <div>
+                        <h4>Evidência de correspondência</h4>
+                        <p>
+                          {submitted.tag && normalize(row.tag ?? "") === normalize(submitted.tag)
+                            ? "TAG igual nesta unidade"
+                            : row.aliases?.some((a) => normalize(a) === normalize(submitted.tag))
+                              ? "Alias igual nesta unidade"
+                              : "Candidato da busca; vínculo não comprovado"}
+                        </p>
+                        {submitted.name && normalize(row.titulo) !== normalize(submitted.name) && (
+                          <p className="nr-notice">Nome divergente da referência externa</p>
+                        )}
+                      </div>
+                    </div>
+                    <NrCardActions>
+                      <Link
+                        to={String(`${norma === "NR33" ? "/nr-33" : "/nr-35"}/locais/${row.id}`)}
+                        search={{ ...search, ficha: "identificacao" }}
+                        className="nr-inline-action"
+                        aria-label={`Abrir ficha de ${row.tag ? `${row.tag} · ` : ""}${row.titulo}`}
+                      >
+                        Abrir ficha
+                      </Link>
+                    </NrCardActions>
+                  </NrCard>
+                </li>
+              ))}
+            </ul>
             {!data?.total && (
               <p className="nr-source">
                 Nenhum candidato encontrado. Isso não comprova ausência no acervo: confira TAG,

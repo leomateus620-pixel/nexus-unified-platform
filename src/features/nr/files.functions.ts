@@ -236,6 +236,86 @@ export const nrArquivoBaixar = createServerFn({ method: "POST" })
       arquivo,
     };
   });
+/** Um único lookup contextual; a associação exata é conferida contra a ocorrência preservada. */
+export const nrFotoOcorrenciasLer = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(s.nrPhotoScope)
+  .handler(async ({ context, data }) =>
+    s.nrPhotoOccurrenceLinks.parse(
+      nrResult(
+        await db(context.supabase)
+          .rpc("nr_foto_ocorrencias_ler", { p_org: data.organization_id, p_local: data.local_id })
+          .abortSignal(getRequest().signal),
+      ),
+    ),
+  );
+/** A variante é resolvida pelo servidor; caminhos do navegador nunca autorizam acesso. */
+export const nrArquivoImagem = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(s.nrFileImage)
+  .handler(async ({ context, data }) => {
+    const client = db(context.supabase);
+    const arquivo = await obter(client, data.organization_id, data.id);
+    const authorized = async () =>
+      nrResult(
+        await client.rpc("nr_arquivo_ler", {
+          p_org: data.organization_id,
+          p_id: data.id,
+        }),
+      ) === true;
+    if (!(await authorized())) throw new Error("Acesso não autorizado à imagem.");
+    if (!arquivo.mime.startsWith("image/")) throw new Error("O vínculo não é uma imagem.");
+    const originalDisponivel = arquivo.origem_metadata?.["tipo"] !== "miniatura_origem";
+    let caminho = arquivo.caminho;
+    type Representacao = {
+      estado: string;
+      largura?: number;
+      altura?: number;
+      sha256?: string;
+      caminho?: string;
+      processador?: string;
+    };
+    let representacao: Representacao | null = null;
+    if (data.variante !== "original") {
+      representacao = nrResult(
+        await client.rpc("nr_imagem_representacao_ler", {
+          p_org: data.organization_id,
+          p_arquivo: data.id,
+          p_variante: data.variante,
+        }),
+      ) as Representacao | null;
+      if (representacao?.estado !== "disponivel" || !representacao.caminho) {
+        return {
+          estado: representacao?.estado || "sem_representacao",
+          original_disponivel: originalDisponivel,
+          variante: data.variante,
+          versao: arquivo.sha256,
+          url: null,
+          expira_em: null,
+          largura: null,
+          altura: null,
+        };
+      }
+      caminho = representacao.caminho;
+    }
+    const { data: signed, error } = await client.storage
+      .from(NR_ARQUIVO_BUCKET)
+      .createSignedUrl(caminho, 60);
+    if (error || !signed) throw new Error("Prévia privada temporariamente indisponível.");
+    if (!(await authorized())) throw new Error("Acesso revogado durante a preparação da imagem.");
+    return {
+      estado: "disponivel",
+      original_disponivel: originalDisponivel,
+      variante: data.variante,
+      versao: representacao?.sha256
+        ? `${representacao.processador || "nexus-pillow-v1"}:${representacao.sha256}`
+        : arquivo.sha256,
+      url: signed.signedUrl,
+      expira_em: new Date(Date.now() + 60000).toISOString(),
+      largura: representacao?.largura || null,
+      altura: representacao?.altura || null,
+    };
+  });
 export const nrArquivoCancelar = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(s.nrFileCancel)

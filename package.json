@@ -57,7 +57,7 @@
     "test:ui:disponibilidade": "node tests/ui/run.mjs --disponibilidade",
     "test:pet": "vitest run --config tests/vitest.pet.config.ts",
     "dev:pet-lab": "vite --config tests/pet-ui/vite.config.mjs",
-    "test:nr": "vitest run --config tests/vitest.nr.config.ts && node --test tests/nr-derived-plans.test.mjs tests/nr-storage-confirmation.test.mjs tests/nr-storage-transfer.test.mjs"
+    "test:nr": "vitest run --config tests/vitest.nr.config.ts && node --test tests/nr-derived-plans.test.mjs tests/nr-storage-confirmation.test.mjs tests/nr-storage-transfer.test.mjs tests/nr-applicability-manifest.test.mjs"
   },
   "overrides": {
     "rolldown": "1.2.1"

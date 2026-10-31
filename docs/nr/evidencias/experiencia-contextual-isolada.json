@@ -1,12 +1,12 @@
 {
-  "capturado_em": "2026-10-30T23:57:31.757Z",
+  "capturado_em": "2026-10-31T00:06:57.243Z",
   "postgres": "17.10",
   "migrationCount": 67,
   "results": [
     {
       "file": "scripts/migrations/test-installation.mjs",
       "passed": true,
-      "elapsedMs": 1453,
+      "elapsedMs": 1506,
       "tail": [
         "PASS: clean installation (67) and private ledger; preexisting schema without reconciliation rejected",
         "PASS: connector single-DO envelopes validate native ledgers/schema, register provenance, apply once and roll back failed DDL with ledger"
@@ -15,7 +15,7 @@
     {
       "file": "tests/db/nr.mjs",
       "passed": true,
-      "elapsedMs": 160,
+      "elapsedMs": 162,
       "tail": [
         "{\"suite\":\"NR core PostgreSQL\",\"assertions\":34,\"passed\":true,\"scope\":\"isolated fixtures; real PostgreSQL constraints/RLS/RPC/locks; no Storage HTTP proof\"}"
       ]
@@ -23,7 +23,7 @@
     {
       "file": "tests/db/nr-arquivos.mjs",
       "passed": true,
-      "elapsedMs": 79,
+      "elapsedMs": 82,
       "tail": [
         "{\"suite\":\"NR files PostgreSQL\",\"assertions\":22,\"passed\":true,\"scope\":\"isolated SQL metadata/RLS/permissions; does not prove Storage HTTP or actual blob bytes\"}"
       ]
@@ -39,7 +39,7 @@
     {
       "file": "tests/db/nr-acervo.mjs",
       "passed": true,
-      "elapsedMs": 135,
+      "elapsedMs": 138,
       "tail": [
         "{\"suite\":\"NR archive organization PostgreSQL\",\"assertions\":33,\"passed\":true,\"scope\":\"isolated SQL; global model context, scoped history, file identity/version/replay/trash/move/RLS, manual field reason, physical consumption deduplication; no Storage HTTP proof\"}"
       ]
@@ -47,7 +47,7 @@
     {
       "file": "tests/db/nr-impactos.mjs",
       "passed": true,
-      "elapsedMs": 188,
+      "elapsedMs": 189,
       "tail": [
         "{\"suite\":\"NR impactos PostgreSQL\",\"assertions\":25,\"passed\":true,\"scope\":\"isolated real constraints/RLS/RPC/locks; preserves issued content/snapshot; review is not emission or signature\"}"
       ]
@@ -55,7 +55,7 @@
     {
       "file": "tests/db/nr-retencao.mjs",
       "passed": true,
-      "elapsedMs": 280,
+      "elapsedMs": 279,
       "tail": [
         "{\"suite\":\"NR retention PostgreSQL\",\"assertions\":19,\"passed\":true,\"scope\":\"isolated SQL: primary/secondary issued and superseded retention; owner-only junction; pending staging; archive replay and two-session association races; no Storage HTTP claim\"}"
       ]
@@ -63,7 +63,7 @@
     {
       "file": "tests/db/nr-storage-confirmation.mjs",
       "passed": true,
-      "elapsedMs": 106,
+      "elapsedMs": 107,
       "tail": [
         "{\"suite\":\"NR Storage confirmation plans\",\"checks\":10,\"passed\":true,\"scope\":\"isolated PostgreSQL and synthetic Storage metadata; does not prove HTTP bytes; fixtures rolled back\"}"
       ]
@@ -71,7 +71,7 @@
     {
       "file": "tests/db/nr-docx-derived.mjs",
       "passed": true,
-      "elapsedMs": 114,
+      "elapsedMs": 143,
       "tail": [
         "{\"suite\":\"DOCX derived import envelopes PostgreSQL\",\"assertions\":17,\"passed\":true,\"scope\":\"Synthetic fixtures inside disposable local transaction rolled back; exact original/revision/image guards, separate derivatives, native images, retry, later edit/new revision, three-way conflict and issued-source immutability. No Storage HTTP or source-document conversion claim.\"}"
       ]
@@ -79,7 +79,7 @@
     {
       "file": "tests/db/nr-publicacao-tecnica.mjs",
       "passed": true,
-      "elapsedMs": 281,
+      "elapsedMs": 298,
       "tail": [
         "{\"suite\":\"NR internal technical publication PostgreSQL\",\"assertions\":46,\"passed\":true,\"scope\":\"isolated fixtures only; professional authority, official NR references/date/version/confrontation, licensed evidence context, server-derived publication snapshots, immutable history, retention, idempotence, stale versions, RLS and generic bypass rejection; no normative certification or document/PET emission\"}"
       ]
@@ -87,7 +87,7 @@
     {
       "file": "tests/db/nr-historico.mjs",
       "passed": true,
-      "elapsedMs": 353,
+      "elapsedMs": 348,
       "tail": [
         "{\"suite\":\"nr-historico-paginado\",\"assertions\":79,\"result\":\"passed\",\"fixtures\":\"synthetic isolated rollback\",\"production_writes\":false}"
       ]
@@ -95,7 +95,7 @@
     {
       "file": "tests/db/nr-fluxos.mjs",
       "passed": true,
-      "elapsedMs": 138,
+      "elapsedMs": 143,
       "tail": [
         "{\"suite\":\"NR workflows/model/capture/folder order\",\"assertions\":61,\"passed\":true,\"scope\":\"isolated synthetic fixtures rolled back; no production data, approval, emission or safety conclusion\"}"
       ]
@@ -103,7 +103,7 @@
     {
       "file": "tests/db/nr-fila-importacao.mjs",
       "passed": true,
-      "elapsedMs": 207,
+      "elapsedMs": 208,
       "tail": [
         "{\"suite\":\"NR durable import queue PostgreSQL\",\"assertions\":91,\"passed\":true,\"scope\":\"isolated synthetic data; real RLS/RPC/transaction rollback/dependency retries/three-way conflict/role-lock concurrency; pg_cron intentionally absent, manual worker only; no Storage bytes claimed\"}"
       ]
@@ -111,7 +111,7 @@
     {
       "file": "tests/db/nr-upgrade-66.mjs",
       "passed": true,
-      "elapsedMs": 450,
+      "elapsedMs": 481,
       "tail": [
         "{\"suite\":\"Manifest64→66 PostgreSQL upgrade\",\"assertions\":25,\"passed\":true,\"migrationCount\":66,\"scope\":\"disposable database; both actual connector envelopes; per-migration DDL/ledger rollback; exact64 source/snapshot/version/PET preservation; runner+connector replay; checksum-prefix rejection; pg_cron absent locally\"}"
       ]
@@ -119,20 +119,20 @@
     {
       "file": "tests/db/nr-experiencia.mjs",
       "passed": true,
-      "elapsedMs": 515,
+      "elapsedMs": 521,
       "tail": [
-        "{\"suite\":\"NR contextual projections upgrade67\",\"assertions\":68,\"passed\":true,\"scope\":\"Synthetic disposable PostgreSQL; upgrade/replay/rollback/RLS/relational context/lineage/natural order/narrative history/source model proof/concurrent association. Storage metadata fixtures do not claim binary retrieval.\"}"
+        "{\"suite\":\"NR contextual projections upgrade67\",\"assertions\":89,\"passed\":true,\"scope\":\"Synthetic disposable PostgreSQL; upgrade/replay/rollback/RLS/relational context/lineage/natural order/narrative history/source model proof/concurrent association. Storage metadata fixtures do not claim binary retrieval.\"}"
       ]
     }
   ],
   "envelope": {
     "position": 67,
     "path": "drizzle/migrations/0048_nr_experiencia_contextual.sql",
-    "sourceSha256": "cb31b4280b12b786a26361b8a98db4cc0f035419f428b2079a5a889dbd3a3e66",
-    "envelopeSha256": "1b5468c2dc175bcee6cbc94ff37fa0d6aed2a454b304f0e27a425f2adc09e529",
-    "bytes": 50696
+    "sourceSha256": "f2a75125e65adf7475b99414082272a9137576911063a73cd432531f3a328c9a",
+    "envelopeSha256": "c341398b8ccf1801200b29fab7d36a38d2b422ac40337b1357821414c27cab20",
+    "bytes": 57844
   },
   "scope": "Disposable loopback PostgreSQL; synthetic data only; no Storage bytes obtained or production changes made by this runner.",
-  "scenario_assertions": 547,
-  "contextual_assertions": 68
+  "scenario_assertions": 568,
+  "specific_assertions": 89
 }

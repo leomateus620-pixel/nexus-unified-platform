@@ -553,38 +553,62 @@ export function NrRecordHistory({
 }
 
 /** The source's narratives are technical history, independent from equipment-operation records. */
-export function NrTechnicalTimeline({ value }: { value: unknown }) {
+export function NrTechnicalTimeline({
+  value,
+  compact = false,
+}: {
+  value: unknown;
+  compact?: boolean;
+}) {
   const entries = technicalEvents(value);
   return (
-    <section aria-label="Histórico técnico da origem" className="mb-6">
+    <section
+      aria-label="Histórico técnico da origem"
+      className={compact ? "nr-technical-timeline nr-technical-timeline-compact" : "mb-6"}
+    >
       <div className="nr-panel-header">
         <h3 className="font-semibold">Histórico técnico</h3>
         <span className="nr-badge">
           {entries.length} {entries.length === 1 ? "acontecimento" : "acontecimentos"}
         </span>
       </div>
-      <p className="nr-muted my-3">
-        Atualizações do cadastro preservadas da origem. Autores e datas históricos não constituem
-        assinaturas na Nexus.
+      <p className={compact ? "nr-muted nr-technical-timeline-intro" : "nr-muted my-3"}>
+        {compact
+          ? "Datas e autoria da origem; não equivalem a assinaturas na Nexus."
+          : "Atualizações do cadastro preservadas da origem. Autores e datas históricos não constituem assinaturas na Nexus."}
       </p>
       {entries.length ? (
-        <ol className="border-l-2 border-border pl-5 space-y-5">
+        <ol className={compact ? "nr-technical-events" : "border-l-2 border-border pl-5 space-y-5"}>
           {entries.map((entry) => (
             <li key={entry.key} className="relative">
               <div
-                className="absolute -left-[1.7rem] top-1.5 size-3 rounded-full border-2 border-white bg-emerald-700"
+                className={
+                  compact
+                    ? "nr-technical-event-dot"
+                    : "absolute -left-[1.7rem] top-1.5 size-3 rounded-full border-2 border-white bg-emerald-700"
+                }
                 aria-hidden
               />
-              <p className="text-sm nr-muted">
+              {compact && (
+                <>
+                  <p className="nr-technical-event-action">{human(entry.action)}</p>
+                  {entry.text && <p className="nr-prewrap">{entry.text}</p>}
+                </>
+              )}
+              <p className={compact ? "nr-technical-event-meta" : "text-sm nr-muted"}>
                 {entry.date ? (
                   <time dateTime={entry.date}>{sourceDate(entry.date)}</time>
                 ) : (
                   "Data não informada"
                 )}
-                {entry.author && ` · ${entry.author} (autoria histórica)`}
+                {entry.author && ` · ${entry.author}${compact ? "" : " (autoria histórica)"}`}
               </p>
-              <h4 className="font-semibold mt-1">{human(entry.action)}</h4>
-              {entry.text && <p className="nr-prewrap mt-1">{entry.text}</p>}
+              {!compact && (
+                <>
+                  <h4 className="font-semibold mt-1">{human(entry.action)}</h4>
+                  {entry.text && <p className="nr-prewrap mt-1">{entry.text}</p>}
+                </>
+              )}
               {Object.keys(entry.extra).length > 0 && (
                 <NrReadOnlyValue
                   title="Informações complementares preservadas"

@@ -3,9 +3,50 @@ import {
   photoOccurrences,
   sourceDate,
   technicalEvents,
+  treatmentOriginDate,
 } from "../src/features/nr/technical-evidence";
 
 describe("projeção das evidências históricas NR", () => {
+  it("recupera data sem hora de tratativa somente com a prova da própria conversão UTC", () => {
+    const imported = { tipo: "historico_importado", data_origem: "2026-10-11T00:00:00+00:00" };
+    expect(treatmentOriginDate(imported, { encerrada_em: "2026-10-11" })).toBe("2026-10-11");
+    expect(
+      treatmentOriginDate(
+        { ...imported, data_origem: "2026-10-11 00:00:00+00" },
+        { atualizado_em: "2026-10-11" },
+      ),
+    ).toBe("2026-10-11");
+    expect(
+      treatmentOriginDate({ ...imported, tipo: "comentario" }, { encerrada_em: "2026-10-11" }),
+    ).toBe(imported.data_origem);
+    expect(
+      treatmentOriginDate(imported, { encerrada_em: "2026-10-10", atualizado_em: "2026-10-11" }),
+    ).toBe(imported.data_origem);
+    expect(
+      treatmentOriginDate(
+        { ...imported, data_origem: "2026-10-11T03:00:00Z" },
+        { encerrada_em: "2026-10-11" },
+      ),
+    ).toBe("2026-10-11T03:00:00Z");
+    expect(
+      treatmentOriginDate(
+        { ...imported, data_origem: "2026-10-11T00:00:00-03:00" },
+        { encerrada_em: "2026-10-11" },
+      ),
+    ).toBe("2026-10-11T00:00:00-03:00");
+    expect(
+      treatmentOriginDate(
+        { ...imported, data_origem: "2026-02-31T00:00:00Z" },
+        { encerrada_em: "2026-02-31" },
+      ),
+    ).toBe("2026-02-31T00:00:00Z");
+    expect(
+      treatmentOriginDate(
+        { tipo: "historico_importado", created_at: "2026-10-30T15:00:00Z" },
+        { encerrada_em: "2026-10-11" },
+      ),
+    ).toBe("2026-10-30T15:00:00Z");
+  });
   it("torna cada narrativa técnica acessível sem convertê-la em operação Nexus", () => {
     const values = Array.from({ length: 7 }, (_, index) => ({
       data: "2026-10-11",

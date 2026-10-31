@@ -78,12 +78,10 @@ export function NrLocalDetail({
       )}
       <NrLocalProposedChanges value={d} />
       <div className="nr-local-identity">
-        <div>
-          <span className="nr-eyebrow">
-            {row.tag} · {unitName}
-          </span>
-          <p>{row.familia || nrLabel(row.tipo ?? "Local")}</p>
-        </div>
+        <p className="nr-local-context">
+          <span>{unitName}</span>
+          <span>{row.familia || nrLabel(row.tipo ?? "Local")}</span>
+        </p>
         <Link to={String(`${base}/levantamentos`)} search={scope} className="nr-inline-action">
           <ClipboardList size={16} /> Abrir levantamento
         </Link>
@@ -339,8 +337,7 @@ export function NrLocalDetail({
         )}
         {area === "historico" && (
           <>
-            <h3>Alterações técnicas do cadastro</h3>
-            <NrTechnicalTimeline value={d["historico"]} />
+            <NrTechnicalTimeline value={d["historico"]} compact />
             <details>
               <summary>Histórico operacional do equipamento</summary>
               <NrValue value={cadastro["historico_equipamento"]} />
@@ -486,6 +483,9 @@ function NrRelatedRecords({
                     <small>
                       {nrLabel(r.estado)}
                       {r.revisao_numero ? ` · Revisão ${r.revisao_numero}` : ""}
+                      {r.resumo_documental?.vigencia_apresentacao
+                        ? ` · ${nrLabel(r.resumo_documental.vigencia_apresentacao)}`
+                        : ""}
                     </small>
                     {r.resumo_documental?.correspondencia_pendente && (
                       <small>Cópia editável · correspondência documental pendente</small>

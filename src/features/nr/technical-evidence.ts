@@ -24,6 +24,20 @@ export function sourceDate(value: unknown): string {
         timeStyle: "short",
       }).format(instant);
 }
+/** Recover a date-only treatment label only when its own import conversion proves the match. */
+export function treatmentOriginDate(entry: unknown, sourceData: unknown): string | undefined {
+  const item = record(entry);
+  const stored = firstText(item, ["data_origem"]);
+  const fallback = stored || firstText(item, ["created_at"]) || undefined;
+  if (item["tipo"] !== "historico_importado") return fallback;
+  const original = firstText(record(sourceData), ["encerrada_em", "atualizado_em"]);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(original)) return fallback;
+  const parsed = Date.parse(`${original}T00:00:00Z`);
+  if (!Number.isFinite(parsed) || new Date(parsed).toISOString().slice(0, 10) !== original)
+    return fallback;
+  const utcMidnight = /^(\d{4}-\d{2}-\d{2})[T ]00:00:00(?:\.0+)?(?:Z|\+00(?::?00)?)$/i.exec(stored);
+  return utcMidnight?.[1] === original ? original : fallback;
+}
 export type TechnicalEvent = {
   key: string;
   date: string;

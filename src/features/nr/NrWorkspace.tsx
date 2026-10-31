@@ -40,6 +40,7 @@ import { NrConference } from "./NrConference";
 import { NrClientsWorkspace } from "./NrClients";
 import { NrFolderTree, NrFolderBreadcrumbs } from "./NrFolderTree";
 import { NrApplicabilityDecisions } from "./NrApplicabilityDecisions";
+import { treatmentOriginDate } from "./technical-evidence";
 import "./nr.css";
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
@@ -67,6 +68,11 @@ const NrDocumentActions = lazy(() =>
 );
 const NrConversionNotice = lazy(() =>
   import("./NrConversionNotice").then((module) => ({ default: module.NrConversionNotice })),
+);
+const NrDocumentContentReader = lazy(() =>
+  import("./NrDocumentContentReader").then((module) => ({
+    default: module.NrDocumentContentReader,
+  })),
 );
 const NrTechnicalPublication = lazy(() =>
   import("./NrTechnicalPublication").then((module) => ({ default: module.NrTechnicalPublication })),
@@ -453,11 +459,11 @@ function NrScope({
     }
   }
   return (
-    <div className="nx-nr-workspace">
-      <header className="nr-heading">
+    <div className={`nx-nr-workspace${id && recurso === "locais" ? " nr-local-workspace" : ""}`}>
+      <header className={`nr-heading${id && recurso === "locais" ? " nr-heading-compact" : ""}`}>
         <div>
           <p className="nr-eyebrow">{norma === "NR33" ? "NR-33" : "NR-35"}</p>
-          <h1>{title}</h1>
+          <h1 className={id && recurso === "locais" ? "sr-only" : undefined}>{title}</h1>
         </div>
         <Link
           className="nr-norma-switch"
@@ -582,13 +588,19 @@ function NrScope({
               </details>
             </div>
             <p className="nr-scope-label" role="status">
-              {contextLabel ||
-                (search.escopo === "todos"
-                  ? "Visão agregada dos contextos associados ao módulo"
-                  : "Selecione cliente e unidade para iniciar")}
-              {search.unidade
-                ? ` · Recorte ${norma === "NR33" ? "NR-33" : "NR-35"}. Conteúdos de outras normas permanecem no mesmo acervo.`
-                : ""}
+              {id && recurso === "locais" ? (
+                `Recorte ${norma === "NR33" ? "NR-33" : "NR-35"}. Outros conteúdos do local permanecem no mesmo acervo.`
+              ) : (
+                <>
+                  {contextLabel ||
+                    (search.escopo === "todos"
+                      ? "Visão agregada dos contextos associados ao módulo"
+                      : "Selecione cliente e unidade para iniciar")}
+                  {search.unidade
+                    ? ` · Recorte ${norma === "NR33" ? "NR-33" : "NR-35"}. Conteúdos de outras normas permanecem no mesmo acervo.`
+                    : ""}
+                </>
+              )}
             </p>
             <label className="nr-section-select">
               Área do módulo
@@ -732,10 +744,24 @@ function NrScope({
                   </Suspense>
                 )}
                 {recurso && (
-                  <section className="nr-panel">
-                    <div className="nr-panel-header">
+                  <section
+                    className={`nr-panel${id && recurso === "locais" ? " nr-local-record" : ""}`}
+                  >
+                    <div
+                      className={`nr-panel-header${id && recurso === "locais" ? " nr-local-record-heading" : ""}`}
+                    >
+                      {id && recurso === "locais" && (
+                        <Link to={path(section)} search={search} className="nr-local-back">
+                          <ArrowLeft size={16} />
+                          Voltar à lista
+                        </Link>
+                      )}
                       <div>
-                        <h2>{id && row ? row.titulo : labels[section]}</h2>
+                        <h2>
+                          {id && row
+                            ? `${recurso === "locais" && row.tag ? `${row.tag} · ` : ""}${row.titulo}`
+                            : labels[section]}
+                        </h2>
                       </div>
                       {!id &&
                         !search.lixeira &&
@@ -758,14 +784,16 @@ function NrScope({
                     </div>
                     {id ? (
                       <>
-                        <Link
-                          to={path(section)}
-                          search={search}
-                          className="inline-flex gap-2 items-center min-h-11 text-sm mb-3"
-                        >
-                          <ArrowLeft size={16} />
-                          Voltar à lista
-                        </Link>
+                        {recurso !== "locais" && (
+                          <Link
+                            to={path(section)}
+                            search={search}
+                            className="inline-flex gap-2 items-center min-h-11 text-sm mb-3"
+                          >
+                            <ArrowLeft size={16} />
+                            Voltar à lista
+                          </Link>
+                        )}
                         {query.isPending ? (
                           <LoadingState />
                         ) : query.isError ? (
@@ -1133,7 +1161,7 @@ function NrScope({
                               to={path("locais") + `/${search.local}`}
                               search={{
                                 ...search,
-                                ficha: recurso === "documentos" ? "documentos" : "identificacao",
+                                ficha: search.ficha || "identificacao",
                               }}
                             >
                               Voltar à ficha
@@ -1584,9 +1612,12 @@ function RecordList({
                 Revisão necessária
               </span>
             )}
-            {resource === "pendencias" && base === "/nr-35" && row.normas?.length && !row.normas.includes("NR35") && (
-              <span className="nr-badge">Aplicabilidade em revisão · abrir na NR-33</span>
-            )}
+            {resource === "pendencias" &&
+              base === "/nr-35" &&
+              row.normas?.length &&
+              !row.normas.includes("NR35") && (
+                <span className="nr-badge">Aplicabilidade em revisão · abrir na NR-33</span>
+              )}
             <Badge value={row.arquivado_em ? "arquivado" : row.estado} />
             <ChevronRight size={16} aria-hidden />
           </Link>
@@ -2017,6 +2048,12 @@ function NrDetail({
             <dd>{date(row.prazo)}</dd>
           </div>
         )}
+        {row.criticidade && (
+          <div>
+            <dt>Criticidade</dt>
+            <dd>{nrLabel(row.criticidade)}</dd>
+          </div>
+        )}
         {row.familia && (
           <div>
             <dt>Família</dt>
@@ -2176,7 +2213,17 @@ function NrDetail({
         (content ? (
           <div className="my-5">
             <h3 className="font-semibold mb-3">Conteúdo da revisão</h3>
-            <NrContentEditor org={row.organization_id} value={content} readOnly />
+            {recurso === "documentos" ? (
+              <Suspense fallback={<LoadingState label="Consultando conteúdo documental…" />}>
+                <NrDocumentContentReader
+                  row={row}
+                  norma={path("documentos").startsWith("/nr-33") ? "NR33" : "NR35"}
+                  value={content}
+                />
+              </Suspense>
+            ) : (
+              <NrContentEditor org={row.organization_id} value={content} readOnly />
+            )}
           </div>
         ) : (
           <p className="nr-source">
@@ -2225,7 +2272,7 @@ function NrDetail({
           </details>
         )}
       {!!raw.tratativas?.length && (
-        <details className="nr-panel">
+        <details className="nr-panel" open={recurso === "pendencias" && row.estado === "encerrada"}>
           <summary className="cursor-pointer font-semibold">
             Tratativas e reaberturas · {raw.tratativas.length}
           </summary>
@@ -2234,8 +2281,10 @@ function NrDetail({
             return (
               <div className="nr-source" key={String(item["id"] ?? index)}>
                 <p>
-                  {hum(String(item["tipo"] ?? "Tratativa"))} ·{" "}
-                  {date(String(item["data_origem"] ?? item["created_at"] ?? ""))}
+                  {item["tipo"] === "historico_importado"
+                    ? "Tratativa histórica da origem"
+                    : nrLabel(String(item["tipo"] ?? "Tratativa"))}{" "}
+                  · {date(treatmentOriginDate(item, row.dados))}
                 </p>
                 <p className="nr-prewrap">
                   {String(item["texto"] ?? item["tratativa"] ?? "Texto não informado")}

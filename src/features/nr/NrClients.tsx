@@ -14,6 +14,7 @@ import { nrAssociarContexto } from "./nr.functions";
 import type { Norma, NrContexto } from "./domain";
 import type { NrSearch } from "./NrWorkspace";
 import { NrStructuredValue } from "./NrStructuredValue";
+import { nrLabel } from "./technical-display";
 import "@/features/clientes/clientes.css";
 
 type EditorState = {
@@ -171,7 +172,8 @@ export function NrClientsWorkspace({
           <h2 className="font-semibold">Clientes e unidades</h2>
           <p className="nr-muted">
             Cadastros associados ao trabalho NR. Unidades sem locais continuam acessíveis pelo
-            acervo e pelas pendências.
+            acervo e pelas pendências. Quantidades no recorte {norma === "NR33" ? "NR-33" : "NR-35"}
+            .
           </p>
         </div>
         <div className="nr-actions">
@@ -438,12 +440,18 @@ export function NrClientsWorkspace({
                             </p>
                           </td>
                           <td>
-                            <p>{unit.situacao || "Situação não informada"}</p>
+                            <p>{nrLabel(unit.situacao || "Situação não informada")}</p>
                             <p className="nr-muted">
                               {unit.documentos === undefined
                                 ? "Quantidade documental indisponível"
                                 : `${unit.documentos} registros documentais`}
                             </p>
+                            {typeof unit.documentos_origem === "number" && (
+                              <p className="nr-muted">
+                                {unit.documentos_origem} da origem · {unit.copias_editaveis ?? "—"}{" "}
+                                cópias editáveis
+                              </p>
+                            )}
                             {unit.documentacao && (
                               <details className="text-sm mt-2">
                                 <summary className="cursor-pointer">

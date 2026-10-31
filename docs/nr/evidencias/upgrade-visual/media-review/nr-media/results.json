@@ -52,6 +52,16 @@
       "pass": true
     },
     {
+      "engine": "chromium",
+      "name": "Processing becomes visible after more than60s without reload, surviving transient errors beyond the former30s budget",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Processing polling has a finite success/error budget and stops immediately on denied or terminal failure",
+      "pass": true
+    },
+    {
       "engine": "webkit",
       "name": "Recognizable thumbnails load with lateral captions, preserved repeated occurrences and no full originals requested",
       "pass": true
@@ -99,6 +109,16 @@
     {
       "engine": "webkit",
       "name": "Authorized pending derivatives show a labeled source preview until Nexus is ready; authorization errors never fall back and source HTTP errors renew only once",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Processing becomes visible after more than60s without reload, surviving transient errors beyond the former30s budget",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Processing polling has a finite success/error budget and stops immediately on denied or terminal failure",
       "pass": true
     }
   ],

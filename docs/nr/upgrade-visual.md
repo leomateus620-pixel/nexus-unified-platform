@@ -39,7 +39,7 @@ As grades usam CSS Grid por largura disponível, com mínimo `min(100%,21rem)` e
 | Painel: coleções internas            | Mesmos cards de documento/pendência dentro dos dois painéis existentes; histórico em eventos                                                     | Indicadores continuam usando totais do servidor, nunca o tamanho de uma amostra                                    |
 | Histórico global em linhas           | Evento, data/autoria, contexto, texto e motivo integral/resumido; acesso à auditoria                                                             | Cronologia, filtros e paginação preservados                                                                        |
 
-A matriz complementar de 11 coleções, fichas, repetidores, versões, conferência e importações está em [upgrade-visual-detalhes.md](upgrade-visual-detalhes.md).
+A matriz complementar de 13 coleções, fichas, repetidores, versões, conferência, consumo e importações está em [upgrade-visual-detalhes.md](upgrade-visual-detalhes.md).
 
 ## Marca, seleção e campos
 

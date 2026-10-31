@@ -1,0 +1,16 @@
+{
+  "format": "nexus-nr-start-build-validation-v1",
+  "captured_at": "2026-10-31T05:57:51.031555+00:00",
+  "build_exit": 0,
+  "wall_seconds": 10.658,
+  "source_sha256_before": "a090f27d66720f380d6b498df00e1716a86976e6a7b747799b2750ba809cb617",
+  "source_sha256_after": "a090f27d66720f380d6b498df00e1716a86976e6a7b747799b2750ba809cb617",
+  "source_unchanged_during_build": true,
+  "input_files": 587,
+  "log_sha256": "a9b2b84ba09f17327bb3cfc6aade464327a174f8beaef4638a1bcba05c70cad7",
+  "log_bytes": 235443,
+  "private_log": "start-worker-build-final.log",
+  "published": false,
+  "equivalent_source_commit": "1ec2d60a668e6645229524747a7679dc37cd94f6",
+  "equivalent_source_verified": true
+}

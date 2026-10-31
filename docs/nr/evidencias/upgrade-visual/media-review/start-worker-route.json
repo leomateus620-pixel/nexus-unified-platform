@@ -1,0 +1,26 @@
+{
+  "format": "nexus-nr-worker-local-route-v1",
+  "scope": "local Vite app; no production endpoint or private binding availability certified",
+  "results": [
+    {
+      "method": "GET",
+      "status": 405,
+      "content_type": "application/json",
+      "cache_control": "no-store",
+      "cors": null,
+      "body": {
+        "error": "metodo_nao_permitido"
+      }
+    },
+    {
+      "method": "POST",
+      "status": 403,
+      "content_type": "application/json",
+      "cache_control": "no-store",
+      "cors": null,
+      "body": {
+        "error": "acesso_negado"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "method": "Fresh disposable PostgreSQL17; actual manifest76→77→78→79 with repository upgrade scenario, then real roles/RPC/RLS/claim concurrency/private dispatch chain. pg_net/Vault HTTP I/O boundary synthetic; no actual cron/Edge/storage bytes claimed.",
+  "directory": "/tmp/nexus-nr-runtime-repro-0060-fzknii",
+  "port": 56618,
+  "runs": [
+    {
+      "file": "tests/db/nr-imagens-upgrade-0058.mjs",
+      "code": 0,
+      "output": "{\"suite\":\"NR image0058 upgrade\",\"passed\":true,\"assertions\":40,\"migrationCount\":77,\"sha256\":\"18060798aec33038f88146185f80f0807f62d17195f03f789a1edbdbf88b2ca9\",\"legacyRowsAndOriginalUnchanged\":true,\"serviceRoleEffectivePermissionsPreserved\":true,\"cronAndHttpExecutionProven\":false}\n"
+    },
+    {
+      "file": "tests/db/nr-imagens-upgrade-0059.mjs",
+      "code": 0,
+      "output": "{\"suite\":\"NR image0059 upgrade\",\"passed\":true,\"assertions\":7,\"migrationCount\":78,\"sha256\":\"d9f8862e914638f03f38d033a8dd5b197c06b73b57d7eb70561632149005cd1a\",\"originalsJobsAndClaimContractsUnchanged\":true,\"permanentVaultTokenUnused\":true,\"realManagedNetAclNotClaimed\":true}\n"
+    },
+    {
+      "file": "tests/db/nr-imagens-upgrade-0060.mjs",
+      "code": 0,
+      "output": "{\"suite\":\"NR image0060 upgrade\",\"passed\":true,\"assertions\":10,\"migrationCount\":79,\"sha256\":\"4834d45a7f7a6c56ed17beca4b267cfd0517e5b1bd136fc72f08cf53f8ca6dae\",\"onlyExactUrlChanged\":true,\"originalsJobsTicketsClaimsAclsAndVaultHoldUnchanged\":true,\"realRuntimeInvocationProven\":false}\n"
+    },
+    {
+      "file": "tests/db/nr-imagens.mjs",
+      "code": 0,
+      "output": "{\"suite\":\"NR image representations and occurrences\",\"assertions\":212,\"passed\":true,\"storage_bytes_proven\":false}\n"
+    }
+  ],
+  "migrationCount": 79,
+  "migration": {
+    "path": "drizzle/migrations/0060_nr_imagem_runtime_nexus.sql",
+    "sha256": "4834d45a7f7a6c56ed17beca4b267cfd0517e5b1bd136fc72f08cf53f8ca6dae"
+  },
+  "success": true
+}

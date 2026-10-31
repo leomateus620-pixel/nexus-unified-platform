@@ -1,0 +1,56 @@
+{
+  "method": "Actual editors with isolated synthetic transport; no production writes.",
+  "checks": [
+    {
+      "engine": "chromium",
+      "name": "Editing and reordering preserve occurrence identity, focus, saved value and explicit discard",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Save persists empty caption, category and order without replacing source aliases; reopen reads current override",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Photo fields remain usable at390x844 and720x450 CSS equivalent of200percent without overflow",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Concurrent-save failure retains caption and ordering until explicit discard",
+      "pass": true
+    },
+    {
+      "engine": "chromium",
+      "name": "Survey photo metadata uses the existing answer/save flow and preserves repeated occurrences",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Editing and reordering preserve occurrence identity, focus, saved value and explicit discard",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Save persists empty caption, category and order without replacing source aliases; reopen reads current override",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Photo fields remain usable at390x844 and720x450 CSS equivalent of200percent without overflow",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Concurrent-save failure retains caption and ordering until explicit discard",
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "name": "Survey photo metadata uses the existing answer/save flow and preserves repeated occurrences",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

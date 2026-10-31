@@ -1,0 +1,17 @@
+{
+  "format": "nexus-nr-worker-client-boundary-v1",
+  "public_js_map_files": 200,
+  "forbidden_markers": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "original_preservado_limite_automatico_10mib",
+    "caminho_de_representacao_invalido",
+    "Invalid private worker origin",
+    "mime_da_representacao_divergente",
+    "image-info.server"
+  ],
+  "public_matches": [],
+  "server_worker_chunks": [
+    ".output/server/_ssr/handler.server-DHIAn4TG.mjs"
+  ],
+  "passed": true
+}

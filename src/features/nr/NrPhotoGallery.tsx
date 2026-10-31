@@ -30,6 +30,7 @@ export function NrPhotoGallery({
   const photos = photoOccurrences(value);
   const [selected, setSelected] = useState<number | null>(null);
   const [zoom, setZoom] = useState(1);
+  const opener = useRef<HTMLButtonElement | null>(null);
   const current = selected === null ? null : photos[selected];
   function move(step: number) {
     setSelected((index) =>
@@ -64,7 +65,8 @@ export function NrPhotoGallery({
               <button
                 type="button"
                 className="block w-full text-left focus-visible:outline-2 focus-visible:outline-emerald-700"
-                onClick={() => {
+                onClick={(event) => {
+                  opener.current = event.currentTarget;
                   setSelected(index);
                   setZoom(1);
                 }}
@@ -102,6 +104,12 @@ export function NrPhotoGallery({
       >
         <DialogContent
           className="w-[calc(100%_-_1rem)] sm:max-w-5xl max-h-[95dvh] overflow-y-auto"
+          onCloseAutoFocus={(event) => {
+            if (opener.current?.isConnected) {
+              event.preventDefault();
+              opener.current.focus();
+            }
+          }}
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") {
               event.preventDefault();
@@ -252,11 +260,15 @@ function GalleryImage({
             className={
               full ? "block object-contain mx-auto" : "w-full h-full aspect-[4/3] object-cover"
             }
-            style={full ? { width: `${zoom * 100}%`, maxWidth: "none" } : undefined}
+            style={
+              full
+                ? { width: `${zoom * 100}%`, height: `${60 * zoom}dvh`, maxWidth: "none" }
+                : undefined
+            }
           />
           {full && (
             <a
-              className="inline-flex items-center gap-2 underline p-3"
+              className="inline-flex items-center gap-2 underline p-3 text-neutral-900 focus-visible:outline-2 focus-visible:outline-emerald-700"
               href={query.data.url}
               target="_blank"
               rel="noopener noreferrer"

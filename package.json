@@ -61,7 +61,8 @@
     "test:pet": "vitest run --config tests/vitest.pet.config.ts",
     "dev:pet-lab": "vite --config tests/pet-ui/vite.config.mjs",
     "test:nr": "vitest run --config tests/vitest.nr.config.ts && node --test tests/nr-derived-plans.test.mjs tests/nr-storage-confirmation.test.mjs tests/nr-storage-transfer.test.mjs tests/nr-applicability-manifest.test.mjs tests/nr-photo-reconciliation.test.mjs tests/nr-source-photo-plan.test.mjs",
-    "test:ui:nr-brand": "node tests/ui/run.mjs --nr-brand"
+    "test:ui:nr-brand": "node tests/ui/run.mjs --nr-brand",
+    "test:ui:nr-photo-edit": "node tests/ui/run.mjs --nr-photo-edit"
   },
   "overrides": {
     "rolldown": "1.2.1"
@@ -111,6 +112,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "fflate": "0.8.3",
+    "image-size": "2.0.4",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.575.0",
     "pdf-lib": "1.17.1",

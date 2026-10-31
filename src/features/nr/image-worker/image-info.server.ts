@@ -1,3 +1,4 @@
+import "@tanstack/react-start/server-only";
 import { imageSize } from "image-size";
 
 export type ImageInfo = {
@@ -27,5 +28,10 @@ export function imageInfo(bytes: Uint8Array): ImageInfo {
     mime = /avif|avis/.test(brands) ? "image/avif" : "image/heic";
   }
   if (!mime || !info.width || !info.height) throw Error("unsupported_image");
-  return { width: info.width, height: info.height, mime, orientation: info.orientation };
+  return {
+    width: info.width,
+    height: info.height,
+    mime,
+    ...(info.orientation === undefined ? {} : { orientation: info.orientation }),
+  };
 }

@@ -5961,6 +5961,34 @@ export type Database = {
           },
         ];
       };
+      nr_imagem_worker_tickets: {
+        Row: {
+          consumido_em: string | null;
+          criado_em: string;
+          expira_em: string;
+          finalidade: string;
+          processador: string;
+          ticket_sha256: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          consumido_em?: string | null;
+          criado_em?: string;
+          expira_em: string;
+          finalidade?: string;
+          processador?: string;
+          ticket_sha256: string;
+        };
+        Update: {
+          consumido_em?: string | null;
+          criado_em?: string;
+          expira_em?: string;
+          finalidade?: string;
+          processador?: string;
+          ticket_sha256?: string;
+        };
+        Relationships: [];
+      };
       nr_import_fila_eventos: {
         Row: {
           acao: string;
@@ -12192,7 +12220,14 @@ export type Database = {
         Args: { p_id: string; p_lease: string; p_resultado: Json };
         Returns: undefined;
       };
-      nr_imagem_trabalho_obter: { Args: { p_limite?: number }; Returns: Json };
+      nr_imagem_trabalho_obter:
+        | { Args: { p_limite?: number }; Returns: Json }
+        | { Args: { p_limite: number; p_processador: string }; Returns: Json };
+      nr_imagem_worker_disparar: {
+        Args: Record<PropertyKey, never>;
+        Returns: Json;
+      };
+      nr_imagem_worker_validar: { Args: { p_token: string }; Returns: boolean };
       nr_import_fila_comandar: {
         Args: { p_acao: string; p_fila: string; p_org: string };
         Returns: Json;

@@ -18,6 +18,7 @@ import { resourceLabels } from "./ui-labels";
 import { NrSurveyEditor } from "./NrSurveyEditor";
 import { NrLocalTechnicalEditor } from "./NrLocalTechnicalEditor";
 import { NrSurveyValue } from "./NrSurveyFields";
+import { NrPhotoMetadataEditor } from "./NrPhotoMetadataEditor";
 import { NrFilesPanel, type NrSelectableFile } from "./NrFilesPanel";
 import { nrLabel } from "./technical-display";
 import {
@@ -1303,13 +1304,23 @@ export function NrEditor({
                 </div>
               )}
               {recurso === "locais" && (
-                <NrLocalTechnicalEditor
-                  value={data}
-                  onChange={(next) => {
-                    setData(next);
-                    setDirty(true);
-                  }}
-                />
+                <>
+                  <NrLocalTechnicalEditor
+                    value={data}
+                    onChange={(next) => {
+                      setData(next);
+                      setDirty(true);
+                    }}
+                  />
+                  <NrPhotoMetadataEditor
+                    value={data["fotos"]}
+                    onChange={(photos) => {
+                      setData((current) => ({ ...current, fotos: photos }));
+                      setDirty(true);
+                    }}
+                    disabled={busy}
+                  />
+                </>
               )}
               {recurso === "pastas" && picker("parent_id", "pastas", "Pasta superior")}
               {recurso === "sistemas" && (

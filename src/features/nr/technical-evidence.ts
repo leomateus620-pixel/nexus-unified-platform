@@ -1,3 +1,5 @@
+import { readPhotoEdit } from "./photo-metadata";
+
 /** Read-only projection. Historical narratives and photo occurrences never become audit events. */
 export type EvidenceRecord = Record<string, unknown>;
 const record = (value: unknown): EvidenceRecord =>
@@ -103,6 +105,7 @@ export function technicalEvents(value: unknown): TechnicalEvent[] {
 }
 export type PhotoOccurrence = {
   key: string;
+  sourceOrder: number;
   caption: string;
   date: string;
   author: string;
@@ -161,29 +164,44 @@ export function photoOccurrences(value: unknown): PhotoOccurrence[] {
     "miniatura",
     "thumbnail",
     "thumb",
+    "edicao_foto_nexus",
   ];
-  return entries.map(([key, item]) => {
-    const data = record(item),
-      fileId = firstText(data, ["arquivo_id", "nr_arquivo_id"]);
-    return {
-      key: firstText(data, ["ocorrencia_id", "id"])
-        ? `${firstText(data, ["ocorrencia_id", "id"])}:${key}`
-        : key,
-      caption: firstText(data, ["legenda", "caption", "descricao", "titulo", "nome"]),
-      date: firstText(data, ["data", "data_foto", "data_origem", "criado_em"]),
-      author: firstText(data, ["autor", "autor_historico", "criado_por"]),
-      category: firstText(data, ["grupo", "categoria", "tipo"]) || "Foto de campo",
-      sourcePath:
-        typeof item === "string"
-          ? item
-          : firstText(data, ["caminho", "path", "url", "arquivo", "src"]),
-      thumbnailPath: firstText(data, ["miniatura", "thumbnail", "thumb"]),
-      // Only a proved, explicit Nexus relation can authorize a binary. Paths/names never imply one.
-      fileId: uuid.test(fileId) ? fileId : null,
-      thumbnailFileId: uuid.test(firstText(data, ["miniatura_arquivo_id"]))
-        ? firstText(data, ["miniatura_arquivo_id"])
-        : null,
-      extra: Object.fromEntries(Object.entries(data).filter(([name]) => !keys.includes(name))),
-    };
-  });
+  return entries
+    .map(([key, item], index) => {
+      const data = record(item),
+        fileId = firstText(data, ["arquivo_id", "nr_arquivo_id"]);
+      const edit = readPhotoEdit(item);
+      return {
+        key:
+          edit?.ocorrencia_id ??
+          (firstText(data, ["ocorrencia_id", "id"])
+            ? `${firstText(data, ["ocorrencia_id", "id"])}:${key}`
+            : key),
+        sourceOrder: edit?.ordem_origem ?? index,
+        order: edit?.ordem ?? index,
+        caption:
+          typeof edit?.legenda === "string"
+            ? edit.legenda
+            : firstText(data, ["legenda", "caption", "descricao", "titulo", "nome"]),
+        date: firstText(data, ["data", "data_foto", "data_origem", "criado_em"]),
+        author: firstText(data, ["autor", "autor_historico", "criado_por"]),
+        category:
+          typeof edit?.categoria === "string"
+            ? edit.categoria
+            : firstText(data, ["grupo", "categoria", "tipo"]) || "Foto de campo",
+        sourcePath:
+          typeof item === "string"
+            ? item
+            : firstText(data, ["caminho", "path", "url", "arquivo", "src"]),
+        thumbnailPath: firstText(data, ["miniatura", "thumbnail", "thumb"]),
+        // Only a proved, explicit Nexus relation can authorize a binary. Paths/names never imply one.
+        fileId: uuid.test(fileId) ? fileId : null,
+        thumbnailFileId: uuid.test(firstText(data, ["miniatura_arquivo_id"]))
+          ? firstText(data, ["miniatura_arquivo_id"])
+          : null,
+        extra: Object.fromEntries(Object.entries(data).filter(([name]) => !keys.includes(name))),
+      };
+    })
+    .sort((a, b) => a.order - b.order)
+    .map(({ order: _order, ...photo }) => photo);
 }

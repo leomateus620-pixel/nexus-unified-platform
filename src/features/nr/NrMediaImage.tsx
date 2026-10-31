@@ -19,6 +19,18 @@ async function bounded<T>(work: () => Promise<T>): Promise<T> {
   }
 }
 type Variant = "miniatura_384" | "previa_768" | "original";
+const processingBackoff = [
+  ...Array<number>(5).fill(5000),
+  ...Array<number>(12).fill(15000),
+  ...Array<number>(7).fill(30000),
+];
+const deniedImageError = (message: string) =>
+  /acesso|autorizad|permiss|revogad|forbidden|unauthor|\b40[13]\b/i.test(message);
+const terminalImageError = (message: string) =>
+  deniedImageError(message) ||
+  /PGRST116|single JSON object|multiple.*rows|not found|não encontrad|não existe|\b404\b/i.test(
+    message,
+  );
 export function NrMediaImage({
   org,
   fileId,
@@ -99,12 +111,17 @@ export function NrMediaImage({
     gcTime: 30_000,
     retry: false,
     refetchOnWindowFocus: false,
-    refetchInterval: (query) =>
-      visible &&
-      query.state.dataUpdateCount < 7 &&
-      ["fila", "processando"].includes(query.state.data?.estado || "")
-        ? 5000
-        : false,
+    refetchInterval: (query) => {
+      if (
+        !visible ||
+        terminalImageError(query.state.error?.message || "") ||
+        !["fila", "processando"].includes(query.state.data?.estado || "")
+      )
+        return false;
+      // Cover cron/lease recovery with a finite budget; failed requests consume it too.
+      const completed = query.state.dataUpdateCount + query.state.errorUpdateCount;
+      return processingBackoff[Math.max(0, completed - 1)] ?? false;
+    },
   });
   useEffect(() => {
     onOriginalAvailabilityChange?.(
@@ -129,7 +146,7 @@ export function NrMediaImage({
   const status = !fileId
     ? "Arquivo ainda não recuperado"
     : query.isError
-      ? /acesso|autorizad/i.test(query.error.message)
+      ? deniedImageError(query.error.message)
         ? "Acesso não autorizado"
         : "Prévia temporariamente indisponível"
       : failed

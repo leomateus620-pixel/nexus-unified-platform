@@ -8,6 +8,7 @@ import {
   type SurveyFieldDefinition,
 } from "./survey-projection";
 import { NrPhotoGallery } from "./NrPhotoGallery";
+import { NrPhotoMetadataEditor } from "./NrPhotoMetadataEditor";
 import { nrLabel } from "./technical-display";
 
 export type NrSurveyEvidenceContext = {
@@ -596,6 +597,9 @@ function SurveyPhotos({
           <Plus size={15} />
           Anexar evidência do acervo
         </ActionButton>
+      )}
+      {!disabled && (
+        <NrPhotoMetadataEditor value={photos} onChange={onChange} disabled={disabled} />
       )}
     </fieldset>
   );

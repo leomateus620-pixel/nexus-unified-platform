@@ -13,7 +13,7 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     "dispatch fixtures require a PostgreSQL cluster without real net/Vault",
   );
   const token = randomUUID().replaceAll("-", "") + randomUUID().replaceAll("-", "");
-  const endpoint = "https://yhtgijtllvgzoqtfcgal.supabase.co/functions/v1/nr-image-worker";
+  const endpoint = "https://nexusgestao.app/api/public/nr/image-worker";
   const reject = async (work, code) => {
     await assert.rejects(work, (error) => error.code === code);
     assertions++;
@@ -127,13 +127,27 @@ export async function testImageDispatch({ sql, org, eng, client, unit, local, as
     assert.equal(JSON.stringify(responses).includes(ticket), false);
     assert.equal((await sql`select count(*)::int n from net.http_request_queue`)[0].n, 2);
     assertions += 5;
-    await sql`update vault.decrypted_secrets set decrypted_secret='https://external.invalid/functions/v1/nr-image-worker'where name='nexus_nr_image_worker_url'`;
-    assert.equal(
-      (await sql`select public.nr_imagem_worker_disparar() r`)[0].r.estado,
-      "configuracao_privada_ausente",
-    );
-    assert.equal((await sql`select count(*)::int n from net.http_request_queue`)[0].n, 2);
-    assertions += 2;
+    for (const invalid of [
+      "https://external.invalid/api/public/nr/image-worker",
+      "https://nexusgestao.app.evil.invalid/api/public/nr/image-worker",
+      "https://nexusgestao.app/api/public/nr/image-worker/extra",
+      "https://nexusgestao.app/api/public/nr/image-worker?target=arbitrary",
+      "https://nexusgestao.app/api/public/nr/image-worker/",
+      "http://nexusgestao.app/api/public/nr/image-worker",
+      "https://yhtgijtllvgzoqtfcgal.supabase.co/functions/v1/nr-image-worker",
+    ]) {
+      await sql`update vault.decrypted_secrets set decrypted_secret=${invalid} where name='nexus_nr_image_worker_url'`;
+      assert.equal(
+        (await sql`select public.nr_imagem_worker_disparar() r`)[0].r.estado,
+        "configuracao_privada_ausente",
+      );
+      assert.equal((await sql`select count(*)::int n from net.http_request_queue`)[0].n, 2);
+      assert.equal(
+        (await sql`select count(*)::int n from public.nr_imagem_worker_tickets`)[0].n,
+        2,
+      );
+      assertions += 3;
+    }
     await sql`update vault.decrypted_secrets set decrypted_secret=${endpoint} where name='nexus_nr_image_worker_url'`;
     const failure = await sql.begin(async (tx) => {
       await tx`select set_config('nexus.test.net_fail','1',true)`;

@@ -38,8 +38,12 @@ export function NrPhotoGallery({
     staleTime: 30_000,
     retry: false,
   });
-  const photos = photoOccurrences(value).map((photo, index) => {
-    const link = findPhotoOccurrenceLink(occurrenceQuery.data || [], photo.sourcePath, index);
+  const photos = photoOccurrences(value).map((photo) => {
+    const link = findPhotoOccurrenceLink(
+      occurrenceQuery.data || [],
+      photo.sourcePath,
+      photo.sourceOrder,
+    );
     return link
       ? {
           ...photo,
@@ -96,7 +100,7 @@ export function NrPhotoGallery({
                   setZoom(1);
                   setOriginalAvailable(null);
                 }}
-                aria-label={`Abrir foto ${index + 1}: ${photo.caption || "Sem legenda na origem"}`}
+                aria-label={`Abrir foto ${index + 1}: ${photo.caption || "Sem legenda"}`}
               >
                 <NrMediaImage
                   key={`${org}:${photo.key}:${photo.fileId}`}
@@ -111,7 +115,7 @@ export function NrPhotoGallery({
                 <PhotoCaption caption={photo.caption} index={index} />
                 <span className="nr-photo-context">{context}</span>
                 <span className="block text-sm nr-muted mt-1">
-                  {photo.category} · {sourceDate(photo.date)}
+                  {photo.category || "Categoria não informada"} · {sourceDate(photo.date)}
                 </span>
                 {photo.author && (
                   <span className="block text-sm nr-muted">{photo.author} · autoria histórica</span>
@@ -218,9 +222,9 @@ export function NrPhotoGallery({
                   />
                 </div>
                 <div className="nr-photo-expanded-caption">
-                  <p>{current.caption || "Legenda não informada na origem"}</p>
+                  <p>{current.caption || "Legenda não informada"}</p>
                   <p className="nr-muted">
-                    {current.category} · {sourceDate(current.date)}
+                    {current.category || "Categoria não informada"} · {sourceDate(current.date)}
                   </p>
                   {current.author && (
                     <p className="nr-muted">{current.author} · autoria histórica</p>

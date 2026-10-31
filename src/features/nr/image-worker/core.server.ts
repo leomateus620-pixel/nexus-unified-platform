@@ -1,8 +1,10 @@
-import type { ImageInfo } from "./image-info.ts";
+import "@tanstack/react-start/server-only";
+import type { ImageInfo } from "./image-info.server";
 
 export const PROCESSOR = "nexus-storage-transform-v1";
 export const NEXUS_STORAGE_ORIGIN = "https://yhtgijtllvgzoqtfcgal.supabase.co";
-export const MAX_PROCESS_BYTES = 25_000_000;
+// Shared Cloudflare Worker isolates are limited to 128 MiB; bound copies before download.
+export const MAX_PROCESS_BYTES = 10 * 1024 * 1024;
 export const MAX_ORIGINAL_BYTES = 50 * 1024 * 1024;
 export const MAX_PIXELS = 24_000_000;
 const MAX_PREVIEW_BYTES = 4 * 1024 * 1024;
@@ -82,26 +84,26 @@ function validateJob(raw: Record<string, unknown>): Job {
   for (const key of ["id", "lease", "organization_id", "arquivo_id"])
     if (typeof raw[key] !== "string" || !uuid.test(raw[key] as string)) fail("trabalho_invalido");
   if (
-    raw.processador !== PROCESSOR ||
-    !["miniatura_384", "previa_768"].includes(String(raw.variante)) ||
-    !hash.test(String(raw.original_sha256))
+    raw["processador"] !== PROCESSOR ||
+    !["miniatura_384", "previa_768"].includes(String(raw["variante"])) ||
+    !hash.test(String(raw["original_sha256"]))
   )
     fail("trabalho_invalido");
-  const expected = `${raw.organization_id}/representacoes/${raw.arquivo_id}/${raw.original_sha256}/${PROCESSOR}/${raw.variante}.webp`;
-  if (raw.caminho !== expected) fail("caminho_de_representacao_invalido");
-  const original = String(raw.original_caminho ?? "");
+  const expected = `${raw["organization_id"]}/representacoes/${raw["arquivo_id"]}/${raw["original_sha256"]}/${PROCESSOR}/${raw["variante"]}.webp`;
+  if (raw["caminho"] !== expected) fail("caminho_de_representacao_invalido");
+  const original = String(raw["original_caminho"] ?? "");
   if (
     original.length > 2048 ||
-    original.split("/")[0] !== raw.organization_id ||
+    original.split("/")[0] !== raw["organization_id"] ||
     original.split("/").some((part) => !part || part === "." || part === "..") ||
     /[\\?#]/.test(original) ||
     Array.from(original).some((character) => character.charCodeAt(0) < 32)
   )
     fail("caminho_do_original_invalido");
-  const size = Number(raw.original_tamanho);
+  const size = Number(raw["original_tamanho"]);
   if (!Number.isSafeInteger(size) || size < 1 || size > MAX_ORIGINAL_BYTES)
     fail("metadados_do_original_invalidos");
-  if (typeof raw.original_mime !== "string" || !raw.original_mime.startsWith("image/"))
+  if (typeof raw["original_mime"] !== "string" || !raw["original_mime"].startsWith("image/"))
     fail("mime_do_original_invalido");
   return { ...raw, original_tamanho: size } as Job;
 }
@@ -132,7 +134,8 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
     throw Error("Invalid private worker origin");
   const root = base.origin;
   const headers: Record<string, string> = { apikey: options.serviceKey };
-  if (!options.serviceKey.startsWith("sb_")) headers.Authorization = `Bearer ${options.serviceKey}`;
+  if (!options.serviceKey.startsWith("sb_"))
+    headers["Authorization"] = `Bearer ${options.serviceKey}`;
   return async (request: Request): Promise<Response> => {
     const started = now();
     if (request.method !== "POST") return json({ error: "metodo_nao_permitido" }, 405);
@@ -184,11 +187,11 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
           elapsed_ms: elapsed(),
         });
       const raw = jobs[0] as Record<string, unknown>;
-      if (uuid.test(String(raw.id)) && uuid.test(String(raw.lease)))
-        claimed = { id: String(raw.id), lease: String(raw.lease) };
+      if (uuid.test(String(raw["id"])) && uuid.test(String(raw["lease"])))
+        claimed = { id: String(raw["id"]), lease: String(raw["lease"]) };
       const job = validateJob(raw);
       if (job.original_tamanho > MAX_PROCESS_BYTES)
-        fail("original_preservado_limite_automatico_25mb");
+        fail("original_preservado_limite_automatico_10mib");
       const originalResponse = await call(
         `${root}/storage/v1/object/authenticated/${BUCKET}/${encodedPath(job.original_caminho)}`,
       );

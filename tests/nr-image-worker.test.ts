@@ -1,3 +1,4 @@
+import { test } from "vitest";
 import assert from "node:assert/strict";
 import {
   createImageWorker,
@@ -5,16 +6,16 @@ import {
   NEXUS_STORAGE_ORIGIN,
   PROCESSOR,
   sha256,
-} from "./core.ts";
-import { imageInfo } from "./image-info.ts";
-import { fixtures } from "./fixtures.test.ts";
+} from "../src/features/nr/image-worker/core.server";
+import { imageInfo } from "../src/features/nr/image-worker/image-info.server";
+import { fixtures } from "./fixtures/nr-image-worker";
 
 const ORG = "10000000-0000-4000-8000-000000000001";
 const FILE = "20000000-0000-4000-8000-000000000001";
 const TOKEN = "a".repeat(64); // Test-only value; never a project credential.
-// All network is injected and Deno grants no network access in these tests.
+// Every network request is injected; unexpected destinations fail the isolated test.
 const ORIGIN = NEXUS_STORAGE_ORIGIN;
-Deno.test("misconfigured backend hosts fail before any credential can be transmitted", () => {
+test("misconfigured backend hosts fail before any credential can be transmitted", () => {
   for (const url of [
     "https://outside.test",
     "http://yhtgijtllvgzoqtfcgal.supabase.co",
@@ -128,71 +129,62 @@ async function harness(options: Options = {}) {
   return { run, calls, completed, job, original, preview, key };
 }
 
-Deno.test(
-  "narrow authentication rejects unauthenticated calls before any queue or Storage access",
-  async () => {
-    const state = await harness();
-    assert.equal((await state.run(new Request(ORIGIN, { method: "POST" }))).status, 403);
-    assert.equal((await state.run(new Request(ORIGIN))).status, 405);
-    assert.equal(state.calls.length, 0);
-    const unknown = await harness({ authorized: false });
-    const response = await unknown.run();
-    assert.equal(response.status, 403);
-    assert.equal(unknown.calls.length, 1);
-    assert.equal(response.headers.get("access-control-allow-origin"), null);
-    assert.deepEqual(response.result, { error: "acesso_negado" });
-  },
-);
+test("narrow authentication rejects unauthenticated calls before any queue or Storage access", async () => {
+  const state = await harness();
+  assert.equal((await state.run(new Request(ORIGIN, { method: "POST" }))).status, 403);
+  assert.equal((await state.run(new Request(ORIGIN))).status, 405);
+  assert.equal(state.calls.length, 0);
+  const unknown = await harness({ authorized: false });
+  const response = await unknown.run();
+  assert.equal(response.status, 403);
+  assert.equal(unknown.calls.length, 1);
+  assert.equal(response.headers.get("access-control-allow-origin"), null);
+  assert.deepEqual(response.result, { error: "acesso_negado" });
+});
 
-Deno.test(
-  "an empty queue terminates without recursive invocation or accepting caller identities",
-  async () => {
-    const state = await harness({ jobs: false });
-    const response = await state.run();
-    assert.equal(response.result.processed, 0);
-    const claim = state.calls.find((entry) => entry.url.pathname.endsWith("trabalho_obter"));
-    assert.deepEqual(claim!.body, { p_limite: 1, p_processador: PROCESSOR });
-    assert.equal(state.calls.length, 2);
-  },
-);
+test("an empty queue terminates without recursive invocation or accepting caller identities", async () => {
+  const state = await harness({ jobs: false });
+  const response = await state.run();
+  assert.equal(response.result.processed, 0);
+  const claim = state.calls.find((entry) => entry.url.pathname.endsWith("trabalho_obter"));
+  assert.deepEqual(claim!.body, { p_limite: 1, p_processador: PROCESSOR });
+  assert.equal(state.calls.length, 2);
+});
 
-Deno.test(
-  "a representation becomes available only after immutable upload and complete private GET/hash",
-  async () => {
-    const state = await harness();
-    const before = await sha256(state.original);
-    const response = await state.run();
-    assert.equal(response.result.ready, 1);
-    assert.equal(response.result.failed, 0);
-    assert.equal(await sha256(state.original), before);
-    assert.equal(state.completed.length, 1);
-    assert.equal(state.completed[0]!.sha256, await sha256(state.preview));
-    assert.deepEqual([state.completed[0]!.largura, state.completed[0]!.altura], [384, 288]);
-    const upload = state.calls.find(
-      (entry) => entry.url.pathname.includes("/object/") && entry.init.method === "POST",
-    )!;
-    assert.equal(new Headers(upload.init.headers).get("x-upsert"), "false");
-    assert.equal(
-      state.calls.some(
-        (entry) => entry.init.method === "POST" && entry.url.pathname.includes("/originais/"),
-      ),
-      false,
-    );
-    assert(state.calls.every((entry) => entry.url.origin === ORIGIN));
-    const transform = state.calls.find((entry) => entry.url.pathname.includes("/render/image/"))!;
-    assert.equal(transform.url.searchParams.get("resize"), "contain");
-    assert.equal(new Headers(transform.init.headers).get("accept"), "image/webp");
-    assert.equal(
-      state.calls.some((entry) => entry.url.pathname === "/functions/v1/nr-image-worker"),
-      false,
-    );
-    assert.equal(JSON.stringify(response.result).includes(TOKEN), false);
-    assert.equal(JSON.stringify(response.result).includes(state.key), false);
-    assert.equal(JSON.stringify(response.result).includes(ORG), false);
-  },
-);
+test("a representation becomes available only after immutable upload and complete private GET/hash", async () => {
+  const state = await harness();
+  const before = await sha256(state.original);
+  const response = await state.run();
+  assert.equal(response.result.ready, 1);
+  assert.equal(response.result.failed, 0);
+  assert.equal(await sha256(state.original), before);
+  assert.equal(state.completed.length, 1);
+  assert.equal(state.completed[0]!.sha256, await sha256(state.preview));
+  assert.deepEqual([state.completed[0]!.largura, state.completed[0]!.altura], [384, 288]);
+  const upload = state.calls.find(
+    (entry) => entry.url.pathname.includes("/object/") && entry.init.method === "POST",
+  )!;
+  assert.equal(new Headers(upload.init.headers).get("x-upsert"), "false");
+  assert.equal(
+    state.calls.some(
+      (entry) => entry.init.method === "POST" && entry.url.pathname.includes("/originais/"),
+    ),
+    false,
+  );
+  assert(state.calls.every((entry) => entry.url.origin === ORIGIN));
+  const transform = state.calls.find((entry) => entry.url.pathname.includes("/render/image/"))!;
+  assert.equal(transform.url.searchParams.get("resize"), "contain");
+  assert.equal(new Headers(transform.init.headers).get("accept"), "image/webp");
+  assert.equal(
+    state.calls.some((entry) => entry.url.pathname === "/functions/v1/nr-image-worker"),
+    false,
+  );
+  assert.equal(JSON.stringify(response.result).includes(TOKEN), false);
+  assert.equal(JSON.stringify(response.result).includes(state.key), false);
+  assert.equal(JSON.stringify(response.result).includes(ORG), false);
+});
 
-Deno.test("modern secret keys use apikey only while legacy JWTs retain Authorization", async () => {
+test("modern secret keys use apikey only while legacy JWTs retain Authorization", async () => {
   for (const key of ["sb_secret_local-test-placeholder", "legacy-local-test-placeholder"]) {
     const state = await harness({ key, jobs: false });
     await state.run();
@@ -202,7 +194,7 @@ Deno.test("modern secret keys use apikey only while legacy JWTs retain Authoriza
   }
 });
 
-Deno.test("small photos are never enlarged", async () => {
+test("small photos are never enlarged", async () => {
   const state = await harness({ original: fixtures.small, preview: fixtures.smallPreview });
   const response = await state.run();
   assert.equal(response.result.ready, 1);
@@ -212,69 +204,60 @@ Deno.test("small photos are never enlarged", async () => {
   assert.deepEqual([state.completed[0]!.largura, state.completed[0]!.altura], [100, 70]);
 });
 
-Deno.test(
-  "EXIF rotation is applied only in the representation and incorrect orientation is rejected",
-  async () => {
-    assert.equal(imageInfo(fixtures.exif).orientation, 6);
-    const state = await harness({ original: fixtures.exif, preview: fixtures.exifPreview });
-    const originalHash = await sha256(state.original);
-    assert.equal((await state.run()).result.ready, 1);
-    assert.deepEqual([state.completed[0]!.largura, state.completed[0]!.altura], [20, 40]);
-    assert.equal(await sha256(state.original), originalHash);
-    const wrong = await harness({ original: fixtures.exif, preview: fixtures.wrongExif });
-    assert.equal((await wrong.run()).result.ready, 0);
-    assert.equal(wrong.completed[0]!.erro, "orientacao_da_representacao_divergente");
-  },
-);
+test("EXIF rotation is applied only in the representation and incorrect orientation is rejected", async () => {
+  assert.equal(imageInfo(fixtures.exif).orientation, 6);
+  const state = await harness({ original: fixtures.exif, preview: fixtures.exifPreview });
+  const originalHash = await sha256(state.original);
+  assert.equal((await state.run()).result.ready, 1);
+  assert.deepEqual([state.completed[0]!.largura, state.completed[0]!.altura], [20, 40]);
+  assert.equal(await sha256(state.original), originalHash);
+  const wrong = await harness({ original: fixtures.exif, preview: fixtures.wrongExif });
+  assert.equal((await wrong.run()).result.ready, 0);
+  assert.equal(wrong.completed[0]!.erro, "orientacao_da_representacao_divergente");
+});
 
-Deno.test(
-  "transparent PNG remains a real WebP representation rather than a JPEG fallback",
-  async () => {
-    const state = await harness({
-      original: fixtures.transparent,
-      preview: fixtures.transparentPreview,
-      sourceMime: "image/png",
-    });
-    assert.equal((await state.run()).result.ready, 1);
-    assert.equal(state.completed[0]!.mime, "image/webp");
-    assert.equal(imageInfo(state.preview).mime, "image/webp");
-    assert.equal(await sha256(state.original), await sha256(fixtures.transparent));
-  },
-);
+test("transparent PNG remains a real WebP representation rather than a JPEG fallback", async () => {
+  const state = await harness({
+    original: fixtures.transparent,
+    preview: fixtures.transparentPreview,
+    sourceMime: "image/png",
+  });
+  assert.equal((await state.run()).result.ready, 1);
+  assert.equal(state.completed[0]!.mime, "image/webp");
+  assert.equal(imageInfo(state.preview).mime, "image/webp");
+  assert.equal(await sha256(state.original), await sha256(fixtures.transparent));
+});
 
-Deno.test(
-  "hash mismatch, HTML and MIME fallback never publish a recovered representation",
-  async () => {
-    for (const options of [
-      { job: { original_sha256: "0".repeat(64) } },
-      { original: new TextEncoder().encode("<html>not an image</html>") },
-      { transformMime: "image/jpeg" },
-    ]) {
-      const state = await harness(options);
-      assert.equal((await state.run()).result.ready, 0);
-      assert(state.completed.every((result) => result.estado !== "disponivel"));
-      assert.equal(
-        state.calls.some(
-          (entry) => entry.init.method === "POST" && entry.url.pathname.includes("/object/"),
-        ),
-        false,
-      );
-    }
-  },
-);
+test("hash mismatch, HTML and MIME fallback never publish a recovered representation", async () => {
+  for (const options of [
+    { job: { original_sha256: "0".repeat(64) } },
+    { original: new TextEncoder().encode("<html>not an image</html>") },
+    { transformMime: "image/jpeg" },
+  ]) {
+    const state = await harness(options);
+    assert.equal((await state.run()).result.ready, 0);
+    assert(state.completed.every((result) => result.estado !== "disponivel"));
+    assert.equal(
+      state.calls.some(
+        (entry) => entry.init.method === "POST" && entry.url.pathname.includes("/object/"),
+      ),
+      false,
+    );
+  }
+});
 
-Deno.test("25MB automatic cap preserves the original without attempting processing", async () => {
+test("10MiB automatic cap preserves the original without attempting processing", async () => {
   const state = await harness({ job: { original_tamanho: MAX_PROCESS_BYTES + 1 } });
   const response = await state.run();
   assert.equal(response.result.ready, 0);
-  assert.equal(response.result.error, "original_preservado_limite_automatico_25mb");
+  assert.equal(response.result.error, "original_preservado_limite_automatico_10mib");
   assert.equal(
     state.calls.some((entry) => entry.url.pathname.includes("/storage/")),
     false,
   );
 });
 
-Deno.test("pixel bombs are rejected before the native transform request", async () => {
+test("pixel bombs are rejected before the native transform request", async () => {
   const bytes = new Uint8Array(fixtures.landscape);
   for (let i = 0; i < bytes.length - 10; i++) {
     if (bytes[i] === 255 && bytes[i + 1] === 192) {
@@ -293,7 +276,7 @@ Deno.test("pixel bombs are rejected before the native transform request", async 
   );
 });
 
-Deno.test("an oversized stream is cancelled even when Content-Length is absent", async () => {
+test("an oversized stream is cancelled even when Content-Length is absent", async () => {
   let cancelled = false;
   const state = await harness({
     originalResponse: () =>
@@ -314,7 +297,7 @@ Deno.test("an oversized stream is cancelled even when Content-Length is absent",
   assert.equal(cancelled, true);
 });
 
-Deno.test("a crop, corrupt RIFF or divergent private object cannot pass confirmation", async () => {
+test("a crop, corrupt RIFF or divergent private object cannot pass confirmation", async () => {
   const corrupt = new Uint8Array(fixtures.preview);
   corrupt[4] = (corrupt[4]! + 1) % 256;
   for (const options of [
@@ -329,27 +312,24 @@ Deno.test("a crop, corrupt RIFF or divergent private object cannot pass confirma
   }
 });
 
-Deno.test(
-  "an identical existing object is idempotent; a path or processor mismatch is rejected",
-  async () => {
-    const duplicate = await harness({ uploadStatus: 409 });
-    assert.equal((await duplicate.run()).result.ready, 1);
-    for (const job of [
-      { caminho: `${ORG}/arbitrary.webp` },
-      { processador: "nexus-pillow-v1" },
-      { original_caminho: "another-organization/private.jpg" },
-    ]) {
-      const state = await harness({ job });
-      assert.equal((await state.run()).result.ready, 0);
-      assert.equal(
-        state.calls.some((entry) => entry.url.pathname.includes("/storage/")),
-        false,
-      );
-    }
-  },
-);
+test("an identical existing object is idempotent; a path or processor mismatch is rejected", async () => {
+  const duplicate = await harness({ uploadStatus: 409 });
+  assert.equal((await duplicate.run()).result.ready, 1);
+  for (const job of [
+    { caminho: `${ORG}/arbitrary.webp` },
+    { processador: "nexus-pillow-v1" },
+    { original_caminho: "another-organization/private.jpg" },
+  ]) {
+    const state = await harness({ job });
+    assert.equal((await state.run()).result.ready, 0);
+    assert.equal(
+      state.calls.some((entry) => entry.url.pathname.includes("/storage/")),
+      false,
+    );
+  }
+});
 
-Deno.test("a failed database conclusion never reports the image as ready", async () => {
+test("a failed database conclusion never reports the image as ready", async () => {
   const state = await harness({ failCompletion: true });
   const response = await state.run();
   assert.equal(response.result.ready, 0);

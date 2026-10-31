@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Integração com banco/RLS: Postgres vazio + migrations reais + cenários S/T/C.
-# Uso: bash tests/db/run.sh   (requer initdb/pg_ctl/psql no PATH)
+# Uso: bash tests/db/run.sh   (requer PostgreSQL 17+ com initdb/pg_ctl/psql no PATH)
+# A migração 0058 usa ALTER COLUMN SET EXPRESSION, disponível a partir do PostgreSQL 17.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 DIR="$(mktemp -d)"; PORT="${PGTEST_PORT:-55432}"

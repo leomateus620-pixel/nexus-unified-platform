@@ -517,6 +517,25 @@ for (const engine of engines) {
       "Administrative import cards preserve lot inspection, item evidence, staged mappings and actions",
       async () => {
         await goto("configuracoes");
+        const consumption = page.getByRole("region", {
+          name: "Consumo físico por unidade",
+          exact: true,
+        });
+        await expect(consumption.getByRole("article")).toHaveCount(1);
+        await expect(consumption).toContainText("Objetos");
+        await expect(consumption).toContainText("MiB");
+        await expect(
+          page
+            .getByRole("region", { name: "Consumo físico por bucket privado", exact: true })
+            .getByRole("article"),
+        ).toHaveCount(1);
+        await page.setViewportSize({ width: 390, height: 844 });
+        await consumption.scrollIntoViewIfNeeded();
+        expect(
+          await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
+        ).toBeLessThanOrEqual(1);
+        await screenshot("storage-cards-390");
+        await page.setViewportSize({ width: 1440, height: 900 });
         const lots = page.getByRole("list", { name: "Lotes de importação", exact: true });
         await expect(lots.getByRole("article")).toHaveCount(1);
         await lots.getByRole("button", { name: "Inspecionar lote", exact: true }).click();

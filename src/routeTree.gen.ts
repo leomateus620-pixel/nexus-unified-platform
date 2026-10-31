@@ -66,6 +66,7 @@ import { Route as AuthenticatedComprasOrdensProducaoIndexRouteImport } from './r
 import { Route as AuthenticatedComprasOrdensProducaoOrdemIdRouteImport } from './routes/_authenticated/compras.ordens-producao.$ordemId'
 import { Route as AuthenticatedExecucaoOrdensOrdemIdRouteImport } from './routes/_authenticated/execucao.ordens.$ordemId'
 import { Route as AuthenticatedExecucaoPetsPetIdRouteImport } from './routes/_authenticated/execucao.pets.$petId'
+import { Route as ApiPublicNrImageWorkerRouteImport } from './routes/api/public/nr/image-worker'
 import { Route as AuthenticatedComercialPropostasPropostaIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.index'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId.index'
@@ -391,6 +392,11 @@ const AuthenticatedExecucaoPetsPetIdRoute =
     path: '/pets/$petId',
     getParentRoute: () => AuthenticatedExecucaoRoute,
   } as any)
+const ApiPublicNrImageWorkerRoute = ApiPublicNrImageWorkerRouteImport.update({
+  id: '/api/public/nr/image-worker',
+  path: '/api/public/nr/image-worker',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedComercialPropostasPropostaIdIndexRoute =
   AuthenticatedComercialPropostasPropostaIdIndexRouteImport.update({
     id: '/propostas/$propostaId/',
@@ -539,6 +545,7 @@ export interface FileRoutesByFullPath {
   '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
   '/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
   '/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
+  '/api/public/nr/image-worker': typeof ApiPublicNrImageWorkerRoute
   '/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
   '/compras/ordens-producao/': typeof AuthenticatedComprasOrdensProducaoIndexRoute
@@ -599,6 +606,7 @@ export interface FileRoutesByTo {
   '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
   '/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
   '/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
+  '/api/public/nr/image-worker': typeof ApiPublicNrImageWorkerRoute
   '/comercial/propostas': typeof AuthenticatedComercialPropostasIndexRoute
   '/compras/ordens-compra': typeof AuthenticatedComprasOrdensCompraIndexRoute
   '/compras/ordens-producao': typeof AuthenticatedComprasOrdensProducaoIndexRoute
@@ -669,6 +677,7 @@ export interface FileRoutesById {
   '/_authenticated/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
   '/_authenticated/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
   '/_authenticated/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
+  '/api/public/nr/image-worker': typeof ApiPublicNrImageWorkerRoute
   '/_authenticated/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/_authenticated/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
   '/_authenticated/compras/ordens-producao/': typeof AuthenticatedComprasOrdensProducaoIndexRoute
@@ -740,6 +749,7 @@ export interface FileRouteTypes {
     | '/compras/ordens-producao/$ordemId'
     | '/execucao/ordens/$ordemId'
     | '/execucao/pets/$petId'
+    | '/api/public/nr/image-worker'
     | '/comercial/propostas/'
     | '/compras/ordens-compra/'
     | '/compras/ordens-producao/'
@@ -800,6 +810,7 @@ export interface FileRouteTypes {
     | '/compras/ordens-producao/$ordemId'
     | '/execucao/ordens/$ordemId'
     | '/execucao/pets/$petId'
+    | '/api/public/nr/image-worker'
     | '/comercial/propostas'
     | '/compras/ordens-compra'
     | '/compras/ordens-producao'
@@ -869,6 +880,7 @@ export interface FileRouteTypes {
     | '/_authenticated/compras/ordens-producao/$ordemId'
     | '/_authenticated/execucao/ordens/$ordemId'
     | '/_authenticated/execucao/pets/$petId'
+    | '/api/public/nr/image-worker'
     | '/_authenticated/comercial/propostas/'
     | '/_authenticated/compras/ordens-compra/'
     | '/_authenticated/compras/ordens-producao/'
@@ -896,6 +908,7 @@ export interface RootRouteChildren {
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  ApiPublicNrImageWorkerRoute: typeof ApiPublicNrImageWorkerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1299,6 +1312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedExecucaoPetsPetIdRouteImport
       parentRoute: typeof AuthenticatedExecucaoRoute
     }
+    '/api/public/nr/image-worker': {
+      id: '/api/public/nr/image-worker'
+      path: '/api/public/nr/image-worker'
+      fullPath: '/api/public/nr/image-worker'
+      preLoaderRoute: typeof ApiPublicNrImageWorkerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/comercial/propostas/$propostaId/': {
       id: '/_authenticated/comercial/propostas/$propostaId/'
       path: '/propostas/$propostaId'
@@ -1645,6 +1665,7 @@ const rootRouteChildren: RootRouteChildren = {
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  ApiPublicNrImageWorkerRoute: ApiPublicNrImageWorkerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

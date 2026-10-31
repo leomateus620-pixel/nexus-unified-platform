@@ -74,6 +74,43 @@ for (const engine of process.env.NEXUS_UI_ENGINE
     expect
       .poll(() => locator.evaluate((element) => element.complete && element.naturalWidth > 0))
       .toBe(true);
+  const pollingScene = async (mode, work) => {
+    const pollingContext = await browser.newContext({
+      locale: "pt-BR",
+      reducedMotion: "reduce",
+      viewport: { width: 1440, height: 900 },
+    });
+    await pollingContext.route("**/*", intercept);
+    const pollingPage = await pollingContext.newPage();
+    pollingPage.on("pageerror", (error) => report.errors.push({ engine, message: error.message }));
+    const requests = () =>
+      pollingPage.evaluate(
+        (file) =>
+          window.__nexusCalls.filter(
+            (call) => call.name === "nrArquivoImagem" && call.data.id === file,
+          ).length,
+        id(6),
+      );
+    try {
+      await pollingPage.clock.install({ time: new Date("2026-11-01T00:00:00Z") });
+      await pollingPage.goto(
+        `${base}/?page=nr-33&scenario=nr-media&nrMediaPolling=${mode}&nrPath=locais/33000000-0000-4000-8000-000000000001&cliente=20000000-0000-4000-8000-000000000001&unidade=21000000-0000-4000-8000-000000000001&ficha=fotos`,
+        { waitUntil: "domcontentloaded" },
+      );
+      const pending = pollingPage.locator(".nr-photo-card").nth(5);
+      await pending.scrollIntoViewIfNeeded();
+      await expect(pending.getByText("Miniatura em processamento", { exact: true })).toBeVisible();
+      await expect.poll(requests).toBeGreaterThanOrEqual(1);
+      const startedAt = await pollingPage.evaluate(() => Date.now());
+      await pollingPage.clock.pauseAt(new Date(startedAt + 1000));
+      await work({ page: pollingPage, pending, requests, startedAt });
+    } catch (error) {
+      await pollingPage.screenshot({ path: `${directory}/${engine}-poll-${mode}-failure.png` });
+      throw error;
+    } finally {
+      await pollingContext.close();
+    }
+  };
   try {
     await page.goto(
       `${base}/?page=nr-33&scenario=nr-media&nrPath=locais/33000000-0000-4000-8000-000000000001&cliente=20000000-0000-4000-8000-000000000001&unidade=21000000-0000-4000-8000-000000000001&ficha=fotos`,
@@ -432,6 +469,63 @@ for (const engine of process.env.NEXUS_UI_ENGINE
           });
         } finally {
           await fallbackContext.close();
+        }
+      },
+    );
+    await check(
+      "Processing becomes visible after more than60s without reload, surviving transient errors beyond the former30s budget",
+      async () => {
+        await pollingScene("delayed", async ({ page, pending, requests, startedAt }) => {
+          for (let step = 0; step < 20; step++) {
+            await page.clock.runFor(5001);
+            await requests();
+            if (await pending.getByRole("img").count()) break;
+          }
+          await loaded(pending.getByRole("img"));
+          await expect(pending.getByRole("img")).toHaveAttribute("src", /id=6&/);
+          expect((await page.evaluate(() => Date.now())) - startedAt).toBeGreaterThan(60000);
+          const completed = await requests();
+          expect(completed).toBeGreaterThan(7);
+          expect(completed).toBeLessThanOrEqual(25);
+          await page.clock.runFor(120001);
+          expect(await requests()).toBe(completed);
+          await page.screenshot({ path: `${directory}/${engine}-poll-delayed-ready.png` });
+        });
+      },
+    );
+    await check(
+      "Processing polling has a finite success/error budget and stops immediately on denied or terminal failure",
+      async () => {
+        for (const mode of ["limit", "errors", "denied", "terminal"]) {
+          await pollingScene(mode, async ({ page, pending, requests }) => {
+            const delays =
+              mode === "denied" || mode === "terminal"
+                ? [5000]
+                : [...Array(5).fill(5000), ...Array(12).fill(15000), ...Array(7).fill(30000)];
+            for (const delay of delays) {
+              await page.clock.runFor(delay + 1);
+              await requests();
+            }
+            const expected = mode === "denied" || mode === "terminal" ? 2 : 25;
+            await expect
+              .poll(async () => {
+                await page.clock.runFor(30001);
+                return requests();
+              })
+              .toBe(expected);
+            const stopped = await requests();
+            await page.clock.runFor(600001);
+            expect(await requests()).toBe(stopped);
+            expect(stopped).toBe(expected);
+            if (mode === "denied")
+              await expect(
+                pending.getByText("Acesso não autorizado", { exact: true }),
+              ).toBeVisible();
+            if (mode === "terminal")
+              await expect(
+                pending.getByText("Falha ao processar a miniatura", { exact: true }),
+              ).toBeVisible();
+          });
         }
       },
     );

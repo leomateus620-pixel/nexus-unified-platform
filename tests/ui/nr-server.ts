@@ -646,6 +646,9 @@ const mediaFixtureId = (index: number) =>
   `33300000-0000-4000-8000-${String(index).padStart(12, "0")}`;
 const mediaFallback =
   scenario === "nr-media" && new URLSearchParams(location.search).get("nrMediaFallback") === "1";
+const mediaPolling = new URLSearchParams(location.search).get("nrMediaPolling");
+const mediaStarted = Date.now();
+let mediaProcessingStarted: number | null = null;
 if (scenario === "nr-media") {
   rows.locais[0].dados.fotos = [
     {
@@ -697,6 +700,22 @@ if (scenario === "nr-media") {
   if (mediaFallback) {
     for (const index of [2, 3, 5, 6])
       rows.locais[0].dados.fotos[index].miniatura_arquivo_id = mediaFixtureId(index + 11);
+  }
+  if (new URLSearchParams(location.search).get("nrPhotoEdit") === "1") {
+    contextualBlocks[3].campos = [
+      {
+        id: "B04.fotos",
+        nome: "Fotos do levantamento",
+        tipo: "foto",
+        destino: "fotos",
+        obrigatorio: false,
+      },
+    ];
+    const survey = rows.levantamentos[0];
+    survey.respostas["B04.fotos"] = structuredClone([
+      rows.locais[0].dados.fotos[0],
+      rows.locais[0].dados.fotos[7],
+    ]);
   }
 }
 const associatedContexts = contextual
@@ -884,7 +903,10 @@ export async function nrConsultar({ data }) {
   };
 }
 export async function nrExecutar({ data }) {
+  window.__nexusCalls.push({ name: "nrExecutar", data: structuredClone(data) });
   await new Promise((resolve) => setTimeout(resolve, 160));
+  if (scenario === "nr-media" && sessionStorage.getItem("nr-photo-conflict") === "1")
+    throw new Error("Outra sessão alterou este registro. Conflito sintético de fotografias.");
   if (scenario === "nr-conflict")
     throw new Error(
       "Outra sessão alterou este registro. Compare as versões antes de salvar. Conflito simulado no laboratório.",
@@ -1005,19 +1027,31 @@ export async function nrArquivoImagem({ data }) {
         call.data.id === data.id &&
         call.data.variante === data.variante,
     ).length;
+    if (index === 6 && mediaProcessingStarted === null) mediaProcessingStarted = Date.now();
+    if (index === 6 && count > 1) {
+      if (mediaPolling === "errors" || (mediaPolling === "delayed" && count < 4))
+        throw new Error("Falha transitória sintética de rede.");
+      if (mediaPolling === "denied") throw new Error("Acesso não autorizado à imagem.");
+    }
     const state =
-      mediaFallback && data.variante !== "original" && index === 3
-        ? "sem_representacao"
-        : mediaFallback &&
-            data.variante !== "original" &&
-            index === 6 &&
-            sessionStorage.getItem("nrMediaDerivativesReady") === "1"
-          ? "disponivel"
-          : data.variante !== "original" && index === 6
-            ? "processando"
-            : data.variante !== "original" && index === 7
-              ? "falhou"
-              : "disponivel";
+      mediaPolling === "delayed" &&
+      index === 6 &&
+      Date.now() - (mediaProcessingStarted ?? mediaStarted) >= 65000
+        ? "disponivel"
+        : mediaPolling === "terminal" && index === 6 && count > 1
+          ? "falhou"
+          : mediaFallback && data.variante !== "original" && index === 3
+            ? "sem_representacao"
+            : mediaFallback &&
+                data.variante !== "original" &&
+                index === 6 &&
+                sessionStorage.getItem("nrMediaDerivativesReady") === "1"
+              ? "disponivel"
+              : data.variante !== "original" && index === 6
+                ? "processando"
+                : data.variante !== "original" && index === 7
+                  ? "falhou"
+                  : "disponivel";
     return {
       estado: state,
       original_disponivel: ![2, 9, 13, 14, 16, 17].includes(index),

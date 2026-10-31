@@ -9,6 +9,7 @@ export type NrCardKind =
   | "unidade"
   | "candidato"
   | "evento"
+  | "consumo"
   | "generic";
 
 /** Structure only: each resource owns its identity, evidence and actions. */

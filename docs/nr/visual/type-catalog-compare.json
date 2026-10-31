@@ -1,19 +1,19 @@
 {
-  "method": "Names and column identities hashed from actual read-only production catalog, compared with isolated manifest-76 introspection. No operational records read.",
+  "method": "Names and column identities hashed from actual read-only production catalog, compared with isolated manifest-79 introspection. No operational records read.",
   "checks": [
     {
       "kind": "tables",
-      "sha256": "a30ad0251b707e2a8bba92a5933a550501a11722e57f5cd9b528ed8380e1092b",
+      "sha256": "b10cb35ae50a3b4fcf0865085108cd36be27144c80cbc7fdbf07f4c707dcd235",
       "matches_remote": true
     },
     {
       "kind": "columns",
-      "sha256": "65521e23eca9b839933b37b21e00fb9b39c3279cf12d2f546b04175d2f77299b",
+      "sha256": "8eb401e3bfec794649a3746ad7dcdc2a13662a9fc33cbbaed93849c7061e1d36",
       "matches_remote": true
     },
     {
       "kind": "functions",
-      "sha256": "a613c417909f01fa128cb7adcf357f4730cd31094ff3254f333ca0feb3867a63",
+      "sha256": "ce3bc1860c35bac2ad3af7214388bac2ec9d2e5dd6f38b777bfc24e0d0418afa",
       "matches_remote": true
     },
     {
@@ -25,12 +25,12 @@
   "contract_checks": [
     {
       "kind": "column_contract",
-      "sha256": "9d344fff2b7914d7081a46c4ed30159270bbf96a97a7a6fd017cfcfa7db427d9",
+      "sha256": "0559334f6afebe095e6ca9c32f97e4734f1b0d189f1f023bacbe2555e265a561",
       "matches_remote": true
     },
     {
       "kind": "function_contract",
-      "sha256": "f0141e457c090deff15eecf98a3a654659b18c4870fc6bd4366f2d6b24965c6f",
+      "sha256": "ac719c776b64aed3644d27331e0ab0a431f59c68a7bbffcd8bb055c7edb202bf",
       "matches_remote": true
     },
     {
@@ -39,5 +39,11 @@
       "matches_remote": true
     }
   ],
-  "contract_method": "Actual column SQL types/nullability/identity/generated flags; complete function arguments including defaults and return types; enum labels/order. Compared by SHA-256 between isolated manifest-76 catalog and the connected production catalog."
+  "contract_method": "Actual column SQL types/nullability/identity/generated flags; complete function arguments including defaults and return types; enum labels/order. Compared by SHA-256 between isolated manifest-79 catalog and the connected production catalog.",
+  "migrationCount": 79,
+  "appliedMigration": {
+    "position": 79,
+    "path": "drizzle/migrations/0060_nr_imagem_runtime_nexus.sql",
+    "sha256": "4834d45a7f7a6c56ed17beca4b267cfd0517e5b1bd136fc72f08cf53f8ca6dae"
+  }
 }

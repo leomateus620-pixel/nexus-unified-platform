@@ -4,6 +4,7 @@ import { Database, RefreshCw } from "lucide-react";
 import { ActionButton, ErrorState, LoadingState } from "@/components/nexus/Page";
 import { nrArquivoConsumo } from "./files.functions";
 import type { NrContexto } from "./domain";
+import { NrCard, NrCardMeta } from "./NrCards";
 const size = (value: number) =>
   new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 1024 / 1024) + " MiB";
 export function NrStorageUsage({ org, contexto }: { org: string; contexto: NrContexto }) {
@@ -90,59 +91,71 @@ export function NrStorageUsage({ org, contexto }: { org: string; contexto: NrCon
               banco: {query.data.ram_banco_informada}; consumo de RAM não medido por esta consulta.
             </p>
             {query.data.por_unidade && (
-              <div className="nr-table-wrap">
-                <table>
-                  <caption>Consumo físico por unidade</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Cliente / unidade</th>
-                      <th scope="col">Objetos</th>
-                      <th scope="col">Bytes medidos</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {query.data.por_unidade.map((row) => (
-                      <tr key={row.unidade_id}>
-                        <td>
-                          {contexto.clientes.find((c) => c.id === row.cliente_id)?.nome ||
-                            "Cliente autorizado"}
-                          <br />
-                          {contexto.unidades.find((u) => u.id === row.unidade_id)?.nome ||
-                            row.unidade_id}
-                        </td>
-                        <td>{row.objetos}</td>
-                        <td>{size(row.bytes)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <section className="my-4" aria-label="Consumo físico por unidade">
+                <h3>Consumo físico por unidade</h3>
+                <ul className="nr-card-grid mt-3">
+                  {query.data.por_unidade.map((row) => (
+                    <li key={row.unidade_id}>
+                      <NrCard kind="consumo">
+                        <header className="nr-card-heading">
+                          <div className="nr-card-identity">
+                            <span className="nr-card-category">
+                              {contexto.clientes.find((c) => c.id === row.cliente_id)?.nome ||
+                                "Cliente autorizado"}
+                            </span>
+                            <h4>
+                              {contexto.unidades.find((u) => u.id === row.unidade_id)?.nome ||
+                                row.unidade_id}
+                            </h4>
+                          </div>
+                        </header>
+                        <NrCardMeta>
+                          <div>
+                            <dt>Objetos</dt>
+                            <dd>{row.objetos.toLocaleString("pt-BR")}</dd>
+                          </div>
+                          <div>
+                            <dt>Bytes medidos</dt>
+                            <dd>{size(row.bytes)}</dd>
+                          </div>
+                        </NrCardMeta>
+                      </NrCard>
+                    </li>
+                  ))}
+                </ul>
                 {!query.data.por_unidade.length && (
                   <p className="nr-muted">Sem objetos físicos contabilizados por unidade.</p>
                 )}
-              </div>
+              </section>
             )}
             {query.data.por_bucket && (
-              <div className="nr-table-wrap mt-4">
-                <table>
-                  <caption>Consumo físico por bucket privado</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Bucket</th>
-                      <th scope="col">Objetos</th>
-                      <th scope="col">Bytes medidos</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {query.data.por_bucket.map((row) => (
-                      <tr key={row.bucket_id}>
-                        <td>{row.bucket_id}</td>
-                        <td>{row.objetos}</td>
-                        <td>{size(row.bytes)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <section className="my-4" aria-label="Consumo físico por bucket privado">
+                <h3>Consumo físico por bucket privado</h3>
+                <ul className="nr-card-grid mt-3">
+                  {query.data.por_bucket.map((row) => (
+                    <li key={row.bucket_id}>
+                      <NrCard kind="consumo">
+                        <header className="nr-card-heading">
+                          <div className="nr-card-identity">
+                            <span className="nr-card-category">Bucket privado</span>
+                            <h4>{row.bucket_id}</h4>
+                          </div>
+                        </header>
+                        <NrCardMeta>
+                          <div>
+                            <dt>Objetos</dt>
+                            <dd>{row.objetos.toLocaleString("pt-BR")}</dd>
+                          </div>
+                          <div>
+                            <dt>Bytes medidos</dt>
+                            <dd>{size(row.bytes)}</dd>
+                          </div>
+                        </NrCardMeta>
+                      </NrCard>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             )}
           </>
         )

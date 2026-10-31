@@ -315,6 +315,10 @@
     {
       "path": "drizzle/migrations/0059_nr_imagem_tickets_descartaveis.sql",
       "sha256": "d9f8862e914638f03f38d033a8dd5b197c06b73b57d7eb70561632149005cd1a"
+    },
+    {
+      "path": "drizzle/migrations/0060_nr_imagem_runtime_nexus.sql",
+      "sha256": "4834d45a7f7a6c56ed17beca4b267cfd0517e5b1bd136fc72f08cf53f8ca6dae"
     }
   ]
 }

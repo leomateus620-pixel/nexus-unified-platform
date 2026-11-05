@@ -1,0 +1,23 @@
+{
+  "canal": "Conector Lovable query_database",
+  "project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+  "before": {
+    "pets_reais": 1,
+    "pets_fabrica": 0,
+    "demonstracoes": null
+  },
+  "after": {
+    "bucket_publico": false,
+    "cinco_silos": 5,
+    "demonstracoes": 0,
+    "migracao": {
+      "applied_at": "2026-11-05T15:31:03.925014+00:00",
+      "path": "drizzle/migrations/0066_pet_demonstracao.sql",
+      "position": 85,
+      "sha256": "a2248fdb5f27af939be509b6fad4b8d17ecb07c94b2587354b0e2dd18fae6dae"
+    },
+    "pets_fabrica": 0,
+    "pets_reais": 1,
+    "tabelas_rls": 7
+  }
+}

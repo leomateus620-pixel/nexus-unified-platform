@@ -75,6 +75,10 @@ Todas as medidas acima são internas de cadastro. Cobertura, folga da descarga, 
 
 As transformações completas estão em `posicoes.md`. Os anexos de IA iniciais foram tratados somente como estudo de enquadramento, nunca como fonte de cor, divisa ou posição.
 
+## PET demonstrativa e nova ficha
+
+A atualização da ficha expandida e do fluxo demonstrativo está documentada em [demonstracao.md](demonstracao.md), incluindo persistência separada, migração 0066 aplicada pelo Lovable e evidências desta etapa. Os resultados abaixo registram a implantação e o fluxo operacional da entrega anterior.
+
 ## Implementação e verificações
 
 React 19.2.8, TanStack Router 1.170.41 / Start 1.168.60, Three 0.186.0, R3F 9.7.0, Drei 10.7.8, Vite 8.1.5. Reutilizados OrbitControls e fichas NR/PET existentes; a convenção de reflexão industrial foi adaptada em componente exclusivo para conservar os arquivos protegidos das outras cenas; nenhum terreno de outro cliente foi importado. O manifesto Cotrirosa fica no servidor e as cinco identidades dependem da associação publicada/autorizada. O motor é carregado somente ao entrar na rota 3D.

@@ -43,6 +43,19 @@ jobs:
         run: |
           psql -h 127.0.0.1 -p 55439 -U postgres -d postgres -v ON_ERROR_STOP=1 -f tests/db/bootstrap.sql
           node tests/cotrirosa/seed.mjs
+          node tests/cotrirosa/demo-db.mjs
           for scenario in nr-mapa-pet nr-contratacao nr-equipe pet-v2 pet pet-retificacoes pet-relatorios pet-listagem nr nr-acervo nr-impactos nr-retencao nr-docx-derived nr-fluxos; do
             node "tests/db/$scenario.mjs"
           done
+      - name: Demonstration browser journey and failure recovery
+        run: |
+          bunx playwright install --with-deps chromium
+          node tests/cotrirosa/run-demo-ui.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pet-demonstration-evidence
+          path: |
+            docs/cotrirosa/demo-*.json
+            docs/cotrirosa/demo-*.png
+            docs/cotrirosa/demo-video/

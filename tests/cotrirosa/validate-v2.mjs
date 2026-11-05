@@ -57,6 +57,7 @@ try {
   check((await active.count()) === 1, "Vínculo explícito de pessoa confirmado na unidade");
   await p.screenshot({ path: "docs/cotrirosa/v2-nexus-equipe.png", fullPage: true });
   await p.goto(`${root}/nr-33/pets?${query}`);
+  await p.getByRole("button", { name: "Operação real", exact: true }).click();
   await p.getByRole("button", { name: "Acompanhar ao vivo", exact: true }).click();
   check(
     (await p.getByRole("button", { name: "Ao vivo · atualização em 5 s", exact: true }).count()) ===

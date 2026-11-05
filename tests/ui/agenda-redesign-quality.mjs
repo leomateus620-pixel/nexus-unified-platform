@@ -15,6 +15,9 @@ const page = await browser.newPage({
   timezoneId: "Asia/Tokyo",
   reducedMotion: "reduce",
 });
+// The transport's historical fixture uses this instant; keep the browser clock
+// aligned so the default weekly ranking does not drift with the CI run date.
+await page.clock.setFixedTime(new Date("2026-11-10T12:00:00.000Z"));
 const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
 const root = `${evidenceRoot}/agenda-redesign`;
 await mkdir(root, { recursive: true });

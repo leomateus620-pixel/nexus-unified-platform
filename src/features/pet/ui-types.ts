@@ -32,7 +32,10 @@ export type PetOrdem = {
 export type PetResumo = {
   id: string;
   numero: string;
-  os_id: string;
+  os_id: string | null;
+  cliente_id?: string;
+  local_nr_id?: string | null;
+  norma_origem?: "NR33" | "NR35";
   unidade_id: string;
   espaco_id: string;
   atividade: string;
@@ -136,7 +139,7 @@ export type PetPendencia =
     };
 export type PetDetalhe = {
   pet: PetResumo;
-  os: PetOrdem;
+  os: PetOrdem | null;
   espaco: PetOption;
   modelo?: PetOption | null;
   servidor_em?: string;

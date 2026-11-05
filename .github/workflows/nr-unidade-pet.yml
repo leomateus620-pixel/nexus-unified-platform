@@ -1,0 +1,48 @@
+name: NR unit and PET
+on:
+  pull_request:
+    paths: ['src/features/nr/**', 'src/features/pet/**', 'src/features/pessoas-competencias/**', 'drizzle/migrations/**', 'tests/**', 'bun.lock', '.github/workflows/nr-unidade-pet.yml']
+  push:
+    branches: [main]
+    paths: ['src/features/nr/**', 'src/features/pet/**', 'src/features/pessoas-competencias/**', 'drizzle/migrations/**', 'tests/**', 'bun.lock', '.github/workflows/nr-unidade-pet.yml']
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ['55439:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      PGTEST_EPHEMERAL: '1'
+      PGTEST_HOST: 127.0.0.1
+      PGTEST_PORT: '55439'
+      PGTEST_DATABASE: cotrirosa_lab
+      NEXUS_IMAGE_PYTHON: python3
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: '24'
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: python3 -m pip install Pillow
+      - run: bun run typecheck
+      - run: bun run test:nr
+      - run: bun run test:pet
+      - run: bun run test:pessoas
+      - run: bun run build
+      - name: Disposable database and upgrade envelopes
+        run: |
+          psql -h 127.0.0.1 -p 55439 -U postgres -d postgres -v ON_ERROR_STOP=1 -f tests/db/bootstrap.sql
+          node tests/cotrirosa/seed.mjs
+          for scenario in nr-mapa-pet nr-contratacao nr-equipe pet-v2 pet pet-retificacoes pet-relatorios pet-listagem nr nr-acervo nr-impactos nr-retencao nr-docx-derived nr-fluxos; do
+            node "tests/db/$scenario.mjs"
+          done

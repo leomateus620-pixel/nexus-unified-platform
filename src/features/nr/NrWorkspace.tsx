@@ -45,6 +45,13 @@ import { RecordList } from "./NrRecordCards";
 import { NrCard } from "./NrCards";
 import { NrClientSelect } from "./NrClientSelect";
 import "./nr.css";
+import { UnitMapEntry } from "./mapa/UnitMapEntry";
+import { NrContratacao } from "./NrContratacao";
+const NrUnitTeam = lazy(() => import("./NrUnitTeam").then((m) => ({ default: m.NrUnitTeam })));
+const UnitMapWorkspace = lazy(() => import("./mapa/UnitMapWorkspace"));
+const PetUnitPanel = lazy(() =>
+  import("@/features/pet/PetUnitPanel").then((m) => ({ default: m.PetUnitPanel })),
+);
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
 );
@@ -86,11 +93,7 @@ const NrRecordHistory = lazy(() =>
 const NrAuditEventDialog = lazy(() =>
   import("./NrRecordHistory").then((module) => ({ default: module.NrAuditEventDialog })),
 );
-const PetHistorico = lazy(() =>
-  import("@/features/pet/ExecucaoWorkspace").then((module) => ({
-    default: module.PetHistoricoUnidade,
-  })),
-);
+
 export type NrSection =
   | NrRecurso
   | "visao-geral"
@@ -99,6 +102,9 @@ export type NrSection =
   | "historico"
   | "configuracoes"
   | "pets"
+  | "contratacao"
+  | "equipe"
+  | "mapa-3d"
   | "conferencia";
 export type NrSearch = {
   cliente: string;
@@ -109,6 +115,11 @@ export type NrSearch = {
   pasta: string;
   lixeira: boolean;
   local?: string;
+  camera?: "normal" | "superior" | "angular";
+  objeto?: string;
+  painel?: "resumo" | "ficha" | "acervo" | "pendencias" | "pet" | "historico";
+  retorno?: "pets" | "mapa-3d";
+  consulta?: boolean;
   ficha?: string;
   escopo?: "" | "unidade" | "todos";
   tipo?: string;
@@ -148,6 +159,9 @@ const labels: Record<NrSection, string> = {
   configuracoes: "Configurações",
   sistemas: "Avaliações e sistemas",
   pets: "PET Digital",
+  contratacao: "Documentos contratados",
+  equipe: "Equipe e certificados",
+  "mapa-3d": "Mapa 3D",
 };
 const tabs = [
   ["visao-geral", LayoutDashboard],
@@ -414,6 +428,10 @@ function NrScope({
     const next: Partial<NrSearch> = {
       ...patch,
       local: "",
+      objeto: "",
+      painel: "resumo",
+      camera: "normal",
+      retorno: "pets",
       ficha: "identificacao",
       busca: "",
       estado: "",
@@ -462,6 +480,19 @@ function NrScope({
       setBusy(false);
     }
   }
+  if (section === "mapa-3d" && contexto)
+    return (
+      <Suspense fallback={<LoadingState label="Abrindo mapa da unidade…" />}>
+        <UnitMapWorkspace
+          org={org}
+          user={user}
+          norma={norma}
+          search={search}
+          onSearch={onSearch}
+          contexto={contexto}
+        />
+      </Suspense>
+    );
   return (
     <div className={`nx-nr-workspace${id && recurso === "locais" ? " nr-local-workspace" : ""}`}>
       <header className={`nr-heading${id && recurso === "locais" ? " nr-heading-compact" : ""}`}>
@@ -472,7 +503,7 @@ function NrScope({
         <Link
           className="nr-norma-switch"
           to={String(
-            `${norma === "NR33" ? "/nr-35" : "/nr-33"}${section === "visao-geral" || section === "pets" ? "" : `/${section}`}`,
+            `${norma === "NR33" ? "/nr-35" : "/nr-33"}${section === "visao-geral" ? "" : `/${section}`}`,
           )}
           search={navigationSearch}
         >
@@ -552,7 +583,9 @@ function NrScope({
                       ["sistemas", Wrench],
                       ["historico", History],
                       ["configuracoes", Settings],
-                      ...(norma === "NR33" ? [["pets", ShieldCheck]] : []),
+                      ["pets", ShieldCheck],
+                      ["contratacao", ClipboardList],
+                      ["equipe", ShieldCheck],
                     ] as [NrSection, typeof Folder][]
                   ).map(([area, Icon]) => (
                     <Link key={area} to={path(area)} search={navigationSearch}>
@@ -562,6 +595,7 @@ function NrScope({
                   ))}
                 </nav>
               </details>
+              <UnitMapEntry org={org} user={user} norma={norma} search={search} />
             </div>
             <p className="nr-scope-label" role="status">
               {id && recurso === "locais" ? (
@@ -581,6 +615,7 @@ function NrScope({
             <label className="nr-section-select">
               Área do módulo
               <select
+                aria-label="Área do módulo"
                 value={section === "modelos" ? "biblioteca" : section}
                 onChange={(event) =>
                   void navigate({
@@ -599,7 +634,10 @@ function NrScope({
                     {labels[area as NrSection]}
                   </option>
                 ))}
-                {norma === "NR33" && <option value="pets">PET Digital</option>}
+                <option value="pets">PET Digital</option>
+                <option value="contratacao">Documentos contratados</option>
+                <option value="equipe">Equipe e certificados</option>
+                <UnitMapEntry org={org} user={user} norma={norma} search={search} option />
               </select>
             </label>
             <nav className="nr-tabs" aria-label={`Áreas ${norma === "NR33" ? "NR-33" : "NR-35"}`}>
@@ -669,32 +707,62 @@ function NrScope({
                 {section === "conferencia" && (
                   <NrConference org={org} norma={norma} search={search} />
                 )}
+                {section === "contratacao" && search.unidade && (
+                  <NrContratacao
+                    scope={{
+                      organization_id: org,
+                      cliente_id: search.cliente,
+                      unidade_id: search.unidade,
+                      norma,
+                    }}
+                  />
+                )}
+                {section === "equipe" && search.unidade && (
+                  <Suspense fallback={<LoadingState />}>
+                    <NrUnitTeam
+                      scope={{
+                        organization_id: org,
+                        cliente_id: search.cliente,
+                        unidade_id: search.unidade,
+                        norma,
+                      }}
+                      user={user}
+                    />
+                  </Suspense>
+                )}
                 {section === "historico" && (
                   <NrHistory org={org} norma={norma} search={search} onSearch={onSearch} />
                 )}
-                {section === "pets" &&
-                  (norma === "NR33" ? (
-                    <div className="nr-panel">
-                      <h2 className="text-lg font-semibold mb-3">PET Digital canônica</h2>
-                      <p className="nr-source">
-                        Inventário, levantamento e documentos não autorizam entrada. Emissão e
-                        assinatura seguem os requisitos verificados na PET.
-                      </p>
-                      {search.unidade ? (
-                        <Suspense fallback={<LoadingState />}>
-                          <PetHistorico unidadeId={search.unidade} />
-                        </Suspense>
-                      ) : (
-                        <EmptyState
-                          title="Selecione uma unidade"
-                          hint="O histórico de PETs será consultado no contexto autorizado da unidade."
+                {section === "pets" && (
+                  <div className="nr-panel">
+                    <h2 className="text-lg font-semibold mb-3">PET Digital</h2>
+                    <p className="nr-source">
+                      Inventário, levantamento e documentos não autorizam entrada. Emissão e
+                      assinatura seguem os requisitos verificados na PET.
+                    </p>
+                    {search.unidade ? (
+                      <Suspense fallback={<LoadingState />}>
+                        <PetUnitPanel
+                          scope={{
+                            organization_id: org,
+                            cliente_id: search.cliente,
+                            unidade_id: search.unidade,
+                            norma,
+                          }}
+                          user={user}
+                          search={search}
+                          localId={search.local || undefined}
+                          onLocal={(local) => onSearch({ local, pagina: 0 })}
                         />
-                      )}
-                      <Link to="/execucao" className="nr-record-link">
-                        Abrir ordens de serviço e PETs <ArrowRight size={17} />
-                      </Link>
-                    </div>
-                  ) : null)}
+                      </Suspense>
+                    ) : (
+                      <EmptyState
+                        title="Selecione uma unidade"
+                        hint="O histórico de PETs será consultado no contexto autorizado da unidade."
+                      />
+                    )}
+                  </div>
+                )}
                 {section === "configuracoes" && contexto.permissoes.configurar && (
                   <Suspense fallback={<LoadingState label="Consultando consumo do acervo…" />}>
                     <NrStorageUsage org={org} contexto={contexto} />

@@ -319,6 +319,26 @@
     {
       "path": "drizzle/migrations/0060_nr_imagem_runtime_nexus.sql",
       "sha256": "4834d45a7f7a6c56ed17beca4b267cfd0517e5b1bd136fc72f08cf53f8ca6dae"
+    },
+    {
+      "path": "drizzle/migrations/0061_nr_mapa_pet_unidade.sql",
+      "sha256": "976775ac0f03a6817332e7aa04833f60744940f58b9f83adcedee729bc64aa6b"
+    },
+    {
+      "path": "drizzle/migrations/0062_nr_documentos_contratados.sql",
+      "sha256": "e07c0116c78fdda6693e072e6b04dfb668390c273da6c0cfa19fd54c27f7f2f3"
+    },
+    {
+      "path": "drizzle/migrations/0063_nr_equipe_certificados.sql",
+      "sha256": "39354c4bce8b8d0a7141932a4d7d8fc3f8c68af298b30d3d2cf59d8708ef3236"
+    },
+    {
+      "path": "drizzle/migrations/0064_pet_evidencias_consulta.sql",
+      "sha256": "efb5a8e17fb7a5b654d3375541bce229e5928cb50e62954d9d5079581fdfff04"
+    },
+    {
+      "path": "drizzle/migrations/0065_nr_contexto_compartilhado.sql",
+      "sha256": "bedf34b1769b665a059cca12253e0db5dc0dacb741b9bd0de7f47154b0008710"
     }
   ]
 }

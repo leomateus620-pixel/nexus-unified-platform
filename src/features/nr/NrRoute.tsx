@@ -3,6 +3,10 @@ import { z } from "zod";
 import { nrSearchSchema } from "./route-state";
 import type { Norma } from "./domain";
 import { NrWorkspace, type NrSearch, type NrSection } from "./NrWorkspace";
+import { lazy, Suspense } from "react";
+const PetUnitRoute = lazy(() =>
+  import("@/features/pet/PetUnitRoute").then((m) => ({ default: m.PetUnitRoute })),
+);
 export function NrRoute({ norma, section }: { norma: Norma; section: NrSection }) {
   const location = useRouterState({ select: (state) => state.location });
   const search = nrSearchSchema.parse(location.search);
@@ -18,6 +22,12 @@ export function NrRoute({ norma, section }: { norma: Norma; section: NrSection }
       </div>
     );
   const id = candidate && z.string().uuid().safeParse(candidate).success ? candidate : undefined;
+  if (section === "pets" && id)
+    return (
+      <Suspense fallback={<p>Carregando PET…</p>}>
+        <PetUnitRoute petId={id} norma={norma} />
+      </Suspense>
+    );
   return (
     <NrWorkspace
       norma={norma}
@@ -47,7 +57,10 @@ export function NrCatchall({ norma }: { norma: Norma }) {
     "historico",
     "configuracoes",
     "sistemas",
-    ...(norma === "NR33" ? ["pets"] : []),
+    "pets",
+    "mapa-3d",
+    "contratacao",
+    "equipe",
   ];
   if (
     !section ||
@@ -62,6 +75,7 @@ export function NrCatchall({ norma }: { norma: Norma }) {
         "pendencias",
         "biblioteca",
         "sistemas",
+        "pets",
       ].includes(section))
   )
     return (

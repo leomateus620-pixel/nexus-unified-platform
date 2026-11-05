@@ -49,7 +49,7 @@ const command = (resource, action, data = {}, id = null, version = null, user = 
     user,
     async (tx) =>
       (
-        await tx`select public.nr_executar(${org},'NR33',${resource},${action},${id},${version},${randomUUID()},${tx.json(data)}) r`
+        await tx`select public.nr_executar(${org},'NR33',${resource},${action},${id},${version},${randomUUID()},${tx.json(resource === "documentos" && action === "salvar" && !id ? { tipo: "memorial", ...data } : data)}) r`
       )[0].r,
   );
 const review = (

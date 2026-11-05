@@ -4,6 +4,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { pathToFileURL } from "node:url";
 import test from "node:test";
 import { strToU8, zipSync } from "fflate";
 
@@ -63,7 +64,7 @@ globalThis.fetch=async(input,init)=>{
       process.execPath,
       [
         "--import",
-        preload,
+        pathToFileURL(preload).href,
         path.join(root, "scripts/nr/storage-transfer.mjs"),
         archive,
         options.badArchiveHash ? "0".repeat(64) : sha(raw),

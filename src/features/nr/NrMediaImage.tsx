@@ -1,3 +1,4 @@
+import { useOrg } from "@/features/org/session";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -96,7 +97,15 @@ export function NrMediaImage({
     return () => observer.disconnect();
   }, [full, fileId]);
   const query = useQuery({
-    queryKey: ["nr", org, "imagem-privada", fileId, effectiveVariant, version],
+    queryKey: [
+      "nr",
+      org,
+      useOrg().data?.userId,
+      "imagem-privada",
+      fileId,
+      effectiveVariant,
+      version,
+    ],
     enabled: visible && !!fileId && !!effectiveVariant,
     queryFn: ({ signal }) =>
       bounded(() => {

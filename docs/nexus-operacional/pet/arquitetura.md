@@ -19,14 +19,16 @@ Estado do código em 23/10/2026. A implantação de schema, a configuração de 
 
 ## Rotas e integração
 
-As rotas de negócio ficam sob `_authenticated`, com o gate existente e o acesso de Execução na matriz de navegação. O layout `/execucao` usa `Outlet`; a árvore é gerada pelo TanStack Router.
+As rotas de negócio ficam sob `_authenticated`, com o gate e a matriz de navegação existentes. A operação da PET fica no contexto autorizado da unidade, em NR-33/NR-35; Execução conserva a operação das OS. A árvore é gerada pelo TanStack Router.
 
-| Rota/consumidor                           | Responsabilidade                                                                    |
-| ----------------------------------------- | ----------------------------------------------------------------------------------- |
-| `/execucao`                               | Lista de OS e PETs; criação contextual; modelos técnicos versionados.               |
-| `/execucao/ordens/$ordemId`               | Ficha da OS, escopo, responsável e card **Permissões de Entrada e Trabalho**.       |
-| `/execucao/pets/$petId`                   | Ficha própria da PET, seis etapas e acompanhamento operacional.                     |
-| `PetHistoricoUnidade` na ficha da unidade | Consulta autorizada por unidade, busca, situação, validade e acesso à PET completa. |
+| Rota/consumidor                             | Responsabilidade                                                                                                               |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `/execucao`                                 | Lista e operação das OS.                                                                                                       |
+| `/execucao/ordens/$ordemId`                 | Ficha da OS, escopo, responsável e card **Permissões de Entrada e Trabalho**.                                                  |
+| `/nr-33/pets` e `/nr-35/pets`               | Histórico unitário, seleção do local, criação explícita e modelos técnicos; não exigem mapa.                                   |
+| `/nr-33/pets/$petId` e `/nr-35/pets/$petId` | Mesma PET e mesmos comandos, contexto de retorno, seis etapas e acompanhamento.                                                |
+| `/execucao/pets/$petId`                     | Resolve a PET autorizada pelo ID e redireciona ao contexto real. Sem correspondência NR, mantém consulta legada identificada.  |
+| `/nr-33/mapa-3d` e `/nr-35/mapa-3d`         | Cena somente após associação publicada e autorização da unidade. Cinco alvos independentes; seleção abre dados e PET por UUID. |
 
 O recorte de OS implementa identidade, cliente/unidade, título, escopo, responsável e transições básicas. Há fundação relacional para participantes e apontamentos; a entrega não afirma possuir um RDO completo, gestão integral de materiais/entrega ou integração automática de horas. O cadastro operacional de pessoas e os cadastros de clientes/unidades permanecem canônicos. Pessoa operacional, conta Auth e função temporal na PET são vínculos diferentes.
 
@@ -34,7 +36,11 @@ Uma OS possui várias PETs. Encerrar uma PET não conclui a OS. A conclusão da 
 
 ## Modelo e estados
 
-As relações principais são `ordens_servico` → `pet_permissoes` → espaço/unidade/modelo versionado. Participantes, respostas, avaliações, leituras, eventos individuais, intervalos, ocorrências, prorrogações, assinaturas e documentos possuem tabelas próprias. FKs compostas preservam organização e contexto. JSON é usado para procedimentos e snapshots; não substitui pessoa, unidade, OS, espaço ou evento relacional.
+As relações principais são `pet_permissoes` → espaço/unidade/modelo versionado, com `ordens_servico` opcional desde `0061_nr_mapa_pet_unidade.sql`. PETs antigas conservam sua OS; a criação unitária permite escolher uma OS elegível da mesma unidade ou nenhuma, sem OS fictícia. Participantes, respostas, avaliações, leituras, eventos individuais, intervalos, ocorrências, prorrogações, assinaturas e documentos possuem tabelas próprias. FKs compostas preservam organização e contexto. JSON é usado para procedimentos e snapshots; não substitui pessoa, unidade, OS, espaço ou evento relacional.
+
+`local_nr_id` e `norma_origem` são congelados na criação. O backfill legado usa apenas correspondência única entre local e `pet_espaco_id`, nunca nome ou proximidade. O comando contextual revalida organização, cliente, unidade, norma, local, espaço ativo, modelo aprovado, OS opcional, capacidade e intenção idempotente. Os demais comandos continuam no motor anterior. `pet_listar` aplica unidade + espaço antes da paginação; a pesquisa usa identificação histórica e apelidos comprovados. A origem de navegação NR-35 não transforma a natureza de PET de espaço confinado em autorização exclusiva para altura.
+
+`nr_cenas_unidade` e `nr_cena_objetos` possuem FKs por contexto e nenhum acesso direto de app. A RPC autentica o contexto, e o manifesto específico da unidade é entregue pelo servidor somente após associação publicada. Medidas, posições e imagens técnicas não entram no chunk público do motor. A cena não executa emissão, liberação ou presença. A ficha e a lista sem WebGL usam as mesmas consultas e comandos autorizados.
 
 O estado documental usa `rascunho`, `em_conferencia`, `aguardando_assinaturas`, `emitida`, `encerramento_pendente`, `encerrada` e `cancelada`. A condição operacional usa `nao_liberada`, `liberada`, `em_atividade`, `interrompida`, `emergencia` e `terminada`. A validade temporal e as presenças são projeções independentes. Expirar não cria saída; interromper não pausa permanência; terminar a operação pode manter conclusão documental pendente.
 
@@ -64,6 +70,10 @@ A mesma intenção mantém chave e payload em retries. Payload divergente com a 
 Queries incluem organização/usuário e são invalidadas após comando. A UI evita duplo toque, mantém preenchimento após falha e apresenta conflito sem sobrescrever outra versão. Essas proteções não substituem as restrições transacionais.
 
 ## Assinaturas e limites de integração
+
+A operação contextual agora parte de NR-33/NR-35 → unidade → PET, com OS opcional e filtro de espaço anterior à paginação. A seleção no mapa é leitura; o vínculo local NR/espaço é conferido por FKs e autorização, nunca por TAG ou proximidade. As versões históricas, originais e regras de fechamento de OS permanecem. URLs antigas resolvem pelo ID autorizado; registros sem contexto NR conclusivo continuam consultáveis com a pendência indicada.
+
+As migrações 0062–0065 acrescentam contratação de documentos pelo RT formal, equipe vinculada à unidade sem concessão implícita de acesso, horas/modalidade dos certificados, metadados fotográficos imutáveis e exportação contextual. Nova criação de PET exige contratação e modelo aprovado; isso não invalida registros existentes. `PetConsulta` oferece leitura autenticada atualizada e não transmite capacidade de comando. A aplicação não importa PIN, contas ou dados de demonstração da referência Perplexity. O formulário em branco exige configuração explícita do layout na versão aprovada; o original certificado continua separado. Detalhes e validação estão em [atualizacao-v2.md](../../cotrirosa/atualizacao-v2.md).
 
 O registro distingue `coletada_tela`, `aceite_autenticado` e `certificada_icp_brasil`; seus estados não são intercambiáveis. A liberação exige assinatura certificada validada de signatários/finalidades/versionamento aplicáveis, mais original documental disponível. Preparar intenção ou desenhar assinatura não satisfaz esse requisito.
 

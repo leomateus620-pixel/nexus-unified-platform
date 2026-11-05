@@ -8,6 +8,11 @@ export const nrSearchSchema = z.object({
   pasta: z.string().uuid().or(z.literal("")).catch(""),
   lixeira: z.boolean().catch(false),
   local: z.string().uuid().or(z.literal("")).catch(""),
+  camera: z.enum(["normal", "superior", "angular"]).catch("normal"),
+  objeto: z.string().max(60).catch(""),
+  painel: z.enum(["resumo", "ficha", "acervo", "pendencias", "pet", "historico"]).catch("resumo"),
+  retorno: z.enum(["pets", "mapa-3d"]).catch("pets"),
+  consulta: z.boolean().catch(false),
   ficha: z
     .enum([
       "identificacao",

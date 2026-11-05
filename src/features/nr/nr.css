@@ -1462,3 +1462,47 @@
     box-shadow: none;
   }
 }
+.nx-nr-workspace .nr-contract-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.6rem;
+  border: 0;
+  padding: 1rem 0;
+}
+.nx-nr-workspace .nr-contract-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  border: 1px solid #b7c9bf;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  background: #f6faf7;
+}
+.nx-nr-workspace .nr-contract-item input {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  accent-color: #235641;
+}
+.nx-nr-workspace .nr-contract-item small {
+  display: block;
+  color: #53675e;
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+}
+.nx-nr-workspace .nr-contract-source {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.nx-nr-workspace .nr-contract-source textarea {
+  padding: 0.75rem;
+  border: 1px solid #9eafa6;
+  border-radius: 0.5rem;
+  width: 100%;
+  background: white;
+}
+.nx-nr-workspace .nr-contract details {
+  margin-top: 1.25rem;
+}

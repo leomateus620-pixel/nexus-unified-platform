@@ -74,6 +74,9 @@ export const qualificacaoDados = z
     emissor: z.string().trim().min(2, "Informe o emissor da qualificação.").max(200),
     conclusao: civilDate,
     validade: civilDate.nullable().default(null),
+    carga_horaria: z.number().positive().max(10000).nullable().optional(),
+    tipo_treinamento: z.enum(["inicial", "periodico", "eventual"]).nullable().optional(),
+    modalidade: z.enum(["presencial", "semipresencial", "distancia"]).nullable().optional(),
   })
   .strict()
   .superRefine((value, context) => {
@@ -134,6 +137,9 @@ export const qualificacaoRow = z.object({
   emissor: z.string(),
   conclusao: civilDate,
   validade: civilDate.nullable(),
+  carga_horaria: z.number().nullable().optional(),
+  tipo_treinamento: z.enum(["inicial", "periodico", "eventual"]).nullable().optional(),
+  modalidade: z.enum(["presencial", "semipresencial", "distancia"]).nullable().optional(),
   estado: estadoQualificacao,
   conferido_por: id.nullable(),
   conferido_em: z.string().nullable(),

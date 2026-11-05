@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "Catálogo único de 13 documentos",
+    "Memorial obrigatório não pode ser removido",
+    "Administrador sem designação RT não altera contrato",
+    "NR35 apresenta a mesma contratação da unidade",
+    "Vínculo explícito de pessoa confirmado na unidade",
+    "Consulta ao vivo disponível sem comando operacional",
+    "CSV contém identidade canônica",
+    "Cinco locais em duas folhas A4, quatro por página",
+    "Formulário sem layout aprovado bloqueado no backend",
+    "Link do gestor abre consulta sem ações operacionais",
+    "Contratação sem transbordamento horizontal no celular emulado",
+    "Menu móvel mantém área de contratação",
+    "Sem erros de execução JavaScript"
+  ],
+  "errors": [],
+  "environment": "Windows Chromium; desktop 1440x1000, celular emulado 390x844"
+}

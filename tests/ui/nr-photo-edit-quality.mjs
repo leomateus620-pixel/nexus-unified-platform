@@ -3,7 +3,7 @@ import { chromium, webkit, expect } from "@playwright/test";
 import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { evidenceRoot } from "./evidence.mjs";
-const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4190";
+const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
 const directory = `${evidenceRoot}/nr-photo-edit`;
 await mkdir(directory, { recursive: true });
 const report = {
@@ -42,7 +42,10 @@ for (const [engine, type] of [
       { waitUntil: "domcontentloaded" },
     );
     const dialog = page.getByRole("dialog", { name: "Editar local", exact: true });
-    const open = () => page.getByRole("button", { name: "Editar registro", exact: true }).click();
+    const open = async () => {
+      await page.getByRole("button", { name: "Editar registro", exact: true }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+    };
     const group = dialog.getByRole("group", { name: "Legendas e ordem das fotos", exact: true });
     await check(
       "Editing and reordering preserve occurrence identity, focus, saved value and explicit discard",

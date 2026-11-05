@@ -1,3 +1,4 @@
+import { useOrg } from "@/features/org/session";
 import { NrMediaImage } from "./NrMediaImage";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -184,7 +185,7 @@ export function NrFilesPanel({
     setAllRevisions(false);
   }, [scopeKey]);
   const limits = useQuery({
-    queryKey: ["nr", org, "arquivo-limites"],
+    queryKey: ["nr", org, useOrg().data?.userId, "arquivo-limites"],
     queryFn: ({ signal }) => limitsFn({ data: { organization_id: org }, signal }),
     retry: false,
   });
@@ -192,6 +193,7 @@ export function NrFilesPanel({
     queryKey: [
       "nr",
       org,
+      useOrg().data?.userId,
       norma,
       "arquivos",
       clienteId,

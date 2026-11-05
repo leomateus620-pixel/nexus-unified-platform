@@ -1,0 +1,98 @@
+[
+  {
+    "key": "silo-mp-norte",
+    "pixel": [
+      545,
+      326
+    ],
+    "sourcePixel": [
+      296,
+      793
+    ],
+    "reading": "\t\t\t72 text 0 m\n\t\t\t\t79 text Barra de escala da visualização atual 100 m\n\t\t\t\t80 text Altitude da câmera em relação ao nível do mar Câmera: 802 m\n\t\t\t\t81 text Latitude e longitude do cursor 27°49'56.91\"S 54°25'48.32\"W\n\t\t\t\t82 text Elevação do cursor em relação ao nível do mar 318 m"
+  },
+  {
+    "key": "silo-milho",
+    "pixel": [
+      545,
+      386
+    ],
+    "sourcePixel": [
+      298,
+      866
+    ],
+    "reading": "+\t\t\t108 text 33,3 m\n+\t\t\t\t109 text Latitude e longitude do cursor 27°49'57.99\"S 54°25'48.31\"W\n+\t\t\t\t110 text Elevação do cursor em relação ao nível do mar 321 m"
+  },
+  {
+    "key": "galpao-norte-nw",
+    "pixel": [
+      680,
+      241
+    ],
+    "sourcePixel": [
+      456,
+      690
+    ],
+    "reading": "+\t\t\t121 text 144,1 m\n+\t\t\t\t123 text Latitude e longitude do cursor 27°49'55.36\"S 54°25'45.55\"W\n+\t\t\t\t124 text Elevação do cursor em relação ao nível do mar 317 m"
+  },
+  {
+    "key": "galpao-norte-ne",
+    "pixel": [
+      792,
+      232
+    ],
+    "sourcePixel": [
+      594,
+      690
+    ],
+    "reading": "+\t\t\t133 text 207,47 m\n+\t\t\t\t134 text Latitude e longitude do cursor 27°49'55.20\"S 54°25'43.24\"W\n+\t\t\t\t135 text Elevação do cursor em relação ao nível do mar 318 m"
+  },
+  {
+    "key": "galpao-norte-se",
+    "pixel": [
+      799,
+      311
+    ],
+    "sourcePixel": [
+      594,
+      782
+    ],
+    "reading": "~\t\t\t133 text 251,74 m\n~\t\t\t\t134 text Latitude e longitude do cursor 27°49'56.63\"S 54°25'43.11\"W\n~\t\t\t\t135 text Elevação do cursor em relação ao nível do mar 322 m"
+  },
+  {
+    "key": "cd-nw",
+    "pixel": [
+      700,
+      414
+    ],
+    "sourcePixel": [
+      473,
+      886
+    ],
+    "reading": "~\t\t\t133 text 331,23 m\n~\t\t\t\t134 text Latitude e longitude do cursor 27°49'58.48\"S 54°25'45.14\"W\n~\t\t\t\t135 text Elevação do cursor em relação ao nível do mar 323 m"
+  },
+  {
+    "key": "cd-ne",
+    "pixel": [
+      841,
+      407
+    ],
+    "sourcePixel": [
+      645,
+      886
+    ],
+    "reading": "~\t\t\t133 text 409,74 m\n~\t\t\t\t134 text Latitude e longitude do cursor 27°49'58.35\"S 54°25'42.27\"W\n~\t\t\t\t135 text Elevação do cursor em relação ao nível do mar 324 m"
+  },
+  {
+    "key": "union-canto-sul",
+    "pixel": [
+      610,
+      415
+    ],
+    "sourcePixel": [
+      380,
+      897
+    ],
+    "reading": "~\t\t\t133 text 538,4 m\n~\t\t\t\t134 text Latitude e longitude do cursor 27°49'58.50\"S 54°25'46.97\"W\n~\t\t\t\t135 text Elevação do cursor em relação ao nível do mar 323 m"
+  }
+]

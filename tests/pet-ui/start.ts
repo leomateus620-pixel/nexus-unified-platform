@@ -1,1 +1,2 @@
-export const useServerFn = (fn: any) => fn;
+export const useServerFn = <T>(fn: T): T => fn;
+export const createClientOnlyFn = <T>(fn: T): T => fn;

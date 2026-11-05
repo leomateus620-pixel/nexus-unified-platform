@@ -3,7 +3,9 @@ import { createServer } from "vite";
 import { preparePdfAssets } from "../../src/features/projetos-engenharia/leitor/prepare-assets.mjs";
 
 // Dedicated test server. The Vite config replaces external boundaries only in this laboratory.
-const port = process.env.NEXUS_UI_PORT || "4190";
+// Match the Vite lab default. The locked WebKit runtime never dispatches a
+// navigation to port 4190; 4182 is verified in both browser engines.
+const port = process.env.NEXUS_UI_PORT || "4182";
 process.env.NEXUS_UI_PORT = port;
 process.env.NEXUS_UI_URL = `http://127.0.0.1:${port}`;
 await preparePdfAssets("node_modules/pdfjs-dist", "public/pdfjs/6.4.299");
@@ -43,13 +45,31 @@ try {
     ],
   };
   const selected = Object.keys(features).find((flag) => process.argv.includes(flag));
+  const suites = {
+    legacy: legacyChecks,
+    nr: Object.entries(features)
+      .filter(([flag]) => flag.startsWith("--nr-"))
+      .flatMap(([, checks]) => checks),
+    operational: [
+      ["operational-quality.mjs"],
+      ...Object.entries(features)
+        .filter(([flag]) => !flag.startsWith("--nr-"))
+        .flatMap(([, checks]) => checks),
+    ],
+  };
+  const suiteIndex = process.argv.indexOf("--suite");
+  const suite = suiteIndex < 0 ? null : process.argv[suiteIndex + 1];
+  if (suiteIndex >= 0 && !Object.hasOwn(suites, suite))
+    throw new Error("Unknown UI suite: use legacy, nr or operational");
   const checks = selected
     ? features[selected]
-    : [
-        ...(process.argv.includes("--operacional") ? [] : legacyChecks),
-        ["operational-quality.mjs"],
-        ...Object.values(features).flat(),
-      ];
+    : suite
+      ? suites[suite]
+      : [
+          ...(process.argv.includes("--operacional") ? [] : legacyChecks),
+          ["operational-quality.mjs"],
+          ...Object.values(features).flat(),
+        ];
   for (const [file, ...args] of checks) {
     await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [`tests/ui/${file}`, ...args], {

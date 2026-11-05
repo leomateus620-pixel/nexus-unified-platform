@@ -7,8 +7,13 @@ permissions:
   contents: read
 jobs:
   presentation:
+    name: presentation (${{ matrix.suite }})
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [legacy, nr, operational]
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -18,10 +23,10 @@ jobs:
           node-version: "24"
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bunx playwright install --with-deps chromium
-      - run: bun run test:ui
+      - run: bunx playwright install --with-deps chromium webkit
+      - run: bun run test:ui -- --suite ${{ matrix.suite }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: operational-ui-evidence
+          name: operational-ui-evidence-${{ matrix.suite }}
           path: docs/ui/evidence/

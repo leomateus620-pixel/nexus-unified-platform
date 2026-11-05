@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, ArrowRight, FileCheck2, Plus, Search, ShieldCheck } from "lucide-react";
@@ -11,7 +11,6 @@ import { petExecutar, petListar, petOpcoes } from "./pet.functions";
 import {
   optionName,
   petDate,
-  petInstant,
   petLabel,
   type PetLista,
   type PetOpcoes,
@@ -20,15 +19,14 @@ import {
   type PetUICommand,
 } from "./ui-types";
 import "./pet.css";
-import { PetModelos } from "./PetModelos";
 import { PetAppearanceProvider, PetThemeToggle, usePetAppearance } from "./PetAppearance";
-import { PetPicker } from "./PetPicker";
 import {
   petListStateKey,
   readPetListState,
   writePetListState,
   petListPageAfterResponse,
 } from "./list-state";
+import { nrSearchSchema } from "@/features/nr/route-state";
 
 function listSessionStorage(): Storage | null {
   try {
@@ -82,8 +80,17 @@ export function PetCard({ pet, onOpen }: { pet: PetResumo; onOpen?: () => void }
         </span>
         <Link
           className="nx-pet-link"
-          to="/execucao/pets/$petId"
-          params={{ petId: pet.id }}
+          to={String(pet.cliente_id ? `/nr-33/pets/${pet.id}` : `/execucao/pets/${pet.id}`)}
+          search={
+            pet.cliente_id
+              ? {
+                  ...nrSearchSchema.parse({}),
+                  cliente: pet.cliente_id,
+                  unidade: pet.unidade_id,
+                  local: pet.local_nr_id ?? "",
+                }
+              : {}
+          }
           onClick={(event) => {
             if (
               event.button === 0 &&
@@ -118,7 +125,6 @@ export function ExecucaoWorkspace({ ordemId }: { ordemId?: string | undefined })
         userId={user}
         ordemId={ordemId}
         canManage={access.data.gerirOperacao}
-        canReview={access.data.revisarOperacao}
       />
     </PetAppearanceProvider>
   );
@@ -128,13 +134,11 @@ function ExecucaoContent({
   userId,
   ordemId,
   canManage,
-  canReview,
 }: {
   organizationId: string;
   userId: string;
   ordemId?: string | undefined;
   canManage: boolean;
-  canReview: boolean;
 }) {
   const { theme } = usePetAppearance();
   const stateKey = petListStateKey(organizationId, userId, ordemId);
@@ -143,10 +147,9 @@ function ExecucaoContent({
   const listFn = useServerFn(petListar),
     optionsFn = useServerFn(petOpcoes),
     executeFn = useServerFn(petExecutar);
-  const queryClient = useQueryClient(),
-    navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState(restored.search);
-  const [tab, setTab] = useState<"ordens" | "pets">(restored.tab);
+  const [tab] = useState<"ordens" | "pets">("ordens");
   const pendingScroll = useRef<number | null>(restored.scrollY);
   const positionCaptured = useRef(false);
   const currentView = useRef(restored);
@@ -174,7 +177,7 @@ function ExecucaoContent({
     currentView.current = { ...currentView.current, scrollY: window.scrollY };
     writePetListState(listSessionStorage(), stateKey, currentView.current);
   };
-  const [dialog, setDialog] = useState<"os" | "pet" | "espaco" | null>(null);
+  const [dialog, setDialog] = useState<"os" | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
@@ -266,11 +269,6 @@ function ExecucaoContent({
       await queryClient.invalidateQueries({ queryKey: ["pet", organizationId] });
       setDialog(null);
       setNotice("Registro confirmado no servidor.");
-      if (comando === "criar_pet" && (saved.pet?.id || saved.id))
-        await navigate({
-          to: "/execucao/pets/$petId",
-          params: { petId: (saved.pet?.id || saved.id)! },
-        });
       return true;
     } catch (e) {
       setError(
@@ -296,11 +294,6 @@ function ExecucaoContent({
   const opts = options.data;
   const nome = (group: "clientes" | "unidades" | "pessoas", id: string) =>
     optionName(opts?.[group]?.find((p) => p.id === id));
-  const openPet = () => {
-    setForm((f) => ({ ...f, os_id: ordem?.id || "" }));
-    setDialog("pet");
-    setError(null);
-  };
   return (
     <div className="nx-pet space-y-5">
       {ordem && (
@@ -312,20 +305,18 @@ function ExecucaoContent({
         <div>
           <p className="nx-pet-kicker">Execução / Ordens de Serviço</p>
           <h1 className="nx-pet-title">
-            {ordem
-              ? `${ordem.numero} · ${ordem.titulo}`
-              : "Serviço organizado. Entrada autorizada."}
+            {ordem ? `${ordem.numero} · ${ordem.titulo}` : "Ordens de serviço"}
           </h1>
           <p className="nx-pet-description">
             {ordem
               ? "Escopo e execução da OS, com permissões específicas para cada espaço confinado."
-              : "Acompanhe ordens de serviço e permissões de entrada em uma jornada conectada."}
+              : "Acompanhe escopo, equipe e execução. A operação da PET fica na unidade."}
           </p>
         </div>
         {canManage && !ordem && (
           <ActionButton onClick={() => setDialog("os")}>
             <Plus size={16} aria-hidden className="mr-2 inline" />
-            {ordem ? "Criar PET" : "Nova ordem de serviço"}
+            Nova ordem de serviço
           </ActionButton>
         )}
       </header>
@@ -417,42 +408,22 @@ function ExecucaoContent({
           </div>
           <div className="nx-pet-actions">
             {(ordem || tab === "pets") && <PetThemeToggle />}
-            {ordem && canManage && !["concluida", "cancelada"].includes(ordem.estado) && (
-              <ActionButton onClick={openPet}>
-                <Plus size={16} aria-hidden /> Criar PET
-              </ActionButton>
+            {ordem && (
+              <Link
+                className="nx-pet-link"
+                to={String("/nr-33/pets")}
+                search={{
+                  ...nrSearchSchema.parse({}),
+                  cliente: ordem.cliente_id,
+                  unidade: ordem.unidade_id,
+                }}
+              >
+                Abrir PETs na unidade
+              </Link>
             )}
           </div>
         </div>
         <div className="nx-pet-controls">
-          {!ordem && (
-            <div className="nx-pet-actions" role="tablist" aria-label="Registros de execução">
-              <ActionButton
-                variant={tab === "ordens" ? "primary" : "ghost"}
-                role="tab"
-                aria-selected={tab === "ordens"}
-                onClick={() => {
-                  pendingScroll.current = null;
-                  setTab("ordens");
-                  setPage(0);
-                }}
-              >
-                Ordens de serviço
-              </ActionButton>
-              <ActionButton
-                variant={tab === "pets" ? "primary" : "ghost"}
-                role="tab"
-                aria-selected={tab === "pets"}
-                onClick={() => {
-                  pendingScroll.current = null;
-                  setTab("pets");
-                  setPage(0);
-                }}
-              >
-                PETs
-              </ActionButton>
-            </div>
-          )}
           <label className="nx-pet-field">
             <span>
               <Search size={12} aria-hidden className="mr-1 inline" /> Buscar{" "}
@@ -481,7 +452,7 @@ function ExecucaoContent({
                 hint={
                   search
                     ? "Ajuste a busca para consultar outras permissões."
-                    : "Crie a permissão a partir da ordem de serviço."
+                    : "Consulte e prepare permissões pelo painel da unidade."
                 }
               />
             )
@@ -490,7 +461,7 @@ function ExecucaoContent({
           ) : (
             <EmptyState
               title="Nenhuma ordem de serviço"
-              hint="Cadastre a OS com cliente e unidade reais para preparar a primeira PET."
+              hint="Cadastre a OS com cliente e unidade reais para organizar o serviço."
             />
           )}
         </div>
@@ -506,31 +477,15 @@ function ExecucaoContent({
           />
         )}
       </section>
-      {!ordem && canManage && opts && (
-        <PetModelos
-          options={opts}
-          busy={busy}
-          canReview={canReview}
-          commandError={error?.message}
-          onCommand={(value) => command(value.comando, value.dados)}
-        />
-      )}
       <OperationalDialog
         open={!!dialog}
         onOpenChange={(open) => {
           if (!open) setDialog(null);
         }}
-        title={
-          dialog === "os"
-            ? "Nova ordem de serviço"
-            : dialog === "espaco"
-              ? "Cadastrar espaço confinado"
-              : "Criar permissão de entrada e trabalho"
-        }
+        title="Nova ordem de serviço"
       >
         <form
           className="nx-pet space-y-4"
-          data-pet-theme={dialog === "os" ? undefined : theme}
           data-dirty="true"
           aria-busy={busy}
           onSubmit={(e) => {
@@ -542,22 +497,6 @@ function ExecucaoContent({
                 titulo: form.titulo,
                 escopo: form.escopo,
                 responsavel_id: form.responsavel_id || null,
-              });
-            else if (dialog === "espaco")
-              void command("salvar_espaco", {
-                unidade_id: ordem?.unidade_id || form.unidade_id,
-                identificacao: form.identificacao,
-                localizacao: form.localizacao,
-              });
-            else if (!form.espaco_id || !form.os_id)
-              setError(new Error("Selecione a OS e o espaço confinado."));
-            else
-              void command("criar_pet", {
-                os_id: form.os_id,
-                espaco_id: form.espaco_id,
-                atividade: form.atividade,
-                termino_previsto: petInstant(form.termino_previsto, form.timezone),
-                timezone: form.timezone,
               });
           }}
         >
@@ -628,103 +567,6 @@ function ExecucaoContent({
                     </option>
                   ))}
                 </select>
-              </label>
-            </>
-          )}
-          {dialog === "pet" && (
-            <>
-              <div className="pet-create-context">
-                <strong>
-                  {ordem?.numero || list.data.ordens.find((o) => o.id === form.os_id)?.numero}
-                </strong>
-                {" · "}
-                {ordem?.titulo || list.data.ordens.find((o) => o.id === form.os_id)?.titulo}
-              </div>
-              {!ordem && (
-                <PetPicker
-                  label="Ordem de serviço"
-                  value={form.os_id}
-                  options={list.data.ordens
-                    .filter((o) => !["concluida", "cancelada"].includes(o.estado))
-                    .map((o) => ({ id: o.id, label: `${o.numero} · ${o.titulo}` }))}
-                  onChange={(value) => {
-                    set("os_id", value);
-                    set("espaco_id", "");
-                  }}
-                  placeholder="Buscar OS"
-                />
-              )}
-              <PetPicker
-                label="Espaço confinado"
-                value={form.espaco_id}
-                options={(opts?.espacos || [])
-                  .filter(
-                    (o) =>
-                      o.unidade_id ===
-                      (ordem?.unidade_id ||
-                        list.data.ordens.find((o) => o.id === form.os_id)?.unidade_id),
-                  )
-                  .map((o) => ({
-                    id: o.id,
-                    label: optionName(o),
-                    ...(o.localizacao ? { description: o.localizacao } : {}),
-                  }))}
-                onChange={(value) => set("espaco_id", value)}
-                placeholder="Buscar espaço desta unidade"
-              />
-              {ordem && (
-                <ActionButton variant="ghost" onClick={() => setDialog("espaco")}>
-                  Cadastrar espaço desta unidade
-                </ActionButton>
-              )}
-              <label className="nx-pet-field">
-                Atividade a realizar
-                <textarea
-                  required
-                  value={form.atividade}
-                  onChange={(e) => set("atividade", e.target.value)}
-                />
-              </label>
-              <label className="nx-pet-field">
-                Validade prevista
-                <input
-                  type="datetime-local"
-                  required
-                  value={form.termino_previsto}
-                  onChange={(e) => set("termino_previsto", e.target.value)}
-                />
-                <small>Informe o término real previsto para a jornada.</small>
-              </label>
-              <label className="nx-pet-field">
-                Fuso utilizado
-                <select value={form.timezone} onChange={(e) => set("timezone", e.target.value)}>
-                  <option value="America/Sao_Paulo">Brasília</option>
-                  <option value="America/Manaus">Manaus</option>
-                  <option value="America/Rio_Branco">Rio Branco</option>
-                </select>
-              </label>
-            </>
-          )}
-          {dialog === "espaco" && (
-            <>
-              <p className="nx-pet-subtitle">
-                Unidade: {nome("unidades", ordem?.unidade_id || form.unidade_id)}
-              </p>
-              <label className="nx-pet-field">
-                Identificação do espaço
-                <input
-                  required
-                  value={form.identificacao}
-                  onChange={(e) => set("identificacao", e.target.value)}
-                />
-              </label>
-              <label className="nx-pet-field">
-                Localização
-                <textarea
-                  required
-                  value={form.localizacao}
-                  onChange={(e) => set("localizacao", e.target.value)}
-                />
               </label>
             </>
           )}

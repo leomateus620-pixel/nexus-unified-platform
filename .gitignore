@@ -41,3 +41,16 @@ __pycache__/
 
 # Generated from the exact locked pdfjs-dist dependency; prepared before build/dev/UI tests.
 /public/pdfjs/
+
+# Private local inspection evidence; originals and authenticated captures stay off Git.
+/docs/cotrirosa/*.png
+/docs/cotrirosa/*.jpg
+/docs/cotrirosa/*.webm
+/docs/cotrirosa/*.mp4
+/docs/cotrirosa/*.log
+/docs/cotrirosa/local-db-path.txt
+/docs/cotrirosa/lab-database.txt
+/docs/cotrirosa/*.pdf
+/docs/cotrirosa/metrics.json
+/docs/cotrirosa/comparacoes.html
+/docs/cotrirosa/ui-regression/

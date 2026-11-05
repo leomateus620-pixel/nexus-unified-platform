@@ -93,10 +93,10 @@ Medição de 05/11/2026, Chromium 153, Intel UHD/D3D11 no notebook Windows, cach
 
 | Perfil | Interação | Mediana / pior segundo | Draw calls máx. | Triângulos máx. |
 |---|---|---|---|---|
-| Desktop 1440 × 1000 | 3,408 s | 56 / 48 FPS | 205 | 520.806 |
-| Toque emulado 390 × 844, mesma GPU | 2,325 s | 60 / 59 FPS | 204 | 272.406 |
+| Desktop 1440 × 1000 | 3,679 s | 58 / 51 FPS | 205 | 520.806 |
+| Toque emulado 390 × 844, mesma GPU | 2,199 s | 60 / 59 FPS | 204 | 272.406 |
 
-648.560 bytes transferidos até a interação; renderização em repouso pausada. O backend estava em loopback. A medição anterior tinha desktop com buffer de 1488 pixels; não é um par rigoroso para afirmar ganho percentual. SwiftShader foi registrado separadamente, com desempenho insuficiente. Não houve medição em telefone físico, Safari/iOS ou conexão móvel real.
+648.265 bytes transferidos até a interação; renderização em repouso pausada. O backend estava em loopback. A medição anterior tinha desktop com buffer de 1488 pixels; não é um par rigoroso para afirmar ganho percentual. SwiftShader foi registrado separadamente, com desempenho insuficiente. Não houve medição em telefone físico, Safari/iOS ou conexão móvel real.
 
 Tipos, build principal/laboratório, testes unitários NR/PET/pessoas e regressão PostgreSQL foram executados; `validacao.json` distingue os conjuntos e suas limitações. UI: 32 verificações da jornada de mapa/PET e 13 da atualização v2, com desktop/celular emulado e sem erros JavaScript. Lint dos arquivos alterados: zero erros, dois avisos de Fast Refresh.
 

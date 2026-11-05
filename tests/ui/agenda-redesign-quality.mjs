@@ -15,7 +15,7 @@ const page = await browser.newPage({
   timezoneId: "Asia/Tokyo",
   reducedMotion: "reduce",
 });
-const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4190";
+const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
 const root = `${evidenceRoot}/agenda-redesign`;
 await mkdir(root, { recursive: true });
 const report = {

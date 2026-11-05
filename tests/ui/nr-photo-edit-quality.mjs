@@ -3,7 +3,7 @@ import { chromium, webkit, expect } from "@playwright/test";
 import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { evidenceRoot } from "./evidence.mjs";
-const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4190";
+const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
 const directory = `${evidenceRoot}/nr-photo-edit`;
 await mkdir(directory, { recursive: true });
 const report = {

@@ -17,7 +17,7 @@ const report = {
   success: false,
 };
 page.on("pageerror", (error) => report.errors.push(error.message));
-const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4190";
+const base = process.env.NEXUS_UI_URL || "http://127.0.0.1:4182";
 const model = "33000000-0000-4000-8000-000000000007";
 const modelVersion = "34000000-0000-4000-8000-000000000007";
 const local = "33000000-0000-4000-8000-000000000001";

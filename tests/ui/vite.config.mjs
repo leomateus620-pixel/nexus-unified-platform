@@ -64,6 +64,16 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
+          /\/features\/(?:nr\/(?:mapa\/mapa|contratacao|equipe)|pet\/(?:unidade|consulta|print))\.functions(?:\.ts)?$/.test(
+            id,
+          ) ||
+          (/^\.\/(?:mapa(?:\/mapa)?|contratacao|equipe|unidade|consulta|print)\.functions(?:\.ts)?$/.test(
+            id,
+          ) &&
+            /\/features\/(?:nr|pet)\//.test(importer || ""))
+        )
+          return path.join(root, "unit-server.ts");
+        if (
           /\/features\/nr\/(?:nr|files|documents|impactos|history|technical-publication|import-inspection|document-models|calculos|import-queue|folders)\.functions(?:\.ts)?$/.test(
             id,
           ) ||

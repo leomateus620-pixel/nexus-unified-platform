@@ -53,3 +53,4 @@ __pycache__/
 /docs/cotrirosa/*.pdf
 /docs/cotrirosa/metrics.json
 /docs/cotrirosa/comparacoes.html
+/docs/cotrirosa/ui-regression/

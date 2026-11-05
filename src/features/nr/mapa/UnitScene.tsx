@@ -5,7 +5,7 @@ import * as T from "three";
 import type { CameraMode, SceneManifest, SceneObject, Vec3 } from "./types";
 import { createUnitModel, disposeUnitModel } from "./model";
 import { SelectionGesture } from "./gestures";
-import { Lighting } from "@/industrial/lighting/Lighting";
+import { UnitEnvironment } from "./UnitEnvironment";
 import { visualGroundHeight } from "./terrain";
 
 export type CameraRequest = {
@@ -362,7 +362,7 @@ function Content(props: Props) {
     identity = objects.find((o) => o.chave === selected);
   return (
     <>
-      <Lighting neutral={false} quality={props.economy ? "economy" : "balanced"} environmentOnly />
+      <UnitEnvironment />
       <fog attach="fog" args={["#e1eaf0", 600, 1100]} />
       <hemisphereLight args={["#cce3ff", "#666443", 1.05]} />
       <primitive object={sunTarget} />

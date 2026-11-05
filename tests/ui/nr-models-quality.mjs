@@ -39,6 +39,9 @@ try {
       await page.getByRole("button", { name: "Criar documento", exact: true }).click();
       const dialog = page.getByRole("dialog", { name: "Criar documento", exact: true });
       await dialog
+        .getByRole("combobox", { name: "Tipo", exact: true })
+        .selectOption("Memorial de Cálculo");
+      await dialog
         .getByRole("combobox", { name: "Conteúdo inicial", exact: true })
         .selectOption("modelo");
       await dialog.getByRole("textbox", { name: "Título", exact: false }).first().fill(title);

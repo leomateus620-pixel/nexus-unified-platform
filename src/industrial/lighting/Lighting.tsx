@@ -9,18 +9,10 @@ import {
   SRGBColorSpace,
 } from "three";
 import type { Quality } from "../types";
-export function Lighting({
-  neutral,
-  quality,
-  environmentOnly = false,
-}: {
-  neutral: boolean;
-  quality: Quality;
-  environmentOnly?: boolean;
-}) {
+export function Lighting({ neutral, quality }: { neutral: boolean; quality: Quality }) {
   const { gl, scene, invalidate } = useThree();
   useFrame(({ camera }) => {
-    if (!environmentOnly && scene.fog instanceof Fog) {
+    if (scene.fog instanceof Fog) {
       const d = camera.position.length();
       scene.fog.near = Math.max(270, d + 150);
       scene.fog.far = Math.max(650, d + 470);
@@ -50,17 +42,16 @@ export function Lighting({
     const generator = new PMREMGenerator(gl);
     const target = generator.fromEquirectangular(texture);
     scene.environment = target.texture;
-    if (!environmentOnly) scene.background = neutral ? new Color("#d4d8d5") : texture;
+    scene.background = neutral ? new Color("#d4d8d5") : texture;
     invalidate();
     return () => {
       scene.environment = null;
-      if (!environmentOnly) scene.background = null;
+      scene.background = null;
       target.dispose();
       generator.dispose();
       texture.dispose();
     };
-  }, [gl, scene, invalidate, neutral, environmentOnly]);
-  if (environmentOnly) return null;
+  }, [gl, scene, invalidate, neutral]);
   return (
     <>
       <fog attach="fog" args={[neutral ? "#d4d8d5" : "#b9ccd1", 280, 590]} />

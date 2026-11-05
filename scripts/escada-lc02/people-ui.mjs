@@ -330,9 +330,12 @@ try {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.getByRole("link", { name: "Voltar à engenharia" }).click();
   // The scene is public; the business route now requires a session.
-  // The login illustration is remote and can remain pending in the CI network.
-  // Assert the actual route and login form without waiting for every remote asset.
-  await page.waitForURL(`${base}/auth`, { waitUntil: "domcontentloaded" });
+  // Auth normalizes its optional return query; its remote illustration may remain
+  // pending in CI. Assert the route and form, independent of query/assets.
+  await page.waitForURL(
+    (url) => url.origin === new URL(base).origin && url.pathname === "/auth",
+    { waitUntil: "domcontentloaded" },
+  );
   await page.getByRole("heading", { name: "Acesso ao sistema" }).waitFor();
   await page.waitForFunction(() => !window.__testCanvas.isConnected);
   // The root switches between the dedicated layout and AppShell before the outlet

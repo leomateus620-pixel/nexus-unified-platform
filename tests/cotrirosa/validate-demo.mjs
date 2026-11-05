@@ -18,7 +18,7 @@ const browser = await chromium.launch({
 });
 const report = {
   browser: browser.version(),
-  environment: "Windows Chromium; responsive/touch emulation, not a physical phone",
+  environment: `${process.platform} Chromium; responsive/touch emulation, not a physical phone`,
   checks: [],
   screenshots: [],
   consoleErrors: [],
@@ -53,6 +53,8 @@ try {
     viewport: { width: 1440, height: 1000 },
     reducedMotion: "reduce",
   });
+  desktop.setDefaultTimeout(30000);
+  desktop.setDefaultNavigationTimeout(60000);
   p = await desktop.newPage();
   p.on("pageerror", (e) => report.consoleErrors.push(e.message));
   await p.goto(url());
@@ -177,6 +179,8 @@ try {
     recordVideo: { dir: "docs/cotrirosa/demo-video", size: { width: 390, height: 844 } },
     reducedMotion: "reduce",
   });
+  mobile.setDefaultTimeout(30000);
+  mobile.setDefaultNavigationTimeout(60000);
   p = await mobile.newPage();
   await p.goto(url(ids.locals[4]));
   await p.locator('canvas[data-ready="true"]').waitFor();

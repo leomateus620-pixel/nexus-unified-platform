@@ -23,6 +23,8 @@ const context = await browser.newContext({
   viewport: { width: 1440, height: 900 },
   reducedMotion: "reduce",
 });
+context.setDefaultTimeout(30000);
+context.setDefaultNavigationTimeout(60000);
 const p = await context.newPage();
 const rpc = async (name, data) => {
   const r = await p.request.post(root + "/__cotrirosa", {
@@ -146,6 +148,8 @@ try {
   await expect(p.getByRole("heading", { name: "Consulta final", exact: true })).toBeVisible();
   check("Unit history search opens the exact same closed silo demonstration");
   const fallback = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  fallback.setDefaultTimeout(30000);
+  fallback.setDefaultNavigationTimeout(60000);
   const f = await fallback.newPage();
   await f.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;

@@ -16,6 +16,35 @@
   padding: 0 !important;
   color: var(--map-ink);
 }
+/* Fit the authenticated shell without the inventory's negative margins. */
+.nexus-operational .nx-main:has(> .unit-map-workspace) {
+  padding: 0;
+}
+.nexus-operational .unit-map-workspace {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 3.25rem);
+  min-height: 0;
+  margin: 0;
+}
+.nexus-operational .unit-map-header {
+  flex: 0 0 auto;
+}
+.nexus-operational .unit-map-stage {
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+}
+.nexus-operational .unit-map-sources {
+  flex: 0 0 auto;
+  max-height: 25dvh;
+  overflow: auto;
+}
+@media (max-width: 767px) {
+  .nexus-operational .unit-map-workspace {
+    height: calc(100dvh - 3.5rem);
+  }
+}
 .unit-map-header {
   display: flex;
   align-items: center;

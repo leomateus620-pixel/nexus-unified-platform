@@ -42,7 +42,10 @@ for (const [engine, type] of [
       { waitUntil: "domcontentloaded" },
     );
     const dialog = page.getByRole("dialog", { name: "Editar local", exact: true });
-    const open = () => page.getByRole("button", { name: "Editar registro", exact: true }).click();
+    const open = async () => {
+      await page.getByRole("button", { name: "Editar registro", exact: true }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+    };
     const group = dialog.getByRole("group", { name: "Legendas e ordem das fotos", exact: true });
     await check(
       "Editing and reordering preserve occurrence identity, focus, saved value and explicit discard",

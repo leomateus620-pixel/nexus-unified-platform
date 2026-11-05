@@ -95,6 +95,7 @@ function DemoEditor({
   const editable = !session || (!!detail?.pode_editar && session.estado === "rascunho");
   const step = demoCanEnterStep(session, requestedStep) ? requestedStep : (session?.etapa ?? 0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const leaveRef = useRef<HTMLDivElement>(null);
   const blocker = useBlocker({
     withResolver: true,
     enableBeforeUnload: () => dirtyRef.current,
@@ -108,6 +109,14 @@ function DemoEditor({
         (current.search as Partial<NrSearch>)["petDemo"] !==
           (next.search as Partial<NrSearch>)["petDemo"]),
   });
+  useEffect(() => {
+    if (blocker.status !== "blocked") return;
+    const previous = document.activeElement as HTMLElement | null;
+    leaveRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    return () => {
+      if (previous?.isConnected) previous.focus();
+    };
+  }, [blocker.status]);
   useEffect(() => {
     if (active) {
       contentRef.current?.scrollTo(0, 0);
@@ -758,7 +767,30 @@ function DemoEditor({
         </div>
       </footer>
       {blocker.status === "blocked" && (
-        <div className="pet-demo-leave" role="alertdialog" aria-label="Preenchimento não salvo">
+        <div
+          ref={leaveRef}
+          className="pet-demo-leave"
+          role="alertdialog"
+          aria-modal="true"
+          aria-label="Preenchimento não salvo"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.preventDefault();
+              event.stopPropagation();
+              blocker.reset();
+            }
+            if (event.key === "Tab") {
+              const buttons = [...event.currentTarget.querySelectorAll("button")];
+              if (event.shiftKey && document.activeElement === buttons[0]) {
+                event.preventDefault();
+                buttons.at(-1)?.focus();
+              } else if (!event.shiftKey && document.activeElement === buttons.at(-1)) {
+                event.preventDefault();
+                buttons[0]?.focus();
+              }
+            }
+          }}
+        >
           <h4>Há alterações não salvas</h4>
           <p>Continue preenchendo ou saia descartando essas alterações.</p>
           <button className="pet-demo-primary" onClick={() => blocker.reset()}>

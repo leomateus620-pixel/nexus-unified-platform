@@ -65,6 +65,7 @@ export function UnitMapPanel({
     if (!expanded) return;
     expandButton.current?.focus();
     const listener = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLElement && e.target.closest('[role="alertdialog"]')) return;
       if (e.key === "Escape") {
         e.preventDefault();
         e.stopPropagation();

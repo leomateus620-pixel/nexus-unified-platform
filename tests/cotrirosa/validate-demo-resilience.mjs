@@ -90,6 +90,11 @@ try {
   await p.getByLabel("Atividade", { exact: true }).fill("Alteração não salva");
   await p.getByRole("button", { name: "Fechar ficha", exact: true }).click();
   await expect(p.getByRole("alertdialog")).toBeVisible();
+  await expect(p.getByRole("button", { name: "Continuar preenchendo", exact: true })).toBeFocused();
+  await p.keyboard.press("Shift+Tab");
+  await expect(p.getByRole("button", { name: "Sair sem salvar", exact: true })).toBeFocused();
+  await p.keyboard.press("Tab");
+  await expect(p.getByRole("button", { name: "Continuar preenchendo", exact: true })).toBeFocused();
   await p.getByRole("button", { name: "Continuar preenchendo", exact: true }).click();
   await expect(p.getByLabel("Atividade", { exact: true })).toHaveValue("Alteração não salva");
   check("Leaving unsaved form requires an explicit discard decision");
@@ -149,7 +154,9 @@ try {
     };
   });
   await f.goto(`${root}/nr-33/mapa-3d?${q}`);
-  await expect(f.getByRole("heading", { name: "Mapa em lista" })).toBeVisible();
+  // A fresh browser context must load the route chunks before testing the fallback.
+  // Software-rendered CI can take longer than the default assertion timeout.
+  await expect(f.getByRole("heading", { name: "Mapa em lista" })).toBeVisible({ timeout: 30000 });
   await f.getByRole("button", { name: /EC 26.*Silo/ }).click();
   await f.getByRole("button", { name: "Iniciar PET", exact: true }).click();
   await expect(f.getByLabel("Atividade", { exact: true })).toHaveValue("");

@@ -1,3 +1,4 @@
+import { useOrg } from "@/features/org/session";
 import { useRef, useState, type ReactNode } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -202,7 +203,7 @@ export function NrAuditEventDialog({
 }) {
   const fetch = useServerFn(nrHistoricoDetalhe);
   const query = useQuery({
-    queryKey: ["nr", org, norma, "evento-completo", eventId],
+    queryKey: ["nr", org, useOrg().data?.userId, norma, "evento-completo", eventId],
     enabled: !!eventId,
     queryFn: ({ signal }) =>
       fetch({ data: { organization_id: org, norma, evento_id: eventId! }, signal }),
@@ -266,7 +267,16 @@ export function NrPastRevisionDialog({
 }) {
   const fetch = useServerFn(nrRevisaoDetalhe);
   const query = useQuery({
-    queryKey: ["nr", org, norma, recurso, registroId, "revisao-completa", revisionId],
+    queryKey: [
+      "nr",
+      org,
+      useOrg().data?.userId,
+      norma,
+      recurso,
+      registroId,
+      "revisao-completa",
+      revisionId,
+    ],
     enabled: !!revisionId,
     queryFn: ({ signal }) =>
       fetch({
@@ -354,7 +364,7 @@ export function NrRecordHistory({
   const hasRevisions = recurso === "documentos" || recurso === "modelos",
     revisionResource = recurso === "modelos" ? "modelos" : "documentos";
   const history = useInfiniteQuery({
-    queryKey: ["nr", org, norma, recurso, registroId, "historico-paginado"],
+    queryKey: ["nr", org, useOrg().data?.userId, norma, recurso, registroId, "historico-paginado"],
     enabled: historyOpen,
     initialPageParam: 0,
     queryFn: ({ pageParam, signal }) =>
@@ -374,7 +384,7 @@ export function NrRecordHistory({
     retry: false,
   });
   const revisions = useInfiniteQuery({
-    queryKey: ["nr", org, norma, recurso, registroId, "revisoes-paginadas"],
+    queryKey: ["nr", org, useOrg().data?.userId, norma, recurso, registroId, "revisoes-paginadas"],
     enabled: revisionsOpen && hasRevisions,
     initialPageParam: 0,
     queryFn: ({ pageParam, signal }) =>

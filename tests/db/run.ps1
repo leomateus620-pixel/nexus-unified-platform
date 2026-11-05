@@ -143,6 +143,10 @@ try {
     node (Join-Path $PSScriptRoot $scenario)
     if ($LASTEXITCODE -ne 0) { throw "Agenda / team test failed: $scenario" }
   }
+  foreach ($scenario in @('nr-mapa-pet', 'nr-contratacao', 'nr-equipe', 'pet-v2')) {
+    node "$PSScriptRoot\$scenario.mjs"
+    if ($LASTEXITCODE -ne 0) { throw "NR unit / PET v2 test failed: $scenario" }
+  }
 } finally {
   if (Test-Path -LiteralPath "$absoluteRoot\data\postmaster.pid") {
     Start-Process -FilePath (Join-Path $PostgresBin 'pg_ctl.exe') -ArgumentList @('-D', "$absoluteRoot\data", 'stop', '-m', 'fast', '-w') -WindowStyle Hidden -Wait

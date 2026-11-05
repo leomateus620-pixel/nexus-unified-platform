@@ -6,9 +6,20 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { mcpPlugin } from "@lovable.dev/mcp-js/stacks/tanstack/vite";
+import path from "node:path";
+
+// MCP 3.4 compares native paths; Vite supplies a slash-normalized root on Windows.
+// Keep the SDK routes/auth checks and normalize only the copy consumed by its hook.
+const mcp = mcpPlugin();
+const resolved = mcp.configResolved;
+if (process.platform === "win32" && typeof resolved === "function") {
+  mcp.configResolved = function (config) {
+    return resolved.call(this, { ...config, root: path.resolve(config.root) });
+  };
+}
 
 export default defineConfig({
-  vite: { plugins: [mcpPlugin()] },
+  vite: { plugins: [mcp] },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

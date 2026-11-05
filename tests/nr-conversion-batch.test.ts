@@ -102,7 +102,18 @@ describe("private DOCX batch conversion", () => {
     const target = path.join(foreign, "original.bin");
     await writeFile(target, await readFile(binding.local_path));
     await rm(binding.local_path);
-    await symlink(target, binding.local_path);
+    if (process.platform === "win32") {
+      const junction = path.join(directory, "foreign-junction");
+      await symlink(foreign, junction, "junction");
+      binding.local_path = path.join(junction, "original.bin");
+      const manifestPath = path.join(directory, "docx-bindings-audit.json");
+      // Keep the same security case: an in-staging path resolves outside it.
+      const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+      manifest.files = manifest.files.map((b: typeof binding) =>
+        b.arquivo_id === binding.arquivo_id ? binding : b,
+      );
+      await writeFile(manifestPath, JSON.stringify(manifest));
+    } else await symlink(target, binding.local_path);
     expect((await convertPrivateDocx(directory)).errors).toBe(1);
   });
 });

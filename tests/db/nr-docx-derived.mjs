@@ -56,7 +56,7 @@ try {
       )[0].id;
       const originalPayload = { fixture: "Issued source remains unchanged" };
       const original = (
-        await tx`select public.nr_importar_item(${org},${lot},'registro_documental','synthetic-unit/original-issued',${tx.json(originalPayload)},${tx.json({ entidade: "documentos", registro: { cliente_id: client, unidade_id: unit, normas: ["NR33"], titulo: "Issued original", estado: "emitido_origem" }, revisao: { numero: 3, conteudo: { schema_version: 1, blocos: [{ id: "original", tipo: "paragrafo", texto: "Historical issued snapshot" }] }, snapshot: originalPayload } })},${digest(originalPayload)},now()) r`
+        await tx`select public.nr_importar_item(${org},${lot},'registro_documental','synthetic-unit/original-issued',${tx.json(originalPayload)},${tx.json({ entidade: "documentos", registro: { cliente_id: client, unidade_id: unit, normas: ["NR33"], titulo: "Issued original", tipo: "memorial", estado: "emitido_origem" }, revisao: { numero: 3, conteudo: { schema_version: 1, blocos: [{ id: "original", tipo: "paragrafo", texto: "Historical issued snapshot" }] }, snapshot: originalPayload } })},${digest(originalPayload)},now()) r`
       )[0].r;
       assert.equal(original.resultado, "importado");
       assertions++;
@@ -188,14 +188,26 @@ try {
       ).records;
       assert.equal(plans.length, 2);
       assertions++;
-    const wrongSource = structuredClone(plans[0]);
-    wrongSource.rpc.args.p_payload.documentos_originais[0].externo_id = "synthetic-unit/unrelated-original";
-    wrongSource.rpc.args.p_destino.registro.dados.documentos_originais = structuredClone(wrongSource.rpc.args.p_payload.documentos_originais);
-    wrongSource.rpc.args.p_destino.revisao.snapshot = structuredClone(wrongSource.rpc.args.p_payload);
-    wrongSource.rpc.args.p_hash = wrongSource.sha256_payload = digest(wrongSource.rpc.args.p_payload);
-    wrongSource.after_success_only.find(command => command.nome === "nr_vincular_documentos_importados").args.p_externo_para = "synthetic-unit/unrelated-original";
-    await assert.rejects(() => tx.savepoint(s => s.unsafe(compileDocxDerivedRecord(wrongSource))), error => error.code === "23514");
-    assertions++;
+      const wrongSource = structuredClone(plans[0]);
+      wrongSource.rpc.args.p_payload.documentos_originais[0].externo_id =
+        "synthetic-unit/unrelated-original";
+      wrongSource.rpc.args.p_destino.registro.dados.documentos_originais = structuredClone(
+        wrongSource.rpc.args.p_payload.documentos_originais,
+      );
+      wrongSource.rpc.args.p_destino.revisao.snapshot = structuredClone(
+        wrongSource.rpc.args.p_payload,
+      );
+      wrongSource.rpc.args.p_hash = wrongSource.sha256_payload = digest(
+        wrongSource.rpc.args.p_payload,
+      );
+      wrongSource.after_success_only.find(
+        (command) => command.nome === "nr_vincular_documentos_importados",
+      ).args.p_externo_para = "synthetic-unit/unrelated-original";
+      await assert.rejects(
+        () => tx.savepoint((s) => s.unsafe(compileDocxDerivedRecord(wrongSource))),
+        (error) => error.code === "23514",
+      );
+      assertions++;
       const invalid = structuredClone(plans[0]);
       invalid.guard.imagens[0].id = pending.id;
       invalid.rpc.args.p_payload.conteudo.blocos[1].arquivo_id = pending.id;
@@ -260,7 +272,7 @@ try {
       );
       assertions++;
       const f = (
-        await tx`select * from public.nr_fontes where organization_id=${org} and externo_id=${plans[1].externo_id}`
+        await tx`select * from public.nr_fontes where organization_id=${org} and externo_id=${plans[0].externo_id}`
       )[0];
       const d = (await tx`select * from public.nr_documentos where id=${f.destino_id}`)[0];
       await tx`select set_config('request.jwt.claim.sub',${engineer},true)`;
@@ -272,7 +284,7 @@ try {
       )[0].r;
       assert.notEqual(revision.revisao_atual_id, f.snapshot_destino.revisao_atual_id);
       assertions++;
-      await tx.unsafe(compileDocxDerivedRecord(plans[1]));
+      await tx.unsafe(compileDocxDerivedRecord(plans[0]));
       assert.equal(
         (
           await tx`select conteudo from public.nr_documento_revisoes where id=${revision.revisao_atual_id}`
@@ -287,7 +299,7 @@ try {
         beforeLinks,
       );
       assertions++;
-      const changed = structuredClone(plans[1]);
+      const changed = structuredClone(plans[0]);
       changed.rpc.args.p_payload.conteudo.blocos[0].texto = "Changed source conversion";
       changed.rpc.args.p_destino.revisao.conteudo = structuredClone(
         changed.rpc.args.p_payload.conteudo,
@@ -297,7 +309,7 @@ try {
       await tx.unsafe(compileDocxDerivedRecord(changed));
       assert.equal(
         (
-          await tx`select resultado from public.nr_import_itens where organization_id=${org} and externo_id=${plans[1].externo_id}`
+          await tx`select resultado from public.nr_import_itens where organization_id=${org} and externo_id=${plans[0].externo_id}`
         )[0].resultado,
         "conflito",
       );

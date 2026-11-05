@@ -1,0 +1,105 @@
+{
+  "url": "https://earth.google.com/web/@-27.8313,-54.42910981,300a,1850d,35y,0h,0t,0r",
+  "areaM2": 115851.58,
+  "perimeterM": 1421.5,
+  "points": [
+    {
+      "pixel": [
+        665,
+        175
+      ],
+      "reading": "+\t\t\t84 text 0 m\n+\t\t\t\t86 text Barra de escala da visualização atual 400 m\n+\t\t\t\t87 text Altitude da câmera em relação ao nível do mar Câmera: 2.150 m\n+\t\t\t\t88 text Latitude e longitude do cursor 27°49'45.94\"S 54°25'46.21\"W\n+\t\t\t\t89 text Elevação do cursor em relação ao nível do mar 293 m"
+    },
+    {
+      "pixel": [
+        698,
+        193
+      ],
+      "reading": "+\t\t\t88 text 81,26 m\n~\t\t\t\t89 text Latitude e longitude do cursor 27°49'47.21\"S 54°25'43.61\"W\n+\t\t\t\t90 text Elevação do cursor em relação ao nível do mar 297 m"
+    },
+    {
+      "pixel": [
+        715,
+        201
+      ],
+      "reading": "+\t\t\t\t115 text Latitude e longitude do cursor 27°49'47.77\"S 54°25'42.27\"W\n+\t\t\t\t116 text Elevação do cursor em relação ao nível do mar 299 m"
+    },
+    {
+      "pixel": [
+        724,
+        227
+      ],
+      "reading": "+\t\t\t\t126 text Latitude e longitude do cursor 27°49'49.59\"S 54°25'41.57\"W\n+\t\t\t\t127 text Elevação do cursor em relação ao nível do mar 304 m"
+    },
+    {
+      "pixel": [
+        722,
+        272
+      ],
+      "reading": "+\t\t\t136 text 277,09 m\n+\t\t\t\t137 text Latitude e longitude do cursor 27°49'52.71\"S 54°25'41.74\"W\n+\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 313 m"
+    },
+    {
+      "pixel": [
+        728,
+        329
+      ],
+      "reading": "~\t\t\t136 text 398,21 m\n~\t\t\t\t137 text Latitude e longitude do cursor 27°49'56.62\"S 54°25'41.30\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 323 m"
+    },
+    {
+      "pixel": [
+        737,
+        381
+      ],
+      "reading": "~\t\t\t136 text 509,34 m\n~\t\t\t\t137 text Latitude e longitude do cursor 27°50'00.18\"S 54°25'40.60\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 327 m"
+    },
+    {
+      "pixel": [
+        680,
+        456
+      ],
+      "reading": "~\t\t\t136 text 708,01 m\n~\t\t\t\t137 text Latitude e longitude do cursor 27°50'05.30\"S 54°25'45.02\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 330 m"
+    },
+    {
+      "pixel": [
+        664,
+        466
+      ],
+      "reading": "+\t\t\t\t150 text Latitude e longitude do cursor 27°50'05.99\"S 54°25'46.26\"W"
+    },
+    {
+      "pixel": [
+        628,
+        418
+      ],
+      "reading": "+\t\t\t136 text 874,32 m\n+\t\t\t\t137 text Latitude e longitude do cursor 27°50'02.72\"S 54°25'49.05\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 327 m"
+    },
+    {
+      "pixel": [
+        615,
+        368
+      ],
+      "reading": "~\t\t\t136 text 982,77 m\n~\t\t\t\t137 text Latitude e longitude do cursor 27°49'59.31\"S 54°25'50.08\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 321 m"
+    },
+    {
+      "pixel": [
+        615,
+        300
+      ],
+      "reading": "~\t\t\t136 text 1.126,51 m\n~\t\t\t\t137 text Latitude e longitude do cursor 27°49'54.64\"S 54°25'50.10\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 313 m"
+    },
+    {
+      "pixel": [
+        621,
+        250
+      ],
+      "reading": "~\t\t\t136 text 1.233,69 m\n~\t\t\t\t137 text Latitude e longitude do cursor 27°49'51.18\"S 54°25'49.65\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 306 m"
+    },
+    {
+      "pixel": [
+        638,
+        213
+      ],
+      "reading": "~\t\t\t\t137 text Latitude e longitude do cursor 27°49'48.60\"S 54°25'48.33\"W\n~\t\t\t\t138 text Elevação do cursor em relação ao nível do mar 298 m"
+    }
+  ]
+}

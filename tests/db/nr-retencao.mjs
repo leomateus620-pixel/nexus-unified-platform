@@ -40,7 +40,7 @@ const document = async (title) =>
     engineer,
     async (tx) =>
       (
-        await tx`select public.nr_executar(${org},'NR33','documentos','salvar',null,null,${randomUUID()},${tx.json({ titulo: title, cliente_id: client, unidade_id: unit })}) r`
+        await tx`select public.nr_executar(${org},'NR33','documentos','salvar',null,null,${randomUUID()},${tx.json({ titulo: title, tipo: "memorial", cliente_id: client, unidade_id: unit })}) r`
       )[0].r,
   );
 const archive = (
@@ -84,6 +84,7 @@ try {
   await sql`insert into public.user_roles(organization_id,user_id,role)values(${org},${engineer},'engenharia'),(${org},${field},'campo'),(${other},${outsider},'engenharia')`;
   await sql`insert into public.clientes(id,organization_id,razao_social)values(${client},${org},'Retention client')`;
   await sql`insert into public.unidades(id,organization_id,cliente_id,nome)values(${unit},${org},${client},'Retention unit')`;
+  await sql`insert into nr_locais(organization_id,cliente_id,unidade_id,normas,titulo)values(${org},${client},${unit},array['NR33'],'Contexto NR da fixture de retenção')`;
   const issued = await document("Historical issued document"),
     old = await document("Superseded draft"),
     draft = await document("Current draft");

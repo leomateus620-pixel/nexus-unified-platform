@@ -31,8 +31,19 @@ import { PET_PHASES, initialPetStage, petStageAvailable } from "./presentation";
 import { PetEncerramento } from "./PetEncerramento";
 import { PetResumoConsulta } from "./PetResumo";
 import { PetCancelarRascunho } from "./PetCancelarRascunho";
+import { PetPhotoMetadata } from "./PetPhotoMetadata";
+import type { NrSearch } from "@/features/nr/NrWorkspace";
+import type { Norma } from "@/features/nr/domain";
 
-export function PetWorkspace({ petId }: { petId: string }) {
+export function PetWorkspace({
+  petId,
+  returnContext,
+  norma = "NR33",
+}: {
+  petId: string;
+  returnContext?: NrSearch | undefined;
+  norma?: Norma;
+}) {
   const session = useOrg();
   if (session.isPending) return <LoadingState label="Conferindo sessão…" />;
   if (session.isError || !session.data)
@@ -49,6 +60,8 @@ export function PetWorkspace({ petId }: { petId: string }) {
         organizationId={session.data.orgId}
         userId={session.data.userId}
         petId={petId}
+        returnContext={returnContext}
+        norma={norma}
       />
     </PetAppearanceProvider>
   );
@@ -57,10 +70,14 @@ function PetConnected({
   organizationId,
   userId,
   petId,
+  returnContext,
+  norma,
 }: {
   organizationId: string;
   userId: string;
   petId: string;
+  returnContext?: NrSearch | undefined;
+  norma: Norma;
 }) {
   const get = useServerFn(petObter),
     getOptions = useServerFn(petOpcoes),
@@ -167,13 +184,26 @@ function PetConnected({
       : null;
   return (
     <PetFicha
+      returnContext={returnContext}
+      norma={norma}
       documentos={
-        <PetDocumentos
-          organizationId={organizationId}
-          petId={petId}
-          versao={petData.pet.version}
-          documentos={petData.documentos as unknown as Record<string, Json>[]}
-        />
+        <>
+          <PetPhotoMetadata
+            org={organizationId}
+            petId={petId}
+            version={petData.pet.version}
+            editable={
+              !!petData.permissoes["editar"] &&
+              ["rascunho", "em_conferencia"].includes(petData.pet.estado_documental)
+            }
+          />
+          <PetDocumentos
+            organizationId={organizationId}
+            petId={petId}
+            versao={petData.pet.version}
+            documentos={petData.documentos as unknown as Record<string, Json>[]}
+          />
+        </>
       }
       contingencia={
         <PetContingencia
@@ -209,6 +239,8 @@ export function PetFicha({
   evidences,
   documentos,
   contingencia,
+  returnContext,
+  norma = "NR33",
 }: {
   detail: PetDetalhe;
   options: PetOpcoes;
@@ -220,6 +252,8 @@ export function PetFicha({
   evidences?: ((item: string) => ReactNode) | undefined;
   documentos?: ReactNode;
   contingencia?: ReactNode;
+  returnContext?: NrSearch | undefined;
+  norma?: Norma;
 }) {
   const readOnly =
     !detail.permissoes["editar"] ||
@@ -360,16 +394,38 @@ export function PetFicha({
   }
   return (
     <div className="nx-pet pet-workspace" data-pet-theme={theme}>
-      <Link
-        className="nx-pet-link mb-4"
-        to="/execucao/ordens/$ordemId"
-        params={{ ordemId: detail.pet.os_id }}
-      >
-        <ArrowLeft size={15} aria-hidden /> {detail.os?.numero || "Ordem de serviço"} · Voltar à OS
-      </Link>
+      {returnContext ? (
+        <Link
+          className="nx-pet-link mb-4"
+          to={String(
+            `${norma === "NR33" ? "/nr-33" : "/nr-35"}/${returnContext.retorno ?? "pets"}`,
+          )}
+          search={returnContext}
+        >
+          <ArrowLeft size={15} aria-hidden /> Voltar à unidade
+          {returnContext.retorno === "mapa-3d" ? " · Mapa 3D" : ""}
+        </Link>
+      ) : (
+        <Link className="nx-pet-link mb-4" to="/execucao">
+          <ArrowLeft size={15} aria-hidden /> Voltar às ordens de serviço
+        </Link>
+      )}
+      {detail.pet.os_id && (
+        <Link
+          className="nx-pet-link mb-4"
+          to="/execucao/ordens/$ordemId"
+          params={{ ordemId: detail.pet.os_id }}
+        >
+          Consultar OS vinculada · {detail.os?.numero}
+        </Link>
+      )}
       <header className="nx-pet-header">
         <div>
           <p className="nx-pet-kicker">Permissão de Entrada e Trabalho</p>
+          <p className="nx-pet-kicker">
+            Espaço confinado · contexto de origem{" "}
+            {detail.pet.norma_origem === "NR35" ? "NR-35" : "NR-33"}
+          </p>
           <h1 className="nx-pet-title">
             {detail.pet.numero} <span className="font-normal text-muted-foreground">/</span>{" "}
             {optionName(petSnapshotOption(detail, "espaco") || detail.espaco)}
@@ -463,7 +519,7 @@ export function PetFicha({
           <dl className="nx-pet-facts">
             <div>
               <dt>OS vinculada</dt>
-              <dd>{detail.os?.numero}</dd>
+              <dd>{detail.os?.numero || "Sem vínculo com OS"}</dd>
             </div>
             <div>
               <dt>Supervisor de entrada</dt>

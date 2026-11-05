@@ -1,0 +1,150 @@
+[
+  {
+    "test": "nr-acervo",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 33
+  },
+  {
+    "test": "nr-aplicabilidade",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 47
+  },
+  {
+    "test": "nr-arquivos-contextuais",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 48
+  },
+  {
+    "test": "nr-arquivos",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 22
+  },
+  {
+    "test": "nr-docx-derived",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 17
+  },
+  {
+    "test": "nr-experiencia",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 89
+  },
+  {
+    "test": "nr-fila-importacao",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 91
+  },
+  {
+    "test": "nr-fluxos",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 61
+  },
+  {
+    "test": "nr-historico",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 79
+  },
+  {
+    "test": "nr-imagem-dispatch",
+    "exit": 0,
+    "status": "passou"
+  },
+  {
+    "test": "nr-imagem-tickets",
+    "exit": 0,
+    "status": "passou"
+  },
+  {
+    "test": "nr-imagens-upgrade-0058",
+    "exit": 1,
+    "status": "precondicao_nao_atendida",
+    "observacao": "Requer banco vazio e baseline própria 0057"
+  },
+  {
+    "test": "nr-imagens-upgrade-0059",
+    "exit": 1,
+    "status": "precondicao_nao_atendida",
+    "observacao": "Requer baseline 0058"
+  },
+  {
+    "test": "nr-imagens-upgrade-0060",
+    "exit": 1,
+    "status": "precondicao_nao_atendida",
+    "observacao": "Requer baseline 0059"
+  },
+  {
+    "test": "nr-imagens",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 212
+  },
+  {
+    "test": "nr-impactos",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 25
+  },
+  {
+    "test": "nr-importacao",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 17
+  },
+  {
+    "test": "nr-publicacao-tecnica",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 46
+  },
+  {
+    "test": "nr-retencao",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 19
+  },
+  {
+    "test": "nr-storage-confirmation",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 10
+  },
+  {
+    "test": "nr-terminal-plans",
+    "exit": 1,
+    "status": "precondicao_nao_atendida",
+    "observacao": "Ensaio opcional exige pacote privado de importação"
+  },
+  {
+    "test": "nr-totais",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 34
+  },
+  {
+    "test": "nr-upgrade-64",
+    "exit": 1,
+    "status": "precondicao_nao_atendida",
+    "observacao": "Requer baseline de 64 migrações"
+  },
+  {
+    "test": "nr-upgrade-66",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 25
+  },
+  {
+    "test": "nr",
+    "exit": 0,
+    "status": "passou",
+    "verificacoes": 34
+  }
+]

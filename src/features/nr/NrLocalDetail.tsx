@@ -1,3 +1,4 @@
+import { useOrg } from "@/features/org/session";
 import { lazy, Suspense } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -107,6 +108,7 @@ export function NrLocalDetail({
   search,
   onSearch,
   onSaved,
+  embedded = false,
 }: {
   row: NrRecord;
   norma: Norma;
@@ -114,6 +116,7 @@ export function NrLocalDetail({
   search: NrSearch;
   onSearch: (patch: Partial<NrSearch>) => void;
   onSaved: () => void;
+  embedded?: boolean;
 }) {
   const base = norma === "NR33" ? "/nr-33" : "/nr-35";
   const area = search.ficha || "identificacao";
@@ -163,8 +166,8 @@ export function NrLocalDetail({
         {areas.map(([key, title]) => (
           <Link
             key={key}
-            to={String(`${base}/locais/${row.id}`)}
-            search={{ ...search, ficha: key }}
+            to={String(embedded ? `${base}/mapa-3d` : `${base}/locais/${row.id}`)}
+            search={{ ...search, ficha: key, ...(embedded ? { painel: "ficha" as const } : {}) }}
             activeOptions={{ exact: true, includeSearch: true }}
             aria-current={area === key ? "page" : false}
           >
@@ -368,7 +371,7 @@ export function NrLocalDetail({
             <h3>Histórico operacional do equipamento</h3>
             <NrValue value={cadastro["historico_equipamento"]} />
             {row.pet_espaco_id && (
-              <Link to="/execucao" className="nr-inline-action">
+              <Link to={String(`${base}/pets`)} search={scope} className="nr-inline-action">
                 Consultar operação e PET <ArrowRight size={16} />
               </Link>
             )}
@@ -481,7 +484,16 @@ function NrRelatedRecords({
 }) {
   const consult = useServerFn(nrConsultar);
   const query = useQuery({
-    queryKey: ["nr", row.organization_id, norma, "relacionados", resource, row.unidade_id, row.id],
+    queryKey: [
+      "nr",
+      row.organization_id,
+      useOrg().data?.userId,
+      norma,
+      "relacionados",
+      resource,
+      row.unidade_id,
+      row.id,
+    ],
     queryFn: ({ signal }) =>
       consult({
         data: {

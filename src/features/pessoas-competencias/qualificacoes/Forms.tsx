@@ -180,6 +180,9 @@ export function QualificationForm({
   const [emissor, setEmissor] = useState(q?.emissor ?? ""),
     [conclusao, setConclusao] = useState(q?.conclusao ?? ""),
     [validade, setValidade] = useState(q?.validade ?? "");
+  const [hours, setHours] = useState(q?.carga_horaria?.toString() ?? ""),
+    [training, setTraining] = useState(q?.tipo_treinamento ?? ""),
+    [modality, setModality] = useState(q?.modalidade ?? "");
   const [estado, setEstado] = useState(""),
     [motivo, setMotivo] = useState("");
   const [dirty, setDirty] = useState(false),
@@ -281,6 +284,9 @@ export function QualificationForm({
           emissor,
           conclusao,
           validade: validade || null,
+          carga_horaria: hours ? Number(hours) : null,
+          tipo_treinamento: training || null,
+          modalidade: modality || null,
         },
       };
       const parsed = salvarQualificacaoInput.safeParse({ ...payload, chave: keyFor(payload) });
@@ -511,6 +517,49 @@ export function QualificationForm({
                 As datas são civis. Registre a validade definida pela fonte e pela política
                 cadastrada. O comprovante pode ser anexado após salvar; anexar não valida nem renova
                 o registro.
+              </p>
+              <label className="grid gap-1 text-sm">
+                Carga horária declarada (h)
+                <input
+                  {...props("carga_horaria")}
+                  type="number"
+                  min="0.01"
+                  max="10000"
+                  step="0.01"
+                  value={hours}
+                  onChange={(e) => setHours(e.target.value)}
+                />
+                {fieldError("carga_horaria")}
+              </label>
+              <label className="grid gap-1 text-sm">
+                Tipo de treinamento
+                <select
+                  className={fieldClass}
+                  value={training}
+                  onChange={(e) => setTraining(e.target.value as typeof training)}
+                >
+                  <option value="">Não informado</option>
+                  <option value="inicial">Inicial</option>
+                  <option value="periodico">Periódico</option>
+                  <option value="eventual">Eventual</option>
+                </select>
+              </label>
+              <label className="grid gap-1 text-sm">
+                Modalidade documentada
+                <select
+                  className={fieldClass}
+                  value={modality}
+                  onChange={(e) => setModality(e.target.value as typeof modality)}
+                >
+                  <option value="">Não informada</option>
+                  <option value="presencial">Presencial</option>
+                  <option value="semipresencial">Semipresencial</option>
+                  <option value="distancia">A distância</option>
+                </select>
+              </label>
+              <p className="text-xs text-muted-foreground">
+                Carga horária e modalidade devem corresponder ao certificado. O registro não
+                comprova, por si, capacitação ou autorização para a atividade.
               </p>
             </>
           ) : (

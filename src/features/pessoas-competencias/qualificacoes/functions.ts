@@ -23,7 +23,7 @@ const client = (db: unknown) => db as SupabaseClient;
 const competenceColumns =
   "id,organization_id,nome,descricao,exige_evidencia,exige_validade,ativa,version,created_by,created_at,updated_at";
 const qualificationColumns =
-  "id,organization_id,pessoa_id,competencia_id,emissor,conclusao,validade,estado,conferido_por,conferido_em,motivo,version,created_by,created_at,updated_at,pessoa:pessoas(id,nome,user_id,ativa),competencia:competencias(id,nome,ativa,exige_evidencia,exige_validade)";
+  "id,organization_id,pessoa_id,competencia_id,emissor,conclusao,validade,carga_horaria,tipo_treinamento,modalidade,estado,conferido_por,conferido_em,motivo,version,created_by,created_at,updated_at,pessoa:pessoas(id,nome,user_id,ativa),competencia:competencias(id,nome,ativa,exige_evidencia,exige_validade)";
 function result(response: {
   data: unknown;
   error: { code?: string; message: string } | null;

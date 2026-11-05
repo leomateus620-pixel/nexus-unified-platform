@@ -1,0 +1,193 @@
+{
+  "data": "2026-11-05",
+  "ambiente": "Windows; PostgreSQL 18.6 descartável loopback; Chromium 153; GPU Intel UHD D3D11; telefone emulado, não físico",
+  "typecheck": "passou",
+  "build_principal": "passou",
+  "build_laboratorio": "passou",
+  "lint": {
+    "erros": 0,
+    "avisos_fast_refresh": 2
+  },
+  "testes_unitarios": {
+    "nr_vitest": 185,
+    "nr_node": 30,
+    "pet": 78,
+    "pessoas": 66
+  },
+  "postgresql_novo": {
+    "mapa_pet": 30,
+    "contratacao": 26,
+    "equipe": 16,
+    "pet_v2": 21
+  },
+  "postgresql_pet_legado": {
+    "pet": 45,
+    "retificacoes": 20,
+    "relatorios": 19,
+    "listagem": 20
+  },
+  "postgresql_nr": [
+    {
+      "test": "nr-acervo",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 33
+    },
+    {
+      "test": "nr-aplicabilidade",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 47
+    },
+    {
+      "test": "nr-arquivos-contextuais",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 48
+    },
+    {
+      "test": "nr-arquivos",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 22
+    },
+    {
+      "test": "nr-docx-derived",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 17
+    },
+    {
+      "test": "nr-experiencia",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 89
+    },
+    {
+      "test": "nr-fila-importacao",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 91
+    },
+    {
+      "test": "nr-fluxos",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 61
+    },
+    {
+      "test": "nr-historico",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 79
+    },
+    {
+      "test": "nr-imagem-dispatch",
+      "exit": 0,
+      "status": "passou"
+    },
+    {
+      "test": "nr-imagem-tickets",
+      "exit": 0,
+      "status": "passou"
+    },
+    {
+      "test": "nr-imagens-upgrade-0058",
+      "exit": 1,
+      "status": "precondicao_nao_atendida",
+      "observacao": "Requer banco vazio e baseline própria 0057"
+    },
+    {
+      "test": "nr-imagens-upgrade-0059",
+      "exit": 1,
+      "status": "precondicao_nao_atendida",
+      "observacao": "Requer baseline 0058"
+    },
+    {
+      "test": "nr-imagens-upgrade-0060",
+      "exit": 1,
+      "status": "precondicao_nao_atendida",
+      "observacao": "Requer baseline 0059"
+    },
+    {
+      "test": "nr-imagens",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 212
+    },
+    {
+      "test": "nr-impactos",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 25
+    },
+    {
+      "test": "nr-importacao",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 17
+    },
+    {
+      "test": "nr-publicacao-tecnica",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 46
+    },
+    {
+      "test": "nr-retencao",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 19
+    },
+    {
+      "test": "nr-storage-confirmation",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 10
+    },
+    {
+      "test": "nr-terminal-plans",
+      "exit": 1,
+      "status": "precondicao_nao_atendida",
+      "observacao": "Ensaio opcional exige pacote privado de importação"
+    },
+    {
+      "test": "nr-totais",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 34
+    },
+    {
+      "test": "nr-upgrade-64",
+      "exit": 1,
+      "status": "precondicao_nao_atendida",
+      "observacao": "Requer baseline de 64 migrações"
+    },
+    {
+      "test": "nr-upgrade-66",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 25
+    },
+    {
+      "test": "nr",
+      "exit": 0,
+      "status": "passou",
+      "verificacoes": 34
+    }
+  ],
+  "ui": {
+    "mapa_pet": 32,
+    "nr_v2": 13,
+    "erros_js": 0
+  },
+  "migracoes": "84 entradas: instalação e upgrade via envelope atômico; dados anteriores a 0061 preservados",
+  "limites": [
+    "Assinatura/provedor real e Storage HTTP não validados pelos doubles SQL",
+    "Layouts sem aprovação explícita são bloqueados",
+    "Não houve PET de exercício em produção",
+    "Pacote Perplexity não continha seus testes declarados",
+    "Telefone físico não medido",
+    "Prévia local usa sessão e dados sintéticos identificados"
+  ]
+}

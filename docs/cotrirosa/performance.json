@@ -1,0 +1,82 @@
+{
+  "browser": "153.0.8010.12",
+  "date": "2026-11-05T12:29:16.181Z",
+  "network": "20 Mb/s download, 10 Mb/s upload, 40 ms RTT; CDP emulation; loopback backend",
+  "build": "Vite production laboratory; real scene and PostgreSQL, synthetic auth/data",
+  "profiles": [
+    {
+      "profile": "balanced; desktop PC GPU",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "device": {
+        "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (Intel)",
+        "dpr": 1,
+        "buffer": [
+          1440,
+          848
+        ],
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+      },
+      "coldInteractionMs": 3408,
+      "bytesAtInteraction": 648560,
+      "totalBytes": 648560,
+      "pausedWhenIdle": true,
+      "orbitSeconds": 30.956,
+      "frames": 1644,
+      "medianFrameMs": 17,
+      "p95FrameMs": 31.599999999998545,
+      "maxFrameMs": 60,
+      "medianFps": 56,
+      "worstOneSecondFps": 48,
+      "maxDrawCalls": 205,
+      "maxTriangles": 520806,
+      "lastResources": {
+        "calls": 205,
+        "triangles": 520806,
+        "geometries": 105,
+        "textures": 26
+      },
+      "selectedAfterOrbit": null
+    },
+    {
+      "profile": "economy; portrait touch emulation on the same PC GPU",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "device": {
+        "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (Intel)",
+        "dpr": 1,
+        "buffer": [
+          390,
+          701
+        ],
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+      },
+      "coldInteractionMs": 2325,
+      "bytesAtInteraction": 648560,
+      "totalBytes": 648560,
+      "pausedWhenIdle": true,
+      "orbitSeconds": 30.152,
+      "frames": 1799,
+      "medianFrameMs": 16.69999999999709,
+      "p95FrameMs": 17.899999999997817,
+      "maxFrameMs": 46.399999999999636,
+      "medianFps": 60,
+      "worstOneSecondFps": 59,
+      "maxDrawCalls": 204,
+      "maxTriangles": 272406,
+      "lastResources": {
+        "calls": 201,
+        "triangles": 272358,
+        "geometries": 105,
+        "textures": 26
+      },
+      "selectedAfterOrbit": null
+    }
+  ]
+}

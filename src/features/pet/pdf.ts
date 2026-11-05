@@ -386,7 +386,12 @@ export async function gerarPetPdf(
       "Cliente / unidade",
       `${snapshotName("cliente", p["cliente_id"])} / ${snapshotName("unidade", p["unidade_id"])}`,
     ],
-    ["OS vinculada", `${value(os["numero"] ?? p["os_id"])} - ${value(os["titulo"])}`],
+    [
+      "OS vinculada",
+      os["numero"] || p["os_id"]
+        ? `${value(os["numero"] ?? p["os_id"])} - ${value(os["titulo"])}`
+        : "Sem OS vinculada",
+    ],
     [
       "Espaço confinado",
       value(

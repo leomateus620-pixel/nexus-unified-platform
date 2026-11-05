@@ -54,6 +54,9 @@ async function cmd(
   norm = "NR33",
   user = engineer,
 ) {
+  // Generic archive scenarios use the mandatory catalog document as their fixture.
+  if (resource === "documentos" && command === "salvar" && !id)
+    data = { tipo: "memorial", ...data };
   return as(
     user,
     async (tx) =>

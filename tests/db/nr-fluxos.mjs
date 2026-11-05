@@ -318,6 +318,7 @@ try {
       unidade_id: unit,
       local_id: local.id,
       titulo: "Document from template",
+      tipo: "memorial",
       modelo_id: dm.id,
       modelo_expected_version: dm.version,
       usar_rascunho: true,

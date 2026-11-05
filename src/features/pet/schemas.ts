@@ -19,6 +19,12 @@ export const listarInput = orgInput.extend({
     .object({
       unidade_id: z.string().uuid().optional(),
       os_id: z.string().uuid().optional(),
+      espaco_id: z.string().uuid().optional(),
+      contexto_unidade: z.boolean().optional(),
+      grupo: z.enum(["andamento", "concluidas"]).optional(),
+      estado: z.string().max(40).optional(),
+      desde: z.string().datetime({ offset: true }).optional(),
+      ate: z.string().datetime({ offset: true }).optional(),
       busca: z.string().trim().max(120).optional(),
       pagina: z.number().int().min(0).optional(),
       limite: z.number().int().min(1).max(100).optional(),

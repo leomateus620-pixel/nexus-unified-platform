@@ -1,0 +1,873 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Perímetro de trabalho incluindo campo norte",
+        "nature": "Traçado visual aproximado; não cadastral",
+        "source": "Google Earth / Airbus 19/03/2026, consulta 05/11/2026",
+        "measuredAreaM2": 115851.58,
+        "measuredPerimeterM": 1421.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.42950277777778,
+              -27.829427777777777
+            ],
+            [
+              -54.428780555555555,
+              -27.829780555555555
+            ],
+            [
+              -54.42840833333333,
+              -27.82993611111111
+            ],
+            [
+              -54.428213888888884,
+              -27.830441666666665
+            ],
+            [
+              -54.428261111111105,
+              -27.831308333333332
+            ],
+            [
+              -54.42813888888889,
+              -27.832394444444443
+            ],
+            [
+              -54.42794444444444,
+              -27.833383333333334
+            ],
+            [
+              -54.42917222222222,
+              -27.834805555555555
+            ],
+            [
+              -54.429516666666665,
+              -27.83499722222222
+            ],
+            [
+              -54.43029166666666,
+              -27.83408888888889
+            ],
+            [
+              -54.43057777777778,
+              -27.833141666666666
+            ],
+            [
+              -54.43058333333333,
+              -27.831844444444446
+            ],
+            [
+              -54.430458333333334,
+              -27.830883333333333
+            ],
+            [
+              -54.43009166666666,
+              -27.830166666666667
+            ],
+            [
+              -54.42950277777778,
+              -27.829427777777777
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fábrica de Ração · Rações Union",
+        "sceneKey": "union-torre",
+        "source": "Identidade visual da fachada real. Cobertura verde observada na nova aérea; paredes laranja pela foto frontal. Dimensões externas aproximadas.",
+        "heightApproxM": 27
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.42988518027469,
+              -27.832505168757333
+            ],
+            [
+              -54.429726304738395,
+              -27.832505168757333
+            ],
+            [
+              -54.429726304738395,
+              -27.832787453749663
+            ],
+            [
+              -54.42988518027469,
+              -27.832787453749663
+            ],
+            [
+              -54.42988518027469,
+              -27.832505168757333
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fábrica de Ração",
+        "sceneKey": "union-medio",
+        "source": "Volume intermediário contíguo à torre, recalibrado pela aérea e fachada.",
+        "heightApproxM": 17
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.43002536457142,
+              -27.832436673134197
+            ],
+            [
+              -54.42982910655599,
+              -27.832436673134197
+            ],
+            [
+              -54.42982910655599,
+              -27.832706504376862
+            ],
+            [
+              -54.43002536457142,
+              -27.832706504376862
+            ],
+            [
+              -54.43002536457142,
+              -27.832436673134197
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fábrica de Ração",
+        "sceneKey": "union-baixo",
+        "source": "Volume frontal baixo; marquises e base clara pela foto frontal.",
+        "heightApproxM": 9
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.430039383001095,
+              -27.832760470625395
+            ],
+            [
+              -54.429702940688934,
+              -27.832760470625395
+            ],
+            [
+              -54.429702940688934,
+              -27.832897461871674
+            ],
+            [
+              -54.430039383001095,
+              -27.832897461871674
+            ],
+            [
+              -54.430039383001095,
+              -27.832760470625395
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Centro de Distribuição Cotrirosa",
+        "sceneKey": "distribuicao",
+        "source": "Inscrição confirmada na aérea oblíqua. Quinas norte, largura e giro da cobertura pelo Earth de 19/03/2026; profundidade e altura aproximadas.",
+        "heightApproxM": 15
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.4292055556,
+              -27.8329111111
+            ],
+            [
+              -54.4284083333,
+              -27.832875
+            ],
+            [
+              -54.428376448797586,
+              -27.833430545831014
+            ],
+            [
+              -54.42917367109759,
+              -27.833466656931012
+            ],
+            [
+              -54.4292055556,
+              -27.8329111111
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Galpão cinza",
+        "sceneKey": "galpao-cinza",
+        "source": "Grande galpão ao norte do CD. Três quinas da cobertura conferidas no Earth de 19/03/2026; função documental e altura pendentes.",
+        "heightApproxM": 11
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.4293194444,
+              -27.8320444444
+            ],
+            [
+              -54.4286777778,
+              -27.832
+            ],
+            [
+              -54.4286428218857,
+              -27.83239830392016
+            ],
+            [
+              -54.429284488485706,
+              -27.83244274832016
+            ],
+            [
+              -54.4293194444,
+              -27.8320444444
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Edificação cinza escalonada",
+        "sceneKey": "edificio-frontal",
+        "source": "Construção ao sul da fábrica, do mesmo lado do eixo interno. Identificação funcional pendente.",
+        "heightApproxM": 7.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.43013517560386,
+              -27.833215032488045
+            ],
+            [
+              -54.42962583932574,
+              -27.833215032488045
+            ],
+            [
+              -54.42962583932574,
+              -27.833439199981953
+            ],
+            [
+              -54.43013517560386,
+              -27.833439199981953
+            ],
+            [
+              -54.43013517560386,
+              -27.833215032488045
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Galpão verde",
+        "sceneKey": "galpao-verde",
+        "source": "Edificação observada atrás da bateria. Função e acervo não atribuídos.",
+        "heightApproxM": 6.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.43016087605826,
+              -27.831975884396716
+            ],
+            [
+              -54.43000200052197,
+              -27.831975884396716
+            ],
+            [
+              -54.43000200052197,
+              -27.832195900640738
+            ],
+            [
+              -54.43016087605826,
+              -27.832195900640738
+            ],
+            [
+              -54.43016087605826,
+              -27.831975884396716
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Apoio ao norte",
+        "sceneKey": "apoio-norte",
+        "source": "Pequeno volume visível na aérea; uso específico não comprovado.",
+        "heightApproxM": 4
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.42900669201517,
+              -27.831674918779896
+            ],
+            [
+              -54.42885716209866,
+              -27.831674918779896
+            ],
+            [
+              -54.42885716209866,
+              -27.831791153776738
+            ],
+            [
+              -54.42900669201517,
+              -27.831791153776738
+            ],
+            [
+              -54.42900669201517,
+              -27.831674918779896
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Recepção da unidade",
+        "sceneKey": "apoio-entrada",
+        "source": "Atendimento na entrada identificado pelo usuário. Posição pela imagem Earth; altura, portas e acabamento aproximados.",
+        "heightApproxM": 3.6
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.42977835484596,
+              -27.834089048584634
+            ],
+            [
+              -54.429610912864995,
+              -27.83408235018709
+            ],
+            [
+              -54.42960213907088,
+              -27.83425544434177
+            ],
+            [
+              -54.42976958105184,
+              -27.834262142739313
+            ],
+            [
+              -54.42977835484596,
+              -27.834089048584634
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marquise do acesso",
+        "sceneKey": "marquise-entrada",
+        "source": "Portaria coberta sobre a via, conferida no Earth. Pilares e altura aproximados.",
+        "heightApproxM": 4.8
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.429413646763564,
+              -27.83420664074642
+            ],
+            [
+              -54.42923079768087,
+              -27.83420664074642
+            ],
+            [
+              -54.42923079768087,
+              -27.834254470364687
+            ],
+            [
+              -54.429413646763564,
+              -27.834254470364687
+            ],
+            [
+              -54.429413646763564,
+              -27.83420664074642
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Apoio lateral",
+        "sceneKey": "apoio-lateral",
+        "source": "Pequena construção observada junto à via lateral.",
+        "heightApproxM": 3.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.430523018824815,
+              -27.833021999368288
+            ],
+            [
+              -54.430415544197324,
+              -27.833021999368288
+            ],
+            [
+              -54.430415544197324,
+              -27.833117478115696
+            ],
+            [
+              -54.430523018824815,
+              -27.833117478115696
+            ],
+            [
+              -54.430523018824815,
+              -27.833021999368288
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Apoio junto ao CD",
+        "sceneKey": "apoio-cd",
+        "source": "Pequeno volume a leste da via principal. Uso pendente.",
+        "heightApproxM": 3.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -54.42924266891467,
+              -27.833875081220107
+            ],
+            [
+              -54.42913519428717,
+              -27.833875081220107
+            ],
+            [
+              -54.42913519428717,
+              -27.833958106217853
+            ],
+            [
+              -54.42924266891467,
+              -27.833958106217853
+            ],
+            [
+              -54.42924266891467,
+              -27.833875081220107
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SA 01",
+        "sceneKey": "sa01",
+        "source": "Levantamento B07, cotas internas conferidas no cadastro do servidor em 05/11/2026; PDF fotos p. 3–6.",
+        "note": "Apoios, cobertura, espaçamento e ordem espacial aproximados. Confirmar TAG física antes de operar."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.43009545671978,
+          -27.832471958758237
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SA 02",
+        "sceneKey": "sa02",
+        "source": "Levantamento B07, cotas internas conferidas no cadastro do servidor em 05/11/2026; PDF fotos p. 3–7.",
+        "note": "Apoios, cobertura, espaçamento e ordem espacial aproximados. Confirmar TAG física antes de operar."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.43009545671978,
+          -27.832538378756432
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SA 03",
+        "sceneKey": "sa03",
+        "source": "Levantamento B07, cotas internas conferidas no cadastro do servidor em 05/11/2026; PDF fotos p. 3–8.",
+        "note": "Apoios, cobertura, espaçamento e ordem espacial aproximados. Confirmar TAG física antes de operar."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.43009545671978,
+          -27.832604798754627
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SA 04",
+        "sceneKey": "sa04",
+        "source": "Levantamento B07, cotas internas conferidas no cadastro do servidor em 05/11/2026; PDF fotos p. 3–9.",
+        "note": "Apoios, cobertura, espaçamento e ordem espacial aproximados. Confirmar TAG física antes de operar."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.43009545671978,
+          -27.83267121875282
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SA 05",
+        "sceneKey": "sa05",
+        "source": "EC 28 · B07 e cadastro conferido em 05/11/2026; PDF fotos p. 10–13.",
+        "note": "Diâmetro interpretado por decisão técnica; medição a laser pendente. Cotas internas, não certificam dimensão externa. Legenda Nexus: 31 min; placa transcrita no PDF p. 13: 34 min. Conferir fontes; nenhum valor preenche PET."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.4300861111,
+          -27.832775
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "eixo-principal",
+        "widthApproxM": 8.5,
+        "nature": "Via interna aproximada"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.42950668267351,
+            -27.831629255031135
+          ],
+          [
+            -54.42949733705373,
+            -27.832160615016697
+          ],
+          [
+            -54.429459954574604,
+            -27.8329368987456
+          ],
+          [
+            -54.42941789928558,
+            -27.833746392473603
+          ],
+          [
+            -54.42933283252362,
+            -27.83402319255639
+          ],
+          [
+            -54.42932222222222,
+            -27.834230555555553
+          ],
+          [
+            -54.42931852196371,
+            -27.83441226806819
+          ],
+          [
+            -54.429317469673094,
+            -27.834573485965674
+          ],
+          [
+            -54.42943162003903,
+            -27.834733672900043
+          ],
+          [
+            -54.429501844100905,
+            -27.834830281317245
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "circuito-oeste",
+        "widthApproxM": 7,
+        "nature": "Via interna aproximada"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.42949266424384,
+            -27.8322560937641
+          ],
+          [
+            -54.4299319083736,
+            -27.83226024501399
+          ],
+          [
+            -54.430263677875864,
+            -27.832310060012635
+          ],
+          [
+            -54.43032909721434,
+            -27.832442900009028
+          ],
+          [
+            -54.43031040597477,
+            -27.832995016244023
+          ],
+          [
+            -54.43028704192532,
+            -27.8334558049815
+          ],
+          [
+            -54.430216949776955,
+            -27.833638459976537
+          ],
+          [
+            -54.42979639688676,
+            -27.833646762476313
+          ],
+          [
+            -54.42941789928558,
+            -27.833630157476765
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "travessa-fabrica",
+        "widthApproxM": 7,
+        "nature": "Via interna aproximada"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.43030106035499,
+            -27.833057284992332
+          ],
+          [
+            -54.42996461804284,
+            -27.83304483124267
+          ],
+          [
+            -54.429487991433945,
+            -27.833024074993233
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "acesso-galpao-norte",
+        "widthApproxM": 6.5,
+        "nature": "Via interna aproximada"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.429487991433945,
+            -27.831878330024367
+          ],
+          [
+            -54.429174913171245,
+            -27.83183266627561
+          ],
+          [
+            -54.42870295937225,
+            -27.83184096877538
+          ],
+          [
+            -54.428595484744754,
+            -27.831919842523238
+          ],
+          [
+            -54.428558102265626,
+            -27.83220212751557
+          ],
+          [
+            -54.428548756645846,
+            -27.832505168757333
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "rodovia-nordeste",
+        "widthApproxM": 10,
+        "nature": "Via pública de contexto"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.431457674882886,
+            -27.836836598491114
+          ],
+          [
+            -54.42994924690931,
+            -27.83549653510289
+          ],
+          [
+            -54.42930277777778,
+            -27.83492222222222
+          ],
+          [
+            -54.42865630864625,
+            -27.834347909341552
+          ],
+          [
+            -54.42664507134815,
+            -27.832561158157255
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "via-publica-oeste",
+        "widthApproxM": 7,
+        "nature": "Via pública de contexto"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.43189916133773,
+            -27.832575740005417
+          ],
+          [
+            -54.4308711431617,
+            -27.83347240998105
+          ],
+          [
+            -54.430315078784666,
+            -27.833978862467287
+          ],
+          [
+            -54.42990130022777,
+            -27.834368669740392
+          ],
+          [
+            -54.429648677310674,
+            -27.83457052194671
+          ],
+          [
+            -54.4294992870936,
+            -27.834731787906644
+          ],
+          [
+            -54.429501844100905,
+            -27.834830281317245
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "estrada-rural-oeste",
+        "widthApproxM": 6,
+        "nature": "Via pública de contexto"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -54.42949266424384,
+            -27.828972455103333
+          ],
+          [
+            -54.42953471953286,
+            -27.82977364633156
+          ],
+          [
+            -54.42994125399338,
+            -27.830400485064526
+          ],
+          [
+            -54.4304038621726,
+            -27.831006567548055
+          ],
+          [
+            -54.43053470084954,
+            -27.831791153776738
+          ],
+          [
+            -54.4306608667166,
+            -27.832828966248535
+          ],
+          [
+            -54.43081039663312,
+            -27.833422594982405
+          ]
+        ]
+      }
+    }
+  ]
+}

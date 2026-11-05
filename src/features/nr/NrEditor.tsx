@@ -21,6 +21,7 @@ import { NrSurveyValue } from "./NrSurveyFields";
 import { NrPhotoMetadataEditor } from "./NrPhotoMetadataEditor";
 import { NrFilesPanel, type NrSelectableFile } from "./NrFilesPanel";
 import { nrLabel } from "./technical-display";
+import { useNrContratacao } from "./NrContratacao";
 import {
   normalizeSurveyBlocks,
   projectSurvey,
@@ -722,6 +723,10 @@ export function NrEditor({
   );
   const [clientId, setClientId] = useState(row ? (row.cliente_id ?? "") : clienteId);
   const [unitId, setUnitId] = useState(row ? (row.unidade_id ?? "") : unidadeId);
+  const contract = useNrContratacao(
+    { organization_id: org, cliente_id: clientId, unidade_id: unitId, norma },
+    ["documentos", "levantamentos"].includes(recurso),
+  );
   const [normas, setNormas] = useState<Norma[]>(row?.normas ?? [norma]);
   const [data, setData] = useState<Record<string, unknown>>(row?.dados ?? {});
   const [aliases, setAliases] = useState(
@@ -1427,6 +1432,26 @@ export function NrEditor({
                           <option value="familia">Família técnica</option>
                           <option value="configuracao">Configuração</option>
                         </select>
+                      ) : !row || duplicating ? (
+                        <select
+                          value={values["tipo"] ?? ""}
+                          onChange={(e) => set("tipo", e.target.value)}
+                          required
+                        >
+                          <option value="">Selecione um documento contratado</option>
+                          {contract.data?.catalogo
+                            .filter(
+                              (d) =>
+                                d.obrigatorio ||
+                                (contract.data.confirmada &&
+                                  contract.data.documentos.includes(d.codigo)),
+                            )
+                            .map((d) => (
+                              <option key={d.codigo} value={d.titulo}>
+                                {d.titulo}
+                              </option>
+                            ))}
+                        </select>
                       ) : (
                         <input
                           value={values["tipo"]}
@@ -1564,6 +1589,14 @@ export function NrEditor({
               )}
               {recurso === "levantamentos" && (
                 <>
+                  {contract.isError && (
+                    <ErrorState error={contract.error} onRetry={() => contract.refetch()} />
+                  )}
+                  <p className="nr-source">
+                    {contract.data?.confirmada
+                      ? "Roteiro de trabalho conforme a contratação. Identificação, geometria e ventilação permanecem disponíveis; todas as respostas históricas continuam na ficha."
+                      : "Contratação ainda não confirmada. O levantamento obrigatório permanece disponível; a geração dos documentos opcionais exige confirmação do RT."}
+                  </p>
                   {model.isError && (
                     <ErrorState error={model.error} onRetry={() => model.refetch()} />
                   )}
@@ -1587,7 +1620,12 @@ export function NrEditor({
                     </p>
                   )}
                   <NrSurveyEditor
-                    blocks={surveyBlocks}
+                    blocks={
+                      contract.data?.confirmada &&
+                      surveyBlocks.every((b) => /^B\d{2}$/.test(b.codigo))
+                        ? surveyBlocks.filter((b) => contract.data.blocos.includes(b.codigo))
+                        : surveyBlocks
+                    }
                     answers={answers}
                     local={surveyLocal}
                     evidence={{

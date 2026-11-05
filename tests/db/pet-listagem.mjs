@@ -3,6 +3,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import postgres from "postgres";
+import { contractFixture } from "./contract-fixture.mjs";
 if (
   process.env.PGTEST_EPHEMERAL !== "1" ||
   !/^\d{4,5}$/.test(process.env.PGTEST_PORT || "") ||
@@ -69,6 +70,7 @@ const setupUnit = async (organization, suffix) => {
       { nome: `Unidade listagem ${suffix}` },
     ])
   )[0].r;
+  await contractFixture(q, { org: organization, client: client.id, unit: unit.id, user: admin });
   const os = await command(
     "criar_os",
     { cliente_id: client.id, unidade_id: unit.id, titulo: `OS listagem ${suffix}` },

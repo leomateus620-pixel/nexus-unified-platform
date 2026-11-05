@@ -1,3 +1,4 @@
+import { useOrg } from "@/features/org/session";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -32,7 +33,7 @@ export function NrPhotoGallery({
 }) {
   const occurrenceLoad = useServerFn(nrFotoOcorrenciasLer);
   const occurrenceQuery = useQuery({
-    queryKey: ["nr", org, "foto-ocorrencias", localId],
+    queryKey: ["nr", org, useOrg().data?.userId, "foto-ocorrencias", localId],
     enabled: !!localId,
     queryFn: () => occurrenceLoad({ data: { organization_id: org, local_id: localId! } }),
     staleTime: 30_000,

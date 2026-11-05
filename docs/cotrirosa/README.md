@@ -1,6 +1,6 @@
 # Cotrirosa · fábrica de ração · revisão de implantação e PET
 
-Implementação local na branch `codex/cotrirosa-unidade-3d-pet`, reconciliada com `origin/main` no commit `e408c628b8726b3b626882ce95fc45377f9f030f`. Inspeção e validação em 05/11/2026. A consulta remota foi somente leitura. As migrações 0061–0065, os dados de exercício e os testes de PET foram executados em PostgreSQL descartável/local, sem publicação ou alteração do ambiente de produção.
+Implementação local na branch `codex/cotrirosa-unidade-3d-pet`, reconciliada com `origin/main` no commit `e408c628b8726b3b626882ce95fc45377f9f030f`. Inspeção e validação em 05/11/2026. A consulta autenticada foi seguida da aplicação autorizada das migrações 0061–0065 pelo conector Lovable. O ledger remoto chegou a 84 entradas, com cinco alvos, RLS e nenhuma referência órfã. Contagens do acervo e snapshots históricos foram preservados. Dados de exercício existem apenas no PostgreSQL descartável local; não foi criada PET de teste em produção.
 
 ## Abrir e revisar
 
@@ -77,7 +77,7 @@ As transformações completas estão em `posicoes.md`. Os anexos de IA iniciais 
 
 ## Implementação e verificações
 
-React 19.2.8, TanStack Router 1.170.41 / Start 1.168.60, Three 0.186.0, R3F 9.7.0, Drei 10.7.8, Vite 8.1.5. Reutilizados controle de órbita, mecanismo de ambiente luminoso industrial e ficha NR/PET existentes; nenhum terreno de outro cliente foi importado. O manifesto Cotrirosa fica no servidor e as cinco identidades dependem da associação publicada/autorizada. O motor é carregado somente ao entrar na rota 3D.
+React 19.2.8, TanStack Router 1.170.41 / Start 1.168.60, Three 0.186.0, R3F 9.7.0, Drei 10.7.8, Vite 8.1.5. Reutilizados OrbitControls e fichas NR/PET existentes; a convenção de reflexão industrial foi adaptada em componente exclusivo para conservar os arquivos protegidos das outras cenas; nenhum terreno de outro cliente foi importado. O manifesto Cotrirosa fica no servidor e as cinco identidades dependem da associação publicada/autorizada. O motor é carregado somente ao entrar na rota 3D.
 
 O modelo compartilha materiais e geometrias dos quatro silos, agrupa partes por material/instância, instancia vegetação, usa detalhe próximo com LOD, texturas pequenas com mipmaps e perfil econômico para toque/software. Renderização sob demanda; descarte de geometria/material/texturas ao desmontar. Normal permite olhar de baixo para cima sem cruzar o solo; Superior usa ortográfica; Angular mantém órbita oblíqua. Arraste/pinça não selecionam. Ficha resumida conserva o terreno, expansão é voluntária, fechamento preserva a câmera. Lista e PET sobrevivem à falta/perda de WebGL.
 
@@ -102,8 +102,8 @@ Tipos, build principal/laboratório, testes unitários NR/PET/pessoas e regress�
 
 ## Estado da entrega e pendências reais
 
-Implementação e prévia local integradas. A última medição remota encontrou 79 migrações até 0060; **0061 não foi aplicada remotamente**. O conector Lovable disponível aponta ao projeto real; não foi encontrado um banco de homologação remoto separado. A prévia Lovable publicada anterior não representa esta branch local.
+Implementação e prévia local integradas, publicadas para revisão na [PR #22](https://github.com/leomateus620-pixel/nexus-unified-platform/pull/22). Migrações **0061–0065 aplicadas pelo conector Lovable em 05/11/2026**, ledger 84. O conector aponta ao projeto real; não foi encontrado um banco de homologação remoto separado. O deploy da interface é uma etapa separada e será registrado após sua verificação.
 
-Permanecem necessários para ativação real: revisão/aplicação da migração aditiva no ambiente autorizado, deploy desta versão, procedimento vigente aprovado pelo responsável técnico, designação técnica e integração de assinatura/originais verificáveis. Sem essas condições, os bloqueios são preservados. A referência normativa é a página oficial de [NRs vigentes do Ministério do Trabalho](https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes); o mapa não substitui procedimento validado.
+Permanecem necessários para ativação real: deploy verificado desta versão, procedimento vigente aprovado pelo responsável técnico, designação técnica e integração de assinatura/originais verificáveis. Sem essas condições, os bloqueios são preservados. A referência normativa é a página oficial de [NRs vigentes do Ministério do Trabalho](https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes); o mapa não substitui procedimento validado.
 
 Ainda não comprovados: divisa e medidas externas por levantamento, ordem física final das placas, fachada externa da moega, correspondência da torre/elevadores, função do segundo galpão, detalhes ocultos e desempenho em telefone físico. A aparência foi refinada por referência, mas não deve ser chamada de reconstrução fotogramétrica ou fotorrealismo certificado. O repositório remoto é público: as fotografias reais, capturas autenticadas e vídeos locais estão excluídos do Git e não foram publicados.

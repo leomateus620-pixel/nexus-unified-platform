@@ -1,0 +1,26 @@
+{
+  "data": "2026-11-05",
+  "canal": "Conector Lovable, projeto Nexus existente",
+  "migracoes_aplicadas": [
+    "0061",
+    "0062",
+    "0063",
+    "0064",
+    "0065"
+  ],
+  "ledger": 84,
+  "envelope": "DDL e ledger atômicos; prefixo de checksums verificado",
+  "alvos_cotrirosa": 5,
+  "referencias_orfas": 0,
+  "novas_tabelas_com_rls": 8,
+  "contagens_acervo_preservadas": true,
+  "snapshots_pet_preservados": true,
+  "contratos_presumidos": 0,
+  "pets_exercicio_producao": 0,
+  "dependencias_reais": [
+    "RT formal",
+    "procedimento aprovado",
+    "contratação confirmada",
+    "assinatura e originais verificáveis"
+  ]
+}

@@ -8,7 +8,8 @@ permissions:
 jobs:
   presentation:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Full serial suite covers both Chromium and WebKit plus all module workspaces.
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -18,7 +19,7 @@ jobs:
           node-version: "24"
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bunx playwright install --with-deps chromium
+      - run: bunx playwright install --with-deps chromium webkit
       - run: bun run test:ui
       - uses: actions/upload-artifact@v4
         if: always()

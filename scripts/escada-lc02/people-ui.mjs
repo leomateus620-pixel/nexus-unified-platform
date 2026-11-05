@@ -330,7 +330,10 @@ try {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.getByRole("link", { name: "Voltar à engenharia" }).click();
   // The scene is public; the business route now requires a session.
-  await page.waitForURL(`${base}/auth`);
+  // The login illustration is remote and can remain pending in the CI network.
+  // Assert the actual route and login form without waiting for every remote asset.
+  await page.waitForURL(`${base}/auth`, { waitUntil: "domcontentloaded" });
+  await page.getByRole("heading", { name: "Acesso ao sistema" }).waitFor();
   await page.waitForFunction(() => !window.__testCanvas.isConnected);
   // The root switches between the dedicated layout and AppShell before the outlet
   // finishes its route transition. Poll the committed DOM from Node (not a paused RAF).

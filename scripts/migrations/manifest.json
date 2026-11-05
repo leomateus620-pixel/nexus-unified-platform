@@ -339,6 +339,10 @@
     {
       "path": "drizzle/migrations/0065_nr_contexto_compartilhado.sql",
       "sha256": "bedf34b1769b665a059cca12253e0db5dc0dacb741b9bd0de7f47154b0008710"
+    },
+    {
+      "path": "drizzle/migrations/0066_pet_demonstracao.sql",
+      "sha256": "a2248fdb5f27af939be509b6fad4b8d17ecb07c94b2587354b0e2dd18fae6dae"
     }
   ]
 }

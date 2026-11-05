@@ -1,0 +1,37 @@
+{
+  "browser": "153.0.8010.12",
+  "environment": "Windows Chromium; responsive/touch emulation, not a physical phone",
+  "checks": [
+    "Silo selection exposes Iniciar PET without scrolling",
+    "Open starts empty and creates no record",
+    "Expand/minimize/tab preserve unsaved form and one mounted Canvas",
+    "Escape minimizes and restores focus",
+    "Double click saves exactly one numbered draft",
+    "Eight-step journey: manual team/readings, start, entry, closure block, exit and explicit closure",
+    "Reload restores final step and same demonstration",
+    "NR35 switch preserves same demonstration",
+    "Demonstration has no certification or approved-procedure warnings",
+    "low-window: expanded sheet fits viewport",
+    "tablet: expanded sheet fits viewport",
+    "mobile: expanded sheet fits viewport",
+    "Mobile touch: start EC28, save, close map panel and continue same demo",
+    "Reduced mobile viewport keeps save controls above emulated keyboard",
+    "No uncaught browser errors"
+  ],
+  "screenshots": [
+    "demo-desktop-compact",
+    "demo-desktop-empty",
+    "demo-desktop-review",
+    "demo-desktop-closed",
+    "demo-low-window",
+    "demo-tablet",
+    "demo-mobile",
+    "demo-mobile-compact",
+    "demo-mobile-form",
+    "demo-mobile-restored"
+  ],
+  "consoleErrors": [],
+  "id": "0347a89d-c049-4549-954b-e2ae1fa38b4a",
+  "number": "DEMO-000005",
+  "video": "docs/cotrirosa/demo-video/page@d2b5636ab862d44afc753dc39c749812.webm"
+}

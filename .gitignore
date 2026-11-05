@@ -54,3 +54,6 @@ __pycache__/
 /docs/cotrirosa/metrics.json
 /docs/cotrirosa/comparacoes.html
 /docs/cotrirosa/ui-regression/
+/docs/cotrirosa/demo-video/
+/docs/cotrirosa/demo-failure.txt
+/docs/cotrirosa/demo-0066-envelope.sql

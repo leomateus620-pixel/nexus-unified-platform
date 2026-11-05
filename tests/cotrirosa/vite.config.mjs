@@ -139,7 +139,23 @@ export default defineConfig({
                       path.join(app, "src/features/nr/mapa/cotrirosa.server.ts"),
                     )
                   ).cotrirosa;
-              } else if (name === "petContextoUnidade")
+              } else if (name === "petDemoContexto")
+                r = (
+                  await db`select pet_demo_contexto(${org},${data.cliente_id},${data.unidade_id},${norma},${data.local_id ?? null}) r`
+                )[0].r;
+              else if (name === "petDemoListar")
+                r = (
+                  await db`select pet_demo_listar(${org},${data.cliente_id},${data.unidade_id},${norma},${data.local_id ?? null},${data.busca ?? ""},${data.grupo ?? "andamento"},${data.pagina ?? 0}) r`
+                )[0].r;
+              else if (name === "petDemoObter")
+                r = (await db`select pet_demo_obter(${org},${data.id},${norma}) r`)[0].r;
+              else if (name === "petDemoRegistros")
+                r = (
+                  await db`select pet_demo_registros(${org},${data.id},${norma},${data.recurso},${data.pagina ?? 0}) r`
+                )[0].r;
+              else if (name === "petDemoExecutar")
+                r = (await db`select pet_demo_executar(${org},${db.json(data.comando)}) r`)[0].r;
+              else if (name === "petContextoUnidade")
                 r = (
                   await db`select pet_contexto_unidade(${org},${data.cliente_id},${data.unidade_id},${norma},${data.local_id ?? null}) r`
                 )[0].r;

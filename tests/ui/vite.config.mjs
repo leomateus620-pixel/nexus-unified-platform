@@ -64,6 +64,11 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
+          /\/features\/pet\/demo\/demo\.functions(?:\.ts)?$/.test(id) ||
+          (id === "./demo.functions" && /\/features\/pet\/demo\//.test(importer || ""))
+        )
+          return path.join(root, "unit-server.ts");
+        if (
           /\/features\/(?:nr\/(?:mapa\/mapa|contratacao|equipe)|pet\/(?:unidade|consulta|print))\.functions(?:\.ts)?$/.test(
             id,
           ) ||

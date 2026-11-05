@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Lost creation response and retry return one saved draft without losing form",
+    "Concurrent edit reports conflict and retains local manual participant",
+    "Leaving unsaved form requires an explicit discard decision",
+    "Downloaded PDF marked as demonstration includes identity, manual readings and attendance",
+    "CSV includes marked demonstration and complete attendance/event data",
+    "Unit history search opens the exact same closed silo demonstration",
+    "WebGL fallback retains exact five local identities and empty demonstration entry"
+  ],
+  "pdfPages": 2,
+  "environment": "Isolated Chromium + real loopback PostgreSQL"
+}

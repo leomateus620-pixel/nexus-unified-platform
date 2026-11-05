@@ -49,8 +49,8 @@ import { UnitMapEntry } from "./mapa/UnitMapEntry";
 import { NrContratacao } from "./NrContratacao";
 const NrUnitTeam = lazy(() => import("./NrUnitTeam").then((m) => ({ default: m.NrUnitTeam })));
 const UnitMapWorkspace = lazy(() => import("./mapa/UnitMapWorkspace"));
-const PetUnitPanel = lazy(() =>
-  import("@/features/pet/PetUnitPanel").then((m) => ({ default: m.PetUnitPanel })),
+const UnitPetExperience = lazy(() =>
+  import("@/features/pet/demo/UnitPetExperience").then((m) => ({ default: m.UnitPetExperience })),
 );
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
@@ -117,6 +117,9 @@ export type NrSearch = {
   local?: string;
   camera?: "normal" | "superior" | "angular";
   objeto?: string;
+  visualizacao?: "compacta" | "expandida";
+  petDemo?: string;
+  etapaDemo?: number;
   painel?: "resumo" | "ficha" | "acervo" | "pendencias" | "pet" | "historico";
   retorno?: "pets" | "mapa-3d";
   consulta?: boolean;
@@ -736,13 +739,9 @@ function NrScope({
                 {section === "pets" && (
                   <div className="nr-panel">
                     <h2 className="text-lg font-semibold mb-3">PET Digital</h2>
-                    <p className="nr-source">
-                      Inventário, levantamento e documentos não autorizam entrada. Emissão e
-                      assinatura seguem os requisitos verificados na PET.
-                    </p>
                     {search.unidade ? (
                       <Suspense fallback={<LoadingState />}>
-                        <PetUnitPanel
+                        <UnitPetExperience
                           scope={{
                             organization_id: org,
                             cliente_id: search.cliente,

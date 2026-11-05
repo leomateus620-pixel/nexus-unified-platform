@@ -31,13 +31,15 @@ type Props = {
   onCamera?: (value: CameraSnapshot) => void;
   initialCamera?: CameraSnapshot | undefined;
   economy?: boolean;
+  interactive?: boolean;
 };
 function Navigation({
   manifest,
   request,
   onCamera,
   initialCamera,
-}: Pick<Props, "manifest" | "request" | "onCamera" | "initialCamera">) {
+  interactive = true,
+}: Pick<Props, "manifest" | "request" | "onCamera" | "initialCamera" | "interactive">) {
   const { get, set, size, invalidate, gl } = useThree();
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
   // Drei recreates controls when the active camera changes. Keep its target
@@ -166,6 +168,7 @@ function Navigation({
     const key = (event: KeyboardEvent) => {
       const c = controls.current;
       if (
+        !interactive ||
         !c ||
         !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "+", "-", "="].includes(event.key)
       )
@@ -193,10 +196,11 @@ function Navigation({
     };
     canvas.addEventListener("keydown", key);
     return () => canvas.removeEventListener("keydown", key);
-  }, [get, gl, invalidate]);
+  }, [get, gl, invalidate, interactive]);
   return (
     <OrbitControls
       ref={controls}
+      enabled={interactive}
       target={navigationTarget.current}
       makeDefault
       enableDamping
@@ -350,6 +354,7 @@ function Content(props: Props) {
     });
   });
   const pick = (e: ThreeEvent<MouseEvent>) => {
+    if (props.interactive === false) return;
     let object: T.Object3D | null = e.object;
     while (object && !object.userData["sceneKey"]) object = object.parent;
     if (object?.userData["sceneKey"]) {

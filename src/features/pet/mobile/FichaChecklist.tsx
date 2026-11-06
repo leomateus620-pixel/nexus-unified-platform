@@ -1,9 +1,12 @@
-import { Phone, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { AlertTriangle, CheckCircle2, Circle, Phone, Plus, Trash2, X } from "lucide-react";
 import {
   CONTATOS_FIXOS,
   ESTADO_LABEL,
   FICHA_ITENS,
   estadoDe,
+  fichaProgresso,
+  resumoTeste,
   type Estado,
   type Ficha,
   type FichaItem,
@@ -20,7 +23,10 @@ function Row({ item, ficha, onChange }: { item: FichaItem } & Base) {
     onChange({ ...ficha, respostas: { ...ficha.respostas, [item.id]: { estado: e, ...r, ...patch } } });
   return (
     <li className="pet-fc-row" id={`ficha-${item.id}`} data-estado={e}>
-      <span className="pet-fc-label">{item.label}</span>
+      <span className="pet-fc-label">
+        <EstadoIcon e={e} needsJust={e === "NA" && (r?.justificativa ?? "").trim().length < 3} />
+        {item.label}
+      </span>
       <div className="pet-fc-opts" role="radiogroup" aria-label={item.label}>
         {item.estados.map((s) => (
           <button key={s} type="button" role="radio" aria-checked={e === s} data-s={s}
@@ -44,8 +50,57 @@ function Row({ item, ficha, onChange }: { item: FichaItem } & Base) {
   );
 }
 
-export function FichaChecklist({ fase, ficha, onChange, disabled, outros }: Base & { fase: FichaItem["fase"]; outros?: boolean }) {
-  const itens = FICHA_ITENS.filter((i) => i.fase === fase);
+function EstadoIcon({ e, needsJust }: { e: Estado; needsJust?: boolean }) {
+  if (e === "N")
+    return <span className="pet-fc-st" data-t="imp"><AlertTriangle size={16} aria-hidden /><span className="sr-only">Impeditivo</span></span>;
+  if (e === "NV" || needsJust)
+    return <span className="pet-fc-st" data-t="pend"><Circle size={16} aria-hidden /><span className="sr-only">Pendente</span></span>;
+  return <span className="pet-fc-st" data-t="ok"><CheckCircle2 size={16} aria-hidden /><span className="sr-only">Respondido</span></span>;
+}
+
+/** Opens the item's group, scrolls and highlights it. */
+export function irParaItemFicha(id: string) {
+  const el = document.getElementById(`ficha-${id}`);
+  if (!el) return false;
+  const det = el.closest("details");
+  if (det) det.open = true;
+  el.scrollIntoView({ block: "center" });
+  el.classList.add("pet-fc-flash");
+  setTimeout(() => el.classList.remove("pet-fc-flash"), 1800);
+  return true;
+}
+
+export function FichaProgresso({ ficha, fase, leituras, onIr }: { ficha: Ficha; fase: FichaItem["fase"]; leituras?: { agente: string; valor: string; momento?: string | undefined }[]; onIr: (id: string) => void }) {
+  const p = fichaProgresso(ficha, fase, leituras);
+  const prox = p.pendencias.find((x) => x.tipo === "impeditiva") ?? p.pendencias[0];
+  return (
+    <div className="pet-fc-prog" role="status">
+      <span>
+        <strong>{p.respondidos} de {p.total}</strong> verificações obrigatórias respondidas
+        {p.impedimentos > 0 && <> · <span className="pet-fc-prog-imp"><AlertTriangle size={14} aria-hidden /> {p.impedimentos} impedimento{p.impedimentos > 1 ? "s" : ""}</span></>}
+      </span>
+      {prox && (
+        <button type="button" className="pet-hz-add" onClick={() => onIr(prox.id)}>Ir para pendências</button>
+      )}
+    </div>
+  );
+}
+
+export function TesteResumo({ ficha, leituras, momento }: { ficha: Ficha; leituras: { agente: string; valor: string; momento?: string | undefined; coletada_em?: string | undefined }[]; momento: Momento }) {
+  const r = resumoTeste(ficha, leituras, momento);
+  const hora = r.horario ? new Date(r.horario).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "—";
+  return (
+    <dl className="pet-fc-resumo" data-s={r.situacao}>
+      <div><dt>Horário</dt><dd>{hora}</dd></div>
+      <div><dt>Responsável</dt><dd>{r.responsavel || "—"}</dd></div>
+      <div><dt>Situação</dt><dd>{r.situacao === "Bloqueado" ? <AlertTriangle size={14} aria-hidden /> : r.situacao === "Completo" ? <CheckCircle2 size={14} aria-hidden /> : <Circle size={14} aria-hidden />} {r.situacao}{r.faltam.length && r.situacao !== "Bloqueado" ? ` · falta ${r.faltam.join(", ")}` : ""}</dd></div>
+      {r.reconferir && <div className="pet-fc-reconf"><dt>Atenção</dt><dd>Ventilação alterada — conferir novamente</dd></div>}
+    </dl>
+  );
+}
+
+export function FichaChecklist({ fase, grupo, ficha, onChange, disabled, outros }: Base & { fase: FichaItem["fase"]; grupo?: string; outros?: boolean }) {
+  const itens = FICHA_ITENS.filter((i) => i.fase === fase && (!grupo || i.grupo === grupo));
   const grupos = [...new Set(itens.map((i) => i.grupo))];
   const list = ficha.outros ?? [];
   const setOutros = (o: typeof list) => onChange({ ...ficha, outros: o });
@@ -109,7 +164,7 @@ export function TesteMetaFields({ momento, ficha, onChange, disabled, instrument
         </select>
       </label>
       <label>Nº de série<input value={m.serie ?? ""} onChange={(e) => put({ serie: e.target.value })} /></label>
-      <label className="pet-fc-check"><input type="checkbox" checked={!!m.confirmado} onChange={(e) => put({ confirmado: e.target.checked })} /> Confirmo os resultados deste teste</label>
+      <label className="pet-fc-check"><input type="checkbox" checked={!!m.confirmado} onChange={(e) => put({ confirmado: e.target.checked, reconferir: false })} /> Confirmo os resultados deste teste</label>
     </fieldset>
   );
 }
@@ -117,7 +172,14 @@ export function TesteMetaFields({ momento, ficha, onChange, disabled, instrument
 export function VentilacaoFields({ ficha, onChange, disabled }: Base) {
   if (estadoDe(ficha, "pre_ventilacao") !== "S") return null;
   const v = ficha.ventilacao ?? {};
-  const put = (p: Partial<typeof v>) => onChange({ ...ficha, ventilacao: { ...v, ...p } });
+  const put = (p: Partial<typeof v>) => {
+    const t = ficha.testes?.pos_ventilacao;
+    onChange({
+      ...ficha,
+      ventilacao: { ...v, ...p },
+      ...(t ? { testes: { ...ficha.testes, pos_ventilacao: { ...t, reconferir: true } } } : {}),
+    });
+  };
   return (
     <fieldset className="pet-fc-meta" disabled={disabled}>
       <div className="pet-fc-opts" role="radiogroup" aria-label="Tipo de ventilação">
@@ -132,7 +194,7 @@ export function VentilacaoFields({ ficha, onChange, disabled }: Base) {
           ))}
         </div>
       )}
-      <label>Tempo real (min)<input inputMode="numeric" value={v.tempo_min ?? ""} onChange={(e) => put({ tempo_min: e.target.value.replace(/\D/g, "") })} /></label>
+      <label>Tempo real (min)<input inputMode="decimal" value={v.tempo_min ?? ""} onChange={(e) => put({ tempo_min: e.target.value.replace(/\D/g, "") })} /></label>
     </fieldset>
   );
 }
@@ -165,5 +227,30 @@ export function ContatosEmergencia({ unidade }: { unidade?: { nome: string; nume
       </ul>
       <p>Ligar não registra ocorrência: use "Registrar ocorrência" para o histórico da PET.</p>
     </section>
+  );
+}
+
+/** One-tap access to rescue plan and contacts during the work. */
+export function PlanoContatosBotao({ plano, unidade }: { plano?: string; unidade?: { nome: string; numero?: string }[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" className="pet-hz-add" onClick={() => setOpen(true)}>
+        <Phone size={16} aria-hidden /> Ver plano e contatos
+      </button>
+      {open && (
+        <div className="pet-fc-sheet" role="dialog" aria-modal="true" aria-label="Plano de resgate e contatos"
+          onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
+          <div className="pet-fc-sheet-box">
+            <div className="pet-fc-sheet-head">
+              <h5>Plano de resgate</h5>
+              <button type="button" className="pet-hz-icon" aria-label="Fechar" autoFocus onClick={() => setOpen(false)}><X size={18} /></button>
+            </div>
+            <p>{plano?.trim() || "Plano de resgate da unidade: siga o procedimento de resgate definido para este espaço."}</p>
+            <ContatosEmergencia {...(unidade ? { unidade } : {})} />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -216,7 +216,7 @@ export function fichaProgresso(f: Ficha | undefined, fase?: FichaItem["fase"], l
 }
 
 /** Summary per atmospheric test: time, supervisor and situation. */
-export function resumoTeste<T extends Leitura & { horario?: string | undefined }>(
+export function resumoTeste<T extends Leitura & { coletada_em?: string | undefined }>(
   f: Ficha | undefined,
   leituras: T[],
   m: Momento,
@@ -230,6 +230,6 @@ export function resumoTeste<T extends Leitura & { horario?: string | undefined }
     : !faltam.length && (meta?.responsavel ?? "").trim()
       ? "Completo"
       : "Incompleto";
-  const horarios = ls.map((l) => l.horario).filter(Boolean).sort() as string[];
+  const horarios = ls.map((l) => l.coletada_em).filter(Boolean).sort() as string[];
   return { situacao, faltam, horario: horarios.at(-1) ?? "", responsavel: meta?.responsavel ?? "", reconferir: !!meta?.reconferir };
 }

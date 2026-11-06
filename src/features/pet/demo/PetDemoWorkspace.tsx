@@ -145,7 +145,7 @@ function DemoEditor({
   const fichaPend = fichaPendencias(ficha, draft.leituras);
   const goToFicha = (id: string) => {
     const tgt = id.startsWith("teste_") || id.startsWith("pre_") || id.startsWith("dur_") ? 3 : 2;
-    onSearch({ etapaDemo: tgt } as Partial<NrSearch>);
+    onSearch({ etapaDemo: tgt });
     setTimeout(() => document.getElementById(`ficha-${id}`)?.scrollIntoView({ block: "center" }), 150);
   };
   const set = <K extends keyof DemoDraft>(key: K, value: DemoDraft[K]) => {
@@ -518,7 +518,7 @@ function DemoEditor({
                 {(["inicial", "pos_ventilacao"] as const).map((m) => (
                   <div key={m}>
                     <strong>{m === "inicial" ? "Inicial" : "Após ventilação"}{testeDaEntrada(ficha) === m ? " · fundamenta a entrada" : ""}:</strong>{" "}
-                    {leiturasDe(draft.leituras, m).map((l) => `${l.agente} ${l.valor} ${l.unidade}${l.coletada_em ? ` (${petInstant(l.coletada_em)})` : ""}`).join(" · ") || "sem leituras"}
+                    {leiturasDe(draft.leituras, m).map((l) => `${l.agente} ${l.valor} ${l.unidade}${l.coletada_em ? ` (${new Date(l.coletada_em).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })})` : ""}`).join(" · ") || "sem leituras"}
                     {ficha.testes?.[m]?.responsavel ? ` — ${ficha.testes[m]!.responsavel}` : ""}
                   </div>
                 ))}

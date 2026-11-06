@@ -18,3 +18,26 @@ describe("ficha Cotrirosa no modelo operacional", () => {
     expect(g.map((x) => x.itens.length)).toEqual([1, 1]);
   });
 });
+
+import { emptyFicha, fichaProgresso, resumoTeste } from "../src/features/pet/cotrirosa-ficha";
+describe("andamento e resumo dos testes", () => {
+  it("conta respondidos e impedimentos da fase antes", () => {
+    const f = emptyFicha();
+    f.respostas["pre_bloqueio"] = { estado: "S" };
+    f.respostas["pre_purga"] = { estado: "N" };
+    const p = fichaProgresso(f, "antes");
+    expect(p.respondidos).toBe(2);
+    expect(p.impedimentos).toBe(1);
+  });
+  it("teste com O₂ fora da faixa fica Bloqueado", () => {
+    const r = resumoTeste(emptyFicha(), [{ agente: "O₂", valor: "18", momento: "inicial" }], "inicial");
+    expect(r.situacao).toBe("Bloqueado");
+  });
+  it("teste completo exige quatro agentes e responsável", () => {
+    const f = emptyFicha();
+    f.testes = { inicial: { responsavel: "Diciane" } };
+    const ls = ["H₂S", "CO", "Inflamáveis"].map((a) => ({ agente: a, valor: "0", momento: "inicial" }));
+    expect(resumoTeste(f, [...ls, { agente: "O₂", valor: "20.9", momento: "inicial" }], "inicial").situacao).toBe("Completo");
+    expect(resumoTeste(f, ls, "inicial").situacao).toBe("Incompleto");
+  });
+});

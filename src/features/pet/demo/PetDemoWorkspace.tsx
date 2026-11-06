@@ -275,7 +275,7 @@ function DemoEditor({
           <span className="pet-demo-eyebrow">{session?.numero ?? "Nova PET"} · Demonstração</span>
           <h3>{session ? demoStateLabel[session.estado] : "Comece por aqui"}</h3>
         </div>
-        <button className="pet-demo-text" onClick={() => onSearch({ petDemo: "", etapaDemo: 0 })}>
+        <button className="pet-demo-text" onClick={() => onSearch({ petDemo: "", etapaDemo: 0, visualizacao: "expandida" })}>
           <ArrowLeft size={15} /> Histórico do silo
         </button>
       </div>

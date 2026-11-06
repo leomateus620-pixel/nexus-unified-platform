@@ -108,7 +108,7 @@ export function UnitMapPanel({
     return () => element?.removeEventListener("keydown", listener);
   }, [expanded]);
   const open = (id: string, step = 0) =>
-    onSearch({ painel: "pet", petDemo: id, etapaDemo: step, visualizacao: "expandida" });
+    onSearch({ painel: "pet", petDemo: id, etapaDemo: step, visualizacao: "dedicada" });
   const base = norma === "NR33" ? "/nr-33" : "/nr-35";
   return (
     <aside
@@ -163,7 +163,7 @@ export function UnitMapPanel({
               !demo.data?.habilitado && (
                 <button
                   className="pet-demo-primary"
-                  onClick={() => onSearch({ painel: "pet", visualizacao: "expandida" })}
+                  onClick={() => onSearch({ painel: "pet", visualizacao: "dedicada" })}
                 >
                   Abrir PET
                 </button>

@@ -97,7 +97,7 @@
   },
   "after": {
     "phase": "verified",
-    "commit": "9cc9603e42c4930c6d7df5986c176aac5b1ea635",
+    "commit": "7296e58b202ecb2cfa6b951869663440ea3b2d7b",
     "browser": "153.0.8010.12",
     "network": "20 Mb/s down, 10 Mb/s up, 40 ms RTT, cold cache, loopback SQL",
     "physicalPhone": false,
@@ -109,8 +109,8 @@
           "width": 1440,
           "height": 1000
         },
-        "interactionMs": 4051,
-        "bytesAtInteraction": 683263,
+        "interactionMs": 4479,
+        "bytesAtInteraction": 683346,
         "device": {
           "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
           "dpr": 1,
@@ -121,13 +121,13 @@
           "profile": "balanced",
           "limits": ""
         },
-        "medianFps": 54,
-        "worstSecondFps": 12,
-        "p95FrameMs": 37.79999999999927,
-        "maxFrameMs": 703,
+        "medianFps": 52,
+        "worstSecondFps": 29,
+        "p95FrameMs": 33.60000000000218,
+        "maxFrameMs": 706.5,
         "pausedWhenIdle": true,
-        "maxCalls": 243,
-        "maxTriangles": 512963,
+        "maxCalls": 140,
+        "maxTriangles": 296055,
         "errors": [],
         "video": "verified-auto-desktop.webm"
       },
@@ -138,8 +138,8 @@
           "width": 1440,
           "height": 1000
         },
-        "interactionMs": 2462,
-        "bytesAtInteraction": 683263,
+        "interactionMs": 2432,
+        "bytesAtInteraction": 683346,
         "device": {
           "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
           "dpr": 1,
@@ -150,13 +150,13 @@
           "profile": "balanced",
           "limits": ""
         },
-        "medianFps": 53,
-        "worstSecondFps": 17,
-        "p95FrameMs": 37.5,
-        "maxFrameMs": 746.4999999999982,
+        "medianFps": 57,
+        "worstSecondFps": 19,
+        "p95FrameMs": 33.399999999999636,
+        "maxFrameMs": 706.8999999999996,
         "pausedWhenIdle": true,
-        "maxCalls": 243,
-        "maxTriangles": 512963,
+        "maxCalls": 140,
+        "maxTriangles": 296055,
         "errors": [],
         "video": "verified-balanced-desktop.webm"
       },
@@ -167,8 +167,8 @@
           "width": 390,
           "height": 844
         },
-        "interactionMs": 2363,
-        "bytesAtInteraction": 683263,
+        "interactionMs": 2422,
+        "bytesAtInteraction": 683346,
         "device": {
           "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
           "dpr": 1,
@@ -180,16 +180,24 @@
           "limits": ""
         },
         "medianFps": 60,
-        "worstSecondFps": 55,
-        "p95FrameMs": 17.700000000000728,
-        "maxFrameMs": 85.40000000000009,
+        "worstSecondFps": 56,
+        "p95FrameMs": 17.699999999999818,
+        "maxFrameMs": 69.59999999999991,
         "pausedWhenIdle": true,
-        "maxCalls": 140,
-        "maxTriangles": 296055,
+        "maxCalls": 229,
+        "maxTriangles": 511857,
         "errors": [],
         "video": "verified-auto-mobile.webm"
       }
-    ]
+    ],
+    "sourceHashes": {
+      "UnitScene.tsx": "faed4f8919bd0eb1ce082d46e7f2143b6ad42cf6cedbd24cca81d0bcc06f9c9b",
+      "model.ts": "d8ddc422d966724d589c3e53faf201986e889d99dff9cbd79804341d69491b02",
+      "graphics.ts": "6a3fe677b00a46fc396f72d71fdda5ceee2d4dabe5d956717eb43323fe0eac43",
+      "UnitEnvironment.tsx": "c9015161039c50978f8a0f44b0290dbea8d779530f334a6f6bc563b4c3fd2ec1",
+      "UnitMapWorkspace.tsx": "395bb479d5b73b863d65168e6fc781ceffd3bc45ce94443be1f6043dfca49cdb",
+      "mapa.css": "6195505ca54b22dc2592c974a94a76dd26f3c914f8b0f4bbea304644c628a280"
+    }
   },
   "checks": {
     "nr": 193,
@@ -292,9 +300,9 @@
     "result": "Did not remove the timing spike and exceeded 5s. Removed from delivered code. Experiment video kept locally under final-auto-desktop.webm."
   },
   "measuredSourceHashes": {
-    "UnitScene.tsx": "a190b0f8c2990ff75a3373f30cedd25d10d4939ab7a02c90c2f41b7d0498eeac",
-    "model.ts": "17cbbd25012fe7b6553684e9c4e40ca85bc6745437b1ff675298e575821eb09d",
-    "graphics.ts": "3a730d29b52af9f4d6c5ff3ceea524f453ed3694ccdf0767e26f72bcea3a3279",
+    "UnitScene.tsx": "faed4f8919bd0eb1ce082d46e7f2143b6ad42cf6cedbd24cca81d0bcc06f9c9b",
+    "model.ts": "d8ddc422d966724d589c3e53faf201986e889d99dff9cbd79804341d69491b02",
+    "graphics.ts": "6a3fe677b00a46fc396f72d71fdda5ceee2d4dabe5d956717eb43323fe0eac43",
     "UnitEnvironment.tsx": "c9015161039c50978f8a0f44b0290dbea8d779530f334a6f6bc563b4c3fd2ec1",
     "UnitMapWorkspace.tsx": "395bb479d5b73b863d65168e6fc781ceffd3bc45ce94443be1f6043dfca49cdb",
     "mapa.css": "6195505ca54b22dc2592c974a94a76dd26f3c914f8b0f4bbea304644c628a280"

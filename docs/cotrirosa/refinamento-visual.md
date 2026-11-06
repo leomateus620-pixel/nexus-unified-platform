@@ -56,11 +56,11 @@ Chromium 153, Windows, Intel UHD / ANGLE D3D11, DPR do dispositivo 1. Cache frio
 
 | Caso                      | Interação antes → depois | FPS mediano antes → depois | p95 antes → depois | Maior intervalo antes → depois |
 | ------------------------- | ------------------------ | -------------------------- | ------------------ | ------------------------------ |
-| Desktop, Automática       | 4,394 → 4,051 s          | 52 → 54                    | 33,3 → 37,8 ms     | 948,6 → 703,0 ms               |
-| Desktop, Equilibrada      | 3,846 → 2,462 s          | 52 → 53                    | 30,9 → 37,5 ms     | 1.293,7 → 746,5 ms             |
-| 390 px, mesma GPU emulada | 3,628 → 2,363 s          | 60 → 60                    | 17,7 → 17,7 ms     | 442,0 → 85,4 ms                |
+| Desktop, Automática       | 4,394 → 4,479 s          | 52 → 52                    | 33,3 → 33,6 ms     | 948,6 → 706,5 ms               |
+| Desktop, Equilibrada      | 3,846 → 2,432 s          | 52 → 57                    | 30,9 → 33,4 ms     | 1.293,7 → 706,9 ms             |
+| 390 px, mesma GPU emulada | 3,628 → 2,422 s          | 60 → 60                    | 17,7 → 17,7 ms     | 442,0 → 69,6 ms                |
 
-Repouso pausado nos seis casos. Transferência até interação: 662.275 → 683.263 bytes. As metas de interação e mediana do notebook foram atendidas nesta máquina; o p95 desktop piorou e há picos iniciais registrados. Os 60 FPS em 390 px não comprovam a meta de celular físico. Não se afirma ganho universal.
+Repouso pausado nos seis casos. Transferência até interação: 662.275 → 683.346 bytes. As metas de interação e mediana do notebook foram atendidas nesta máquina; o p95 desktop piorou e há picos iniciais registrados. Os 60 FPS em 390 px não comprovam a meta de celular físico. Não se afirma ganho universal.
 
 Passaram TypeScript, lint do escopo, build principal e laboratório, 193 testes NR, 95 PET, 29 verificações visuais novas, 13 v2, 15 de demonstração, 7 de resiliência, 30 checks SQL mapa/PET e 42 da demonstração. O CI NR passou a incluir as 29 verificações visuais. O teste legado `validate-ui.mjs` passou os oito checks de mapa anteriores à etapa PET e parou no seletor obsoleto “Operação da PET”, ausente já na base `9cc9603e`; o componente de ficha e esse roteiro não foram modificados. As suítes atuais da PET passaram.
 

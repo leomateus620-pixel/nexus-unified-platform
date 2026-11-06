@@ -217,7 +217,7 @@ function MapContextBar({ ctx }: { ctx: ShellContext }) {
     <div className="nx-mapctx">
       <Link
         to={ctx.back.to}
-        search={ctx.back.search}
+        search={ctx.back.search as never}
         className="nx-mapctx-back"
         aria-label={ctx.back.label}
         title={ctx.back.label}
@@ -232,7 +232,7 @@ function MapContextBar({ ctx }: { ctx: ShellContext }) {
       </div>
       <Link
         to={ctx.switchNorma.to}
-        search={ctx.switchNorma.search}
+        search={ctx.switchNorma.search as never}
         className="nx-mapctx-switch"
         aria-label={ctx.switchNorma.label}
         title={ctx.switchNorma.label}

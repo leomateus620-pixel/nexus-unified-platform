@@ -201,7 +201,8 @@ export default function UnitMapWorkspace({
         .toLocaleLowerCase("pt-BR")
         .includes(term.toLocaleLowerCase("pt-BR")),
     ) ?? [];
-  const maximized = !!selected && search.visualizacao === "expandida";
+  const dedicated = !!selected && search.visualizacao === "dedicada";
+  const maximized = !!selected && (search.visualizacao === "expandida" || dedicated);
   const clienteNome = contexto.clientes.find((c) => c.id === search.cliente)?.nome ?? "";
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   // Register the norm → client → unit context in the shell header; owned by this route + scope.
@@ -241,7 +242,7 @@ export default function UnitMapWorkspace({
       </div>
     );
   return (
-    <div className="nx-nr-workspace unit-map-workspace">
+    <div className="nx-nr-workspace unit-map-workspace" data-pet-focus={dedicated || undefined}>
       <h1 className="sr-only">
         Mapa 3D {norma === "NR33" ? "NR-33" : "NR-35"} · {clienteNome} · {unit.nome}
       </h1>
@@ -385,7 +386,7 @@ export default function UnitMapWorkspace({
               Implantação aproximada · medidas em metros · {data.objetos.length} silos vinculados
             </p>
           </div>
-          <details className="unit-map-sources">
+          <details className="unit-map-sources" hidden={dedicated}>
             <summary>Referências e limites da implantação</summary>
             {data.manifest.provenance.map((p) => (
               <p key={p}>{p}</p>

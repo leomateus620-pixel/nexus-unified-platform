@@ -15,6 +15,7 @@ import { PetStatus } from "./ExecucaoWorkspace";
 import { petDangerEvidenceItem } from "./evidence-context";
 import { PetPicker } from "./PetPicker";
 import { PetCertStatus } from "./PetTeamSelector";
+import { useOrg } from "@/features/org/session";
 import {
   PET_CONTROLES,
   pendingTarget,
@@ -134,10 +135,11 @@ export function PetDraftStage({
   const [selectedPerson, setSelectedPerson] = useState("");
   const [funcao, setFuncao] = useState("trabalhador");
   const [classificacao, setClassificacao] = useState("interno");
+  const orgId = useOrg().data?.orgId;
   const certScope =
-    detail.os?.cliente_id && detail.pet.unidade_id
+    orgId && detail.os?.cliente_id && detail.pet.unidade_id
       ? {
-          organization_id: detail.pet.organization_id,
+          organization_id: orgId,
           cliente_id: detail.os.cliente_id,
           unidade_id: detail.pet.unidade_id,
         }

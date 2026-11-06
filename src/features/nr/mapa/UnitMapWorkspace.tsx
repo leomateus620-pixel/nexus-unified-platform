@@ -1,5 +1,17 @@
-import { Component, lazy, Suspense, useCallback, useMemo, useState, type ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
+import {
+  Component,
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { clearShellContext, setShellContext } from "@/components/nexus/shell-context";
+const useLayoutSafeEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, Box, Expand, List, X } from "lucide-react";
@@ -190,6 +202,35 @@ export default function UnitMapWorkspace({
         .includes(term.toLocaleLowerCase("pt-BR")),
     ) ?? [];
   const maximized = !!selected && search.visualizacao === "expandida";
+  const clienteNome = contexto.clientes.find((c) => c.id === search.cliente)?.nome ?? "";
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // Register the norm → client → unit context in the shell header; owned by this route + scope.
+  const ownerKey = `${pathname}|${norma}|${search.cliente}|${search.unidade}`;
+  const otherNorma = norma === "NR33" ? "NR-35" : "NR-33";
+  const ctxReady = !!unit && !!clienteNome && search.escopo !== "todos";
+  const backSearch = JSON.stringify({ ...search, local: "", objeto: "" });
+  const switchSearch = JSON.stringify(search);
+  useLayoutSafeEffect(() => {
+    if (!ctxReady || !unit) {
+      clearShellContext(ownerKey);
+      return;
+    }
+    setShellContext({
+      path: pathname,
+      key: ownerKey,
+      normaCodigo: norma === "NR33" ? "NR-33" : "NR-35",
+      normaNome: norma === "NR33" ? "NR-33 — Espaços confinados" : "NR-35 — Trabalho em altura",
+      cliente: clienteNome,
+      unidade: unit.nome,
+      back: { to: base, search: JSON.parse(backSearch), label: "Voltar ao painel da unidade" },
+      switchNorma: {
+        to: `${norma === "NR33" ? "/nr-35" : "/nr-33"}/mapa-3d`,
+        search: JSON.parse(switchSearch),
+        label: `Alternar mapa para ${otherNorma}`,
+      },
+    });
+    return () => clearShellContext(ownerKey);
+  }, [ctxReady, ownerKey, pathname, norma, clienteNome, unit?.nome, base, backSearch, switchSearch, otherNorma]);
   if (!unit || !search.cliente || !search.unidade || search.escopo === "todos")
     return (
       <div className="nx-nr-workspace">
@@ -201,27 +242,9 @@ export default function UnitMapWorkspace({
     );
   return (
     <div className="nx-nr-workspace unit-map-workspace">
-      <header className="unit-map-header">
-        <Link
-          to={base}
-          search={{ ...search, local: "", objeto: "" }}
-          aria-label="Voltar ao painel da unidade"
-        >
-          <ArrowLeft size={19} />
-        </Link>
-        <div>
-          <p>
-            {contexto.clientes.find((c) => c.id === search.cliente)?.nome} ·{" "}
-            {norma === "NR33" ? "NR-33" : "NR-35"}
-          </p>
-          <h1>
-            <Box size={18} /> {unit.nome}
-          </h1>
-        </div>
-        <Link to={String(`${norma === "NR33" ? "/nr-35" : "/nr-33"}/mapa-3d`)} search={search}>
-          {norma === "NR33" ? "NR-35" : "NR-33"}
-        </Link>
-      </header>
+      <h1 className="sr-only">
+        Mapa 3D {norma === "NR33" ? "NR-33" : "NR-35"} · {clienteNome} · {unit.nome}
+      </h1>
       {q.isPending ? (
         <LoadingState label="Conferindo associação da cena e locais autorizados…" />
       ) : q.isError ? (

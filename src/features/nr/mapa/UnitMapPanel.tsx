@@ -59,6 +59,12 @@ export function UnitMapPanel({
   const onSearchRef = useRef(onSearch);
   onSearchRef.current = onSearch;
   const wasExpanded = useRef(false);
+  const tabsRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    tabsRef.current
+      ?.querySelector<HTMLElement>('[aria-pressed="true"]')
+      ?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [panel, expanded]);
   useEffect(() => {
     if (!expanded && wasExpanded.current) expandButton.current?.focus();
     wasExpanded.current = expanded;
@@ -66,7 +72,14 @@ export function UnitMapPanel({
     expandButton.current?.focus();
     const listener = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement && e.target.closest('[role="alertdialog"]')) return;
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && !e.defaultPrevented) {
+        const t = e.target instanceof HTMLElement ? e.target : null;
+        const openDetails = t?.closest("details[open]");
+        if (openDetails && root.current?.contains(openDetails) && t?.tagName === "SUMMARY") {
+          e.preventDefault();
+          (openDetails as HTMLDetailsElement).open = false;
+          return;
+        }
         e.preventDefault();
         e.stopPropagation();
         onSearchRef.current({ visualizacao: "compacta" });
@@ -102,11 +115,52 @@ export function UnitMapPanel({
       aria-label={`${identity?.tag ?? "Infraestrutura"} · ${identity?.titulo ?? building?.name ?? "Passarela compartilhada"}`}
     >
       <header className="unit-map-panel-top">
-        <div>
-          <p>{identity?.tag ?? "Infraestrutura"}</p>
+        <div className="unit-map-panel-identity">
+          <p>
+            <span className="unit-map-tag">{identity?.tag ?? "Infraestrutura"}</span>
+          </p>
           <h2>{identity?.titulo ?? building?.name ?? "Passarela compartilhada"}</h2>
+          {!!silo?.aliases.length && (
+            <span className="unit-map-aliases" aria-label="Outras identificações">
+              {silo.aliases.join(" · ")}
+            </span>
+          )}
         </div>
+        {identity && (
+          <div
+            className="unit-map-panel-intro"
+            hidden={expanded && panel === "pet" && !!search.petDemo}
+          >
+            <PetDemoEntry
+              scope={localScope}
+              user={user}
+              onOpen={open}
+              variant={expanded ? "toolbar" : undefined}
+            />
+            {demo.isPending ? (
+              <span className="unit-map-pet-loading" role="status">
+                Carregando PET…
+              </span>
+            ) : demo.isError ? (
+              <ErrorState error={demo.error} onRetry={() => demo.refetch()} />
+            ) : (
+              !demo.data?.habilitado && (
+                <button
+                  className="pet-demo-primary"
+                  onClick={() => onSearch({ painel: "pet", visualizacao: "expandida" })}
+                >
+                  Abrir PET
+                </button>
+              )
+            )}
+          </div>
+        )}
         <div className="unit-map-panel-tools">
+          {identity && (
+            <button aria-label="Enquadrar silo" title="Enquadrar silo" onClick={onFocus}>
+              <Crosshair size={18} />
+            </button>
+          )}
           <button
             ref={expandButton}
             aria-label={expanded ? "Minimizar ficha" : "Expandir ficha"}
@@ -117,6 +171,7 @@ export function UnitMapPanel({
           </button>
           <button
             aria-label="Fechar ficha"
+            title="Fechar ficha"
             onClick={() =>
               onSearch({
                 local: "",
@@ -134,37 +189,12 @@ export function UnitMapPanel({
       </header>
       {identity ? (
         <>
-          <div
-            className="unit-map-panel-intro"
-            hidden={expanded && panel === "pet" && !!search.petDemo}
-          >
-            <PetDemoEntry scope={localScope} user={user} onOpen={open} />
-            {demo.isPending ? (
-              <LoadingState label="Carregando PET…" />
-            ) : demo.isError ? (
-              <ErrorState error={demo.error} onRetry={() => demo.refetch()} />
-            ) : (
-              !demo.data?.habilitado && (
-                <button
-                  className="pet-demo-primary"
-                  onClick={() => onSearch({ painel: "pet", visualizacao: "expandida" })}
-                >
-                  Abrir PET
-                </button>
-              )
-            )}
-            <div className="unit-map-equipment-summary">
-              <span>{silo?.aliases.join(" · ")}</span>
-              <button aria-label="Enquadrar silo" title="Enquadrar silo" onClick={onFocus}>
-                <Crosshair size={16} />
-              </button>
-            </div>
-          </div>
-          <nav className="unit-map-tabs" aria-label="Conteúdo do equipamento">
+          <nav className="unit-map-tabs" aria-label="Conteúdo do equipamento" ref={tabsRef}>
             {(["ficha", "acervo", "pet", "historico"] as const).map((tab) => (
               <button
                 key={tab}
                 aria-pressed={panel === tab}
+                aria-current={panel === tab ? "page" : undefined}
                 onClick={() => onSearch({ painel: tab })}
               >
                 {
@@ -204,6 +234,7 @@ export function UnitMapPanel({
             </div>
             {panel === "historico" && (
               <>
+                <h3 className="unit-map-section-title">Histórico de PET</h3>
                 <PetDemoPanel
                   scope={localScope}
                   user={user}
@@ -262,18 +293,21 @@ export function UnitMapPanel({
                       )}
                     </>
                   )}
-                  {panel === "acervo" && (
-                    <details className="unit-map-provenance">
-                      <summary>Documentos contratados</summary>
-                      <NrContratacao scope={scope} compact />
-                    </details>
-                  )}
                   {expanded || panel === "acervo" ? (
                     <NrLocalDetail
                       row={row}
                       norma={panel === "acervo" ? norma : "NR33"}
                       contexto={contexto}
                       embedded
+                      variant={panel === "acervo" ? "acervo" : "padrao"}
+                      acervoExtra={
+                        panel === "acervo" ? (
+                          <details className="nr-acervo-contratados">
+                            <summary>Documentos contratados</summary>
+                            <NrContratacao scope={scope} compact />
+                          </details>
+                        ) : undefined
+                      }
                       search={{
                         ...search,
                         ficha:

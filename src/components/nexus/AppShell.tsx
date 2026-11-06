@@ -5,7 +5,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useOrg, useSessionUser } from "@/features/org/session";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { ArrowLeft, ArrowLeftRight } from "lucide-react";
+import { useShellContext, type ShellContext } from "./shell-context";
 
 import { destinoInicial, menusVisiveis, navGroups } from "@/lib/nexus-nav";
 import { cn } from "@/lib/utils";
@@ -128,6 +130,19 @@ export function AppShell({ children }: { children: ReactNode }) {
       .find(
         (item) => item.to !== "/" && (pathname === item.to || pathname.startsWith(`${item.to}/`)),
       )?.label ?? "Operação";
+  const registered = useShellContext();
+  const mapCtx = registered?.path === pathname ? registered : null;
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const sync = () =>
+      document.documentElement.style.setProperty("--nx-topbar-h", `${el.offsetHeight}px`);
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    return () => ro.disconnect();
+  });
   if (pathname === "/mapas-3d" || pathname === "/auth") return <main>{children}</main>;
 
   return (
@@ -150,8 +165,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="nx-shell-content lg:pl-64">
         <header
+          ref={headerRef}
+          data-context={mapCtx ? "map" : undefined}
           className={cn(
-            "nx-topbar sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border px-4 md:px-6",
+            "nx-topbar sticky top-0 z-30 flex items-center gap-3 border-b border-border px-4 md:px-6",
+            mapCtx ? "nx-topbar-map min-h-14" : "h-16",
             operational ? "bg-background" : "bg-background/90 backdrop-blur",
           )}
         >
@@ -173,11 +191,15 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
-          {operational && (
-            <div className="nx-area-label">
-              <span>Workspace</span>
-              <strong>{area}</strong>
-            </div>
+          {mapCtx ? (
+            <MapContextBar ctx={mapCtx} />
+          ) : (
+            operational && (
+              <div className="nx-area-label">
+                <span>Workspace</span>
+                <strong>{area}</strong>
+              </div>
+            )
           )}
           <UserArea />
         </header>
@@ -187,6 +209,70 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
       </div>
     </div>
+  );
+}
+
+function MapContextBar({ ctx }: { ctx: ShellContext }) {
+  return (
+    <div className="nx-mapctx">
+      <Link
+        to={ctx.back.to}
+        search={ctx.back.search as never}
+        className="nx-mapctx-back"
+        aria-label={ctx.back.label}
+        title={ctx.back.label}
+      >
+        <ArrowLeft aria-hidden="true" size={18} />
+      </Link>
+      <div className="nx-mapctx-cards" role="group" aria-label="Contexto do mapa">
+        <span className="nx-mapctx-area">Workspace</span>
+        <ContextCard label="Norma" short={ctx.normaCodigo} value={ctx.normaNome} />
+        <ContextCard label="Cliente" value={ctx.cliente} />
+        <ContextCard label="Unidade" value={ctx.unidade} grow />
+      </div>
+      <Link
+        to={ctx.switchNorma.to}
+        search={ctx.switchNorma.search as never}
+        className="nx-mapctx-switch"
+        aria-label={ctx.switchNorma.label}
+        title={ctx.switchNorma.label}
+      >
+        <ArrowLeftRight aria-hidden="true" size={15} />
+        <span>{ctx.switchNorma.label.replace(/^Alternar mapa para /, "")}</span>
+      </Link>
+    </div>
+  );
+}
+
+function ContextCard({
+  label,
+  value,
+  short,
+  grow,
+}: {
+  label: string;
+  value: string;
+  short?: string;
+  grow?: boolean;
+}) {
+  // A <details> keeps the full value reachable by touch and keyboard when truncated.
+  return (
+    <details className={cn("nx-mapctx-card", grow && "nx-mapctx-grow")}>
+      <summary aria-label={`${label}: ${value}`}>
+        <small>{label}</small>
+        <strong>
+          {short ? (
+            <>
+              <span className="nx-mapctx-short">{short}</span>
+              <span className="nx-mapctx-long">{value}</span>
+            </>
+          ) : (
+            value
+          )}
+        </strong>
+      </summary>
+      <p role="note">{value}</p>
+    </details>
   );
 }
 

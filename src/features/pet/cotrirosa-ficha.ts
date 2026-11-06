@@ -92,7 +92,7 @@ export type Resposta = { estado: Estado; justificativa?: string; detalhe?: strin
 export type Outro = { id: string; grupo: "EPC" | "EPI"; descricao: string; estado: Estado };
 export type TesteMeta = {
   responsavel?: string;
-  aparelho_filial?: "S" | "NA";
+  aparelho_filial?: "S" | "NA" | undefined;
   instrumento?: string;
   serie?: string;
   confirmado?: boolean;

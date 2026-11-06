@@ -9545,6 +9545,51 @@ export type Database = {
           },
         ]
       }
+      pet_funcao_competencias: {
+        Row: {
+          competencia_id: string
+          funcao: string
+          organization_id: string
+          regra: string
+          regra_versao: number
+          rotulo_vinculo: string
+          validade_meses: number | null
+        }
+        Insert: {
+          competencia_id: string
+          funcao: string
+          organization_id: string
+          regra?: string
+          regra_versao?: number
+          rotulo_vinculo: string
+          validade_meses?: number | null
+        }
+        Update: {
+          competencia_id?: string
+          funcao?: string
+          organization_id?: string
+          regra?: string
+          regra_versao?: number
+          rotulo_vinculo?: string
+          validade_meses?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_funcao_competencias_organization_id_competencia_id_fkey"
+            columns: ["organization_id", "competencia_id"]
+            isOneToOne: false
+            referencedRelation: "competencias"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "pet_funcao_competencias_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pet_intervalos: {
         Row: {
           entrada_em: string
@@ -13446,6 +13491,25 @@ export type Database = {
         Returns: boolean
       }
       pet_demo_validar: { Args: { p: Json }; Returns: undefined }
+      pet_equipe_candidatos: {
+        Args: {
+          p_cliente: string
+          p_funcao: string
+          p_org: string
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      pet_equipe_evidencias: {
+        Args: {
+          p_cliente: string
+          p_funcao: string
+          p_org: string
+          p_pessoa: string
+          p_unidade: string
+        }
+        Returns: Json
+      }
       pet_executar: { Args: { p_comando: Json; p_org: string }; Returns: Json }
       pet_executar_ate31: {
         Args: { p_comando: Json; p_org: string }

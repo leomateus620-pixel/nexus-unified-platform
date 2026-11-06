@@ -24,7 +24,7 @@ export function PetDemoEntry({
   user: string;
   onOpen: (id: string, step?: number) => void;
   /** "toolbar": compact horizontal layout for the expanded map sheet header. */
-  variant?: "toolbar";
+  variant?: "toolbar" | undefined;
 }) {
   const cls = variant === "toolbar" ? "pet-demo-entry pet-demo-entry-toolbar" : "pet-demo-entry";
   const ctx = useDemoContext(scope, user),

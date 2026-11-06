@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import { Crosshair, Maximize2, Minimize2, X } from "lucide-react";
+import { Crosshair, Maximize2, Minimize2, Expand, X } from "lucide-react";
 import { ErrorState, LoadingState } from "@/components/nexus/Page";
 import { PetUnitPanel } from "@/features/pet/PetUnitPanel";
 import { PetDemoEntry, PetDemoPanel } from "@/features/pet/demo/PetDemoPanel";
@@ -60,6 +60,8 @@ export function UnitMapPanel({
   const onSearchRef = useRef(onSearch);
   onSearchRef.current = onSearch;
   const wasExpanded = useRef(false);
+  const dedicatedRef = useRef(dedicated);
+  dedicatedRef.current = dedicated;
   const tabsRef = useRef<HTMLElement>(null);
   useEffect(() => {
     tabsRef.current
@@ -83,7 +85,7 @@ export function UnitMapPanel({
         }
         e.preventDefault();
         e.stopPropagation();
-        onSearchRef.current({ visualizacao: "compacta" });
+        onSearchRef.current({ visualizacao: dedicatedRef.current ? "expandida" : "compacta" });
       }
       if (e.key !== "Tab") return;
       const items = [
@@ -115,7 +117,20 @@ export function UnitMapPanel({
       data-view={expanded ? "expanded" : "compact"}
       aria-label={`${identity?.tag ?? "Infraestrutura"} · ${identity?.titulo ?? building?.name ?? "Passarela compartilhada"}`}
     >
-      <header className="unit-map-panel-top">
+      {dedicated && identity && (
+        <div className="unit-map-pet-focusbar">
+          <span className="unit-map-tag">{identity.tag}</span>
+          <strong>{identity.titulo}</strong>
+          <button
+            className="unit-map-pet-focus-exit"
+            onClick={() => onSearch({ visualizacao: "expandida" })}
+            title="Sair da tela dedicada (Esc)"
+          >
+            <Minimize2 size={16} /> Sair da tela dedicada
+          </button>
+        </div>
+      )}
+      <header className="unit-map-panel-top" hidden={dedicated && !!identity}>
         <div className="unit-map-panel-identity">
           <p>
             <span className="unit-map-tag">{identity?.tag ?? "Infraestrutura"}</span>
@@ -157,6 +172,15 @@ export function UnitMapPanel({
           </div>
         )}
         <div className="unit-map-panel-tools">
+          {identity && expanded && panel === "pet" && (
+            <button
+              aria-label="Abrir PET em tela dedicada"
+              title="Tela dedicada"
+              onClick={() => onSearch({ visualizacao: "dedicada" })}
+            >
+              <Expand size={18} />
+            </button>
+          )}
           {identity && (
             <button aria-label="Enquadrar silo" title="Enquadrar silo" onClick={onFocus}>
               <Crosshair size={18} />
@@ -190,7 +214,12 @@ export function UnitMapPanel({
       </header>
       {identity ? (
         <>
-          <nav className="unit-map-tabs" aria-label="Conteúdo do equipamento" ref={tabsRef}>
+          <nav
+            className="unit-map-tabs"
+            aria-label="Conteúdo do equipamento"
+            ref={tabsRef}
+            hidden={dedicated}
+          >
             {(["ficha", "acervo", "pet", "historico"] as const).map((tab) => (
               <button
                 key={tab}

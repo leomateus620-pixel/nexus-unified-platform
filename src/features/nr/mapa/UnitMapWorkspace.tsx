@@ -14,7 +14,7 @@ import { clearShellContext, setShellContext } from "@/components/nexus/shell-con
 const useLayoutSafeEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, Box, Expand, List, X } from "lucide-react";
+import { Expand, List, X } from "lucide-react";
 import { ErrorState, LoadingState } from "@/components/nexus/Page";
 import type { NrSearch } from "../NrWorkspace";
 import type { Norma, NrContexto, NrRecord } from "../domain";

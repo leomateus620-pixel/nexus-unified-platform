@@ -18,17 +18,21 @@ export function PetDemoEntry({
   scope,
   user,
   onOpen,
+  variant,
 }: {
   scope: DemoScope;
   user: string;
   onOpen: (id: string, step?: number) => void;
+  /** "toolbar": compact horizontal layout for the expanded map sheet header. */
+  variant?: "toolbar";
 }) {
+  const cls = variant === "toolbar" ? "pet-demo-entry pet-demo-entry-toolbar" : "pet-demo-entry";
   const ctx = useDemoContext(scope, user),
     list = useDemoList(scope, user, !!ctx.data?.habilitado);
   if (!ctx.data?.habilitado) return null;
   if (list.isPending)
     return (
-      <div className="pet-demo-entry">
+      <div className={cls}>
         <span className="pet-demo-badge">Demonstração</span>
         <button disabled>Carregando PETs…</button>
       </div>
@@ -37,7 +41,7 @@ export function PetDemoEntry({
   const rows = list.data?.registros ?? [],
     latest = rows[0];
   return (
-    <div className="pet-demo-entry">
+    <div className={cls}>
       <span className="pet-demo-badge">Demonstração</span>
       {latest ? (
         <button

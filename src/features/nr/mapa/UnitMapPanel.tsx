@@ -49,7 +49,8 @@ export function UnitMapPanel({
   const building = data.manifest?.buildings.find((b) => b.key === selected);
   const localScope = { ...scope, ...(identity ? { local_id: identity.local_id } : {}) };
   const demo = useDemoContext(localScope, user);
-  const expanded = search.visualizacao === "expandida";
+  const dedicated = search.visualizacao === "dedicada";
+  const expanded = search.visualizacao === "expandida" || dedicated;
   const panel =
     search.painel === "resumo" || !search.painel || search.painel === "pendencias"
       ? "ficha"

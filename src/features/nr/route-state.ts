@@ -10,7 +10,7 @@ export const nrSearchSchema = z.object({
   local: z.string().uuid().or(z.literal("")).catch(""),
   camera: z.enum(["normal", "superior", "angular"]).catch("normal"),
   objeto: z.string().max(60).catch(""),
-  visualizacao: z.enum(["compacta", "expandida"]).catch("compacta"),
+  visualizacao: z.enum(["compacta", "expandida", "dedicada"]).catch("compacta"),
   petDemo: z.union([z.string().uuid(), z.literal("nova"), z.literal("")]).catch(""),
   etapaDemo: z.coerce.number().int().min(0).max(7).catch(0),
   painel: z.enum(["resumo", "ficha", "acervo", "pendencias", "pet", "historico"]).catch("resumo"),

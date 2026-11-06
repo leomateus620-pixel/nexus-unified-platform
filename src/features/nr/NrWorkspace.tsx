@@ -117,7 +117,7 @@ export type NrSearch = {
   local?: string;
   camera?: "normal" | "superior" | "angular";
   objeto?: string;
-  visualizacao?: "compacta" | "expandida";
+  visualizacao?: "compacta" | "expandida" | "dedicada";
   petDemo?: string;
   etapaDemo?: number;
   painel?: "resumo" | "ficha" | "acervo" | "pendencias" | "pet" | "historico";

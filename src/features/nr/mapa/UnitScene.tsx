@@ -309,7 +309,7 @@ function Content(
     onAutomatic: (p: GraphicsProfile) => void;
   },
 ) {
-  const { manifest, objects, selected, onSelect, onFail, onQuality, profile } = props;
+  const { manifest, objects, selected, onSelect, onFail, onQuality, profile, interactive } = props;
   const { gl, scene, get, invalidate } = useThree();
   const light = props.light ?? "day",
     lighting = LIGHT_STATES[light],
@@ -339,6 +339,9 @@ function Content(
     return () => clearTimeout(timer);
   }, [selected]);
   useEffect(() => () => disposeUnitModel(model), [model]);
+  useEffect(() => {
+    if (interactive !== false) invalidate();
+  }, [interactive, invalidate]);
   useEffect(() => {
     configureUnitModel(model, profile, config.density);
     adaptive.current.reset(profile);
@@ -568,7 +571,7 @@ export default function UnitScene(props: Props) {
     <Canvas
       shadows
       dpr={config.dpr}
-      frameloop="demand"
+      frameloop={props.interactive === false ? "never" : "demand"}
       gl={contextOptions}
       camera={{ position: props.manifest.cameras.normal.position, fov: 43, near: 0.12, far: 1400 }}
       onCreated={({ gl }) => {

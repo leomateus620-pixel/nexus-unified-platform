@@ -58,8 +58,8 @@ export function graphicsLimits(choice: GraphicsProfile, c: GraphicsCapability) {
   return {
     ...config,
     shadow,
-    dpr: c.software ? Math.min(0.55, config.dpr) : config.dpr,
-    density: c.software ? Math.min(0.18, config.density) : config.density,
+    dpr: c.software ? Math.min(0.35, config.dpr) : config.dpr,
+    density: c.software ? Math.min(0.12, config.density) : config.density,
     message: c.software
       ? "Renderização por software: resolução, sombras e vegetação periférica limitadas neste recurso."
       : shadow < config.shadow

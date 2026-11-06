@@ -97,7 +97,7 @@
   },
   "after": {
     "phase": "verified",
-    "commit": "7296e58b202ecb2cfa6b951869663440ea3b2d7b",
+    "commit": "058a728d547a62863964d09e3e10f10e3fc1108d",
     "browser": "153.0.8010.12",
     "network": "20 Mb/s down, 10 Mb/s up, 40 ms RTT, cold cache, loopback SQL",
     "physicalPhone": false,
@@ -109,8 +109,8 @@
           "width": 1440,
           "height": 1000
         },
-        "interactionMs": 4479,
-        "bytesAtInteraction": 683346,
+        "interactionMs": 3996,
+        "bytesAtInteraction": 683368,
         "device": {
           "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
           "dpr": 1,
@@ -121,10 +121,10 @@
           "profile": "balanced",
           "limits": ""
         },
-        "medianFps": 52,
-        "worstSecondFps": 29,
-        "p95FrameMs": 33.60000000000218,
-        "maxFrameMs": 706.5,
+        "medianFps": 55,
+        "worstSecondFps": 18,
+        "p95FrameMs": 34.100000000000364,
+        "maxFrameMs": 701.7999999999993,
         "pausedWhenIdle": true,
         "maxCalls": 140,
         "maxTriangles": 296055,
@@ -138,8 +138,8 @@
           "width": 1440,
           "height": 1000
         },
-        "interactionMs": 2432,
-        "bytesAtInteraction": 683346,
+        "interactionMs": 2607,
+        "bytesAtInteraction": 683368,
         "device": {
           "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
           "dpr": 1,
@@ -150,10 +150,10 @@
           "profile": "balanced",
           "limits": ""
         },
-        "medianFps": 57,
-        "worstSecondFps": 19,
-        "p95FrameMs": 33.399999999999636,
-        "maxFrameMs": 706.8999999999996,
+        "medianFps": 58,
+        "worstSecondFps": 17,
+        "p95FrameMs": 36.5,
+        "maxFrameMs": 711.5,
         "pausedWhenIdle": true,
         "maxCalls": 140,
         "maxTriangles": 296055,
@@ -167,8 +167,8 @@
           "width": 390,
           "height": 844
         },
-        "interactionMs": 2422,
-        "bytesAtInteraction": 683346,
+        "interactionMs": 2403,
+        "bytesAtInteraction": 683368,
         "device": {
           "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
           "dpr": 1,
@@ -180,20 +180,20 @@
           "limits": ""
         },
         "medianFps": 60,
-        "worstSecondFps": 56,
-        "p95FrameMs": 17.699999999999818,
-        "maxFrameMs": 69.59999999999991,
+        "worstSecondFps": 55,
+        "p95FrameMs": 17.600000000002183,
+        "maxFrameMs": 86.69999999999982,
         "pausedWhenIdle": true,
-        "maxCalls": 229,
-        "maxTriangles": 511857,
+        "maxCalls": 140,
+        "maxTriangles": 296055,
         "errors": [],
         "video": "verified-auto-mobile.webm"
       }
     ],
     "sourceHashes": {
-      "UnitScene.tsx": "faed4f8919bd0eb1ce082d46e7f2143b6ad42cf6cedbd24cca81d0bcc06f9c9b",
+      "UnitScene.tsx": "fc05a56e460a566b08fc235637aa9ea809c9b62fd66d5fcadaeaffa6cb80ff78",
       "model.ts": "d8ddc422d966724d589c3e53faf201986e889d99dff9cbd79804341d69491b02",
-      "graphics.ts": "6a3fe677b00a46fc396f72d71fdda5ceee2d4dabe5d956717eb43323fe0eac43",
+      "graphics.ts": "def9763e6fa53bcd90343c9ef2c123982e7f58db59350c2493d97d02bbe20735",
       "UnitEnvironment.tsx": "c9015161039c50978f8a0f44b0290dbea8d779530f334a6f6bc563b4c3fd2ec1",
       "UnitMapWorkspace.tsx": "395bb479d5b73b863d65168e6fc781ceffd3bc45ce94443be1f6043dfca49cdb",
       "mapa.css": "6195505ca54b22dc2592c974a94a76dd26f3c914f8b0f4bbea304644c628a280"
@@ -300,9 +300,9 @@
     "result": "Did not remove the timing spike and exceeded 5s. Removed from delivered code. Experiment video kept locally under final-auto-desktop.webm."
   },
   "measuredSourceHashes": {
-    "UnitScene.tsx": "faed4f8919bd0eb1ce082d46e7f2143b6ad42cf6cedbd24cca81d0bcc06f9c9b",
+    "UnitScene.tsx": "fc05a56e460a566b08fc235637aa9ea809c9b62fd66d5fcadaeaffa6cb80ff78",
     "model.ts": "d8ddc422d966724d589c3e53faf201986e889d99dff9cbd79804341d69491b02",
-    "graphics.ts": "6a3fe677b00a46fc396f72d71fdda5ceee2d4dabe5d956717eb43323fe0eac43",
+    "graphics.ts": "def9763e6fa53bcd90343c9ef2c123982e7f58db59350c2493d97d02bbe20735",
     "UnitEnvironment.tsx": "c9015161039c50978f8a0f44b0290dbea8d779530f334a6f6bc563b4c3fd2ec1",
     "UnitMapWorkspace.tsx": "395bb479d5b73b863d65168e6fc781ceffd3bc45ce94443be1f6043dfca49cdb",
     "mapa.css": "6195505ca54b22dc2592c974a94a76dd26f3c914f8b0f4bbea304644c628a280"

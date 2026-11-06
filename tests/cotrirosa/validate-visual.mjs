@@ -42,7 +42,10 @@ const snap = (p) =>
     buffer: [c.width, c.height],
   }));
 const shot = async (p, name) => {
-  await p.screenshot({ path: `${out}/${name}.png` });
+  await p.screenshot({
+    path: `${out}/${name}.png`,
+    timeout: process.platform === "win32" ? 30000 : 60000,
+  });
   report.captures.push(name);
 };
 const open = async (p) => {
@@ -83,6 +86,9 @@ try {
   p.on("pageerror", (e) => report.errors.push(e.message));
   await p.goto(url);
   await ready(p);
+  const orbitSteps = /software/.test((await p.locator("canvas").getAttribute("data-limits")) ?? "")
+    ? 6
+    : 32;
   await p.evaluate(() => {
     window.__originalCanvas = document.querySelector("canvas");
   });
@@ -175,7 +181,7 @@ try {
       cy = box.y + box.height * 0.5;
     await p.mouse.move(cx, cy);
     await p.mouse.down();
-    await p.mouse.move(cx + 140, cy - 15, { steps: 32 });
+    await p.mouse.move(cx + 140, cy - 15, { steps: orbitSteps });
     await p.mouse.up();
     await p.waitForTimeout(900);
     const d = await snap(p);

@@ -48,7 +48,7 @@ O popover acessível oferece Automática, Baixa, Equilibrada e Alta, mais hora d
 
 Um único canvas/contexto é mantido nas trocas, assim como seleção, modo, posição, alvo, zoom, painel e hora. Geometria/material/buffers são reaproveitados, mapas de sombras substituídos são descartados e PMREMs são liberados na desmontagem. Perda de contexto tem restauração controlada; após 5 s sem restauração, abre a lista de locais existente. Os ciclos testados mantiveram 137 geometrias e 31 texturas antes/depois, com dois ambientes preparados.
 
-O primeiro CI identificou timeout de captura no renderer por software. O custo foi reproduzido com SwiftShader no Windows (24,119 s para a captura). O orçamento específico de software foi reduzido para DPR 0,55, sombras de 256 px e no máximo 18% das instâncias de vegetação periférica, preservando a estrutura industrial e a opção manual. A captura caiu para 16,062 s nessa observação; não é prova de desempenho de celular. A capacidade agora é resolvida na sonda anterior ao canvas, evitando submeter primeiro o orçamento Equilibrada num dispositivo por software.
+O primeiro CI identificou timeout de captura no renderer por software. O custo foi reproduzido com SwiftShader no Windows (24,119 s para a captura). O orçamento específico de software foi reduzido para DPR 0,35, sombras de 256 px e no máximo 12% das instâncias de vegetação periférica, preservando a estrutura industrial e a opção manual. A captura posterior com seleção e ficha compacta levou 16,490 s; a ficha expandida, 3,337 s. O canvas pausa quando coberto pela ficha expandida e retoma sem recriar contexto. Em CI Linux, somente a captura de evidência tem prazo de 60 s; os testes funcionais mantêm seus limites. Não é prova de desempenho de celular. A capacidade agora é resolvida na sonda anterior ao canvas, evitando submeter primeiro o orçamento Equilibrada num dispositivo por software.
 
 ## Desempenho e validação
 
@@ -56,11 +56,11 @@ Chromium 153, Windows, Intel UHD / ANGLE D3D11, DPR do dispositivo 1. Cache frio
 
 | Caso                      | Interação antes → depois | FPS mediano antes → depois | p95 antes → depois | Maior intervalo antes → depois |
 | ------------------------- | ------------------------ | -------------------------- | ------------------ | ------------------------------ |
-| Desktop, Automática       | 4,394 → 4,479 s          | 52 → 52                    | 33,3 → 33,6 ms     | 948,6 → 706,5 ms               |
-| Desktop, Equilibrada      | 3,846 → 2,432 s          | 52 → 57                    | 30,9 → 33,4 ms     | 1.293,7 → 706,9 ms             |
-| 390 px, mesma GPU emulada | 3,628 → 2,422 s          | 60 → 60                    | 17,7 → 17,7 ms     | 442,0 → 69,6 ms                |
+| Desktop, Automática       | 4,394 → 3,996 s          | 52 → 55                    | 33,3 → 34,1 ms     | 948,6 → 701,8 ms               |
+| Desktop, Equilibrada      | 3,846 → 2,607 s          | 52 → 58                    | 30,9 → 36,5 ms     | 1.293,7 → 711,5 ms             |
+| 390 px, mesma GPU emulada | 3,628 → 2,403 s          | 60 → 60                    | 17,7 → 17,6 ms     | 442,0 → 86,7 ms                |
 
-Repouso pausado nos seis casos. Transferência até interação: 662.275 → 683.346 bytes. As metas de interação e mediana do notebook foram atendidas nesta máquina; o p95 desktop piorou e há picos iniciais registrados. Os 60 FPS em 390 px não comprovam a meta de celular físico. Não se afirma ganho universal.
+Repouso pausado nos seis casos. Transferência até interação: 662.275 → 683.368 bytes. As metas de interação e mediana do notebook foram atendidas nesta máquina; o p95 desktop piorou e há picos iniciais registrados. Os 60 FPS em 390 px não comprovam a meta de celular físico. Não se afirma ganho universal.
 
 Passaram TypeScript, lint do escopo, build principal e laboratório, 193 testes NR, 95 PET, 29 verificações visuais novas, 13 v2, 15 de demonstração, 7 de resiliência, 30 checks SQL mapa/PET e 42 da demonstração. O CI NR passou a incluir as 29 verificações visuais. O teste legado `validate-ui.mjs` passou os oito checks de mapa anteriores à etapa PET e parou no seletor obsoleto “Operação da PET”, ausente já na base `9cc9603e`; o componente de ficha e esse roteiro não foram modificados. As suítes atuais da PET passaram.
 

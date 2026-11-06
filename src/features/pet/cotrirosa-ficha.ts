@@ -170,3 +170,28 @@ export const CONTATOS_FIXOS = [
   { nome: "SAMU", numero: "192" },
   { nome: "Bombeiros", numero: "193" },
 ];
+
+/** Model items for the unit procedure (operational PET). "N" always blocks; NA needs justification. */
+export function fichaModeloItens() {
+  return FICHA_ITENS.map((it) => ({
+    id: it.id,
+    rotulo: it.label,
+    grupo: it.grupo,
+    fase: it.fase,
+    obrigatorio: true,
+    permite_na: it.estados.includes("NA"),
+    justificativa_na: true,
+    evidencia_obrigatoria: false,
+  }));
+}
+/** Operational groups by paper-form block; only items the approved model includes. */
+export function fichaGruposDoModelo(ids: Set<string>) {
+  const out: { grupo: string; itens: [string, string][] }[] = [];
+  for (const it of FICHA_ITENS) {
+    if (!ids.has(it.id)) continue;
+    let g = out.find((x) => x.grupo === it.grupo);
+    if (!g) out.push((g = { grupo: it.grupo, itens: [] }));
+    g.itens.push([it.id, it.label]);
+  }
+  return out;
+}

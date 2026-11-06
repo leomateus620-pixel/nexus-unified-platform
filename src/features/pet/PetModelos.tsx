@@ -5,6 +5,7 @@ import { optionName, petDate, type PetExecute, type PetOpcoes } from "./ui-types
 import { PetField } from "./PetEditor";
 import { PetStatus } from "./ExecucaoWorkspace";
 import type { Json } from "./schemas";
+import { FICHA_VERSAO, fichaModeloItens } from "./cotrirosa-ficha";
 
 export function PetModelos({
   options,
@@ -149,6 +150,37 @@ export function PetModelos({
                   onChange={(e) => setProcedimento(e.target.value)}
                 />
               </PetField>
+              <ActionButton
+                variant="ghost"
+                onClick={() => {
+                  let base: Record<string, unknown> = {};
+                  try {
+                    const cur: unknown = procedimento.trim() ? JSON.parse(procedimento) : {};
+                    if (cur && typeof cur === "object" && !Array.isArray(cur)) base = cur as Record<string, unknown>;
+                  } catch {
+                    /* replace invalid text */
+                  }
+                  const atuais = Array.isArray(base["itens"]) ? (base["itens"] as { id?: string }[]) : [];
+                  const novos = fichaModeloItens().filter((n) => !atuais.some((a) => a?.id === n.id));
+                  setProcedimento(
+                    JSON.stringify(
+                      {
+                        agentes: [],
+                        qualificacoes: [],
+                        procedimento_resgate: "",
+                        monitoramento_continuo: true,
+                        ...base,
+                        ficha: FICHA_VERSAO,
+                        itens: [...atuais, ...novos],
+                      },
+                      null,
+                      2,
+                    ),
+                  );
+                }}
+              >
+                Incluir itens da ficha Cotrirosa
+              </ActionButton>
               <p className="nx-pet-notice">
                 Não há limites ou qualificações presumidos neste editor. Preencha o procedimento
                 validado da organização. Salvar cria uma versão em rascunho.

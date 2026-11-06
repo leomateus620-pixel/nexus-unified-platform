@@ -109,6 +109,8 @@ export function NrLocalDetail({
   onSearch,
   onSaved,
   embedded = false,
+  variant = "padrao",
+  acervoExtra,
 }: {
   row: NrRecord;
   norma: Norma;
@@ -117,7 +119,11 @@ export function NrLocalDetail({
   onSearch: (patch: Partial<NrSearch>) => void;
   onSaved: () => void;
   embedded?: boolean;
+  /** "acervo": Mapa 3D Acervo tab — list first, no identity or 8-item technical nav. */
+  variant?: "padrao" | "acervo";
+  acervoExtra?: ReactNode;
 }) {
+  const acervo = variant === "acervo";
   const base = norma === "NR33" ? "/nr-33" : "/nr-35";
   const area = search.ficha || "identificacao";
   const d = row.dados;
@@ -143,9 +149,11 @@ export function NrLocalDetail({
         </p>
       )}
       <NrLocalProposedChanges value={d} />
+      {!acervo && (
+      <>
       <div className="nr-local-identity">
         <p className="nr-local-context">
-          <span>{unitName}</span>
+          {!embedded && <span>{unitName}</span>}
           <span>{row.familia || nrLabel(row.tipo ?? "Local")}</span>
         </p>
         <Link to={String(`${base}/levantamentos`)} search={scope} className="nr-inline-action">
@@ -175,6 +183,32 @@ export function NrLocalDetail({
           </Link>
         ))}
       </nav>
+      </>
+      )}
+      {acervo && (
+        <div className="nr-acervo-head">
+          <div className="nr-acervo-switch" role="group" aria-label="Tipo de acervo">
+            {(["documentos", "fotos"] as const).map((k) => (
+              <button
+                key={k}
+                type="button"
+                aria-pressed={area === k}
+                onClick={() => onSearch({ ficha: k })}
+              >
+                {k === "documentos" ? "Documentos" : "Fotos"}
+              </button>
+            ))}
+          </div>
+          <Link
+            to={String(`${norma === "NR33" ? "/nr-35" : "/nr-33"}/documentos`)}
+            search={scope}
+            className="nr-inline-action"
+          >
+            Documentos na {norma === "NR33" ? "NR-35" : "NR-33"} <ArrowRight size={16} />
+          </Link>
+          {acervoExtra}
+        </div>
+      )}
       <section aria-label={areas.find(([key]) => key === area)?.[1]} className="nr-detail-area">
         {area === "identificacao" && (
           <>
@@ -410,14 +444,14 @@ export function NrLocalDetail({
         )}
         {area === "documentos" && (
           <>
-            <Link
+            {!acervo && <Link
               to={String(`${norma === "NR33" ? "/nr-35" : "/nr-33"}/documentos`)}
               search={scope}
               className="nr-inline-action"
             >
               Consultar documentos vinculados na {norma === "NR33" ? "NR-35" : "NR-33"}
               <ArrowRight size={16} />
-            </Link>
+            </Link>}
             <NrRelatedRecords
               row={row}
               norma={norma}

@@ -231,21 +231,6 @@ function DemoEditor({
       next,
     );
   }
-  function addReading() {
-    const n = reading.replace(",", ".");
-    if (!agent.trim() || !unit.trim() || !n || !Number.isFinite(Number(n))) {
-      setError("Informe agente, valor numérico e unidade.");
-      return;
-    }
-    setError("");
-    set("leituras", [
-      ...draft.leituras,
-      { id: crypto.randomUUID(), agente: agent.trim(), valor: n, unidade: unit.trim() },
-    ]);
-    setAgent("");
-    setReading("");
-    setUnit("");
-  }
   const closedOrOperating = !editable;
   const workers = draft.equipe.filter((p) => p.funcao === "trabalhador"),
     open = detail?.presencas.filter((p) => !p.saida_em) ?? [];

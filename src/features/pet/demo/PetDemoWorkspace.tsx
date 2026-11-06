@@ -432,7 +432,7 @@ function DemoEditor({
               <TesteResumo ficha={ficha} leituras={draft.leituras} momento="inicial" />
               <ReadingRows
                 momento="inicial"
-                legend="Teste inicial"
+                legend="Leituras"
                 agentes={DEMO_AGENTES}
                 instrumentos={DEMO_INSTRUMENTOS}
                 pontos={DEMO_PONTOS}
@@ -452,7 +452,7 @@ function DemoEditor({
               <TesteResumo ficha={ficha} leituras={draft.leituras} momento="pos_ventilacao" />
               <ReadingRows
                 momento="pos_ventilacao"
-                legend="Teste após ventilação e isolamento"
+                legend="Leituras"
                 agentes={DEMO_AGENTES}
                 instrumentos={DEMO_INSTRUMENTOS}
                 pontos={DEMO_PONTOS}

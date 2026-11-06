@@ -13,11 +13,12 @@ type Props = {
 
 /** Hazard → measure selection by touch; measures always start "pendente". */
 export function HazardMeasurePicker({ catalogo, value, onChange, disabled, aviso }: Props) {
-  const [adding, setAdding] = useState(value.length === 0);
+  const [adding, setAdding] = useState(true);
   const [outro, setOutro] = useState({ perigo: "", motivo: "" });
   const has = (perigo: string) => value.some((p) => p.perigo === perigo);
   const medidasDe = (perigo: string) =>
     catalogo.flatMap((g) => g.itens).find((i) => i.perigo === perigo)?.medidas ?? [];
+  const todas = [...new Set(catalogo.flatMap((g) => g.itens.flatMap((i) => i.medidas)))];
   const toggle = (grupo: string, perigo: string) =>
     onChange(
       has(perigo)
@@ -44,7 +45,7 @@ export function HazardMeasurePicker({ catalogo, value, onChange, disabled, aviso
             <details key={g.grupo} open={gi === 0}>
               <summary>
                 {g.grupo}
-                <span>{g.itens.filter((i) => has(i.perigo)).length || ""}</span>
+                <span>{g.itens.filter((i) => has(i.perigo)).length} selecionado(s)</span>
                 <ChevronDown size={16} aria-hidden />
               </summary>
               <div className="pet-hz-options">
@@ -97,7 +98,7 @@ export function HazardMeasurePicker({ catalogo, value, onChange, disabled, aviso
       )}
       <ul className="pet-hz-list">
         {value.map((p) => (
-          <HazardRow key={p.id} p={p} sugestoes={medidasDe(p.perigo)} patch={patch} patchM={patchM}
+          <HazardRow key={p.id} p={p} sugestoes={medidasDe(p.perigo)} todas={todas} patch={patch} patchM={patchM}
             remove={() => onChange(value.filter((x) => x.id !== p.id))} />
         ))}
       </ul>
@@ -108,17 +109,21 @@ export function HazardMeasurePicker({ catalogo, value, onChange, disabled, aviso
 function HazardRow({
   p,
   sugestoes,
+  todas,
   patch,
   patchM,
   remove,
 }: {
   p: DemoPerigo;
   sugestoes: string[];
+  todas: string[];
   patch: (id: string, f: (p: DemoPerigo) => DemoPerigo) => void;
   patchM: (pid: string, mid: string, m: Partial<DemoMedida>) => void;
   remove: () => void;
 }) {
-  const [open, setOpen] = useState(p.medidas.length === 0);
+  const [open, setOpen] = useState(false);
+  const [verTodas, setVerTodas] = useState(false);
+  const [busca, setBusca] = useState("");
   const [outra, setOutra] = useState({ medida: "", motivo: "" });
   const hasM = (m: string) => p.medidas.some((x) => x.medida === m);
   const addM = (medida: string, outro_motivo?: string) =>
@@ -155,14 +160,17 @@ function HazardRow({
                 <X size={16} />
               </button>
             </div>
-            <label className="pet-hz-estado">
-              <span className="sr-only">Estado de {m.medida}</span>
-              <select value={m.estado} onChange={(e) => patchM(p.id, m.id, { estado: e.target.value as DemoMedida["estado"] })}>
-                {Object.entries(MEDIDA_ESTADOS).map(([k, v]) => (
-                  <option key={k} value={k}>{v}</option>
-                ))}
-              </select>
-            </label>
+            <span className="pet-hz-prevista">Prevista</span>
+            <div className="pet-fc-opts" role="radiogroup" aria-label={`Confirmação em campo: ${m.medida}`}>
+              {(["confirmada", "impeditiva", "nao_aplica"] as const).map((k) => (
+                <button key={k} type="button" role="radio" aria-checked={m.estado === k}
+                  data-s={k === "confirmada" ? "S" : k === "impeditiva" ? "N" : "NA"}
+                  onClick={() => patchM(p.id, m.id, { estado: m.estado === k ? "pendente" : k })}>
+                  {k === "confirmada" ? "Sim" : k === "impeditiva" ? "Não" : "Não se aplica"}
+                </button>
+              ))}
+            </div>
+            {m.estado === "pendente" && <small className="pet-hz-nv">{MEDIDA_ESTADOS.pendente} · confirmação em campo</small>}
             {(m.estado === "nao_aplica" || m.estado === "impeditiva") && (
               <label className="pet-hz-just">
                 Justificativa{m.estado === "nao_aplica" ? " (obrigatória)" : ""}
@@ -173,7 +181,7 @@ function HazardRow({
         ))}
       </ul>
       <button type="button" className="pet-hz-add" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-        <Plus size={16} aria-hidden /> Adicionar medidas
+        <Plus size={16} aria-hidden /> Adicionar medida
       </button>
       {open && (
         <div className="pet-hz-chips">
@@ -182,6 +190,22 @@ function HazardRow({
               <Plus size={14} aria-hidden /> {s}
             </button>
           ))}
+          <button type="button" className="pet-hz-link" aria-expanded={verTodas} onClick={() => setVerTodas((v) => !v)}>
+            {verTodas ? "Ocultar demais medidas" : "Ver todas as medidas aplicáveis"}
+          </button>
+          {verTodas && (
+            <>
+              <input className="pet-hz-busca" type="search" placeholder="Buscar medida (opcional)" aria-label="Buscar medida"
+                value={busca} onChange={(e) => setBusca(e.target.value)} />
+              {todas
+                .filter((s) => !sugestoes.includes(s) && !hasM(s) && s.toLocaleLowerCase("pt-BR").includes(busca.toLocaleLowerCase("pt-BR")))
+                .map((s) => (
+                  <button key={s} type="button" className="pet-hz-chip" onClick={() => addM(s)}>
+                    <Plus size={14} aria-hidden /> {s}
+                  </button>
+                ))}
+            </>
+          )}
           <div className="pet-hz-outro">
             <label>
               Outra medida

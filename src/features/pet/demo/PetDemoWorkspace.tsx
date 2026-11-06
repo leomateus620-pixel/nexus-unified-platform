@@ -34,7 +34,7 @@ import { HazardMeasurePicker } from "../mobile/HazardMeasurePicker";
 import { ReadingRows } from "../mobile/ReadingRows";
 import { ProcedurePicker } from "../mobile/ProcedurePicker";
 import "../mobile/pet-mobile.css";
-import { ContatosEmergencia, FichaChecklist, QuenteFields, TesteMetaFields, VentilacaoFields } from "../mobile/FichaChecklist";
+import { ContatosEmergencia, FichaChecklist, FichaProgresso, PlanoContatosBotao, QuenteFields, TesteMetaFields, TesteResumo, VentilacaoFields, irParaItemFicha } from "../mobile/FichaChecklist";
 import { emptyFicha, fichaPendencias, leiturasDe, testeDaEntrada, type Ficha } from "../cotrirosa-ficha";
 import {
   DEMO_AGENTES,
@@ -144,8 +144,9 @@ function DemoEditor({
   const fichaPend = fichaPendencias(ficha, draft.leituras);
   const goToFicha = (id: string) => {
     const tgt = id.startsWith("teste_") || id.startsWith("pre_") || id.startsWith("dur_") ? 3 : 2;
+    if (step === tgt && irParaItemFicha(id)) return;
     onSearch({ etapaDemo: tgt });
-    setTimeout(() => document.getElementById(`ficha-${id}`)?.scrollIntoView({ block: "center" }), 150);
+    setTimeout(() => irParaItemFicha(id), 200);
   };
   const set = <K extends keyof DemoDraft>(key: K, value: DemoDraft[K]) => {
     setDraft((old) => ({ ...old, [key]: value }));
@@ -419,32 +420,52 @@ function DemoEditor({
         {step === 2 && (
           <>
             <h5 className="pet-demo-section-heading">Medidas de controle e prevenção</h5>
+            <FichaProgresso ficha={ficha} fase="controle" onIr={goToFicha} />
             <FichaChecklist fase="controle" outros ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
           </>
         )}
         {step === 3 && (
           <>
-            <div className="pet-fc-testes">
-              {(["inicial", "pos_ventilacao"] as const).map((m) => (
-                <div key={m}>
-                  <ReadingRows
-                    key={m}
-                    momento={m}
-                    legend={m === "inicial" ? "Teste inicial da atmosfera" : "Teste após ventilação e isolamento"}
-                    agentes={DEMO_AGENTES}
-                    instrumentos={DEMO_INSTRUMENTOS}
-                    pontos={DEMO_PONTOS}
-                    value={draft.leituras}
-                    disabled={closedOrOperating || busy}
-                    onChange={(v) => set("leituras", v)}
-                  />
-                  <TesteMetaFields momento={m} instrumentos={DEMO_INSTRUMENTOS} ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
-                </div>
-              ))}
-            </div>
-            <h5 className="pet-demo-section-heading">Procedimentos antes da entrada</h5>
-            <FichaChecklist fase="antes" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
-            <VentilacaoFields ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            <FichaProgresso ficha={ficha} fase="antes" leituras={draft.leituras} onIr={goToFicha} />
+            <details className="pet-fc-grupo" open>
+              <summary>Teste inicial</summary>
+              <TesteResumo ficha={ficha} leituras={draft.leituras} momento="inicial" />
+              <ReadingRows
+                momento="inicial"
+                legend="Leituras"
+                agentes={DEMO_AGENTES}
+                instrumentos={DEMO_INSTRUMENTOS}
+                pontos={DEMO_PONTOS}
+                value={draft.leituras}
+                disabled={closedOrOperating || busy}
+                onChange={(v) => set("leituras", v)}
+              />
+              <TesteMetaFields momento="inicial" instrumentos={DEMO_INSTRUMENTOS} ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            </details>
+            <details className="pet-fc-grupo" open>
+              <summary>Bloqueio, purga e ventilação</summary>
+              <FichaChecklist fase="antes" grupo="Bloqueio, purga e ventilação" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+              <VentilacaoFields ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            </details>
+            <details className="pet-fc-grupo" open>
+              <summary>Teste após ventilação e isolamento</summary>
+              <TesteResumo ficha={ficha} leituras={draft.leituras} momento="pos_ventilacao" />
+              <ReadingRows
+                momento="pos_ventilacao"
+                legend="Leituras"
+                agentes={DEMO_AGENTES}
+                instrumentos={DEMO_INSTRUMENTOS}
+                pontos={DEMO_PONTOS}
+                value={draft.leituras}
+                disabled={closedOrOperating || busy}
+                onChange={(v) => set("leituras", v)}
+              />
+              <TesteMetaFields momento="pos_ventilacao" instrumentos={DEMO_INSTRUMENTOS} ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            </details>
+            <details className="pet-fc-grupo" open>
+              <summary>Demais verificações</summary>
+              <FichaChecklist fase="antes" grupo="Demais verificações" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            </details>
             <h5 className="pet-demo-section-heading">Durante o trabalho (previsto)</h5>
             <FichaChecklist fase="durante" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
             <QuenteFields ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
@@ -543,6 +564,28 @@ function DemoEditor({
         )}
         {step === 5 && (
           <>
+            <div className="pet-fc-cards">
+              <section className="pet-fc-card" aria-label="Monitoramento">
+                <h5>Monitoramento</h5>
+                <p>
+                  {fichaPend.some((p) => p.tipo === "impeditiva")
+                    ? `${fichaPend.filter((p) => p.tipo === "impeditiva").length} impedimento(s) registrado(s)`
+                    : `${draft.leituras.filter((l) => l.momento === "monitoramento").length} leitura(s) de acompanhamento`}
+                </p>
+              </section>
+              <section className="pet-fc-card" aria-label="Trabalho a quente">
+                <h5>Trabalho a quente</h5>
+                <p>
+                  {{ S: `Aplicável · ${ficha.quente?.referencia || "permissão não vinculada"}`, N: "Não previsto", NA: "Não se aplica", NV: "Não respondido" }[
+                    (ficha.respostas["dur_trabalho_quente"]?.estado ?? "NV") as "S" | "N" | "NA" | "NV"
+                  ]}
+                </p>
+              </section>
+              <section className="pet-fc-card" aria-label="Emergência e resgate">
+                <h5>Emergência e resgate</h5>
+                <PlanoContatosBotao />
+              </section>
+            </div>
             <ContatosEmergencia />
             <div className="pet-demo-section-heading">
               <h5>Entradas e saídas</h5>

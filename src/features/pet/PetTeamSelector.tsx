@@ -192,7 +192,7 @@ export function PetTeamSelector({
                         )}
                       </span>
                       <span className="pet-team-actions">
-                        {"retry" in st && st.retry && (
+                        {"retry" in st && (
                           <button type="button" aria-label={`Tentar de novo para ${p.nome}`} onClick={() => st.retry?.()}>
                             <RotateCw size={15} />
                           </button>

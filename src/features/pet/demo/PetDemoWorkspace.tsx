@@ -205,12 +205,12 @@ function DemoEditor({
     await command(
       session ? "salvar" : "criar",
       session
-        ? { conteudo: draft, etapa: next }
+        ? { conteudo: draft as unknown as Json, etapa: next }
         : {
             cliente_id: scope.cliente_id,
             unidade_id: scope.unidade_id,
             local_id: scope.local_id!,
-            conteudo: draft,
+            conteudo: draft as unknown as Json,
           },
       next,
     );
@@ -368,9 +368,9 @@ function DemoEditor({
             </p>
             <PetTeamSelector
               scope={{
-                organization_id: props.scope.organization_id,
-                cliente_id: props.scope.cliente_id,
-                unidade_id: props.scope.unidade_id,
+                organization_id: scope.organization_id,
+                cliente_id: scope.cliente_id,
+                unidade_id: scope.unidade_id,
               }}
               equipe={draft.equipe}
               disabled={closedOrOperating || busy}

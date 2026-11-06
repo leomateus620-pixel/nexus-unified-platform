@@ -6,6 +6,8 @@ export const demoParticipant = z.object({
   id: z.string().uuid(),
   nome: z.string().trim().min(2).max(160),
   funcao: z.enum(["supervisor", "vigia", "trabalhador", "resgate", "substituto_vigia"]),
+  /** Optional canonical person reference; older drafts carry only the name. */
+  pessoa_id: z.string().uuid().optional(),
 });
 export const demoReading = z.object({
   id: z.string().uuid(),

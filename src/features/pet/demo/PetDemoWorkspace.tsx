@@ -25,6 +25,7 @@ import { petDemoExecutar, petDemoObter, petDemoRegistros } from "./demo.function
 import { demoExportDetail } from "./export-detail";
 import { PetDemoHistory } from "./PetDemoHistory";
 import { PetDemoFiles } from "./PetDemoFiles";
+import { PetTeamSelector } from "../PetTeamSelector";
 
 type Props = {
   scope: DemoScope;
@@ -82,8 +83,6 @@ function DemoEditor({
   const [error, setError] = useState(""),
     [saved, setSaved] = useState(""),
     [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [personName, setPersonName] = useState(""),
-    [role, setRole] = useState("trabalhador");
   const [agent, setAgent] = useState(""),
     [reading, setReading] = useState(""),
     [unit, setUnit] = useState("");
@@ -206,12 +205,12 @@ function DemoEditor({
     await command(
       session ? "salvar" : "criar",
       session
-        ? { conteudo: draft, etapa: next }
+        ? { conteudo: draft as unknown as Json, etapa: next }
         : {
             cliente_id: scope.cliente_id,
             unidade_id: scope.unidade_id,
             local_id: scope.local_id!,
-            conteudo: draft,
+            conteudo: draft as unknown as Json,
           },
       next,
     );
@@ -367,66 +366,23 @@ function DemoEditor({
             <p className="pet-demo-hint">
               Adicione os participantes desta demonstração e suas funções.
             </p>
-            <fieldset disabled={closedOrOperating || busy}>
-              <div className="pet-demo-form-grid">
-                <PetField label="Nome do participante">
-                  <input
-                    value={personName}
-                    maxLength={160}
-                    onChange={(e) => setPersonName(e.target.value)}
-                  />
-                </PetField>
-                <PetField label="Função">
-                  <select value={role} onChange={(e) => setRole(e.target.value)}>
-                    {Object.entries(PET_FUNCOES).map(([v, label]) => (
-                      <option key={v} value={v}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </PetField>
-              </div>
-              <button
-                className="pet-demo-secondary"
-                disabled={personName.trim().length < 2}
-                onClick={() => {
-                  set("equipe", [
-                    ...draft.equipe,
-                    {
-                      id: crypto.randomUUID(),
-                      nome: personName.trim(),
-                      funcao: role as DemoDraft["equipe"][number]["funcao"],
-                    },
-                  ]);
-                  setPersonName("");
-                }}
-              >
-                <Plus size={16} /> Adicionar participante
-              </button>
-            </fieldset>
-            <div className="pet-demo-rows">
-              {draft.equipe.map((p) => (
-                <div key={p.id}>
-                  <span>
-                    <strong>{p.nome}</strong>
-                    <small>{PET_FUNCOES[p.funcao]}</small>
-                  </span>
-                  {editable && (
-                    <button
-                      aria-label={`Remover ${p.nome}`}
-                      onClick={() =>
-                        set(
-                          "equipe",
-                          draft.equipe.filter((x) => x.id !== p.id),
-                        )
-                      }
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
+            <PetTeamSelector
+              scope={{
+                organization_id: scope.organization_id,
+                cliente_id: scope.cliente_id,
+                unidade_id: scope.unidade_id,
+              }}
+              equipe={draft.equipe}
+              disabled={closedOrOperating || busy}
+              editable={editable}
+              onAdd={(m) =>
+                set("equipe", [
+                  ...draft.equipe,
+                  { id: crypto.randomUUID(), nome: m.nome, funcao: m.funcao, ...(m.pessoa_id ? { pessoa_id: m.pessoa_id } : {}) },
+                ])
+              }
+              onRemove={(id) => set("equipe", draft.equipe.filter((x) => x.id !== id))}
+            />
           </>
         )}
         {step === 2 && (

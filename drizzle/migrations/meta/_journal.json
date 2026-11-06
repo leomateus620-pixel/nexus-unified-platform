@@ -85,6 +85,20 @@
       "when": 1791311103597,
       "tag": "0011_ordens_idempotencia_contexto_trava_revisao",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1793944008904,
+      "tag": "0012_pet_equipe_candidatos",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1793944080783,
+      "tag": "0013_pet_demo_participante_pessoa",
+      "breakpoints": true
     }
   ]
 }

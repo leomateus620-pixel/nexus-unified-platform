@@ -10,7 +10,7 @@ export type Reading = {
   instrumento?: string | undefined;
   ponto?: string | undefined;
   coletada_em?: string | undefined;
-  momento?: "pre_entrada" | "monitoramento" | undefined;
+  momento?: "pre_entrada" | "inicial" | "pos_ventilacao" | "monitoramento" | undefined;
 };
 type Agent = { agente: string; unidade: string };
 
@@ -25,7 +25,11 @@ export function ReadingRows({
   value,
   onChange,
   disabled,
+  momento = "inicial",
+  legend = "Avaliação imediatamente antes da entrada",
 }: {
+  momento?: "inicial" | "pos_ventilacao";
+  legend?: string;
   agentes: readonly Agent[];
   instrumentos: string[];
   pontos: string[];
@@ -37,7 +41,7 @@ export function ReadingRows({
   const [ponto, setPonto] = useState(value[0]?.ponto ?? "");
   const [raw, setRaw] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const pre = value.filter((r) => (r.momento ?? "pre_entrada") === "pre_entrada");
+  const pre = value.filter((r) => ((r.momento ?? "pre_entrada") === "pre_entrada" ? "inicial" : r.momento) === momento);
   const record = (a: Agent) => {
     const text = raw[a.agente] ?? "";
     const v = parseDecimalBR(text);
@@ -53,7 +57,7 @@ export function ReadingRows({
         agente: a.agente,
         valor: v,
         unidade: a.unidade,
-        momento: "pre_entrada",
+        momento,
         coletada_em: new Date().toISOString(),
         ...(inst ? { instrumento: inst } : {}),
         ...(ponto ? { ponto } : {}),
@@ -63,7 +67,7 @@ export function ReadingRows({
   };
   return (
     <fieldset className="pet-rd" disabled={disabled}>
-      <legend>Avaliação imediatamente antes da entrada</legend>
+      <legend>{legend}</legend>
       <div className="pet-rd-ctx">
         <label>
           Instrumento
@@ -83,7 +87,7 @@ export function ReadingRows({
       <ul className="pet-rd-list">
         {agentes.map((a) => {
           const done = pre.filter((r) => r.agente === a.agente);
-          const id = `rd-${a.agente}`;
+          const id = `rd-${momento}-${a.agente}`;
           return (
             <li key={a.agente}>
               <label htmlFor={id} className="pet-rd-agent">{a.agente}</label>

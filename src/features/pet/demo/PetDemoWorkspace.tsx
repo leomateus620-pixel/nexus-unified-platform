@@ -34,6 +34,8 @@ import { HazardMeasurePicker } from "../mobile/HazardMeasurePicker";
 import { ReadingRows } from "../mobile/ReadingRows";
 import { ProcedurePicker } from "../mobile/ProcedurePicker";
 import "../mobile/pet-mobile.css";
+import { ContatosEmergencia, FichaChecklist, QuenteFields, TesteMetaFields, VentilacaoFields } from "../mobile/FichaChecklist";
+import { emptyFicha, fichaPendencias, leiturasDe, testeDaEntrada, type Ficha } from "../cotrirosa-ficha";
 import {
   DEMO_AGENTES,
   DEMO_CATALOGO_AVISO,
@@ -138,6 +140,14 @@ function DemoEditor({
       contentRef.current?.querySelector<HTMLElement>("h4")?.focus();
     }
   }, [step, active]);
+  const ficha: Ficha = draft.ficha ?? emptyFicha();
+  const setFicha = (f: Ficha) => set("ficha", f);
+  const fichaPend = fichaPendencias(ficha, draft.leituras);
+  const goToFicha = (id: string) => {
+    const tgt = id.startsWith("teste_") || id.startsWith("pre_") || id.startsWith("dur_") ? 3 : 2;
+    onSearch({ etapaDemo: tgt });
+    setTimeout(() => document.getElementById(`ficha-${id}`)?.scrollIntoView({ block: "center" }), 150);
+  };
   const set = <K extends keyof DemoDraft>(key: K, value: DemoDraft[K]) => {
     setDraft((old) => ({ ...old, [key]: value }));
     dirtyRef.current = true;
@@ -408,17 +418,39 @@ function DemoEditor({
             }}
           />
         )}
+        {step === 2 && (
+          <>
+            <h5 className="pet-demo-section-heading">Medidas de controle e prevenção</h5>
+            <FichaChecklist fase="controle" outros ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+          </>
+        )}
         {step === 3 && (
           <>
             <p className="pet-hz-aviso">{DEMO_CATALOGO_AVISO}</p>
-            <ReadingRows
-              agentes={DEMO_AGENTES}
-              instrumentos={DEMO_INSTRUMENTOS}
-              pontos={DEMO_PONTOS}
-              value={draft.leituras}
-              disabled={closedOrOperating || busy}
-              onChange={(v) => set("leituras", v)}
-            />
+            <div className="pet-fc-testes">
+              {(["inicial", "pos_ventilacao"] as const).map((m) => (
+                <div key={m}>
+                  <ReadingRows
+                    key={m}
+                    momento={m}
+                    legend={m === "inicial" ? "Teste inicial da atmosfera" : "Teste após ventilação e isolamento"}
+                    agentes={DEMO_AGENTES}
+                    instrumentos={DEMO_INSTRUMENTOS}
+                    pontos={DEMO_PONTOS}
+                    value={draft.leituras}
+                    disabled={closedOrOperating || busy}
+                    onChange={(v) => set("leituras", v)}
+                  />
+                  <TesteMetaFields momento={m} instrumentos={DEMO_INSTRUMENTOS} ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+                </div>
+              ))}
+            </div>
+            <h5 className="pet-demo-section-heading">Procedimentos antes da entrada</h5>
+            <FichaChecklist fase="antes" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            <VentilacaoFields ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            <h5 className="pet-demo-section-heading">Durante o trabalho (previsto)</h5>
+            <FichaChecklist fase="durante" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
+            <QuenteFields ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
             <ProcedurePicker
               grupos={DEMO_PROCEDIMENTOS}
               value={draft.procedimentos_sel ?? []}
@@ -465,6 +497,32 @@ function DemoEditor({
                   </dd>
                 </>
               )}
+              {fichaPend.length > 0 && (
+                <>
+                  <dt>Pendências da ficha ({fichaPend.length})</dt>
+                  <dd className="pet-demo-pend pet-fc-pend">
+                    <ul>
+                      {fichaPend.map((x, i) => (
+                        <li key={x.id + i} data-tipo={x.tipo}>
+                          <button type="button" onClick={() => goToFicha(x.id)}>
+                            {x.tipo === "impeditiva" ? "Impeditiva · " : ""}{x.texto}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </>
+              )}
+              <dt>Testes atmosféricos</dt>
+              <dd>
+                {(["inicial", "pos_ventilacao"] as const).map((m) => (
+                  <div key={m}>
+                    <strong>{m === "inicial" ? "Inicial" : "Após ventilação"}{testeDaEntrada(ficha) === m ? " · fundamenta a entrada" : ""}:</strong>{" "}
+                    {leiturasDe(draft.leituras, m).map((l) => `${l.agente} ${l.valor} ${l.unidade}${l.coletada_em ? ` (${new Date(l.coletada_em).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })})` : ""}`).join(" · ") || "sem leituras"}
+                    {ficha.testes?.[m]?.responsavel ? ` — ${ficha.testes[m]!.responsavel}` : ""}
+                  </div>
+                ))}
+              </dd>
               <dt>Segurança</dt>
               <dd>
                 {draft.perigos || "Não preenchida"}
@@ -488,6 +546,7 @@ function DemoEditor({
         )}
         {step === 5 && (
           <>
+            <ContatosEmergencia />
             <div className="pet-demo-section-heading">
               <h5>Entradas e saídas</h5>
               <span>{open.length} presentes na demonstração</span>

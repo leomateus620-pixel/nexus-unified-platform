@@ -172,7 +172,7 @@ export function PetTeamSelector({
           </button>
         </p>
       )}
-      <div className="pet-team-groups">
+      <div className="pet-teamsel-groups">
         {PET_FUNCOES_EQUIPE.filter((f) => equipe.some((p) => p.funcao === f)).map((f) => (
           <section key={f} aria-label={PET_FUNCOES[f]}>
             <h4>{PET_FUNCOES[f]}</h4>

@@ -1,0 +1,87 @@
+.pet-team-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+.pet-team-controls label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 0;
+}
+.pet-team-controls select,
+.pet-team-controls input {
+  min-height: 44px;
+  width: 100%;
+}
+.pet-team-controls > button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.pet-team-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+.pet-cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #cfd9cc;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f4f7f2;
+  color: #33463b;
+}
+.pet-cert-badge[data-tone="ok"] { background: #e3f3e6; border-color: #9fd0a8; color: #17572a; }
+.pet-cert-badge[data-tone="atencao"] { background: #fff4dc; border-color: #e6c27a; color: #6b4a07; }
+.pet-cert-badge[data-tone="erro"] { background: #fde8e6; border-color: #e8a59d; color: #8a1f13; }
+.pet-team-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 4px 10px;
+  border: 1px solid #c6d3c2;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+}
+.pet-team-groups { margin-top: 14px; display: grid; gap: 12px; }
+.pet-team-groups h4 { font-size: 12px; font-weight: 700; margin: 0 0 6px; color: #47604f; }
+.pet-team-groups ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pet-team-groups li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #e0e8dd;
+  border-radius: 10px;
+}
+.pet-team-name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+.pet-team-actions { display: flex; align-items: center; gap: 4px; }
+.pet-team-actions > button:not(.pet-team-view) {
+  min-width: 40px; min-height: 40px; border: 0; background: transparent; border-radius: 8px;
+  display: grid; place-items: center;
+}
+.pet-training-dialog { max-width: min(760px, 94vw); max-height: 90dvh; overflow: auto; }
+.pet-training-body dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; font-size: 13px; margin: 0 0 12px; }
+.pet-training-body dt { color: #5b6e63; }
+.pet-training-body img { width: 100%; height: auto; border: 1px solid #e0e8dd; border-radius: 8px; }
+.pet-training-body label { display: grid; gap: 4px; margin-top: 10px; font-size: 12px; }
+@media (max-width: 640px) {
+  .pet-team-controls { grid-template-columns: 1fr; }
+}

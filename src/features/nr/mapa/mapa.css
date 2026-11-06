@@ -970,14 +970,14 @@
   .nx-mapctx-area { display: none; }
 }
 @media (max-width: 640px) {
-  .nx-topbar-map { flex-wrap: wrap; row-gap: 0; }
-  .nx-mapctx { order: 3; flex-basis: 100%; padding-top: 0; flex-wrap: wrap; }
-  .nx-mapctx-cards { order: 2; flex-basis: 100%; }
-  .nx-mapctx-back { order: 0; }
-  .nx-mapctx-switch { order: 1; margin-left: auto; min-height: 44px; }
-  .nx-mapctx-back { min-height: 44px; min-width: 44px; }
-  .nx-mapctx-switch span { font-size: 12px; }
-  .nx-mapctx-card { max-width: 30%; }
+  .nx-topbar-map { flex-wrap: wrap; row-gap: 6px; padding-block: 6px; }
+  .nx-mapctx { display: contents; }
+  .nx-topbar-map > :first-child { order: 0; }
+  .nx-mapctx-back { order: 1; min-height: 44px; min-width: 44px; }
+  .nx-mapctx-switch { order: 2; margin-left: auto; min-height: 44px; }
+  .nx-topbar-map > .ml-auto { order: 3; margin-left: 0; }
+  .nx-mapctx-cards { order: 4; flex-basis: 100%; }
+  .nx-mapctx-card { max-width: 32%; }
   .nx-mapctx-grow { max-width: none; }
 }
 

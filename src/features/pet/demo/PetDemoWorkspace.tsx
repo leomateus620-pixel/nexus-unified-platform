@@ -83,8 +83,6 @@ function DemoEditor({
   const [error, setError] = useState(""),
     [saved, setSaved] = useState(""),
     [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [personName, setPersonName] = useState(""),
-    [role, setRole] = useState("trabalhador");
   const [agent, setAgent] = useState(""),
     [reading, setReading] = useState(""),
     [unit, setUnit] = useState("");

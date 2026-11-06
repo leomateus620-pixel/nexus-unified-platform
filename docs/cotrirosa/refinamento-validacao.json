@@ -1,0 +1,302 @@
+{
+  "dateLocal": "2026-11-05",
+  "originalCheckout": "dbe4560d3fc4c5e8eaab3e4b16b0c35d72ddb2a9",
+  "executionBase": "9cc9603e42c4930c6d7df5986c176aac5b1ea635",
+  "branch": "codex/cotrirosa-visual-quality",
+  "preview": "http://127.0.0.1:4197/nr-33/mapa-3d?cliente=9d6dfbe8-285a-44e5-9ea1-2574daa7cb28&unidade=6a454dcc-82b2-4506-aca3-410a3cc820f2&camera=normal",
+  "environment": "Compiled Cotrirosa SQL laboratory; real Nexus components/routes/domain RPCs, isolated fixtures and test authentication; no production writes",
+  "before": {
+    "phase": "before",
+    "commit": "9cc9603e42c4930c6d7df5986c176aac5b1ea635",
+    "browser": "153.0.8010.12",
+    "network": "20 Mb/s down, 10 Mb/s up, 40 ms RTT, cold cache, loopback SQL",
+    "physicalPhone": false,
+    "runs": [
+      {
+        "choice": "auto",
+        "mobileEmulation": false,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "interactionMs": 4394,
+        "bytesAtInteraction": 662275,
+        "device": {
+          "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "dpr": 1,
+          "buffer": [
+            1440,
+            848
+          ]
+        },
+        "medianFps": 52,
+        "worstSecondFps": 2,
+        "p95FrameMs": 33.29999999999927,
+        "maxFrameMs": 948.6000000000004,
+        "pausedWhenIdle": true,
+        "maxCalls": 205,
+        "maxTriangles": 520806,
+        "errors": [],
+        "video": "before-auto-desktop.webm"
+      },
+      {
+        "choice": "balanced",
+        "mobileEmulation": false,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "interactionMs": 3846,
+        "bytesAtInteraction": 662275,
+        "device": {
+          "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "dpr": 1,
+          "buffer": [
+            1440,
+            848
+          ]
+        },
+        "medianFps": 52,
+        "worstSecondFps": 1,
+        "p95FrameMs": 30.899999999997817,
+        "maxFrameMs": 1293.6999999999998,
+        "pausedWhenIdle": true,
+        "maxCalls": 205,
+        "maxTriangles": 520806,
+        "errors": [],
+        "video": "before-balanced-desktop.webm"
+      },
+      {
+        "choice": "auto",
+        "mobileEmulation": true,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "interactionMs": 3628,
+        "bytesAtInteraction": 662275,
+        "device": {
+          "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "dpr": 1,
+          "buffer": [
+            390,
+            701
+          ]
+        },
+        "medianFps": 60,
+        "worstSecondFps": 32,
+        "p95FrameMs": 17.700000000000728,
+        "maxFrameMs": 442,
+        "pausedWhenIdle": true,
+        "maxCalls": 204,
+        "maxTriangles": 272406,
+        "errors": [],
+        "video": "before-auto-mobile.webm"
+      }
+    ]
+  },
+  "after": {
+    "phase": "verified",
+    "commit": "9cc9603e42c4930c6d7df5986c176aac5b1ea635",
+    "browser": "153.0.8010.12",
+    "network": "20 Mb/s down, 10 Mb/s up, 40 ms RTT, cold cache, loopback SQL",
+    "physicalPhone": false,
+    "runs": [
+      {
+        "choice": "auto",
+        "mobileEmulation": false,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "interactionMs": 4051,
+        "bytesAtInteraction": 683263,
+        "device": {
+          "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "dpr": 1,
+          "buffer": [
+            1440,
+            848
+          ],
+          "profile": "balanced",
+          "limits": ""
+        },
+        "medianFps": 54,
+        "worstSecondFps": 12,
+        "p95FrameMs": 37.79999999999927,
+        "maxFrameMs": 703,
+        "pausedWhenIdle": true,
+        "maxCalls": 243,
+        "maxTriangles": 512963,
+        "errors": [],
+        "video": "verified-auto-desktop.webm"
+      },
+      {
+        "choice": "balanced",
+        "mobileEmulation": false,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "interactionMs": 2462,
+        "bytesAtInteraction": 683263,
+        "device": {
+          "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "dpr": 1,
+          "buffer": [
+            1440,
+            848
+          ],
+          "profile": "balanced",
+          "limits": ""
+        },
+        "medianFps": 53,
+        "worstSecondFps": 17,
+        "p95FrameMs": 37.5,
+        "maxFrameMs": 746.4999999999982,
+        "pausedWhenIdle": true,
+        "maxCalls": 243,
+        "maxTriangles": 512963,
+        "errors": [],
+        "video": "verified-balanced-desktop.webm"
+      },
+      {
+        "choice": "auto",
+        "mobileEmulation": true,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "interactionMs": 2363,
+        "bytesAtInteraction": 683263,
+        "device": {
+          "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "dpr": 1,
+          "buffer": [
+            390,
+            701
+          ],
+          "profile": "balanced",
+          "limits": ""
+        },
+        "medianFps": 60,
+        "worstSecondFps": 55,
+        "p95FrameMs": 17.700000000000728,
+        "maxFrameMs": 85.40000000000009,
+        "pausedWhenIdle": true,
+        "maxCalls": 140,
+        "maxTriangles": 296055,
+        "errors": [],
+        "video": "verified-auto-mobile.webm"
+      }
+    ]
+  },
+  "checks": {
+    "nr": 193,
+    "pet": 95,
+    "visual": [
+      "quality menu restores keyboard focus with Escape",
+      "manual quality preserves camera position target mode and zoom",
+      "quality reuses the original canvas and WebGL context",
+      "front stair picks EC28 SA05",
+      "inclined tube and tower pick the same EC28 identity",
+      "Baixa preserves equipment and compact panel",
+      "Equilibrada preserves equipment and compact panel",
+      "Alta preserves equipment and compact panel",
+      "Baixa time of day keeps camera fixed",
+      "Baixa changes sun direction color and environment at fixed exposure",
+      "Baixa orbit keeps world sun and cached PMREM fixed",
+      "Equilibrada time of day keeps camera fixed",
+      "Equilibrada changes sun direction color and environment at fixed exposure",
+      "Equilibrada orbit keeps world sun and cached PMREM fixed",
+      "Alta time of day keeps camera fixed",
+      "Alta changes sun direction color and environment at fixed exposure",
+      "Alta orbit keeps world sun and cached PMREM fixed",
+      "only two PMREMs generated across profiles, hours and orbits",
+      "Superior camera survives profile switches",
+      "Angular camera survives profile switches",
+      "Normal camera survives profile switches",
+      "repeated quality cycles do not grow geometries or textures",
+      "context restoration warms and recovers the same canvas",
+      "unrestored context falls back to existing equipment list",
+      "390px has no horizontal overflow",
+      "map remains dominant at 390px",
+      "validated manual preference survives reload",
+      "automatic mode exposes the active profile",
+      "no JavaScript exceptions"
+    ],
+    "v2": 13,
+    "demo": [
+      "Silo selection exposes Iniciar PET without scrolling",
+      "Open starts empty and creates no record",
+      "Expand/minimize/tab preserve unsaved form and one mounted Canvas",
+      "Escape minimizes and restores focus",
+      "Double click saves exactly one numbered draft",
+      "Eight-step journey: manual team/readings, start, entry, closure block, exit and explicit closure",
+      "Reload restores final step and same demonstration",
+      "NR35 switch preserves same demonstration",
+      "Demonstration has no certification or approved-procedure warnings",
+      "low-window: expanded sheet fits viewport",
+      "tablet: expanded sheet fits viewport",
+      "mobile: expanded sheet fits viewport",
+      "Mobile touch: start EC28, save, close map panel and continue same demo",
+      "Reduced mobile viewport keeps save controls above emulated keyboard",
+      "No uncaught browser errors"
+    ],
+    "resilience": [
+      "Lost creation response and retry return one saved draft without losing form",
+      "Concurrent edit reports conflict and retains local manual participant",
+      "Leaving unsaved form requires an explicit discard decision",
+      "Downloaded PDF marked as demonstration includes identity, manual readings and attendance",
+      "CSV includes marked demonstration and complete attendance/event data",
+      "Unit history search opens the exact same closed silo demonstration",
+      "WebGL fallback retains exact five local identities and empty demonstration entry"
+    ],
+    "mapSql": 30,
+    "demoSql": 42,
+    "typecheck": true,
+    "scopedLint": true,
+    "mainBuild": true,
+    "labBuild": true
+  },
+  "resources": {
+    "before": {
+      "calls": 219,
+      "triangles": 619159,
+      "geometries": 137,
+      "textures": 31
+    },
+    "after": {
+      "calls": 219,
+      "triangles": 619159,
+      "geometries": 137,
+      "textures": 31
+    }
+  },
+  "legacySuite": {
+    "status": "pre-existing obsolete selector",
+    "passedMapChecks": 8,
+    "selector": "Operação da PET",
+    "evidence": "The baseline 9cc9603e UnitMapPanel.tsx has no such control; neither that component nor validate-ui.mjs was changed. Current demo/v2/resilience suites pass."
+  },
+  "limits": [
+    "Mobile measurements use the same Intel UHD and an emulated 390px viewport, not a physical phone.",
+    "Cold first-gesture frame spikes remain in the recorded timing; median FPS does not imply every frame meets budget.",
+    "Hidden supports, unmeasured stair/platform/tower dimensions and facade master artwork require field/brand confirmation.",
+    "Preview is loopback-only, not deployed production or a remote staging URL."
+  ],
+  "confirmedTerrainCause": "Different recursive triangulations interpolated the nonlinear terrace differently, crossing nominally separated ground layers. Common world Z contour strips retain parallel 4cm spacing; verified over >250 points and the same orbit.",
+  "rejectedExperiment": {
+    "feature": "extra GPU fence before interaction",
+    "automaticFirstInteractionMs": 5299,
+    "result": "Did not remove the timing spike and exceeded 5s. Removed from delivered code. Experiment video kept locally under final-auto-desktop.webm."
+  },
+  "measuredSourceHashes": {
+    "UnitScene.tsx": "a190b0f8c2990ff75a3373f30cedd25d10d4939ab7a02c90c2f41b7d0498eeac",
+    "model.ts": "17cbbd25012fe7b6553684e9c4e40ca85bc6745437b1ff675298e575821eb09d",
+    "graphics.ts": "3a730d29b52af9f4d6c5ff3ceea524f453ed3694ccdf0767e26f72bcea3a3279",
+    "UnitEnvironment.tsx": "c9015161039c50978f8a0f44b0290dbea8d779530f334a6f6bc563b4c3fd2ec1",
+    "UnitMapWorkspace.tsx": "395bb479d5b73b863d65168e6fc781ceffd3bc45ce94443be1f6043dfca49cdb",
+    "mapa.css": "6195505ca54b22dc2592c974a94a76dd26f3c914f8b0f4bbea304644c628a280"
+  }
+}

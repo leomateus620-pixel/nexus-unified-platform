@@ -3,10 +3,20 @@ import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber"
 import { OrbitControls, Html } from "@react-three/drei";
 import * as T from "three";
 import type { CameraMode, SceneManifest, SceneObject, Vec3 } from "./types";
-import { createUnitModel, disposeUnitModel } from "./model";
+import { createUnitModel, disposeUnitModel, configureUnitModel } from "./model";
 import { SelectionGesture } from "./gestures";
 import { UnitEnvironment } from "./UnitEnvironment";
 import { visualGroundHeight } from "./terrain";
+import {
+  AutomaticQuality,
+  graphicsLimits,
+  initialAutomatic,
+  LIGHT_STATES,
+  type GraphicsCapability,
+  type GraphicsChoice,
+  type GraphicsProfile,
+  type LightState,
+} from "./graphics";
 
 export type CameraRequest = {
   mode: CameraMode;
@@ -30,7 +40,9 @@ type Props = {
   onFail: () => void;
   onCamera?: (value: CameraSnapshot) => void;
   initialCamera?: CameraSnapshot | undefined;
-  economy?: boolean;
+  quality?: GraphicsChoice;
+  light?: LightState;
+  onQuality?: (profile: GraphicsProfile, limit: string) => void;
   interactive?: boolean;
 };
 function Navigation({
@@ -39,7 +51,10 @@ function Navigation({
   onCamera,
   initialCamera,
   interactive = true,
-}: Pick<Props, "manifest" | "request" | "onCamera" | "initialCamera" | "interactive">) {
+  onGesture,
+}: Pick<Props, "manifest" | "request" | "onCamera" | "initialCamera" | "interactive"> & {
+  onGesture?: (phase: "start" | "change" | "end") => void;
+}) {
   const { get, set, size, invalidate, gl } = useThree();
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
   // Drei recreates controls when the active camera changes. Keep its target
@@ -224,6 +239,7 @@ function Navigation({
       zoomToCursor
       onStart={() => {
         transition.current = null;
+        onGesture?.("start");
       }}
       onChange={() => {
         const camera = get().camera,
@@ -241,6 +257,7 @@ function Navigation({
         );
         c.target.y = T.MathUtils.clamp(c.target.y, 0.5, 32);
         navigationTarget.current.copy(c.target);
+        onGesture?.("change");
         camera.position.y = Math.max(
           visualGroundHeight(camera.position.x, camera.position.z) + 0.75,
           camera.position.y,
@@ -254,6 +271,7 @@ function Navigation({
         invalidate();
       }}
       onEnd={() => {
+        onGesture?.("end");
         if (controls.current)
           onCamera?.({
             mode: request.mode,
@@ -268,48 +286,35 @@ function Navigation({
     />
   );
 }
-function Atmosphere() {
-  const { scene, invalidate } = useThree();
-  useEffect(() => {
-    const c = document.createElement("canvas");
-    c.width = 32;
-    c.height = 512;
-    const ctx = c.getContext("2d")!,
-      g = ctx.createLinearGradient(0, 0, 0, 512);
-    for (const [stop, color] of [
-      [0, "#3679b7"],
-      [0.3, "#68a4d3"],
-      [0.46, "#b4d0e2"],
-      [0.5, "#e1eaf0"],
-      [1, "#e1eaf0"],
-    ] as const)
-      g.addColorStop(stop, color);
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, 32, 512);
-    const t = new T.CanvasTexture(c);
-    t.colorSpace = T.SRGBColorSpace;
-    t.mapping = T.EquirectangularReflectionMapping;
-    scene.background = t;
-    invalidate();
-    return () => {
-      if (scene.background === t) scene.background = null;
-      t.dispose();
-    };
-  }, [scene, invalidate]);
-  return null;
-}
-function Content(props: Props) {
-  const { manifest, objects, selected, onSelect, onFail } = props;
-  const { gl, invalidate } = useThree();
+function Content(
+  props: Props & {
+    profile: GraphicsProfile;
+    capability: GraphicsCapability;
+    onAutomatic: (p: GraphicsProfile) => void;
+  },
+) {
+  const { manifest, objects, selected, onSelect, onFail, onQuality, profile } = props;
+  const { gl, scene, get, invalidate } = useThree();
+  const light = props.light ?? "day",
+    lighting = LIGHT_STATES[light],
+    config = graphicsLimits(props.profile, props.capability);
+  const sun = useRef<T.DirectionalLight>(null);
+  const adaptive = useRef(new AutomaticQuality(props.profile));
+  const interaction = useRef({
+    down: false,
+    sampling: false,
+    frame: 0,
+    timer: undefined as ReturnType<typeof setTimeout> | undefined,
+  });
+  const [ready, setReady] = useState(false);
+  const [recoveryEpoch, setRecoveryEpoch] = useState(0);
+  const previousShadow = useRef(0);
   const sunTarget = useMemo(() => {
     const target = new T.Object3D();
-    target.position.set(32, 0, -15);
+    target.position.set(5, 0, 0);
     return target;
   }, []);
-  const model = useMemo(
-    () => createUnitModel(manifest, !!props.economy),
-    [manifest, props.economy],
-  );
+  const model = useMemo(() => createUnitModel(manifest, false), [manifest]);
   const gesture = useRef(new SelectionGesture());
   const [highlight, setHighlight] = useState(false);
   useEffect(() => {
@@ -319,6 +324,80 @@ function Content(props: Props) {
   }, [selected]);
   useEffect(() => () => disposeUnitModel(model), [model]);
   useEffect(() => {
+    configureUnitModel(model, profile);
+    adaptive.current.reset(profile);
+    const s = sun.current?.shadow;
+    if (s && previousShadow.current !== config.shadow) {
+      s.map?.dispose();
+      s.map = null;
+      s.mapPass?.dispose();
+      s.mapPass = null;
+      s.mapSize.set(config.shadow, config.shadow);
+      previousShadow.current = config.shadow;
+    }
+    gl.shadowMap.needsUpdate = true;
+    gl.domElement.dataset["profile"] = profile;
+    gl.domElement.dataset["limits"] = config.message;
+    onQuality?.(profile, config.message);
+    invalidate();
+  }, [model, profile, config.shadow, config.message, gl, invalidate, onQuality]);
+  useEffect(() => {
+    gl.shadowMap.needsUpdate = true;
+    gl.domElement.dataset["lighting"] = JSON.stringify({
+      state: light,
+      sun: lighting.sun,
+      target: sunTarget.position.toArray(),
+      color: lighting.color,
+      intensity: lighting.intensity,
+      environment: lighting.environment,
+      exposure: gl.toneMappingExposure,
+    });
+    invalidate();
+  }, [light, lighting, sunTarget, gl, invalidate]);
+  useEffect(() => {
+    let cancelled = false;
+    const warm = async () => {
+      await gl.compileAsync(scene, get().camera);
+      if (cancelled || gl.getContext().isContextLost()) return;
+      // Allocate shadow maps and finish the first complete render before enabling controls.
+      gl.shadowMap.needsUpdate = true;
+      gl.render(scene, get().camera);
+      gl.domElement.style.visibility = "visible";
+      gl.domElement.dataset["ready"] = "true";
+      interaction.current.frame = 0;
+      setReady(true);
+      invalidate();
+    };
+    warm().catch(() => {
+      if (!cancelled) onFail();
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [gl, scene, get, model, invalidate, onFail, recoveryEpoch]);
+  const finishGesture = () => {
+    interaction.current.sampling = false;
+    interaction.current.frame = 0;
+    if (props.quality === undefined || props.quality === "auto") {
+      const next = adaptive.current.finish(performance.now());
+      if (next) props.onAutomatic(next);
+    }
+  };
+  const onGesture = (phase: "start" | "change" | "end") => {
+    const state = interaction.current;
+    if (phase === "start") {
+      state.down = true;
+      state.sampling = true;
+      state.frame = 0;
+      clearTimeout(state.timer);
+    } else if (phase === "end") state.down = false;
+    if (phase !== "start" && !state.down) {
+      clearTimeout(state.timer);
+      state.timer = setTimeout(finishGesture, 220);
+    }
+  };
+  useEffect(() => () => clearTimeout(interaction.current.timer), []);
+  useEffect(() => {
     const canvas = gl.domElement;
     const down = (e: PointerEvent) =>
       gesture.current.down(e.pointerId, e.clientX, e.clientY, performance.now());
@@ -327,14 +406,24 @@ function Content(props: Props) {
     const cancel = () => gesture.current.cancel();
     const lost = (event: Event) => {
       event.preventDefault();
-      onFail();
+      setReady(false);
+      canvas.dataset["ready"] = "false";
+      canvas.style.visibility = "hidden";
+      // Give the browser a bounded chance to restore this same context.
+      recoveryTimer = setTimeout(onFail, 5000);
+    };
+    let recoveryTimer: ReturnType<typeof setTimeout> | undefined;
+    const restored = () => {
+      clearTimeout(recoveryTimer);
+      setRecoveryEpoch((n) => n + 1);
+      invalidate();
     };
     canvas.addEventListener("pointerdown", down, true);
     canvas.addEventListener("pointermove", move, true);
     canvas.addEventListener("pointerup", up, true);
     canvas.addEventListener("pointercancel", cancel);
     canvas.addEventListener("webglcontextlost", lost);
-    canvas.dataset["ready"] = "true";
+    canvas.addEventListener("webglcontextrestored", restored);
     invalidate();
     return () => {
       canvas.removeEventListener("pointerdown", down, true);
@@ -342,10 +431,18 @@ function Content(props: Props) {
       canvas.removeEventListener("pointerup", up, true);
       canvas.removeEventListener("pointercancel", cancel);
       canvas.removeEventListener("webglcontextlost", lost);
+      canvas.removeEventListener("webglcontextrestored", restored);
+      clearTimeout(recoveryTimer);
     };
   }, [gl, onFail, invalidate]);
   useFrame(() => {
-    gl.domElement.dataset["frameTime"] = performance.now().toFixed(3);
+    const now = performance.now(),
+      state = interaction.current;
+    if (ready && state.sampling && (props.quality === undefined || props.quality === "auto")) {
+      if (state.frame) adaptive.current.sample(now - state.frame, now, props.capability);
+      state.frame = now;
+    }
+    if (ready) gl.domElement.dataset["frameTime"] = now.toFixed(3);
     gl.domElement.dataset["metrics"] = JSON.stringify({
       calls: gl.info.render.calls,
       triangles: gl.info.render.triangles,
@@ -367,27 +464,27 @@ function Content(props: Props) {
     identity = objects.find((o) => o.chave === selected);
   return (
     <>
-      <UnitEnvironment />
-      <fog attach="fog" args={["#e1eaf0", 600, 1100]} />
-      <hemisphereLight args={["#cce3ff", "#666443", 1.05]} />
+      <UnitEnvironment light={light} />
+      <fog attach="fog" args={[lighting.fog, 600, 1100]} />
+      <hemisphereLight args={[lighting.sky, lighting.ground, lighting.hemisphere]} />
       <primitive object={sunTarget} />
       <directionalLight
-        position={[-85, 140, 55]}
+        ref={sun}
+        position={lighting.sun}
         target={sunTarget}
-        intensity={3.1}
-        color="#fff5e6"
+        intensity={lighting.intensity}
+        color={lighting.color}
         castShadow
-        shadow-mapSize={[props.economy ? 1024 : 2048, props.economy ? 1024 : 2048]}
-        shadow-camera-left={-100}
-        shadow-camera-right={100}
-        shadow-camera-top={100}
-        shadow-camera-bottom={-100}
+        shadow-mapSize={[config.shadow, config.shadow]}
+        shadow-camera-left={-66}
+        shadow-camera-right={66}
+        shadow-camera-top={76}
+        shadow-camera-bottom={-70}
         shadow-camera-near={5}
         shadow-camera-far={380}
         shadow-bias={-0.00025}
         shadow-normalBias={0.07}
       />
-      <Atmosphere />
       <primitive object={model} onClick={pick} dispose={null} />
       {silo && identity && (
         <group position={silo.position}>
@@ -408,14 +505,31 @@ function Content(props: Props) {
           </Html>
         </group>
       )}
-      <Navigation {...props} />
+      <Navigation
+        {...props}
+        interactive={props.interactive !== false && ready}
+        onGesture={onGesture}
+      />
     </>
   );
 }
 export default function UnitScene(props: Props) {
   const { onFail } = props;
   const [supported, setSupported] = useState(false);
-  const [software, setSoftware] = useState(false);
+  const [automatic, setAutomatic] = useState<GraphicsProfile>("balanced");
+  const [capability, setCapability] = useState<GraphicsCapability>({
+    software: false,
+    maxTextureSize: 4096,
+    cores: 4,
+    width: 1024,
+    renderer: "",
+  });
+  const profile = props.quality && props.quality !== "auto" ? props.quality : automatic;
+  const config = graphicsLimits(profile, capability);
+  const contextOptions = useMemo(
+    () => ({ antialias: true, powerPreference: "default" as const, alpha: false }),
+    [],
+  );
   useEffect(() => {
     // R3F's configure() rejection does not reach a React error boundary.
     // Release this short-lived capability probe before allocating the scene.
@@ -431,27 +545,36 @@ export default function UnitScene(props: Props) {
   if (!supported) return null;
   return (
     <Canvas
-      shadows={!software}
-      dpr={software ? 0.7 : [1, props.economy ? 1 : 1.5]}
+      shadows
+      dpr={config.dpr}
       frameloop="demand"
-      gl={{ antialias: !props.economy, powerPreference: "default", alpha: false }}
+      gl={contextOptions}
       camera={{ position: props.manifest.cameras.normal.position, fov: 43, near: 0.12, far: 1400 }}
       onCreated={({ gl }) => {
         gl.toneMapping = T.ACESFilmicToneMapping;
         gl.toneMappingExposure = 0.9;
+        gl.shadowMap.autoUpdate = false;
+        gl.shadowMap.needsUpdate = true;
+        gl.domElement.style.visibility = "hidden";
         const context = gl.getContext(),
           extension = context.getExtension("WEBGL_debug_renderer_info");
-        if (
-          extension &&
-          /swiftshader|llvmpipe|software/i.test(
-            String(context.getParameter(extension.UNMASKED_RENDERER_WEBGL)),
-          )
-        )
-          setSoftware(true);
+        const renderer = extension
+          ? String(context.getParameter(extension.UNMASKED_RENDERER_WEBGL))
+          : String(context.getParameter(context.RENDERER));
+        const detected: GraphicsCapability = {
+          software: /swiftshader|llvmpipe|software|basic render/i.test(renderer),
+          renderer,
+          maxTextureSize: context.getParameter(context.MAX_TEXTURE_SIZE),
+          cores: navigator.hardwareConcurrency || 4,
+          memory: (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
+          width: gl.domElement.clientWidth,
+        };
+        setCapability(detected);
+        setAutomatic(initialAutomatic(detected));
       }}
       fallback={<button onClick={props.onFail}>Abrir lista de locais</button>}
     >
-      <Content {...props} economy={props.economy || software} />
+      <Content {...props} profile={profile} capability={capability} onAutomatic={setAutomatic} />
     </Canvas>
   );
 }

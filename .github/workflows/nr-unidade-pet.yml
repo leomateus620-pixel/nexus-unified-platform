@@ -59,3 +59,4 @@ jobs:
             docs/cotrirosa/demo-*.json
             docs/cotrirosa/demo-*.png
             docs/cotrirosa/demo-video/
+            docs/cotrirosa/visual-local/

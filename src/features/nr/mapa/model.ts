@@ -1,7 +1,13 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
+import unionArtwork from "./assets/union-facade.svg?raw";
+import cotrirosaArtwork from "./assets/cotrirosa-facade.svg?raw";
+import { GRAPHICS_PROFILES, type GraphicsProfile } from "./graphics";
 import type { SceneManifest, SiloPlacement, Vec3, Vec2 } from "./types";
 import { visualGroundHeight } from "./terrain";
+import { conformTerrain } from "./terrain-mesh";
+import { sa05Access, sa05Connections } from "./sa05-access";
 import { junctionContours, outsideConvex } from "./junction";
 
 /** Static geometry is batched by material per selectable physical instance. */
@@ -55,6 +61,17 @@ class Batch {
   cylinder(top: number, bottom: number, h: number, p: Vec3, m: T.Material, n = 40) {
     this.add(new T.CylinderGeometry(top, bottom, h, n), m, p);
   }
+  tube(a: Vec3, b: Vec3, radius: number, m: T.Material, segments = 20) {
+    const from = new T.Vector3(...a),
+      to = new T.Vector3(...b),
+      delta = to.clone().sub(from);
+    this.add(
+      new T.CylinderGeometry(radius, radius, delta.length(), segments),
+      m,
+      from.add(to).multiplyScalar(0.5).toArray() as Vec3,
+      new T.Quaternion().setFromUnitVectors(new T.Vector3(0, 1, 0), delta.normalize()),
+    );
+  }
   finish(key?: string) {
     const group = new T.Group();
     group.userData["sceneKey"] = key;
@@ -92,6 +109,13 @@ function openMesh(kind: "fence" | "grating") {
       ctx.moveTo(x, 0);
       ctx.lineTo(x - 128, 128);
       ctx.stroke();
+    } else {
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(0, x);
+      ctx.lineTo(128, x);
+      ctx.stroke();
+      ctx.lineWidth = 12;
     }
   }
   const alpha = new T.CanvasTexture(canvas);
@@ -183,6 +207,43 @@ function corrugation(height: number) {
   texture.needsUpdate = true;
   return texture;
 }
+function cladding(color: string, pitch = 0.2) {
+  const m = surface(color, 0.28, 0.48);
+  const data = new Uint8Array(128 * 4);
+  for (let x = 0; x < 128; x++) {
+    const t = x / 128,
+      slope = t < 0.15 ? 0 : t < 0.27 ? -0.72 : t < 0.73 ? 0 : t < 0.85 ? 0.72 : 0;
+    data.set([128 + Math.round(slope * 100), 128, 235, 255], x * 4);
+  }
+  const normal = new T.DataTexture(data, 128, 1);
+  normal.wrapS = normal.wrapT = T.RepeatWrapping;
+  normal.minFilter = T.LinearMipmapLinearFilter;
+  normal.magFilter = T.LinearFilter;
+  normal.generateMipmaps = true;
+  normal.needsUpdate = true;
+  normal.anisotropy = 8;
+  m.normalMap = normal;
+  m.normalScale.set(0.65, 0.65);
+  m.userData["meters"] = pitch;
+  return m;
+}
+function galvanizedRoughness() {
+  const data = new Uint8Array(64 * 64 * 4);
+  let seed = 1907;
+  for (let i = 0; i < data.length; i += 4) {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const v = 205 + (seed >>> 27);
+    data.set([v, v, v, 255], i);
+  }
+  const t = new T.DataTexture(data, 64, 64);
+  t.wrapS = t.wrapT = T.RepeatWrapping;
+  t.repeat.set(20, 12);
+  t.generateMipmaps = true;
+  t.minFilter = T.LinearMipmapLinearFilter;
+  t.magFilter = T.LinearFilter;
+  t.needsUpdate = true;
+  return t;
+}
 function sign(text: string, color: string, background: string, w: number, h: number) {
   const canvas = document.createElement("canvas");
   canvas.width = 1024;
@@ -195,19 +256,6 @@ function sign(text: string, color: string, background: string, w: number, h: num
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(text, 512, 128, 970);
-  if (text === "Rações Union") {
-    ctx.clearRect(0, 0, 1024, 256);
-    ctx.font = "bold 46px Arial";
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#f5f5e9";
-    ctx.fillText("Rações", 184, 38);
-    ctx.font = "bold 190px Arial";
-    ctx.textAlign = "center";
-    ctx.lineWidth = 7;
-    ctx.strokeStyle = "#48504a";
-    ctx.strokeText("Union", 512, 150, 930);
-    ctx.fillText("Union", 512, 150, 930);
-  }
   const texture = new T.CanvasTexture(canvas);
   texture.colorSpace = T.SRGBColorSpace;
   texture.anisotropy = 4;
@@ -220,6 +268,32 @@ function sign(text: string, color: string, background: string, w: number, h: num
       alphaTest: 0.05,
     }),
   );
+}
+function facadeIdentity(artwork: string, width: number, height: number) {
+  const group = new T.Group();
+  group.name = "photo-confirmed-facade-mark";
+  const b = new Batch();
+  const inks = new Map<string, T.Material>();
+  for (const path of new SVGLoader().parse(artwork).paths) {
+    const color = `#${path.color.getHexString()}`;
+    let material = inks.get(color);
+    if (!material) {
+      material = surface(color, 0.12, 0.53);
+      inks.set(color, material);
+    }
+    for (const shape of SVGLoader.createShapes(path)) {
+      const geometry = new T.ExtrudeGeometry(shape, {
+        depth: 0.06,
+        bevelEnabled: false,
+        curveSegments: 8,
+      });
+      geometry.scale(width / 600, -height / 280, 1);
+      geometry.translate(-width / 2, height / 2, 0);
+      b.add(geometry, material);
+    }
+  }
+  group.add(b.finish());
+  return group;
 }
 function railing(b: Batch, from: Vec3, to: Vec3, m: T.Material) {
   const len = new T.Vector3(...from).distanceTo(new T.Vector3(...to));
@@ -253,9 +327,262 @@ function stairs(
     railing(b, [x + dx, y, z], [x + dx, y + rise, z - run], m);
   }
 }
+function walkingFloor(
+  floors: Batch,
+  center: Vec3,
+  angle: number,
+  width: number,
+  depth: number,
+  material: T.Material,
+) {
+  floors.add(
+    new T.BoxGeometry(width, 0.065, depth),
+    material,
+    [center[0], center[1] - 0.0325, center[2]],
+    new T.Quaternion().setFromEuler(new T.Euler(0, -angle, 0)),
+  );
+}
+function floorLevels(floors: Batch, m: ReturnType<typeof palette>) {
+  const close = floors.finish(),
+    far = close.clone();
+  far.traverse((object) => {
+    if (object instanceof T.Mesh) object.material = m.tread;
+  });
+  const lod = new T.LOD();
+  lod.userData["floorDetail"] = true;
+  lod.addLevel(close, 0);
+  lod.addLevel(far, 48, 0.1);
+  return lod;
+}
+function cornAccess(b: Batch, floors: Batch, s: SiloPlacement, m: ReturnType<typeof palette>) {
+  const a = sa05Access(s),
+    r = s.diameter / 2;
+  for (const section of a.segments) {
+    const n = section.kind === "flight" ? Math.ceil((section.high - section.low) / 0.205) : 7;
+    const edge = (t: number, side: number, offset = 0) =>
+      a.point(
+        section.from + (section.to - section.from) * t,
+        section.low + (section.high - section.low) * t + offset,
+        a.radius + (side * a.width) / 2,
+      );
+    for (let i = 1; i <= n; i++) {
+      const t = i / n,
+        angle = section.from + ((section.to - section.from) * (i - 0.5)) / n;
+      walkingFloor(
+        floors,
+        a.point(angle, section.low + (section.high - section.low) * t),
+        angle,
+        a.width,
+        (a.radius * Math.abs(section.to - section.from)) / n + 0.025,
+        m.grating,
+      );
+      for (const side of [-1, 1]) {
+        b.beam(edge((i - 1) / n, side, -0.16), edge(t, side, -0.16), 0.1, m.stringer, 0.15);
+        for (const h of [0.52, 1.05])
+          b.tube(edge((i - 1) / n, side, h), edge(t, side, h), 0.022, m.yellow, 8);
+        b.beam(edge((i - 1) / n, side, 0.08), edge(t, side, 0.08), 0.035, m.yellow, 0.12);
+        if (i === 1 || i === n || i % 5 === 0)
+          b.tube(edge(t, side), edge(t, side, 1.05), 0.024, m.yellow, 8);
+      }
+    }
+    if (section.kind === "landing") {
+      const angle = (section.from + section.to) / 2;
+      b.beam(
+        a.point(angle, section.low - 0.2, r + 0.02),
+        a.point(angle, section.low - 0.2, a.radius + 0.5),
+        0.12,
+        m.stringer,
+      );
+      b.beam(
+        a.point(angle, section.low - 1.15, r + 0.03),
+        a.point(angle, section.low - 0.2, a.radius + 0.48),
+        0.09,
+        m.stringer,
+      );
+      b.box([0.2, 0.32, 0.12], a.point(angle, section.low - 0.8, r + 0.04), m.steel);
+    }
+  }
+  // Lower access, body flight and roof exit have separate, shared endpoints.
+  const [x, y] = a.lower,
+    entry = a.groundEntry;
+  const lowerEndZ = -0.45;
+  const n = Math.ceil((y - entry[1]) / 0.205);
+  for (let i = 1; i <= n; i++)
+    walkingFloor(
+      floors,
+      [x, entry[1] + ((y - entry[1]) * i) / n, entry[2] + ((lowerEndZ - entry[2]) * (i - 0.5)) / n],
+      0,
+      1,
+      (lowerEndZ - entry[2]) / n + 0.025,
+      m.grating,
+    );
+  for (const side of [-0.5, 0.5]) {
+    const from: Vec3 = [x + side, entry[1], entry[2]],
+      to: Vec3 = [x + side, y, lowerEndZ];
+    b.beam(from, to, 0.12, m.stringer, 0.18);
+    railing(b, from, to, m.yellow);
+  }
+  // Hatch platform is level with the first body step; hatch itself never moves.
+  walkingFloor(floors, [x, y, 0.35], 0, 1.15, 1.65, m.grating);
+  railing(b, [x - 0.58, y, -0.45], [x - 0.58, y, 1.18], m.yellow);
+  for (const zz of [-0.35, 1.05]) {
+    b.beam([x - 0.55, 0.45, zz], [x - 0.55, y - 0.1, zz], 0.13, m.steel);
+    b.beam([x - 0.55, y - 0.15, zz], [-r + 0.05, y - 0.15, zz], 0.13, m.stringer);
+  }
+  const upper = a.upper,
+    rim = a.point(a.end, a.top + 0.08, r - 0.12);
+  walkingFloor(
+    floors,
+    [(upper[0] + rim[0]) / 2, upper[1], (upper[2] + rim[2]) / 2],
+    a.end + Math.PI / 2,
+    1.05,
+    0.93,
+    m.grating,
+  );
+  for (const side of [-0.52, 0.52]) {
+    const dx = -Math.sin(a.end) * side,
+      dz = Math.cos(a.end) * side;
+    railing(
+      b,
+      [upper[0] + dx, upper[1], upper[2] + dz],
+      [rim[0] + dx, rim[1], rim[2] + dz],
+      m.yellow,
+    );
+  }
+  const roofEnd = a.roofLanding,
+    roofSteps = 9;
+  for (let i = 0; i < roofSteps; i++) {
+    const t = (i + 0.5) / roofSteps;
+    walkingFloor(
+      floors,
+      [rim[0] * (1 - t), rim[1] + ((roofEnd[1] - rim[1]) * (i + 1)) / roofSteps, rim[2] * (1 - t)],
+      a.end + Math.PI / 2,
+      0.95,
+      Math.hypot(rim[0], rim[2]) / roofSteps + 0.025,
+      m.grating,
+    );
+  }
+  for (const side of [-0.52, 0.52]) {
+    const dx = -Math.sin(a.end) * side,
+      dz = Math.cos(a.end) * side;
+    const from: Vec3 = [rim[0] + dx, rim[1], rim[2] + dz],
+      to: Vec3 = [dx, roofEnd[1], dz];
+    b.beam(from, to, 0.1, m.stringer);
+    railing(b, from, to, m.yellow);
+  }
+  walkingFloor(floors, roofEnd, 0, 2.1, 2.1, m.grating);
+  for (const zz of [-1.05, 1.05])
+    railing(b, [-1.05, roofEnd[1], zz], [1.05, roofEnd[1], zz], m.yellow);
+  railing(b, [-1.05, roofEnd[1], -1.05], [-1.05, roofEnd[1], 1.05], m.yellow);
+  for (let i = 0; i < 8; i++) {
+    const angle = (i * Math.PI) / 4;
+    b.beam(
+      a.point(angle, a.top + 0.05, r),
+      [Math.cos(angle) * 0.7, a.top + s.roof - 0.1, Math.sin(angle) * 0.7],
+      0.055,
+      m.steel,
+    );
+    b.box([0.5, 0.12, 0.3], a.point(angle, a.top + 0.55, r * 0.63), m.red);
+  }
+  b.box(
+    [0.8, 0.1, 0.72],
+    [rim[0] * 0.65, a.top + s.roof * 0.4 + 0.12, rim[2] * 0.65 + 0.7],
+    m.yellow,
+  );
+}
+function connectionTower(s: SiloPlacement, m: ReturnType<typeof palette>) {
+  const { origin, deck, towerSocket, siloSocket, diameter } = sa05Connections(s);
+  const b = new Batch(),
+    floors = new Batch();
+  const world = (x: number, y: number, z: number): Vec3 => [
+    origin[0] + x,
+    origin[1] + y,
+    origin[2] + z,
+  ];
+  // Twin elevator casing distinct from its external steel supports.
+  for (const x of [-0.29, 0.29])
+    b.box([0.42, deck + 0.45, 0.56], world(x, (deck + 0.45) / 2, 0), m.towerCase);
+  for (const x of [-0.64, 0.64])
+    for (const z of [-0.48, 0.48]) {
+      b.beam(world(x, 0.25, z), world(x, deck + 0.3, z), 0.1, m.steel);
+      b.box([0.4, 0.18, 0.4], world(x, 0.16, z), m.concrete);
+    }
+  for (let y = 0.8; y < deck - 1; y += 2.6) {
+    for (const z of [-0.48, 0.48]) b.beam(world(-0.64, y, z), world(0.64, y, z), 0.075, m.steel);
+    b.beam(world(-0.64, y, -0.48), world(-0.64, Math.min(deck, y + 2.6), 0.48), 0.055, m.steel);
+    b.beam(world(0.64, y, 0.48), world(0.64, Math.min(deck, y + 2.6), -0.48), 0.055, m.steel);
+    b.box([0.88, 0.06, 0.64], world(0, y, 0), m.dark);
+  }
+  const levels = [10.1, 17.7, 25.3, deck];
+  for (let i = 0; i < levels.length; i++) {
+    const y = levels[i]!,
+      side = i % 2 ? 1 : -1,
+      centerX = i === 3 ? 0 : side * 0.55;
+    const width = i === 3 || i === 1 ? 3.9 : 2.35,
+      depth = i === 3 ? 2.65 : 1.8;
+    walkingFloor(floors, world(centerX, y, 0), 0, width, depth, m.grating);
+    for (const zz of [-depth / 2, depth / 2]) {
+      // The ladder enters from +Z; keep its 0.65m opening.
+      if (zz > 0) {
+        railing(b, world(centerX - width / 2, y, zz), world(-0.34, y, zz), m.yellow);
+        railing(b, world(0.34, y, zz), world(centerX + width / 2, y, zz), m.yellow);
+      } else
+        railing(b, world(centerX - width / 2, y, zz), world(centerX + width / 2, y, zz), m.yellow);
+      b.beam(
+        world(centerX - width / 2, y - 0.13, zz),
+        world(centerX + width / 2, y - 0.13, zz),
+        0.12,
+        m.stringer,
+        0.2,
+      );
+    }
+    for (const xx of [centerX - width / 2, centerX + width / 2]) {
+      railing(b, world(xx, y, -depth / 2), world(xx, y, depth / 2), m.yellow);
+      b.beam(world(Math.sign(xx) * 0.6, y - 1.1, 0), world(xx, y - 0.18, 0), 0.09, m.steel);
+    }
+  }
+  for (const x of [-0.28, 0.28])
+    b.beam(world(x, 0.45, 0.84), world(x, deck + 1, 0.84), 0.055, m.steel);
+  for (let y = 0.7; y < deck + 0.9; y += 0.3)
+    b.tube(world(-0.28, y, 0.84), world(0.28, y, 0.84), 0.018, m.steel, 8);
+  for (let y = 9.3; y < deck + 0.8; y += 0.9)
+    b.add(
+      new T.TorusGeometry(0.41, 0.022, 5, 18, Math.PI * 1.55),
+      m.yellow,
+      world(0, y, 1.01),
+      new T.Quaternion().setFromEuler(new T.Euler(Math.PI / 2, 0, 0.72)),
+    );
+  for (const x of [-0.38, 0.38])
+    b.beam(world(x, 9, 1.25), world(x, deck + 0.8, 1.25), 0.035, m.yellow);
+  for (const y of [18.3, deck + 0.55]) {
+    b.box([0.78, 0.9, 0.76], world(0.2, y, 0), m.blue);
+    b.cylinder(0.38, 0.38, 0.34, world(0.2, y + 0.35, 0), m.blue, 20);
+    b.box([0.28, 0.45, 0.55], world(0.82, y - 0.12, 0), m.dark);
+  }
+  b.tube(towerSocket, siloSocket, diameter / 2, m.pipe, 28);
+  const direction = new T.Vector3(...towerSocket).sub(new T.Vector3(...siloSocket));
+  for (const t of [0, 0.24, 0.49, 0.74, 1]) {
+    const center = new T.Vector3(...siloSocket).addScaledVector(direction, t);
+    const along = direction.clone().normalize().multiplyScalar(0.055);
+    b.tube(
+      center.clone().sub(along).toArray() as Vec3,
+      center.clone().add(along).toArray() as Vec3,
+      diameter * 0.57,
+      m.steel,
+      24,
+    );
+  }
+  b.tube([siloSocket[0], siloSocket[1] - 0.5, siloSocket[2]], siloSocket, diameter * 0.52, m.pipe);
+  const group = b.finish("sa05");
+  group.name = "sa05-connection-tower";
+  group.userData["sockets"] = { towerSocket, siloSocket };
+  group.add(floorLevels(floors, m));
+  return group;
+}
 function silo(s: SiloPlacement, materials: ReturnType<typeof palette>) {
   const { steel, cone, yellow, green, red, dark, smallShell, bigShell } = materials;
   const b = new Batch(),
+    floors = new Batch(),
     r = s.diameter / 2,
     bottom = s.clearance + s.cone,
     top = bottom + s.straight;
@@ -294,49 +621,25 @@ function silo(s: SiloPlacement, materials: ReturnType<typeof palette>) {
       0.07,
       steel,
     );
-    railing(
-      b,
-      [Math.cos(a) * (r + 0.1), top + 0.08, Math.sin(a) * (r + 0.1)],
-      [Math.cos(next) * (r + 0.1), top + 0.08, Math.sin(next) * (r + 0.1)],
-      yellow,
-    );
+    if (s.key !== "sa05" || Math.abs(a - 0.3) > 0.4)
+      railing(
+        b,
+        [Math.cos(a) * (r + 0.1), top + 0.08, Math.sin(a) * (r + 0.1)],
+        [Math.cos(next) * (r + 0.1), top + 0.08, Math.sin(next) * (r + 0.1)],
+        yellow,
+      );
   }
   if (s.key === "sa05") {
-    b.box([1.7, 0.12, 2.5], [-r - 0.7, bottom + 0.15, 0.9], steel);
-    railing(b, [-r - 1.5, bottom + 0.2, -0.35], [-r - 1.5, bottom + 0.2, 2.1], yellow);
-    stairs(b, -r - 0.7, 0.5, 13.5, bottom - 0.35, 11.5, yellow, steel);
+    cornAccess(b, floors, s, materials);
     // 0.80 m circular hatch; side and elevation remain photo-derived approximations.
     const q = new T.Quaternion().setFromEuler(new T.Euler(0, 0, Math.PI / 2));
     b.add(new T.CylinderGeometry(0.4, 0.4, 0.12, 40), red, [-r - 0.06, bottom + 1.05, 0.9], q);
     b.box([0.16, 0.13, 0.32], [-r - 0.16, bottom + 1.05, 0.48], steel);
     b.beam([-r - 0.23, bottom + 1.65, 0.55], [-r - 0.23, bottom + 1.65, 1.2], 0.045, steel);
-    b.box([1.2, 0.18, 1.2], [0, top + s.roof + 0.18, 0], yellow);
-    // Access on the body: photo-derived circulation, not a verified anchorage.
-    for (let section = 0; section < 3; section++) {
-      const fromY = bottom + 1 + section * 5,
-        steps = 20;
-      for (let step = 0; step <= steps; step++) {
-        const t = step / steps,
-          a = Math.PI * 0.85 + section * 0.8 + t * 0.8,
-          x = Math.cos(a) * (r + 0.5),
-          z = Math.sin(a) * (r + 0.5),
-          y = fromY + t * 5;
-        b.box([0.7, 0.055, 0.35], [x, y, z], steel);
-        if (step % 4 === 0) b.beam([x, y, z], [x, y + 1.05, z], 0.045, yellow);
-        if (step < steps) {
-          const next = a + 0.8 / steps;
-          b.beam(
-            [x, y + 1.05, z],
-            [Math.cos(next) * (r + 0.5), y + 5 / steps + 1.05, Math.sin(next) * (r + 0.5)],
-            0.045,
-            yellow,
-          );
-        }
-      }
-    }
   }
   const group = b.finish(s.key);
   group.position.set(...s.position);
+  if (s.key === "sa05") group.add(floorLevels(floors, materials));
   const plate = sign(
     s.key === "sa05"
       ? "EC 28 · SA 05 / AS 05"
@@ -362,38 +665,70 @@ function silo(s: SiloPlacement, materials: ReturnType<typeof palette>) {
     );
   }
   close.add(seams.finish());
+  if (s.key === "sa05") {
+    const ribs = new Batch(),
+      fixings = new Batch();
+    for (let i = 0; i < 24; i++) {
+      const angle = (i * Math.PI) / 12,
+        x = Math.cos(angle) * (r + 0.045),
+        z = Math.sin(angle) * (r + 0.045);
+      ribs.beam([x, bottom, z], [x, top, z], 0.095, steel, 0.13);
+      for (let y = bottom + 0.3; y < top; y += 1.22)
+        fixings.cylinder(0.025, 0.025, 0.035, [x, y, z], steel, 6);
+    }
+    for (let y = bottom + 1.22; y < top; y += 1.22)
+      ribs.add(
+        new T.TorusGeometry(r + 0.018, 0.013, 4, 80),
+        steel,
+        [0, y, 0],
+        new T.Quaternion().setFromEuler(new T.Euler(Math.PI / 2, 0, 0)),
+      );
+    group.add(ribs.finish());
+    const bolts = fixings.finish();
+    bolts.userData["fineDetail"] = true;
+    close.add(bolts);
+  }
   detail.addLevel(close, 0);
   detail.addLevel(new T.Group(), 110, 0.1);
   group.add(detail);
   return group;
 }
 function palette() {
-  const smallShell = surface("#c6cdd0", 0.72, 0.43);
+  const smallShell = surface("#c3ccd2", 0.83, 0.47);
   smallShell.normalMap = corrugation(6.6);
-  smallShell.normalScale.set(0.28, 0.28);
+  smallShell.normalMap.anisotropy = 8;
+  smallShell.normalScale.set(0.62, 0.62);
+  smallShell.roughnessMap = galvanizedRoughness();
+  smallShell.envMapIntensity = 0.85;
   const bigShell = smallShell.clone();
   bigShell.normalMap = corrugation(16.5);
   return {
     smallShell,
     bigShell,
     steel: surface("#b8c3c8", 0.65, 0.45),
+    stringer: surface("#b4a45d", 0.58, 0.46),
+    tread: surface("#8c989d", 0.72, 0.46),
+    towerCase: surface("#8697a1", 0.72, 0.38),
+    pipe: surface("#cbd3d7", 0.82, 0.28),
+    blue: surface("#1e4f92", 0.32, 0.38),
     cone: surface("#a3afb5", 0.68, 0.5),
-    yellow: surface("#e9b923", 0.18, 0.57),
+    yellow: surface("#efbe16", 0.12, 0.43),
     fence: openMesh("fence"),
     grating: openMesh("grating"),
-    green: surface("#236b49", 0.05, 0.85),
-    concrete: patterned(surface("#c3bcae"), "concrete", 2),
+    green: surface("#076839", 0.15, 0.46),
+    greenRoof: cladding("#09713e", 0.19),
+    concrete: patterned(surface("#c3bcae", 0, 0.58), "concrete", 2),
     baseFloor: patterned(surface("#b47b5a"), "concrete", 2),
     red: surface("#a53735", 0.2, 0.6),
     dark: surface("#4e5858", 0.3),
-    grass: patterned(surface("#70834a"), "grass", 18),
+    grass: patterned(surface("#70834a", 0, 1), "grass", 18),
     field: patterned(surface("#8a8160"), "grass", 35),
     soil: patterned(surface("#b47150"), "concrete", 2.3),
     asphalt: patterned(surface("#454b4b", 0, 0.96), "concrete", 1.4),
-    blocks: patterned(surface("#beb1a1"), "blocks", 1.6),
+    blocks: patterned(surface("#beb1a1", 0, 0.48), "blocks", 1.6),
     wall: patterned(surface("#bfc5c4"), "roof", 2),
     roof: patterned(surface("#c6cccd", 0.2, 0.73), "roof", 2),
-    union: patterned(surface("#e06432", 0.1, 0.75), "roof", 1.5),
+    union: cladding("#e05b17"),
     white: surface("#d9d7ca"),
     cream: patterned(surface("#d5d0b8"), "concrete", 2),
     glass: surface("#3b514c", 0.25, 0.34),
@@ -407,44 +742,13 @@ function ground(
   height: number,
   material: T.Material,
   holes: Vec2[][] = [],
-  maxEdge = 18,
+  _maxEdge = 18,
 ) {
   const shape = new T.Shape(points.map(([x, z]) => new T.Vector2(x, -z)));
   shape.holes = holes.map((hole) => new T.Path(hole.map(([x, z]) => new T.Vector2(x, -z))));
   const geo = new T.ShapeGeometry(shape);
   geo.rotateX(-Math.PI / 2);
-  // Subdivide long triangles so the north field follows the visual grade.
-  const source = geo.toNonIndexed(),
-    positions = source.getAttribute("position"),
-    vertices: number[] = [];
-  const split = (a: T.Vector3, c: T.Vector3, d: T.Vector3, depth: number) => {
-    if (depth < 8 && Math.max(a.distanceTo(c), c.distanceTo(d), d.distanceTo(a)) > maxEdge) {
-      const ac = a.clone().add(c).multiplyScalar(0.5),
-        cd = c.clone().add(d).multiplyScalar(0.5),
-        da = d.clone().add(a).multiplyScalar(0.5);
-      split(a, ac, da, depth + 1);
-      split(ac, c, cd, depth + 1);
-      split(da, cd, d, depth + 1);
-      split(ac, cd, da, depth + 1);
-    } else for (const v of [a, c, d]) vertices.push(v.x, visualGroundHeight(v.x, v.z), v.z);
-  };
-  for (let i = 0; i < positions.count; i += 3)
-    split(
-      new T.Vector3().fromBufferAttribute(positions, i),
-      new T.Vector3().fromBufferAttribute(positions, i + 1),
-      new T.Vector3().fromBufferAttribute(positions, i + 2),
-      0,
-    );
-  source.dispose();
-  geo.dispose();
-  const mesh = new T.BufferGeometry();
-  mesh.setAttribute("position", new T.Float32BufferAttribute(vertices, 3));
-  mesh.setAttribute(
-    "uv",
-    new T.Float32BufferAttribute(new Float32Array((vertices.length / 3) * 2), 2),
-  );
-  mesh.computeVertexNormals();
-  b.add(mesh, material, [0, height, 0]);
+  b.add(conformTerrain(geo, height), material);
 }
 function roadStrip(
   b: Batch,
@@ -523,8 +827,7 @@ function roadStrip(
   g.setAttribute("position", new T.Float32BufferAttribute(verts, 3));
   g.setAttribute("uv", new T.Float32BufferAttribute(uv, 2));
   g.setIndex(indices);
-  g.computeVertexNormals();
-  b.add(g, material);
+  b.add(conformTerrain(g, height), material);
 }
 function inside(x: number, z: number, points: Vec2[]) {
   let hit = false;
@@ -607,6 +910,8 @@ function plants(manifest: SceneManifest, m: ReturnType<typeof palette>, economy:
   trunks.instanceMatrix.needsUpdate = true;
   crown.receiveShadow = true;
   crown.castShadow = !economy;
+  crown.userData["vegetationCount"] = crown.count;
+  trunks.userData["vegetationCount"] = trunks.count;
   crown.raycast = () => {};
   trunks.raycast = () => {};
   grove.add(crown, trunks);
@@ -617,16 +922,9 @@ export function createUnitModel(manifest: SceneManifest, economy: boolean) {
     group = new T.Group(),
     terrain = new Batch(),
     site = manifest.site;
-  const outer = new T.PlaneGeometry(3000, 3000, 180, 180);
+  const outer = new T.PlaneGeometry(3000, 3000);
   outer.rotateX(-Math.PI / 2);
-  const outerPositions = outer.getAttribute("position");
-  for (let i = 0; i < outerPositions.count; i++)
-    outerPositions.setY(
-      i,
-      visualGroundHeight(outerPositions.getX(i), outerPositions.getZ(i)) - 0.45,
-    );
-  outer.computeVertexNormals();
-  terrain.add(outer, m.field);
+  terrain.add(conformTerrain(outer, -0.45), m.field);
   ground(terrain, site.outline, 0, m.grass);
   for (const surface of site.surfaces)
     ground(
@@ -828,15 +1126,31 @@ export function createUnitModel(manifest: SceneManifest, economy: boolean) {
     if (building.kind === "union") {
       b.box([w + 0.2, 0.25, d + 0.2], [0, h, 0], m.green);
       b.box([w + 0.3, 0.45, 0.2], [0, h, d / 2 + 0.1], m.green);
-      b.box(
-        [w + 0.7, 0.25, 2.4],
-        [0, building.key === "union-baixo" ? 6.1 : 8, d / 2 + 1],
-        m.green,
-      );
+      for (const x of [-w / 2, w / 2])
+        for (const z of [-d / 2, d / 2])
+          b.box([0.12, h - 2.4, 0.12], [x, (h + 2.4) / 2, z], m.green);
       if (building.key === "union-baixo") {
+        b.box([w + 0.8, 0.18, 2.5], [0, 6.1, d / 2 + 1.15], m.greenRoof);
+        b.add(
+          new T.CylinderGeometry(0.2, 0.2, w + 0.8, 10),
+          m.greenRoof,
+          [0, 6.0, d / 2 + 2.35],
+          new T.Quaternion().setFromEuler(new T.Euler(0, 0, Math.PI / 2)),
+        );
+        for (const x of [-w / 2 + 0.6, w / 2 - 0.6]) {
+          b.box([0.14, 6, 0.14], [x, 3, d / 2 + 2.25], m.steel);
+          b.beam([x, 4.9, d / 2 + 0.1], [x, 6.0, d / 2 + 2.15], 0.1, m.steel);
+        }
         b.box([4.5, 4.5, 0.15], [0, 2.25, d / 2 + 0.1], m.green);
         for (const x of [-w * 0.35, -w * 0.2, w * 0.2, w * 0.35])
           b.box([0.8, 0.55, 0.08], [x, 2.5, d / 2 + 0.1], m.glass);
+      } else if (building.key === "union-torre") {
+        // Second visible canopy on the return; do not repeat it on unreferenced walls.
+        b.box([2.6, 0.2, 5.2], [w / 2 + 1.05, 7.3, d / 2 - 2.0], m.greenRoof);
+        for (const z of [d / 2 - 4, d / 2])
+          b.beam([w / 2 + 0.1, 5.8, z], [w / 2 + 2.3, 7.2, z], 0.13, m.steel);
+        for (const z of [-d * 0.25, d * 0.25])
+          b.box([0.08, h * 0.8, 0.43], [w / 2 + 0.06, h * 0.6, z], m.white);
       }
     } else if (building.kind === "warehouse") {
       // Three observed stepped masses; use-specific identity remains pending.
@@ -902,13 +1216,13 @@ export function createUnitModel(manifest: SceneManifest, economy: boolean) {
     volume.rotation.y = building.rotationY ?? 0;
     volume.position.y += visualGroundHeight(building.position[0], building.position[2]);
     if (building.key === "union-torre") {
-      const label = sign("Rações Union", "#edf0e7", "#ba4d2f", 9.5, 3.8);
-      label.position.set(0, 22, d / 2 + 0.04);
+      const label = facadeIdentity(unionArtwork, 10.6, 6.5);
+      label.position.set(0, 21.5, d / 2 + 0.14);
       volume.add(label);
     }
     if (building.key === "union-medio") {
-      const label = sign("Nutrição Animal Cotrirosa", "#e4dfc9", "#c9552c", 13, 1.6);
-      label.position.set(0, 12.8, d / 2 + 0.04);
+      const label = facadeIdentity(cotrirosaArtwork, 10.6, 4.5);
+      label.position.set(-2.8, 13.3, d / 2 + 0.14);
       volume.add(label);
     }
     if (building.kind === "distribution") {
@@ -977,20 +1291,19 @@ export function createUnitModel(manifest: SceneManifest, economy: boolean) {
     shared.beam([x, deck + 2.3, z0], [x, deck + 1.2, z0 + 5], 0.12, m.steel);
   }
   shared.beam([sx - 0.65, deck + 2.3, z0], [sx + 0.65, deck + 2.3, z0], 0.12, m.steel);
-  const tx = big.position[0] + 8,
-    tz = big.position[2] - 7;
-  for (const x of [tx - 1, tx + 1])
-    for (const z of [tz - 1, tz + 1]) shared.beam([x, 0.1, z], [x, 33, z], 0.16, m.steel);
-  for (let y = 0; y < 32; y += 4) {
-    shared.box([2.5, 0.1, 2.5], [tx, y + 4, tz], m.steel);
-    for (const x of [tx - 1, tx + 1]) {
-      shared.beam([x, y, tz - 1], [x, y + 4, tz + 1], 0.075, m.steel);
-      shared.beam([x, y, tz + 1], [x, y + 4, tz - 1], 0.075, m.steel);
-    }
-  }
-  shared.beam([tx, 31.5, tz], [big.position[0], 26, big.position[2]], 0.55, m.steel);
+  group.add(connectionTower(big, m));
   group.add(shared.finish("passarela"));
   return group;
+}
+export function configureUnitModel(group: T.Group, profile: GraphicsProfile) {
+  const config = GRAPHICS_PROFILES[profile];
+  group.traverse((object) => {
+    if (object instanceof T.InstancedMesh && object.userData["vegetationCount"])
+      object.count = Math.max(1, Math.floor(object.userData["vegetationCount"] * config.density));
+    if (object.userData["fineDetail"]) object.visible = config.fine;
+    if (object instanceof T.LOD && object.userData["floorDetail"])
+      object.levels[1]!.distance = config.floorDistance;
+  });
 }
 export function disposeUnitModel(group: T.Group) {
   const materials = new Set<T.Material>(),

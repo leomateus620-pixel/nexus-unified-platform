@@ -11,6 +11,14 @@ import { nrMapaContexto } from "./mapa.functions";
 import type { CameraMode, MapContext } from "./types";
 import type { CameraRequest, CameraSnapshot } from "./UnitScene";
 import { UnitMapPanel } from "./UnitMapPanel";
+import { GraphicsMenu } from "./GraphicsMenu";
+import {
+  QUALITY_STORAGE,
+  validGraphicsChoice,
+  type GraphicsChoice,
+  type GraphicsProfile,
+  type LightState,
+} from "./graphics";
 import "./mapa.css";
 const UnitScene = lazy(() => import("./UnitScene"));
 class SceneBoundary extends Component<
@@ -67,6 +75,28 @@ export default function UnitMapWorkspace({
   const [listOpen, setListOpen] = useState(false),
     [term, setTerm] = useState(""),
     [noWebGL, setNoWebGL] = useState(false);
+  const [quality, setQuality] = useState<GraphicsChoice>(() => {
+    try {
+      return validGraphicsChoice(localStorage.getItem(QUALITY_STORAGE));
+    } catch {
+      return "auto";
+    }
+  });
+  const [activeProfile, setActiveProfile] = useState<GraphicsProfile>("balanced");
+  const [graphicsLimit, setGraphicsLimit] = useState("");
+  const [light, setLight] = useState<LightState>("day");
+  const chooseQuality = useCallback((choice: GraphicsChoice) => {
+    setQuality(choice);
+    try {
+      localStorage.setItem(QUALITY_STORAGE, choice);
+    } catch {
+      /* Choice works without persistent storage. */
+    }
+  }, []);
+  const reportQuality = useCallback((profile: GraphicsProfile, limit: string) => {
+    setActiveProfile(profile);
+    setGraphicsLimit(limit);
+  }, []);
   const mode = search.camera ?? "normal";
   const storageKey = `nr-map:${org}:${user}:${norma}:${search.cliente}:${search.unidade}`;
   const [initialCamera] = useState<CameraSnapshot | undefined>(() => {
@@ -220,10 +250,9 @@ export default function UnitMapWorkspace({
                       onFail={failed}
                       onCamera={camera}
                       initialCamera={initialCamera}
-                      economy={
-                        typeof window !== "undefined" &&
-                        window.matchMedia("(max-width: 700px)").matches
-                      }
+                      quality={quality}
+                      light={light}
+                      onQuality={reportQuality}
                     />
                   </Suspense>
                 </SceneBoundary>
@@ -256,6 +285,14 @@ export default function UnitMapWorkspace({
                 >
                   <Expand size={19} />
                 </button>
+                <GraphicsMenu
+                  choice={quality}
+                  active={activeProfile}
+                  limit={graphicsLimit}
+                  light={light}
+                  onChoice={chooseQuality}
+                  onLight={setLight}
+                />
                 <button aria-expanded={listOpen || noWebGL} onClick={() => setListOpen(!listOpen)}>
                   <List size={18} /> Locais
                 </button>

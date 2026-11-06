@@ -474,3 +474,22 @@
     font-size: 16px;
   }
 }
+.pet-demo .pet-hz label.pet-hz-check,
+.pet-demo .pet-pr label.pet-hz-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  grid-template-columns: none;
+}
+@media (max-width: 850px) {
+  .pet-demo-workflow-heading > div {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+  .pet-demo-workflow-heading h3 {
+    margin: 0;
+  }
+}

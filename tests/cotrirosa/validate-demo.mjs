@@ -28,7 +28,10 @@ const check = (label) => {
   console.log("PASS " + label);
 };
 const shot = async (p, name) => {
-  await p.screenshot({ path: `docs/cotrirosa/${name}.png` });
+  await p.screenshot({
+    path: `docs/cotrirosa/${name}.png`,
+    timeout: process.platform === "win32" ? 30000 : 60000,
+  });
   report.screenshots.push(name);
 };
 const rpc = async (p, name, data) => {

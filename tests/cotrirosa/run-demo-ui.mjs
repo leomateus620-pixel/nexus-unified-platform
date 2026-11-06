@@ -40,6 +40,8 @@ try {
   if (!ready) throw Error("Preview did not start");
   await run("tests/cotrirosa/validate-demo.mjs");
   await run("tests/cotrirosa/validate-demo-resilience.mjs");
+  process.env.COTRIROSA_VISUAL_ORIGIN = "http://127.0.0.1:4196";
+  await run("tests/cotrirosa/validate-visual.mjs");
 } finally {
   if (server.exitCode === null && server.signalCode === null) {
     const stopped = new Promise((resolve) => server.once("exit", resolve));

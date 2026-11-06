@@ -84,7 +84,7 @@ export function PetDemoPanel({ scope, user, search, onSearch, active = true }: P
       painel: "pet",
       petDemo: id,
       etapaDemo: s?.etapa ?? 0,
-      visualizacao: "expandida",
+      visualizacao: "dedicada",
       ...(s ? { local: s.local_id, objeto: "" } : {}),
     };
     if (onSearch) onSearch(patch);

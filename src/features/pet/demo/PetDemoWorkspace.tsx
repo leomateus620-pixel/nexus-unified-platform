@@ -427,7 +427,7 @@ function DemoEditor({
         {step === 3 && (
           <>
             <FichaProgresso ficha={ficha} fase="antes" leituras={draft.leituras} onIr={goToFicha} />
-            <details className="pet-fc-grupo" open id="ficha-teste_inicial">
+            <details className="pet-fc-grupo" open>
               <summary>Teste inicial</summary>
               <TesteResumo ficha={ficha} leituras={draft.leituras} momento="inicial" />
               <ReadingRows
@@ -447,7 +447,7 @@ function DemoEditor({
               <FichaChecklist fase="antes" grupo="Bloqueio, purga e ventilação" ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
               <VentilacaoFields ficha={ficha} onChange={setFicha} disabled={closedOrOperating || busy} />
             </details>
-            <details className="pet-fc-grupo" open id="ficha-teste_pos_ventilacao">
+            <details className="pet-fc-grupo" open>
               <summary>Teste após ventilação e isolamento</summary>
               <TesteResumo ficha={ficha} leituras={draft.leituras} momento="pos_ventilacao" />
               <ReadingRows

@@ -131,14 +131,14 @@ export function fichaPendencias(f: Ficha | undefined, leituras: Leitura[] = []):
   for (const it of FICHA_ITENS) {
     const r = f?.respostas?.[it.id];
     const e = r?.estado ?? "NV";
-    if (e === "NV") out.push({ id: it.id, texto: `${it.label}: não verificado`, tipo: "pendente" });
+    if (e === "NV") out.push({ id: it.id, texto: `${it.label}: responder`, tipo: "pendente" });
     else if (e === "N") out.push({ id: it.id, texto: `${it.label}: marcado como Não — entrada proibida`, tipo: "impeditiva" });
     else if (e === "NA" && (r?.justificativa ?? "").trim().length < 3)
       out.push({ id: it.id, texto: `${it.label}: justifique o "Não se aplica"`, tipo: "pendente" });
   }
   for (const o of f?.outros ?? []) {
     if (o.descricao.trim().length < 2) out.push({ id: o.id, texto: `Outros (${o.grupo}): descreva o item`, tipo: "pendente" });
-    if (o.estado === "NV") out.push({ id: o.id, texto: `Outros (${o.grupo}) ${o.descricao}: não verificado`, tipo: "pendente" });
+    if (o.estado === "NV") out.push({ id: o.id, texto: `Outros (${o.grupo}) ${o.descricao}: responder`, tipo: "pendente" });
     if (o.estado === "N") out.push({ id: o.id, texto: `Outros (${o.grupo}) ${o.descricao}: marcado como Não`, tipo: "impeditiva" });
   }
   if (estadoDe(f, "dur_trabalho_quente") === "S" && !(f?.quente?.referencia ?? "").trim())

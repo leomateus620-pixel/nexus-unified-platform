@@ -38,7 +38,6 @@ import { ContatosEmergencia, FichaChecklist, QuenteFields, TesteMetaFields, Vent
 import { emptyFicha, fichaPendencias, leiturasDe, testeDaEntrada, type Ficha } from "../cotrirosa-ficha";
 import {
   DEMO_AGENTES,
-  DEMO_CATALOGO_AVISO,
   DEMO_INSTRUMENTOS,
   DEMO_PERIGOS,
   DEMO_PONTOS,
@@ -406,7 +405,6 @@ function DemoEditor({
         {step === 2 && (
           <HazardMeasurePicker
             catalogo={DEMO_PERIGOS}
-            aviso={DEMO_CATALOGO_AVISO}
             value={demoSeguranca(draft)}
             disabled={closedOrOperating || busy}
             onChange={(list) => {
@@ -426,7 +424,6 @@ function DemoEditor({
         )}
         {step === 3 && (
           <>
-            <p className="pet-hz-aviso">{DEMO_CATALOGO_AVISO}</p>
             <div className="pet-fc-testes">
               {(["inicial", "pos_ventilacao"] as const).map((m) => (
                 <div key={m}>

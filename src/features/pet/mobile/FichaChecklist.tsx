@@ -28,7 +28,6 @@ function Row({ item, ficha, onChange }: { item: FichaItem } & Base) {
             {ESTADO_LABEL[s]}
           </button>
         ))}
-        {e === "NV" && <span className="pet-fc-nv">Não verificado</span>}
       </div>
       {item.detalhe && e === "S" && (
         <div className="pet-fc-opts" role="radiogroup" aria-label={`${item.label}: tipo`}>

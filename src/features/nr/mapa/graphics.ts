@@ -54,13 +54,14 @@ export function initialAutomatic(c: GraphicsCapability): GraphicsProfile {
 }
 export function graphicsLimits(choice: GraphicsProfile, c: GraphicsCapability) {
   const config = GRAPHICS_PROFILES[choice];
-  const shadow = Math.min(config.shadow, c.maxTextureSize, c.software ? 512 : 4096);
+  const shadow = Math.min(config.shadow, c.maxTextureSize, c.software ? 256 : 4096);
   return {
     ...config,
     shadow,
-    dpr: c.software ? Math.min(0.75, config.dpr) : config.dpr,
+    dpr: c.software ? Math.min(0.55, config.dpr) : config.dpr,
+    density: c.software ? Math.min(0.18, config.density) : config.density,
     message: c.software
-      ? "Renderização por software: resolução e mapa de sombras limitados neste recurso."
+      ? "Renderização por software: resolução, sombras e vegetação periférica limitadas neste recurso."
       : shadow < config.shadow
         ? `Mapa de sombras limitado a ${shadow} px pelo WebGL.`
         : "",

@@ -45,6 +45,22 @@ type Props = {
   onQuality?: (profile: GraphicsProfile, limit: string) => void;
   interactive?: boolean;
 };
+function readCapability(
+  context: WebGLRenderingContext | WebGL2RenderingContext,
+): GraphicsCapability {
+  const extension = context.getExtension("WEBGL_debug_renderer_info");
+  const renderer = extension
+    ? String(context.getParameter(extension.UNMASKED_RENDERER_WEBGL))
+    : String(context.getParameter(context.RENDERER));
+  return {
+    software: /swiftshader|llvmpipe|software|basic render/i.test(renderer),
+    renderer,
+    maxTextureSize: context.getParameter(context.MAX_TEXTURE_SIZE),
+    cores: navigator.hardwareConcurrency || 4,
+    memory: (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
+    width: window.innerWidth,
+  };
+}
 function Navigation({
   manifest,
   request,
@@ -324,7 +340,7 @@ function Content(
   }, [selected]);
   useEffect(() => () => disposeUnitModel(model), [model]);
   useEffect(() => {
-    configureUnitModel(model, profile);
+    configureUnitModel(model, profile, config.density);
     adaptive.current.reset(profile);
     const s = sun.current?.shadow;
     if (s && previousShadow.current !== config.shadow) {
@@ -340,7 +356,7 @@ function Content(
     gl.domElement.dataset["limits"] = config.message;
     onQuality?.(profile, config.message);
     invalidate();
-  }, [model, profile, config.shadow, config.message, gl, invalidate, onQuality]);
+  }, [model, profile, config.shadow, config.density, config.message, gl, invalidate, onQuality]);
   useEffect(() => {
     gl.shadowMap.needsUpdate = true;
     gl.domElement.dataset["lighting"] = JSON.stringify({
@@ -539,6 +555,11 @@ export default function UnitScene(props: Props) {
       onFail();
       return;
     }
+    // Resolve the initial device profile before mounting the interactive canvas.
+    // Software rendering must never first submit the balanced tree/pixel budget.
+    const detected = readCapability(context);
+    setCapability(detected);
+    setAutomatic(initialAutomatic(detected));
     context.getExtension("WEBGL_lose_context")?.loseContext();
     setSupported(true);
   }, [onFail]);
@@ -556,21 +577,6 @@ export default function UnitScene(props: Props) {
         gl.shadowMap.autoUpdate = false;
         gl.shadowMap.needsUpdate = true;
         gl.domElement.style.visibility = "hidden";
-        const context = gl.getContext(),
-          extension = context.getExtension("WEBGL_debug_renderer_info");
-        const renderer = extension
-          ? String(context.getParameter(extension.UNMASKED_RENDERER_WEBGL))
-          : String(context.getParameter(context.RENDERER));
-        const detected: GraphicsCapability = {
-          software: /swiftshader|llvmpipe|software|basic render/i.test(renderer),
-          renderer,
-          maxTextureSize: context.getParameter(context.MAX_TEXTURE_SIZE),
-          cores: navigator.hardwareConcurrency || 4,
-          memory: (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
-          width: gl.domElement.clientWidth,
-        };
-        setCapability(detected);
-        setAutomatic(initialAutomatic(detected));
       }}
       fallback={<button onClick={props.onFail}>Abrir lista de locais</button>}
     >

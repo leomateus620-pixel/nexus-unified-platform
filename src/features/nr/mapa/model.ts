@@ -1218,12 +1218,14 @@ export function createUnitModel(manifest: SceneManifest, economy: boolean) {
     if (building.key === "union-torre") {
       const label = facadeIdentity(unionArtwork, 10.6, 6.5);
       label.position.set(0, 21.5, d / 2 + 0.14);
+      label.name = "union-front-mark";
       volume.add(label);
-    }
-    if (building.key === "union-medio") {
-      const label = facadeIdentity(cotrirosaArtwork, 10.6, 4.5);
-      label.position.set(-2.8, 13.3, d / 2 + 0.14);
-      volume.add(label);
+      // Both marks belong to this physical front plane. The client confirmed
+      // Cotrirosa below Union, rather than on the adjacent intermediate mass.
+      const cotrirosa = facadeIdentity(cotrirosaArtwork, 10.6, 4.5);
+      cotrirosa.name = "cotrirosa-front-mark";
+      cotrirosa.position.set(0, 13.3, d / 2 + 0.14);
+      volume.add(cotrirosa);
     }
     if (building.kind === "distribution") {
       const label = sign("CENTRO DE DISTRIBUIÇÃO · Cotrirosa", "#315345", "#c6c7bb", 32, 2.2);
@@ -1295,11 +1297,14 @@ export function createUnitModel(manifest: SceneManifest, economy: boolean) {
   group.add(shared.finish("passarela"));
   return group;
 }
-export function configureUnitModel(group: T.Group, profile: GraphicsProfile) {
+export function configureUnitModel(group: T.Group, profile: GraphicsProfile, densityLimit = 1) {
   const config = GRAPHICS_PROFILES[profile];
   group.traverse((object) => {
     if (object instanceof T.InstancedMesh && object.userData["vegetationCount"])
-      object.count = Math.max(1, Math.floor(object.userData["vegetationCount"] * config.density));
+      object.count = Math.max(
+        1,
+        Math.floor(object.userData["vegetationCount"] * Math.min(config.density, densityLimit)),
+      );
     if (object.userData["fineDetail"]) object.visible = config.fine;
     if (object instanceof T.LOD && object.userData["floorDetail"])
       object.levels[1]!.distance = config.floorDistance;

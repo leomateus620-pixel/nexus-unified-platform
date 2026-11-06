@@ -72,6 +72,7 @@ for (const name of [
   report.measuredSourceHashes[name] = createHash("sha256")
     .update(await readFile(`src/features/nr/mapa/${name}`))
     .digest("hex");
+if (after.sourceHashes) report.measuredSourceHashes = after.sourceHashes;
 await writeFile("docs/cotrirosa/refinamento-validacao.json", JSON.stringify(report, null, 2));
 const rows = before.runs
   .map((r, i) => {

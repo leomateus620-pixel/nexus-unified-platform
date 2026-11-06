@@ -36,6 +36,8 @@ As três massas e seus recuos foram preservados. Chapa vertical com normais na e
 
 O ambiente procedural original usa céu/horizonte HDR e PMREM, em coordenadas do mundo, com cache máximo de dois estados por renderer. Dia/Fim de tarde mudam posição e cor do sol, intensidade, céu, ambiente e sombras conjuntamente, mantendo a exposição. A órbita muda a resposta especular sem regenerar o ambiente. Dois testes independentes passaram nos três perfis: câmera fixa com troca de hora; hora fixa com órbita, sol e cache ancorados. Aço, galvanizado, pintura e pavimentos têm rugosidades distintas; pátio e concreto são dielétricos, sem pressupor água ou poças.
 
+Correção confirmada pelo usuário: a marca Cotrirosa fica no mesmo plano frontal da Union, alinhada abaixo dela, e foi retirada da massa intermediária adjacente. As duas peças têm o mesmo X local e o mesmo Z de fachada; as alturas dos grupos são 21,5 m (Union) e 13,3 m (Cotrirosa). A prévia corrigida foi conferida de frente e em ângulo e passou novamente pelos 29 checks.
+
 ## Piscagem e qualidade
 
 **Causa confirmada das manchas do terreno:** camadas com triangulações recursivas diferentes interpolavam o relevo não linear de modos diferentes. A separação nominal de 4 cm podia se inverter entre vértices. Faixas comuns em Z tornam as camadas paralelas, também nas vias e no terreno exterior. A intervenção isolada foi registrada em `terrain-auto-desktop.webm`; um teste por raios verifica mais de 250 pontos na região inclinada. O percurso antes/depois foi repetido em build compilado, sem espera de estabilização.
@@ -45,6 +47,8 @@ A preparação de shaders, ambiente e primeiro passe de sombras antecede a liber
 O popover acessível oferece Automática, Baixa, Equilibrada e Alta, mais hora do dia. Em 390 px, fica na parte inferior em duas colunas para liberar o alvo. Escape fecha e devolve foco. A escolha manual validada persiste localmente. Automática começa de forma conservadora segundo WebGL, software, CPU/memória e usa janelas de interação, histerese, três janelas rápidas para promoção e intervalo mínimo de 15 s. A proposta só é aplicada depois do gesto e do amortecimento. Repouso sob demanda não é medido como GPU lenta. Limites de resolução/sombra preservam a opção manual e são informados por recurso.
 
 Um único canvas/contexto é mantido nas trocas, assim como seleção, modo, posição, alvo, zoom, painel e hora. Geometria/material/buffers são reaproveitados, mapas de sombras substituídos são descartados e PMREMs são liberados na desmontagem. Perda de contexto tem restauração controlada; após 5 s sem restauração, abre a lista de locais existente. Os ciclos testados mantiveram 137 geometrias e 31 texturas antes/depois, com dois ambientes preparados.
+
+O primeiro CI identificou timeout de captura no renderer por software. O custo foi reproduzido com SwiftShader no Windows (24,119 s para a captura). O orçamento específico de software foi reduzido para DPR 0,55, sombras de 256 px e no máximo 18% das instâncias de vegetação periférica, preservando a estrutura industrial e a opção manual. A captura caiu para 16,062 s nessa observação; não é prova de desempenho de celular. A capacidade agora é resolvida na sonda anterior ao canvas, evitando submeter primeiro o orçamento Equilibrada num dispositivo por software.
 
 ## Desempenho e validação
 

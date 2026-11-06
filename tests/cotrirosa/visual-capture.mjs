@@ -1,6 +1,7 @@
 // Compiled real Nexus scene + isolated SQL fixture; no production interception.
 import { chromium } from "@playwright/test";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { ids } from "./fixture.mjs";
 const phase = process.argv[2] || "after";
@@ -10,7 +11,12 @@ const out = "docs/cotrirosa/visual-local";
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
-  args: ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"],
+  args: [
+    process.platform === "win32" ? "--use-angle=d3d11" : "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+  ],
 });
 const report = {
   phase,
@@ -20,6 +26,18 @@ const report = {
   physicalPhone: false,
   runs: [],
 };
+report.sourceHashes = {};
+for (const name of [
+  "UnitScene.tsx",
+  "model.ts",
+  "graphics.ts",
+  "UnitEnvironment.tsx",
+  "UnitMapWorkspace.tsx",
+  "mapa.css",
+])
+  report.sourceHashes[name] = createHash("sha256")
+    .update(await readFile(`src/features/nr/mapa/${name}`))
+    .digest("hex");
 try {
   const runs = ["stairs", "facade", "lighting"].includes(phase)
     ? []

@@ -10,13 +10,18 @@ const out = "docs/cotrirosa/visual-local",
 await mkdir(out, { recursive: true });
 const b = await chromium.launch({
   headless: true,
-  args: ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"],
+  args: [
+    process.platform === "win32" ? "--use-angle=d3d11" : "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+  ],
 });
 const report = {
   checks: [],
   errors: [],
   captures: [],
-  limits: "Chromium on Windows Intel UHD; touch emulation, not a physical phone",
+  limits: `${process.platform} Chromium; touch emulation, not a physical phone; ${root}`,
 };
 const check = (value, label) => {
   assert.ok(value, label);

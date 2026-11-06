@@ -99,6 +99,13 @@
       "when": 1793944080783,
       "tag": "0013_pet_demo_participante_pessoa",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1793944518988,
+      "tag": "0014_pet_demo_seguranca_estruturada",
+      "breakpoints": true
     }
   ]
 }

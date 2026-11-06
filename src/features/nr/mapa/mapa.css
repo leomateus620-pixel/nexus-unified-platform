@@ -838,6 +838,23 @@
 }
 
 /* ---- Single white shell header with norm → client → unit context ---- */
+/* Restore the workspace (light) tokens that the operational shell darkens on the top bar. */
+.nx-app-shell.nx-stable-frame.nexus-operational .nx-topbar.nx-topbar-map {
+  color-scheme: light;
+  --background: inherit;
+  --foreground: inherit;
+  --card: inherit;
+  --primary: inherit;
+  --primary-foreground: inherit;
+  --muted-foreground: inherit;
+  --border: inherit;
+  --input: inherit;
+  --ring: inherit;
+  background: var(--background);
+  color: var(--foreground);
+  height: auto;
+  min-height: 3.5rem;
+}
 .nx-topbar-map {
   background: var(--background);
   color: var(--foreground);
@@ -1083,3 +1100,4 @@
   }
   .unit-map-tabs { justify-content: flex-start !important; gap: 16px !important; }
 }
+.unit-map-pet-loading { font-size: 12px; color: #53675e; }

@@ -138,7 +138,9 @@ export function UnitMapPanel({
               variant={expanded ? "toolbar" : undefined}
             />
             {demo.isPending ? (
-              <LoadingState label="Carregando PET…" />
+              <span className="unit-map-pet-loading" role="status">
+                Carregando PET…
+              </span>
             ) : demo.isError ? (
               <ErrorState error={demo.error} onRetry={() => demo.refetch()} />
             ) : (

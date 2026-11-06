@@ -17,6 +17,9 @@ import {
   demoContextErrors,
   demoStateLabel,
   emptyDemoDraft,
+  demoSeguranca,
+  segurancaPendencias,
+  segurancaTexto,
   type DemoCommand,
   type DemoDetail,
   type DemoDraft,
@@ -26,6 +29,19 @@ import { demoExportDetail } from "./export-detail";
 import { PetDemoHistory } from "./PetDemoHistory";
 import { PetDemoFiles } from "./PetDemoFiles";
 import { PetTeamSelector } from "../PetTeamSelector";
+import { PetStepProgress } from "../mobile/PetStepProgress";
+import { HazardMeasurePicker } from "../mobile/HazardMeasurePicker";
+import { ReadingRows } from "../mobile/ReadingRows";
+import { ProcedurePicker } from "../mobile/ProcedurePicker";
+import "../mobile/pet-mobile.css";
+import {
+  DEMO_AGENTES,
+  DEMO_CATALOGO_AVISO,
+  DEMO_INSTRUMENTOS,
+  DEMO_PERIGOS,
+  DEMO_PONTOS,
+  DEMO_PROCEDIMENTOS,
+} from "./catalogo";
 
 type Props = {
   scope: DemoScope;
@@ -215,21 +231,6 @@ function DemoEditor({
       next,
     );
   }
-  function addReading() {
-    const n = reading.replace(",", ".");
-    if (!agent.trim() || !unit.trim() || !n || !Number.isFinite(Number(n))) {
-      setError("Informe agente, valor numérico e unidade.");
-      return;
-    }
-    setError("");
-    set("leituras", [
-      ...draft.leituras,
-      { id: crypto.randomUUID(), agente: agent.trim(), valor: n, unidade: unit.trim() },
-    ]);
-    setAgent("");
-    setReading("");
-    setUnit("");
-  }
   const closedOrOperating = !editable;
   const workers = draft.equipe.filter((p) => p.funcao === "trabalhador"),
     open = detail?.presencas.filter((p) => !p.saida_em) ?? [];
@@ -291,6 +292,13 @@ function DemoEditor({
           </button>
         ))}
       </nav>
+      <PetStepProgress
+        steps={DEMO_STEPS}
+        current={step}
+        canEnter={(i) => demoCanEnterStep(session, i)}
+        onGo={go}
+        disabled={busy}
+      />
       <div className="pet-demo-form-body" ref={contentRef}>
         <h4 tabIndex={-1}>{DEMO_STEPS[step]}</h4>
         {session && step === 7 && (
@@ -386,60 +394,41 @@ function DemoEditor({
           </>
         )}
         {step === 2 && (
-          <fieldset disabled={closedOrOperating || busy}>
-            <PetField label="Perigos identificados">
-              <textarea
-                rows={4}
-                value={draft.perigos}
-                onChange={(e) => set("perigos", e.target.value)}
-              />
-            </PetField>
-            <PetField label="Medidas de prevenção">
-              <textarea
-                rows={5}
-                value={draft.medidas}
-                onChange={(e) => set("medidas", e.target.value)}
-              />
-            </PetField>
-          </fieldset>
+          <HazardMeasurePicker
+            catalogo={DEMO_PERIGOS}
+            aviso={DEMO_CATALOGO_AVISO}
+            value={demoSeguranca(draft)}
+            disabled={closedOrOperating || busy}
+            onChange={(list) => {
+              const t = segurancaTexto(list);
+              setDraft((old) => ({ ...old, seguranca: list, perigos: t.perigos, medidas: t.medidas }));
+              dirtyRef.current = true;
+              setDirty(true);
+              setSaved("");
+            }}
+          />
         )}
         {step === 3 && (
           <>
+            <p className="pet-hz-aviso">{DEMO_CATALOGO_AVISO}</p>
+            <ReadingRows
+              agentes={DEMO_AGENTES}
+              instrumentos={DEMO_INSTRUMENTOS}
+              pontos={DEMO_PONTOS}
+              value={draft.leituras}
+              disabled={closedOrOperating || busy}
+              onChange={(v) => set("leituras", v)}
+            />
+            <ProcedurePicker
+              grupos={DEMO_PROCEDIMENTOS}
+              value={draft.procedimentos_sel ?? []}
+              disabled={closedOrOperating || busy}
+              onChange={(v) => set("procedimentos_sel", v)}
+            />
             <fieldset disabled={closedOrOperating || busy}>
-              {readingsInput}
-              <button className="pet-demo-secondary" onClick={addReading}>
-                <Plus size={16} /> Adicionar leitura
-              </button>
-            </fieldset>
-            <div className="pet-demo-rows">
-              {draft.leituras.map((l) => (
-                <div key={l.id}>
-                  <span>
-                    {l.agente}{" "}
-                    <strong>
-                      {l.valor} {l.unidade}
-                    </strong>
-                  </span>
-                  {editable && (
-                    <button
-                      aria-label={`Remover leitura de ${l.agente}`}
-                      onClick={() =>
-                        set(
-                          "leituras",
-                          draft.leituras.filter((x) => x.id !== l.id),
-                        )
-                      }
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-            <fieldset disabled={closedOrOperating || busy}>
-              <PetField label="Procedimentos e observações">
+              <PetField label="Observações (exceções)">
                 <textarea
-                  rows={4}
+                  rows={3}
                   value={draft.procedimentos}
                   onChange={(e) => set("procedimentos", e.target.value)}
                 />
@@ -464,6 +453,18 @@ function DemoEditor({
                 {draft.equipe.map((p) => `${p.nome} · ${PET_FUNCOES[p.funcao]}`).join("; ") ||
                   "Nenhum participante"}
               </dd>
+              {segurancaPendencias(demoSeguranca(draft)).length > 0 && (
+                <>
+                  <dt>Pendências de segurança</dt>
+                  <dd className="pet-demo-pend">
+                    <ul>
+                      {segurancaPendencias(demoSeguranca(draft)).map((x) => (
+                        <li key={x}>{x}</li>
+                      ))}
+                    </ul>
+                  </dd>
+                </>
+              )}
               <dt>Segurança</dt>
               <dd>
                 {draft.perigos || "Não preenchida"}

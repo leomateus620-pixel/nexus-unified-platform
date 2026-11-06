@@ -500,3 +500,33 @@
     margin: 0;
   }
 }
+
+/* Ficha Cotrirosa: one answer per verifiable item. */
+.pet-fc { container-type: inline-size; display: grid; gap: 10px; border: 0; padding: 0; margin: 12px 0; min-width: 0; }
+.pet-fc details { border: 1px solid #dfe7e1; border-radius: 10px; background: #fff; }
+.pet-fc summary { display: flex; justify-content: space-between; gap: 8px; padding: 12px 14px; min-height: 44px; font-weight: 600; cursor: pointer; }
+.pet-fc summary span { color: #5b6b62; font-weight: 500; }
+.pet-fc ul { list-style: none; margin: 0; padding: 0 10px 10px; display: grid; gap: 6px; }
+.pet-fc-row { display: grid; gap: 6px; padding: 8px 4px; border-top: 1px solid #eef2ef; min-width: 0; }
+.pet-fc-label { overflow-wrap: anywhere; }
+.pet-fc-opts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pet-fc-opts button { min-height: 44px; min-width: 52px; padding: 0 12px; border: 1px solid #cfdad2; border-radius: 8px; background: #fff; color: #17251f; font: inherit; }
+.pet-fc-opts button[aria-checked="true"] { border-color: #17251f; background: #17251f; color: #fff; font-weight: 600; }
+.pet-fc-opts button[aria-checked="true"][data-s="N"] { background: #a3261b; border-color: #a3261b; }
+.pet-fc-opts button:focus-visible { outline: 3px solid #2f7d4f; outline-offset: 2px; }
+.pet-fc-nv { color: #8a5a00; font-size: 14px; }
+.pet-fc-just, .pet-fc-meta input, .pet-fc-meta select, .pet-fc-outros input, .pet-fc-outros select { min-height: 44px; font-size: 16px; min-width: 0; }
+.pet-fc-meta { display: grid; gap: 10px; border: 1px solid #dfe7e1; border-radius: 10px; padding: 12px; margin: 8px 0; min-width: 0; }
+.pet-fc-meta label { display: grid; gap: 4px; }
+.pet-fc-meta .pet-fc-check { display: flex; gap: 8px; align-items: center; min-height: 44px; }
+.pet-fc-outros { display: grid; gap: 8px; }
+.pet-fc-contatos ul { list-style: none; padding: 0; display: grid; gap: 6px; }
+.pet-fc-contatos a { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; font-weight: 600; }
+.pet-fc-testes { display: grid; gap: 12px; }
+.pet-fc-pend button { background: none; border: 0; padding: 4px 0; text-align: left; text-decoration: underline; color: inherit; font: inherit; min-height: 32px; }
+@container (min-width: 640px) {
+  .pet-fc-row { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+  .pet-fc-row > .pet-fc-just, .pet-fc-row > .pet-fc-opts + .pet-fc-opts { grid-column: 1 / -1; }
+}
+@media (min-width: 768px) { .pet-fc-meta { grid-template-columns: 1fr 1fr; } .pet-fc-meta .pet-fc-check { grid-column: 1 / -1; } }
+@media (min-width: 1280px) { .pet-fc-testes { grid-template-columns: 1fr 1fr; } }

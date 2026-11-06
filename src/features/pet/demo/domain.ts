@@ -1,3 +1,4 @@
+import type { Ficha } from "../cotrirosa-ficha";
 import { z } from "zod";
 import { jsonValue } from "../schemas";
 import { unitScopeSchema } from "@/features/nr/mapa/schemas";
@@ -20,7 +21,7 @@ export const demoReading = z.object({
   instrumento: z.string().max(160).optional(),
   ponto: z.string().max(160).optional(),
   coletada_em: z.string().optional(),
-  momento: z.enum(["pre_entrada", "monitoramento"]).optional(),
+  momento: z.enum(["pre_entrada", "inicial", "pos_ventilacao", "monitoramento"]).optional(),
 });
 export const MEDIDA_ESTADOS = {
   pendente: "Pendente",
@@ -66,6 +67,7 @@ export const demoDraftSchema = z
     procedimentos: z.string().max(10000),
     seguranca: z.array(demoPerigo).max(100).optional(),
     procedimentos_sel: z.array(demoProcedimento).max(50).optional(),
+    ficha: z.custom<Ficha>((v) => typeof v === "object" && v !== null).optional(),
   })
   .refine(
     (d) =>

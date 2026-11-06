@@ -8,7 +8,10 @@ export const DEMO_CATALOGO_AVISO = "Catálogo de demonstração — não validad
 
 export type DemoPerigoCat = { grupo: string; itens: { perigo: string; medidas: string[] }[] };
 
-export const DEMO_PERIGOS: DemoPerigoCat[] = [
+import { FICHA_PERIGOS } from "../cotrirosa-ficha";
+
+/** Five Cotrirosa form families first, then Nexus silo hazards (energias, engolfamento…). */
+export const DEMO_PERIGOS_NEXUS: DemoPerigoCat[] = [
   {
     grupo: "Atmosfera",
     itens: [
@@ -46,6 +49,11 @@ export const DEMO_PERIGOS: DemoPerigoCat[] = [
     ],
   },
   { grupo: "Outros", itens: [{ perigo: "Iluminação insuficiente", medidas: ["Iluminação adequada à classificação da área"] }] },
+];
+
+export const DEMO_PERIGOS: DemoPerigoCat[] = [
+  ...FICHA_PERIGOS,
+  ...DEMO_PERIGOS_NEXUS.map((g) => ({ ...g, grupo: `Nexus · ${g.grupo}` })),
 ];
 
 /** Agentes da demo: unidade fixa por agente, sem conversão e sem limites. */

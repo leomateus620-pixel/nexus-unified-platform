@@ -316,3 +316,51 @@ function TrainingViewer({
     </Dialog>
   );
 }
+
+/** Documentary state + "Ver treinamento" for one person in one role (operational PET rows). */
+export function PetCertStatus({
+  scope,
+  funcao,
+  pessoa_id,
+  nome,
+}: {
+  scope: Scope | null;
+  funcao: string;
+  pessoa_id: string;
+  nome: string;
+}) {
+  const load = useServerFn(petEquipeCandidatos);
+  const [open, setOpen] = useState(false);
+  const valid = !!scope && (PET_FUNCOES_EQUIPE as readonly string[]).includes(funcao);
+  const q = useQuery({
+    queryKey: certificadoKey(scope ?? { organization_id: "", cliente_id: "", unidade_id: "" }, funcao),
+    enabled: valid,
+    queryFn: ({ signal }) => load({ data: { ...scope!, funcao: funcao as PetFuncaoEquipe }, signal }),
+    retry: false,
+    staleTime: 60_000,
+  });
+  if (!valid) return null;
+  if (q.isPending) return <Badge s="verificando" />;
+  if (q.isError) return <Badge s={noAccessErr(q.error) ? "sem_acesso" : "indisponivel"} />;
+  const c = q.data.candidatos.find((x) => x.pessoa_id === pessoa_id);
+  return (
+    <span className="pet-team-name">
+      <Badge s={c?.situacao ?? "ausente"} />
+      {c?.evidencia?.anexo_id && (
+        <button
+          type="button"
+          className="pet-team-view"
+          aria-label={`Ver treinamento de ${nome} como ${PET_FUNCOES[funcao]}`}
+          onClick={() => setOpen(true)}
+        >
+          <Eye size={15} aria-hidden="true" /> Ver treinamento
+        </button>
+      )}
+      <TrainingViewer
+        scope={scope!}
+        target={open ? { pessoa_id, nome, funcao: funcao as PetFuncaoEquipe, qualificacao_id: c!.evidencia!.qualificacao_id } : null}
+        onClose={() => setOpen(false)}
+      />
+    </span>
+  );
+}

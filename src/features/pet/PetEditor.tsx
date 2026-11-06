@@ -14,6 +14,7 @@ import {
 import { PetStatus } from "./ExecucaoWorkspace";
 import { petDangerEvidenceItem } from "./evidence-context";
 import { PetPicker } from "./PetPicker";
+import { PetCertStatus } from "./PetTeamSelector";
 import {
   PET_CONTROLES,
   pendingTarget,
@@ -133,6 +134,14 @@ export function PetDraftStage({
   const [selectedPerson, setSelectedPerson] = useState("");
   const [funcao, setFuncao] = useState("trabalhador");
   const [classificacao, setClassificacao] = useState("interno");
+  const certScope =
+    detail.os?.cliente_id && detail.pet.unidade_id
+      ? {
+          organization_id: detail.pet.organization_id,
+          cliente_id: detail.os.cliente_id,
+          unidade_id: detail.pet.unidade_id,
+        }
+      : null;
   const [empresa, setEmpresa] = useState("");
   const [otherByGroup, setOtherByGroup] = useState<Record<string, string>>({});
   const [observations, setObservations] = useState<Record<string, boolean>>({});
@@ -390,6 +399,12 @@ export function PetDraftStage({
                               ? "Interno"
                               : `Terceirizado · ${person.empresa || "Empresa não informada"}`}
                           </p>
+                          <PetCertStatus
+                            scope={certScope}
+                            funcao={person.funcao}
+                            pessoa_id={person.pessoa_id}
+                            nome={name(person.pessoa_id)}
+                          />
                         </div>
                         {!readOnly && (
                           <ActionButton

@@ -25,7 +25,9 @@ import {
   updatePetAnswer,
   type PetDraft,
 } from "./preparation-domain";
+import { FICHA_ITENS, fichaGruposDoModelo } from "./cotrirosa-ficha";
 import "./pet-preparation.css";
+const FICHA_IDS = new Set(FICHA_ITENS.map((item) => item.id));
 // eslint-disable-next-line react-refresh/only-export-components -- Existing public imports forward pure helpers.
 export { PET_CONTROLES, draftPayload, petDraft, pendingTarget } from "./preparation-domain";
 export type { PetDraft } from "./preparation-domain";
@@ -149,13 +151,16 @@ export function PetDraftStage({
   const [observations, setObservations] = useState<Record<string, boolean>>({});
   const selectedModel = options.modelos.find((model) => model.id === draft.modelo_id);
   const requirements = petModelRequirements(selectedModel);
+  const fichaIds = new Set(requirements.map((rule) => rule.id).filter((key) => FICHA_IDS.has(key)));
   const controlGroups = [
-    ...PET_CONTROLES,
+    ...(fichaIds.size ? fichaGruposDoModelo(fichaIds) : PET_CONTROLES),
     {
       grupo: "Itens do procedimento",
       itens: requirements
         .filter(
-          (rule) => !PET_CONTROLES.some((group) => group.itens.some(([key]) => key === rule.id)),
+          (rule) =>
+            !FICHA_IDS.has(rule.id) &&
+            !PET_CONTROLES.some((group) => group.itens.some(([key]) => key === rule.id)),
         )
         .map((rule) => [rule.id, rule.rotulo || rule.id] as [string, string]),
     },

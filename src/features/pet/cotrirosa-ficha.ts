@@ -72,10 +72,12 @@ export const FICHA_ITENS: FichaItem[] = [
     ["epi_resp_resgate", "Autônomo ou ar mandado c/ cilindro de escape — equipe de resgate"],
     ["epi_eletrico_ex", "Equipamentos elétricos/eletrônicos adequados a área potencialmente explosiva"],
   ]),
-  ...g("Antes da entrada · procedimentos", "antes", [
+  ...g("Bloqueio, purga e ventilação", "antes", [
     ["pre_bloqueio", "Bloqueios, travamento e etiquetagem de equipamentos"],
     ["pre_purga", "Purga e/ou lavagem"],
     ["pre_ventilacao", "Ventilação/exaustão"],
+  ]),
+  ...g("Demais verificações", "antes", [
     ["pre_comunicacao", "Procedimentos de comunicação"],
     ["pre_resgate", "Procedimentos de resgate"],
     ["pre_mov_vertical", "Procedimentos e proteção de movimentação vertical"],
@@ -96,6 +98,8 @@ export type TesteMeta = {
   instrumento?: string;
   serie?: string;
   confirmado?: boolean;
+  /** Set when a dependent choice (ventilation) changed after the test was recorded. */
+  reconferir?: boolean;
 };
 export type Ficha = {
   versao: string;
@@ -194,4 +198,38 @@ export function fichaGruposDoModelo(ids: Set<string>) {
     g.itens.push([it.id, it.label]);
   }
   return out;
+}
+
+/** Progress of required items for one phase (or all): answered / total, blocking count. */
+export function fichaProgresso(f: Ficha | undefined, fase?: FichaItem["fase"], leituras: Leitura[] = []) {
+  const itens = FICHA_ITENS.filter((i) => !fase || i.fase === fase);
+  const ids = new Set(itens.map((i) => i.id));
+  const pend = fichaPendencias(f, leituras).filter(
+    (p) => !fase || ids.has(p.id) || (fase === "antes" && p.id.startsWith("teste_")),
+  );
+  return {
+    respondidos: itens.filter((i) => estadoDe(f, i.id) !== "NV").length,
+    total: itens.length,
+    impedimentos: pend.filter((p) => p.tipo === "impeditiva").length,
+    pendencias: pend,
+  };
+}
+
+/** Summary per atmospheric test: time, supervisor and situation. */
+export function resumoTeste<T extends Leitura & { horario?: string | undefined }>(
+  f: Ficha | undefined,
+  leituras: T[],
+  m: Momento,
+) {
+  const ls = leiturasDe(leituras, m);
+  const faltam = ["H₂S", "CO", "Inflamáveis", "O₂"].filter((a) => !ls.some((l) => l.agente === a));
+  const bloqueado = ls.some((l) => l.agente === "O₂" && o2Status(l.valor) === "bloqueio");
+  const meta = f?.testes?.[m];
+  const situacao: "Completo" | "Incompleto" | "Bloqueado" = bloqueado
+    ? "Bloqueado"
+    : !faltam.length && (meta?.responsavel ?? "").trim()
+      ? "Completo"
+      : "Incompleto";
+  const horarios = ls.map((l) => l.horario).filter(Boolean).sort() as string[];
+  return { situacao, faltam, horario: horarios.at(-1) ?? "", responsavel: meta?.responsavel ?? "", reconferir: !!meta?.reconferir };
 }

@@ -841,15 +841,16 @@
 /* Restore the workspace (light) tokens that the operational shell darkens on the top bar. */
 .nx-app-shell.nx-stable-frame.nexus-operational .nx-topbar.nx-topbar-map {
   color-scheme: light;
-  --background: inherit;
-  --foreground: inherit;
-  --card: inherit;
-  --primary: inherit;
-  --primary-foreground: inherit;
-  --muted-foreground: inherit;
-  --border: inherit;
-  --input: inherit;
-  --ring: inherit;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.25 0.03 160);
+  --card: oklch(1 0 0);
+  --muted: oklch(0.965 0.008 150);
+  --primary: oklch(0.38 0.07 160);
+  --primary-foreground: oklch(0.98 0.01 150);
+  --muted-foreground: oklch(0.47 0.03 155);
+  --border: oklch(0.89 0.015 150);
+  --input: oklch(0.89 0.015 150);
+  --ring: oklch(0.62 0.12 75);
   background: var(--background);
   color: var(--foreground);
   height: auto;

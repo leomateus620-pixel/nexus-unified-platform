@@ -463,10 +463,17 @@
     min-height: 44px;
     font-size: 14px;
   }
+  .pet-demo-workflow .pet-demo-footer > div {
+    flex-wrap: nowrap;
+  }
   .pet-demo-workflow .pet-demo-footer .pet-demo-primary {
-    flex: 1 1 100%;
+    flex: 1 1 auto;
     justify-content: center;
-    order: -1;
+    order: 3;
+  }
+  .pet-demo-workflow .pet-demo-footer > span {
+    padding: 0;
+    line-height: 1.2;
   }
   .pet-demo-workflow textarea,
   .pet-demo-workflow input,

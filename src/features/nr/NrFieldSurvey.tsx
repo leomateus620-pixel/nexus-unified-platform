@@ -61,8 +61,8 @@ export function NrFieldSurvey({
     answers: row.respostas,
   });
   const [answers, setAnswers] = useState(() => surveyObject(row.respostas));
-  const [metadata, setMetadata] = useState(() => surveyObject(row.dados["medidas_coleta"]));
-  const [verified, setVerified] = useState(row.dados["identificacao_verificada"] === true);
+  const [metadata, setMetadata] = useState(() => surveyObject(row.dados?.["medidas_coleta"]));
+  const [verified, setVerified] = useState(row.dados?.["identificacao_verificada"] === true);
   const [changed, setChanged] = useState(new Set<string>());
   const [dirty, setDirty] = useState(false);
   const dirtyRef = useRef(false);
@@ -80,7 +80,7 @@ export function NrFieldSurvey({
   const applicable = progress.filter((p) => p.applicability !== false);
   const [stage, setStage] = useState(
     () =>
-      label(row.dados[`coleta_bloco_${scope.norma}`]) ||
+      label(row.dados?.[`coleta_bloco_${scope.norma}`]) ||
       (applicable.find((p) => p.requiredMissing.length || p.answered < p.total) ?? applicable[0])
         ?.block.id ||
       "",
@@ -309,7 +309,7 @@ export function NrFieldSurvey({
             <h1>{row.local_titulo ?? row.titulo}</h1>
             <p className="nr-muted">
               {label(local["familia"])}
-              {row.dados["tecnico_nome"] ? ` · ${label(row.dados["tecnico_nome"])}` : ""}
+              {row.dados?.["tecnico_nome"] ? ` · ${label(row.dados?.["tecnico_nome"])}` : ""}
             </p>
           </div>
           <div className="nr-field-count">

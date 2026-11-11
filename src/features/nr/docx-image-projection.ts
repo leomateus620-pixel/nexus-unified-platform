@@ -21,10 +21,10 @@ export function projectConvertedDocxImages(input: {
   const { row, value } = input,
     revision = object(input.revision),
     snapshot = object(revision["snapshot"]),
-    conversion = object(row.dados["conversao"]),
+    conversion = object(row.dados?.["conversao"]),
     context = object(snapshot["contexto"]);
-  const originalId = conversion["original_arquivo_id"] ?? row.dados["arquivo_original_id"],
-    originalHash = conversion["original_sha256"] ?? row.dados["sha256_original"];
+  const originalId = conversion["original_arquivo_id"] ?? row.dados?.["arquivo_original_id"],
+    originalHash = conversion["original_sha256"] ?? row.dados?.["sha256_original"];
   const photos: Record<string, unknown>[] = [],
     projectedBlockIds: string[] = [],
     ambiguousBlockIds: string[] = [];

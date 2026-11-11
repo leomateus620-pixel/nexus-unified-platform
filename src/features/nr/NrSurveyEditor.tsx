@@ -299,7 +299,7 @@ export function NrSurveyReader({ row }: { row: NrRecord }) {
     historicalData: row.dados,
     answers: row.respostas,
   });
-  const historicState = row.dados["estado_historico"] ?? row.dados["situacao"];
+  const historicState = row.dados?.["estado_historico"] ?? row.dados?.["situacao"];
   return (
     <div>
       <p className="nr-source">

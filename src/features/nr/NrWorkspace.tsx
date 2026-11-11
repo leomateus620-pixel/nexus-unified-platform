@@ -2149,7 +2149,7 @@ function NrDetail({
             ).map(([key, label]) => (
               <div key={key}>
                 <dt>{label}</dt>
-                <dd>{hum(typeof row.dados[key] === "string" ? row.dados[key] : null)}</dd>
+                <dd>{hum(typeof row.dados?.[key] === "string" ? row.dados?.[key] : null)}</dd>
               </div>
             ))}
           </dl>

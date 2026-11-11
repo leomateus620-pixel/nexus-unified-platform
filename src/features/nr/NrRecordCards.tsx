@@ -163,7 +163,7 @@ export function RecordList({
                   </h3>
                   {resource === "locais" ? (
                     <p className="nr-card-context">{technical?.setor || "Setor não informado"}</p>
-                  ) : (
+                  ) : resource !== "levantamentos" ? (
                     <p className="nr-card-context">
                       {context ||
                         (resource === "documentos"
@@ -172,7 +172,7 @@ export function RecordList({
                             ? nrLabel(row.tipo)
                             : null)}
                     </p>
-                  )}
+                  ) : null}
                 </div>
                 {resource === "documentos" ? (
                   <span className="nr-card-revision">
@@ -300,6 +300,35 @@ export function RecordList({
                     <p className="nr-card-attention">Aplicabilidade em revisão · abrir na NR-33</p>
                   )}
                 </>
+              ) : resource === "levantamentos" ? (
+                <NrCardMeta>
+                  <div>
+                    <dt>Local</dt>
+                    <dd>
+                      {[row.local_tag || row.tag, row.local_titulo].filter(Boolean).join(" · ") ||
+                        "Sem vínculo informado"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Família</dt>
+                    <dd>{family || "Por confirmar"}</dd>
+                  </div>
+                  <div>
+                    <dt>Progresso</dt>
+                    <dd>
+                      {typeof row.dados["coleta_total"] === "number" &&
+                      row.dados["coleta_total"] > 0
+                        ? `${String(row.dados["coleta_preenchidos"])} de ${row.dados["coleta_total"]} campos`
+                        : "Disponível no roteiro"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Técnico</dt>
+                    <dd>
+                      <NrValue value={row.dados["tecnico_nome"] ?? row.dados["levantado_por"]} />
+                    </dd>
+                  </div>
+                </NrCardMeta>
               ) : (
                 <NrCardMeta>
                   {family && (
@@ -364,43 +393,13 @@ export function RecordList({
                   Revisão necessária
                 </p>
               )}
-              {resource === "levantamentos" && (
-                <NrCardMeta>
-                  <div>
-                    <dt>Local</dt>
-                    <dd>
-                      {[row.tag, row.local_titulo].filter(Boolean).join(" · ") ||
-                        "Sem vínculo informado"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Família</dt>
-                    <dd>{row.familia || "Por confirmar"}</dd>
-                  </div>
-                  <div>
-                    <dt>Progresso</dt>
-                    <dd>
-                      {typeof row.dados["coleta_total"] === "number" &&
-                      row.dados["coleta_total"] > 0
-                        ? `${String(row.dados["coleta_preenchidos"])} de ${row.dados["coleta_total"]} campos`
-                        : "Disponível no roteiro"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Técnico</dt>
-                    <dd>
-                      <NrValue value={row.dados["tecnico_nome"] ?? row.dados["levantado_por"]} />
-                    </dd>
-                  </div>
-                </NrCardMeta>
-              )}
               <NrCardActions>
                 <Link
                   className="nr-card-open"
                   to={link}
                   search={
                     resource === "levantamentos" && !search.lixeira
-                      ? { ...search, coleta: "campo" }
+                      ? { ...search, coleta: "campo", coletaRevisao: "" }
                       : search
                   }
                 >

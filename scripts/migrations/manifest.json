@@ -362,7 +362,7 @@
     },
     {
       "path": "drizzle/migrations/0067_nr_coleta_campo.sql",
-      "sha256": "48a7f7139317d8e83a79227f4e9329fde1d5bff78fbb2eff7d28767100b51c4c"
+      "sha256": "da5e135dd0a208ae144d26a96629e980ef8bc0f32204f43926894dcd93de9008"
     }
   ]
 }

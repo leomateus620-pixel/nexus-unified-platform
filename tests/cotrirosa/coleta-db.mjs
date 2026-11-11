@@ -196,6 +196,15 @@ try {
     { campo: "B14.itens", codigo: "SRG" },
   ]);
   assert.notEqual(reviewed.documento_id, next.documento_id);
+  const listByState = async (estado) =>
+    (
+      await run(
+        (tx) =>
+          tx`select nr_coleta_listar(${org},${client},${unit},'NR33',${tx.json({ estado })}) result`,
+      )
+    )[0].result;
+  assert.ok((await listByState("aprovada")).rows.some((row) => row.id === x.id));
+  assert.ok((await listByState("em_revisao")).rows.every((row) => row.id !== x.id));
   const snapshots =
     await sql`select numero,estado,snapshot from nr_coleta_revisoes where levantamento_id=${x.id} order by numero`;
   assert.deepEqual(

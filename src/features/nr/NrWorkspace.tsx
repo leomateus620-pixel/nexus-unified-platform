@@ -326,6 +326,15 @@ function NrScope({
   });
   const contexto = context.data as NrContexto | undefined;
   const term = useTerm(search.busca);
+  const surveyListScope =
+    recurso === "levantamentos" &&
+    !id &&
+    search.cliente &&
+    search.unidade &&
+    !search.lixeira &&
+    search.escopo !== "todos"
+      ? { cliente: search.cliente, unidade: search.unidade }
+      : null;
   const query = useQuery({
     queryKey: [
       "nr",
@@ -354,18 +363,12 @@ function NrScope({
       !!recurso &&
       (!!id || !!search.unidade || search.escopo === "todos" || recurso === "modelos"),
     queryFn: ({ signal }) =>
-      recurso === "levantamentos" &&
-      !id &&
-      search.cliente &&
-      search.unidade &&
-      !search.lixeira &&
-      search.escopo !== "todos"
+      surveyListScope
         ? listSurveys({
             data: {
               org,
               norma,
-              cliente: search.cliente,
-              unidade: search.unidade,
+              ...surveyListScope,
               busca: term,
               estado: search.estado,
               pagina: search.pagina,
@@ -1514,7 +1517,9 @@ function NrScope({
                                   : recurso === "modelos"
                                     ? ["rascunho", "em_revisao", "publicado"]
                                     : recurso === "levantamentos"
-                                      ? ["rascunho", "em_revisao"]
+                                      ? surveyListScope
+                                        ? ["rascunho", "em_revisao", "devolvida", "aprovada"]
+                                        : ["rascunho", "em_revisao"]
                                       : ["rascunho", "em_revisao", "emitido_origem"]
                               ).map((s) => (
                                 <option key={s} value={s}>

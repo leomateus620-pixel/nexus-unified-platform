@@ -269,6 +269,8 @@ const labels: Record<string, string> = {
   rascunho: "Rascunho",
   emitido_origem: "Emitido na origem",
   em_revisao: "Em revisão",
+  aprovada: "Aprovada",
+  devolvida: "Devolvida",
   altura: "Trabalho em altura",
   confirmado_ec: "Espaço confinado confirmado",
   nao_ec: "Não é espaço confinado",

@@ -498,13 +498,17 @@ begin
     raise exception 'Unidade indisponível.' using errcode='42501';
   end if;
   with matches as materialized (
-    select s,l.tag,l.titulo as local_titulo,l.familia,l.tipo
+    select s,l.tag,l.titulo as local_titulo,l.familia,l.tipo,r.estado as revisao
     from public.nr_levantamentos s left join public.nr_locais l
       on l.organization_id=s.organization_id and l.id=s.local_id
+    left join lateral (
+      select c.estado from public.nr_coleta_revisoes c where c.organization_id=s.organization_id
+        and c.levantamento_id=s.id order by c.numero desc limit 1
+    ) r on true
     where s.organization_id=p_org and s.cliente_id=p_cliente and s.unidade_id=p_unidade
       and p_norma=any(s.normas) and s.arquivado_em is null
       and (nullif(p_filtros->>'local_id','') is null or s.local_id=(p_filtros->>'local_id')::uuid)
-      and (nullif(p_filtros->>'estado','') is null or s.estado=p_filtros->>'estado')
+      and (nullif(p_filtros->>'estado','') is null or coalesce(r.estado,s.estado)=p_filtros->>'estado')
       and position(termo in lower(concat_ws(' ',s.titulo,l.tag,l.titulo,array_to_string(l.aliases,' '))))>0
   ), page as (
     select * from matches order by (s).updated_at desc,(s).id offset pagina*25 limit 25
@@ -513,9 +517,7 @@ begin
       coalesce(public.nr_levantamento_apresentacao(p_org,p_norma,(s).id)->'dados',v.dados),
       coalesce((select jsonb_object_agg(r.campo_id,r.valor) from public.nr_respostas r
         where r.organization_id=p_org and r.levantamento_id=(s).id),'{}'),
-      jsonb_build_object('familia',page.familia,'tipo',page.tipo)) as diagnostico,
-      (select c.estado from public.nr_coleta_revisoes c where c.organization_id=p_org
-        and c.levantamento_id=(s).id order by c.numero desc limit 1) as revisao
+      jsonb_build_object('familia',page.familia,'tipo',page.tipo)) as diagnostico
     from page left join public.nr_modelo_versoes v on v.organization_id=p_org and v.id=(s).modelo_versao_id
   )
   select (select count(*) from matches),coalesce(jsonb_agg((to_jsonb(s)-'dados')||

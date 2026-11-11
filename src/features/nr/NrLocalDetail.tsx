@@ -156,7 +156,7 @@ export function NrLocalDetail({
           {!embedded && <span>{unitName}</span>}
           <span>{row.familia || nrLabel(row.tipo ?? "Local")}</span>
         </p>
-        <Link to={String(`${base}/levantamentos`)} search={scope} className="nr-inline-action">
+        <Link to={String(`${base}/levantamentos`)} search={{ ...scope, coleta: "" }} className="nr-inline-action">
           <ClipboardList size={16} /> Abrir levantamento
         </Link>
       </div>

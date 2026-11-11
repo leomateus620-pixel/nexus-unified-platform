@@ -145,6 +145,86 @@ export async function exportarDocumentoNr(
     documento_version: row.version,
   };
 }
+export async function persistirRelatorioCampoNr(value: unknown, userId: string, input: Base) {
+  const client = db(value);
+  const row = await documento(client, input);
+  if (row.tipo !== "relatorio_campo" || !row.revisao_atual_id || !row.dados["coleta_revisao_id"])
+    throw new Error("Relatório de campo indisponível no acesso atual.");
+  const existing = nrFileRow
+    .nullable()
+    .parse(
+      nrResult(
+        await client
+          .from("nr_arquivos")
+          .select("*")
+          .eq("organization_id", input.organization_id)
+          .eq("documento_id", row.id)
+          .eq("revisao_id", row.revisao_atual_id)
+          .eq("estado", "vinculado")
+          .contains("origem_metadata", { gerador: "nr-coleta-pdf-1" })
+          .maybeSingle(),
+      ),
+    );
+  if (existing) {
+    const bytes = await readFile(client, existing);
+    return {
+      base64: Buffer.from(bytes).toString("base64"),
+      mime: existing.mime,
+      nome: existing.nome,
+    };
+  }
+  if (!process.env["SUPABASE_SERVICE_ROLE_KEY"] || !process.env["SUPABASE_URL"])
+    throw Error("Integração não configurada: armazenamento privado do Relatório de Campo.");
+  const rendered = await exportarDocumentoNr(client, { ...input, formato: "pdf" });
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const admin = db(supabaseAdmin);
+  const prepared = nrFileRow.parse(
+    nrResult(
+      await admin.rpc("nr_coleta_pdf_preparar", {
+        p_org: input.organization_id,
+        p_documento: row.id,
+        p_revisao: row.revisao_atual_id,
+        p_autor: userId,
+        p_sha256: rendered.sha256,
+        p_tamanho: rendered.tamanho,
+      }),
+    ),
+  );
+  if (prepared.estado === "vinculado") return rendered;
+  try {
+    await documento(client, input);
+    const upload = await admin.storage
+      .from(NR_ARQUIVO_BUCKET)
+      .upload(prepared.caminho, Buffer.from(rendered.base64, "base64"), {
+        contentType: rendered.mime,
+        upsert: false,
+      });
+    if (upload.error && String((upload.error as { statusCode?: string }).statusCode) !== "409")
+      throw new Error("O armazenamento privado não confirmou o PDF. Tente gerar novamente.");
+    await readFile(admin, prepared);
+    nrResult(
+      await admin.rpc("nr_arquivo_confirmar", {
+        p_org: input.organization_id,
+        p_id: prepared.id,
+        p_autor: prepared.created_by,
+        p_sha256: prepared.sha256,
+        p_tamanho: prepared.tamanho,
+        p_mime: prepared.mime,
+      }),
+    );
+    await documento(client, input);
+    return rendered;
+  } catch (error) {
+    await admin.rpc("nr_arquivo_falhar", {
+      p_org: input.organization_id,
+      p_id: prepared.id,
+      p_autor: prepared.created_by,
+      p_motivo: "A geração aguarda nova tentativa de armazenamento.",
+    });
+    throw error;
+  }
+}
+
 async function uuidKey(value: string) {
   const hash = await sha256Nr(new TextEncoder().encode(value));
   return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-5${hash.slice(13, 16)}-a${hash.slice(17, 20)}-${hash.slice(20, 32)}`;

@@ -45,6 +45,11 @@ function wrap(
 }
 export async function gerarPdfNr(snapshot: NrDocumentSnapshot, assets: NrDocumentAsset[] = []) {
   const doc = await PDFDocument.create();
+  const frozenDate = new Date(snapshot.updated_at);
+  if (Number.isFinite(frozenDate.getTime())) {
+    doc.setCreationDate(frozenDate);
+    doc.setModificationDate(frozenDate);
+  }
   doc.registerFontkit(fontkit);
   const regular = await doc.embedFont(fontBytes(regularData), { subset: true }),
     bold = await doc.embedFont(fontBytes(boldData), { subset: true }),

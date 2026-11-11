@@ -1,4 +1,4 @@
-import { useId, useRef } from "react";
+import { useId, useRef, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { ActionButton } from "@/components/nexus/Page";
 import {
@@ -14,6 +14,7 @@ import { nrLabel } from "./technical-display";
 export type NrSurveyEvidenceContext = {
   org: string;
   context: string;
+  fieldMode?: boolean;
   localId?: string | null | undefined;
   onAttach?: (
     field: SurveyFieldDefinition,
@@ -148,7 +149,15 @@ export function NrSurveyField({
       />
     );
   if (field.tipo === "checklist")
-    return <SurveyAssessment field={field} value={value} onChange={onChange} disabled={disabled} />;
+    return (
+      <SurveyAssessment
+        field={field}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        evidence={evidence}
+      />
+    );
   if (field.tipo === "multipla") {
     if (value != null && !Array.isArray(value))
       return (
@@ -616,11 +625,13 @@ function SurveyAssessment({
   value,
   onChange,
   disabled,
+  evidence,
 }: {
   field: SurveyFieldDefinition;
   value: unknown;
   onChange: (value: unknown) => void;
   disabled: boolean;
+  evidence?: NrSurveyEvidenceContext | undefined;
 }) {
   const id = useId();
   if (value != null && (typeof value !== "object" || Array.isArray(value)))
@@ -631,6 +642,16 @@ function SurveyAssessment({
       </div>
     );
   const rows = surveyObject(value);
+  if (evidence?.fieldMode)
+    return (
+      <SurveyAssessmentCards
+        field={field}
+        rows={rows}
+        onChange={onChange}
+        disabled={disabled}
+        evidence={evidence}
+      />
+    );
   return (
     <fieldset className="nr-wide nr-survey-field">
       <legend>{field.nome}</legend>
@@ -755,5 +776,156 @@ function SurveyAssessment({
         <p className="nr-muted">Nenhuma avaliação registrada neste campo.</p>
       )}
     </fieldset>
+  );
+}
+
+function SurveyAssessmentCards({
+  field,
+  rows,
+  onChange,
+  disabled,
+  evidence,
+}: {
+  field: SurveyFieldDefinition;
+  rows: Record<string, unknown>;
+  onChange: (value: unknown) => void;
+  disabled: boolean;
+  evidence: NrSurveyEvidenceContext;
+}) {
+  const [code, setCode] = useState("");
+  return (
+    <div className="nr-field-assessments">
+      <h3>{field.nome}</h3>
+      {Object.entries(rows).map(([key, value]) => {
+        const row = surveyObject(value);
+        if (!Object.keys(row).length)
+          return (
+            <div key={key}>
+              <h4>{key}</h4>
+              <NrSurveyValue value={value} />
+            </div>
+          );
+        const patch = (axis: string, choice: unknown) =>
+          onChange({ ...rows, [key]: { ...row, [axis]: choice, validacao_nexus: "nao_revisado" } });
+        return (
+          <article className="nr-field-assessment" key={key}>
+            <h4>
+              {key}
+              {scalar(row["titulo"]) ? ` · ${scalar(row["titulo"])}` : ""}
+            </h4>
+            {Object.entries(assessmentChoices).map(([axis, choices]) => (
+              <fieldset key={axis} className="nr-field-pills">
+                <legend>{surveyLabel(axis)}</legend>
+                {[...new Set([...choices, ...(scalar(row[axis]) ? [scalar(row[axis])] : [])])].map(
+                  (choice) => (
+                    <button
+                      key={choice}
+                      type="button"
+                      aria-pressed={row[axis] === choice}
+                      disabled={disabled}
+                      onClick={() => patch(axis, choice)}
+                    >
+                      {surveyLabel(choice)}
+                    </button>
+                  ),
+                )}
+              </fieldset>
+            ))}
+            {row["acao"] === "verificar" && row["aplicabilidade"] === "pendente" && (
+              <p className="nr-source">Pendência de campo · confirmar aplicabilidade.</p>
+            )}
+            <label>
+              Justificativa
+              <textarea
+                value={scalar(row["justificativa"])}
+                disabled={disabled}
+                onChange={(e) => patch("justificativa", e.target.value)}
+              />
+            </label>
+            <div className="nr-field-pair">
+              <label>
+                Quantidade
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  value={scalar(row["quantidade"])}
+                  disabled={disabled}
+                  onChange={(e) =>
+                    patch("quantidade", e.target.value === "" ? "" : e.target.valueAsNumber)
+                  }
+                />
+              </label>
+              <label>
+                Unidade
+                <input
+                  value={scalar(row["unidade"])}
+                  maxLength={30}
+                  disabled={disabled}
+                  onChange={(e) => patch("unidade", e.target.value)}
+                />
+              </label>
+            </div>
+            <SurveyPhotos
+              field={{
+                ...field,
+                id: `${field.id}.${key}.evidencias`,
+                nome: `Evidência · ${key}`,
+                tipo: "foto",
+                obrigatorio: false,
+              }}
+              value={row["evidencias"]}
+              disabled={disabled}
+              evidence={evidence}
+              onChange={(next) => patch("evidencias", next)}
+            />
+            <details>
+              <summary>Decisão e dados de origem</summary>
+              <NrSurveyValue
+                value={Object.fromEntries(
+                  Object.entries(row).filter(
+                    ([k]) =>
+                      ![
+                        ...Object.keys(assessmentChoices),
+                        "justificativa",
+                        "quantidade",
+                        "unidade",
+                      ].includes(k),
+                  ),
+                )}
+              />
+            </details>
+          </article>
+        );
+      })}
+      {!disabled && (
+        <div className="nr-field-actions">
+          <label>
+            Código do catálogo
+            <input value={code} maxLength={60} onChange={(e) => setCode(e.target.value)} />
+          </label>
+          <ActionButton
+            variant="ghost"
+            disabled={!code.trim() || Object.hasOwn(rows, code.trim())}
+            onClick={() => {
+              const key = code.trim();
+              onChange({
+                ...rows,
+                [key]: {
+                  codigo: key,
+                  existencia: "nao_verificada",
+                  aplicabilidade: "pendente",
+                  condicao: "nao_avaliada",
+                  acao: "sem_decisao",
+                },
+              });
+              setCode("");
+            }}
+          >
+            <Plus size={16} /> Adicionar item
+          </ActionButton>
+        </div>
+      )}
+    </div>
   );
 }

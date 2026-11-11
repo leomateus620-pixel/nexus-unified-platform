@@ -24,9 +24,16 @@ const categories: Record<string, string> = {
 };
 const date = (value?: string | null) => (value ? nrDate(value) : "Não informado");
 function Status({ row }: { row: NrRecord }) {
+  const review = row.dados["coleta_revisao"];
   return (
     <span className="nr-badge">
-      {nrLabel(row.arquivado_em ? "arquivado" : row.estado_origem || row.estado)}
+      {nrLabel(
+        row.arquivado_em
+          ? "arquivado"
+          : typeof review === "string"
+            ? review
+            : row.estado_origem || row.estado,
+      )}
     </span>
   );
 }
@@ -140,14 +147,23 @@ export function RecordList({
                     </span>
                   )}
                   <h3>
-                    <Link to={link} search={search}>
-                      {row.tag && resource !== "locais" ? `${row.tag} · ` : ""}
+                    <Link
+                      to={link}
+                      search={
+                        resource === "levantamentos" && !search.lixeira
+                          ? { ...search, coleta: "campo", coletaRevisao: "" }
+                          : search
+                      }
+                    >
+                      {row.tag && resource !== "locais" && resource !== "levantamentos"
+                        ? `${row.tag} · `
+                        : ""}
                       {row.titulo}
                     </Link>
                   </h3>
                   {resource === "locais" ? (
                     <p className="nr-card-context">{technical?.setor || "Setor não informado"}</p>
-                  ) : (
+                  ) : resource !== "levantamentos" ? (
                     <p className="nr-card-context">
                       {context ||
                         (resource === "documentos"
@@ -156,7 +172,7 @@ export function RecordList({
                             ? nrLabel(row.tipo)
                             : null)}
                     </p>
-                  )}
+                  ) : null}
                 </div>
                 {resource === "documentos" ? (
                   <span className="nr-card-revision">
@@ -284,6 +300,35 @@ export function RecordList({
                     <p className="nr-card-attention">Aplicabilidade em revisão · abrir na NR-33</p>
                   )}
                 </>
+              ) : resource === "levantamentos" ? (
+                <NrCardMeta>
+                  <div>
+                    <dt>Local</dt>
+                    <dd>
+                      {[row.local_tag || row.tag, row.local_titulo].filter(Boolean).join(" · ") ||
+                        "Sem vínculo informado"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Família</dt>
+                    <dd>{family || "Por confirmar"}</dd>
+                  </div>
+                  <div>
+                    <dt>Progresso</dt>
+                    <dd>
+                      {typeof row.dados["coleta_total"] === "number" &&
+                      row.dados["coleta_total"] > 0
+                        ? `${String(row.dados["coleta_preenchidos"])} de ${row.dados["coleta_total"]} campos`
+                        : "Disponível no roteiro"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Técnico</dt>
+                    <dd>
+                      <NrValue value={row.dados["tecnico_nome"] ?? row.dados["levantado_por"]} />
+                    </dd>
+                  </div>
+                </NrCardMeta>
               ) : (
                 <NrCardMeta>
                   {family && (
@@ -349,13 +394,23 @@ export function RecordList({
                 </p>
               )}
               <NrCardActions>
-                <Link className="nr-card-open" to={link} search={search}>
+                <Link
+                  className="nr-card-open"
+                  to={link}
+                  search={
+                    resource === "levantamentos" && !search.lixeira
+                      ? { ...search, coleta: "campo", coletaRevisao: "" }
+                      : search
+                  }
+                >
                   {resource === "locais"
                     ? "Abrir ficha"
                     : resource === "documentos"
                       ? "Abrir documento"
                       : resource === "levantamentos"
-                        ? "Abrir levantamento"
+                        ? row.estado === "rascunho" && !search.lixeira
+                          ? "Retomar levantamento"
+                          : "Abrir levantamento"
                         : resource === "pendencias"
                           ? "Consultar tratativa"
                           : resource === "pastas"

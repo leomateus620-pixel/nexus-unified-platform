@@ -343,6 +343,26 @@
     {
       "path": "drizzle/migrations/0066_pet_demonstracao.sql",
       "sha256": "a2248fdb5f27af939be509b6fad4b8d17ecb07c94b2587354b0e2dd18fae6dae"
+    },
+    {
+      "path": "drizzle/migrations/0012_pet_equipe_candidatos.sql",
+      "sha256": "3f11d2bbfbba09de8c7e231a30d8068603fe3fd8d9ccfd97e8ae180d09a9d3fa"
+    },
+    {
+      "path": "drizzle/migrations/0013_pet_demo_participante_pessoa.sql",
+      "sha256": "06c6fe4330118525235495a05822c3f09d9b362772f53ff4137402f2b1629f4d"
+    },
+    {
+      "path": "drizzle/migrations/0014_pet_demo_seguranca_estruturada.sql",
+      "sha256": "72995f95f45b656ea17f7126691da06fc1cfdc2670ce86f3f219d98f1d8836ab"
+    },
+    {
+      "path": "drizzle/migrations/0015_pet_demo_ficha_cotrirosa.sql",
+      "sha256": "38beb1c226cec26617a65497debab129e90d8d05acae251eb1c521d10fbfb190"
+    },
+    {
+      "path": "drizzle/migrations/0067_nr_coleta_campo.sql",
+      "sha256": "da5e135dd0a208ae144d26a96629e980ef8bc0f32204f43926894dcd93de9008"
     }
   ]
 }

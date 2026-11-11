@@ -16,6 +16,13 @@ export const nrDocumentoExportar = createServerFn({ method: "POST" })
     const { exportarDocumentoNr } = await import("./documents.server");
     return exportarDocumentoNr(context.supabase, data);
   });
+export const nrColetaPdfGerar = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(input)
+  .handler(async ({ context, data }) => {
+    const { persistirRelatorioCampoNr } = await import("./documents.server");
+    return persistirRelatorioCampoNr(context.supabase, context.userId, data);
+  });
 export const nrDocumentoConverterDocx = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(

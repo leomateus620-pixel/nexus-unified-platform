@@ -179,7 +179,7 @@ export function NrDocumentContentReader({
 }) {
   const fetch = useServerFn(nrRevisaoDetalhe);
   const converted =
-    !!row.dados["conversao"] || row.tipo === "derivado_docx" || !!row.dados["arquivo_original_id"];
+    !!row.dados?.["conversao"] || row.tipo === "derivado_docx" || !!row.dados?.["arquivo_original_id"];
   const candidate = !converted && !!row.revisao_atual_id && hasLegacySnapshotSignature(value);
   const revision = useQuery({
     queryKey: [

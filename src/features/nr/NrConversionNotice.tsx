@@ -16,10 +16,10 @@ function dictionary(value: unknown): Record<string, unknown> {
 }
 
 export function NrConversionNotice({ row, norma }: { row: NrRecord; norma?: Norma }) {
-  const conversion = dictionary(row.dados["conversao"]);
-  const fileId = conversion["original_arquivo_id"] ?? row.dados["arquivo_original_id"];
-  const converter = conversion["conversor"] ?? row.dados["converter"];
-  const rawWarnings = conversion["avisos"] ?? row.dados["avisos_conversao"];
+  const conversion = dictionary(row.dados?.["conversao"]);
+  const fileId = conversion["original_arquivo_id"] ?? row.dados?.["arquivo_original_id"];
+  const converter = conversion["conversor"] ?? row.dados?.["converter"];
+  const rawWarnings = conversion["avisos"] ?? row.dados?.["avisos_conversao"];
   const warnings = Array.isArray(rawWarnings)
     ? rawWarnings.filter((warning): warning is string => typeof warning === "string")
     : [];

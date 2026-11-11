@@ -1094,18 +1094,18 @@ function NrScope({
                                 </Suspense>
                               )}
                               {recurso === "documentos" &&
-                                typeof row.dados["levantamento_id"] === "string" &&
-                                typeof row.dados["coleta_revisao_id"] === "string" && (
+                                typeof row.dados?.["levantamento_id"] === "string" &&
+                                typeof row.dados?.["coleta_revisao_id"] === "string" && (
                                   <Link
                                     className="nr-inline-action"
                                     to={String(
-                                      `${base}/levantamentos/${row.dados["levantamento_id"]}`,
+                                      `${base}/levantamentos/${row.dados?.["levantamento_id"]}`,
                                     )}
                                     search={{
                                       ...search,
                                       local: "",
                                       coleta: "campo",
-                                      coletaRevisao: row.dados["coleta_revisao_id"],
+                                      coletaRevisao: row.dados?.["coleta_revisao_id"],
                                     }}
                                   >
                                     Conferir a revisão de origem
@@ -2126,10 +2126,10 @@ function NrDetail({
         )}
       </dl>
       {row.descricao && <p className="nr-prewrap my-4">{row.descricao}</p>}
-      {recurso === "sistemas" && typeof row.dados["familia_biblioteca"] === "string" && (
+      {recurso === "sistemas" && typeof row.dados?.["familia_biblioteca"] === "string" && (
         <section className="nr-source my-4" aria-label="Avaliação por família importada">
           <h3 className="font-semibold">
-            Avaliação por família: {row.dados["familia_biblioteca"]}
+            Avaliação por família: {row.dados?.["familia_biblioteca"]}
           </h3>
           <p className="mt-2">
             Este registro preserva uma avaliação do levantamento de origem. A presença do registro e
@@ -2149,7 +2149,7 @@ function NrDetail({
             ).map(([key, label]) => (
               <div key={key}>
                 <dt>{label}</dt>
-                <dd>{hum(typeof row.dados[key] === "string" ? row.dados[key] : null)}</dd>
+                <dd>{hum(typeof row.dados?.[key] === "string" ? row.dados?.[key] : null)}</dd>
               </div>
             ))}
           </dl>
@@ -2295,9 +2295,9 @@ function NrDetail({
             estados próprios de obtenção.
           </p>
         ))}
-      {recurso === "modelos" && Array.isArray(row.dados["blocos"]) && (
+      {recurso === "modelos" && Array.isArray(row.dados?.["blocos"]) && (
         <div className="nr-block-library my-4">
-          {row.dados["blocos"].map((b, i) => {
+          {row.dados?.["blocos"].map((b, i) => {
             const block = dictionary(b);
             return (
               <details key={String(block["id"] ?? i)}>

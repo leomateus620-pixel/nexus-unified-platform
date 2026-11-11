@@ -148,7 +148,7 @@ export async function exportarDocumentoNr(
 export async function persistirRelatorioCampoNr(value: unknown, userId: string, input: Base) {
   const client = db(value);
   const row = await documento(client, input);
-  if (row.tipo !== "relatorio_campo" || !row.revisao_atual_id || !row.dados["coleta_revisao_id"])
+  if (row.tipo !== "relatorio_campo" || !row.revisao_atual_id || !row.dados?.["coleta_revisao_id"])
     throw new Error("Relatório de campo indisponível no acesso atual.");
   const existing = nrFileRow
     .nullable()

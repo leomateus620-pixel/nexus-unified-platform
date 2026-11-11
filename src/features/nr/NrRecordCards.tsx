@@ -24,7 +24,7 @@ const categories: Record<string, string> = {
 };
 const date = (value?: string | null) => (value ? nrDate(value) : "Não informado");
 function Status({ row }: { row: NrRecord }) {
-  const review = row.dados["coleta_revisao"];
+  const review = row.dados?.["coleta_revisao"];
   return (
     <span className="nr-badge">
       {nrLabel(
@@ -316,16 +316,16 @@ export function RecordList({
                   <div>
                     <dt>Progresso</dt>
                     <dd>
-                      {typeof row.dados["coleta_total"] === "number" &&
-                      row.dados["coleta_total"] > 0
-                        ? `${String(row.dados["coleta_preenchidos"])} de ${row.dados["coleta_total"]} campos`
+                      {typeof row.dados?.["coleta_total"] === "number" &&
+                      row.dados?.["coleta_total"] > 0
+                        ? `${String(row.dados?.["coleta_preenchidos"])} de ${row.dados?.["coleta_total"]} campos`
                         : "Disponível no roteiro"}
                     </dd>
                   </div>
                   <div>
                     <dt>Técnico</dt>
                     <dd>
-                      <NrValue value={row.dados["tecnico_nome"] ?? row.dados["levantado_por"]} />
+                      <NrValue value={row.dados?.["tecnico_nome"] ?? row.dados?.["levantado_por"]} />
                     </dd>
                   </div>
                 </NrCardMeta>
@@ -346,21 +346,21 @@ export function RecordList({
                   {typeof row.dados?.["codigo"] === "string" && (
                     <div>
                       <dt>Código</dt>
-                      <dd>{row.dados["codigo"]}</dd>
+                      <dd>{row.dados?.["codigo"]}</dd>
                     </div>
                   )}
                   {row.dados?.["versao"] != null && (
                     <div>
                       <dt>Versão do conteúdo</dt>
                       <dd>
-                        <NrValue value={row.dados["versao"]} />
+                        <NrValue value={row.dados?.["versao"]} />
                       </dd>
                     </div>
                   )}
                   {typeof row.dados?.["origem"] === "string" && (
                     <div className="nr-wide">
                       <dt>Origem</dt>
-                      <dd>{row.dados["origem"]}</dd>
+                      <dd>{row.dados?.["origem"]}</dd>
                     </div>
                   )}
                   {row.resumo_pasta && (

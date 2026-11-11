@@ -5385,6 +5385,92 @@ export type Database = {
           },
         ]
       }
+      nr_coleta_revisoes: {
+        Row: {
+          concluida_em: string
+          concluida_por: string
+          documento_id: string
+          documento_tecnico_id: string | null
+          estado: string
+          id: string
+          itens_confirmados: Json
+          levantamento_id: string
+          levantamento_version: number
+          motivo: string | null
+          numero: number
+          organization_id: string
+          revisada_em: string | null
+          revisada_por: string | null
+          sha256: string
+          snapshot: Json
+        }
+        Insert: {
+          concluida_em?: string
+          concluida_por: string
+          documento_id: string
+          documento_tecnico_id?: string | null
+          estado?: string
+          id?: string
+          itens_confirmados?: Json
+          levantamento_id: string
+          levantamento_version: number
+          motivo?: string | null
+          numero: number
+          organization_id: string
+          revisada_em?: string | null
+          revisada_por?: string | null
+          sha256: string
+          snapshot: Json
+        }
+        Update: {
+          concluida_em?: string
+          concluida_por?: string
+          documento_id?: string
+          documento_tecnico_id?: string | null
+          estado?: string
+          id?: string
+          itens_confirmados?: Json
+          levantamento_id?: string
+          levantamento_version?: number
+          motivo?: string | null
+          numero?: number
+          organization_id?: string
+          revisada_em?: string | null
+          revisada_por?: string | null
+          sha256?: string
+          snapshot?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nr_coleta_revisoes_organization_id_documento_id_fkey"
+            columns: ["organization_id", "documento_id"]
+            isOneToOne: false
+            referencedRelation: "nr_documentos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "nr_coleta_revisoes_organization_id_documento_tecnico_id_fkey"
+            columns: ["organization_id", "documento_tecnico_id"]
+            isOneToOne: false
+            referencedRelation: "nr_documentos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "nr_coleta_revisoes_organization_id_levantamento_id_fkey"
+            columns: ["organization_id", "levantamento_id"]
+            isOneToOne: false
+            referencedRelation: "nr_levantamentos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "nr_coleta_revisoes_revisada_por_fkey"
+            columns: ["revisada_por"]
+            isOneToOne: false
+            referencedRelation: "pessoas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nr_contextos: {
         Row: {
           cliente_id: string
@@ -12873,6 +12959,134 @@ export type Database = {
           p_norma: string
           p_org: string
           p_pagina?: number
+        }
+        Returns: Json
+      }
+      nr_coleta_concluir: {
+        Args: {
+          p_chave: string
+          p_cliente: string
+          p_id: string
+          p_norma: string
+          p_org: string
+          p_unidade: string
+          p_version: number
+        }
+        Returns: Json
+      }
+      nr_coleta_conteudo: { Args: { p_snapshot: Json }; Returns: Json }
+      nr_coleta_contexto: {
+        Args: {
+          p_busca?: string
+          p_cliente: string
+          p_local?: string
+          p_norma: string
+          p_org: string
+          p_pagina?: number
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      nr_coleta_documento: {
+        Args: {
+          p_cliente: string
+          p_id: string
+          p_modelo: string
+          p_modelo_versao: string
+          p_modelo_version: number
+          p_norma: string
+          p_org: string
+          p_revisao: string
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      nr_coleta_iniciar: {
+        Args: {
+          p_chave: string
+          p_cliente: string
+          p_duplo: boolean
+          p_local: string
+          p_modelo: string
+          p_modelo_version: number
+          p_norma: string
+          p_org: string
+          p_origem: string
+          p_reinspecao?: boolean
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      nr_coleta_itens: { Args: { p_snapshot: Json }; Returns: Json }
+      nr_coleta_listar: {
+        Args: {
+          p_cliente: string
+          p_filtros: Json
+          p_norma: string
+          p_org: string
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      nr_coleta_pdf_preparar: {
+        Args: {
+          p_autor: string
+          p_documento: string
+          p_org: string
+          p_revisao: string
+          p_sha256: string
+          p_tamanho: number
+        }
+        Returns: Json
+      }
+      nr_coleta_revisar: {
+        Args: {
+          p_chave: string
+          p_cliente: string
+          p_decisao: string
+          p_id: string
+          p_itens?: Json
+          p_motivo: string
+          p_norma: string
+          p_org: string
+          p_revisao: string
+          p_unidade: string
+          p_version: number
+        }
+        Returns: Json
+      }
+      nr_coleta_revisoes_listar: {
+        Args: {
+          p_cliente: string
+          p_id: string
+          p_norma: string
+          p_org: string
+          p_unidade: string
+        }
+        Returns: Json
+      }
+      nr_coleta_roteiro_altura: { Args: never; Returns: Json }
+      nr_coleta_salvar: {
+        Args: {
+          p_chave: string
+          p_cliente: string
+          p_dados: Json
+          p_id: string
+          p_norma: string
+          p_org: string
+          p_unidade: string
+          p_version: number
+        }
+        Returns: Json
+      }
+      nr_coleta_snapshot: {
+        Args: {
+          p_cliente: string
+          p_id: string
+          p_norma: string
+          p_org: string
+          p_revisao: string
+          p_unidade: string
         }
         Returns: Json
       }

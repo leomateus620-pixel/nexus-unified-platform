@@ -30,6 +30,9 @@ import { useCommandKey } from "@/features/operacao/components";
 import { nrConsultar, nrExecutar } from "./nr.functions";
 import type { Norma, NrContexto, NrJson, NrRecord, NrRecurso } from "./domain";
 import { NrEditor } from "./NrEditor";
+import { NrFieldStart } from "./NrFieldStart";
+import { NrFieldSurvey } from "./NrFieldSurvey";
+import { nrColetaListar, nrColetaSnapshot } from "./coleta.functions";
 import { resourceLabels } from "./ui-labels";
 import { NrContentEditor } from "./NrContentEditor";
 import { parseNative } from "./native-content";
@@ -115,6 +118,8 @@ export type NrSearch = {
   pasta: string;
   lixeira: boolean;
   local?: string;
+  coleta?: "" | "iniciar" | "campo" | "revisao" | "reinspecao";
+  coletaRevisao?: string;
   camera?: "normal" | "superior" | "angular";
   objeto?: string;
   visualizacao?: "compacta" | "expandida" | "dedicada";
@@ -279,6 +284,8 @@ function NrScope({
   onSearch: (patch: Partial<NrSearch>) => void;
 }) {
   const consult = useServerFn(nrConsultar),
+    listSurveys = useServerFn(nrColetaListar),
+    readSnapshot = useServerFn(nrColetaSnapshot),
     execute = useServerFn(nrExecutar),
     qc = useQueryClient(),
     keyFor = useCommandKey();
@@ -294,6 +301,8 @@ function NrScope({
     pasta: "",
     lixeira: false,
     local: "",
+    coleta: "",
+    coletaRevisao: "",
     tipo: "",
     familia: "",
     vinculo: "",
@@ -345,35 +354,85 @@ function NrScope({
       !!recurso &&
       (!!id || !!search.unidade || search.escopo === "todos" || recurso === "modelos"),
     queryFn: ({ signal }) =>
-      consult({
+      recurso === "levantamentos" &&
+      !id &&
+      search.cliente &&
+      search.unidade &&
+      !search.lixeira &&
+      search.escopo !== "todos"
+        ? listSurveys({
+            data: {
+              org,
+              norma,
+              cliente: search.cliente,
+              unidade: search.unidade,
+              busca: term,
+              estado: search.estado,
+              pagina: search.pagina,
+              ...(search.local ? { local: search.local } : {}),
+            },
+            signal,
+          })
+        : consult({
+            data: {
+              organization_id: org,
+              norma,
+              recurso: recurso!,
+              operacao: id ? "detalhe" : "listar",
+              id,
+              cliente_id: search.cliente || undefined,
+              unidade_id: search.unidade || undefined,
+              busca: term,
+              estado: search.estado,
+              pagina: search.pagina,
+              limite: 25,
+              pasta_id: recurso === "pastas" ? search.pasta || null : search.pasta || undefined,
+              lixeira: search.lixeira,
+              local_id: search.local || undefined,
+              tipo: search.tipo || undefined,
+              familia: search.familia || undefined,
+              copias_editaveis: search.copias ?? false,
+              somente_unidade: search.vinculo === "unidade",
+              grupo_documental: search.grupo || undefined,
+              revisao_aplicabilidade: search.aplicabilidade ?? false,
+            },
+            signal,
+          }),
+    retry: false,
+  });
+  const row =
+    query.data && "registro" in query.data ? (query.data.registro as NrRecord) : undefined;
+  const frozenSurvey = useQuery({
+    queryKey: [
+      "nr",
+      org,
+      user,
+      norma,
+      "coleta-snapshot",
+      row?.id,
+      search.coletaRevisao,
+      row?.unidade_id,
+    ],
+    enabled:
+      recurso === "levantamentos" &&
+      !!id &&
+      !!row?.cliente_id &&
+      !!row.unidade_id &&
+      !!search.coletaRevisao,
+    queryFn: ({ signal }) =>
+      readSnapshot({
         data: {
-          organization_id: org,
+          org,
           norma,
-          recurso: recurso!,
-          operacao: id ? "detalhe" : "listar",
-          id,
-          cliente_id: search.cliente || undefined,
-          unidade_id: search.unidade || undefined,
-          busca: term,
-          estado: search.estado,
-          pagina: search.pagina,
-          limite: 25,
-          pasta_id: recurso === "pastas" ? search.pasta || null : search.pasta || undefined,
-          lixeira: search.lixeira,
-          local_id: search.local || undefined,
-          tipo: search.tipo || undefined,
-          familia: search.familia || undefined,
-          copias_editaveis: search.copias ?? false,
-          somente_unidade: search.vinculo === "unidade",
-          grupo_documental: search.grupo || undefined,
-          revisao_aplicabilidade: search.aplicabilidade ?? false,
+          cliente: row!.cliente_id!,
+          unidade: row!.unidade_id!,
+          id: id!,
+          revisao: search.coletaRevisao!,
         },
         signal,
       }),
     retry: false,
   });
-  const row =
-    query.data && "registro" in query.data ? (query.data.registro as NrRecord) : undefined;
   const list =
     query.data && "rows" in query.data
       ? (query.data as { rows: NrRecord[]; total: number; pagina: number; limite: number })
@@ -496,6 +555,91 @@ function NrScope({
         />
       </Suspense>
     );
+  const fieldScope = {
+    org,
+    norma,
+    cliente: search.cliente || row?.cliente_id || "",
+    unidade: search.unidade || row?.unidade_id || "",
+  };
+  const backToSurveys = () =>
+    void navigate({
+      to: path("levantamentos"),
+      search: { ...search, coleta: "", coletaRevisao: "" },
+    });
+  const openSurvey = (recordId: string) =>
+    void navigate({
+      to: path("levantamentos") + `/${recordId}`,
+      search: {
+        ...search,
+        local: "",
+        coleta: "campo",
+        coletaRevisao: "",
+        busca: "",
+        pagina: 0,
+        lixeira: false,
+      },
+    });
+  if (recurso === "levantamentos" && id && search.coleta && contexto) {
+    if (query.isError) return <ErrorState error={query.error} onRetry={() => query.refetch()} />;
+    if (!row) return <LoadingState label="Abrindo levantamento…" />;
+    if (search.coletaRevisao && frozenSurvey.isError)
+      return <ErrorState error={frozenSurvey.error} onRetry={() => frozenSurvey.refetch()} />;
+    if (search.coletaRevisao && !frozenSurvey.data)
+      return <LoadingState label="Abrindo a revisão fixada…" />;
+    const frozen = search.coletaRevisao ? frozenSurvey.data : undefined;
+    if (
+      (search.coleta === "revisao" || search.coleta === "reinspecao") &&
+      contexto.permissoes.cadastrar &&
+      row.local_id
+    )
+      return (
+        <div className="nx-nr-workspace">
+          <NrFieldStart
+            key={row.id}
+            scope={fieldScope}
+            user={user}
+            contexto={contexto}
+            initialLocal={row.local_id}
+            source={row}
+            reinspecao={search.coleta === "reinspecao"}
+            onOpen={openSurvey}
+            onClose={() => onSearch({ coleta: "campo" })}
+          />
+        </div>
+      );
+    return (
+      <NrFieldSurvey
+        key={`${org}:${user}:${norma}:${row.id}:${search.coletaRevisao}`}
+        scope={fieldScope}
+        user={user}
+        record={
+          frozen
+            ? {
+                ...row,
+                local_id: frozen.local.id,
+                local_tag: frozen.local.tag,
+                local_titulo: frozen.local.titulo,
+                local_contexto: frozen.local,
+                modelo_snapshot: frozen.roteiro,
+                modelo_apresentacao: null,
+                respostas: frozen.valores,
+                estado: "em_revisao",
+                dados: {
+                  medidas_coleta: frozen.medidas,
+                  identificacao_verificada: frozen.identificacao_verificada,
+                },
+              }
+            : row
+        }
+        frozenNumber={frozen?.numero}
+        context={contexto}
+        onExit={backToSurveys}
+        onAdmin={() => onSearch({ coleta: "", coletaRevisao: "" })}
+        onNewRevision={() => onSearch({ coleta: "revisao" })}
+        onReinspection={() => onSearch({ coleta: "reinspecao", coletaRevisao: "" })}
+      />
+    );
+  }
   return (
     <div className={`nx-nr-workspace${id && recurso === "locais" ? " nr-local-workspace" : ""}`}>
       <header className={`nr-heading${id && recurso === "locais" ? " nr-heading-compact" : ""}`}>
@@ -813,6 +957,15 @@ function NrScope({
                           : contexto.permissoes.cadastrar) && (
                           <ActionButton
                             onClick={(event) => {
+                              if (
+                                recurso === "levantamentos" &&
+                                search.cliente &&
+                                search.unidade &&
+                                search.escopo !== "todos"
+                              ) {
+                                onSearch({ coleta: "iniciar" });
+                                return;
+                              }
                               editorReturn.current = event.currentTarget;
                               setDuplicating(false);
                               setEditor("novo");
@@ -822,10 +975,32 @@ function NrScope({
                             <Plus size={16} aria-hidden />
                             {recurso === "modelos"
                               ? "Novo modelo ou item"
-                              : `Criar ${resourceLabels[recurso].toLowerCase()}`}
+                              : recurso === "levantamentos" &&
+                                  search.unidade &&
+                                  search.escopo !== "todos"
+                                ? "Iniciar levantamento"
+                                : `Criar ${resourceLabels[recurso].toLowerCase()}`}
                           </ActionButton>
                         )}
                     </div>
+                    {!id &&
+                      recurso === "levantamentos" &&
+                      search.coleta === "iniciar" &&
+                      search.cliente &&
+                      search.unidade &&
+                      contexto.permissoes.cadastrar &&
+                      contextValid &&
+                      search.escopo !== "todos" && (
+                        <NrFieldStart
+                          key={`${norma}:${search.cliente}:${search.unidade}:${search.local}`}
+                          scope={fieldScope}
+                          user={user}
+                          contexto={contexto}
+                          initialLocal={search.local ?? ""}
+                          onOpen={openSurvey}
+                          onClose={() => onSearch({ coleta: "" })}
+                        />
+                      )}
                     {id ? (
                       <>
                         {recurso !== "locais" && (
@@ -915,6 +1090,24 @@ function NrScope({
                                   />
                                 </Suspense>
                               )}
+                              {recurso === "documentos" &&
+                                typeof row.dados["levantamento_id"] === "string" &&
+                                typeof row.dados["coleta_revisao_id"] === "string" && (
+                                  <Link
+                                    className="nr-inline-action"
+                                    to={String(
+                                      `${base}/levantamentos/${row.dados["levantamento_id"]}`,
+                                    )}
+                                    search={{
+                                      ...search,
+                                      local: "",
+                                      coleta: "campo",
+                                      coletaRevisao: row.dados["coleta_revisao_id"],
+                                    }}
+                                  >
+                                    Conferir a revisão de origem
+                                  </Link>
+                                )}
                               {recurso === "documentos" &&
                                 (parseNative(row.conteudo)?.blocos.length ?? 0) > 0 && (
                                   <Suspense

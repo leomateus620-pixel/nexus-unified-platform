@@ -44,6 +44,7 @@ jobs:
           psql -h 127.0.0.1 -p 55439 -U postgres -d postgres -v ON_ERROR_STOP=1 -f tests/db/bootstrap.sql
           node tests/cotrirosa/seed.mjs
           node tests/cotrirosa/demo-db.mjs
+          node tests/cotrirosa/coleta-db.mjs
           for scenario in nr-mapa-pet nr-contratacao nr-equipe pet-v2 pet pet-retificacoes pet-relatorios pet-listagem nr nr-acervo nr-impactos nr-retencao nr-docx-derived nr-fluxos; do
             node "tests/db/$scenario.mjs"
           done

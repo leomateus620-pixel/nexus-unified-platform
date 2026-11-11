@@ -84,6 +84,7 @@ export default defineConfig({
           ) ||
           ([
             "./nr.functions",
+            "./coleta.functions",
             "./files.functions",
             "./documents.functions",
             "./impactos.functions",

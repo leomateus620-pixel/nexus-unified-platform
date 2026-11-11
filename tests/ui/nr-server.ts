@@ -1594,3 +1594,36 @@ export async function nrPastaOrdenar({ data }) {
   row.version++;
   return { registro: structuredClone(row) };
 }
+
+export const nrColetaListar = ({ data }) =>
+  nrConsultar({
+    data: {
+      organization_id: data.org,
+      norma: data.norma,
+      recurso: "levantamentos",
+      cliente_id: data.cliente,
+      unidade_id: data.unidade,
+      busca: data.busca,
+      pagina: data.pagina,
+      estado: data.estado,
+      local_id: data.local,
+    },
+  });
+export const nrColetaContexto = async () => ({
+  locais: [],
+  total: 0,
+  modelos: [],
+  piloto_altura: false,
+});
+export const nrColetaRevisoes = async () => ({ revisoes: [], pode_revisar: false });
+export const nrColetaPdfGerar = unavailable;
+export const nrColetaSnapshot = async () => {
+  throw new Error("Revisão indisponível na fixture visual.");
+};
+export const nrColetaIniciar = async () => {
+  throw new Error("Use o laboratório de coleta para persistir.");
+};
+export const nrColetaSalvar = nrColetaIniciar;
+export const nrColetaDocumento = nrColetaIniciar;
+export const nrColetaConcluir = nrColetaIniciar;
+export const nrColetaRevisar = nrColetaIniciar;

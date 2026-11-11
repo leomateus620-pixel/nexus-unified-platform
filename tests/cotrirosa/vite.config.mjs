@@ -55,12 +55,19 @@ export default defineConfig({
               if (body.length > 1000000) throw Error("Payload excedido");
             }
             const { name, data } = JSON.parse(body);
-            if (data.organization_id !== ids.org) throw Error("Organização fora da fixture");
+            if ((data.organization_id ?? data.org) !== ids.org)
+              throw Error("Organização fora da fixture");
             let r;
             await sql.begin(async (db) => {
               await db`select set_config('request.jwt.claim.sub',${ids.user},true)`;
               await db.unsafe("set local role authenticated");
-              const { organization_id: org, norma = "NR33", recurso, operacao, ...filters } = data;
+              const {
+                organization_id: org = data.org,
+                norma = "NR33",
+                recurso,
+                operacao,
+                ...filters
+              } = data;
               if (name === "nrConsultar") {
                 r = (
                   await db`select nr_consultar(${org},${norma},${recurso},${db.json(filters)}) r`
@@ -71,6 +78,62 @@ export default defineConfig({
                     nome: c.nome ?? c.nome_exibicao ?? c.razao_social,
                   }));
                 else if (data.id && !r.registro) r = { registro: r };
+              } else if (name === "nrExecutar") {
+                r = (
+                  await db`select nr_executar(${org},${norma},${recurso},${data.comando},${data.id ?? null},${data.expected_version ?? null},${data.chave},${db.json(data.dados)}) r`
+                )[0].r;
+                if (!r.registro) r = { registro: r };
+              } else if (name === "nrColetaSalvar") {
+                r = (
+                  await db`select nr_coleta_salvar(${org},${data.cliente},${data.unidade},${norma},${data.id},${data.version},${data.chave},${db.json({ bloco: data.bloco, respostas: data.respostas, medidas: data.medidas, identificacao_verificada: data.identificacao_verificada })}) r`
+                )[0].r;
+                if (!r.registro) r = { registro: r };
+              } else if (name === "nrDocumentoExportar" || name === "nrColetaPdfGerar") {
+                const doc = (
+                  await db`select nr_consultar(${org},${norma},'documentos',${db.json({ id: data.documento_id })}) r`
+                )[0].r;
+                if (doc.version !== data.expected_version) throw Error("Documento mudou.");
+                const { gerarPdfNr } = await server.ssrLoadModule(
+                  path.join(app, "src/features/nr/documents.pdf.ts"),
+                );
+                const pdf = await gerarPdfNr({ ...doc, revisao_id: doc.revisao_atual_id });
+                r = {
+                  base64: Buffer.from(pdf.bytes).toString("base64"),
+                  mime: "application/pdf",
+                  nome: `relatorio-${doc.id}.pdf`,
+                };
+              } else if (name === "nrColetaListar") {
+                r = (
+                  await db`select nr_coleta_listar(${org},${data.cliente},${data.unidade},${norma},${db.json({ busca: data.busca, estado: data.estado, pagina: data.pagina, local_id: data.local ?? null })}) r`
+                )[0].r;
+              } else if (name === "nrColetaContexto") {
+                r = (
+                  await db`select nr_coleta_contexto(${org},${data.cliente},${data.unidade},${norma},${data.local ?? null},${data.busca ?? ""},${data.pagina ?? 0}) r`
+                )[0].r;
+              } else if (name === "nrColetaIniciar") {
+                r = (
+                  await db`select nr_coleta_iniciar(${org},${data.cliente},${data.unidade},${norma},${data.local},${data.modelo},${data.modeloVersion},${data.duplo},${data.origem},${data.chave},${data.reinspecao ?? false}) r`
+                )[0].r;
+              } else if (name === "nrColetaRevisoes") {
+                r = (
+                  await db`select nr_coleta_revisoes_listar(${org},${data.cliente},${data.unidade},${norma},${data.id}) r`
+                )[0].r;
+              } else if (name === "nrColetaConcluir") {
+                r = (
+                  await db`select nr_coleta_concluir(${org},${data.cliente},${data.unidade},${norma},${data.id},${data.version},${data.chave}) r`
+                )[0].r;
+              } else if (name === "nrColetaRevisar") {
+                r = (
+                  await db`select nr_coleta_revisar(${org},${data.cliente},${data.unidade},${norma},${data.id},${data.revisao},${data.version},${data.decisao},${data.motivo},${data.chave},${db.json(data.itens ?? [])}) r`
+                )[0].r;
+              } else if (name === "nrColetaSnapshot") {
+                r = (
+                  await db`select nr_coleta_snapshot(${org},${data.cliente},${data.unidade},${norma},${data.id},${data.revisao}) r`
+                )[0].r;
+              } else if (name === "nrColetaDocumento") {
+                r = (
+                  await db`select nr_coleta_documento(${org},${data.cliente},${data.unidade},${norma},${data.id},${data.revisao},${data.modelo},${data.modeloVersion},${data.modeloVersao}) r`
+                )[0].r;
               } else if (name === "nrContratacaoObter") {
                 r = (
                   await db`select nr_contratacao_obter(${org},${data.cliente_id},${data.unidade_id},${norma}) r`

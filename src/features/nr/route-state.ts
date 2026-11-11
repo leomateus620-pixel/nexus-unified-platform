@@ -8,6 +8,8 @@ export const nrSearchSchema = z.object({
   pasta: z.string().uuid().or(z.literal("")).catch(""),
   lixeira: z.boolean().catch(false),
   local: z.string().uuid().or(z.literal("")).catch(""),
+  coleta: z.enum(["", "iniciar", "campo", "revisao", "reinspecao"]).catch(""),
+  coletaRevisao: z.string().uuid().or(z.literal("")).catch(""),
   camera: z.enum(["normal", "superior", "angular"]).catch("normal"),
   objeto: z.string().max(60).catch(""),
   visualizacao: z.enum(["compacta", "expandida", "dedicada"]).catch("compacta"),

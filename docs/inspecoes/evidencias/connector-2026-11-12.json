@@ -1,0 +1,322 @@
+{
+  "destino": {
+    "lovable_project_id": "91380c2d-559c-4527-b3a4-1a8bc1e19f69",
+    "projeto": "Nexus Unified Platform",
+    "conexao": "Primary",
+    "supabase_ref": "yhtgijtllvgzoqtfcgal",
+    "base_commit": "3664118cd120f5dfd0f8da793b5301fbba6b525f"
+  },
+  "ledger": {
+    "verificado": true,
+    "local": 99,
+    "remoto": 99,
+    "sufixo": [
+      {
+        "path": "drizzle/migrations/0068_inspecoes_acervo.sql",
+        "position": 91,
+        "sha256": "c0adc066fb34820dcb26fe1e5abc7669b408f24f6d2c909ee04e9c9d937ae2b4"
+      },
+      {
+        "path": "drizzle/migrations/0069_inspecoes_levantamentos.sql",
+        "position": 92,
+        "sha256": "df3d7d1dfb1d22c96b299e0b3ff4d346bef239bb5520a8913c07da1fe2ff8952"
+      },
+      {
+        "path": "drizzle/migrations/0070_inspecoes_importacao.sql",
+        "position": 93,
+        "sha256": "6766babbf6a3dd5cd48420c3829f1bdfa644e0ff018f6565598988ab7b0c071c"
+      },
+      {
+        "path": "drizzle/migrations/0071_inspecoes_r64.sql",
+        "position": 94,
+        "sha256": "576513d39f4f86804522c70259c55c03cb8e937e1fe6d03ee3324c6167d04f49"
+      },
+      {
+        "path": "drizzle/migrations/0072_inspecoes_transferencia_privada.sql",
+        "position": 95,
+        "sha256": "3ff0b43c40d782c8ad9e0dc5ab63d4ed0825007a74365e5a1fe20ebfee38da25"
+      },
+      {
+        "path": "drizzle/migrations/0072_inspecoes_transferencia_ingresso.sql",
+        "position": 96,
+        "sha256": "4af630f37a13b4732be9eb778ad9343d1a41657d152cbfe27e6834d88ded0989"
+      },
+      {
+        "path": "drizzle/migrations/0073_inspecoes_ativos_ensaios.sql",
+        "position": 97,
+        "sha256": "fb081f20febe28c6615234ddbfe11d9c7c0a8c25aa02b6940dc6b835765b8cfd"
+      },
+      {
+        "path": "drizzle/migrations/0074_inspecoes_continuidade.sql",
+        "position": 98,
+        "sha256": "b71a257c778e339d8dab051bd38e271b67430d0285118704a6c779f875c3e2e3"
+      },
+      {
+        "path": "drizzle/migrations/0075_inspecoes_acervo_consulta.sql",
+        "position": 99,
+        "sha256": "d1eb7a71705f96eed037f2e43def3f94ec4d878aa6795582cdd6bcb6d3ba258d"
+      }
+    ]
+  },
+  "lote": {
+    "blocos_aplicados": 18,
+    "conflitos": 0,
+    "itens": [
+      {
+        "colecao": "ativos",
+        "estado": "importado",
+        "total": 835
+      },
+      {
+        "colecao": "avisos",
+        "estado": "importado",
+        "total": 13
+      },
+      {
+        "colecao": "configuracoes",
+        "estado": "importado",
+        "total": 4
+      },
+      {
+        "colecao": "demonstracao",
+        "estado": "preservado",
+        "total": 4
+      },
+      {
+        "colecao": "documentos",
+        "estado": "importado",
+        "total": 18
+      },
+      {
+        "colecao": "equipamentos",
+        "estado": "importado",
+        "total": 1
+      },
+      {
+        "colecao": "familias",
+        "estado": "importado",
+        "total": 13
+      },
+      {
+        "colecao": "importacoes",
+        "estado": "importado",
+        "total": 8
+      },
+      {
+        "colecao": "inspecoes",
+        "estado": "importado",
+        "total": 844
+      },
+      {
+        "colecao": "listas",
+        "estado": "importado",
+        "total": 11
+      },
+      {
+        "colecao": "matrizes",
+        "estado": "importado",
+        "total": 1
+      },
+      {
+        "colecao": "metadados",
+        "estado": "preservado",
+        "total": 5
+      },
+      {
+        "colecao": "pacotes",
+        "estado": "importado",
+        "total": 5
+      },
+      {
+        "colecao": "parametros",
+        "estado": "importado",
+        "total": 45
+      },
+      {
+        "colecao": "pendencias",
+        "estado": "importado",
+        "total": 300
+      },
+      {
+        "colecao": "plantas",
+        "estado": "importado",
+        "total": 1
+      },
+      {
+        "colecao": "registro",
+        "estado": "importado",
+        "total": 24
+      },
+      {
+        "colecao": "regras",
+        "estado": "importado",
+        "total": 64
+      },
+      {
+        "colecao": "relacao",
+        "estado": "importado",
+        "total": 3392
+      },
+      {
+        "colecao": "servicos",
+        "estado": "importado",
+        "total": 27
+      },
+      {
+        "colecao": "textos",
+        "estado": "importado",
+        "total": 9
+      },
+      {
+        "colecao": "tipos",
+        "estado": "importado",
+        "total": 6
+      }
+    ],
+    "lote": {
+      "blocos": 18,
+      "concluido_em": "2026-11-12T15:53:43.786892-03:00",
+      "criado_em": "2026-11-12T15:50:12.468725-03:00",
+      "criado_por": null,
+      "data_origem": "2026-11-01",
+      "executor": "postgres",
+      "fonte": "nexus-inspecoes",
+      "id": "ebbae03d-2ea9-4aa9-b318-82aa5f293d41",
+      "organization_id": "abab473b-8baa-4781-aed2-c1243338af65",
+      "snapshot_sha256": "343bcc56f1a0f436e1bf1b1dcf5ef1b1ecf739bf9d25e161c4a4aba4d34f41ea",
+      "versao": 1
+    }
+  },
+  "storage": {
+    "arquivos": [
+      {
+        "estado": "original_verificado",
+        "hashes": 1,
+        "miniaturas": 0,
+        "papel": "art",
+        "previas": 0,
+        "quantidade": 1
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 2,
+        "miniaturas": 0,
+        "papel": "certificado",
+        "previas": 0,
+        "quantidade": 2
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 1,
+        "miniaturas": 0,
+        "papel": "fabricante",
+        "previas": 0,
+        "quantidade": 1
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 6,
+        "miniaturas": 6,
+        "papel": "foto",
+        "previas": 6,
+        "quantidade": 6
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 6,
+        "miniaturas": 0,
+        "papel": "modelo",
+        "previas": 0,
+        "quantidade": 6
+      },
+      {
+        "estado": "original_pendente",
+        "hashes": 0,
+        "miniaturas": 0,
+        "papel": "original",
+        "previas": 0,
+        "quantidade": 17
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 1,
+        "miniaturas": 0,
+        "papel": "original",
+        "previas": 0,
+        "quantidade": 1
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 2,
+        "miniaturas": 0,
+        "papel": "piloto",
+        "previas": 0,
+        "quantidade": 2
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 2,
+        "miniaturas": 0,
+        "papel": "prancha",
+        "previas": 0,
+        "quantidade": 2
+      },
+      {
+        "estado": "original_verificado",
+        "hashes": 1,
+        "miniaturas": 0,
+        "papel": "projeto",
+        "previas": 0,
+        "quantidade": 1
+      }
+    ],
+    "bytes": "38490920",
+    "ciclos": 13,
+    "novas_emissoes": 0,
+    "objetos": 34,
+    "permissoes_transitorias": 0,
+    "publico": false,
+    "get_sem_autorizacao_http": 400
+  },
+  "r64": {
+    "data": "2026-11-12",
+    "grupos_nexus": 15,
+    "grupos_publicacao": 15,
+    "iguais": 15,
+    "diferencas": 0
+  },
+  "integridade": {
+    "atribuicoes": 0,
+    "contratos_cadastrados": 0,
+    "documentos_consulta": 18,
+    "levantamentos_novos": 0,
+    "pontos": 149,
+    "tabelas_modulo_sem_rls": 0
+  },
+  "atribuicoes": {
+    "identidade_est": 1,
+    "identidade_tst": 0,
+    "pessoa_est": 1,
+    "pessoa_tst": 0,
+    "posicao": 95,
+    "qualificacoes_validadas": 0,
+    "storage_insert": true,
+    "storage_select": true
+  },
+  "verificacoes_adicionais": [
+    {
+      "name": "reimportacao",
+      "confirmado": true,
+      "result": {
+        "rows": []
+      }
+    },
+    {
+      "name": "negacao_sem_atribuicao",
+      "confirmado": true,
+      "result": {
+        "rows": []
+      }
+    }
+  ]
+}

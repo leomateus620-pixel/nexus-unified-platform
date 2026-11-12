@@ -27,7 +27,7 @@ describe("navegação por papel", () => {
         const itens = menusVisiveis(roles, caps).flatMap((group) =>
           group.items.map((item) => item.to),
         );
-        for (const off of ["/documentacao", "/inspecoes", "/projetos-engenharia", "/seguranca"]) {
+        for (const off of ["/documentacao", "/projetos-engenharia", "/seguranca"]) {
           expect(itens).not.toContain(off);
           expect(podeVerRota(roles, off, caps)).toBe(false);
           expect(podeVerRota(roles, off + "/registro", caps)).toBe(false);
@@ -79,6 +79,7 @@ describe("navegação por papel", () => {
       "/equipe",
       "/nr-33",
       "/nr-35",
+      "/inspecoes",
     ]);
     expect(destinoInicial(["engenharia"])).toBe("/comercial");
     expect(podeVerRota(["engenharia"], "/")).toBe(true);
@@ -153,6 +154,7 @@ describe("navegação por papel", () => {
         "/equipe",
         "/nr-33",
         "/nr-35",
+        "/inspecoes",
       ],
     ],
   ])("o papel %s recebe somente seu contexto atual", (role, paths) => {

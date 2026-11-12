@@ -60,10 +60,27 @@ const routeSearchKeys = [
   "grupo",
   "copias",
   "aplicabilidade",
+  "menu",
+  "ordem",
+  "atribuicao",
+  "trilha",
 ];
-let search = Object.fromEntries(
-  [...new URLSearchParams(location.search)].filter(([key]) => routeSearchKeys.includes(key)),
-);
+const searchValue = (key, value) => (key === "trilha" ? JSON.stringify(value) : String(value));
+function readSearch(url) {
+  return Object.fromEntries(
+    [...url.searchParams]
+      .filter(([key]) => routeSearchKeys.includes(key))
+      .map(([key, value]) => {
+        if (key !== "trilha") return [key, value];
+        try {
+          return [key, JSON.parse(value)];
+        } catch {
+          return [key, undefined];
+        }
+      }),
+  );
+}
+let search = readSearch(new URL(location.href));
 const params = {
   revisaoId: "rev-fixture",
   propostaId: "proposal-fixture",
@@ -77,9 +94,7 @@ const pageListeners = new Set<() => void>();
 // application's URL state rather than only changing the address bar.
 window.addEventListener("popstate", () => {
   const url = new URL(location.href);
-  search = Object.fromEntries(
-    [...url.searchParams].filter(([key]) => routeSearchKeys.includes(key)),
-  );
+  search = readSearch(url);
   page = url.searchParams.get("page") || "dimensionamento";
   pageListeners.forEach((listener) => listener());
   listeners.forEach((listener) => listener());
@@ -96,6 +111,7 @@ export function useFixturePage() {
 const operationalPaths = {
   "nr-33": "/nr-33",
   "nr-35": "/nr-35",
+  inspecoes: "/inspecoes",
   "agenda-equipe": "/agenda-equipe",
   almoxarifado: "/almoxarifado",
   engenharia: "/engenharia",
@@ -123,7 +139,7 @@ export function useNavigate() {
       const url = new URL(location.href);
       for (const key of routeSearchKeys) {
         if (search[key] !== undefined && search[key] !== "")
-          url.searchParams.set(key, String(search[key]));
+          url.searchParams.set(key, searchValue(key, search[key]));
         else url.searchParams.delete(key);
       }
       if (opts.replace) history.replaceState({}, "", url);
@@ -178,6 +194,7 @@ export function Link({
   activeOptions,
   search: _search,
   preload,
+  resetScroll,
   className,
   ...props
 }) {
@@ -187,7 +204,7 @@ export function Link({
   const encoded = new URLSearchParams(
     Object.entries(targetSearch)
       .filter(([, value]) => value !== undefined && value !== "")
-      .map(([key, value]) => [key, String(value)]),
+      .map(([key, value]) => [key, searchValue(key, value)]),
   ).toString();
   const href = targetPath + (encoded ? `?${encoded}` : "");
   const currentPage = useFixturePage();
@@ -196,7 +213,8 @@ export function Link({
     (currentPage.startsWith("nr-") && new URLSearchParams(location.search).get("nrPath")
       ? "/" + new URLSearchParams(location.search).get("nrPath")
       : "");
-  const active = fixturePath === targetPath;
+  const active =
+    fixturePath === targetPath && (targetPath !== "/inspecoes" || _search === undefined);
   const state = active ? activeProps : inactiveProps;
   return (
     <a
@@ -221,12 +239,11 @@ export function Link({
           for (const key of routeSearchKeys) {
             if (key === "nrPath") continue;
             const value = targetSearch[key];
-            if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
+            if (value !== undefined && value !== "")
+              url.searchParams.set(key, searchValue(key, value));
             else url.searchParams.delete(key);
           }
-          search = Object.fromEntries(
-            [...url.searchParams].filter(([key]) => routeSearchKeys.includes(key)),
-          );
+          search = readSearch(url);
           history.pushState({}, "", url);
           pageListeners.forEach((listener) => listener());
           listeners.forEach((listener) => listener());
@@ -245,11 +262,10 @@ export function Link({
           url.searchParams.set("page", page);
           for (const key of routeSearchKeys) url.searchParams.delete(key);
           for (const [key, value] of Object.entries(targetSearch)) {
-            if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
+            if (value !== undefined && value !== "")
+              url.searchParams.set(key, searchValue(key, value));
           }
-          search = Object.fromEntries(
-            [...url.searchParams].filter(([key]) => routeSearchKeys.includes(key)),
-          );
+          search = readSearch(url);
           history.pushState({}, "", url);
           pageListeners.forEach((listener) => listener());
           listeners.forEach((listener) => listener());

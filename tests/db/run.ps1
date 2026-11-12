@@ -39,11 +39,6 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Clean installation / upgrade / ledger test failed' }
   if ($FingerprintCurrent -or $CaptureFingerprint) { Save-CatalogFingerprint 'schema-local-depois.json' }
   if ($FingerprintCurrent) { return }
-  Invoke-TestSql "$PSScriptRoot\inspecoes-importacao.sql"
-  Invoke-TestSql "$PSScriptRoot\inspecoes-r64.sql"
-  Invoke-TestSql "$PSScriptRoot\inspecoes-continuidade.sql"
-  node "$PSScriptRoot\inspecoes-acervo-fluxo.mjs"
-  if ($LASTEXITCODE -ne 0) { throw 'Inspeções acervo, permissões e revisão falharam' }
   if ($OnlyPessoas) {
     Invoke-TestSql "$PSScriptRoot\operacional.sql"
     node "$PSScriptRoot\pessoas-concurrency.mjs"
@@ -79,6 +74,11 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Levantamento concurrency test failed' }
     return
   }
+  Invoke-TestSql "$PSScriptRoot\inspecoes-importacao.sql"
+  Invoke-TestSql "$PSScriptRoot\inspecoes-r64.sql"
+  Invoke-TestSql "$PSScriptRoot\inspecoes-continuidade.sql"
+  node "$PSScriptRoot\inspecoes-acervo-fluxo.mjs"
+  if ($LASTEXITCODE -ne 0) { throw 'Inspeções acervo, permissões e revisão falharam' }
   Invoke-TestSql "$PSScriptRoot\cenarios.sql"
   Invoke-TestSql "$PSScriptRoot\clientes-operacionais.sql"
   Invoke-TestSql "$PSScriptRoot\projetos-engenharia.sql"

@@ -275,14 +275,13 @@ function WorkspaceAuthorized({
         <div className="insp-hero-title">
           <NexusLogo className="insp-wordmark" />
           <div>
-            <p>Conformidade</p>
             <h1>
               Inspeções <span>SPIQ &amp; SPCQ</span>
             </h1>
           </div>
         </div>
         <div className="insp-selectors">
-          <div className="insp-context-field">
+          <div className="insp-context-field" title={selectedClient?.nome}>
             <label htmlFor="insp-cliente">Cliente</label>
             <NrClientSelect
               id="insp-cliente"
@@ -301,11 +300,16 @@ function WorkspaceAuthorized({
             />
           </div>
           <div className="insp-context-field insp-assignment">
-            <label htmlFor="insp-atribuicao">Atuação</label>
+            {assignments.length > 1 ? (
+              <label htmlFor="insp-atribuicao">Atuação</label>
+            ) : (
+              <span className="insp-context-label">Atuação</span>
+            )}
             {assignments.length > 1 ? (
               <select
                 id="insp-atribuicao"
                 value={active?.id ?? ""}
+                title={active ? labelAtribuicao(active, units) : undefined}
                 onChange={(e) => {
                   const atribuicao = e.target.value;
                   atualizar((prev) => ({ ...prev, atribuicao, trilha: undefined }));
@@ -318,9 +322,15 @@ function WorkspaceAuthorized({
                 ))}
               </select>
             ) : (
-              <span className="insp-assignment-value" id="insp-atribuicao">
+              <span
+                className="insp-assignment-value"
+                id="insp-atribuicao"
+                title={active ? labelAtribuicao(active, units) : undefined}
+              >
                 <ShieldCheck size={16} aria-hidden="true" />
-                {active ? labelAtribuicao(active, units) : "Sem atribuição neste contexto"}
+                <span>
+                  {active ? labelAtribuicao(active, units) : "Sem atribuição neste contexto"}
+                </span>
               </span>
             )}
           </div>
@@ -490,6 +500,7 @@ function UnitSelect({
           type="button"
           role="combobox"
           aria-label={`Unidade: ${label}`}
+          title={label}
           aria-controls={list}
           aria-expanded={open}
           aria-haspopup="listbox"

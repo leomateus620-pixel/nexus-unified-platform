@@ -21,6 +21,7 @@ const report = {
     "Componentes reais, dados sintéticos e transporte isolado. Tela móvel emulada. Nenhum acesso à base operacional.",
   browser: browser.version(),
   layouts: [],
+  contextoLongo: null,
   jornadas: [],
   errors: [],
 };
@@ -56,6 +57,24 @@ async function pageFor(width, height) {
   });
   return page;
 }
+async function headerMetrics(page) {
+  return page.evaluate(() => {
+    const header = document.querySelector(".insp-hero");
+    const nav = document.querySelector(".insp-nav");
+    const controls = [...header.querySelectorAll(".nr-client-combobox, #insp-atribuicao")];
+    return {
+      headerHeight: header.getBoundingClientRect().height,
+      navHeight: nav.getBoundingClientRect().height,
+      navigationRows: new Set([...nav.querySelectorAll("a")].map((link) => link.offsetTop)).size,
+      minControlHeight: Math.min(
+        ...controls.map((control) => control.getBoundingClientRect().height),
+      ),
+      horizontalOverflowControls: controls.filter(
+        (control) => control.scrollWidth > control.clientWidth + 1,
+      ).length,
+    };
+  });
+}
 try {
   for (const [width, height] of [
     [1280, 800],
@@ -86,10 +105,15 @@ try {
       ),
     }));
     expect(metrics.overflow).toBeLessThanOrEqual(1);
+    const header = await headerMetrics(page);
+    expect(header.headerHeight).toBeLessThanOrEqual(width >= 1280 ? 90 : 165);
+    expect(header.minControlHeight).toBeGreaterThanOrEqual(40);
+    expect(header.horizontalOverflowControls).toBe(0);
+    expect(header.navigationRows).toBe(width >= 1280 ? 1 : 2);
     expect(metrics.active).toEqual(["Laudos"]);
     const filename = `laudos-${width}.png`;
-    if (width !== 360) await page.screenshot({ path: `${output}/${filename}` });
-    report.layouts.push({ width, height, ...metrics, screenshot: width !== 360 ? filename : null });
+    await page.screenshot({ path: `${output}/${filename}` });
+    report.layouts.push({ width, height, ...metrics, ...header, screenshot: filename });
     if (width === 1440) {
       const doc = page.getByRole("button", {
         name: "Laudo de pontos de ancoragem da Unidade Norte",
@@ -189,6 +213,56 @@ try {
     }
     await page.close();
   }
+
+  const narrow = await pageFor(360, 800);
+  await narrow.goto(
+    lab({
+      scenario: "insp-long-context",
+      menu: "laudos",
+      area: "documentos",
+      cliente: clientId,
+      unidade: unitId,
+    }),
+    { waitUntil: "domcontentloaded", timeout: 90_000 },
+  );
+  await expect(
+    narrow.getByRole("combobox", {
+      name: "Cliente: Indústria de Sistemas de Proteção e Manutenção",
+    }),
+  ).toBeVisible();
+  await expect(
+    narrow.getByRole("combobox", {
+      name: "Unidade: Unidade Operacional Santa Rosa — Linha de Vida",
+    }),
+  ).toBeVisible();
+  await expect(narrow.locator(".insp-assignment-value")).toHaveText(
+    "EST · Responsável Técnica de Inspeções e Proteção contra Quedas",
+  );
+  const longHeader = await headerMetrics(narrow);
+  expect(longHeader.headerHeight).toBeLessThanOrEqual(175);
+  expect(longHeader.horizontalOverflowControls).toBe(0);
+  expect(longHeader.minControlHeight).toBeGreaterThanOrEqual(40);
+  await narrow.screenshot({ path: `${output}/cabecalho-360-nomes-longos.png` });
+  report.contextoLongo = {
+    width: 360,
+    height: 800,
+    ...longHeader,
+    screenshot: "cabecalho-360-nomes-longos.png",
+  };
+  await expect(narrow.locator(".insp-content .insp-context-note").first()).toHaveText(
+    "Indústria de Sistemas de Proteção e Manutenção · Unidade Operacional Santa Rosa — Linha de Vida",
+  );
+  const clientSelector = narrow.getByRole("combobox", {
+    name: "Cliente: Indústria de Sistemas de Proteção e Manutenção",
+  });
+  await clientSelector.focus();
+  await narrow.keyboard.press("Enter");
+  await expect(
+    narrow.getByRole("option", { name: /Indústria de Sistemas de Proteção e Manutenção/ }),
+  ).toBeVisible();
+  await narrow.keyboard.press("Escape");
+  await expect(clientSelector).toBeFocused();
+  await narrow.close();
 
   const tst = await pageFor(390, 844);
   await tst.goto(

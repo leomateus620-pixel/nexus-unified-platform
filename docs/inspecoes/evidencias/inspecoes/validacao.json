@@ -10,6 +10,11 @@
       "active": [
         "Laudos"
       ],
+      "headerHeight": 82.578125,
+      "navHeight": 56.21875,
+      "navigationRows": 1,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
       "screenshot": "laudos-1280.png"
     },
     {
@@ -20,6 +25,11 @@
       "active": [
         "Laudos"
       ],
+      "headerHeight": 82.578125,
+      "navHeight": 56.21875,
+      "navigationRows": 1,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
       "screenshot": "laudos-1440.png"
     },
     {
@@ -30,6 +40,11 @@
       "active": [
         "Laudos"
       ],
+      "headerHeight": 82.578125,
+      "navHeight": 56.21875,
+      "navigationRows": 1,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
       "screenshot": "laudos-1920.png"
     },
     {
@@ -40,6 +55,11 @@
       "active": [
         "Laudos"
       ],
+      "headerHeight": 162.125,
+      "navHeight": 103.40625,
+      "navigationRows": 2,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
       "screenshot": "laudos-390.png"
     },
     {
@@ -50,9 +70,24 @@
       "active": [
         "Laudos"
       ],
-      "screenshot": null
+      "headerHeight": 162.125,
+      "navHeight": 103.40625,
+      "navigationRows": 2,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
+      "screenshot": "laudos-360.png"
     }
   ],
+  "contextoLongo": {
+    "width": 360,
+    "height": 800,
+    "headerHeight": 165.5,
+    "navHeight": 103.40625,
+    "navigationRows": 2,
+    "minControlHeight": 43.375,
+    "horizontalOverflowControls": 0,
+    "screenshot": "cabecalho-360-nomes-longos.png"
+  },
   "jornadas": [
     "Documento → PDF e fotos com teclado → ativo → planta com 149 pontos e SVG A3 → mesmo ativo → devolução EST → consulta com contexto, seleção e foco preservados.",
     "TST em 390 px consulta e submete levantamento atribuído. Ações de aprovação, devolução e emissão permanecem indisponíveis."

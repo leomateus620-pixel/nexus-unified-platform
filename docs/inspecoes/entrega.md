@@ -27,7 +27,7 @@ Os 17 originais ausentes estão identificados por documento no [relatório de re
 
 ## Validação e limitações
 
-- A [validação visual](evidencias/inspecoes/validacao.json) usou os componentes reais da Nexus, dados de teste e transporte isolado em Chromium. Foram verificadas larguras de 1280, 1440, 1920, 390 e 360 px, foco e retorno pelo teclado, miniaturas, ampliação, navegação na planta, devolução EST e submissão TST. O mobile foi emulado.
+- A [validação visual](evidencias/inspecoes/validacao.json) usou os componentes reais da Nexus, dados de teste e transporte isolado em Chromium. Foram verificadas larguras de 1280, 1440, 1920, 390 e 360 px, foco e retorno pelo teclado, miniaturas, ampliação, navegação na planta, devolução EST e submissão TST. O cabeçalho mediu cerca de 83 px no desktop e 162 px no celular para o contexto de teste. Cliente e Unidade ficaram lado a lado nas larguras móveis, com controles de pelo menos 40 px e sem rolagem horizontal. O mobile foi emulado.
 - O fluxo com personas, o isolamento por unidade, a imutabilidade, o reprocessamento e os limites de calendário da R64 foram exercitados em PostgreSQL local. No banco conectado, a verificação cobriu o ledger, as contagens, RLS ativa, o Storage privado e a negação anônima.
 - A interface segue em PR revisável. A confirmação de jornada autenticada no ambiente conectado depende das designações reais. A integração apresenta biblioteca histórica e homologação versionada de protocolos. Revisões gerais de todos os textos e parâmetros, gestão completa de evidências de consentimento e integração da fila de geração PAC/PAL permanecem abertas.
 
@@ -35,6 +35,6 @@ Os 17 originais ausentes estão identificados por documento no [relatório de re
 
 - `npm run typecheck`, build de produção e ESLint dos arquivos alterados passaram localmente.
 - `npm run test:nr` passou 195 testes Vitest e 23 testes Node, com sete pulos previstos pelo ambiente. PET passou 121 testes e a suíte operacional passou 55 testes Vitest e 12 testes Node.
-- Os testes de importação passaram 3/3. O PostgreSQL local confirmou instalação limpa, aplicação atômica pelo envelope do conector, 59 verificações de fluxo e os cenários de R64, reimportação e continuidade.
+- Os testes de importação passaram 3/3. O PostgreSQL local confirmou instalação limpa, aplicação atômica pelo envelope do conector, 59 verificações de fluxo e os cenários de R64, reimportação e continuidade. Os 23 cenários focados de banco para NR33, NR35 e PET passaram. Os testes locais de formato e integridade de vídeo passaram 3/3.
 - A execução completa do banco parou na validação de janela de qualificação em `tests/db/agenda-foundation.sql:97`. A mesma falha foi reproduzida no checkout de referência com apenas as 90 migrações anteriores.
 - No banco conectado, reprocessar os 18 blocos preservou o total de registros e os 835 ativos. Uma simulação do papel autenticado com identidade existente, ainda sem atribuição técnica, retornou zero registros e arquivos do módulo.

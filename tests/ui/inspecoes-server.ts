@@ -195,13 +195,21 @@ let levantamento: InspecoesLevantamento = {
 };
 
 export async function inspecoesContexto() {
+  const longContext = new URLSearchParams(location.search).get("scenario") === "insp-long-context";
+  const clientName = longContext
+    ? "Indústria de Sistemas de Proteção e Manutenção"
+    : "Cliente de Validação";
   return {
     atribuicoes: [
       {
         id: id(6),
         perfil: tst ? "TST" : "EST",
         pessoa_id: user,
-        nome: tst ? "Técnico de Campo" : "Responsável Técnica",
+        nome: tst
+          ? "Técnico de Campo"
+          : longContext
+            ? "Responsável Técnica de Inspeções e Proteção contra Quedas"
+            : "Responsável Técnica",
         cliente_id: null,
         unidade_id: null,
         ensaios: false,
@@ -213,14 +221,16 @@ export async function inspecoesContexto() {
       {
         cliente_id: cliente,
         unidade_id: unidade,
-        cliente_nome: "Cliente de Validação",
-        unidade_nome: "Unidade Norte",
+        cliente_nome: clientName,
+        unidade_nome: longContext
+          ? "Unidade Operacional Santa Rosa — Linha de Vida"
+          : "Unidade Norte",
         segmento: "IN",
       },
       {
         cliente_id: cliente,
         unidade_id: id(4),
-        cliente_nome: "Cliente de Validação",
+        cliente_nome: clientName,
         unidade_nome: "Unidade Sul",
         segmento: "IN",
       },

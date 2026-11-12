@@ -1,0 +1,96 @@
+{
+  "method": "Componentes reais, dados sintéticos e transporte isolado. Tela móvel emulada. Nenhum acesso à base operacional.",
+  "browser": "153.0.8010.12",
+  "layouts": [
+    {
+      "width": 1280,
+      "height": 800,
+      "overflow": 0,
+      "cardWidth": 303.875,
+      "active": [
+        "Laudos"
+      ],
+      "headerHeight": 82.578125,
+      "navHeight": 56.21875,
+      "navigationRows": 1,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
+      "screenshot": "laudos-1280.png"
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "overflow": 0,
+      "cardWidth": 356.65625,
+      "active": [
+        "Laudos"
+      ],
+      "headerHeight": 82.578125,
+      "navHeight": 56.21875,
+      "navigationRows": 1,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
+      "screenshot": "laudos-1440.png"
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflow": 0,
+      "cardWidth": 516.65625,
+      "active": [
+        "Laudos"
+      ],
+      "headerHeight": 82.578125,
+      "navHeight": 56.21875,
+      "navigationRows": 1,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
+      "screenshot": "laudos-1920.png"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "cardWidth": 336.8125,
+      "active": [
+        "Laudos"
+      ],
+      "headerHeight": 162.125,
+      "navHeight": 103.40625,
+      "navigationRows": 2,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
+      "screenshot": "laudos-390.png"
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "overflow": 0,
+      "cardWidth": 306.8125,
+      "active": [
+        "Laudos"
+      ],
+      "headerHeight": 162.125,
+      "navHeight": 103.40625,
+      "navigationRows": 2,
+      "minControlHeight": 40,
+      "horizontalOverflowControls": 0,
+      "screenshot": "laudos-360.png"
+    }
+  ],
+  "contextoLongo": {
+    "width": 360,
+    "height": 800,
+    "headerHeight": 165.5,
+    "navHeight": 103.40625,
+    "navigationRows": 2,
+    "minControlHeight": 43.375,
+    "horizontalOverflowControls": 0,
+    "screenshot": "cabecalho-360-nomes-longos.png"
+  },
+  "jornadas": [
+    "Documento → PDF e fotos com teclado → ativo → planta com 149 pontos e SVG A3 → mesmo ativo → devolução EST → consulta com contexto, seleção e foco preservados.",
+    "TST em 390 px consulta e submete levantamento atribuído. Ações de aprovação, devolução e emissão permanecem indisponíveis."
+  ],
+  "errors": []
+}

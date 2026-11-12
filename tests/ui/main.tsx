@@ -34,6 +34,7 @@ import { Route as ConfiguracoesRoute } from "@/routes/_authenticated/configuraco
 import { Route as LevantamentosRoute } from "@/routes/_authenticated/levantamentos";
 import { Route as EngenhariaRoute } from "@/routes/_authenticated/engenharia.index";
 import { Route as AlmoxarifadoRoute } from "@/routes/_authenticated/almoxarifado";
+import { Route as InspecoesRoute } from "@/routes/_authenticated/inspecoes";
 import "@/styles.css";
 
 const client = new QueryClient({
@@ -77,6 +78,7 @@ const Almoxarifado = AlmoxarifadoRoute.options.component;
 const Seguranca = SegurancaRoute.options.component;
 const Pessoas = PessoasRoute.options.component;
 const AgendaEquipe = AgendaEquipeRoute.options.component;
+const Inspecoes = InspecoesRoute.options.component;
 function Harness() {
   const page = useFixturePage();
   return (
@@ -84,6 +86,8 @@ function Harness() {
       <AppShell>
         {page === "nr-33" || page === "nr-35" ? (
           <NrHarness norma={page === "nr-33" ? "NR33" : "NR35"} />
+        ) : page === "inspecoes" ? (
+          <Inspecoes />
         ) : page === "agenda-equipe" ? (
           <AgendaEquipe />
         ) : page === "almoxarifado" ? (

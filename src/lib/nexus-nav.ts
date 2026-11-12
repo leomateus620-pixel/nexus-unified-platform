@@ -47,7 +47,7 @@ const DISPONIBILIDADE_MODULOS: Readonly<Record<string, boolean>> = {
   "/equipe": true,
   "/seguranca": false,
   "/documentacao": false,
-  "/inspecoes": false,
+  "/inspecoes": true,
   "/financeiro": true,
   "/relatorios": true,
   "/configuracoes": true,
@@ -183,7 +183,12 @@ export const navGroups: NavGroup[] = [
         icon: FileText,
         hint: "Laudos e dossiês",
       },
-      { to: "/inspecoes", label: "Inspeções", icon: ShieldCheck, hint: "Validades e revisões" },
+      {
+        to: "/inspecoes",
+        label: "Inspeções",
+        icon: ShieldCheck,
+        hint: "SPIQ, SPCQ, ativos, laudos e reinspeções",
+      },
     ],
   },
   {

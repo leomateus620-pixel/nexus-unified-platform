@@ -363,6 +363,42 @@
     {
       "path": "drizzle/migrations/0067_nr_coleta_campo.sql",
       "sha256": "da5e135dd0a208ae144d26a96629e980ef8bc0f32204f43926894dcd93de9008"
+    },
+    {
+      "path": "drizzle/migrations/0068_inspecoes_acervo.sql",
+      "sha256": "c0adc066fb34820dcb26fe1e5abc7669b408f24f6d2c909ee04e9c9d937ae2b4"
+    },
+    {
+      "path": "drizzle/migrations/0069_inspecoes_levantamentos.sql",
+      "sha256": "df3d7d1dfb1d22c96b299e0b3ff4d346bef239bb5520a8913c07da1fe2ff8952"
+    },
+    {
+      "path": "drizzle/migrations/0070_inspecoes_importacao.sql",
+      "sha256": "6766babbf6a3dd5cd48420c3829f1bdfa644e0ff018f6565598988ab7b0c071c"
+    },
+    {
+      "path": "drizzle/migrations/0071_inspecoes_r64.sql",
+      "sha256": "576513d39f4f86804522c70259c55c03cb8e937e1fe6d03ee3324c6167d04f49"
+    },
+    {
+      "path": "drizzle/migrations/0072_inspecoes_transferencia_privada.sql",
+      "sha256": "3ff0b43c40d782c8ad9e0dc5ab63d4ed0825007a74365e5a1fe20ebfee38da25"
+    },
+    {
+      "path": "drizzle/migrations/0072_inspecoes_transferencia_ingresso.sql",
+      "sha256": "4af630f37a13b4732be9eb778ad9343d1a41657d152cbfe27e6834d88ded0989"
+    },
+    {
+      "path": "drizzle/migrations/0073_inspecoes_ativos_ensaios.sql",
+      "sha256": "fb081f20febe28c6615234ddbfe11d9c7c0a8c25aa02b6940dc6b835765b8cfd"
+    },
+    {
+      "path": "drizzle/migrations/0074_inspecoes_continuidade.sql",
+      "sha256": "b71a257c778e339d8dab051bd38e271b67430d0285118704a6c779f875c3e2e3"
+    },
+    {
+      "path": "drizzle/migrations/0075_inspecoes_acervo_consulta.sql",
+      "sha256": "d1eb7a71705f96eed037f2e43def3f94ec4d878aa6795582cdd6bcb6d3ba258d"
     }
   ]
 }

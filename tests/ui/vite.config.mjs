@@ -64,6 +64,11 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
+          /^\.\/(?:inspecoes(?:-upload|-campo)?|continuidade)\.functions(?:\.ts)?$/.test(id) &&
+          /\/features\/inspecoes\//.test(importer || "")
+        )
+          return path.join(root, "inspecoes-server.ts");
+        if (
           /\/features\/pet\/demo\/demo\.functions(?:\.ts)?$/.test(id) ||
           (id === "./demo.functions" && /\/features\/pet\/demo\//.test(importer || ""))
         )

@@ -24,6 +24,7 @@ try {
     ["autosave-checks.mjs"],
   ];
   const features = {
+    "--inspecoes": [["inspecoes-quality.mjs"]],
     "--nr-layout": [["nr-layout-quality.mjs"]],
     "--nr-details": [["nr-details-quality.mjs"]],
     "--nr-media": [["nr-media-quality.mjs"]],

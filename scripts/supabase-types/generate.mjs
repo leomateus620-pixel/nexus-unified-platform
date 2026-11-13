@@ -87,11 +87,27 @@ if (
 )
   throw new Error("Tabelas divergentes do catálogo");
 for (const table of names) {
-  const row = property(property(tables, table) ?? property(views, table), "Row");
-  const expected = provenance.columns
+  const relation = property(tables, table) ?? property(views, table);
+  const row = property(relation, "Row");
+  const columns = provenance.columns
     .filter((column) => column.table_name === table)
     .map((column) => column.column_name);
-  if (!equalNames(keys(row), expected)) throw new Error(`Colunas divergentes: ${table}`);
+  const computed = provenance.computedFields
+    .filter((field) => field.table_name === table)
+    .map((field) => field.field_name);
+  const marker = property(relation, "ComputedFields");
+  const computedKeys =
+    marker?.kind === ts.SyntaxKind.NeverKeyword || !marker
+      ? []
+      : (ts.isUnionTypeNode(marker) ? marker.types : [marker]).map((node) => {
+          if (!ts.isLiteralTypeNode(node) || !ts.isStringLiteral(node.literal))
+            throw new Error(`Campo computado inválido: ${table}`);
+          return node.literal.text;
+        });
+  if (!equalNames(computedKeys, computed))
+    throw new Error(`Campos computados divergentes: ${table}`);
+  if (!equalNames(keys(row), [...columns, ...computed]))
+    throw new Error(`Colunas divergentes: ${table}`);
 }
 if (
   !equalNames(
@@ -133,6 +149,7 @@ const report = {
   formatter: { name: "prettier", version: prettier.version, typescriptAstPreserved: true },
   tables: keys(tables).length,
   views: keys(views).length,
+  computedFields: provenance.computedFields.length,
   functions: provenance.functions.length,
   enums: provenance.enums.length,
   sha256: createHash("sha256").update(generated).digest("hex"),

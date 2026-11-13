@@ -33,18 +33,16 @@ export function InspecoesCadastroAtivo({
   escopo,
   queryKey,
   atribuicao,
+  canManageAcervo = false,
   onCreated,
-}: ContextProps & { onCreated: (registro: InspecoesRegistro) => void }) {
+}: ContextProps & { canManageAcervo?: boolean; onCreated: (registro: InspecoesRegistro) => void }) {
   const [open, setOpen] = useState(false);
   const { organizationId, clienteId, unidadeId } = escopo;
-  if (
-    atribuicao?.perfil !== "EST" ||
-    !clienteId ||
-    !unidadeId ||
-    (atribuicao.cliente_id && atribuicao.cliente_id !== clienteId) ||
-    (atribuicao.unidade_id && atribuicao.unidade_id !== unidadeId)
-  )
-    return null;
+  const estNoEscopo =
+    atribuicao?.perfil === "EST" &&
+    (!atribuicao.cliente_id || atribuicao.cliente_id === clienteId) &&
+    (!atribuicao.unidade_id || atribuicao.unidade_id === unidadeId);
+  if (!clienteId || !unidadeId || !(canManageAcervo || estNoEscopo)) return null;
 
   return open ? (
     <AtivoForm

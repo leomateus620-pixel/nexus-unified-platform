@@ -12,6 +12,7 @@ import {
   imageDimensions,
   type OriginalMime,
 } from "./domain";
+import { createPdfRangeTransport, PDF_RANGE_CHUNK } from "./pdf-range.client";
 
 export type RenderSettings = {
   availableWidth: number;
@@ -44,9 +45,15 @@ function configureCanvas(canvas: HTMLCanvasElement, budget: ReturnType<typeof ca
   canvas.style.height = `${budget.cssHeight}px`;
 }
 
+type RangedPdf = {
+  size: number;
+  authorize: (signal: AbortSignal) => Promise<{ url: string; expiresAt?: string | undefined }>;
+  onFailure: (error: unknown) => void;
+};
+
 /** Only this client-only module imports PDF.js. No native Node/canvas or scripting package. */
 async function openPdf(
-  bytes: Uint8Array,
+  source: Uint8Array | RangedPdf,
   signal: AbortSignal,
   assetBaseUrl: string,
 ): Promise<ReaderDocument> {
@@ -64,6 +71,22 @@ async function openPdf(
     !base.pathname.endsWith(`/${PDFJS_VERSION}/`)
   )
     throw new LeituraPeError("worker");
+  const input =
+    source instanceof Uint8Array
+      ? { data: source }
+      : {
+          range: await createPdfRangeTransport(
+            api.PDFDataRangeTransport,
+            source.size,
+            source.authorize,
+            signal,
+            source.onFailure,
+          ),
+          disableStream: true,
+          disableAutoFetch: true,
+          rangeChunkSize: PDF_RANGE_CHUNK,
+        };
+  signal.throwIfAborted();
   const worker = new Worker(workerUrl, { type: "module", name: "Nexus original PE" });
   const pdfWorker = api.PDFWorker.create({ port: worker });
   let loading: PDFDocumentLoadingTask | undefined;
@@ -122,7 +145,7 @@ async function openPdf(
   signal.addEventListener("abort", abort, { once: true });
   try {
     loading = api.getDocument({
-      data: bytes,
+      ...input,
       worker: pdfWorker,
       cMapUrl: new URL("cmaps/", base).href,
       standardFontDataUrl: new URL("standard_fonts/", base).href,
@@ -193,9 +216,19 @@ async function openPdf(
         currentTask = task;
         const cancel = () => task.cancel();
         renderSignal.addEventListener("abort", cancel, { once: true });
+        let timeout: ReturnType<typeof setTimeout> | undefined;
         try {
-          await task.promise;
+          await Promise.race([
+            task.promise,
+            new Promise<never>((_, reject) => {
+              timeout = setTimeout(() => {
+                reject(new LeituraPeError("resource"));
+                cancel();
+              }, 30_000);
+            }),
+          ]);
         } finally {
+          if (timeout) clearTimeout(timeout);
           renderSignal.removeEventListener("abort", cancel);
           if (currentTask === task) currentTask = undefined;
         }
@@ -300,4 +333,8 @@ export async function openOriginalDocument(
   return mime === "application/pdf"
     ? openPdf(bytes, signal, assetBaseUrl)
     : openImage(bytes, mime, signal);
+}
+
+export function openRangedPdf(source: RangedPdf, signal: AbortSignal, assetBaseUrl: string) {
+  return openPdf(source, signal, assetBaseUrl);
 }

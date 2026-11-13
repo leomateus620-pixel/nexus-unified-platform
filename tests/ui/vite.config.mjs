@@ -9,16 +9,21 @@ import os from "node:os";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const app = path.resolve(process.env.NEXUS_UI_SOURCE || path.join(root, "../.."));
+const pdfFixture = readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf"));
+const sparseLength = 91 * 1024 * 1024;
+// Duplicate the final pointer to the existing xref after virtual padding.
+const sparseTail = Buffer.from(pdfFixture.toString("latin1").match(/startxref\n\d+\n%%EOF\n$/)[0]);
+const sparseTailOffset = sparseLength - sparseTail.length;
 export default defineConfig({
   root,
   cacheDir: path.join(os.tmpdir(), `nexus-ui-vite-${process.env.NEXUS_UI_PORT || 4182}`),
   publicDir: path.join(app, "public"),
+  optimizeDeps: { include: ["pdfjs-dist/legacy/build/pdf.min.mjs"] },
   define: {
     __NEXUS_PDF_FIXTURE__: JSON.stringify({
-      sha256: createHash("sha256")
-        .update(readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf")))
-        .digest("hex"),
-      tamanho: readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf")).length,
+      sha256: createHash("sha256").update(pdfFixture).digest("hex"),
+      tamanho: pdfFixture.length,
+      tamanhoGrande: sparseLength,
     }),
     "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(
       `http://127.0.0.1:${process.env.NEXUS_UI_PORT || 4182}`,
@@ -32,6 +37,36 @@ export default defineConfig({
         // Synthetic PDF bytes exist only in this isolated laboratory, never app/API code.
         server.middlewares.use((request, response, next) => {
           const url = new URL(request.url || "/", "http://isolated.invalid");
+          if (url.pathname === "/storage/v1/object/sign/inspecoes-acervo/fixture-grande.pdf") {
+            const match = request.headers.range?.match(/^bytes=(\d+)-(\d+)$/);
+            const total = sparseLength;
+            if (url.searchParams.get("token") === "insp-ignore-range") {
+              response.setHeader("Content-Type", "application/pdf");
+              return response.end(pdfFixture);
+            }
+            const begin = Number(match?.[1]);
+            const end = Number(match?.[2]) + 1;
+            if (!match || begin >= end || end > total || end - begin > 16 * 1024 * 1024) {
+              response.statusCode = 416;
+              return response.end();
+            }
+            const bytes = Buffer.alloc(end - begin, 0x20);
+            if (begin < pdfFixture.length)
+              pdfFixture.copy(bytes, 0, begin, Math.min(end, pdfFixture.length));
+            if (end > sparseTailOffset)
+              sparseTail.copy(
+                bytes,
+                Math.max(0, sparseTailOffset - begin),
+                Math.max(0, begin - sparseTailOffset),
+                end - sparseTailOffset,
+              );
+            response.statusCode = 206;
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Content-Type", "application/pdf");
+            response.setHeader("Content-Length", bytes.length);
+            response.setHeader("Content-Range", `bytes ${begin}-${end - 1}/${total}`);
+            return response.end(bytes);
+          }
           if (url.pathname !== "/storage/v1/object/sign/nexus-operacional/fixture-reader.pdf")
             return next();
           const send = () => {
@@ -42,9 +77,7 @@ export default defineConfig({
               response.statusCode = 403;
               return response.end("Expired isolated fixture");
             }
-            const bytes = Buffer.from(
-              readFileSync(path.join(root, "fixtures/nexus-original-isolado.pdf")),
-            );
+            const bytes = Buffer.from(pdfFixture);
             if (flags.includes("corrupt")) bytes[bytes.length - 20] ^= 1;
             response.setHeader("Content-Type", "application/pdf");
             response.setHeader("Content-Length", bytes.length);
@@ -64,7 +97,9 @@ export default defineConfig({
       },
       resolveId(id, importer) {
         if (
-          /^\.\/(?:inspecoes(?:-upload|-campo)?|continuidade)\.functions(?:\.ts)?$/.test(id) &&
+          /^\.\/(?:inspecoes(?:-upload|-campo)?|acessos|continuidade|manutencao)\.functions(?:\.ts)?$/.test(
+            id,
+          ) &&
           /\/features\/inspecoes\//.test(importer || "")
         )
           return path.join(root, "inspecoes-server.ts");

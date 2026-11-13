@@ -1,4 +1,5 @@
 import { assinarMarcas } from "@/features/clientes/marca.server";
+import { MAX_PDF_RANGE_BYTES } from "@/features/projetos-engenharia/leitor/domain";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createServerFn } from "@tanstack/react-start";
@@ -97,9 +98,10 @@ export const inspecoesContexto = createServerFn({ method: "GET" })
   .inputValidator(scope.pick({ organizationId: true }))
   .handler(async ({ context, data }): Promise<InspecoesContexto> => {
     const db = client(context.supabase);
-    const [access, contexts] = await Promise.all([
+    const [access, contexts, admin] = await Promise.all([
       db.rpc("inspecoes_acesso", { p_org: data.organizationId }),
       db.rpc("inspecoes_contexto", { p_org: data.organizationId }),
+      db.rpc("has_org_role", { _org: data.organizationId, _role: "admin" }),
     ]);
     const atribuicoes = (dataOrThrow(access) ?? []) as InspecoesAtribuicao[];
     const unidades = (dataOrThrow(contexts) ?? []) as InspecoesUnidade[];
@@ -110,6 +112,7 @@ export const inspecoesContexto = createServerFn({ method: "GET" })
     ]);
     const marcaById = new Map(marcas.map((marca) => [marca.id, marca.marca]));
     return {
+      administrador: dataOrThrow(admin) === true,
       atribuicoes,
       unidades: unidades.map((row) => ({ ...row, marca: marcaById.get(row.cliente_id) ?? null })),
     };
@@ -132,7 +135,8 @@ const orgCollections = new Set([
 const recordColumns =
   "id,cliente_id,unidade_id,colecao,source_id,titulo,codigo,familia,situacao,data_ref,vigente,existente";
 const detailColumns =
-  recordColumns + ",snapshot,origem_autor,origem_data,importado_em,levantamento_id,ativo_id";
+  recordColumns +
+  ",snapshot,origem_autor,origem_data,importado_em,levantamento_id,ativo_id,acervo_versao,nota_acervo";
 const summaryKeys = [
   "revisao",
   "local",
@@ -314,9 +318,12 @@ export const inspecoesPainel = createServerFn({ method: "GET" })
 const fileVariant = z.enum(["original", "miniatura_384", "previa_768"]);
 type FileVariant = z.infer<typeof fileVariant>;
 type FileRow = InspecoesArquivo & {
+  cliente_id: string | null;
+  unidade_id: string | null;
   caminho: string | null;
   miniatura_caminho: string | null;
   previa_caminho: string | null;
+  ordem: number | null;
 };
 
 function filePath(arquivo: FileRow, variant: FileVariant) {
@@ -328,29 +335,75 @@ function filePath(arquivo: FileRow, variant: FileVariant) {
       : arquivo.previa_caminho;
 }
 
-async function signedFile(db: SupabaseClient, arquivo: FileRow, variant: FileVariant) {
-  const path = filePath(arquivo, variant);
-  if (!path) return null;
-  const response = await db.storage.from(bucket).createSignedUrl(path, 300);
-  return response.data?.signedUrl ?? null;
-}
-
 export const inspecoesArquivoUrl = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(z.object({ organizationId: uuid, id: uuid, variante: fileVariant }))
+  .inputValidator(
+    scope.extend({
+      id: uuid,
+      variante: fileVariant,
+      acao: z.enum(["visualizar", "baixar", "verificar"]).default("visualizar"),
+      esperado: z
+        .object({
+          bytes: z.number().int().min(1).max(MAX_PDF_RANGE_BYTES),
+          sha256: z.string().regex(/^[a-f0-9]{64}$/),
+        })
+        .optional(),
+    }),
+  )
   .handler(async ({ context, data }) => {
     const db = client(context.supabase);
+    const unavailable = { permitido: false, url: null, expiresAt: undefined } as const;
+    if (
+      (data.unidadeId && !data.clienteId) ||
+      (data.acao !== "visualizar" && data.variante !== "original") ||
+      (data.acao === "verificar" && !data.esperado)
+    )
+      return unavailable;
     const row = dataOrThrow(
       await db
         .from("inspecoes_arquivos")
-        .select("*")
+        .select(
+          "cliente_id,unidade_id,caminho,miniatura_caminho,previa_caminho,estado,mime,nome,sha256,bytes",
+        )
         .eq("organization_id", data.organizationId)
         .eq("id", data.id)
-        .single(),
-    ) as FileRow;
-    const url = await signedFile(db, row, data.variante);
-    if (!url) throw new Error("Arquivo privado ou variante indisponível.");
-    return { url };
+        .maybeSingle(),
+    ) as FileRow | null;
+    if (
+      !row ||
+      (row.cliente_id && data.clienteId && row.cliente_id !== data.clienteId) ||
+      (row.unidade_id && data.unidadeId && row.unidade_id !== data.unidadeId) ||
+      (data.esperado &&
+        (row.mime !== "application/pdf" ||
+          row.bytes !== data.esperado.bytes ||
+          row.sha256 !== data.esperado.sha256))
+    )
+      return unavailable;
+    const path = filePath(row, data.variante);
+    if (!path) return unavailable;
+    const storage = db.storage.from(bucket);
+    if (data.acao === "verificar") {
+      // This authenticated HEAD rechecks the private Storage object without minting a bearer URL.
+      try {
+        const { data: exists } = await storage.exists(path);
+        return { permitido: exists === true, url: null, expiresAt: undefined };
+      } catch {
+        throw new Error("Não foi possível conferir o acesso ao arquivo. Tente novamente.");
+      }
+    }
+    const expiresIn = data.variante === "original" ? 60 : 300;
+    const { data: signed } = await storage.createSignedUrl(
+      path,
+      expiresIn,
+      data.acao === "baixar" ? { download: row.nome } : undefined,
+    );
+    return signed
+      ? {
+          permitido: true,
+          url: signed.signedUrl,
+          expiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+        }
+      : unavailable;
   });
 
 export const inspecoesDetalhe = createServerFn({ method: "GET" })
@@ -422,7 +475,7 @@ export const inspecoesDetalhe = createServerFn({ method: "GET" })
     const batches = Array.from({ length: Math.ceil(ids.length / 75) }, (_, index) =>
       ids.slice(index * 75, index * 75 + 75),
     );
-    const [relatedResponses, thumbsResponse] = await Promise.all([
+    const [relatedResponses, thumbsResponse, presentations] = await Promise.all([
       Promise.all(
         batches.map((batch) =>
           db
@@ -433,8 +486,21 @@ export const inspecoesDetalhe = createServerFn({ method: "GET" })
         ),
       ),
       thumbPaths.length ? db.storage.from(bucket).createSignedUrls(thumbPaths, 300) : null,
+      arquivos.length
+        ? db
+            .from("inspecoes_apresentacao_atual")
+            .select("arquivo_id,versao,legenda,ordem")
+            .eq("organization_id", data.organizationId)
+            .in(
+              "arquivo_id",
+              arquivos.map((entry) => entry.id),
+            )
+        : null,
     ]);
     const thumbnails = new Map(thumbsResponse?.data?.map((row) => [row.path, row.signedUrl]));
+    const effective = new Map(
+      (presentations ? (dataOrThrow(presentations) ?? []) : []).map((row) => [row.arquivo_id, row]),
+    );
     const relacionados = await enrichR64(
       db,
       data.organizationId,
@@ -445,17 +511,28 @@ export const inspecoesDetalhe = createServerFn({ method: "GET" })
     return {
       registro: { ...registro, resumo: projection?.resumo ?? {} },
       relacionados,
-      arquivos: arquivos.map((a) => ({
-        id: a.id,
-        nome: a.nome,
-        papel: a.papel,
-        mime: a.mime,
-        estado: a.estado,
-        bytes: a.bytes,
-        sha256: a.sha256,
-        legenda: a.legenda,
-        miniaturaUrl: a.miniatura_caminho ? (thumbnails.get(a.miniatura_caminho) ?? null) : null,
-      })),
+      arquivos: arquivos
+        .map((a) => {
+          const presentation = effective.get(a.id);
+          return {
+            id: a.id,
+            nome: a.nome,
+            papel: a.papel,
+            mime: a.mime,
+            estado: a.estado,
+            bytes: a.bytes,
+            sha256: a.sha256,
+            legenda: presentation ? presentation.legenda : a.legenda,
+            ordem: presentation ? presentation.ordem : a.ordem,
+            apresentacaoVersao: presentation?.versao ?? 0,
+            possuiMiniatura: Boolean(a.miniatura_caminho),
+            possuiPrevia: Boolean(a.previa_caminho),
+            miniaturaUrl: a.miniatura_caminho
+              ? (thumbnails.get(a.miniatura_caminho) ?? null)
+              : null,
+          };
+        })
+        .sort((a, b) => (a.ordem ?? Infinity) - (b.ordem ?? Infinity) || a.id.localeCompare(b.id)),
     };
   });
 
@@ -521,7 +598,9 @@ const command = z.discriminatedUnion("comando", [
 
 export const inspecoesLevantamentos = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(z.object({ organizationId: uuid, ativoId: uuid }))
+  .inputValidator(
+    z.object({ organizationId: uuid, ativoId: uuid, visualizacaoTst: z.boolean().optional() }),
+  )
   .handler(async ({ context, data }): Promise<InspecoesLevantamentos> => {
     const db = client(context.supabase);
     const asset = dataOrThrow(
@@ -539,18 +618,21 @@ export const inspecoesLevantamentos = createServerFn({ method: "GET" })
       p_cliente: asset.cliente_id,
       p_unidade: asset.unidade_id,
     };
+    let rowsQuery = db
+      .from("inspecoes_levantamentos")
+      .select("*")
+      .eq("organization_id", data.organizationId)
+      .eq("ativo_id", data.ativoId);
+    if (data.visualizacaoTst) {
+      const actor = uuid.parse(context.userId);
+      rowsQuery = rowsQuery.or(`estado.eq.emitido,atribuido_a.eq.${actor},created_by.eq.${actor}`);
+    }
     const [rowsResponse, candidatesResponse] = await Promise.all([
-      db
-        .from("inspecoes_levantamentos")
-        .select("*")
-        .eq("organization_id", data.organizationId)
-        .eq("ativo_id", data.ativoId)
-        .order("created_at", { ascending: false })
-        .limit(30),
-      db.rpc("inspecoes_levantamento_candidatos", params),
+      rowsQuery.order("created_at", { ascending: false }).limit(30),
+      data.visualizacaoTst ? null : db.rpc("inspecoes_levantamento_candidatos", params),
     ]);
     const rows = (dataOrThrow(rowsResponse) ?? []) as InspecoesLevantamento[];
-    const candidates = (dataOrThrow(candidatesResponse) ??
+    const candidates = ((candidatesResponse ? dataOrThrow(candidatesResponse) : null) ??
       []) as InspecoesLevantamentos["candidatos"];
     const items = await Promise.all(
       rows.map(async (row) => ({

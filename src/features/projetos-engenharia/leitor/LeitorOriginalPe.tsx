@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { createClientOnlyFn } from "@tanstack/react-start";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import {
   ACCESS_INTERVAL_MS,
+  MAX_PDF_RANGE_BYTES,
   PDFJS_VERSION,
   LeituraPeAccessError,
   LeituraPeError,
@@ -35,11 +36,15 @@ export type LeitorOriginalPeProps = {
   arquivo: OriginalPe;
   onClose: () => void;
   /** Adapter validates the registered file and Storage origin; no browser-editable URL input. */
-  fetchAuthorized: (signal: AbortSignal) => Promise<{ url: string; expiresAt?: string }>;
+  fetchAuthorized: (
+    signal: AbortSignal,
+  ) => Promise<{ url: string; expiresAt?: string | undefined }>;
   /** Must validate the exact ID/hash/version/organization and current parent ACL, without a list horizon. */
   checkAccess: (signal: AbortSignal) => Promise<void>;
   sessionSignal?: AbortSignal;
   assetBaseUrl?: string;
+  downloadAction?: ReactNode;
+  readPdfByRange?: boolean;
 };
 const buttonClass =
   "inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-md border border-border px-3 text-sm text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
@@ -51,10 +56,12 @@ export function LeitorOriginalPe(props: LeitorOriginalPeProps) {
     props.arquivo.sha256,
     props.arquivo.tamanho,
     props.arquivo.mime,
+    props.readPdfByRange,
   ].join(":");
   return <ReaderSession key={key} {...props} />;
 }
 function ReaderSession(props: LeitorOriginalPeProps) {
+  const ranged = props.readPdfByRange === true && props.arquivo.mime === "application/pdf";
   const callbacks = useRef(props);
   callbacks.current = props;
   const opener = useRef(
@@ -173,48 +180,64 @@ function ReaderSession(props: LeitorOriginalPeProps) {
       let bytes: Uint8Array | undefined;
       try {
         scope.assertActive();
-        validateOriginal(callbacks.current.arquivo);
+        validateOriginal(callbacks.current.arquivo, ranged ? MAX_PDF_RANGE_BYTES : undefined);
         await callbacks.current.checkAccess(signal);
         scope.assertActive();
         setAccessConfirmed(true);
         setPhase("Carregando original…");
-        let response: Response | undefined;
-        for (let retry = 0; retry < 2; retry++) {
-          const authorized = await callbacks.current.fetchAuthorized(signal);
+        const assetBaseUrl = callbacks.current.assetBaseUrl ?? `/pdfjs/${PDFJS_VERSION}/`;
+        const renderer = await loadRenderer();
+        let doc: ReaderDocument;
+        if (ranged) {
+          doc = await scope.acquire(
+            renderer.openRangedPdf(
+              {
+                size: callbacks.current.arquivo.tamanho,
+                authorize: (rangeSignal) => callbacks.current.fetchAuthorized(rangeSignal),
+                onFailure: fail,
+              },
+              signal,
+              assetBaseUrl,
+            ),
+            (resource) => resource.close(),
+          );
+        } else {
+          let response: Response | undefined;
+          for (let retry = 0; retry < 2; retry++) {
+            const authorized = await callbacks.current.fetchAuthorized(signal);
+            scope.assertActive();
+            const url = new URL(authorized.url, window.location.origin);
+            if (!["http:", "https:"].includes(url.protocol)) throw new LeituraPeError("network");
+            response = await fetch(url.href, {
+              signal,
+              cache: "no-store",
+              referrerPolicy: "no-referrer",
+            });
+            if (![401, 403].includes(response.status)) break;
+            await response.body?.cancel();
+            // Distinguish expired link from current denial without logging the bearer URL.
+            await callbacks.current.checkAccess(signal);
+            if (retry === 1) throw new LeituraPeError("network");
+          }
+          if (!response) throw new LeituraPeError("network");
+          bytes = await readOriginalBytes(response, callbacks.current.arquivo.tamanho, signal);
           scope.assertActive();
-          const url = new URL(authorized.url, window.location.origin);
-          if (!["http:", "https:"].includes(url.protocol)) throw new LeituraPeError("network");
-          response = await fetch(url.href, {
-            signal,
-            cache: "no-store",
-            referrerPolicy: "no-referrer",
-          });
-          if (![401, 403].includes(response.status)) break;
-          await response.body?.cancel();
-          // Distinguish expired link from current denial without logging the bearer URL.
+          setPhase("Conferindo original…");
+          await verifyOriginalBytes(bytes, callbacks.current.arquivo);
+          scope.assertActive();
           await callbacks.current.checkAccess(signal);
-          if (retry === 1) throw new LeituraPeError("network");
+          scope.assertActive();
+          setPhase("Abrindo documento…");
+          doc = await scope.acquire(
+            renderer.openOriginalDocument(
+              bytes,
+              callbacks.current.arquivo.mime,
+              signal,
+              assetBaseUrl,
+            ),
+            (resource) => resource.close(),
+          );
         }
-        if (!response) throw new LeituraPeError("network");
-        bytes = await readOriginalBytes(response, callbacks.current.arquivo.tamanho, signal);
-        scope.assertActive();
-        setPhase("Conferindo original…");
-        await verifyOriginalBytes(bytes, callbacks.current.arquivo);
-        scope.assertActive();
-        await callbacks.current.checkAccess(signal);
-        scope.assertActive();
-        setPhase("Abrindo documento…");
-        const { openOriginalDocument } = await loadRenderer();
-        scope.assertActive();
-        const doc = await scope.acquire(
-          openOriginalDocument(
-            bytes,
-            callbacks.current.arquivo.mime,
-            signal,
-            callbacks.current.assetBaseUrl ?? `/pdfjs/${PDFJS_VERSION}/`,
-          ),
-          (resource) => resource.close(),
-        );
         scope.assertActive();
         documentRef.current = doc;
         setCount(doc.pageCount);
@@ -235,7 +258,7 @@ function ReaderSession(props: LeitorOriginalPeProps) {
       documentRef.current = null;
       void scope.close();
     };
-  }, [attempt]);
+  }, [attempt, ranged]);
   useEffect(() => {
     // Radix mounts the portal after the first effect; observe the actual mounted workspace.
     const node = stageNode;
@@ -497,6 +520,7 @@ function ReaderSession(props: LeitorOriginalPeProps) {
                 {textBusy ? "Obtendo texto…" : text === null ? "Texto da página" : "Ocultar texto"}
               </button>
             )}
+            {props.downloadAction}
           </div>
           {pageError && (
             <p
@@ -603,7 +627,7 @@ function ReaderSession(props: LeitorOriginalPeProps) {
             </span>
             {accessConfirmed && (
               <span className="font-mono" title={props.arquivo.sha256}>
-                SHA-256 {props.arquivo.sha256.slice(0, 12)}…
+                {ranged ? "SHA-256 do acervo" : "SHA-256"} {props.arquivo.sha256.slice(0, 12)}…
               </span>
             )}
           </footer>

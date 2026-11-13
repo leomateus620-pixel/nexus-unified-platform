@@ -399,6 +399,22 @@
     {
       "path": "drizzle/migrations/0075_inspecoes_acervo_consulta.sql",
       "sha256": "d1eb7a71705f96eed037f2e43def3f94ec4d878aa6795582cdd6bcb6d3ba258d"
+    },
+    {
+      "path": "drizzle/migrations/0076_inspecoes_acesso_admin.sql",
+      "sha256": "3d840e5099adef5466008ae9ee1f7fb8fb69911dc0b4feb4b39198f4d2b4f6b8"
+    },
+    {
+      "path": "drizzle/migrations/0077_inspecoes_manutencao.sql",
+      "sha256": "1718058d1ab495e93a576ecf46117ebb59a3693e946ba02fa2003b2014dba3ff"
+    },
+    {
+      "path": "drizzle/migrations/0078_inspecoes_arquivos.sql",
+      "sha256": "fb338d3415421ad61c199ee1efe44d50a9eb9e36f2bd4cdfd2255f808a5dfca0"
+    },
+    {
+      "path": "drizzle/migrations/0079_inspecoes_originais_extensos.sql",
+      "sha256": "a3178d8f7b74da46783cda067807dc1721fd647008e657f9fadfdfa04fa4d7e4"
     }
   ]
 }

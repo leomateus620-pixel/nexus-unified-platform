@@ -60,6 +60,8 @@
     "test:ui:disponibilidade": "node tests/ui/run.mjs --disponibilidade",
     "test:pet": "vitest run --config tests/vitest.pet.config.ts",
     "dev:pet-lab": "vite --config tests/pet-ui/vite.config.mjs",
+    "test:inspecoes": "tsx --test tests/inspecoes-arquivos.test.ts && vitest run tests/inspecoes-derivados.test.ts && node --test scripts/inspecoes/prepare-import.test.mjs",
+    "test:ui:inspecoes": "node tests/ui/run.mjs --inspecoes",
     "test:nr": "vitest run --config tests/vitest.nr.config.ts && node --test tests/nr-derived-plans.test.mjs tests/nr-storage-confirmation.test.mjs tests/nr-storage-transfer.test.mjs tests/nr-applicability-manifest.test.mjs tests/nr-photo-reconciliation.test.mjs tests/nr-source-photo-plan.test.mjs",
     "test:ui:nr-brand": "node tests/ui/run.mjs --nr-brand",
     "test:ui:nr-photo-edit": "node tests/ui/run.mjs --nr-photo-edit"

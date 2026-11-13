@@ -33,6 +33,20 @@ try {
     select table_name, column_name from information_schema.columns
     where table_schema='public' order by table_name,ordinal_position
   `;
+  // Postgres Meta reports a function taking one composite relation argument as a
+  // computed field. Structural introspection does not grant callers EXECUTE.
+  const computedFields = await sql`
+    select distinct c.relname as table_name,p.proname as field_name
+    from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    join pg_class c on c.reltype=p.proargtypes[0]
+    join pg_namespace cn on cn.oid=c.relnamespace
+    where n.nspname='public' and cn.nspname='public' and p.prokind='f' and p.pronargs=1
+      and p.prorettype not in ('trigger'::regtype,'event_trigger'::regtype)
+      and c.relkind in ('r','p','v','m','f')
+      and not exists(select 1 from pg_attribute a where a.attrelid=c.oid
+        and a.attnum>0 and not a.attisdropped and a.attname=p.proname)
+    order by table_name,field_name
+  `;
   const functions = await sql`
     select distinct p.proname as name from pg_proc p join pg_namespace n on n.oid=p.pronamespace
     where n.nspname='public' and p.prorettype not in ('trigger'::regtype,'event_trigger'::regtype)
@@ -61,6 +75,7 @@ try {
         appliedCount: applied.length,
         tables,
         columns,
+        computedFields,
         functions,
         enums,
       },

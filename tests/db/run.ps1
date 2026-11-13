@@ -77,6 +77,9 @@ try {
   Invoke-TestSql "$PSScriptRoot\inspecoes-importacao.sql"
   Invoke-TestSql "$PSScriptRoot\inspecoes-r64.sql"
   Invoke-TestSql "$PSScriptRoot\inspecoes-continuidade.sql"
+  Invoke-TestSql "$PSScriptRoot\inspecoes-manutencao.sql"
+  Invoke-TestSql "$PSScriptRoot\inspecoes-arquivos.sql"
+  Invoke-TestSql "$PSScriptRoot\inspecoes-originais-extensos.sql"
   node "$PSScriptRoot\inspecoes-acervo-fluxo.mjs"
   if ($LASTEXITCODE -ne 0) { throw 'Inspeções acervo, permissões e revisão falharam' }
   Invoke-TestSql "$PSScriptRoot\cenarios.sql"

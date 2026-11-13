@@ -1,6 +1,6 @@
 import { InspecoesProtocolo } from "./InspecoesProtocolo";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowLeft,
@@ -40,6 +40,13 @@ import type {
   InspecoesUnidade,
 } from "./ui-contract";
 import { InspecoesArquivos } from "./InspecoesArquivos";
+import { InspecoesAnexar } from "./InspecoesAnexar";
+import {
+  InspecoesEditarFoto,
+  InspecoesEditarRegistro,
+  InspecoesHistorico,
+  InspecoesNovoDocumento,
+} from "./InspecoesManutencao";
 import { InspecoesPlanta, type InspecoesMapaView } from "./InspecoesPlanta";
 import { InspecoesLevantamentoPanel } from "./InspecoesLevantamentos";
 
@@ -49,6 +56,8 @@ type DetailProps = {
   unidades: InspecoesUnidade[];
   userId: string;
   atribuicao?: InspecoesAtribuicao | undefined;
+  canManageAcervo?: boolean | undefined;
+  visualizacaoTst?: boolean | undefined;
 };
 
 export function InspecoesDetalheDialog({
@@ -165,6 +174,9 @@ export function InspecoesDetalheDialog({
               saveSection={(section) => sections.current.set(viewKey, section)}
               detalhe={query.data}
               abrir={openRelated}
+              abrirDocumento={(id) =>
+                setTrail([...trail, { id, recurso: "documentos" }].slice(-12) as InspecoesFicha[])
+              }
               {...props}
             />
           )}
@@ -186,6 +198,7 @@ type Section = (typeof sections)[number]["id"];
 function Conteudo({
   detalhe,
   abrir,
+  abrirDocumento,
   views,
   viewKey,
   initialSection,
@@ -194,6 +207,7 @@ function Conteudo({
 }: DetailProps & {
   detalhe: InspecoesDetalhe;
   abrir: (item: InspecoesRegistro) => void;
+  abrirDocumento: (id: string) => void;
   views: Map<string, InspecoesMapaView>;
   viewKey: string;
   initialSection: Section;
@@ -205,12 +219,21 @@ function Conteudo({
     saveSection(next);
   }
   const item = detalhe.registro;
+  const cache = useQueryClient();
+  const refresh = () => void cache.invalidateQueries({ queryKey: props.queryKey });
+  const recordScope: InspecoesEscopo = {
+    organizationId: props.escopo.organizationId,
+    clienteId: item.cliente_id ?? undefined,
+    unidadeId: item.unidade_id ?? undefined,
+  };
+  const editable =
+    !!props.canManageAcervo &&
+    item.acervo_versao != null &&
+    !["registro", "configuracoes", "importacoes"].includes(item.colecao);
   const source = item.snapshot;
   const isAsset = item.colecao === "ativos";
   const isDocument = item.colecao === "documentos";
-  const original = detalhe.arquivos.find(
-    (file) => file.papel === "original" && file.mime === "application/pdf",
-  );
+  const original = detalhe.arquivos.find((file) => file.papel === "original");
   const originalStatus = original?.estado ?? texto(source["original_situacao"]);
   const extracted = source["conteudo_extraido"] ?? source["texto_extraido"] ?? source["snapshot"];
   const status = item.situacao;
@@ -261,6 +284,29 @@ function Conteudo({
 
       {section === "resumo" && (
         <>
+          {editable && (
+            <div className="insp-actions">
+              <InspecoesEditarRegistro escopo={recordScope} item={item} onSaved={refresh} />
+              {["ativos", "inspecoes", "pendencias", "plantas", "documentos"].includes(
+                item.colecao,
+              ) && (
+                <InspecoesNovoDocumento
+                  escopo={recordScope}
+                  vinculo={item}
+                  onSaved={(id) => {
+                    refresh();
+                    abrirDocumento(id);
+                  }}
+                />
+              )}
+            </div>
+          )}
+          {item.nota_acervo && (
+            <p className="insp-preserve-lines">
+              <strong>Nota de cadastro: </strong>
+              {item.nota_acervo}
+            </p>
+          )}
           <div className="insp-badges">
             {status && <Badge value={status} />}
             {r64status && <Badge value={r64status} kind="prazo" />}
@@ -288,7 +334,7 @@ function Conteudo({
                 "Parecer técnico na origem",
                 texto(source["resultado_rt"]) && legenda(texto(source["resultado_rt"])),
               ],
-              ["Original PDF", isDocument && originalStatus ? legenda(originalStatus) : ""],
+              ["Original da origem", isDocument && originalStatus ? legenda(originalStatus) : ""],
             ]}
           />
           {typeof source["resumo"] === "string" && source["resumo"].trim() && (
@@ -319,6 +365,7 @@ function Conteudo({
               queryKey={props.queryKey}
               atribuicao={props.atribuicao}
               userId={props.userId}
+              visualizacaoTst={props.visualizacaoTst}
             />
           )}
           {phases.length > 0 && (
@@ -347,17 +394,51 @@ function Conteudo({
         <Relacionados items={detalhe.relacionados} unidades={props.unidades} abrir={abrir} />
       )}
       {section === "arquivos" && (
-        <InspecoesArquivos
-          files={detalhe.arquivos}
-          escopo={props.escopo}
-          queryKey={props.queryKey}
-          context={contextoRegistro(item, props.unidades) ?? item.titulo}
-          title={item.titulo}
-          isDocument={isDocument}
-        />
+        <>
+          {editable && (
+            <InspecoesAnexar
+              escopo={recordScope}
+              queryKey={props.queryKey}
+              alvo={{ tipo: "registro", id: item.id }}
+              edit
+              tag={item.titulo}
+              atualizar={refresh}
+              exibirAcervo={false}
+            />
+          )}
+          <InspecoesArquivos
+            files={detalhe.arquivos.filter(
+              (file) => file.estado !== "envio_pendente" && file.estado !== "envio_cancelado",
+            )}
+            escopo={recordScope}
+            queryKey={props.queryKey}
+            context={contextoRegistro(item, props.unidades) ?? item.titulo}
+            title={item.titulo}
+            isDocument={isDocument}
+            acoesArquivo={
+              editable
+                ? (file) => (
+                    <InspecoesEditarFoto
+                      organizationId={recordScope.organizationId}
+                      file={file}
+                      onSaved={refresh}
+                    />
+                  )
+                : undefined
+            }
+          />
+        </>
       )}
       {section === "historico" && (
         <div className="insp-stack">
+          {item.colecao !== "vencimentos" && (
+            <InspecoesHistorico
+              organizationId={recordScope.organizationId}
+              tipo={item.acervo_versao === null && isDocument ? "emissao" : "registro"}
+              id={item.id}
+              queryKey={props.queryKey}
+            />
+          )}
           <h3 className="insp-subheading">Histórico na origem</h3>
           {Array.isArray(source["historico"]) && source["historico"].length > 0 ? (
             <ValorEstruturado value={source["historico"]} />

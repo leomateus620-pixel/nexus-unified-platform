@@ -145,10 +145,13 @@ export const inspecoesContinuidadeOpcoes = createServerFn({ method: "GET" })
   .inputValidator(scope.extend({ busca: z.string().trim().max(80) }))
   .handler(async ({ context, data }): Promise<Options> => {
     const db = context.supabase as unknown as SupabaseClient;
-    const allowed = result<boolean>(
-      await db.rpc("inspecoes_pode", { ...rpcScope(data), p_capacidade: "est" }),
-    );
-    if (!allowed) throw new Error("A seleção de vínculos exige atribuição EST nesta unidade.");
+    const permissions = await Promise.all([
+      db.rpc("inspecoes_pode", { ...rpcScope(data), p_capacidade: "est" }),
+      db.rpc("inspecoes_pode", { ...rpcScope(data), p_capacidade: "gerir_acervo" }),
+    ]);
+    const [technical, admin] = permissions.map((entry) => result<boolean>(entry));
+    if (!technical && !admin)
+      throw new Error("A seleção de vínculos não está disponível nesta unidade.");
     let propostas = db
       .from("propostas")
       .select("id,numero,titulo")
@@ -169,7 +172,9 @@ export const inspecoesContinuidadeOpcoes = createServerFn({ method: "GET" })
     }
     const [proposalRows, orderRows, packageRows] = await Promise.all([
       propostas.order("numero", { ascending: false }).limit(30),
-      ordens.order("numero", { ascending: false }).limit(30),
+      technical
+        ? ordens.order("numero", { ascending: false }).limit(30)
+        : { data: [], error: null },
       db
         .from("inspecoes_registros")
         .select("id,codigo,titulo")

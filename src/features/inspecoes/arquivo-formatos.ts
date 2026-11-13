@@ -1,7 +1,25 @@
 import { mimeDetectado, sha256, validarBinario } from "@/features/operacao/files";
+import { mimeDetectadoNr, NR_ARQUIVO_MIMES } from "@/features/nr/files";
+
+export const inspecoesAnexoTipos = ["levantamento", "registro", "contrato", "unidade"] as const;
+export type InspecoesAnexoAlvo = { tipo: (typeof inspecoesAnexoTipos)[number]; id: string };
+export const inspecoesAnexoPapeis = [
+  "original",
+  "documento",
+  "contrato",
+  "foto",
+  "art",
+  "certificado",
+  "projeto",
+  "ensaio",
+  "evidencia",
+] as const;
+export type InspecoesAnexoPapel = (typeof inspecoesAnexoPapeis)[number];
+export const inspecoesUploadLimite = 20 * 1024 * 1024;
 
 export const inspecoesUploadMimes = [
   "application/pdf",
+  NR_ARQUIVO_MIMES.docx,
   "image/jpeg",
   "image/png",
   "image/webp",
@@ -49,17 +67,32 @@ export function mimeInspecoes(bytes: Uint8Array) {
   return mimeDetectado(bytes) ?? (mp4(bytes) ? "video/mp4" : webm(bytes) ? "video/webm" : null);
 }
 
+export async function detectarArquivoInspecoes(bytes: Uint8Array) {
+  if (bytes.length < 1 || bytes.length > inspecoesUploadLimite)
+    throw new Error("Selecione um arquivo de até 20 MiB.");
+  if (ascii(bytes, 0, 4) === "PK\x03\x04") return mimeDetectadoNr(bytes);
+  return mimeInspecoes(bytes);
+}
+
+export function mimesPorPapel(papel: InspecoesAnexoPapel): readonly string[] {
+  if (papel === "original" || papel === "art") return ["application/pdf"];
+  if (papel === "foto") return ["image/jpeg", "image/png", "image/webp"];
+  if (["documento", "contrato", "certificado", "projeto"].includes(papel))
+    return ["application/pdf", NR_ARQUIVO_MIMES.docx];
+  return inspecoesUploadMimes;
+}
+
 export async function validarArquivoInspecoes(
   bytes: Uint8Array,
   meta: { tamanho: number; mime: string; sha256: string },
 ) {
-  if (meta.mime !== "video/mp4" && meta.mime !== "video/webm") {
+  if (!["video/mp4", "video/webm", NR_ARQUIVO_MIMES.docx].includes(meta.mime)) {
     return validarBinario(bytes, meta);
   }
-  if (bytes.byteLength !== meta.tamanho || bytes.byteLength > 20 * 1024 * 1024)
+  if (bytes.byteLength !== meta.tamanho || bytes.byteLength > inspecoesUploadLimite)
     throw new Error("O tamanho do arquivo armazenado diverge do envio.");
-  if (mimeInspecoes(bytes) !== meta.mime)
-    throw new Error("O vídeo armazenado não corresponde ao formato informado.");
+  if ((await detectarArquivoInspecoes(bytes)) !== meta.mime)
+    throw new Error("O arquivo armazenado não corresponde ao formato informado.");
   if ((await sha256(bytes)) !== meta.sha256)
     throw new Error("O arquivo armazenado não corresponde ao hash informado. Repita o envio.");
 }

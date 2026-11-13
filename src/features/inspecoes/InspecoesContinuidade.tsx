@@ -3,6 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ActionButton, EmptyState, ErrorState, LoadingState } from "@/components/nexus/Page";
 import { NrCard } from "@/features/nr/NrCards";
+import { InspecoesAnexar } from "./InspecoesAnexar";
+import { InspecoesEditarFoto, InspecoesHistorico } from "./InspecoesManutencao";
 import { Badge, dataCivil, Fatos, legenda } from "./apresentacao";
 import {
   inspecoesContinuidadeCiclos,
@@ -22,6 +24,7 @@ type Props = {
   scope: InspecoesEscopo;
   queryKey: readonly string[];
   canManage: boolean;
+  canDraft?: boolean | undefined;
   compact?: boolean;
 };
 type ContextProps = Omit<Props, "scope"> & { scope: ContinuidadeEscopo };
@@ -367,7 +370,7 @@ function CycleCard({
   );
 }
 
-function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps) {
+function ScopedContinuity({ scope, queryKey, canManage, canDraft, compact }: ContextProps) {
   const titleId = useId();
   const cache = useQueryClient();
   const fetchContracts = useServerFn(inspecoesContinuidadeContratos);
@@ -380,6 +383,7 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
   const [mode, setMode] = useState<"new" | "edit" | "cancel" | "cycle">();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
+  const [showArchive, setShowArchive] = useState(false);
   const attempted = useRef<{ signature: string; chave: string } | null>(null);
   const key = [...queryKey, "continuidade", scope.organizationId, scope.clienteId, scope.unidadeId];
   const contracts = useQuery({
@@ -388,6 +392,7 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
     retry: false,
   });
   const current = contracts.data?.contratos.find(({ id }) => id === selected);
+  const manageDraft = canManage || canDraft;
   const cycles = useQuery({
     queryKey: [...key, "ciclos", current?.id, cyclePage],
     queryFn: ({ signal }) =>
@@ -398,7 +403,7 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
   const options = useQuery({
     queryKey: [...key, "opcoes", search],
     queryFn: ({ signal }) => fetchOptions({ data: { ...scope, busca: search }, signal }),
-    enabled: canManage && Boolean(mode === "new" || mode === "edit" || current),
+    enabled: Boolean(manageDraft && (mode === "new" || mode === "edit" || (canManage && current))),
     retry: false,
   });
   const mutation = useMutation({
@@ -451,7 +456,7 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
         <h3 className="insp-subheading" id={titleId}>
           {compact ? "Contratos da unidade" : "Contratos, ciclos e ordens de serviço"}
         </h3>
-        {canManage && contracts.data?.segmento && mode !== "new" && (
+        {manageDraft && contracts.data?.segmento && mode !== "new" && (
           <ActionButton onClick={() => setMode("new")}>Novo contrato</ActionButton>
         )}
       </div>
@@ -462,10 +467,10 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
       {status && <p role="status">{status}</p>}
       {mutation.isPending && <p role="status">Salvando continuidade…</p>}
       {mutation.isError && <ErrorState error={mutation.error} />}
-      {canManage && contracts.data?.segmento === null && (
+      {manageDraft && contracts.data?.segmento === null && (
         <p>O segmento da unidade precisa ser definido para planejar ciclos.</p>
       )}
-      {canManage && (mode || current) && (
+      {manageDraft && (mode || (canManage && current)) && (
         <form
           className="insp-work-head"
           onSubmit={(event) => {
@@ -474,7 +479,7 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
           }}
         >
           <label className="insp-field">
-            Buscar proposta ou OS por título
+            {canManage ? "Buscar proposta ou OS por título" : "Buscar proposta por título"}
             <input name="busca" type="search" maxLength={80} />
           </label>
           <ActionButton type="submit" variant="ghost">
@@ -485,7 +490,7 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
       {options.isError && (
         <ErrorState error={options.error} onRetry={() => void options.refetch()} />
       )}
-      {canManage && (mode === "new" || (mode === "edit" && current)) && (
+      {manageDraft && (mode === "new" || (mode === "edit" && current?.estado === "rascunho")) && (
         <ContractForm
           key={mode === "new" ? "new" : current?.id}
           contract={mode === "edit" ? current : undefined}
@@ -553,38 +558,77 @@ function ScopedContinuity({ scope, queryKey, canManage, compact }: ContextProps)
         <>
           <div className="insp-work-head">
             <h4>Ciclos de {current.titulo}</h4>
-            {canManage && current.estado !== "cancelado" && (
-              <div className="insp-work-head">
-                <ActionButton onClick={() => setMode("cycle")}>Planejar ciclo</ActionButton>
-                {current.estado === "rascunho" && (
-                  <>
-                    <ActionButton variant="ghost" onClick={() => setMode("edit")}>
-                      Editar
+            {(canManage || (canDraft && current.estado === "rascunho")) &&
+              current.estado !== "cancelado" && (
+                <div className="insp-work-head">
+                  {canManage && (
+                    <ActionButton onClick={() => setMode("cycle")}>Planejar ciclo</ActionButton>
+                  )}
+                  {current.estado === "rascunho" && (
+                    <>
+                      <ActionButton variant="ghost" onClick={() => setMode("edit")}>
+                        Editar
+                      </ActionButton>
+                      {canManage && (
+                        <ActionButton
+                          variant="ghost"
+                          disabled={mutation.isPending}
+                          onClick={() =>
+                            submit(
+                              {
+                                acao: "ativar_contrato",
+                                contrato_id: current.id,
+                                version: current.version,
+                              },
+                              "Vigência registrada.",
+                            )
+                          }
+                        >
+                          Registrar vigência
+                        </ActionButton>
+                      )}
+                    </>
+                  )}
+                  {canManage && (
+                    <ActionButton variant="ghost" onClick={() => setMode("cancel")}>
+                      Cancelar contrato
                     </ActionButton>
-                    <ActionButton
-                      variant="ghost"
-                      disabled={mutation.isPending}
-                      onClick={() =>
-                        submit(
-                          {
-                            acao: "ativar_contrato",
-                            contrato_id: current.id,
-                            version: current.version,
-                          },
-                          "Vigência registrada.",
+                  )}
+                </div>
+              )}
+          </div>
+          <details key={current.id} onToggle={(event) => setShowArchive(event.currentTarget.open)}>
+            <summary>Arquivos e histórico do contrato</summary>
+            {showArchive && (
+              <div className="insp-stack">
+                <InspecoesAnexar
+                  escopo={scope}
+                  queryKey={queryKey}
+                  alvo={{ tipo: "contrato", id: current.id }}
+                  edit={!!canDraft && current.estado !== "cancelado"}
+                  tag={current.titulo}
+                  atualizar={() => void cache.invalidateQueries({ queryKey })}
+                  acoesArquivo={
+                    canDraft
+                      ? (file) => (
+                          <InspecoesEditarFoto
+                            organizationId={scope.organizationId}
+                            file={file}
+                            onSaved={() => void cache.invalidateQueries({ queryKey })}
+                          />
                         )
-                      }
-                    >
-                      Registrar vigência
-                    </ActionButton>
-                  </>
-                )}
-                <ActionButton variant="ghost" onClick={() => setMode("cancel")}>
-                  Cancelar contrato
-                </ActionButton>
+                      : undefined
+                  }
+                />
+                <InspecoesHistorico
+                  organizationId={scope.organizationId}
+                  tipo="contrato"
+                  id={current.id}
+                  queryKey={queryKey}
+                />
               </div>
             )}
-          </div>
+          </details>
           {mode === "cycle" && canManage && (
             <CycleForm
               contract={current}

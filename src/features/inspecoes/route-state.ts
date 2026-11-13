@@ -88,6 +88,7 @@ export const inspecoesSearchSchema = z.object({
   cliente: optionalId,
   unidade: optionalId,
   atribuicao: optionalId,
+  visualizacao: z.enum(["est", "tst"]).optional().catch(undefined),
   escopo: z.enum(["todos", "cliente", "unidade"]).optional().catch(undefined),
   busca: z.string().max(100).default("").catch(""),
   estado: z.string().max(50).default("").catch(""),

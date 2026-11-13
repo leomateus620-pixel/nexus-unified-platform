@@ -67,6 +67,13 @@ import { Fatos, RegistroCard, ValorEstruturado, legenda } from "./apresentacao";
 import { InspecoesCadastroAtivo } from "./InspecoesCampo";
 import { InspecoesContinuidade } from "./InspecoesContinuidade";
 import { InspecoesDetalheDialog } from "./InspecoesDetalhe";
+import { InspecoesAcessos } from "./InspecoesAcessos";
+import {
+  InspecoesClienteCadastro,
+  UnidadeAcervo,
+  InspecoesContatosCadastrados,
+} from "./InspecoesClienteCadastro";
+import { InspecoesNovoDocumento } from "./InspecoesManutencao";
 import "@/features/nr/nr.css";
 import "./inspecoes.css";
 
@@ -92,7 +99,10 @@ const headings: Record<InspecoesMenu, string> = {
 
 type Atualizar = (update: (prev: InspecoesSearch) => InspecoesSearch, replace?: boolean) => void;
 type Abrir = (item: InspecoesRegistro, trigger: HTMLElement) => void;
-type Preferencia = Pick<InspecoesSearch, "cliente" | "unidade" | "escopo" | "atribuicao">;
+type Preferencia = Pick<
+  InspecoesSearch,
+  "cliente" | "unidade" | "escopo" | "atribuicao" | "visualizacao"
+>;
 type ViewProps = { search: InspecoesSearch; atualizar: Atualizar };
 
 function preferenciaLer(key: string): Preferencia {
@@ -133,7 +143,7 @@ function WorkspaceSession({ search, atualizar, org }: ViewProps & { org: OrgCont
         <LoadingState label="Verificando atribuições de Inspeções…" />
       ) : query.isError ? (
         <ErrorState error={query.error} onRetry={() => void query.refetch()} />
-      ) : !query.data.atribuicoes.length ? (
+      ) : !query.data.administrador && !query.data.atribuicoes.length ? (
         <div className="insp-no-access">
           <NexusLogo className="insp-wordmark" />
           <h1>Inspeções SPIQ &amp; SPCQ</h1>
@@ -193,8 +203,16 @@ function WorkspaceAuthorized({
       (!clientId || !item.cliente_id || item.cliente_id === clientId) &&
       (!unitId || !item.unidade_id || item.unidade_id === unitId),
   );
+  const visualizacao = context.administrador
+    ? (search.visualizacao ?? initialPreference.visualizacao) === "tst"
+      ? "tst"
+      : "est"
+    : undefined;
+  const applicable = visualizacao
+    ? assignments.filter(({ perfil }) => perfil === (visualizacao === "est" ? "EST" : "TST"))
+    : assignments;
   const assignmentId = search.atribuicao ?? initialPreference.atribuicao;
-  const active = assignments.find(({ id }) => id === assignmentId) ?? assignments[0];
+  const active = applicable.find(({ id }) => id === assignmentId) ?? applicable[0];
   const cache = useQueryClient();
   const queryKey = useMemo(
     () => [
@@ -205,8 +223,9 @@ function WorkspaceAuthorized({
       clientId ?? "",
       unitId ?? "",
       active?.id ?? "",
+      visualizacao ?? "",
     ],
-    [org.orgId, org.userId, clientId, unitId, active?.id],
+    [org.orgId, org.userId, clientId, unitId, active?.id, visualizacao],
   );
   const escopo: InspecoesEscopo = {
     organizationId: org.orgId,
@@ -214,6 +233,7 @@ function WorkspaceAuthorized({
     unidadeId: unitId,
   };
   const canManage = !!unitId && active?.perfil === "EST";
+  const canManageAcervo = visualizacao === "est";
   const scopeMode = unitId ? "unidade" : clientId ? "cliente" : "todos";
 
   useEffect(() => {
@@ -223,8 +243,9 @@ function WorkspaceAuthorized({
         unidade: unitId,
         escopo: scopeMode,
         atribuicao: active?.id,
+        visualizacao,
       });
-  }, [unavailable, sessionKey, clientId, unitId, scopeMode, active?.id]);
+  }, [unavailable, sessionKey, clientId, unitId, scopeMode, active?.id, visualizacao]);
 
   useEffect(() => {
     if (!unavailable && usingPreference && (clientId || unitId)) {
@@ -260,9 +281,28 @@ function WorkspaceAuthorized({
     opener.current = trigger;
     atualizar((prev) => ({ ...prev, trilha: [{ id: item.id, recurso: item.colecao }] }));
   };
-  const trail = search.trilha ?? [];
+  const requestedTrail = search.trilha ?? [];
+  const trail = (unavailable ? [] : requestedTrail).filter(
+    ({ recurso }) => recurso !== "registro" || visualizacao !== "tst",
+  );
+  useEffect(() => {
+    if (!unavailable || !context.administrador) return;
+    atualizar((prev) => {
+      const validClient = clients.find((client) => client.id === prev.cliente)?.id;
+      return {
+        ...prev,
+        cliente: validClient,
+        unidade: undefined,
+        escopo: validClient ? "cliente" : "todos",
+        atribuicao: undefined,
+        trilha: undefined,
+        pagina: 0,
+      };
+    }, true);
+  }, [unavailable, context.administrador, atualizar, clients]);
   const menu = inspecoesMenus.find((item) => item.id === search.menu) ?? inspecoesMenus[0];
-  const area = menu.areas.find((item) => item.id === search.area) ?? menu.areas[0];
+  const areas = menu.areas.filter(({ id }) => id !== "registro" || visualizacao !== "tst");
+  const area = areas.find((item) => item.id === search.area) ?? areas[0];
   const selectedClient = clients.find((client) => client.id === clientId);
   const scopeLabel = selectedUnit
     ? `${selectedUnit.cliente_nome} · ${selectedUnit.unidade_nome}`
@@ -300,12 +340,33 @@ function WorkspaceAuthorized({
             />
           </div>
           <div className="insp-context-field insp-assignment">
-            {assignments.length > 1 ? (
+            {context.administrador || applicable.length > 1 ? (
               <label htmlFor="insp-atribuicao">Atuação</label>
             ) : (
               <span className="insp-context-label">Atuação</span>
             )}
-            {assignments.length > 1 ? (
+            {context.administrador ? (
+              <select
+                id="insp-atribuicao"
+                value={visualizacao}
+                onChange={(event) => {
+                  const next = event.target.value === "tst" ? "tst" : "est";
+                  atualizar((prev) => ({
+                    ...prev,
+                    visualizacao: next,
+                    atribuicao: undefined,
+                    trilha: undefined,
+                  }));
+                }}
+              >
+                <option value="est">
+                  {visualizacao === "est" && active?.perfil === "EST"
+                    ? "EST · técnico e administrativo"
+                    : "EST administrativo"}
+                </option>
+                <option value="tst">Visualização TST</option>
+              </select>
+            ) : applicable.length > 1 ? (
               <select
                 id="insp-atribuicao"
                 value={active?.id ?? ""}
@@ -315,7 +376,7 @@ function WorkspaceAuthorized({
                   atualizar((prev) => ({ ...prev, atribuicao, trilha: undefined }));
                 }}
               >
-                {assignments.map((item) => (
+                {applicable.map((item) => (
                   <option key={item.id} value={item.id}>
                     {labelAtribuicao(item, units)}
                   </option>
@@ -365,10 +426,40 @@ function WorkspaceAuthorized({
             {menu.label}
           </h2>
           <p className="nr-muted">{headings[menu.id]}</p>
+          {context.administrador && (
+            <div className="insp-technical-acting">
+              {applicable.length > 1 ? (
+                <label className="insp-field">
+                  Atribuição técnica
+                  <select
+                    value={active?.id ?? ""}
+                    onChange={(event) => {
+                      const atribuicao = event.target.value;
+                      atualizar((prev) => ({ ...prev, atribuicao, trilha: undefined }));
+                    }}
+                  >
+                    {applicable.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {labelAtribuicao(item, units)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : active ? (
+                <p className="nr-muted">Atribuição técnica: {labelAtribuicao(active, units)}</p>
+              ) : (
+                <p className="nr-muted">
+                  {visualizacao === "tst"
+                    ? "Consulta da visualização TST. A coleta exige atribuição TST válida."
+                    : "Gestão administrativa. Atos técnicos exigem atribuição EST válida."}
+                </p>
+              )}
+            </div>
+          )}
         </div>
-        {menu.areas.length > 0 && (
+        {areas.length > 0 && (
           <nav className="insp-subnav" aria-label={`Subáreas de ${menu.label}`}>
-            {menu.areas.map((item) => (
+            {areas.map((item) => (
               <Link
                 key={item.id}
                 to="/inspecoes"
@@ -397,7 +488,9 @@ function WorkspaceAuthorized({
         ) : menu.id === "clientes" ? (
           <Clientes
             search={search}
+            userId={org.userId}
             canManage={canManage}
+            canManageAcervo={canManageAcervo}
             units={units}
             clients={clients}
             clientId={clientId}
@@ -407,11 +500,22 @@ function WorkspaceAuthorized({
           />
         ) : area?.recurso ? (
           <>
+            {area.recurso === "documentos" && canManageAcervo && unitId && (
+              <InspecoesNovoDocumento
+                escopo={escopo}
+                onSaved={(id) => {
+                  void cache.invalidateQueries({ queryKey: ["inspecoes", org.orgId] });
+                  opener.current = main.current;
+                  atualizar((prev) => ({ ...prev, trilha: [{ id, recurso: "documentos" }] }));
+                }}
+              />
+            )}
             {area.recurso === "ativos" && (
               <InspecoesCadastroAtivo
                 escopo={escopo}
                 queryKey={queryKey}
                 atribuicao={active}
+                canManageAcervo={canManageAcervo}
                 onCreated={(registro) => {
                   opener.current = main.current;
                   atualizar((prev) => ({
@@ -434,11 +538,23 @@ function WorkspaceAuthorized({
             />
           </>
         ) : area?.id === "contatos" ? (
-          <Contatos units={units} cliente={clientId} unidade={unitId} />
+          <Contatos
+            units={units}
+            cliente={clientId}
+            unidade={unitId}
+            escopo={escopo}
+            queryKey={queryKey}
+            cadastro={canManageAcervo}
+          />
         ) : area?.id === "envio" ? (
           <Envio />
         ) : area?.id === "f4" ? (
-          <InspecoesContinuidade scope={escopo} queryKey={queryKey} canManage={canManage} />
+          <InspecoesContinuidade
+            scope={escopo}
+            queryKey={queryKey}
+            canManage={canManage}
+            canDraft={canManageAcervo}
+          />
         ) : (
           <Fase area={area?.id ?? "f1"} />
         )}
@@ -452,6 +568,8 @@ function WorkspaceAuthorized({
           unidades={units}
           userId={org.userId}
           atribuicao={active}
+          canManageAcervo={canManageAcervo}
+          visualizacaoTst={visualizacao === "tst"}
           trail={trail}
           opener={opener}
           fallbackFocus={main}
@@ -795,11 +913,15 @@ function Clientes({
   onSelect,
   search,
   canManage,
+  canManageAcervo,
+  userId,
   escopo,
   queryKey,
 }: QueryScope & {
   search: InspecoesSearch;
   canManage: boolean;
+  canManageAcervo: boolean;
+  userId: string;
   clients: NrClientIdentity[];
   units: InspecoesUnidade[];
   clientId?: string | undefined;
@@ -808,6 +930,9 @@ function Clientes({
   const visible = clientId ? clients.filter((client) => client.id === clientId) : clients;
   return (
     <div className="insp-stack">
+      {canManageAcervo && (
+        <InspecoesClienteCadastro escopo={escopo} units={units} queryKey={queryKey} />
+      )}
       {visible.length ? (
         <div className="insp-grid">
           {visible.map((client) => {
@@ -855,11 +980,40 @@ function Clientes({
       )}
       {clientId && (
         <>
+          {escopo.unidadeId && (
+            <UnidadeAcervo
+              key={escopo.unidadeId}
+              escopo={escopo}
+              queryKey={queryKey}
+              id={escopo.unidadeId}
+              clienteId={clientId}
+              name={
+                units.find((row) => row.unidade_id === escopo.unidadeId)?.unidade_nome ?? "Unidade"
+              }
+              edit={canManageAcervo}
+            />
+          )}
           <h3 className="insp-subheading">Contatos</h3>
-          <Contatos units={units} cliente={clientId} unidade={escopo.unidadeId} />
+          <Contatos
+            units={units}
+            cliente={clientId}
+            unidade={escopo.unidadeId}
+            escopo={escopo}
+            queryKey={queryKey}
+            cadastro={canManageAcervo}
+          />
           <h3 className="insp-subheading">Contratos</h3>
-          <InspecoesContinuidade scope={escopo} queryKey={queryKey} canManage={canManage} compact />
+          <InspecoesContinuidade
+            scope={escopo}
+            queryKey={queryKey}
+            canManage={canManage}
+            canDraft={canManageAcervo}
+            compact
+          />
         </>
+      )}
+      {canManageAcervo && (
+        <InspecoesAcessos organizationId={escopo.organizationId} userId={userId} unidades={units} />
       )}
     </div>
   );
@@ -869,10 +1023,16 @@ function Contatos({
   units,
   cliente,
   unidade,
+  escopo,
+  queryKey,
+  cadastro,
 }: {
   units: InspecoesUnidade[];
   cliente?: string | undefined;
   unidade?: string | undefined;
+  escopo: InspecoesEscopo;
+  queryKey: readonly string[];
+  cadastro: boolean;
 }) {
   const visible = units.filter(
     (unit) =>
@@ -886,18 +1046,24 @@ function Contatos({
     });
     return candidates.length ? [{ unit, candidates }] : [];
   });
-  if (!populated.length) return <EmptyState title="Nenhum contato disponível neste contexto" />;
+  if (!populated.length && (!cadastro || !cliente))
+    return <EmptyState title="Nenhum contato disponível neste contexto" />;
   return (
-    <div className="insp-grid">
-      {populated.map(({ unit, candidates }) => (
-        <NrCard key={unit.unidade_id} className="insp-record">
-          <h3>{unit.cliente_nome}</h3>
-          <p className="insp-context-note">{unit.unidade_nome}</p>
-          {candidates.map((contact, index) => (
-            <ValorEstruturado key={index} value={contact} />
+    <div className="insp-stack">
+      {cadastro && cliente && <InspecoesContatosCadastrados escopo={escopo} queryKey={queryKey} />}
+      {populated.length > 0 && (
+        <div className="insp-grid">
+          {populated.map(({ unit, candidates }) => (
+            <NrCard key={unit.unidade_id} className="insp-record">
+              <h3>{unit.cliente_nome}</h3>
+              <p className="insp-context-note">{unit.unidade_nome}</p>
+              {candidates.map((contact, index) => (
+                <ValorEstruturado key={index} value={contact} />
+              ))}
+            </NrCard>
           ))}
-        </NrCard>
-      ))}
+        </div>
+      )}
     </div>
   );
 }

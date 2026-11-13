@@ -1,5 +1,6 @@
 export const PDFJS_VERSION = "6.4.299";
 export const MAX_ORIGINAL_BYTES = 20 * 1024 * 1024;
+export const MAX_PDF_RANGE_BYTES = 150 * 1024 * 1024;
 export const ACCESS_INTERVAL_MS = 30_000;
 export const MOBILE_PIXEL_BUDGET = 4_000_000;
 export const DESKTOP_PIXEL_BUDGET = 8_000_000;
@@ -12,7 +13,7 @@ export type OriginalPe = {
   mime: OriginalMime;
 };
 export type ReaderFailureKind =
-  "access" | "network" | "integrity" | "invalid" | "password" | "worker" | "resource";
+  "access" | "network" | "integrity" | "invalid" | "password" | "worker" | "resource" | "range";
 export class LeituraPeAccessError extends Error {
   readonly kind = "access" as const;
   constructor() {
@@ -46,12 +47,14 @@ export const failureText: Record<ReaderFailureKind, string> = {
     "O renderizador não pôde iniciar ou foi interrompido. Tente novamente ou utilize o download autorizado.",
   resource:
     "Esta página excede os limites da prévia neste dispositivo. Tente um zoom menor ou utilize o download autorizado.",
+  range:
+    "O servidor não entregou os trechos necessários para esta prévia. Tente novamente ou baixe o original.",
 };
-export function validateOriginal(arquivo: OriginalPe) {
+export function validateOriginal(arquivo: OriginalPe, maxBytes = MAX_ORIGINAL_BYTES) {
   if (
     !Number.isSafeInteger(arquivo.tamanho) ||
     arquivo.tamanho < 1 ||
-    arquivo.tamanho > MAX_ORIGINAL_BYTES ||
+    arquivo.tamanho > maxBytes ||
     !/^[a-f0-9]{64}$/.test(arquivo.sha256) ||
     !["application/pdf", "image/png", "image/jpeg", "image/webp"].includes(arquivo.mime)
   )

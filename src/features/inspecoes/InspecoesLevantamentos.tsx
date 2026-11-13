@@ -26,6 +26,7 @@ type Props = {
   escopo: InspecoesEscopo;
   queryKey: readonly string[];
   atribuicao?: InspecoesAtribuicao | undefined;
+  visualizacaoTst?: boolean | undefined;
   userId: string;
 };
 type Intent = InspecoesComando extends infer C
@@ -35,7 +36,14 @@ type Intent = InspecoesComando extends infer C
   : never;
 type Executar = (intent: Intent) => Promise<InspecoesLevantamento>;
 
-export function InspecoesLevantamentoPanel({ ativo, escopo, queryKey, atribuicao, userId }: Props) {
+export function InspecoesLevantamentoPanel({
+  ativo,
+  escopo,
+  queryKey,
+  atribuicao,
+  userId,
+  visualizacaoTst,
+}: Props) {
   const fetch = useServerFn(inspecoesLevantamentos);
   const execute = useServerFn(inspecoesExecutar);
   const client = useQueryClient();
@@ -43,7 +51,10 @@ export function InspecoesLevantamentoPanel({ ativo, escopo, queryKey, atribuicao
   const query = useQuery<InspecoesLevantamentos>({
     queryKey: key,
     queryFn: ({ signal }) =>
-      fetch({ data: { organizationId: escopo.organizationId, ativoId: ativo.id }, signal }),
+      fetch({
+        data: { organizationId: escopo.organizationId, ativoId: ativo.id, visualizacaoTst },
+        signal,
+      }),
     retry: false,
   });
   const [showCreate, setShowCreate] = useState(false);

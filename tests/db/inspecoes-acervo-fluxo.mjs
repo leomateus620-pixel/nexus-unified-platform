@@ -26,6 +26,8 @@ const est = randomUUID();
 const tst = randomUUID();
 const otherTst = randomUUID();
 const admin = randomUUID();
+const otherOrg = randomUUID();
+const otherOrgAdmin = randomUUID();
 const asset = randomUUID();
 const otherAsset = randomUUID();
 const historicalDoc = randomUUID();
@@ -63,11 +65,13 @@ const exec = (user, comando, dados, row, chave = randomUUID(), atribuicaoId) =>
 
 try {
   await sql`insert into organizations(id,nome) values(${org},'Inspeções TESTE DESCARTÁVEL')`;
-  for (const user of [est, tst, otherTst, admin]) {
+  await sql`insert into organizations(id,nome) values(${otherOrg},'Outra organização de teste')`;
+  for (const user of [est, tst, otherTst, admin, otherOrgAdmin]) {
     await sql`insert into auth.users(id) values(${user})`;
-    await sql`insert into memberships(organization_id,user_id) values(${org},${user})`;
+    await sql`insert into memberships(organization_id,user_id) values(${user === otherOrgAdmin ? otherOrg : org},${user})`;
   }
   await sql`insert into user_roles(organization_id,user_id,role) values(${org},${admin},'admin')`;
+  await sql`insert into user_roles(organization_id,user_id,role) values(${otherOrg},${otherOrgAdmin},'admin')`;
   await sql`insert into clientes(id,organization_id,razao_social) values(${client},${org},'Cliente teste')`;
   for (const id of [unit, otherUnit]) {
     await sql`insert into unidades(id,organization_id,cliente_id,nome) values(${id},${org},${client},${id})`;
@@ -123,6 +127,213 @@ try {
   });
 
   equal(await as(admin, async (tx) => (await tx`select inspecoes_acesso(${org}) a`)[0].a), []);
+  equal(
+    await as(admin, async (tx) =>
+      (await tx`select inspecoes_contexto(${org}) a`)[0].a.map((x) => x.unidade_id).sort(),
+    ),
+    [unit, otherUnit].sort(),
+  );
+  equal(
+    await as(
+      admin,
+      async (tx) =>
+        (
+          await tx`select inspecoes_pode(${org},${client},${unit},'gerir_acervo') as gerir,
+        inspecoes_pode(${org},${client},${unit},'est') as est,
+        inspecoes_pode(${org},${client},${unit},'ensaio') as ensaio,
+        inspecoes_pode(${org},null,null,'biblioteca') as biblioteca,
+        inspecoes_pode(${org},null,null,'importar') as importar,
+        inspecoes_pode(${org},null,null,'comunicar') as comunicar,
+        inspecoes_pode(${org},${client},${randomUUID()},'gerir_acervo') as fora`
+        )[0],
+    ),
+    {
+      gerir: true,
+      est: false,
+      ensaio: false,
+      biblioteca: false,
+      importar: false,
+      comunicar: false,
+      fora: false,
+    },
+  );
+  equal(
+    await as(otherOrgAdmin, async (tx) => (await tx`select inspecoes_contexto(${org}) a`)[0].a),
+    [],
+  );
+  equal(
+    await as(
+      admin,
+      async (tx) =>
+        (await tx`select name from storage.objects where name=${historicalPath}`).length,
+    ),
+    1,
+  );
+  equal(
+    await as(
+      otherOrgAdmin,
+      async (tx) =>
+        (await tx`select name from storage.objects where name=${historicalPath}`).length,
+    ),
+    0,
+  );
+  await reject(() => exec(admin, "criar", { ativo_id: asset, tipo: "T2" }), "42501");
+  await reject(
+    () => as(otherOrgAdmin, (tx) => tx`select inspecoes_acessos_listar(${org},'',0)`),
+    "42501",
+  );
+  await reject(() => as(tst, (tx) => tx`select inspecoes_acessos_listar(${org},'',0)`), "42501");
+  await reject(() => as(admin, (tx) => tx`select inspecoes_admin(${org},${admin})`), "42501");
+
+  const membership = await as(
+    admin,
+    async (tx) => (await tx`select inspecoes_acessos_listar(${org},'',0) a`)[0].a,
+  );
+  equal(membership.total, 4);
+  const tstQual = membership.membros.find((item) => item.user_id === tst).qualificacoes[0].id;
+  const assignment = (comando, key = randomUUID(), actor = admin) =>
+    as(
+      actor,
+      async (tx) =>
+        (await tx`select inspecoes_acessos_executar(${org},${key},${tx.json(comando)}) a`)[0].a,
+    );
+  const requestGrant = {
+    acao: "designar",
+    user_id: tst,
+    qualificacao_id: tstQual,
+    perfil: "TST",
+    cliente_id: client,
+    unidade_id: otherUnit,
+    motivo: "Designação temporária para ensaio de RLS",
+  };
+  await reject(() => assignment({ ...requestGrant, qualificacao_id: randomUUID() }), "23514");
+  await reject(() => assignment({ ...requestGrant, unidade_id: randomUUID() }), "23503");
+  await reject(() => assignment({ ...requestGrant, biblioteca: true }), "23514");
+  await reject(() => assignment(requestGrant, randomUUID(), otherOrgAdmin), "42501");
+  const grantKey = randomUUID();
+  const grant = await assignment(requestGrant, grantKey);
+  equal(await assignment(requestGrant, grantKey), grant);
+  await reject(() => assignment(requestGrant), "23505");
+  const revokeKey = randomUUID();
+  const revoke = {
+    acao: "revogar",
+    atribuicao_id: grant.id,
+    motivo: "Encerramento da designação temporária de teste",
+  };
+  const revoked = await assignment(revoke, revokeKey);
+  equal(await assignment(revoke, revokeKey), revoked);
+  const audit = await as(
+    admin,
+    async (tx) => (await tx`select inspecoes_acessos_historico(${org},${tst},0) a`)[0].a,
+  );
+  equal(
+    audit.eventos.map((item) => item.acao),
+    ["revogada", "designada"],
+  );
+  await reject(
+    () =>
+      sql`update inspecoes_acesso_eventos set motivo='alterado' where atribuicao_id=${grant.id}`,
+    "23514",
+  );
+  const adminAsset = await as(
+    admin,
+    async (tx) =>
+      (
+        await tx`select inspecoes_ativo_criar(${org},${client},${otherUnit},${randomUUID()},
+      ${tx.json({ tag: "ADMIN-01", nome: "Identidade de ativo cadastrada", familia: "ANC" })}) a`
+      )[0].a,
+  );
+  equal(
+    [adminAsset.situacao, adminAsset.importado_por, adminAsset.snapshot.resultado],
+    ["existente", admin, undefined],
+  );
+  await reject(() => exec(admin, "criar", { ativo_id: adminAsset.id, tipo: "T2" }), "42501");
+
+  const adminPessoa = randomUUID();
+  const competenciaEst = randomUUID();
+  const adminQual = randomUUID();
+  await sql`insert into user_roles(organization_id,user_id,role) values(${org},${est},'engenharia')`;
+  await sql.begin(async (fixture) => {
+    await fixture`select set_config('request.jwt.claim.sub',${admin},true)`;
+    await fixture`insert into pessoas(id,organization_id,nome,vinculo,user_id,registro_profissional,created_by)
+      values(${adminPessoa},${org},'Responsável de teste','colaborador',${admin},'REG-TESTE',${admin})`;
+    await fixture`insert into competencias(id,organization_id,nome,created_by)
+      values(${competenciaEst},${org},'Engenharia de Segurança do Trabalho',${est})`;
+    await fixture`insert into pessoa_qualificacoes(id,organization_id,pessoa_id,competencia_id,emissor,conclusao,created_by)
+      values(${adminQual},${org},${adminPessoa},${competenciaEst},'Conselho de teste',current_date-1,${admin})`;
+  });
+  const adminRequest = {
+    acao: "designar",
+    user_id: admin,
+    qualificacao_id: adminQual,
+    perfil: "EST",
+    cliente_id: null,
+    unidade_id: null,
+    motivo: "Designação após conferência independente de teste",
+    vincular_competencia: true,
+    ensaios: true,
+    biblioteca: true,
+    importacao: true,
+  };
+  await reject(() => assignment(adminRequest), "23514");
+  await as(
+    est,
+    (tx) =>
+      tx`select transicionar_qualificacao(${org},${randomUUID()},${adminQual},1,'em_conferencia')`,
+  );
+  await reject(
+    () =>
+      as(
+        admin,
+        (tx) =>
+          tx`select transicionar_qualificacao(${org},${randomUUID()},${adminQual},2,'validada')`,
+      ),
+    "42501",
+  );
+  await reject(
+    () =>
+      as(
+        est,
+        (tx) =>
+          tx`select transicionar_qualificacao(${org},${randomUUID()},${adminQual},2,'validada')`,
+      ),
+    "23514",
+  );
+  await sql`insert into anexos(organization_id,qualificacao_id,nome,mime,tamanho,sha256,caminho,estado,created_by,confirmado_em)
+    values(${org},${adminQual},'evidencia-teste.pdf','application/pdf',24,${fixtureDigest},
+      ${`${org}/evidencia-qualificacao.pdf`},'vinculado',${admin},now())`;
+  await as(
+    est,
+    (tx) => tx`select transicionar_qualificacao(${org},${randomUUID()},${adminQual},2,'validada')`,
+  );
+  await reject(
+    () => assignment({ ...adminRequest, perfil: "TST", biblioteca: false, importacao: false }),
+    "42501",
+  );
+  const adminGrant = await assignment(adminRequest);
+  equal(
+    await as(
+      admin,
+      async (tx) => (await tx`select inspecoes_pode(${org},${client},${unit},'est') a`)[0].a,
+    ),
+    true,
+  );
+  equal(
+    await as(
+      admin,
+      async (tx) => (await tx`select inspecoes_pode(${org},null,null,'biblioteca') a`)[0].a,
+    ),
+    true,
+  );
+  const adminDraft = await exec(
+    admin,
+    "criar",
+    { ativo_id: adminAsset.id, tipo: "T2" },
+    undefined,
+    randomUUID(),
+    adminGrant.id,
+  );
+  equal(adminDraft.created_by, admin);
   equal(
     await as(tst, async (tx) =>
       (await tx`select inspecoes_contexto(${org}) a`)[0].a.map((x) => x.unidade_id),
@@ -299,6 +510,58 @@ try {
   )[0];
   equal(issue.snapshot.revisao_aprovada.parecer_est, "nao_apto");
   equal(issue.snapshot.arquivos[0].sha256, fixtureDigest);
+  let adminRow = await exec(
+    admin,
+    "salvar",
+    { ...input, codigo_documento: "ADMIN-DOC-TESTE" },
+    adminDraft,
+    randomUUID(),
+    adminGrant.id,
+  );
+  adminRow = await exec(admin, "submeter", {}, adminRow, randomUUID(), adminGrant.id);
+  adminRow = await exec(
+    admin,
+    "aprovar",
+    { parecer: "nao_apto", motivo: "Trinca em item crítico." },
+    adminRow,
+    randomUUID(),
+    adminGrant.id,
+  );
+  await reject(() => exec(admin, "emitir", {}, adminRow, randomUUID(), adminGrant.id), "23514");
+  const adminPdf = randomUUID();
+  const upload = await as(
+    admin,
+    async (tx) =>
+      (
+        await tx`select inspecoes_arquivo_reservar(${org},${adminRow.id},${adminPdf},
+      'original','laudo-admin.pdf','application/pdf',24,${fixtureDigest}) a`
+      )[0].a,
+  );
+  await as(
+    admin,
+    (tx) => tx`insert into storage.objects(bucket_id,name,metadata)
+    values('inspecoes-acervo',${upload.caminho},'{"size":24,"mimetype":"application/pdf"}')`,
+  );
+  await sql.begin(async (tx) => {
+    await tx.unsafe("set local role service_role");
+    await tx`select inspecoes_arquivo_atestar(${org},${adminPdf},${admin},${fixtureDigest},24)`;
+  });
+  const emissionKey = randomUUID();
+  adminRow = await exec(admin, "emitir", {}, adminRow, emissionKey, adminGrant.id);
+  equal([adminRow.estado, adminRow.issued_by], ["emitido", admin]);
+  await assignment({
+    acao: "revogar",
+    atribuicao_id: adminGrant.id,
+    motivo: "Encerra o acesso técnico de teste",
+  });
+  equal(
+    await as(
+      admin,
+      async (tx) => (await tx`select inspecoes_pode(${org},${client},${unit},'est') a`)[0].a,
+    ),
+    false,
+  );
+  await reject(() => exec(admin, "criar", { ativo_id: adminAsset.id, tipo: "T2" }), "42501");
   await reject(
     () =>
       sql`update inspecoes_levantamentos set conteudo='{}', version=version+1 where id=${row.id}`,

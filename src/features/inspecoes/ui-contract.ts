@@ -57,6 +57,7 @@ export type InspecoesUnidade = {
 };
 
 export type InspecoesContexto = {
+  administrador: boolean;
   atribuicoes: InspecoesAtribuicao[];
   unidades: InspecoesUnidade[];
 };
@@ -106,6 +107,10 @@ export type InspecoesArquivo = {
   bytes: number | null;
   sha256: string | null;
   legenda?: string | undefined | null;
+  ordem?: number | undefined | null;
+  apresentacaoVersao?: number | undefined;
+  possuiMiniatura?: boolean | undefined;
+  possuiPrevia?: boolean | undefined;
   miniaturaUrl?: string | undefined | null;
   previaUrl?: string | undefined | null;
   originalUrl?: string | undefined | null;
@@ -117,9 +122,22 @@ export type InspecoesDetalhe = {
     origem_autor?: string | undefined | null;
     origem_data?: string | undefined | null;
     importado_em?: string | undefined;
+    acervo_versao?: number | null | undefined;
+    nota_acervo?: string | null | undefined;
   };
   relacionados: InspecoesRegistro[];
   arquivos: InspecoesArquivo[];
+};
+
+export type InspecoesEvento = {
+  id: string;
+  evento: string;
+  autor: string | null;
+  ocorridoEm: string;
+  versao: number | null;
+  motivo: string | null;
+  antes: InspecoesObjeto | null;
+  depois: InspecoesObjeto | null;
 };
 
 export type InspecoesPainel = {

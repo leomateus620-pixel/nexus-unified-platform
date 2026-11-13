@@ -1,0 +1,42 @@
+{
+  "schema": "nexus-inspecoes-reconciliacao-v1",
+  "data": "2026-11-13",
+  "base_commit": "ccc4abee3ff529088b990f31de593c52f6ae88af",
+  "projeto": "Nexus Unified Platform",
+  "origem": {
+    "exportacao_proprietaria_sha256": "8026d709bad85ca00de327a7b4de07edc569b18c756ba88dfbf076ebad114fc1",
+    "laudos_md5_correspondentes": 18,
+    "ja_verificado": 1,
+    "novos_originais": 17,
+    "novos_bytes": 476955763,
+    "acima_50_mib": 3,
+    "fotos_e_anexos_reaproveitados": 10,
+    "referencias_sem_md5_sem_novo_vinculo": 1
+  },
+  "destino": {
+    "bytes": 515446683,
+    "contextos": 8,
+    "fotos": 6,
+    "laudos": 18,
+    "ledger": 103,
+    "novas_emissoes": 0,
+    "objetos": 51,
+    "originais": 18,
+    "pendentes": 0,
+    "permissoes_transitorias": 0,
+    "vinculos_verificados": 39
+  },
+  "verificacao": {
+    "todos_novos_relidos_sha256_mime_tamanho": true,
+    "bucket_publico": false,
+    "get_anonimo_apos_revogacao_http": 400,
+    "administrador_rls_8_contextos_18_laudos": true,
+    "emissao_de_producao_realizada": false
+  },
+  "habilitacao": {
+    "registro_profissional_cadastrado": true,
+    "qualificacao": "enviada",
+    "evidencia_privada_verificada": 1,
+    "atribuicao_tecnica_confirmada": false
+  }
+}

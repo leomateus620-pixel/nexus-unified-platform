@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
@@ -20,12 +20,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NrCard } from "@/features/nr/NrCards";
+import {
+  LeituraPeAccessError,
+  MAX_ORIGINAL_BYTES,
+  MAX_PDF_RANGE_BYTES,
+  type OriginalPe,
+} from "@/features/projetos-engenharia/leitor/domain";
+import { LeitorOriginalPe } from "@/features/projetos-engenharia/leitor/LeitorOriginalPe";
 import { Badge, Fatos, legenda } from "./apresentacao";
 import { inspecoesArquivoUrl } from "./inspecoes.functions";
 import type { InspecoesArquivo, InspecoesEscopo } from "./ui-contract";
 
 type MediaScope = { escopo: InspecoesEscopo; queryKey: readonly string[] };
 type Variante = "original" | "miniatura_384" | "previa_768";
+type AcoesArquivo = (file: InspecoesArquivo) => ReactNode;
 
 function useArquivo(
   scope: MediaScope,
@@ -42,12 +50,14 @@ function useArquivo(
     staleTime: 40_000,
     gcTime: 45_000,
     retry: false,
+    refetchOnWindowFocus: false,
     queryFn: async ({ signal }) => {
       const result = await load({
-        data: { organizationId: scope.escopo.organizationId, id: file.id, variante },
+        data: { ...scope.escopo, id: file.id, variante },
         signal,
       });
-      return typeof result === "string" ? result : result.url;
+      if (!result.url) throw new Error("Arquivo privado ou variante indisponível.");
+      return result.url;
     },
   });
 }
@@ -61,12 +71,14 @@ export function InspecoesArquivos({
   context,
   title,
   isDocument,
+  acoesArquivo,
   ...scope
 }: MediaScope & {
   files: InspecoesArquivo[];
   context: string;
   title: string;
   isDocument: boolean;
+  acoesArquivo?: AcoesArquivo | undefined;
 }) {
   const photos = files.filter((file) => file.papel === "foto" || file.papel === "fotografia");
   const documents = files.filter((file) => !photos.includes(file));
@@ -78,7 +90,7 @@ export function InspecoesArquivos({
           {documents.length ? (
             <div className="insp-grid">
               {documents.map((file) => (
-                <ArquivoCard key={file.id} file={file} {...scope} />
+                <ArquivoCard key={file.id} file={file} acoesArquivo={acoesArquivo} {...scope} />
               ))}
             </div>
           ) : (
@@ -92,7 +104,13 @@ export function InspecoesArquivos({
       <section className="insp-stack" aria-label="Fotografias">
         <h3 className="insp-subheading">Fotografias</h3>
         {photos.length ? (
-          <Fotos photos={photos} context={context} title={title} {...scope} />
+          <Fotos
+            photos={photos}
+            context={context}
+            title={title}
+            acoesArquivo={acoesArquivo}
+            {...scope}
+          />
         ) : (
           <EmptyState title="Nenhuma fotografia vinculada a este registro" />
         )}
@@ -101,9 +119,23 @@ export function InspecoesArquivos({
   );
 }
 
-function ArquivoCard({ file, ...scope }: MediaScope & { file: InspecoesArquivo }) {
+function ArquivoCard({
+  file,
+  acoesArquivo,
+  ...scope
+}: MediaScope & { file: InspecoesArquivo; acoesArquivo?: AcoesArquivo | undefined }) {
   const [preview, setPreview] = useState(false);
-  const pdf = file.mime === "application/pdf";
+  const pdf: OriginalPe | null =
+    file.mime === "application/pdf" && file.bytes && file.sha256
+      ? {
+          id: file.id,
+          nome: file.nome,
+          mime: "application/pdf" as const,
+          tamanho: file.bytes,
+          sha256: file.sha256,
+        }
+      : null;
+  const tooLarge = !!pdf && pdf.tamanho > MAX_PDF_RANGE_BYTES;
   return (
     <NrCard className="insp-record">
       <div className="insp-asset-title">
@@ -125,45 +157,76 @@ function ArquivoCard({ file, ...scope }: MediaScope & { file: InspecoesArquivo }
       />
       {isVerified(file) && (
         <div className="insp-actions">
-          {pdf && (
-            <ActionButton variant="ghost" onClick={() => setPreview(true)}>
+          {pdf && !tooLarge && (
+            <ActionButton
+              variant="ghost"
+              onClick={(event) => {
+                event.currentTarget.focus({ preventScroll: true });
+                setPreview(true);
+              }}
+            >
               <Maximize2 size={16} aria-hidden="true" />
               Visualizar PDF
             </ActionButton>
           )}
-          <ArquivoOriginal {...scope} file={file} />
+          <ArquivoOriginal escopo={scope.escopo} file={file} />
         </div>
       )}
-      {preview && <PdfDialog {...scope} file={file} fechar={() => setPreview(false)} />}
+      {tooLarge && isVerified(file) && (
+        <p className="nr-muted">
+          O PDF excede o limite de 150 MiB da prévia. Baixe o original para ler.
+        </p>
+      )}
+      {acoesArquivo?.(file)}
+      {preview && pdf && !tooLarge && (
+        <PdfDialog escopo={scope.escopo} file={file} pdf={pdf} fechar={() => setPreview(false)} />
+      )}
     </NrCard>
   );
 }
 
-function ArquivoOriginal({ file, ...scope }: MediaScope & { file: InspecoesArquivo }) {
-  const [requested, setRequested] = useState(false);
-  const query = useArquivo(scope, file, "original", requested, file.originalUrl);
-  if (query.data)
-    return (
-      <a href={query.data} className="insp-text-link" target="_blank" rel="noreferrer noopener">
-        <Download size={16} aria-hidden="true" /> Abrir original
-      </a>
-    );
+function ArquivoOriginal({ file, escopo }: { file: InspecoesArquivo; escopo: InspecoesEscopo }) {
+  const authorize = useServerFn(inspecoesArquivoUrl);
+  const request = useRef<AbortController | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(false);
+  useEffect(() => () => request.current?.abort(), []);
+  async function baixar() {
+    if (request.current) return;
+    const controller = new AbortController();
+    request.current = controller;
+    setBusy(true);
+    setError(false);
+    try {
+      const result = await authorize({
+        data: { ...escopo, id: file.id, variante: "original", acao: "baixar" },
+        signal: controller.signal,
+      });
+      if (controller.signal.aborted) return;
+      if (!result.url) throw new Error("Download indisponível.");
+      const link = document.createElement("a");
+      link.href = result.url;
+      link.download = file.nome;
+      link.rel = "noreferrer noopener";
+      document.body.append(link);
+      link.click();
+      link.remove();
+    } catch {
+      if (!controller.signal.aborted) setError(true);
+    } finally {
+      request.current = null;
+      if (!controller.signal.aborted) setBusy(false);
+    }
+  }
   return (
     <>
-      <ActionButton
-        variant="ghost"
-        loading={query.isFetching}
-        onClick={() => {
-          if (requested) void query.refetch();
-          else setRequested(true);
-        }}
-      >
+      <ActionButton variant="ghost" loading={busy} onClick={() => void baixar()}>
         <Download size={16} aria-hidden="true" />
-        Preparar original
+        {error ? "Tentar baixar novamente" : "Baixar original"}
       </ActionButton>
-      {query.isError && (
+      {error && (
         <p role="alert" className="insp-media-failure">
-          Não foi possível autorizar o original.
+          Não foi possível baixar o original com o acesso atual.
         </p>
       )}
     </>
@@ -172,71 +235,47 @@ function ArquivoOriginal({ file, ...scope }: MediaScope & { file: InspecoesArqui
 
 function PdfDialog({
   file,
+  pdf,
+  escopo,
   fechar,
-  ...scope
-}: MediaScope & { file: InspecoesArquivo; fechar: () => void }) {
-  const query = useArquivo(scope, file, "original", true, file.originalUrl);
-  const [page, setPage] = useState(1);
-  const [zoom, setZoom] = useState(100);
+}: {
+  file: InspecoesArquivo;
+  pdf: OriginalPe;
+  escopo: InspecoesEscopo;
+  fechar: () => void;
+}) {
+  const authorize = useServerFn(inspecoesArquivoUrl);
+  async function access(signal: AbortSignal, acao: "visualizar" | "verificar") {
+    const result = await authorize({
+      data: {
+        ...escopo,
+        id: file.id,
+        variante: "original",
+        acao,
+        esperado: { bytes: pdf.tamanho, sha256: pdf.sha256 },
+      },
+      signal,
+    });
+    if (!result.permitido) throw new LeituraPeAccessError();
+    return result;
+  }
   return (
-    <Dialog
-      open
-      onOpenChange={(open) => {
-        if (!open) fechar();
+    <LeitorOriginalPe
+      organizationId={escopo.organizationId}
+      versaoId={file.id}
+      arquivo={pdf}
+      readPdfByRange={pdf.tamanho > MAX_ORIGINAL_BYTES}
+      onClose={fechar}
+      checkAccess={async (signal) => {
+        await access(signal, "verificar");
       }}
-    >
-      <DialogContent className="nx-nr-workspace insp-dialog insp-media-dialog">
-        <DialogHeader className="insp-dialog-header">
-          <DialogTitle>{file.nome}</DialogTitle>
-          <DialogDescription>Visualização do PDF original</DialogDescription>
-        </DialogHeader>
-        <div className="insp-dialog-scroll insp-stack">
-          <div className="insp-actions">
-            <label className="insp-field">
-              Página
-              <input
-                type="number"
-                min={1}
-                max={9999}
-                value={page}
-                onChange={(e) => setPage(Math.max(1, Number(e.target.value) || 1))}
-              />
-            </label>
-            <label className="insp-field">
-              Zoom
-              <select value={zoom} onChange={(e) => setZoom(Number(e.target.value))}>
-                {[75, 100, 125, 150, 200].map((value) => (
-                  <option key={value} value={value}>
-                    {value}%
-                  </option>
-                ))}
-              </select>
-            </label>
-            {query.data && (
-              <a
-                className="insp-text-link"
-                href={query.data}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Abrir em outra aba
-              </a>
-            )}
-          </div>
-          {query.isError ? (
-            <ErrorState error={query.error} onRetry={() => void query.refetch()} />
-          ) : query.data ? (
-            <iframe
-              className="insp-pdf"
-              title={file.nome}
-              src={`${query.data}#page=${page}&zoom=${zoom}`}
-            />
-          ) : (
-            <p role="status">Preparando visualização…</p>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+      fetchAuthorized={async (signal) => {
+        const result = await access(signal, "visualizar");
+        if (!result.url) throw new LeituraPeAccessError();
+        return { url: result.url, expiresAt: result.expiresAt };
+      }}
+      downloadAction={<ArquivoOriginal escopo={escopo} file={file} />}
+    />
   );
 }
 
@@ -247,7 +286,7 @@ function Thumb({
 }: MediaScope & { file: InspecoesArquivo; context: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failedSrc, setFailedSrc] = useState<string>();
   useEffect(() => {
     const target = ref.current;
     if (!target || visible) return;
@@ -264,28 +303,32 @@ function Thumb({
     scope,
     file,
     "miniatura_384",
-    visible && !file.miniaturaUrl && isVerified(file),
-    file.miniaturaUrl,
+    visible && !file.miniaturaUrl && file.possuiMiniatura !== false && isVerified(file),
   );
-  const src = query.data;
+  const src = file.miniaturaUrl && file.miniaturaUrl !== failedSrc ? file.miniaturaUrl : query.data;
   return (
     <div className="insp-photo-image" ref={ref}>
-      {src && !failed ? (
+      {src && src !== failedSrc ? (
         <img
           src={src}
           alt={file.legenda || `Foto em ${context}`}
           loading="lazy"
           decoding="async"
-          onError={() => setFailed(true)}
+          onError={() => {
+            setFailedSrc(src);
+            if (src === file.miniaturaUrl) void query.refetch();
+          }}
         />
       ) : (
         <span role="status">
           <ImageOff size={19} aria-hidden="true" />
-          {query.isFetching
-            ? "Carregando miniatura…"
-            : query.isError || failed
-              ? "Miniatura indisponível"
-              : "Aguardando miniatura"}
+          {!isVerified(file)
+            ? "Foto com original pendente"
+            : query.isFetching
+              ? "Carregando miniatura…"
+              : query.isError || !!failedSrc || file.possuiMiniatura === false
+                ? "Miniatura indisponível"
+                : "Aguardando miniatura"}
         </span>
       )}
     </div>
@@ -296,18 +339,21 @@ function Fotos({
   photos,
   context,
   title,
+  acoesArquivo,
   ...scope
 }: MediaScope & {
   photos: InspecoesArquivo[];
   context: string;
   title: string;
+  acoesArquivo?: AcoesArquivo | undefined;
 }) {
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
   const open = useRef<HTMLButtonElement | null>(null);
-  const current = selected === null ? null : photos[selected];
+  const selected = photos.findIndex(({ id }) => id === selectedId);
+  const current = photos[selected];
   function next(index: number) {
-    setSelected(index);
+    setSelectedId(photos[index]?.id ?? null);
     setZoom(1);
   }
   return (
@@ -334,6 +380,7 @@ function Fotos({
                 {context} · {title}
               </small>
               <Badge value={file.estado} />
+              {acoesArquivo?.(file)}
             </figcaption>
           </figure>
         ))}
@@ -341,10 +388,10 @@ function Fotos({
       <Dialog
         open={!!current}
         onOpenChange={(value) => {
-          if (!value) setSelected(null);
+          if (!value) setSelectedId(null);
         }}
       >
-        {current && selected != null && (
+        {current && (
           <DialogContent
             className="nx-nr-workspace insp-dialog insp-media-dialog"
             onCloseAutoFocus={(event) => {
@@ -400,7 +447,7 @@ function Fotos({
                   <ZoomIn size={16} aria-hidden="true" />
                 </ActionButton>
                 {isVerified(current) && (
-                  <ArquivoOriginal key={current.id} file={current} {...scope} />
+                  <ArquivoOriginal key={current.id} file={current} escopo={scope.escopo} />
                 )}
               </div>
               <FotoAmpliada key={current.id} file={current} zoom={zoom} {...scope} />
@@ -417,25 +464,45 @@ function FotoAmpliada({
   zoom,
   ...scope
 }: MediaScope & { file: InspecoesArquivo; zoom: number }) {
-  const query = useArquivo(scope, file, "previa_768", isVerified(file), file.previaUrl);
+  const [failedSrc, setFailedSrc] = useState<string>();
+  const [failedOriginal, setFailedOriginal] = useState<string>();
+  const query = useArquivo(
+    scope,
+    file,
+    "previa_768",
+    isVerified(file) && file.possuiPrevia !== false,
+    file.previaUrl,
+  );
+  const fallback =
+    file.possuiPrevia === false || query.isError || (!!query.data && query.data === failedSrc);
   const original = useArquivo(
     scope,
     file,
     "original",
-    query.isError && isVerified(file),
+    fallback && isVerified(file),
     file.originalUrl,
   );
-  const src = query.data ?? original.data;
+  const src = fallback ? original.data : query.data;
+  const unavailable = fallback && (original.isError || (!!src && src === failedOriginal));
   return (
     <div className="insp-photo-full">
-      {src ? (
-        <img
-          src={src}
-          alt={file.legenda || "Fotografia do acervo"}
-          style={{ width: `${100 * zoom}%` }}
+      {src && !unavailable ? (
+        <div style={{ width: `${100 * zoom}%` }}>
+          <img
+            src={src}
+            alt={file.legenda || "Fotografia do acervo"}
+            style={{ maxHeight: `${62 * zoom}dvh` }}
+            onError={() => (fallback ? setFailedOriginal(src) : setFailedSrc(src))}
+          />
+        </div>
+      ) : unavailable ? (
+        <ErrorState
+          error={new Error("Não foi possível abrir a fotografia.")}
+          onRetry={() => {
+            setFailedOriginal(undefined);
+            void original.refetch();
+          }}
         />
-      ) : query.isError && original.isError ? (
-        <ErrorState error={original.error} onRetry={() => void original.refetch()} />
       ) : (
         <p role="status">{isVerified(file) ? "Carregando fotografia…" : "Original pendente"}</p>
       )}

@@ -3,20 +3,50 @@ import type {
   InspecoesComando,
   InspecoesDetalhe,
   InspecoesEscopo,
+  InspecoesEvento,
   InspecoesFiltro,
   InspecoesLevantamento,
   InspecoesRegistro,
   InspecoesRecurso,
+  InspecoesUnidade,
 } from "../../src/features/inspecoes/ui-contract";
+import type {
+  ContinuidadeComando,
+  ContinuidadeContrato,
+  ContinuidadeSegmento,
+} from "../../src/features/inspecoes/continuidade.functions";
+import { listarCadastrosCliente } from "./operacional-server";
 
 const id = (n: number) => `41000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const org = id(1),
   cliente = id(2),
   unidade = id(3);
-const tst = new URLSearchParams(location.search).get("scenario") === "insp-tst";
+const scenario = new URLSearchParams(location.search).get("scenario");
+const tst = scenario === "insp-tst";
+const maintenance = scenario === "insp-maintenance";
 const user = tst ? id(7) : id(8);
+const activeUnits: InspecoesUnidade[] = [];
+const contracts: (ContinuidadeContrato & { unidadeId: string })[] = [];
+const history = new Map<string, InspecoesEvento[]>();
+const corrections = new Map<string, { versao: number; nota: string }>();
+let attemptedCorrection = false;
+
+function recordEvent(
+  entityId: string,
+  entry: Pick<InspecoesEvento, "evento" | "versao" | "motivo" | "antes" | "depois">,
+) {
+  const events = history.get(entityId) ?? [];
+  events.unshift({
+    ...entry,
+    id: crypto.randomUUID(),
+    autor: "Administrador de Validação",
+    ocorridoEm: "2026-11-13T13:30:00.000Z",
+  });
+  history.set(entityId, events);
+}
 const file = new URL("./fixtures/nr-photo-landscape.png", import.meta.url).href;
 const pdf = new URL("./fixtures/nexus-original-isolado.pdf", import.meta.url).href;
+declare const __NEXUS_PDF_FIXTURE__: { tamanho: number; tamanhoGrande: number; sha256: string };
 const mock = (
   entry: Partial<InspecoesRegistro> & Pick<InspecoesRegistro, "id" | "colecao" | "titulo">,
 ): InspecoesRegistro => ({
@@ -195,28 +225,32 @@ let levantamento: InspecoesLevantamento = {
 };
 
 export async function inspecoesContexto() {
-  const longContext = new URLSearchParams(location.search).get("scenario") === "insp-long-context";
+  const longContext = scenario === "insp-long-context";
+  const administrador = scenario === "insp-admin" || maintenance;
   const clientName = longContext
     ? "Indústria de Sistemas de Proteção e Manutenção"
     : "Cliente de Validação";
   return {
-    atribuicoes: [
-      {
-        id: id(6),
-        perfil: tst ? "TST" : "EST",
-        pessoa_id: user,
-        nome: tst
-          ? "Técnico de Campo"
-          : longContext
-            ? "Responsável Técnica de Inspeções e Proteção contra Quedas"
-            : "Responsável Técnica",
-        cliente_id: null,
-        unidade_id: null,
-        ensaios: false,
-        biblioteca: !tst,
-        importacao: !tst,
-      },
-    ],
+    administrador,
+    atribuicoes: administrador
+      ? []
+      : [
+          {
+            id: id(6),
+            perfil: tst ? "TST" : "EST",
+            pessoa_id: user,
+            nome: tst
+              ? "Técnico de Campo"
+              : longContext
+                ? "Responsável Técnica de Inspeções e Proteção contra Quedas"
+                : "Responsável Técnica",
+            cliente_id: null,
+            unidade_id: null,
+            ensaios: false,
+            biblioteca: !tst,
+            importacao: !tst,
+          },
+        ],
     unidades: [
       {
         cliente_id: cliente,
@@ -241,8 +275,34 @@ export async function inspecoesContexto() {
         unidade_nome: "Unidade Central",
         segmento: "CC",
       },
+      ...activeUnits,
     ],
   };
+}
+
+export async function inspecoesAcessosListar() {
+  return {
+    total: 1,
+    membros: [
+      {
+        user_id: user,
+        nome: "Administrador de Validação",
+        email: null,
+        pessoa_id: null,
+        tem_registro: false,
+        qualificacoes: [],
+        atribuicoes: [],
+      },
+    ],
+  };
+}
+
+export async function inspecoesAcessosHistorico() {
+  return { total: 0, eventos: [] };
+}
+
+export async function inspecoesAcessosExecutar() {
+  throw new Error("A organização isolada ainda não possui qualificações.");
 }
 export async function inspecoesListar({ data }: { data: InspecoesFiltro }) {
   const rows = records.filter(
@@ -295,6 +355,8 @@ export async function inspecoesDetalhe({
   return {
     registro: {
       ...registro,
+      acervo_versao: corrections.get(registro.id)?.versao ?? 0,
+      nota_acervo: corrections.get(registro.id)?.nota ?? null,
       snapshot:
         registro.id === plan.id
           ? snapshot
@@ -322,17 +384,48 @@ export async function inspecoesDetalhe({
               papel: "original",
               estado: "original_verificado",
               mime: "application/pdf",
-              bytes: 4096,
-              sha256: "b".repeat(64),
+              bytes: __NEXUS_PDF_FIXTURE__.tamanho,
+              sha256: __NEXUS_PDF_FIXTURE__.sha256,
               originalUrl: pdf,
             },
             ...photoFiles,
           ]
-        : [],
+        : registro.id === id(12)
+          ? [
+              {
+                id: id(398),
+                nome: "relatorio-extenso.pdf",
+                papel: "original",
+                estado: "original_verificado",
+                mime: "application/pdf",
+                bytes: __NEXUS_PDF_FIXTURE__.tamanhoGrande,
+                sha256: "f".repeat(64),
+              },
+            ]
+          : [],
   };
 }
-export async function inspecoesArquivoUrl({ data }: { data: { id: string } }) {
-  return { url: data.id === id(399) ? pdf : file };
+export async function inspecoesArquivoUrl({
+  data,
+}: {
+  data: { id: string; acao?: "visualizar" | "baixar" | "verificar" };
+}) {
+  const permitido = !window.document.body.hasAttribute("data-insp-revoked");
+  const ranged = window.document.body.hasAttribute("data-insp-ignore-range")
+    ? "/storage/v1/object/sign/inspecoes-acervo/fixture-grande.pdf?token=insp-ignore-range"
+    : "/storage/v1/object/sign/inspecoes-acervo/fixture-grande.pdf?token=insp-range";
+  return {
+    permitido,
+    url:
+      !permitido || data.acao === "verificar"
+        ? null
+        : data.id === id(399)
+          ? pdf
+          : data.id === id(398)
+            ? ranged
+            : file,
+    expiresAt: new Date(Date.now() + 60_000).toISOString(),
+  };
 }
 export async function inspecoesLevantamentos({ data }: { data: { ativoId: string } }) {
   return { items: data.ativoId === assets[0].id ? [levantamento] : [], candidatos: [] };
@@ -348,8 +441,8 @@ export async function inspecoesExecutar({ data }: { data: InspecoesComando }) {
   return levantamento;
 }
 export const inspecoesLimiteEnvio = 20 * 1024 * 1024;
-export async function inspecoesAnexos() {
-  return [];
+export async function inspecoesAnexosPorAlvo() {
+  return { files: [], history: [], total: 0, pageSize: 50 };
 }
 export async function inspecoesUploadReservar() {
   throw new Error("Envio real desabilitado no laboratório.");
@@ -361,8 +454,14 @@ export async function inspecoesUploadCancelar() {
   return true;
 }
 
-export async function inspecoesContinuidadeContratos() {
-  return { contratos: [], segmento: "IN", total: 0, limite: 20 };
+export async function inspecoesContinuidadeContratos({ data }: { data: InspecoesEscopo }) {
+  const selected = contracts.filter((item) => item.unidadeId === data.unidadeId);
+  return {
+    contratos: structuredClone(selected),
+    segmento: activeUnits.find((item) => item.unidade_id === data.unidadeId)?.segmento ?? "IN",
+    total: selected.length,
+    limite: 20,
+  };
 }
 export async function inspecoesContinuidadeCiclos() {
   return { ciclos: [], total: 0, limite: 20 };
@@ -370,8 +469,39 @@ export async function inspecoesContinuidadeCiclos() {
 export async function inspecoesContinuidadeOpcoes() {
   return { propostas: [], pacotes: [], ordens: [] };
 }
-export async function inspecoesContinuidadeExecutar() {
-  throw new Error("Operação externa desabilitada no laboratório.");
+export async function inspecoesContinuidadeExecutar({
+  data,
+}: {
+  data: InspecoesEscopo & { comando: ContinuidadeComando };
+}) {
+  const command = data.comando;
+  if (!maintenance || command.acao !== "criar_contrato" || !data.unidadeId)
+    throw new Error("Operação externa desabilitada no laboratório.");
+  const contract: (typeof contracts)[number] = {
+    unidadeId: data.unidadeId,
+    id: crypto.randomUUID(),
+    titulo: command.titulo,
+    referencia: command.referencia ?? null,
+    segmento: "IN",
+    estado: "rascunho",
+    version: 1,
+    inicio: command.inicio ?? null,
+    fim: command.fim ?? null,
+    situacao_prazo: null,
+    cancelado_em: null,
+    cancelamento_motivo: null,
+    proposta: null,
+    pacote: null,
+  };
+  contracts.unshift(contract);
+  recordEvent(contract.id, {
+    evento: "criar_contrato",
+    versao: 1,
+    motivo: null,
+    antes: null,
+    depois: { titulo: contract.titulo, referencia: contract.referencia },
+  });
+  return { contrato_id: contract.id };
 }
 export async function inspecoesCampoConsultar() {
   return { ensaios: [], pontos: [], evidencias: [], total: 0, pageSize: 20 };
@@ -391,4 +521,88 @@ export async function inspecoesProtocoloAtual() {
 }
 export async function inspecoesHomologarProtocolo() {
   throw new Error("Operação externa desabilitada no laboratório.");
+}
+
+export async function inspecoesAtivarUnidade({
+  data,
+}: {
+  data: {
+    organizationId: string;
+    clienteId: string;
+    unidadeId: string;
+    segmento: ContinuidadeSegmento;
+    motivo: string;
+  };
+}) {
+  if (!maintenance) throw new Error("Ativação desabilitada neste cenário.");
+  if (activeUnits.some((row) => row.unidade_id === data.unidadeId)) return true;
+  const scope = {
+    organization_id: data.organizationId,
+    cliente_id: data.clienteId,
+    situacao: "ativos",
+  };
+  const [{ rows: clients }, { rows: units }] = await Promise.all([
+    listarCadastrosCliente({ data: { ...scope, grupo: "clientes" } }),
+    listarCadastrosCliente({ data: { ...scope, grupo: "unidades" } }),
+  ]);
+  const clientRow = clients.find((row: { id: string }) => row.id === data.clienteId);
+  const unitRow = units.find((row: { id: string }) => row.id === data.unidadeId);
+  if (!clientRow || !unitRow) throw new Error("Cadastro não encontrado no contexto isolado.");
+  activeUnits.push({
+    cliente_id: data.clienteId,
+    unidade_id: data.unidadeId,
+    cliente_nome: clientRow.nome_exibicao ?? clientRow.razao_social,
+    unidade_nome: unitRow.nome,
+    segmento: data.segmento,
+  });
+  recordEvent(data.unidadeId, {
+    evento: "unidade_incluida",
+    versao: null,
+    motivo: data.motivo,
+    antes: null,
+    depois: { segmento: data.segmento },
+  });
+  return true;
+}
+export async function inspecoesAcervoSalvar({
+  data,
+}: {
+  data: {
+    id: string | null;
+    versao: number;
+    chave: string;
+    dados: { titulo: string; nota: string; motivo: string };
+  };
+}) {
+  const record = records.find((row) => row.id === data.id);
+  if (!maintenance || !record) throw new Error("A edição está indisponível neste cenário.");
+  const keys = window.document.body.dataset["inspCorrectionKeys"];
+  window.document.body.dataset["inspCorrectionKeys"] = keys ? `${keys},${data.chave}` : data.chave;
+  if (!attemptedCorrection) {
+    attemptedCorrection = true;
+    throw new Error("Falha simulada. O preenchimento pode ser reenviado.");
+  }
+  const anterior = corrections.get(record.id);
+  if ((anterior?.versao ?? 0) !== data.versao) throw new Error("A versão da ficha mudou.");
+  const versao = data.versao + 1;
+  recordEvent(record.id, {
+    evento: "correcao_acervo",
+    versao,
+    motivo: data.dados.motivo,
+    antes: { titulo: record.titulo, nota: anterior?.nota ?? null },
+    depois: { titulo: data.dados.titulo, nota: data.dados.nota },
+  });
+  record.titulo = data.dados.titulo;
+  corrections.set(record.id, { versao, nota: data.dados.nota });
+  return { id: record.id, versao };
+}
+export async function inspecoesApresentacaoSalvar({
+  data,
+}: {
+  data: { id: string; versao: number };
+}) {
+  return { id: data.id, versao: data.versao + 1 };
+}
+export async function inspecoesHistorico({ data }: { data: { id: string } }) {
+  return { eventos: structuredClone(history.get(data.id) ?? []), mais: false };
 }

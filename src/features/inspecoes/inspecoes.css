@@ -643,7 +643,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .insp-photo-image span {
   display: grid;
@@ -654,19 +654,15 @@
   font-size: 0.75rem;
 }
 .insp-photo-full img {
-  max-width: none;
-  max-height: none;
+  display: block;
+  width: 100%;
   height: auto;
+  object-fit: contain;
 }
 .insp-photo-full {
+  display: block;
   min-height: 9rem;
   max-height: 66dvh;
-}
-.insp-pdf {
-  width: 100%;
-  height: min(62dvh, 46rem);
-  border: 1px solid var(--nr-border);
-  border-radius: var(--nr-radius-control);
 }
 .insp-map-layout {
   display: grid;
@@ -920,4 +916,42 @@
 }
 .insp-matrix tbody tr:last-child :is(th, td) {
   border-block-end: 0;
+}
+
+.insp-editor-dialog {
+  width: min(calc(100% - 2rem), 38rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+}
+
+.insp-history-list {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.insp-history-event {
+  display: grid;
+  gap: 0.3rem;
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--primary);
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: var(--card);
+  overflow-wrap: anywhere;
+}
+
+.insp-history-event p,
+.insp-history-event h4 {
+  margin: 0;
+}
+
+.insp-history-event h4 {
+  font-weight: 600;
+}
+
+.insp-history-event p {
+  white-space: pre-wrap;
 }

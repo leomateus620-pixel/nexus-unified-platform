@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import test from "node:test";
-import { mimeInspecoes, validarArquivoInspecoes } from "../src/features/inspecoes/arquivo-formatos";
+import { strToU8, zipSync } from "fflate";
+import {
+  detectarArquivoInspecoes,
+  mimeInspecoes,
+  mimesPorPapel,
+  validarArquivoInspecoes,
+} from "../src/features/inspecoes/arquivo-formatos";
 import { mimeDetectado } from "../src/features/operacao/files";
 
 const mp4 = Uint8Array.of(
@@ -76,5 +82,42 @@ test("Inspeções exige tamanho, formato e hash idênticos no retorno do vídeo"
   await assert.rejects(
     validarArquivoInspecoes(webm, { ...metadata, sha256: "0".repeat(64) }),
     /hash/,
+  );
+});
+
+test("Inspeções confirma DOCX estrutural e recusa ZIP genérico, macros ou DOCX em papel ART", async () => {
+  const mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+  const office = {
+    "[Content_Types].xml": strToU8(
+      '<Types><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>',
+    ),
+    "word/document.xml": strToU8('<w:document xmlns:w="urn:test"><w:body/></w:document>'),
+  };
+  const docx = zipSync(office);
+  const metadata = {
+    tamanho: docx.length,
+    mime,
+    sha256: createHash("sha256").update(docx).digest("hex"),
+  };
+  assert.equal(await detectarArquivoInspecoes(docx), mime);
+  assert.ok(mimesPorPapel("contrato").includes(mime));
+  assert.ok(!mimesPorPapel("art").includes(mime));
+  await validarArquivoInspecoes(docx, metadata);
+  await assert.rejects(
+    detectarArquivoInspecoes(zipSync({ "notes.txt": strToU8("texto") })),
+    /DOCX/,
+  );
+  await assert.rejects(
+    detectarArquivoInspecoes(zipSync({ ...office, "word/vbaProject.bin": strToU8("fake") })),
+    /macro/,
+  );
+  await assert.rejects(
+    detectarArquivoInspecoes(
+      zipSync({
+        ...office,
+        "word/document.xml": strToU8("<w:document><w:altChunk/></w:document>"),
+      }),
+    ),
+    /XML ativo/,
   );
 });

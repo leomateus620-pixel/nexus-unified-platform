@@ -1,0 +1,89 @@
+{
+  "stage": "antes",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "poses": {
+    "01-patio-11-56": {
+      "camera": [
+        -14.041,
+        21.222,
+        -129.049
+      ],
+      "target": [
+        -3.585,
+        8.626,
+        -94.68
+      ],
+      "fov": 46.37917198155022,
+      "zoom": 1,
+      "width": 1440,
+      "height": 823,
+      "dpr": 1,
+      "quality": "detalhado",
+      "calls": 106,
+      "triangles": 445219
+    },
+    "02-preparacao-caldeiras": {
+      "camera": [
+        352.684,
+        120.773,
+        107.425
+      ],
+      "target": [
+        68.955,
+        9.673,
+        26.513
+      ],
+      "fov": 43,
+      "zoom": 1,
+      "width": 1440,
+      "height": 823,
+      "dpr": 1,
+      "quality": "detalhado",
+      "calls": 86,
+      "triangles": 281449
+    },
+    "03-unidade-implantacao": {
+      "camera": [
+        -255.25,
+        200.242,
+        66.596
+      ],
+      "target": [
+        68.955,
+        9.673,
+        26.513
+      ],
+      "fov": 43,
+      "zoom": 1,
+      "width": 1440,
+      "height": 823,
+      "dpr": 1,
+      "quality": "detalhado",
+      "calls": 80,
+      "triangles": 281229
+    },
+    "04-silos-ferrovia": {
+      "camera": [
+        -28.695,
+        138.223,
+        284.236
+      ],
+      "target": [
+        71.617,
+        6.409,
+        189.528
+      ],
+      "fov": 43,
+      "zoom": 1,
+      "width": 1440,
+      "height": 823,
+      "dpr": 1,
+      "quality": "detalhado",
+      "calls": 105,
+      "triangles": 452767
+    }
+  }
+}

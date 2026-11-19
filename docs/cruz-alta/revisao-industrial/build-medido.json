@@ -1,0 +1,36 @@
+{
+  "baseline": [
+    {
+      "arquivo": "navigation-B1RKfUDE.js",
+      "bytes": 79833,
+      "sha256": "0de05df6a32240d118eb41dedef6f46141f673e1193698168f6685a6997bfb46"
+    },
+    {
+      "arquivo": "CruzAltaWorkspace-DJ41WABN.css",
+      "bytes": 12149,
+      "sha256": "fe9a8b117781f5211bd9855f58497218b8721441e69f8fd9c8bec9a682142384"
+    },
+    {
+      "arquivo": "CruzAltaWorkspace-rC4YQTEi.js",
+      "bytes": 20988,
+      "sha256": "4a32b19bde5796e734461b794a6698aa90d2588009d49fd54b6494183cf60ac7"
+    }
+  ],
+  "verificada": [
+    {
+      "arquivo": "navigation-QYDxqIzO.js",
+      "bytes": 98574,
+      "sha256": "d3fb3358bcbee4e778ba111356c5f9365e2ded289d180737dd3b603b7444fff2"
+    },
+    {
+      "arquivo": "CruzAltaWorkspace-Cb9XKXsW.css",
+      "bytes": 28244,
+      "sha256": "c1c0650ef4bd008053f8a54cfe6e34f80558c5d473af1ad8e7d3e0d1c1b7eccf"
+    },
+    {
+      "arquivo": "CruzAltaWorkspace-DR6AoTLC.js",
+      "bytes": 30706,
+      "sha256": "5a0fafbf41d70ee7393b1bc40eb9a6c53abd2dc538796263f7c176bff446f101"
+    }
+  ]
+}

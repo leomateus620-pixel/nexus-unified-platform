@@ -1,4 +1,11 @@
 import "@tanstack/react-start/server-only";
+import {
+  isRasterPhotoMime,
+  RASTER_PHOTO_MIMES,
+  rasterPhotoSignature,
+  safeDriveThumbnail,
+  type RasterPhotoMime,
+} from "./photo-media.server";
 
 export const DRIVE_FOLDER = "application/vnd.google-apps.folder";
 export const DRIVE_PDF = "application/pdf";
@@ -12,6 +19,16 @@ const FILE_FIELDS =
   "id,name,mimeType,parents,modifiedTime,version,size,sha256Checksum,resourceKey,trashed";
 const DRIVE_PAGE_SIZE = 100;
 const MAX_METADATA_BYTES = 192 * 1024;
+export const MAX_DRIVE_PHOTO_BYTES = 24 * 1024 * 1024;
+const MAX_THUMBNAIL_BYTES = 2 * 1024 * 1024;
+export const MAX_DRIVE_PHOTO_DEPTH = 4;
+const MAX_PHOTO_FOLDERS = 40;
+const MAX_PHOTO_PAGES = 48;
+const MAX_PHOTO_ITEMS = 240;
+const PHOTO_TIMEOUT_MS = 20_000;
+const THUMBNAIL_TIMEOUT_MS = 6_000;
+const MAX_OAUTH_CACHE_MS = 5 * 60 * 1000;
+const oauthTokens = new Map<string, { token: string; validUntil: number }>();
 
 type Credentials = { clientEmail: string; privateKey: string; keyId?: string };
 export type DriveItem = {
@@ -25,11 +42,20 @@ export type DriveItem = {
   sha256: string | null;
   resourceKey: string | null;
 };
+type DriveEntry = Omit<DriveItem, "mimeType"> & { mimeType: string };
+export type DrivePhotoFolder = {
+  id: string;
+  resourceKey: string | null;
+  origin?: { parentId: string; rootId: string; nameMatches: (name: string) => boolean };
+};
+export type DrivePhotoRef = { id: string; version: string; path: string[] };
+export type DrivePhoto = DrivePhotoRef & { name: string; modifiedAt: string };
 
 export class SyncFailure extends Error {
   constructor(
     readonly code: string,
     readonly retryable = false,
+    readonly status?: number,
   ) {
     super(code);
   }
@@ -151,7 +177,26 @@ function expectSuccess(response: Response, failure: string) {
   throw new SyncFailure(
     failure,
     response.status === 408 || response.status === 429 || response.status >= 500,
+    response.status,
   );
+}
+
+async function rejectDrivePermission(response: Response): Promise<never> {
+  let retryable = false;
+  try {
+    const data = await readJson(response, 16_384);
+    const error = record(data["error"]);
+    const reasons = Array.isArray(error["errors"]) ? error["errors"].map(record) : [];
+    retryable =
+      error["status"] === "RESOURCE_EXHAUSTED" ||
+      reasons.some(
+        (item) =>
+          item["reason"] === "rateLimitExceeded" || item["reason"] === "userRateLimitExceeded",
+      );
+  } catch {
+    // HTTP 403 still blocks all media. A transient quota reason may be retried.
+  }
+  throw new SyncFailure("leitura_drive_indisponivel", retryable, 403);
 }
 
 function explicitParent(data: Record<string, unknown>, expected: string) {
@@ -163,7 +208,7 @@ function explicitParent(data: Record<string, unknown>, expected: string) {
 const quotedDriveValue = (value: string) =>
   `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
 
-function asDriveItem(value: unknown, parent: string): DriveItem {
+function asDriveEntry(value: unknown, parent: string): DriveEntry {
   const data = record(value);
   const { id, name, mimeType, modifiedTime, version, size, sha256Checksum, resourceKey, trashed } =
     data;
@@ -178,13 +223,13 @@ function asDriveItem(value: unknown, parent: string): DriveItem {
     Array.from(name).some(
       (character) => character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127,
     ) ||
-    (mimeType !== DRIVE_FOLDER && mimeType !== DRIVE_PDF) ||
+    typeof mimeType !== "string" ||
     explicitParent(data, parent) === false ||
     typeof modifiedTime !== "string" ||
     !Number.isFinite(Date.parse(modifiedTime)) ||
     typeof version !== "string" ||
     !/^\d{1,24}$/.test(version) ||
-    (mimeType === DRIVE_PDF && (bytes === null || !Number.isSafeInteger(bytes) || bytes < 1)) ||
+    (mimeType !== DRIVE_FOLDER && (bytes === null || !Number.isSafeInteger(bytes) || bytes < 1)) ||
     (sha256Checksum != null &&
       (typeof sha256Checksum !== "string" || !sha256Pattern.test(sha256Checksum))) ||
     (resourceKey != null && (typeof resourceKey !== "string" || !driveId.test(resourceKey)))
@@ -203,10 +248,81 @@ function asDriveItem(value: unknown, parent: string): DriveItem {
   };
 }
 
+function asDriveItem(value: unknown, parent: string): DriveItem {
+  const entry = asDriveEntry(value, parent);
+  if (entry.mimeType !== DRIVE_FOLDER && entry.mimeType !== DRIVE_PDF)
+    throw new SyncFailure("metadados_drive_invalidos", true);
+  return { ...entry, mimeType: entry.mimeType };
+}
+
+function checkPhotoFolder(folder: DrivePhotoFolder) {
+  if (
+    !driveId.test(folder.id) ||
+    (folder.resourceKey !== null && !driveId.test(folder.resourceKey))
+  )
+    throw new SyncFailure("pasta_drive_divergente");
+  const origin = folder.origin;
+  if (
+    origin &&
+    (!driveId.test(origin.parentId) ||
+      !driveId.test(origin.rootId) ||
+      typeof origin.nameMatches !== "function" ||
+      origin.parentId === folder.id ||
+      origin.rootId === folder.id)
+  )
+    throw new SyncFailure("pasta_rdo_fora_da_origem");
+}
+
+async function readRaster(
+  response: Response,
+  limit: number,
+  tooLarge: string,
+  expectedMime?: RasterPhotoMime,
+) {
+  const mime = response.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
+  if (
+    response.status !== 200 ||
+    !isRasterPhotoMime(mime) ||
+    (expectedMime && mime !== expectedMime)
+  ) {
+    await response.body?.cancel();
+    throw new SyncFailure("foto_rdo_invalida");
+  }
+  const bytes = await readLimited(response, limit, tooLarge);
+  if (!rasterPhotoSignature(bytes, mime)) throw new SyncFailure("foto_rdo_invalida");
+  return { bytes, mime };
+}
+
+function photoResponse({ bytes, mime }: Awaited<ReturnType<typeof readRaster>>) {
+  return new Response(bytes, {
+    headers: {
+      "content-type": mime,
+      "content-length": String(bytes.byteLength),
+      "cache-control": "private, no-store",
+      "x-content-type-options": "nosniff",
+    },
+  });
+}
+
+async function sha256Hex(bytes: Uint8Array<ArrayBuffer>) {
+  return Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+}
+
 export function createDrive(credentials: Credentials, transport = fetch) {
   let bearer: Promise<string> | undefined;
-  async function driveRequest(path: string, id: string, key: string | null, signal: AbortSignal) {
+  let cacheKey: string | undefined;
+  function accessToken(signal: AbortSignal) {
     bearer ??= (async () => {
+      if (transport === fetch) {
+        const identity = new TextEncoder().encode(
+          JSON.stringify([credentials.clientEmail, credentials.keyId, credentials.privateKey]),
+        );
+        cacheKey ??= await sha256Hex(identity);
+        const cached = oauthTokens.get(cacheKey);
+        if (cached && cached.validUntil > Date.now()) return cached.token;
+      }
       let jwt: string;
       try {
         jwt = await assertion(credentials, Date.now());
@@ -223,18 +339,41 @@ export function createDrive(credentials: Credentials, transport = fetch) {
         signal,
       });
       expectSuccess(response, "autenticacao_drive_indisponivel");
-      const token = (await readJson(response, 16_384))["access_token"];
+      const data = await readJson(response, 16_384);
+      const token = data["access_token"];
       if (typeof token !== "string" || !/^[\w.+/=-]{1,8192}$/.test(token))
         throw new SyncFailure("autenticacao_drive_invalida");
+      const expiresIn = data["expires_in"];
+      if (
+        cacheKey &&
+        typeof expiresIn === "number" &&
+        Number.isFinite(expiresIn) &&
+        expiresIn > 60
+      ) {
+        if (oauthTokens.size >= 4 && !oauthTokens.has(cacheKey)) {
+          const first = oauthTokens.keys().next().value;
+          if (first) oauthTokens.delete(first);
+        }
+        oauthTokens.set(cacheKey, {
+          token,
+          validUntil: Date.now() + Math.min(MAX_OAUTH_CACHE_MS, (expiresIn - 60) * 1000),
+        });
+      }
       return token;
     })();
-    const headers = new Headers({ Authorization: `Bearer ${await bearer}` });
+    return bearer;
+  }
+
+  async function driveRequest(path: string, id: string, key: string | null, signal: AbortSignal) {
+    const headers = new Headers({ Authorization: `Bearer ${await accessToken(signal)}` });
     if (key) headers.set("X-Goog-Drive-Resource-Keys", `${id}/${key}`);
     const response = await transport(`${DRIVE_API}${path}`, {
       headers,
       redirect: "manual",
       signal,
     });
+    if (response.status === 401 && cacheKey) oauthTokens.delete(cacheKey);
+    if (response.status === 403) await rejectDrivePermission(response);
     expectSuccess(response, "leitura_drive_indisponivel");
     return response;
   }
@@ -292,7 +431,7 @@ export function createDrive(credentials: Credentials, transport = fetch) {
       typeof name !== "string" ||
       !name ||
       name.length > 500 ||
-      (mimeType !== DRIVE_FOLDER && mimeType !== DRIVE_PDF)
+      (mimeType !== DRIVE_FOLDER && mimeType !== DRIVE_PDF && !isRasterPhotoMime(mimeType))
     )
       throw new SyncFailure("pasta_drive_divergente");
     const query = `${quotedDriveValue(expected)} in parents and trashed = false and name = ${quotedDriveValue(name)} and mimeType = ${quotedDriveValue(mimeType)}`;
@@ -323,6 +462,182 @@ export function createDrive(credentials: Credentials, transport = fetch) {
     throw new SyncFailure("pasta_drive_divergente");
   }
 
+  async function readableFolder(
+    { id, resourceKey }: DrivePhotoFolder,
+    expected: {
+      parent?: string | undefined;
+      name?: string | undefined;
+      nameMatches?: (name: string) => boolean;
+    },
+    signal: AbortSignal,
+  ) {
+    // A parent filter can return an empty result even if the folder cannot be read.
+    const params = new URLSearchParams({
+      supportsAllDrives: "true",
+      fields: "id,name,parents,mimeType,trashed,capabilities(canListChildren)",
+    });
+    const folder = await readJson(
+      await driveRequest(`/files/${id}?${params}`, id, resourceKey, signal),
+      16_384,
+    );
+    const capabilities = folder["capabilities"] as { canListChildren?: unknown } | undefined;
+    if (
+      folder["id"] !== id ||
+      folder["mimeType"] !== DRIVE_FOLDER ||
+      folder["trashed"] === true ||
+      capabilities?.canListChildren !== true
+    )
+      throw new SyncFailure("pasta_drive_sem_acesso");
+    if (expected.name && folder["name"] !== expected.name)
+      throw new SyncFailure("pasta_drive_divergente");
+    if (
+      expected.nameMatches &&
+      (typeof folder["name"] !== "string" || !expected.nameMatches(folder["name"]))
+    )
+      throw new SyncFailure("pasta_rdo_fora_da_origem");
+    if (expected.parent) await confirmParent(folder, expected.parent, resourceKey, signal);
+  }
+
+  async function verifyPhotoOrigin(
+    folder: DrivePhotoFolder,
+    budget: { pages: number },
+    signal: AbortSignal,
+  ) {
+    if (!folder.origin) return readableFolder(folder, {}, signal);
+    const { parentId, rootId, nameMatches } = folder.origin;
+    try {
+      if (parentId !== rootId) {
+        // Resolve the resource key from the registered root before opening the branch.
+        await readableFolder({ id: rootId, resourceKey: null }, {}, signal);
+        const query = `${quotedDriveValue(rootId)} in parents and trashed = false and mimeType = '${DRIVE_FOLDER}'`;
+        const seen = new Set<string>();
+        let cursor: string | null = null;
+        let parent: DriveEntry | undefined;
+        do {
+          if (budget.pages <= 0) throw new SyncFailure("limite_fotos_rdo");
+          budget.pages -= 1;
+          const page = await listPage(query, FILE_FIELDS, rootId, null, cursor, signal);
+          const match = page.raw.map(record).find((entry) => entry["id"] === parentId);
+          if (match) {
+            parent = asDriveEntry(match, rootId);
+            if (parent.mimeType !== DRIVE_FOLDER) throw new SyncFailure("pasta_rdo_fora_da_origem");
+            break;
+          }
+          cursor = page.nextPageToken;
+          if (cursor) {
+            if (seen.has(cursor)) throw new SyncFailure("listagem_drive_incompleta", true);
+            seen.add(cursor);
+          }
+        } while (cursor);
+        if (!parent) throw new SyncFailure("pasta_rdo_fora_da_origem");
+        await readableFolder(parent, { parent: rootId }, signal);
+      }
+      await readableFolder(folder, { parent: parentId, nameMatches }, signal);
+    } catch (error) {
+      if (
+        error instanceof SyncFailure &&
+        !error.retryable &&
+        (error.status === 403 ||
+          error.status === 404 ||
+          error.code === "pasta_drive_divergente" ||
+          error.code === "pasta_drive_sem_acesso")
+      )
+        throw new SyncFailure("pasta_rdo_fora_da_origem");
+      throw error;
+    }
+  }
+
+  async function photoChildren(
+    folder: DrivePhotoFolder,
+    budget: { pages: number },
+    signal: AbortSignal,
+  ) {
+    const filters = [DRIVE_FOLDER, ...RASTER_PHOTO_MIMES]
+      .map((mime) => `mimeType = '${mime}'`)
+      .join(" or ");
+    const query = `${quotedDriveValue(folder.id)} in parents and trashed = false and (${filters})`;
+    const children: DriveEntry[] = [];
+    const ids = new Set<string>();
+    const cursors = new Set<string>();
+    let cursor: string | null = null;
+    do {
+      if (budget.pages <= 0) throw new SyncFailure("limite_fotos_rdo");
+      budget.pages -= 1;
+      const { raw, nextPageToken } = await listPage(
+        query,
+        FILE_FIELDS,
+        folder.id,
+        folder.resourceKey,
+        cursor,
+        signal,
+      );
+      for (const value of raw) {
+        const entry = record(value);
+        const mime = entry["mimeType"];
+        if (typeof mime !== "string") throw new SyncFailure("metadados_drive_invalidos", true);
+        if (mime !== DRIVE_FOLDER && !isRasterPhotoMime(mime)) continue;
+        const child = asDriveEntry(entry, folder.id);
+        if (ids.has(child.id)) throw new SyncFailure("listagem_drive_incompleta", true);
+        ids.add(child.id);
+        children.push(child);
+        if (children.length > MAX_PHOTO_ITEMS + MAX_PHOTO_FOLDERS)
+          throw new SyncFailure("limite_fotos_rdo");
+      }
+      cursor = nextPageToken;
+      if (cursor) {
+        if (cursors.has(cursor)) throw new SyncFailure("listagem_drive_incompleta", true);
+        cursors.add(cursor);
+      }
+    } while (cursor);
+    return children;
+  }
+
+  async function photoDetails(item: DriveEntry, signal: AbortSignal) {
+    const { id, resourceKey } = item;
+    const params = new URLSearchParams({
+      supportsAllDrives: "true",
+      fields: `${FILE_FIELDS},thumbnailLink`,
+    });
+    const data = await readJson(
+      await driveRequest(`/files/${id}?${params}`, id, resourceKey, signal),
+      16_384,
+    );
+    if (data["id"] !== id || data["version"] !== item.version || data["trashed"] === true)
+      throw new SyncFailure("versao_foto_rdo_alterada");
+    const parent = item.parents[0]!;
+    await confirmParent(data, parent, resourceKey, signal);
+    const current = asDriveEntry(data, parent);
+    if (
+      !isRasterPhotoMime(current.mimeType) ||
+      current.mimeType !== item.mimeType ||
+      current.size !== item.size ||
+      current.name !== item.name ||
+      (item.sha256 && current.sha256 && current.sha256 !== item.sha256)
+    )
+      throw new SyncFailure("versao_foto_rdo_alterada");
+    return {
+      ...current,
+      mimeType: current.mimeType,
+      sha256: current.sha256 ?? item.sha256,
+      thumbnailLink: data["thumbnailLink"],
+    };
+  }
+
+  async function nativeThumbnail(link: URL, signal: AbortSignal) {
+    const deadline = AbortSignal.any([signal, AbortSignal.timeout(THUMBNAIL_TIMEOUT_MS)]);
+    try {
+      const thumbnail = await transport(link.href, {
+        headers: { Authorization: `Bearer ${await accessToken(deadline)}` },
+        redirect: "manual",
+        signal: deadline,
+      });
+      return await readRaster(thumbnail, MAX_THUMBNAIL_BYTES, "miniatura_rdo_indisponivel");
+    } catch {
+      signal.throwIfAborted();
+      return null;
+    }
+  }
+
   return {
     async listFolder(
       id: string,
@@ -332,26 +647,7 @@ export function createDrive(credentials: Credentials, transport = fetch) {
       expected: { parent?: string | undefined; name?: string | undefined },
       foldersOnly = false,
     ) {
-      // A parent filter can return an empty result even if the folder cannot be read.
-      const folderParams = new URLSearchParams({
-        supportsAllDrives: "true",
-        fields: "id,name,parents,mimeType,trashed,capabilities(canListChildren)",
-      });
-      const folder = await readJson(
-        await driveRequest(`/files/${id}?${folderParams}`, id, key, signal),
-        16_384,
-      );
-      const capabilities = folder["capabilities"] as { canListChildren?: unknown } | undefined;
-      if (
-        folder["id"] !== id ||
-        folder["mimeType"] !== DRIVE_FOLDER ||
-        folder["trashed"] === true ||
-        capabilities?.canListChildren !== true
-      )
-        throw new SyncFailure("pasta_drive_sem_acesso");
-      if (expected.name && folder["name"] !== expected.name)
-        throw new SyncFailure("pasta_drive_divergente");
-      if (expected.parent) await confirmParent(folder, expected.parent, key, signal);
+      await readableFolder({ id, resourceKey: key }, expected, signal);
       const folderMime = `mimeType = '${DRIVE_FOLDER}'`;
       const { raw, nextPageToken } = await listPage(
         `'${id}' in parents and trashed = false and ${foldersOnly ? folderMime : `(${folderMime} or mimeType = '${DRIVE_PDF}')`}`,
@@ -421,14 +717,102 @@ export function createDrive(credentials: Credentials, transport = fetch) {
         !new TextDecoder().decode(bytes.subarray(0, 5)).startsWith("%PDF-")
       )
         throw new SyncFailure("pdf_drive_divergente");
-      const sha256 = Array.from(
-        new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
-        (byte) => byte.toString(16).padStart(2, "0"),
-      ).join("");
+      const sha256 = await sha256Hex(bytes);
       if (item.sha256 && item.sha256 !== sha256)
         throw new SyncFailure("hash_drive_divergente", true);
       if (!item.sha256) check(await details());
       return { bytes, sha256 };
+    },
+    async listPhotos(folder: DrivePhotoFolder, signal: AbortSignal): Promise<DrivePhoto[]> {
+      checkPhotoFolder(folder);
+      const deadline = AbortSignal.any([signal, AbortSignal.timeout(PHOTO_TIMEOUT_MS)]);
+      const queue: { folder: DrivePhotoFolder; path: string[]; parent?: string }[] = [
+        { folder, path: [] },
+      ];
+      const seen = new Set([folder.id]);
+      const photos: DrivePhoto[] = [];
+      const budget = { pages: MAX_PHOTO_PAGES };
+      await verifyPhotoOrigin(folder, budget, deadline);
+      for (const node of queue) {
+        if (node.parent) await readableFolder(node.folder, { parent: node.parent }, deadline);
+        const children = await photoChildren(node.folder, budget, deadline);
+        for (const child of children) {
+          if (seen.has(child.id)) throw new SyncFailure("listagem_drive_incompleta", true);
+          seen.add(child.id);
+          if (child.mimeType === DRIVE_FOLDER) {
+            if (node.path.length >= MAX_DRIVE_PHOTO_DEPTH || queue.length >= MAX_PHOTO_FOLDERS)
+              throw new SyncFailure("limite_fotos_rdo");
+            queue.push({ folder: child, path: [...node.path, child.id], parent: node.folder.id });
+            continue;
+          }
+          if (photos.length >= MAX_PHOTO_ITEMS) throw new SyncFailure("limite_fotos_rdo");
+          const { id, name, modifiedAt, version } = child;
+          photos.push({ id, name, modifiedAt, version, path: node.path });
+        }
+      }
+      return photos;
+    },
+    async readPhoto(
+      folder: DrivePhotoFolder,
+      ref: DrivePhotoRef,
+      preview: boolean,
+      signal: AbortSignal,
+    ) {
+      checkPhotoFolder(folder);
+      const chain = [folder.id, ...ref.path, ref.id];
+      if (
+        ref.path.length > MAX_DRIVE_PHOTO_DEPTH ||
+        new Set(chain).size !== chain.length ||
+        chain.some((id) => !driveId.test(id)) ||
+        !/^\d{1,24}$/.test(ref.version)
+      )
+        throw new SyncFailure("foto_rdo_indisponivel");
+      const deadline = AbortSignal.any([signal, AbortSignal.timeout(PHOTO_TIMEOUT_MS)]);
+      const budget = { pages: MAX_PHOTO_PAGES };
+      await verifyPhotoOrigin(folder, budget, deadline);
+      let scoped = folder;
+      for (const id of ref.path) {
+        const children = await photoChildren(scoped, budget, deadline);
+        const next = children.find((child) => child.id === id && child.mimeType === DRIVE_FOLDER);
+        if (!next) throw new SyncFailure("foto_rdo_indisponivel");
+        await readableFolder(next, { parent: scoped.id }, deadline);
+        scoped = next;
+      }
+      const children = await photoChildren(scoped, budget, deadline);
+      const item = children.find(
+        (child) => child.id === ref.id && isRasterPhotoMime(child.mimeType),
+      );
+      if (!item) throw new SyncFailure("foto_rdo_indisponivel");
+      if (item.version !== ref.version) throw new SyncFailure("versao_foto_rdo_alterada");
+      const current = await photoDetails(item, deadline);
+
+      if (preview) {
+        const link = safeDriveThumbnail(current.thumbnailLink, item.id);
+        const thumbnail = link && (await nativeThumbnail(link, deadline));
+        if (thumbnail) {
+          await photoDetails(current, deadline);
+          return photoResponse(thumbnail);
+        }
+      }
+
+      const limit = preview ? MAX_THUMBNAIL_BYTES : MAX_DRIVE_PHOTO_BYTES;
+      const tooLarge = preview ? "miniatura_rdo_indisponivel" : "foto_rdo_acima_do_limite";
+      if (!current.size || current.size > limit) throw new SyncFailure(tooLarge);
+      const query = new URLSearchParams({ supportsAllDrives: "true", alt: "media" });
+      const response = await driveRequest(
+        `/files/${item.id}?${query}`,
+        item.id,
+        current.resourceKey,
+        deadline,
+      );
+      const original = await readRaster(response, limit, tooLarge, current.mimeType);
+      if (
+        original.bytes.byteLength !== current.size ||
+        (current.sha256 && (await sha256Hex(original.bytes)) !== current.sha256)
+      )
+        throw new SyncFailure("foto_rdo_invalida");
+      if (!current.sha256) await photoDetails(current, deadline);
+      return photoResponse(original);
     },
   };
 }

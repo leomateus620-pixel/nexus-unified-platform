@@ -508,6 +508,10 @@ try {
   };
   const rdoRegister = async (root = rdoRoot, published = rdoPublishedId) =>
     (await sql`select ca_inspecao_rdo_registrar(${root},${published}) r`)[0].r;
+  const rdoCredential = async (folder) =>
+    (await sql`select ca_inspecao_rdo_credencial(${folder}) r`)[0].r;
+  const rdoOrigin = async (folderIds) =>
+    (await sql`select ca_inspecao_rdo_origem(${folderIds}::text[]) r`)[0].r;
   const rdoStatus = async () => {
     await role(users.reviewer);
     return (await sql`select ca_inspecao_sync_status(${org}) r`)[0].r;
@@ -606,6 +610,51 @@ try {
   assert.deepEqual(await rdoSummary(users.viewer), []);
   console.log("PASS cadastro idempotente, 74 identidades ativas e acesso a originais por escopo");
 
+  await role(users.reviewer);
+  await deny(() => rdoCredential(launched.id), "42501");
+  await deny(() => rdoOrigin([launched.id]), "42501");
+  await role();
+  await sql.unsafe("set role anon");
+  await deny(() => rdoCredential(launched.id), "42501");
+  await deny(() => rdoOrigin([launched.id]), "42501");
+  await role(null, true);
+  await deny(() => rdoCredential(null), "42501");
+  await deny(() => rdoCredential(launched.id + "-nao-indexada"), "42501");
+  await deny(() => rdoCredential(rdoPublishedId), "42501");
+  assert.deepEqual(JSON.parse(await rdoCredential(launched.id)), credential);
+  await deny(() => rdoOrigin(null), "42501");
+  await deny(() => rdoOrigin([]), "42501");
+  await deny(() => rdoOrigin([launched.id, launched.id]), "42501");
+  await deny(() => rdoOrigin([launched.id, null]), "42501");
+  await deny(() => rdoOrigin([launched.id, "id inválido"]), "42501");
+  await deny(() => rdoOrigin([launched.id, "pasta-teste-nao-cadastrada"]), "42501");
+  await deny(() => rdoOrigin([rdoRoot, rdoPublishedId]), "42501");
+  const origin = await rdoOrigin([launched.id, folders[0].id]);
+  assert.deepEqual(JSON.parse(origin.credential), credential);
+  assert.deepEqual(origin.folders, [
+    { id: launched.id, parentId: rdoPublishedId, rootId: rdoRoot },
+    { id: folders[0].id, parentId: rdoRoot, rootId: rdoRoot },
+  ]);
+  await role();
+  await sql`update nr_cenas_unidade set estado='rascunho' where organization_id=${org} and unidade_id=${unit}`;
+  await role(null, true);
+  await deny(() => rdoCredential(launched.id), "42501");
+  await deny(() => rdoOrigin([launched.id]), "42501");
+  await role();
+  await sql`update nr_cenas_unidade set estado='publicada' where organization_id=${org} and unidade_id=${unit}`;
+  await sql`update vault.secrets set name='credencial-de-teste-indisponivel'
+    where name='nexus_ca_inspecao_drive_service_account'`;
+  await role(null, true);
+  assert.equal(await rdoCredential(launched.id), null);
+  assert.deepEqual(await rdoOrigin([launched.id]), {
+    credential: null,
+    folders: [{ id: launched.id, parentId: rdoPublishedId, rootId: rdoRoot }],
+  });
+  await role();
+  await sql`update vault.secrets set name='nexus_ca_inspecao_drive_service_account'
+    where name='credencial-de-teste-indisponivel'`;
+  console.log("PASS credencial e origem exigem serviço, pastas exatas e unidade publicada");
+
   const failedRdo = await rdoRefresh();
   await deny(() => finish(failedRdo, { ...rdoScan([]), nextPageToken: "incompleto" }), "23514");
   assert.equal(
@@ -621,9 +670,19 @@ try {
   assert.equal((await finish(failedRdo, rdoScan([]))).state, "obsolete");
   assert.equal((await finish(changedRdo, rdoScan([moved]))).state, "completed");
   assert.deepEqual(await rdoSummary(), [moved]);
+  await role(null, true);
+  await deny(() => rdoCredential(folders[0].id), "42501");
+  await deny(() => rdoOrigin([moved.id, folders[0].id]), "42501");
+  assert.deepEqual(JSON.parse(await rdoCredential(moved.id)), credential);
+  assert.deepEqual((await rdoOrigin([moved.id])).folders, [
+    { id: moved.id, parentId: rdoRoot, rootId: rdoRoot },
+  ]);
   const emptyRdo = await rdoRefresh();
   assert.equal((await finish(emptyRdo, rdoScan([]))).state, "completed");
   assert.deepEqual(await rdoSummary(), []);
+  await role(null, true);
+  await deny(() => rdoCredential(moved.id), "42501");
+  await deny(() => rdoOrigin([moved.id]), "42501");
   console.log(
     "PASS leitura completa substitui pastas removidas ou movidas, preserva a anterior em falhas e isola o estado dos laudos",
   );

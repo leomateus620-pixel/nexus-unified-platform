@@ -102,12 +102,22 @@ try {
       check(caught?.code === code, `${label}: ${caught?.code || "accepted"}`);
     };
     await auth(admin);
+    const [{ visit_dates: visitDates }] = await tx`
+      select array(
+        select ((now() at time zone 'America/Sao_Paulo')::date + day)::text
+        from generate_series(1, 5) as visits(day)
+        order by day
+      ) as visit_dates
+    `;
+    const visitWindow = (index) => ({
+      inicio_local: `${visitDates[index]}T10:00`,
+      fim_local: `${visitDates[index]}T11:00`,
+    });
     const base = {
       titulo: "Visita técnica isolada",
       descricao: "Execução de teste SQL",
       tipo: "visita_tecnica",
-      inicio_local: "2026-11-10T10:00",
-      fim_local: "2026-11-10T11:00",
+      ...visitWindow(0),
       timezone: "America/Sao_Paulo",
       dia_inteiro: false,
       local: "Local de teste",
@@ -165,8 +175,7 @@ try {
     const partialId = partial.detalhe.custodias[0].id;
     const withoutTools = {
       ...externalData,
-      inicio_local: "2026-11-11T10:00",
-      fim_local: "2026-11-11T11:00",
+      ...visitWindow(1),
     };
     delete withoutTools.ferramentas;
     await reject(
@@ -223,8 +232,7 @@ try {
     const exactData = {
       ...externalData,
       titulo: "Reserva externa exata",
-      inicio_local: "2026-11-12T10:00",
-      fim_local: "2026-11-12T11:00",
+      ...visitWindow(2),
     };
     const ex = await exec("salvar_evento", { evento: exactData });
     const exp = await exec("publicar", {
@@ -254,8 +262,7 @@ try {
       expected_version: exp.detalhe.evento.version,
       evento: {
         ...exactData,
-        inicio_local: "2026-11-13T10:00",
-        fim_local: "2026-11-13T11:00",
+        ...visitWindow(3),
         ferramentas: [{ ferramenta_id: tool, pessoa_id: principal }],
       },
     });
@@ -275,8 +282,7 @@ try {
     );
     const legacyData = {
       ...exactData,
-      inicio_local: "2026-11-14T10:00",
-      fim_local: "2026-11-14T11:00",
+      ...visitWindow(4),
     };
     delete legacyData.ferramentas;
     const retained = await rpc("salvar_evento_agenda", {

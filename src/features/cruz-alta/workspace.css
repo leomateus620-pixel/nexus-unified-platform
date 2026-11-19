@@ -973,3 +973,51 @@
   grid-column: 2;
   grid-row: 1 / span 2;
 }
+.ca-rdo-photos h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px;
+}
+.ca-rdo-tag + .ca-rdo-tag {
+  margin-top: 13px;
+}
+.ca-rdo-tag h4 {
+  margin: 0 0 5px;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+.ca-rdo-tag ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ca-rdo-tag a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 7px 10px;
+  color: var(--ca-ink);
+  background: var(--ca-subtle);
+  border: 1px solid var(--ca-rule);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+.ca-rdo-tag a:hover strong {
+  text-decoration: underline;
+}
+.ca-rdo-tag a:focus-visible {
+  outline: 3px solid #1167ad;
+  outline-offset: 1px;
+}
+.ca-rdo-tag a small {
+  display: block;
+  margin-top: 2px;
+  color: var(--ca-muted);
+  line-height: 1.3;
+}

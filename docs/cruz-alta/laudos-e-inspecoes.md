@@ -16,6 +16,12 @@ PDFs finais de laudos e placas são classificados pela pasta, pelo código compl
 
 O perfil revisor precisa da permissão `revisar_nr` e de um cadastro profissional ativo no Nexus. O revisor abre a página do documento, confirma os campos indicados e decide sobre o aviso. O mapa usa datas documentadas. Um aviso de prazo ou restrição informa a condição registrada no acervo. A autorização operacional é tratada no processo da unidade.
 
+## Fotos de montagem e RDO
+
+A ficha lateral mostra as pastas da LVHF selecionada e das linhas vinculadas à estrutura. O código no início do nome é conferido contra a cena. As subpastas numeradas da raiz entram como fotos de montagem. As subpastas numeradas de `LANÇADOS RDO CHARLISE` entram como fotos lançadas no RDO. A seção usa a identificação técnica da linha e abre a pasta original em outra aba. O Drive aplica o compartilhamento da pasta e mostra as fotos recém-adicionadas ao abrir o link.
+
+Aplique a migração `0089` via Lovable e publique o worker antes de executar `ca_inspecao_rdo_registrar(p_raiz, p_lancadas)` no banco do projeto, com os IDs das duas pastas do Drive. A função cadastra a origem na configuração privada e usa a fila existente. O worker percorre as duas listagens, incluindo páginas adicionais, e substitui a relação de pastas somente ao concluir a conferência. Mudanças de nome, movimentações e novas pastas numeradas entram no ciclo do agendador. A aplicação consulta o inventário com a sessão da unidade e a permissão de abrir originais.
+
 ## Conferência
 
 - A listagem do Drive encontrou 40 códigos distintos presentes em `Laudos`, `Linhas Já Montadas` e na cena. O número decimal foi tratado como parte da identidade. As duas unidades de `01` mantêm o vínculo no nível da linha enquanto a evidência não as distingue.

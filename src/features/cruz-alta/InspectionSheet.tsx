@@ -1,9 +1,18 @@
 import { lazy, Suspense, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { AlertTriangle, ChevronRight, FileCheck2, FileText, RefreshCw } from "lucide-react";
+import {
+  AlertTriangle,
+  Camera,
+  ChevronRight,
+  ExternalLink,
+  FileCheck2,
+  FileText,
+  RefreshCw,
+} from "lucide-react";
 import { cruzAlta } from "./context";
 import { objects } from "./manifest";
+import type { CruzObject } from "./scene-types";
 import { hasInspectionEvidence, technicalTitle } from "./inspection-display";
 import { caInspectionOpen, caInspectionReview, caInspectionSyncNow } from "./inspection.functions";
 import {
@@ -14,6 +23,7 @@ import {
   type CaInspectionLine,
   type CaInspectionSummary,
   type InspectionAdoptField,
+  type InspectionRdoFolder,
 } from "./inspection-domain";
 
 const Pdf = lazy(() =>
@@ -158,6 +168,78 @@ export function InspectionSourcesReader({
 
 const byKey = new Map(objects.map((object) => [object.id, object]));
 
+function descendsFrom(item: CruzObject, ancestor: string) {
+  let parent = item.parent;
+  while (parent) {
+    if (parent === ancestor) return true;
+    parent = byKey.get(parent)?.parent;
+  }
+  return false;
+}
+
+const rdoFolderCategories = [
+  { id: "montagem", label: "Pasta de montagem" },
+  { id: "lancada", label: "Lançadas no RDO" },
+] as const;
+
+function rdoFolderUrl(folder: InspectionRdoFolder) {
+  const url = new URL("https://drive.google.com/drive/folders/" + encodeURIComponent(folder.id));
+  if (folder.resourceKey) url.searchParams.set("resourcekey", folder.resourceKey);
+  return url.href;
+}
+
+export function RdoPhotoFolders({
+  object,
+  folders,
+  inspections,
+}: {
+  object: CruzObject;
+  folders: InspectionRdoFolder[];
+  inspections: ReadonlyMap<string, CaInspectionLine>;
+}) {
+  if (!folders.length || !["estrutura", "componente", "lvhf"].includes(object.kind)) return null;
+
+  const byLine = new Map<CruzObject, InspectionRdoFolder[]>();
+  for (const folder of folders) {
+    const line = byKey.get(`lvhf-${folder.code}`);
+    if (!line || (line.id !== object.id && !descendsFrom(line, object.id))) continue;
+    const matched = byLine.get(line);
+    if (matched) matched.push(folder);
+    else byLine.set(line, [folder]);
+  }
+  if (!byLine.size) return null;
+
+  return (
+    <section className="ca-detail-section ca-rdo-photos" aria-labelledby="ca-rdo-photos-heading">
+      <h3 id="ca-rdo-photos-heading">
+        <Camera size={17} aria-hidden="true" /> Fotos de montagem
+      </h3>
+      {[...byLine.entries()].map(([line, links]) => (
+        <div className="ca-rdo-tag" key={line.id}>
+          {object.kind !== "lvhf" && <h4>{technicalTitle(line, inspections.get(line.id))}</h4>}
+          <ul>
+            {rdoFolderCategories.map(({ id, label }) => {
+              const category = links.filter((link) => link.category === id);
+              return category.map((link) => (
+                <li key={`${id}-${link.id}`}>
+                  <a href={rdoFolderUrl(link)} target="_blank" rel="noopener noreferrer">
+                    <span>
+                      <strong>{label}</strong>
+                      {category.length > 1 && <small>{link.name}</small>}
+                      <span className="sr-only"> (abre em outra aba)</span>
+                    </span>
+                    <ExternalLink size={16} aria-hidden="true" />
+                  </a>
+                </li>
+              ));
+            })}
+          </ul>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 export function RelatedInspections({
   object,
   lines,
@@ -168,12 +250,8 @@ export function RelatedInspections({
   onOpen: (id: string) => void;
 }) {
   const related = lines.filter((line) => {
-    let current = byKey.get(line.key)?.parent;
-    while (current) {
-      if (current === object) return true;
-      current = byKey.get(current)?.parent;
-    }
-    return false;
+    const item = byKey.get(line.key);
+    return item && descendsFrom(item, object);
   });
   if (!related.length) return null;
   return (

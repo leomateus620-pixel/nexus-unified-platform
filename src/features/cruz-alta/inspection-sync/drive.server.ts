@@ -230,7 +230,11 @@ export function createDrive(credentials: Credentials, transport = fetch) {
     })();
     const headers = new Headers({ Authorization: `Bearer ${await bearer}` });
     if (key) headers.set("X-Goog-Drive-Resource-Keys", `${id}/${key}`);
-    const response = await transport(`${DRIVE_API}${path}`, { headers, redirect: "manual", signal });
+    const response = await transport(`${DRIVE_API}${path}`, {
+      headers,
+      redirect: "manual",
+      signal,
+    });
     expectSuccess(response, "leitura_drive_indisponivel");
     return response;
   }
@@ -326,6 +330,7 @@ export function createDrive(credentials: Credentials, transport = fetch) {
       pageToken: string | null,
       signal: AbortSignal,
       expected: { parent?: string | undefined; name?: string | undefined },
+      foldersOnly = false,
     ) {
       // A parent filter can return an empty result even if the folder cannot be read.
       const folderParams = new URLSearchParams({
@@ -347,15 +352,31 @@ export function createDrive(credentials: Credentials, transport = fetch) {
       if (expected.name && folder["name"] !== expected.name)
         throw new SyncFailure("pasta_drive_divergente");
       if (expected.parent) await confirmParent(folder, expected.parent, key, signal);
+      const folderMime = `mimeType = '${DRIVE_FOLDER}'`;
       const { raw, nextPageToken } = await listPage(
-        `'${id}' in parents and trashed = false and (mimeType = '${DRIVE_FOLDER}' or mimeType = '${DRIVE_PDF}')`,
+        `'${id}' in parents and trashed = false and ${foldersOnly ? folderMime : `(${folderMime} or mimeType = '${DRIVE_PDF}')`}`,
         FILE_FIELDS,
         id,
         key,
         pageToken,
         signal,
       );
-      return { items: raw.map((item) => asDriveItem(item, id)), nextPageToken };
+      const safeNames = foldersOnly
+        ? raw.filter((item) => {
+            const name = record(item)["name"];
+            return (
+              typeof name !== "string" ||
+              !Array.from(name).some((character) => {
+                const code = character.charCodeAt(0);
+                return code < 32 || (code >= 127 && code <= 159);
+              })
+            );
+          })
+        : raw;
+      const items = safeNames.map((item) => asDriveItem(item, id));
+      if (foldersOnly && items.some((item) => item.mimeType !== DRIVE_FOLDER))
+        throw new SyncFailure("listagem_rdo_inconsistente", true);
+      return { items, nextPageToken };
     },
     async download(item: DriveItem, signal: AbortSignal) {
       const params = new URLSearchParams({ supportsAllDrives: "true", fields: FILE_FIELDS });

@@ -14593,6 +14593,16 @@ export type Database = {
         };
         Returns: Json;
       };
+      ca_publicar_ate82: {
+        Args: {
+          p_arquivo: string;
+          p_chave: string;
+          p_dados: Json;
+          p_operacao: string;
+          p_org: string;
+        };
+        Returns: Json;
+      };
       ca_relacoes: {
         Args: { p_chave: string; p_org: string };
         Returns: {

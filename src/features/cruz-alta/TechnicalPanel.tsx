@@ -310,7 +310,15 @@ function SheetContent({
                     <article className="ca-doc" key={d.id + d.objeto}>
                       <strong>{d.titulo}</strong>
                       <p className="ca-hint">
-                        Vínculo · {objects.find((o) => o.id === d.objeto)?.name ?? d.objeto}
+                        Vínculo ·{" "}
+                        {(d.origens ?? [d.objeto])
+                          .map((id) => {
+                            const source = objects.find((o) => o.id === id);
+                            return source
+                              ? [source.code, source.name].filter(Boolean).join(" · ")
+                              : id;
+                          })
+                          .join(" / ")}
                       </p>
                       {current ? (
                         <button onClick={() => openReader(d.id, current.id)}>
@@ -344,7 +352,7 @@ function SheetContent({
                             Adicionar revisão
                           </button>
                         )}
-                        {sheet.pode_editar && d.objeto === object.id && (
+                        {sheet.pode_editar && (d.origens ?? [d.objeto]).includes(object.id) && (
                           <button onClick={() => setUnlink(d)}>Desvincular deste objeto</button>
                         )}
                       </details>
@@ -534,8 +542,7 @@ function EditSheet({
   onCancel,
   onSuccess,
 }: FormActions & { scope: Scope; sheet: Sheet }) {
-  const save = useServerFn(caSalvarFicha),
-    get = useServerFn(caFicha);
+  const save = useServerFn(caSalvarFicha);
   const [base, setBase] = useState(sheet);
   const [draft, setDraft] = useState({
     titulo: sheet.titulo,
@@ -558,23 +565,23 @@ function EditSheet({
         );
         try {
           const changedDims = JSON.stringify(dimensions) !== JSON.stringify(base.atributos);
-          if (Object.keys(alteracoes).length || changedDims)
-            await save({
+          if (Object.keys(alteracoes).length || changedDims) {
+            const result = await save({
               data: {
                 ...scope,
                 version: base.version,
                 alteracoes: { ...alteracoes, ...(changedDims ? { atributos: dimensions } : {}) },
               },
             });
+            if (result.conflito) {
+              setConflict(result.ficha);
+              setError("Outra edição foi salva. Compare as duas versões antes de conciliar.");
+              return;
+            }
+          }
           await onSuccess("Ficha salva.");
         } catch (c) {
           setError(describeError(c));
-          if (/conflito|concorr|versão|version/i.test(describeError(c)))
-            try {
-              setConflict(await get({ data: scope }));
-            } catch {
-              /* draft stays visible */
-            }
         } finally {
           setBusy(false);
         }

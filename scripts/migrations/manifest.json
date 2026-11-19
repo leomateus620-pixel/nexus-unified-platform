@@ -427,6 +427,10 @@
     {
       "path": "drizzle/migrations/0082_nr_cena_evidencias.sql",
       "sha256": "cd8f0840b477d6dfd3d986cd6ecf04be60e2d0c6c0824a61c1c531ce7a1fdc86"
+    },
+    {
+      "path": "drizzle/migrations/0083_nr_cena_conjuntos.sql",
+      "sha256": "cccfc0840b1dc60eeb825e4f4139e1c06c8e23290b1f6e0d0ec07d218940f4e1"
     }
   ]
 }

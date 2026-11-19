@@ -47,6 +47,7 @@ const ficha = z.object({
       titulo: z.string(),
       escopo,
       objeto: z.string(),
+      origens: z.array(z.string()).optional(),
       version: z.number().int(),
       descricao: z.string(),
       pode_corrigir: z.boolean(),
@@ -133,15 +134,21 @@ export const caSalvarFicha = createServerFn({ method: "POST" })
         .strict(),
     }),
   )
-  .handler(async ({ context, data }) =>
-    ficha.parse(
-      await rpc(context.supabase, "ca_salvar", {
-        ...params(data),
-        p_version: data.version,
-        p_dados: data.alteracoes,
-      }),
-    ),
-  );
+  .handler(async ({ context, data }) => {
+    const scope = params(data);
+    const current = async () => ficha.parse(await rpc(context.supabase, "ca_ficha", scope));
+    const saved = await current();
+    if (!saved.pode_editar) throw new Error("Sem permissão para editar a ficha.");
+    if (saved.version !== data.version) return { conflito: true, ficha: saved };
+    // The SQL compare-and-swap still protects edits arriving after this read.
+    const result = await db(context.supabase).rpc("ca_salvar", {
+      ...scope,
+      p_version: data.version,
+      p_dados: data.alteracoes,
+    });
+    if (result.error?.code === "40001") return { conflito: true, ficha: await current() };
+    return { conflito: false, ficha: ficha.parse(nrResult(result)) };
+  });
 export const caDocumentosDisponiveis = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator(alvo)

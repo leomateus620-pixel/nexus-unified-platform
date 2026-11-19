@@ -27,8 +27,8 @@ const database = "cruz_alta_acervo_" + process.pid;
 const control = postgres(options),
   sql = postgres({ ...options, database }),
   other = postgres({ ...options, database });
-const migrations = (await loadManifest(process.cwd())).slice(0, 106);
-assert.equal(migrations.at(-1).path, "drizzle/migrations/0082_nr_cena_evidencias.sql");
+const migrations = (await loadManifest(process.cwd())).slice(0, 107);
+assert.equal(migrations.at(-1).path, "drizzle/migrations/0083_nr_cena_conjuntos.sql");
 // Correspondência exclusiva do catálogo, testada somente no cluster descartável acima.
 const org = "abab473b-8baa-4781-aed2-c1243338af65",
   client = "c3d779b6-c407-8ab4-8545-6bdfd6068013",
@@ -76,9 +76,7 @@ try {
     (await sql`select cena from nr_cenas_unidade where unidade_id=${otherUnit}`)[0].cena,
     "outra-cena-teste",
   );
-  passed(
-    "0080/0081/0082 aplicadas e repetidas pelo envelope e runner com preservação da cena legada",
-  );
+  passed("0080–0083 aplicadas e repetidas pelo envelope e runner com preservação da cena legada");
   for (const [id, user] of [
     [unit, viewer],
     [otherUnit, outsider],
@@ -156,7 +154,31 @@ try {
   assert.notEqual(recovered.caminho, oldPath.caminho);
   assert.equal((await prepare(bad, badHash)).id, recovered.id);
   passed("caminho incompleto retirado e retomado com a mesma operação");
+  async function stage(meta, sha256, selected, size = 400, mime = "application/pdf") {
+    const old = (await sql`select ca_inventario(${org}) r`)[0].r.filter(
+      (x) => x.sourceId !== meta.origem.id,
+    );
+    await inventory([
+      ...old,
+      {
+        sourceId: meta.origem.id,
+        sha256,
+        mime,
+        size,
+        status: "conferido",
+        documentKey: meta.origem.documento_chave,
+        page: meta.origem.pagina,
+        title: meta.titulo,
+        revision: meta.rotulo === "Original" ? null : meta.rotulo,
+        date: meta.data,
+        scope: mime.startsWith("image/") ? "evidencia" : meta.escopo,
+        objectKeys: [selected],
+      },
+    ]);
+  }
   await verify(a, hash);
+  await denied(() => publish(original, op, a.id, meta), "23514");
+  await stage(meta, hash, original);
   const first = await publish(original, op, a.id, meta);
   assert.deepEqual(await publish(original, op, a.id, meta), first);
   passed("interrupção antes do commit, retomada e repetição idempotente");
@@ -186,6 +208,7 @@ try {
     hash2 = "b".repeat(64),
     b = await prepare(op2, hash2);
   await verify(b, hash2);
+  await stage({ ...meta, rotulo: "02", data: "2026-11-18" }, hash2, original);
   const second = await publish(original, op2, b.id, {
     ...meta,
     rotulo: "02",
@@ -193,6 +216,17 @@ try {
     documento_id: first.documento_id,
     anterior_id: first.revisao_id,
   });
+  const structure = await get(other, "estrutura-armazem-01");
+  assert.equal(structure.documentos.length, 1);
+  assert.deepEqual(structure.documentos[0].origens, [original, shared]);
+  assert.equal(structure.documentos[0].id, first.documento_id);
+  assert.equal(
+    (
+      await sql`select ca_previa(${org},'estrutura-armazem-01',${first.documento_id},${second.revisao_id}) r`
+    )[0].r.arquivo_id,
+    b.id,
+  );
+  passed("conjunto dos descendentes aparece uma vez na estrutura, preservando os dois vínculos");
   const s = await get(other, shared);
   assert.equal(s.documentos.length, 1);
   assert.equal(s.documentos[0].vigente_id, second.revisao_id);
@@ -256,6 +290,7 @@ try {
     () => publish(roof, imgIntent, img.id, { ...noDate, categoria: "individual" }),
     "23514",
   );
+  await stage(noDate, imgHash, roof, 302, "image/png");
   await publish(roof, imgIntent, img.id, noDate);
   const evidence = (await get(sql, roof)).documentos[0].revisoes[0];
   assert.equal(evidence.data, null);

@@ -1,0 +1,157 @@
+{
+  "method": "Similaridade ajustada por mínimos quadrados em quatro feições. Checagens independentes incluem feições elevadas e absorbem paralaxe e diferença de época.",
+  "reference": "Esri World Imagery, EPSG:3857, TileMatrix 18. A resolução nominal na latitude do centro é 0,524 m/px.",
+  "parameters": [
+    [
+      2.43744558442067e-05,
+      -0.4038993953228478,
+      258.73507978247005
+    ],
+    [
+      0.4038993953228478,
+      2.43744558442067e-05,
+      -235.22510067503094
+    ]
+  ],
+  "controls": [
+    {
+      "id": "A1",
+      "sector": "Norte",
+      "feature": "Borda da plataforma junto à faixa de árvores",
+      "kind": "ajuste",
+      "sheet": [
+        290,
+        105
+      ],
+      "reference": [
+        220.35523521863834,
+        -120.22558750909609
+      ],
+      "deviationM": 4.553
+    },
+    {
+      "id": "A2",
+      "sector": "Tanques",
+      "feature": "Canto externo do fechamento no pátio do reservatório",
+      "kind": "ajuste",
+      "sheet": [
+        225,
+        423
+      ],
+      "reference": [
+        85.68468661311181,
+        -144.1397857549641
+      ],
+      "deviationM": 2.215
+    },
+    {
+      "id": "A3",
+      "sector": "Armazenagem",
+      "feature": "Faixa pavimentada junto ao corredor ferroviário",
+      "kind": "ajuste",
+      "sheet": [
+        226,
+        637
+      ],
+      "reference": [
+        0.6405471945551436,
+        -140.2072110155891
+      ],
+      "deviationM": 3.81
+    },
+    {
+      "id": "A4",
+      "sector": "Sul",
+      "feature": "Canto do meio-fio do canteiro circular, sudoeste da bateria",
+      "kind": "ajuste",
+      "sheet": [
+        1202,
+        848
+      ],
+      "reference": [
+        -84.74227311380508,
+        248.49777247161106
+      ],
+      "deviationM": 2.046
+    },
+    {
+      "id": "V1",
+      "sector": "Farelo",
+      "feature": "Aresta externa do armazém farelo, sujeita a paralaxe",
+      "kind": "independente",
+      "sheet": [
+        972,
+        303
+      ],
+      "reference": [
+        132.01034584050862,
+        157.4841265977971
+      ],
+      "deviationM": 4.368
+    },
+    {
+      "id": "V2",
+      "sector": "Silos sul",
+      "feature": "Costado visível do silo extremo da bateria, sujeito a paralaxe",
+      "kind": "independente",
+      "sheet": [
+        1194,
+        432
+      ],
+      "reference": [
+        78.82376625230248,
+        247.88299922443744
+      ],
+      "deviationM": 5.52
+    },
+    {
+      "id": "V3",
+      "sector": "Armazém 01",
+      "feature": "Aresta lateral do depósito junto ao armazém, sujeita a paralaxe",
+      "kind": "independente",
+      "sheet": [
+        420,
+        769
+      ],
+      "reference": [
+        -53.653605957147846,
+        -67.23125440730595
+      ],
+      "deviationM": 2.451
+    },
+    {
+      "id": "V4",
+      "sector": "Oeste",
+      "feature": "Canto de cobertura baixa no limite da malha urbana",
+      "kind": "independente",
+      "sheet": [
+        264,
+        860
+      ],
+      "reference": [
+        -91.72805355296063,
+        -130.2442680981562
+      ],
+      "deviationM": 3.535
+    },
+    {
+      "id": "V5",
+      "sector": "Extração",
+      "feature": "Aresta no pátio técnico junto à extração, sujeita a paralaxe",
+      "kind": "independente",
+      "sheet": [
+        511,
+        222
+      ],
+      "reference": [
+        165.95413020699746,
+        -29.8341797491915
+      ],
+      "deviationM": 3.286
+    }
+  ],
+  "rmseIndependentM": 3.9711773065427334,
+  "maxIndependentM": 5.52,
+  "scaleA1": 0.4031750031498047,
+  "scaleFit": 0.40389939605832065
+}

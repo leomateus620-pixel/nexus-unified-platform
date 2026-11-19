@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Box } from "lucide-react";
 import { nrMapaContexto } from "./mapa.functions";
 import type { NrSearch } from "../NrWorkspace";
+import { isCruzAlta, cruzAlta } from "@/features/cruz-alta/context";
 import type { Norma } from "../domain";
 export function UnitMapEntry({
   org,
@@ -37,6 +38,18 @@ export function UnitMapEntry({
     retry: false,
     staleTime: 15000,
   });
+  if (
+    norma === "NR35" &&
+    search.escopo !== "todos" &&
+    isCruzAlta(org, search.cliente, search.unidade)
+  ) {
+    if (option) return <option value="mapa-3d">Mapa 3D</option>;
+    return (
+      <Link className="nr-map-entry" to={cruzAlta.rota}>
+        <Box size={18} aria-hidden /> Mapa 3D
+      </Link>
+    );
+  }
   if (!q.data?.cena) return null;
   if (option) return <option value="mapa-3d">Mapa 3D</option>;
   return (

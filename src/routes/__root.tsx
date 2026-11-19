@@ -147,6 +147,7 @@ function RootComponent() {
     select: (state) =>
       [
         "/mapas-3d/trevisan",
+        "/mapas-3d/tres-tentos-cruz-alta",
         "/escada-lc02",
         "/mapas-3d/silo-engolfamento",
         "/.lovable/oauth/consent",

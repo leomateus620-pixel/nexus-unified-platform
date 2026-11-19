@@ -50,6 +50,39 @@ function Maps() {
       </label>
       <div className="nx-map-library grid min-w-0 gap-4 md:grid-cols-2 2xl:grid-cols-3">
         <Link
+          to="/mapas-3d/tres-tentos-cruz-alta"
+          aria-label="Abrir visualização: Três Tentos — Cruz Alta/RS"
+          style={{
+            display: show("Três Tentos 3tentos Cruz Alta RS fábrica preparação silos LVHF")
+              ? "flex"
+              : "none",
+          }}
+          className="group overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/50"
+        >
+          <div className="bg-muted">
+            <img
+              src="/models/cruz-alta/implantacao.webp"
+              alt="Implantação modelada da fábrica de Cruz Alta"
+              className="h-64 w-full object-cover"
+            />
+          </div>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[10px] uppercase tracking-[.2em] text-primary">
+                Três Tentos · Rio Grande do Sul
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold">Cruz Alta</h2>
+              <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+                Explore as coberturas, os setores e as linhas de vida. Abra a ficha de uma estrutura
+                para consultar as pranchas da unidade.
+              </p>
+            </div>
+            <span className="nx-map-open">
+              Abrir visualização <ArrowUpRight aria-hidden size={18} />
+            </span>
+          </div>
+        </Link>
+        <Link
           to="/mapas-3d/silo-engolfamento"
           aria-label="Abrir visualização: Silo metálico · LVHF interna"
           style={{
@@ -208,6 +241,7 @@ function Maps() {
         </Link>
       </div>
       {![
+        "Três Tentos 3tentos Cruz Alta RS fábrica preparação silos LVHF",
         "silo metálico lvhf interna treinamento segurança massa granular",
         "Trevisan arroz moega coberturas levantamento",
         "3 Tentos unidade industrial silos armazenagem",

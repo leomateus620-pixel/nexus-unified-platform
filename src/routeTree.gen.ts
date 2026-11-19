@@ -37,6 +37,7 @@ import { Route as AuthenticatedProjetosEngenhariaRouteImport } from './routes/_a
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as AuthenticatedSegurancaRouteImport } from './routes/_authenticated/seguranca'
 import { Route as Mapas3dSiloEngolfamentoRouteImport } from './routes/mapas-3d_.silo-engolfamento'
+import { Route as Mapas3dTresTentosCruzAltaRouteImport } from './routes/mapas-3d_.tres-tentos-cruz-alta'
 import { Route as Mapas3dTrevisanRouteImport } from './routes/mapas-3d_.trevisan'
 import { Route as Mapas3dUnidadesRouteImport } from './routes/mapas-3d_.unidades'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -225,6 +226,12 @@ const Mapas3dSiloEngolfamentoRoute = Mapas3dSiloEngolfamentoRouteImport.update({
   path: '/mapas-3d/silo-engolfamento',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Mapas3dTresTentosCruzAltaRoute =
+  Mapas3dTresTentosCruzAltaRouteImport.update({
+    id: '/mapas-3d_/tres-tentos-cruz-alta',
+    path: '/mapas-3d/tres-tentos-cruz-alta',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const Mapas3dTrevisanRoute = Mapas3dTrevisanRouteImport.update({
   id: '/mapas-3d_/trevisan',
   path: '/mapas-3d/trevisan',
@@ -519,6 +526,7 @@ export interface FileRoutesByFullPath {
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/seguranca': typeof AuthenticatedSegurancaRoute
   '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
+  '/mapas-3d/tres-tentos-cruz-alta': typeof Mapas3dTresTentosCruzAltaRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -579,6 +587,7 @@ export interface FileRoutesByTo {
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/seguranca': typeof AuthenticatedSegurancaRoute
   '/mapas-3d/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
+  '/mapas-3d/tres-tentos-cruz-alta': typeof Mapas3dTresTentosCruzAltaRoute
   '/mapas-3d/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d/unidades': typeof Mapas3dUnidadesRoute
   '/': typeof AuthenticatedIndexRoute
@@ -650,6 +659,7 @@ export interface FileRoutesById {
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/seguranca': typeof AuthenticatedSegurancaRoute
   '/mapas-3d_/silo-engolfamento': typeof Mapas3dSiloEngolfamentoRoute
+  '/mapas-3d_/tres-tentos-cruz-alta': typeof Mapas3dTresTentosCruzAltaRoute
   '/mapas-3d_/trevisan': typeof Mapas3dTrevisanRoute
   '/mapas-3d_/unidades': typeof Mapas3dUnidadesRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
@@ -723,6 +733,7 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/seguranca'
     | '/mapas-3d/silo-engolfamento'
+    | '/mapas-3d/tres-tentos-cruz-alta'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/.lovable/oauth/consent'
@@ -783,6 +794,7 @@ export interface FileRouteTypes {
     | '/relatorios'
     | '/seguranca'
     | '/mapas-3d/silo-engolfamento'
+    | '/mapas-3d/tres-tentos-cruz-alta'
     | '/mapas-3d/trevisan'
     | '/mapas-3d/unidades'
     | '/'
@@ -853,6 +865,7 @@ export interface FileRouteTypes {
     | '/_authenticated/relatorios'
     | '/_authenticated/seguranca'
     | '/mapas-3d_/silo-engolfamento'
+    | '/mapas-3d_/tres-tentos-cruz-alta'
     | '/mapas-3d_/trevisan'
     | '/mapas-3d_/unidades'
     | '/_authenticated/'
@@ -905,6 +918,7 @@ export interface RootRouteChildren {
   McpRoute: typeof McpRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   Mapas3dSiloEngolfamentoRoute: typeof Mapas3dSiloEngolfamentoRoute
+  Mapas3dTresTentosCruzAltaRoute: typeof Mapas3dTresTentosCruzAltaRoute
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -1107,6 +1121,13 @@ declare module '@tanstack/react-router' {
       path: '/mapas-3d/silo-engolfamento'
       fullPath: '/mapas-3d/silo-engolfamento'
       preLoaderRoute: typeof Mapas3dSiloEngolfamentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mapas-3d_/tres-tentos-cruz-alta': {
+      id: '/mapas-3d_/tres-tentos-cruz-alta'
+      path: '/mapas-3d/tres-tentos-cruz-alta'
+      fullPath: '/mapas-3d/tres-tentos-cruz-alta'
+      preLoaderRoute: typeof Mapas3dTresTentosCruzAltaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mapas-3d_/trevisan': {
@@ -1662,6 +1683,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   Mapas3dSiloEngolfamentoRoute: Mapas3dSiloEngolfamentoRoute,
+  Mapas3dTresTentosCruzAltaRoute: Mapas3dTresTentosCruzAltaRoute,
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,

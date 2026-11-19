@@ -48,6 +48,7 @@ import { RecordList } from "./NrRecordCards";
 import { NrCard } from "./NrCards";
 import { NrClientSelect } from "./NrClientSelect";
 import "./nr.css";
+import { isCruzAlta, cruzAlta } from "@/features/cruz-alta/context";
 import { UnitMapEntry } from "./mapa/UnitMapEntry";
 import { NrContratacao } from "./NrContratacao";
 const NrUnitTeam = lazy(() => import("./NrUnitTeam").then((m) => ({ default: m.NrUnitTeam })));
@@ -55,6 +56,7 @@ const UnitMapWorkspace = lazy(() => import("./mapa/UnitMapWorkspace"));
 const UnitPetExperience = lazy(() =>
   import("@/features/pet/demo/UnitPetExperience").then((m) => ({ default: m.UnitPetExperience })),
 );
+const CruzAltaWorkspace = lazy(() => import("@/features/cruz-alta/CruzAltaWorkspace"));
 const NrFilesPanel = lazy(() =>
   import("./NrFilesPanel").then((module) => ({ default: module.NrFilesPanel })),
 );
@@ -110,6 +112,8 @@ export type NrSection =
   | "mapa-3d"
   | "conferencia";
 export type NrSearch = {
+  plantaDocumento?: string;
+  plantaRevisao?: string;
   cliente: string;
   unidade: string;
   busca: string;
@@ -492,6 +496,8 @@ function NrScope({
   function changeContext(patch: Partial<NrSearch>) {
     const next: Partial<NrSearch> = {
       ...patch,
+      plantaDocumento: "",
+      plantaRevisao: "",
       local: "",
       objeto: "",
       painel: "resumo",
@@ -545,6 +551,17 @@ function NrScope({
       setBusy(false);
     }
   }
+  const cruzAltaAtiva =
+    norma === "NR35" &&
+    isCruzAlta(org, search.cliente, search.unidade) &&
+    search.escopo !== "todos" &&
+    contexto?.unidades.some((u) => u.id === cruzAlta.unidade && u.cliente_id === cruzAlta.cliente);
+  if (cruzAltaAtiva && section === "mapa-3d")
+    return (
+      <Link className="nr-map-entry" to={cruzAlta.rota}>
+        Abrir mapa de Cruz Alta
+      </Link>
+    );
   if (section === "mapa-3d" && contexto)
     return (
       <Suspense fallback={<LoadingState label="Abrindo mapa da unidade…" />}>
@@ -808,6 +825,27 @@ function NrScope({
                 </Link>
               ))}
             </nav>
+            {cruzAltaAtiva && section === "documentos" && !id && (
+              <Suspense fallback={<LoadingState label="Abrindo acervo de Cruz Alta…" />}>
+                <CruzAltaWorkspace
+                  archive
+                  search={{
+                    objeto: search.objeto || undefined,
+                    aba: search.painel === "ficha" ? "ficha" : "documentos",
+                    documento: search.plantaDocumento || undefined,
+                    revisao: search.plantaRevisao || undefined,
+                  }}
+                  onChange={(s) =>
+                    onSearch({
+                      objeto: s.objeto ?? "",
+                      painel: s.aba === "ficha" ? "ficha" : "acervo",
+                      plantaDocumento: s.documento ?? "",
+                      plantaRevisao: s.revisao ?? "",
+                    })
+                  }
+                />
+              </Suspense>
+            )}
             {!search.unidade &&
             search.escopo !== "todos" &&
             !id &&

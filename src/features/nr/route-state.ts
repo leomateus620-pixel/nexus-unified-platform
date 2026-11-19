@@ -11,6 +11,8 @@ export const nrSearchSchema = z.object({
   coleta: z.enum(["", "iniciar", "campo", "revisao", "reinspecao"]).catch(""),
   coletaRevisao: z.string().uuid().or(z.literal("")).catch(""),
   camera: z.enum(["normal", "superior", "angular"]).catch("normal"),
+  plantaDocumento: z.string().uuid().or(z.literal("")).catch(""),
+  plantaRevisao: z.string().uuid().or(z.literal("")).catch(""),
   objeto: z.string().max(60).catch(""),
   visualizacao: z.enum(["compacta", "expandida", "dedicada"]).catch("compacta"),
   petDemo: z.union([z.string().uuid(), z.literal("nova"), z.literal("")]).catch(""),

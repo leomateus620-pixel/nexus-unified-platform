@@ -1,0 +1,89 @@
+{
+  "ambiente": "Chromium headless, WebGL via SwiftShader, aplicação local, sem login",
+  "chromium": "153.0.8010.12",
+  "results": [
+    "Primeiro arraste orbita sem selecionar.",
+    "Busca sem acento enquadra Preparação. O código 28.1 abre a cobertura. Escape conserva a posição.",
+    "Raycast sobre a cumeeira resolve cobertura-28.1.",
+    "Hash, recorte fotográfico e sobreposição do PDF A1 local na planta com opacidade ajustável.",
+    "Passeio ao nível do pátio com deslocamento pelo teclado.",
+    "Pinça mantém a cena. Em 390 × 844 a ficha permanece selecionável, sem transbordamento e com X ≥44 px.",
+    "Sem WebGL, a lista abre a mesma cobertura 28.1.",
+    "Perda de WebGL com planta de contingência e reconstrução do contexto."
+  ],
+  "cameras": {
+    "angular": {
+      "engine": "three.js r186",
+      "camera": "-329.897,376.617,301.721",
+      "target": "68.955,9.673,26.513",
+      "fov": "43",
+      "zoom": "1",
+      "mode": "angular",
+      "calls": "102",
+      "triangles": "468281",
+      "width": 1440,
+      "height": 823
+    },
+    "planta": {
+      "engine": "three.js r186",
+      "camera": "68.955,723.963,26.514",
+      "target": "68.955,0.000,26.513",
+      "fov": "orthographic",
+      "zoom": "0.8771929824561404",
+      "mode": "planta",
+      "calls": "101",
+      "triangles": "468274",
+      "width": 1440,
+      "height": 823
+    },
+    "preparacao": {
+      "engine": "three.js r186",
+      "camera": "87.549,63.757,-52.242",
+      "target": "148.479,7.701,-94.284",
+      "fov": "43",
+      "zoom": "1",
+      "mode": "angular",
+      "calls": "72",
+      "triangles": "464705",
+      "width": 1022,
+      "height": 823
+    },
+    "dji-0044": {
+      "engine": "three.js r186",
+      "camera": "-14.041,21.222,-129.049",
+      "target": "-3.585,8.626,-94.680",
+      "fov": "46.37917198155022",
+      "zoom": "1",
+      "mode": "angular",
+      "calls": "91",
+      "triangles": "468458",
+      "width": 1440,
+      "height": 823
+    },
+    "encontro-11-56": {
+      "engine": "three.js r186",
+      "camera": "-43.268,9.500,-106.648",
+      "target": "-5.003,7.600,-94.248",
+      "fov": "43",
+      "zoom": "1",
+      "mode": "angular",
+      "calls": "79",
+      "triangles": "466975",
+      "width": 1440,
+      "height": 823
+    },
+    "celular": {
+      "engine": "three.js r186",
+      "camera": "-190.464,187.139,80.884",
+      "target": "8.329,4.250,-56.282",
+      "fov": "43",
+      "zoom": "1",
+      "mode": "angular",
+      "calls": "99",
+      "triangles": "465843",
+      "width": 390,
+      "height": 371
+    }
+  },
+  "errors": []
+}

@@ -25,10 +25,14 @@ export type NrPreviewFile = {
 export function NrOriginalPreview({
   org,
   file,
+  authorizePreview,
+  showOriginalLink = true,
 }: {
   org: string;
   file: NrPreviewFile;
   url: string;
+  authorizePreview?: () => Promise<{ url: string }>;
+  showOriginalLink?: boolean;
 }) {
   const authorize = useServerFn(nrArquivoBaixar);
   const host = useRef<HTMLDivElement>(null),
@@ -46,8 +50,11 @@ export function NrOriginalPreview({
     [textError, setTextError] = useState("");
   const [attempt, setAttempt] = useState(0);
   const [link, setLink] = useState("");
-  const authorization = useRef(authorize);
-  authorization.current = authorize;
+  const renew =
+    authorizePreview ??
+    (() => authorize({ data: { organization_id: org, id: file.id, visualizar: true } }));
+  const authorization = useRef(renew);
+  authorization.current = renew;
   useEffect(() => {
     if (!host.current) return;
     const observer = new ResizeObserver(([entry]) => {
@@ -68,9 +75,7 @@ export function NrOriginalPreview({
     async function open() {
       try {
         // A new attempt renews access. Download links remain an explicit fallback for every state.
-        const permitted = await authorization.current({
-          data: { organization_id: org, id: file.id, visualizar: true },
-        });
+        const permitted = await authorization.current();
         controller.signal.throwIfAborted();
         setLink(permitted.url);
         const response = await fetch(permitted.url, {
@@ -113,7 +118,7 @@ export function NrOriginalPreview({
     // Continued viewing revalidates the authenticated relationship, independently of signed-URL TTL.
     const interval = setInterval(() => {
       void authorization
-        .current({ data: { organization_id: org, id: file.id, visualizar: true } })
+        .current()
         .then((result) => {
           if (!controller.signal.aborted) setLink(result.url);
         })
@@ -236,7 +241,7 @@ export function NrOriginalPreview({
         >
           <RotateCw size={16} />
         </ActionButton>
-        {link && (
+        {link && showOriginalLink && (
           <a
             className="inline-flex min-h-11 items-center gap-2 underline text-sm"
             href={link}

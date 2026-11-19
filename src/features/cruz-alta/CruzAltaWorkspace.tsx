@@ -1,0 +1,226 @@
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { useOrg, useSessionUser } from "@/features/org/session";
+import CruzAltaViewer from "./CruzAltaViewer";
+import { geometry, objects as elements } from "./manifest";
+import type { CruzObject } from "./scene-types";
+import { cruzAlta } from "./context";
+import "./workspace.css";
+const objects: CruzObject[] = elements.some((e) => e.id === "unidade")
+  ? elements
+  : [{ id: "unidade", kind: "setor", name: "Três Tentos — Cruz Alta/RS" }, ...elements];
+
+function label(object: CruzObject) {
+  return object.id.startsWith("cobertura-")
+    ? object.id.slice(10) + " · " + object.name
+    : object.name;
+}
+
+const Panel = lazy(() => import("./TechnicalPanel"));
+export type MapSearch = {
+  objeto?: string | undefined;
+  aba?: "documentos" | "ficha" | undefined;
+  documento?: string | undefined;
+  revisao?: string | undefined;
+};
+export type ChangeSearch = (next: MapSearch, replace?: boolean) => void;
+export default function CruzAltaWorkspace({
+  search,
+  onChange,
+  archive = false,
+}: {
+  search: MapSearch;
+  onChange: ChangeSearch;
+  archive?: boolean;
+}) {
+  const user = useSessionUser();
+  const org = useOrg();
+  const [compact, setCompact] = useState(false);
+
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
+  const panelBody = useRef<HTMLDivElement>(null);
+  const scrollPos = useRef(0);
+  const selected = objects.find((o) => o.id === search.objeto);
+  const reader = !!(search.revisao || search.documento);
+  const select = (id: string) => {
+    if (!search.objeto) opener.current = document.activeElement as HTMLElement;
+    scrollPos.current = 0;
+    setCompact(false);
+    onChange({ objeto: id, aba: "documentos" }, !!search.objeto);
+  };
+  const close = () => {
+    if (reader) onChange({ objeto: search.objeto, aba: "documentos" }, true);
+    else {
+      onChange({}, true);
+
+      requestAnimationFrame(() =>
+        (opener.current?.isConnected
+          ? opener.current
+          : document.querySelector<HTMLElement>(".ca-workspace button")
+        )?.focus(),
+      );
+    }
+  };
+  useEffect(() => {
+    if (!search.objeto) return;
+    closeButton.current?.focus({ preventScroll: true });
+    if (panelBody.current) panelBody.current.scrollTop = reader ? 0 : scrollPos.current;
+    const escape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented) return;
+      event.preventDefault();
+      close();
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, [search.objeto, reader]); // Camera and layers remain mounted across panel and reader navigation.
+  const openReader = (doc: string, rev: string) => {
+    scrollPos.current = panelBody.current?.scrollTop ?? 0;
+    onChange({ ...search, aba: "documentos", documento: doc, revisao: rev });
+  };
+  return (
+    <div
+      className={[
+        "ca-workspace",
+        (!!search.objeto || reader) && "ca-has-panel",
+        reader && "ca-expanded",
+        compact && !reader && "ca-compact",
+        archive && "ca-archive",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {archive ? (
+        <div className="ca-archive-index">
+          <h2>Acervo de Cruz Alta</h2>
+          <label>
+            Estrutura ou componente
+            <select value={search.objeto ?? ""} onChange={(e) => select(e.target.value)}>
+              <option value="">Selecione um objeto</option>
+              {objects.map((o) => (
+                <option value={o.id} key={o.id}>
+                  {label(o)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <Link to={cruzAlta.rota} search={{ ...search, vista: undefined }}>
+            Ver no mapa 3D
+          </Link>
+        </div>
+      ) : (
+        <div className="ca-viewport-wrap">
+          <CruzAltaViewer selectedId={selected?.id ?? null} onSelect={select} />
+        </div>
+      )}
+      {(search.objeto || reader) && (
+        <aside
+          className="ca-drawer"
+          aria-label={reader ? "Leitor de documentos" : "Ficha do objeto"}
+        >
+          <header className="ca-drawer-head">
+            <div>
+              <span>
+                {reader
+                  ? "Leitor de documentos"
+                  : selected?.id === "unidade"
+                    ? "Unidade industrial"
+                    : selected?.kind === "lvhf"
+                      ? "Linha de vida horizontal flexível"
+                      : (selected?.kind ?? "Ficha técnica")}
+              </span>
+              <h2>{selected ? label(selected) : "Objeto indisponível"}</h2>
+            </div>
+            {!reader && (
+              <button
+                className="ca-mobile-size"
+                onClick={() => {
+                  setCompact(!compact);
+                }}
+                aria-label={compact ? "Abrir meia ficha" : "Recolher ao resumo"}
+              >
+                {compact ? <ChevronUp /> : <ChevronDown />}
+              </button>
+            )}
+            <button
+              ref={closeButton}
+              onClick={close}
+              aria-label={reader ? "Fechar leitor" : "Fechar ficha"}
+            >
+              <X size={20} />
+            </button>
+          </header>
+          <div className="ca-drawer-body" ref={panelBody}>
+            {!selected ? (
+              <p role="alert">O endereço não corresponde a um objeto desta unidade.</p>
+            ) : (
+              <>
+                {!reader && selected.parent && (
+                  <button className="ca-parent" onClick={() => select(selected.parent!)}>
+                    ↑ {objects.find((o) => o.id === selected.parent)?.name ?? "Conjunto"}
+                  </button>
+                )}
+                {user === undefined || (user && org.isPending) ? (
+                  <p role="status">Conferindo acesso…</p>
+                ) : !user ? (
+                  <>
+                    <p>Entre no Nexus para consultar a ficha e as pranchas desta unidade.</p>
+                    <Link
+                      className="ca-action"
+                      to="/auth"
+                      search={{ next: window.location.pathname + window.location.search }}
+                    >
+                      Entrar no Nexus
+                    </Link>
+                  </>
+                ) : org.data?.userId !== user.id || org.data?.orgId !== cruzAlta.org ? (
+                  <p role="alert">A sessão atual não tem acesso a este acervo.</p>
+                ) : (
+                  <Suspense fallback={<p role="status">Carregando ficha…</p>}>
+                    <Panel
+                      key={user.id + selected.id}
+                      user={user.id}
+                      object={selected}
+                      search={search}
+                      change={onChange}
+                      openReader={openReader}
+                      archive={archive}
+                    />
+                  </Suspense>
+                )}
+                {!reader && geometry.some((p) => p.id === selected.id) && (
+                  <details>
+                    <summary>Geometria do modelo</summary>
+                    <p>
+                      Contorno interpretado na implantação. Níveis estimados a partir da silhueta,
+                      em metros acima do piso local.
+                    </p>
+                    {geometry
+                      .filter((p) => p.id === selected.id)
+                      .map((part, i) => (
+                        <p key={i}>
+                          Beiral {part.eave.toLocaleString("pt-BR")} m · Elevação até o topo{" "}
+                          {(part.eave + part.rise).toLocaleString("pt-BR")} m
+                        </p>
+                      ))}
+                    <p>
+                      Para confirmar a altura, conferir um corte cotado que identifique piso, beiral
+                      e topo deste corpo.
+                    </p>
+                  </details>
+                )}
+                {!reader && selected.note && (
+                  <details>
+                    <summary>Fontes e pendências</summary>
+                    <p>{selected.note}</p>
+                  </details>
+                )}
+              </>
+            )}
+          </div>
+        </aside>
+      )}
+    </div>
+  );
+}

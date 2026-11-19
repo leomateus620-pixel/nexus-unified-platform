@@ -415,6 +415,18 @@
     {
       "path": "drizzle/migrations/0079_inspecoes_originais_extensos.sql",
       "sha256": "a3178d8f7b74da46783cda067807dc1721fd647008e657f9fadfdfa04fa4d7e4"
+    },
+    {
+      "path": "drizzle/migrations/0080_nr_cena_acervo.sql",
+      "sha256": "d6a4cb45ff8b79e544725006be73e17e4886dd2934f1ee92406d75996be64e6d"
+    },
+    {
+      "path": "drizzle/migrations/0081_nr_cena_cruz_alta_elementos.sql",
+      "sha256": "93b4a5c4581e05d2bb22ad45819d35bb375bff75abf1f99b6ce3476ed0c6e664"
+    },
+    {
+      "path": "drizzle/migrations/0082_nr_cena_evidencias.sql",
+      "sha256": "cd8f0840b477d6dfd3d986cd6ecf04be60e2d0c6c0824a61c1c531ce7a1fdc86"
     }
   ]
 }

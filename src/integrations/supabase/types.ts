@@ -6957,6 +6957,294 @@ export type Database = {
         };
         Relationships: [];
       };
+      nr_cena_consultores: {
+        Row: {
+          cliente_id: string;
+          organization_id: string;
+          permite_original: boolean;
+          unidade_id: string;
+          usuario_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          cliente_id: string;
+          organization_id: string;
+          permite_original?: boolean;
+          unidade_id: string;
+          usuario_id: string;
+        };
+        Update: {
+          cliente_id?: string;
+          organization_id?: string;
+          permite_original?: boolean;
+          unidade_id?: string;
+          usuario_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_consultores_organization_id_cliente_id_unidade_id_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_cenas_unidade";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id"];
+          },
+          {
+            foreignKeyName: "nr_cena_consultores_organization_id_usuario_id_fkey";
+            columns: ["organization_id", "usuario_id"];
+            isOneToOne: false;
+            referencedRelation: "memberships";
+            referencedColumns: ["organization_id", "user_id"];
+          },
+        ];
+      };
+      nr_cena_documentos: {
+        Row: {
+          cliente_id: string;
+          criado_em: string;
+          criado_por: string;
+          documento_id: string;
+          escopo: string;
+          local_id: string;
+          organization_id: string;
+          removido_em: string | null;
+          removido_por: string | null;
+          unidade_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          cliente_id: string;
+          criado_em?: string;
+          criado_por: string;
+          documento_id: string;
+          escopo: string;
+          local_id: string;
+          organization_id: string;
+          removido_em?: string | null;
+          removido_por?: string | null;
+          unidade_id: string;
+        };
+        Update: {
+          cliente_id?: string;
+          criado_em?: string;
+          criado_por?: string;
+          documento_id?: string;
+          escopo?: string;
+          local_id?: string;
+          organization_id?: string;
+          removido_em?: string | null;
+          removido_por?: string | null;
+          unidade_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_documentos_organization_id_cliente_id_unidade_id_d_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "documento_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_documentos";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+          {
+            foreignKeyName: "nr_cena_documentos_organization_id_cliente_id_unidade_id_l_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_locais";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+        ];
+      };
+      nr_cena_elementos: {
+        Row: {
+          aliases: string[];
+          cena: string;
+          chave: string;
+          codigo: string | null;
+          nome: string;
+          nota: string | null;
+          pai: string | null;
+          situacao: string | null;
+          tipo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          aliases?: string[];
+          cena: string;
+          chave: string;
+          codigo?: string | null;
+          nome: string;
+          nota?: string | null;
+          pai?: string | null;
+          situacao?: string | null;
+          tipo: string;
+        };
+        Update: {
+          aliases?: string[];
+          cena?: string;
+          chave?: string;
+          codigo?: string | null;
+          nome?: string;
+          nota?: string | null;
+          pai?: string | null;
+          situacao?: string | null;
+          tipo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_elementos_cena_pai_fkey";
+            columns: ["cena", "pai"];
+            isOneToOne: false;
+            referencedRelation: "nr_cena_elementos";
+            referencedColumns: ["cena", "chave"];
+          },
+        ];
+      };
+      nr_cena_envios: {
+        Row: {
+          arquivo_id: string;
+          autor: string;
+          cliente_id: string;
+          criado_em: string;
+          local_id: string;
+          operacao: string;
+          organization_id: string;
+          pedido: NonNullable<Json>;
+          publicacao: Json | null;
+          resultado: Json | null;
+          unidade_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          arquivo_id: string;
+          autor: string;
+          cliente_id: string;
+          criado_em?: string;
+          local_id: string;
+          operacao: string;
+          organization_id: string;
+          pedido: NonNullable<Json>;
+          publicacao?: Json | null;
+          resultado?: Json | null;
+          unidade_id: string;
+        };
+        Update: {
+          arquivo_id?: string;
+          autor?: string;
+          cliente_id?: string;
+          criado_em?: string;
+          local_id?: string;
+          operacao?: string;
+          organization_id?: string;
+          pedido?: NonNullable<Json>;
+          publicacao?: Json | null;
+          resultado?: Json | null;
+          unidade_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_envios_organization_id_cliente_id_unidade_id_arqui_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "arquivo_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_arquivos";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+          {
+            foreignKeyName: "nr_cena_envios_organization_id_cliente_id_unidade_id_local_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "local_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_locais";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+        ];
+      };
+      nr_cena_inventarios: {
+        Row: {
+          atual: boolean;
+          cliente_id: string;
+          criado_em: string;
+          criado_por: string;
+          fontes: NonNullable<Json>;
+          id: string;
+          organization_id: string;
+          sha256: string;
+          unidade_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          atual?: boolean;
+          cliente_id: string;
+          criado_em?: string;
+          criado_por: string;
+          fontes: NonNullable<Json>;
+          id?: string;
+          organization_id: string;
+          sha256: string;
+          unidade_id: string;
+        };
+        Update: {
+          atual?: boolean;
+          cliente_id?: string;
+          criado_em?: string;
+          criado_por?: string;
+          fontes?: NonNullable<Json>;
+          id?: string;
+          organization_id?: string;
+          sha256?: string;
+          unidade_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_inventarios_organization_id_cliente_id_unidade_id_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_cenas_unidade";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id"];
+          },
+        ];
+      };
+      nr_cena_metadados: {
+        Row: {
+          atualizado_em: string;
+          autor: string;
+          cliente_id: string;
+          descricao: string;
+          documento_id: string;
+          organization_id: string;
+          titulo: string;
+          unidade_id: string;
+          versao: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          atualizado_em?: string;
+          autor: string;
+          cliente_id: string;
+          descricao: string;
+          documento_id: string;
+          organization_id: string;
+          titulo: string;
+          unidade_id: string;
+          versao?: number;
+        };
+        Update: {
+          atualizado_em?: string;
+          autor?: string;
+          cliente_id?: string;
+          descricao?: string;
+          documento_id?: string;
+          organization_id?: string;
+          titulo?: string;
+          unidade_id?: string;
+          versao?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_metadados_organization_id_cliente_id_unidade_id_do_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "documento_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_documentos";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+        ];
+      };
       nr_cena_objetos: {
         Row: {
           aliases: string[];
@@ -7000,6 +7288,55 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "nr_locais";
             referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+        ];
+      };
+      nr_cena_origens: {
+        Row: {
+          cliente_id: string;
+          documento_id: string;
+          externo_id: string;
+          organization_id: string;
+          revisao_id: string;
+          sha256: string;
+          sistema: string;
+          unidade_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          cliente_id: string;
+          documento_id: string;
+          externo_id: string;
+          organization_id: string;
+          revisao_id: string;
+          sha256: string;
+          sistema: string;
+          unidade_id: string;
+        };
+        Update: {
+          cliente_id?: string;
+          documento_id?: string;
+          externo_id?: string;
+          organization_id?: string;
+          revisao_id?: string;
+          sha256?: string;
+          sistema?: string;
+          unidade_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "nr_cena_origens_organization_id_cliente_id_unidade_id_docu_fkey";
+            columns: ["organization_id", "cliente_id", "unidade_id", "documento_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_documentos";
+            referencedColumns: ["organization_id", "cliente_id", "unidade_id", "id"];
+          },
+          {
+            foreignKeyName: "nr_cena_origens_organization_id_documento_id_revisao_id_fkey";
+            columns: ["organization_id", "documento_id", "revisao_id"];
+            isOneToOne: false;
+            referencedRelation: "nr_documento_revisoes";
+            referencedColumns: ["organization_id", "documento_id", "id"];
           },
         ];
       };
@@ -14102,6 +14439,206 @@ export type Database = {
       atualizar_componentes_revisao: {
         Args: { _esperados: Json; _ids: string[]; _patch: Json; _rev: string };
         Returns: number;
+      };
+      ca_bytes_verificados: {
+        Args: {
+          p_arquivo: string;
+          p_autor: string;
+          p_mime: string;
+          p_org: string;
+          p_sha256: string;
+          p_tamanho: number;
+        };
+        Returns: undefined;
+      };
+      ca_conciliar_inventario: {
+        Args: { p_fontes: Json; p_org: string };
+        Returns: Json;
+      };
+      ca_contexto: {
+        Args: { p_org: string };
+        Returns: {
+          cena: string;
+          cliente_id: string;
+          estado: string;
+          organization_id: string;
+          unidade_id: string;
+          versao: number;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "nr_cenas_unidade";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      ca_destino: {
+        Args: { p_chave: string; p_escopo: string; p_org: string };
+        Returns: {
+          aliases: string[];
+          arquivado_em: string | null;
+          cliente_id: string;
+          created_at: string;
+          created_by: string | null;
+          dados: NonNullable<Json>;
+          descricao: string;
+          estado: string;
+          familia: string;
+          id: string;
+          normas: string[];
+          organization_id: string;
+          pet_espaco_id: string | null;
+          tag: string;
+          tipo: string;
+          titulo: string;
+          unidade_id: string;
+          updated_at: string;
+          version: number;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "nr_locais";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      ca_disponiveis: {
+        Args: { p_chave: string; p_org: string };
+        Returns: Json;
+      };
+      ca_envio: {
+        Args: {
+          p_arquivo: string;
+          p_chave: string;
+          p_operacao: string;
+          p_org: string;
+        };
+        Returns: Json;
+      };
+      ca_estado: { Args: { p_org: string }; Returns: Json };
+      ca_ficha: { Args: { p_chave: string; p_org: string }; Returns: Json };
+      ca_inventario: { Args: { p_org: string }; Returns: Json };
+      ca_local: {
+        Args: { p_chave: string; p_org: string };
+        Returns: {
+          aliases: string[];
+          arquivado_em: string | null;
+          cliente_id: string;
+          created_at: string;
+          created_by: string | null;
+          dados: NonNullable<Json>;
+          descricao: string;
+          estado: string;
+          familia: string;
+          id: string;
+          normas: string[];
+          organization_id: string;
+          pet_espaco_id: string | null;
+          tag: string;
+          tipo: string;
+          titulo: string;
+          unidade_id: string;
+          updated_at: string;
+          version: number;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "nr_locais";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      ca_localizar_origem: {
+        Args: {
+          p_chave: string;
+          p_doc_chave: string;
+          p_org: string;
+          p_sha: string;
+          p_source: string;
+        };
+        Returns: Json;
+      };
+      ca_metadados: {
+        Args: {
+          p_chave: string;
+          p_descricao: string;
+          p_doc: string;
+          p_org: string;
+          p_titulo: string;
+          p_version: number;
+        };
+        Returns: Json;
+      };
+      ca_preparar: {
+        Args: {
+          p_chave: string;
+          p_meta: Json;
+          p_operacao: string;
+          p_org: string;
+        };
+        Returns: Json;
+      };
+      ca_previa: {
+        Args: { p_chave: string; p_doc: string; p_org: string; p_rev: string };
+        Returns: Json;
+      };
+      ca_provisionar: { Args: { p_org: string }; Returns: Json };
+      ca_publicar: {
+        Args: {
+          p_arquivo: string;
+          p_chave: string;
+          p_dados: Json;
+          p_operacao: string;
+          p_org: string;
+        };
+        Returns: Json;
+      };
+      ca_relacoes: {
+        Args: { p_chave: string; p_org: string };
+        Returns: {
+          documento_id: string;
+          escopo: string;
+          objeto: string;
+        }[];
+      };
+      ca_retirar_pendente: {
+        Args: {
+          p_arquivo: string;
+          p_chave: string;
+          p_operacao: string;
+          p_org: string;
+        };
+        Returns: string;
+      };
+      ca_revisoes: {
+        Args: { p_doc: string; p_org: string };
+        Returns: {
+          arquivo_id: string;
+          data: string;
+          id: string;
+          mime: string;
+          numero: number;
+          rotulo: string;
+        }[];
+      };
+      ca_salvar: {
+        Args: {
+          p_chave: string;
+          p_dados: Json;
+          p_org: string;
+          p_version: number;
+        };
+        Returns: Json;
+      };
+      ca_vinculo: {
+        Args: {
+          p_chave: string;
+          p_documento: string;
+          p_escopo: string;
+          p_org: string;
+          p_remover: boolean;
+        };
+        Returns: Json;
       };
       cadastrar_produto_codificado: {
         Args: {

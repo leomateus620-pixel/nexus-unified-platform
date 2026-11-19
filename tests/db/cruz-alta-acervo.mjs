@@ -27,8 +27,8 @@ const database = "cruz_alta_acervo_" + process.pid;
 const control = postgres(options),
   sql = postgres({ ...options, database }),
   other = postgres({ ...options, database });
-const migrations = (await loadManifest(process.cwd())).slice(0, 107);
-assert.equal(migrations.at(-1).path, "drizzle/migrations/0083_nr_cena_conjuntos.sql");
+const migrations = (await loadManifest(process.cwd())).slice(0, 108);
+assert.equal(migrations.at(-1).path, "drizzle/migrations/0084_nr_cena_conflito_editorial.sql");
 // Correspondência exclusiva do catálogo, testada somente no cluster descartável acima.
 const org = "abab473b-8baa-4781-aed2-c1243338af65",
   client = "c3d779b6-c407-8ab4-8545-6bdfd6068013",
@@ -76,7 +76,7 @@ try {
     (await sql`select cena from nr_cenas_unidade where unidade_id=${otherUnit}`)[0].cena,
     "outra-cena-teste",
   );
-  passed("0080–0083 aplicadas e repetidas pelo envelope e runner com preservação da cena legada");
+  passed("0080–0084 aplicadas e repetidas pelo envelope e runner com preservação da cena legada");
   for (const [id, user] of [
     [unit, viewer],
     [otherUnit, outsider],
@@ -106,7 +106,7 @@ try {
   await denied(
     () =>
       other`select ca_salvar(${org},${roof},${concurrent.version},'{"observacoes":"versão obsoleta"}')`,
-    "40001",
+    "PT409",
   );
   assert.equal((await get(other, roof)).observacoes, "TESTE de persistência");
   passed("edição concorrente em duas conexões e auditoria");
@@ -258,7 +258,7 @@ try {
   await denied(
     () =>
       other`select ca_metadados(${org},${shared},${first.documento_id},${s.documentos[0].version},'Título concorrente','')`,
-    "40001",
+    "PT409",
   );
   passed("errata de metadados entre objetos sem alterar a revisão original");
   const imgIntent = randomUUID(),

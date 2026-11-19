@@ -85,7 +85,7 @@ const params = (data: z.infer<typeof alvo>) => ({
 });
 async function rpc(client: unknown, nome: string, argumentos: Record<string, unknown>) {
   const response = await db(client).rpc(nome, argumentos);
-  if (response.error?.code === "40001")
+  if (response.error?.code === "PT409" || response.error?.code === "40001")
     throw new Error(
       "Conflito de edição. Recarregue para comparar a versão atual com suas alterações.",
     );
@@ -146,7 +146,8 @@ export const caSalvarFicha = createServerFn({ method: "POST" })
       p_version: data.version,
       p_dados: data.alteracoes,
     });
-    if (result.error?.code === "40001") return { conflito: true, ficha: await current() };
+    if (result.error?.code === "PT409" || result.error?.code === "40001")
+      return { conflito: true, ficha: await current() };
     return { conflito: false, ficha: ficha.parse(nrResult(result)) };
   });
 export const caDocumentosDisponiveis = createServerFn({ method: "GET" })

@@ -431,6 +431,10 @@
     {
       "path": "drizzle/migrations/0083_nr_cena_conjuntos.sql",
       "sha256": "cccfc0840b1dc60eeb825e4f4139e1c06c8e23290b1f6e0d0ec07d218940f4e1"
+    },
+    {
+      "path": "drizzle/migrations/0084_nr_cena_conflito_editorial.sql",
+      "sha256": "19af09c17012112a1d2bfd90e18eac6463d217303bda6708105a5e682ff0369e"
     }
   ]
 }

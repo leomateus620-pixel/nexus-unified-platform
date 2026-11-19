@@ -10,8 +10,9 @@ A cena `tres-tentos-cruz-alta` corresponde à organização `abab473b-8baa-4781-
 | 0081 | 105 | Catálogo de identidades e hierarquia | `93b4a5c4581e05d2bb22ad45819d35bb375bff75abf1f99b6ce3476ed0c6e664` |
 | 0082 | 106 | Fotografia original com data interna desconhecida, nota de evidência e autoria da inclusão | `cd8f0840b477d6dfd3d986cd6ecf04be60e2d0c6c0824a61c1c531ce7a1fdc86` |
 | 0083 | 107 | Conjuntos dos descendentes na ficha da estrutura e conferência de proveniência pelo inventário no servidor | `cccfc0840b1dc60eeb825e4f4139e1c06c8e23290b1f6e0d0ec07d218940f4e1` |
+| 0084 | 108 | Conflito editorial HTTP 409 na gravação de ficha, metadados e revisão | `19af09c17012112a1d2bfd90e18eac6463d217303bda6708105a5e682ff0369e` |
 
-O conector Lovable confirmou as quatro migrações no banco do Nexus em 19/11/2026. O ledger registrou 0080 às 00h38min57s, 0081 às 00h39min56s, 0082 às 00h44min22s e 0083 às 00h50min56s, horário de Brasília. A aplicação direta usou o envelope do repositório, que confere o prefixo completo do ledger, serializa com o deploy e grava o checksum na mesma transação da alteração.
+O conector Lovable confirmou as cinco migrações no banco do Nexus em 19/11/2026. O ledger registrou 0080 às 00h38min57s, 0081 às 00h39min56s, 0082 às 00h44min22s, 0083 às 00h50min56s e 0084 às 01h25min20s, horário de Brasília. A aplicação direta usou o envelope do repositório, que confere o prefixo completo do ledger, serializa com o deploy e grava o checksum na mesma transação da alteração.
 
 ## Leitura e publicação
 
@@ -63,3 +64,5 @@ Na prévia do Lovable, a sessão de Diego cadastrou as 213 entidades e conciliou
 Na ficha 28.1, a individual abriu no leitor autenticado na revisão 02, datada de 12/11/2026, página 1 de 2. Fechar o leitor devolveu a ficha 28.1 com as seções de componente e conjunto. O editor salvou uma observação e publicou um PDF identificado como teste. Pelos componentes 11 e 56, vinculou o mesmo documento de teste como desenho de conjunto. A revisão 02 foi publicada a partir do 11. A consulta pelo acervo do 56 mostrou a revisão 02 vigente e a 01 histórica. O leitor renderizou a página do original histórico. Depois de sair da sessão, o link direto solicitou login e devolveu a mesma página do PDF, objeto e revisão. A observação e o anexo reapareceram na ficha 28.1.
 
 O teste criou um documento lógico adicional, dois arquivos com conteúdos diferentes, duas revisões e três vínculos. O banco confirmou o mesmo autor de sessão nas duas revisões. Os originais importados conservaram seus históricos. O teste com um segundo perfil de consulta e o caso de interrupção entre Storage e banco estão documentados nos cenários de PostgreSQL acima.
+
+Na prévia conectada, duas abas iniciaram a edição da mesma versão da ficha 28.1. A primeira gravou a observação. Na segunda, o rascunho local continuou no formulário enquanto a ficha mostrou a versão 3 do servidor, a observação já gravada e o controle de conciliação. O teste revelou inicialmente uma repetição do erro transitório pelo transporte. A migração 0084 passou a distinguir esse conflito editorial com HTTP 409, e o ensaio foi repetido com sucesso. O catálogo confirmou o sinal nas três funções e a posição 108 do ledger.

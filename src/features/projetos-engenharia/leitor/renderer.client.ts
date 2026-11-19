@@ -49,20 +49,24 @@ type RangedPdf = {
   size: number;
   authorize: (signal: AbortSignal) => Promise<{ url: string; expiresAt?: string | undefined }>;
   onFailure: (error: unknown) => void;
+  chunkHashes?: readonly string[];
 };
+
+function loadPdfEngine() {
+  return import("pdfjs-dist/legacy/build/pdf.min.mjs");
+}
+
+export function preparePdfEngine() {
+  return loadPdfEngine().then(() => undefined);
+}
 
 /** Only this client-only module imports PDF.js. No native Node/canvas or scripting package. */
 async function openPdf(
   source: Uint8Array | RangedPdf,
   signal: AbortSignal,
   assetBaseUrl: string,
+  staticWorker: boolean,
 ): Promise<ReaderDocument> {
-  const [api, { default: workerUrl }] = await Promise.all([
-    import("pdfjs-dist/legacy/build/pdf.min.mjs"),
-    import("pdfjs-dist/legacy/build/pdf.worker.min.mjs?url"),
-  ]);
-  signal.throwIfAborted();
-  if (api.version !== PDFJS_VERSION) throw new LeituraPeError("worker");
   const base = new URL(assetBaseUrl, window.location.origin);
   if (
     base.origin !== window.location.origin ||
@@ -71,6 +75,14 @@ async function openPdf(
     !base.pathname.endsWith(`/${PDFJS_VERSION}/`)
   )
     throw new LeituraPeError("worker");
+  const [api, workerUrl] = await Promise.all([
+    loadPdfEngine(),
+    staticWorker
+      ? new URL("legacy/build/pdf.worker.min.mjs", base).href
+      : import("pdfjs-dist/legacy/build/pdf.worker.min.mjs?url").then((asset) => asset.default),
+  ]);
+  signal.throwIfAborted();
+  if (api.version !== PDFJS_VERSION) throw new LeituraPeError("worker");
   const input =
     source instanceof Uint8Array
       ? { data: source }
@@ -81,6 +93,7 @@ async function openPdf(
             source.authorize,
             signal,
             source.onFailure,
+            source.chunkHashes,
           ),
           disableStream: true,
           disableAutoFetch: true,
@@ -329,12 +342,18 @@ export async function openOriginalDocument(
   mime: OriginalMime,
   signal: AbortSignal,
   assetBaseUrl: string,
+  staticWorker = false,
 ) {
   return mime === "application/pdf"
-    ? openPdf(bytes, signal, assetBaseUrl)
+    ? openPdf(bytes, signal, assetBaseUrl, staticWorker)
     : openImage(bytes, mime, signal);
 }
 
-export function openRangedPdf(source: RangedPdf, signal: AbortSignal, assetBaseUrl: string) {
-  return openPdf(source, signal, assetBaseUrl);
+export function openRangedPdf(
+  source: RangedPdf,
+  signal: AbortSignal,
+  assetBaseUrl: string,
+  staticWorker = false,
+) {
+  return openPdf(source, signal, assetBaseUrl, staticWorker);
 }

@@ -9,7 +9,6 @@ import {
   ChevronRight,
   ClipboardList,
   FileCheck2,
-  FileImage,
   FileText,
   Link2,
   Paperclip,
@@ -41,7 +40,8 @@ import { describeFile, operationId, transferFile } from "./upload";
 import { InspectionSection, InspectionSourcesReader, RelatedInspections } from "./InspectionSheet";
 import { RdoPhotoGallery } from "./RdoPhotoGallery";
 import { CruzAltaPdf, prepareCruzAltaPdf } from "./pdf-preview";
-import { useRdoPhotos } from "./use-rdo-photos";
+import { AcervoImageReader, AcervoImageThumbnail, AcervoOfficeDownload } from "./AcervoMedia";
+import type { useRdoPhotos } from "./use-rdo-photos";
 import type { CaInspectionLine, CaInspectionSummary } from "./inspection-domain";
 import {
   inspectionCatalog,
@@ -73,6 +73,7 @@ type Props = {
   inspectionsPending: boolean;
   refreshInspections: () => Promise<unknown>;
   archive: boolean;
+  photos: ReturnType<typeof useRdoPhotos>;
 };
 const describeError = (e: unknown) =>
   e instanceof Error ? e.message : "Não foi possível confirmar a operação.";
@@ -81,6 +82,12 @@ function feedback(text: string) {
     <p role="alert" className="ca-feedback">
       {text}
     </p>
+  );
+}
+function isAcervoOffice(mime: string | null) {
+  return (
+    mime === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    mime === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   );
 }
 export default function TechnicalPanel(props: Props) {
@@ -94,7 +101,6 @@ export default function TechnicalPanel(props: Props) {
   const scope = { organization_id: cruzAlta.org, chave: object.id };
   const key = ["cruz-alta", user, scope.organization_id];
   const reading = !!(search.revisao || search.documento || search.evidencia);
-  const photos = useRdoPhotos(user, object, !reading);
   const state = useQuery({
     queryKey: [...key, "estado"],
     queryFn: ({ signal }) => getState({ data: { organization_id: scope.organization_id }, signal }),
@@ -113,55 +119,59 @@ export default function TechnicalPanel(props: Props) {
       qc.invalidateQueries({ queryKey: ["nr", scope.organization_id] }),
     ]);
   }
-  if (state.isError || sheet.isError)
-    return (
-      <>
-        {feedback(describeError(state.error || sheet.error))}
-        <button className="ca-action" onClick={() => void refresh()}>
-          Tentar novamente
-        </button>
-      </>
-    );
-  if (!state.data) return <p role="status">Conferindo a unidade…</p>;
-  if (!state.data.provisionada)
-    return (
-      <>
-        <p>As estruturas ainda aguardam cadastro no acervo.</p>
-        {state.data.pode_provisionar && (
-          <button
-            className="ca-action"
-            disabled={working}
-            onClick={async () => {
-              setWorking(true);
-              setError("");
-              try {
-                await provision({ data: { organization_id: scope.organization_id } });
-                await refresh();
-              } catch (e) {
-                setError(describeError(e));
-              } finally {
-                setWorking(false);
-              }
-            }}
-          >
-            Cadastrar estruturas no acervo
+  function renderSheet() {
+    if (state.isError || sheet.isError)
+      return (
+        <>
+          {feedback(describeError(state.error || sheet.error))}
+          <button className="ca-action" onClick={() => void refresh()}>
+            Tentar novamente
           </button>
-        )}
-        {error && feedback(error)}
-      </>
+        </>
+      );
+    if (!state.data) return <p role="status">Conferindo a unidade…</p>;
+    if (!state.data.provisionada)
+      return (
+        <>
+          <p>As estruturas ainda aguardam cadastro no acervo.</p>
+          {state.data.pode_provisionar && (
+            <button
+              className="ca-action"
+              disabled={working}
+              onClick={async () => {
+                setWorking(true);
+                setError("");
+                try {
+                  await provision({ data: { organization_id: scope.organization_id } });
+                  await refresh();
+                } catch (e) {
+                  setError(describeError(e));
+                } finally {
+                  setWorking(false);
+                }
+              }}
+            >
+              Cadastrar estruturas no acervo
+            </button>
+          )}
+          {error && feedback(error)}
+        </>
+      );
+    if (!sheet.data) return <p role="status">Carregando ficha…</p>;
+    return (
+      <SheetContent
+        {...props}
+        scope={scope}
+        sheet={sheet.data}
+        refresh={refresh}
+        mediaActive={!reading}
+      />
     );
-  if (!sheet.data) return <p role="status">Carregando ficha…</p>;
+  }
+  const ready = !!state.data?.provisionada && !!sheet.data && !state.isError && !sheet.isError;
   return (
     <>
-      <div hidden={reading}>
-        <SheetContent
-          {...props}
-          scope={scope}
-          sheet={sheet.data}
-          refresh={refresh}
-          photos={photos}
-        />
-      </div>
+      <div hidden={!!search.evidencia || (reading && ready)}>{renderSheet()}</div>
       {search.evidencia ? (
         <InspectionSourcesReader
           key={search.evidencia + "/" + search.pagina}
@@ -173,7 +183,9 @@ export default function TechnicalPanel(props: Props) {
           page={search.pagina}
         />
       ) : (
-        reading && (
+        reading &&
+        ready &&
+        sheet.data && (
           <Reader
             key={[object.id, search.documento].join("/")}
             onRevision={props.openReader}
@@ -204,18 +216,26 @@ function Reader({
   const preview = useServerFn(caPrevia);
   const doc = docs.find((d) => d.id === search.documento),
     rev = doc?.revisoes.find((r) => r.id === search.revisao);
-  const renew = (signal: AbortSignal) =>
-    preview({ data: { ...scope, documento_id: doc!.id, revisao_id: rev!.id }, signal });
+  const pdfRevision = rev?.mime === "application/pdf";
+  const renew = async (signal: AbortSignal) => {
+    const result = await preview({
+      data: { ...scope, documento_id: doc!.id, revisao_id: rev!.id },
+      signal,
+    });
+    return { url: result.url, expiresAt: result.expira_em };
+  };
   const q = useQuery({
     queryKey: ["cruz-alta-preview", user, scope, doc?.id, rev?.id],
-    queryFn: ({ signal }) => renew(signal),
-    enabled: !!rev,
+    queryFn: ({ signal }) =>
+      preview({
+        data: { ...scope, documento_id: doc!.id, revisao_id: rev!.id, representar: true },
+        signal,
+      }),
+    enabled: pdfRevision,
     retry: false,
     gcTime: 0,
     refetchOnWindowFocus: false,
-    refetchInterval: (query) => (query.state.data?.mime.startsWith("image/") ? 30_000 : false),
   });
-  const pdfRevision = rev?.mime === "application/pdf";
   useEffect(() => {
     if (pdfRevision) prepareCruzAltaPdf();
   }, [pdfRevision]);
@@ -242,7 +262,21 @@ function Reader({
         </label>
         {rev.nota && <p>{rev.nota}</p>}
       </header>
-      {q.isError ? (
+      {rev.mime?.startsWith("image/") ? (
+        <AcervoImageReader
+          key={rev.id}
+          scope={{ ...scope, documento_id: doc.id, revisao_id: rev.id }}
+          user={user}
+          title={doc.titulo}
+        />
+      ) : isAcervoOffice(rev.mime) ? (
+        <AcervoOfficeDownload
+          key={rev.id}
+          scope={{ ...scope, documento_id: doc.id, revisao_id: rev.id }}
+        />
+      ) : !pdfRevision ? (
+        <p>Prévia indisponível para este formato.</p>
+      ) : q.isError ? (
         <>
           {feedback("Prévia indisponível. " + describeError(q.error))}
           <button className="ca-action" onClick={() => void q.refetch()}>
@@ -268,16 +302,11 @@ function Reader({
               sha256: q.data.sha256,
             }}
             authorizePreview={renew}
+            representations={q.data.representations}
+            staticWorker
             showOriginalLink={false}
           />
         </Suspense>
-      ) : q.data.mime.startsWith("image/") ? (
-        <ReaderImage
-          key={`${q.data.arquivo_id}/${q.data.sha256}`}
-          url={q.data.url}
-          title={doc.titulo}
-          refresh={async () => (await q.refetch()).data?.url}
-        />
       ) : (
         <p>Prévia indisponível para este formato.</p>
       )}
@@ -285,52 +314,6 @@ function Reader({
   );
 }
 
-function ReaderImage({
-  url,
-  title,
-  refresh,
-}: {
-  url: string;
-  title: string;
-  refresh: () => Promise<string | undefined>;
-}) {
-  const [src, setSrc] = useState(url);
-  const [status, setStatus] = useState<"loading" | "ready" | "failed" | "retrying">("loading");
-  if (status === "retrying") return <p role="status">Preparando prévia privada…</p>;
-  if (status === "failed") {
-    return (
-      <>
-        {feedback("Prévia de imagem indisponível.")}
-        <button
-          className="ca-action"
-          type="button"
-          onClick={async () => {
-            setStatus("retrying");
-            const next = await refresh();
-            if (next) setSrc(next);
-            setStatus(next ? "loading" : "failed");
-          }}
-        >
-          Tentar novamente
-        </button>
-      </>
-    );
-  }
-  return (
-    <>
-      {status === "loading" && <p role="status">Carregando imagem…</p>}
-      <img
-        className="ca-reader-image"
-        src={src}
-        alt={title}
-        decoding="async"
-        referrerPolicy="no-referrer"
-        onLoad={() => setStatus("ready")}
-        onError={() => setStatus("failed")}
-      />
-    </>
-  );
-}
 function formatDate(value: string | null) {
   return value ? value.split("T")[0]?.split("-").reverse().join("/") : "Data não informada";
 }
@@ -358,6 +341,7 @@ function SheetContent({
   scope,
   sheet,
   photos,
+  mediaActive,
   refresh,
   object,
   user,
@@ -373,7 +357,7 @@ function SheetContent({
 }: Props & {
   scope: Scope;
   sheet: Sheet;
-  photos: ReturnType<typeof useRdoPhotos>;
+  mediaActive: boolean;
   refresh: () => Promise<void>;
 }) {
   const [form, setForm] = useState<"anexar" | "vincular" | "editar" | "importar" | null>(null);
@@ -448,9 +432,7 @@ function SheetContent({
   const showPhotos =
     object.kind === "estrutura" || object.kind === "componente" || object.kind === "lvhf";
   const hasPhotoLinks =
-    showPhotos &&
-    !!photos.data?.photos.length &&
-    !photos.error?.message.startsWith("Unauthorized:");
+    showPhotos && !!photos.data?.total && !photos.error?.message.startsWith("Unauthorized:");
   const hasInspectionLinks = showInspection || related.length > 0;
   return (
     <section className="ca-technical">
@@ -570,6 +552,9 @@ function SheetContent({
               <DocumentShelf
                 docs={sheet.documentos}
                 inspections={catalog}
+                context={scope}
+                user={user}
+                mediaActive={mediaActive}
                 owner={object.id}
                 editing={editing}
                 canPublish={sheet.pode_publicar}
@@ -731,6 +716,9 @@ function SheetContent({
 function DocumentShelf({
   docs,
   inspections,
+  context,
+  user,
+  mediaActive,
   owner,
   editing,
   canPublish,
@@ -743,6 +731,9 @@ function DocumentShelf({
 }: {
   docs: DocumentRow[];
   inspections: ReadonlyMap<string, CaInspectionLine>;
+  context: Scope;
+  user: string;
+  mediaActive: boolean;
   owner: string;
   editing: boolean;
   canPublish: boolean;
@@ -810,11 +801,6 @@ function DocumentShelf({
             {group.map((doc) => {
               const current = doc.revisoes.find((r) => r.id === doc.vigente_id);
               const history = doc.revisoes.filter((r) => r.id !== doc.vigente_id);
-              const icon = current?.mime?.startsWith("image/") ? (
-                <FileImage size={18} />
-              ) : (
-                <FileText size={18} />
-              );
               const canEditDoc =
                 editing &&
                 (doc.pode_corrigir ||
@@ -823,9 +809,17 @@ function DocumentShelf({
               return (
                 <article className="ca-doc" key={doc.id + doc.objeto}>
                   <div className="ca-doc-heading">
-                    <span className="ca-doc-icon" aria-hidden="true">
-                      {icon}
-                    </span>
+                    {mediaActive && current?.mime?.startsWith("image/") ? (
+                      <AcervoImageThumbnail
+                        key={current.id}
+                        scope={{ ...context, documento_id: doc.id, revisao_id: current.id }}
+                        user={user}
+                      />
+                    ) : (
+                      <span className="ca-doc-icon" aria-hidden="true">
+                        <FileText size={18} />
+                      </span>
+                    )}
                     <div>
                       <h4>{doc.titulo}</h4>
                       <p className="ca-hint">{names(doc).join(" · ")}</p>
@@ -859,6 +853,12 @@ function DocumentShelf({
                         {history.map((r) => (
                           <li key={r.id}>
                             <button className="ca-open-revision" onClick={() => open(doc.id, r.id)}>
+                              {mediaActive && r.mime?.startsWith("image/") && (
+                                <AcervoImageThumbnail
+                                  scope={{ ...context, documento_id: doc.id, revisao_id: r.id }}
+                                  user={user}
+                                />
+                              )}
                               <span>
                                 <strong>{revisionLabel(r.rotulo)}</strong>
                                 <small>{formatDate(r.data)}</small>

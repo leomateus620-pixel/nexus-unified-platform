@@ -5,14 +5,29 @@ import { ActionButton } from "@/components/nexus/Page";
 import { nrArquivoBaixar } from "./files.functions";
 import { confirmedNrOriginalBytes } from "./original-bytes";
 import type { ReaderDocument } from "@/features/projetos-engenharia/leitor/renderer.client";
+import type { CruzPdfRepresentations } from "@/features/cruz-alta/pdf-representations";
 import {
   failureKind,
   failureText,
   isCancelled,
+  LeituraPeAccessError,
+  PDFJS_VERSION,
 } from "@/features/projetos-engenharia/leitor/domain";
 const loadRenderer = createClientOnlyFn(
   () => import("@/features/projetos-engenharia/leitor/renderer.client"),
 );
+const assets = `/pdfjs/${PDFJS_VERSION}/`;
+
+type Authorization = { url: string; expiresAt?: string | undefined };
+
+function fetchVerifiedPdf(url: string, tamanho: number, sha256: string, signal: AbortSignal) {
+  return fetch(url, {
+    signal,
+    credentials: "omit",
+    cache: "no-store",
+    referrerPolicy: "no-referrer",
+  }).then((response) => confirmedNrOriginalBytes(response, { tamanho, sha256 }, signal));
+}
 
 export type NrPreviewFile = {
   id: string;
@@ -28,6 +43,8 @@ export function NrOriginalPreview({
   url,
   initialAuthorizedUntil,
   authorizePreview,
+  representations,
+  staticWorker = false,
   showOriginalLink = true,
   initialPage = 1,
 }: {
@@ -35,7 +52,9 @@ export function NrOriginalPreview({
   file: NrPreviewFile;
   url: string;
   initialAuthorizedUntil?: number;
-  authorizePreview?: (signal: AbortSignal) => Promise<{ url: string }>;
+  authorizePreview?: (signal: AbortSignal) => Promise<Authorization>;
+  representations?: CruzPdfRepresentations | undefined;
+  staticWorker?: boolean;
   showOriginalLink?: boolean;
   initialPage?: number;
 }) {
@@ -54,6 +73,8 @@ export function NrOriginalPreview({
   const [textOpen, setTextOpen] = useState(false),
     [textError, setTextError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  const [originalRequested, setOriginalRequested] = useState(false);
+  const [previewPage, setPreviewPage] = useState<number>();
   const [link, setLink] = useState("");
   const renew =
     authorizePreview ??
@@ -61,8 +82,8 @@ export function NrOriginalPreview({
       authorize({ data: { organization_id: org, id: file.id, visualizar: true }, signal }));
   const authorization = useRef(renew);
   authorization.current = renew;
-  const initialAuthorization = useRef({ url, validUntil: initialAuthorizedUntil });
-  initialAuthorization.current = { url, validUntil: initialAuthorizedUntil };
+  const initialAuthorization = useRef({ url, validUntil: initialAuthorizedUntil, representations });
+  initialAuthorization.current = { url, validUntil: initialAuthorizedUntil, representations };
   useEffect(() => {
     if (!host.current) return;
     const observer = new ResizeObserver(([entry]) => {
@@ -73,45 +94,171 @@ export function NrOriginalPreview({
   }, []);
   useEffect(() => {
     const controller = new AbortController();
+    let pendingAuthorization: Promise<Authorization> | undefined;
+    const renewAuthorization = () =>
+      (pendingAuthorization ??= authorization.current(controller.signal).finally(() => {
+        pendingAuthorization = undefined;
+      }));
     let reader: ReaderDocument | undefined;
+    let derivative: ReaderDocument | undefined;
+    let original: ReaderDocument | undefined;
     setBusy(true);
     setLink("");
     setError("");
     setPages(0);
     setPage(initialPage);
+    setPreviewPage(undefined);
     setPageText("");
     async function open() {
       try {
         const initial = initialAuthorization.current;
-        const permitted =
-          attempt === 0 && initial.validUntil && initial.validUntil > Date.now()
-            ? initial
-            : await authorization.current(controller.signal);
-        controller.signal.throwIfAborted();
+        const { signal } = controller;
+        const rendererPromise = loadRenderer();
+        void rendererPromise.then((renderer) => renderer.preparePdfEngine()).catch(() => undefined);
+        const initialAvailable =
+          attempt === 0 && !!initial.validUntil && initial.validUntil > Date.now();
+        const permitted: Authorization = initialAvailable
+          ? { url: initial.url, expiresAt: new Date(initial.validUntil!).toISOString() }
+          : await renewAuthorization();
+        signal.throwIfAborted();
         setLink(permitted.url);
-        const [bytes, { openOriginalDocument }] = await Promise.all([
-          fetch(permitted.url, {
-            signal: controller.signal,
-            credentials: "omit",
-            cache: "no-store",
-            referrerPolicy: "no-referrer",
-          }).then((response) =>
-            confirmedNrOriginalBytes(
-              response,
-              { tamanho: file.tamanho, sha256: file.sha256 },
-              controller.signal,
-            ),
-          ),
-          loadRenderer(),
-        ]);
-        controller.signal.throwIfAborted();
-        reader = await openOriginalDocument(
-          bytes,
-          "application/pdf",
-          controller.signal,
-          "/pdfjs/6.4.299/",
-        );
-        controller.signal.throwIfAborted();
+        const manifest = initialAvailable ? initial.representations : undefined;
+        const tryOriginal = async () => {
+          const renderer = await rendererPromise;
+          const openFull = async () => {
+            const source =
+              Date.parse(permitted.expiresAt ?? "") > Date.now() + 5_000 || !permitted.expiresAt
+                ? permitted
+                : await renewAuthorization();
+            const bytes = await fetchVerifiedPdf(source.url, file.tamanho, file.sha256, signal);
+            return renderer.openOriginalDocument(
+              bytes,
+              "application/pdf",
+              signal,
+              assets,
+              staticWorker,
+            );
+          };
+          if (manifest?.chunks.length && !originalRequested) {
+            const range = new AbortController();
+            const rangeSignal = AbortSignal.any([signal, range.signal]);
+            let initialRange = true;
+            try {
+              const ranged = await renderer.openRangedPdf(
+                {
+                  size: file.tamanho,
+                  chunkHashes: manifest.chunks,
+                  authorize: (requestSignal) => {
+                    requestSignal.throwIfAborted();
+                    if (
+                      initialRange &&
+                      Date.parse(permitted.expiresAt ?? "") > Date.now() + 5_000
+                    ) {
+                      initialRange = false;
+                      return Promise.resolve(permitted);
+                    }
+                    return renewAuthorization().catch(() => {
+                      requestSignal.throwIfAborted();
+                      throw new LeituraPeAccessError();
+                    });
+                  },
+                  onFailure: (error) => range.abort(error),
+                },
+                rangeSignal,
+                assets,
+                staticWorker,
+              );
+              let full: Promise<ReaderDocument> | undefined;
+              const read = async <T,>(run: (source: ReaderDocument) => Promise<T>) => {
+                try {
+                  rangeSignal.throwIfAborted();
+                  return await run(ranged);
+                } catch (error) {
+                  signal.throwIfAborted();
+                  if (!rangeSignal.aborted) throw error;
+                  if (rangeSignal.reason instanceof LeituraPeAccessError) throw rangeSignal.reason;
+                }
+                return run(await (full ??= openFull()));
+              };
+              return {
+                pageCount: ranged.pageCount,
+                render: (...args: Parameters<ReaderDocument["render"]>) =>
+                  read((source) => source.render(...args)),
+                text: (...args: Parameters<ReaderDocument["text"]>) =>
+                  read((source) => source.text(...args)),
+                async close() {
+                  await ranged.close();
+                  if (full)
+                    await full.then(
+                      (source) => source.close(),
+                      () => undefined,
+                    );
+                },
+              };
+            } catch (error) {
+              signal.throwIfAborted();
+              const reason: unknown = rangeSignal.aborted ? rangeSignal.reason : error;
+              if (reason instanceof LeituraPeAccessError) throw reason;
+            }
+          }
+          return openFull();
+        };
+        const target =
+          !originalRequested && manifest?.page?.page === initialPage ? manifest.page : undefined;
+        if (target) {
+          try {
+            const [bytes, renderer] = await Promise.all([
+              fetchVerifiedPdf(target.url, target.size, target.sha256, signal),
+              rendererPromise,
+            ]);
+            derivative = await renderer.openOriginalDocument(
+              bytes,
+              "application/pdf",
+              signal,
+              assets,
+              staticWorker,
+            );
+            if (derivative.pageCount !== 1) throw new Error("Prévia de página inválida.");
+            signal.throwIfAborted();
+            const pageReader = derivative;
+            let pending: Promise<ReaderDocument> | undefined;
+            const getOriginal = () =>
+              (pending ??= tryOriginal().then((loaded) => {
+                original = loaded;
+                if (loaded.pageCount !== target.pageCount)
+                  throw new Error("A quantidade de páginas da prévia diverge do original.");
+                return loaded;
+              }));
+            reader = {
+              pageCount: target.pageCount,
+              async render(number, canvas, settings, requestSignal) {
+                if (number === target.page) {
+                  try {
+                    return await pageReader.render(1, canvas, settings, requestSignal);
+                  } catch {
+                    requestSignal.throwIfAborted();
+                    setPreviewPage(undefined);
+                  }
+                }
+                return (await getOriginal()).render(number, canvas, settings, requestSignal);
+              },
+              async text(number, requestSignal) {
+                return (await getOriginal()).text(number, requestSignal);
+              },
+              async close() {
+                await Promise.all([pageReader.close(), original?.close()]);
+              },
+            };
+            setPreviewPage(target.page);
+          } catch (error) {
+            await derivative?.close();
+            derivative = undefined;
+            signal.throwIfAborted();
+            if (error instanceof LeituraPeAccessError) throw error;
+          }
+        }
+        if (!reader) reader = await tryOriginal();
+        signal.throwIfAborted();
         if (!Number.isInteger(initialPage) || initialPage < 1 || initialPage > reader.pageCount) {
           await reader.close();
           reader = undefined;
@@ -136,8 +283,7 @@ export function NrOriginalPreview({
     void open();
     // Continued viewing revalidates the authenticated relationship, independently of signed-URL TTL.
     const interval = setInterval(() => {
-      void authorization
-        .current(controller.signal)
+      void renewAuthorization()
         .then((result) => {
           if (!controller.signal.aborted) setLink(result.url);
         })
@@ -165,7 +311,16 @@ export function NrOriginalPreview({
       document.current = null;
       void reader?.close();
     };
-  }, [org, file.id, file.tamanho, file.sha256, initialPage, attempt]);
+  }, [
+    org,
+    file.id,
+    file.tamanho,
+    file.sha256,
+    initialPage,
+    attempt,
+    originalRequested,
+    staticWorker,
+  ]);
   useEffect(() => {
     const reader = document.current;
     if (!reader || !canvas.current || !pages) return;
@@ -280,6 +435,14 @@ export function NrOriginalPreview({
           Carregando original autorizado…
         </p>
       )}
+      {previewPage === page && pages > 0 && (
+        <div className="nr-actions mb-2">
+          <p className="nr-muted">Prévia derivada da página original.</p>
+          <ActionButton variant="ghost" onClick={() => setOriginalRequested(true)}>
+            Carregar PDF original
+          </ActionButton>
+        </div>
+      )}
       {error && (
         <div role="alert" className="nr-feedback mb-3">
           <p>{error}</p>
@@ -296,7 +459,7 @@ export function NrOriginalPreview({
           ref={canvas}
           className="mx-auto max-w-none"
           role="img"
-          aria-label={`Página ${page} do PDF original ${file.nome}`}
+          aria-label={`Página ${page} do PDF ${previewPage === page ? "derivado" : "original"} ${file.nome}`}
         />
       </div>
       {pages > 0 && (

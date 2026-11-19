@@ -126,6 +126,10 @@ function wire(o: FakeOptions = {}) {
         assert.deepEqual(body, { p_token: TOKEN });
         return Response.json({ authorized: o.authorized ?? true, job: o.job ?? null });
       }
+      if (url.pathname.endsWith("/ca_pdf_trabalho")) {
+        assert.deepEqual(body, {});
+        return Response.json(null);
+      }
       if (url.pathname.endsWith("/ca_inspecao_drive_worker_secret")) {
         assert(o.useVault);
         assert.deepEqual(body, { p_id: JOB, p_lease: LEASE });
@@ -446,11 +450,15 @@ test("only a valid queue claim allows a Drive call, and a caller cannot supply s
 });
 
 test("the worker resolves a Vault secret only for a strictly validated active lease", async () => {
-  for (const job of [null, { ...JOB_PROCESS, lease: "malformed" }]) {
-    const run = wire({ job, useVault: true });
-    await run.run();
-    assert(run.calls.every((url) => url.endsWith("ca_inspecao_sync_claim")));
-  }
+  const idle = wire({ job: null, useVault: true });
+  assert.equal((await idle.run()).status, 200);
+  assert.deepEqual(
+    idle.calls.map((url) => url.split("/").at(-1)),
+    ["ca_inspecao_sync_claim", "ca_pdf_trabalho"],
+  );
+  const invalid = wire({ job: { ...JOB_PROCESS, lease: "malformed" }, useVault: true });
+  await invalid.run();
+  assert(invalid.calls.every((url) => url.endsWith("ca_inspecao_sync_claim")));
   const denied = wire({ job: JOB_PROCESS, useVault: true, authorized: false });
   assert.equal((await denied.run()).status, 403);
   assert.equal(denied.calls.length, 1);

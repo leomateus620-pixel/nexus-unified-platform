@@ -28,10 +28,38 @@ type Job = {
 type WorkerOptions = {
   url: string;
   serviceKey: string;
+  cruzAlta?: boolean;
   fetch?: typeof fetch;
   inspectImage: (data: Uint8Array) => ImageInfo;
   now?: () => number;
 };
+
+async function verifiedImageHeader(response: Response, job: Job, headerLimit: number) {
+  const declared = response.headers.get("content-length");
+  if ((declared !== null && Number(declared) !== job.original_tamanho) || !response.body)
+    fail("original_divergente");
+  const { createHash } = await import("node:crypto");
+  const hash = createHash("sha256");
+  const header = new Uint8Array(Math.min(job.original_tamanho, headerLimit));
+  const reader = response.body.getReader();
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (total + value.length > job.original_tamanho) fail("limite_de_bytes");
+      if (total < header.length) header.set(value.subarray(0, header.length - total), total);
+      hash.update(value);
+      total += value.length;
+    }
+    if (total !== job.original_tamanho || hash.digest("hex") !== job.original_sha256)
+      fail("original_divergente");
+    return header;
+  } finally {
+    await reader.cancel().catch(() => undefined);
+    reader.releaseLock();
+  }
+}
 class WorkerFailure extends Error {
   constructor(readonly code: string) {
     super(code);
@@ -167,16 +195,16 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
       // A short-lived invocation ticket is consumed atomically by this service-only RPC.
       // Only its hash is stored; the RPC never returns a ticket or a persistent secret.
       try {
-        if ((await rpc("nr_imagem_worker_validar", { p_token: token })) !== true)
+        const validate = options.cruzAlta ? "ca_imagem_worker_validar" : "nr_imagem_worker_validar";
+        if ((await rpc(validate, { p_token: token })) !== true)
           return json({ error: "acesso_negado" }, 403);
       } catch {
         return json({ error: "acesso_negado" }, 403);
       }
       // Request payload is deliberately ignored: no caller-supplied organization, path or limit.
-      const jobs: unknown = await rpc("nr_imagem_trabalho_obter", {
-        p_limite: 1,
-        p_processador: PROCESSOR,
-      });
+      const jobs: unknown = options.cruzAlta
+        ? await rpc("ca_imagem_reservar", { p_processador: PROCESSOR })
+        : await rpc("nr_imagem_trabalho_obter", { p_limite: 1, p_processador: PROCESSOR });
       if (!Array.isArray(jobs) || jobs.length > 1) fail("resposta_de_fila_invalida");
       if (!jobs.length)
         return json({
@@ -190,7 +218,7 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
       if (uuid.test(String(raw["id"])) && uuid.test(String(raw["lease"])))
         claimed = { id: String(raw["id"]), lease: String(raw["lease"]) };
       const job = validateJob(raw);
-      if (job.original_tamanho > MAX_PROCESS_BYTES)
+      if (!options.cruzAlta && job.original_tamanho > MAX_PROCESS_BYTES)
         fail("original_preservado_limite_automatico_10mib");
       const originalResponse = await call(
         `${root}/storage/v1/object/authenticated/${BUCKET}/${encodedPath(job.original_caminho)}`,
@@ -198,12 +226,11 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
       if (!originalResponse.ok) fail("original_indisponivel");
       if (!sameMime(originalResponse.headers.get("content-type") ?? "", job.original_mime))
         fail("mime_do_original_divergente");
-      const original = await bytesLimited(originalResponse, MAX_PROCESS_BYTES);
-      if (
-        original.length !== job.original_tamanho ||
-        (await sha256(original)) !== job.original_sha256
-      )
-        fail("original_divergente");
+      const original = await verifiedImageHeader(
+        originalResponse,
+        job,
+        options.cruzAlta ? 2 * 1024 * 1024 : MAX_PROCESS_BYTES,
+      );
       let source: ImageInfo;
       try {
         source = options.inspectImage(original);

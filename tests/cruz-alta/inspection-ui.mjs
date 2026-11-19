@@ -2,12 +2,24 @@ import assert from "node:assert/strict";
 import http from "node:http";
 import { createHash, createHmac, generateKeyPairSync } from "node:crypto";
 import { spawn } from "node:child_process";
-import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { PDFDocument } from "pdf-lib";
+import { preparePdfAssets } from "../../src/features/projetos-engenharia/leitor/prepare-assets.mjs";
+import {
+  drawingPng,
+  drawingPdf,
+  drawingWebps,
+  pdfRepresentations,
+  runMediaBenchmark,
+  serveBytes,
+} from "./media-performance.mjs";
+
+const benchmark = process.env.CA_MEDIA_BENCHMARK === "1";
+const release = process.env.CA_MEDIA_RELEASE === "1";
 
 // App and PDFs are real code paths. This fixture owns a loopback Supabase substitute
 // so a browser run never reads a private original or writes to the unit.
@@ -30,6 +42,28 @@ const drawingId = "b99c41ea-db27-4a9a-aae5-1ccf1a6d16e2";
 const drawingRevision = "b0faeab4-61e6-42db-a063-11ef9586b4c1";
 const drawingFile = "e60ce8ec-0132-4b30-8dcd-d65ab41509a0";
 const drawingTitle = "Prancha de montagem de teste";
+const imageDoc = "01938e57-0fde-4c2d-8e57-68c3c0794f0a";
+const imageRevision = "5887869d-b735-4363-b7ce-1a4571d88815";
+const imageLegacy = "fe24ad5a-70fb-4622-9eca-cad26a324f0d";
+const imageFile = "054fbbe1-7426-4415-817b-5d9b1e6cc8e0";
+const officeFiles = [
+  {
+    id: "f268d3a2-e274-4bea-9a21-f28883d73fb9",
+    revision: "80610660-cea6-4e41-86c3-9dd7652f5bac",
+    file: "f2ef793a-dedc-42e8-8493-7e52a0078ccb",
+    title: "Memorial de teste",
+    nome: "memorial.docx",
+    mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  },
+  {
+    id: "17a86909-5efe-4fa1-bc43-664133f75872",
+    revision: "db37124d-ae4c-45d8-9964-686770506046",
+    file: "fceb7804-9659-4c66-8d74-a06c18f08183",
+    title: "Planilha de teste",
+    nome: "planilha.xlsx",
+    mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  },
+];
 const candidateId = "d4b08715-705d-4c21-a90b-e6c7a27f170a";
 const orphanId = "a5259a69-5a18-4463-ae30-3bcbd42c4d74";
 const galleryRoot = "fixture-rdo-root";
@@ -63,11 +97,22 @@ const montagePhoto = "Montagem de teste 56.png";
 const decimalPhoto = "Montagem de teste 28.1.png";
 const refreshedPhoto = "Nova foto de teste 11.png";
 const addedPhoto = "Última foto de teste 11.png";
-const photoBytes = Buffer.from(
-  "iVBORw0KGgoAAAANSUhEUgAAAFAAAAA3CAIAAAAUgloYAAAAbElEQVR42u3YMQ0AIAwEwLrEAR5YsIADtOKgY5OSS3794bbPx7k7yVgzScduAAMDAwMDAwOXgf8j5V1gYGBgYGBg4DqwLQ0MDAwMDAwM7NOypYGBgYGBgYF9WrY0MDAwMDAwMLBPCxgYuF/3AX6ovwFy0dxOAAAAAElFTkSuQmCC",
-  "base64",
-);
+const benchmarkThumb = benchmark ? drawingPng(384, 278) : undefined;
+const photoBytes = benchmark
+  ? drawingPng(3000, 2172, false)
+  : Buffer.from(
+      "iVBORw0KGgoAAAANSUhEUgAAAFAAAAA3CAIAAAAUgloYAAAAbElEQVR42u3YMQ0AIAwEwLrEAR5YsIADtOKgY5OSS3794bbPx7k7yVgzScduAAMDAwMDAwOXgf8j5V1gYGBgYGBg4DqwLQ0MDAwMDAwM7NOypYGBgYGBgYF9WrY0MDAwMDAwMLBPCxgYuF/3AX6ovwFy0dxOAAAAAElFTkSuQmCC",
+      "base64",
+    );
 const photoDigest = createHash("sha256").update(photoBytes).digest("hex");
+const webpBytes = await readFile(
+  new URL("../../public/models/cruz-alta/icones/armazenagem.webp", import.meta.url),
+);
+const webpDigest = createHash("sha256").update(webpBytes).digest("hex");
+let rdoThumbnail = webpBytes;
+let rdoPreview = webpBytes;
+let thumbnailDigest = webpDigest;
+let previewDigest = webpDigest;
 const { privateKey: fixtureDriveKey } = generateKeyPairSync("rsa", {
   modulusLength: 2048,
   privateKeyEncoding: { format: "pem", type: "pkcs8" },
@@ -124,9 +169,20 @@ const session = {
 const pdf = await PDFDocument.create();
 pdf.addPage().drawText("Arquivo de teste local - pagina 1", { x: 70, y: 760, size: 17 });
 pdf.addPage().drawText("Evidencia de teste local - pagina 2", { x: 70, y: 760, size: 17 });
-const bytes = Buffer.from(await pdf.save());
+const bytes = benchmark ? await drawingPdf() : Buffer.from(await pdf.save());
 const digest = createHash("sha256").update(bytes).digest("hex");
-const trace = { ids: [], decisions: [], errors: [], rdoMedia: [], signed: [], timing: {} };
+const performancePdf = benchmark ? await pdfRepresentations(bytes) : undefined;
+const trace = {
+  ids: [],
+  decisions: [],
+  errors: [],
+  rdoMedia: [],
+  driveThumbnails: [],
+  rdoRepresentations: [],
+  mediaScopes: [],
+  signed: [],
+  timing: {},
+};
 const sheetGate = Promise.withResolvers();
 const listingGate = Promise.withResolvers();
 const listingStarted = Promise.withResolvers();
@@ -205,7 +261,55 @@ function drivePhotos() {
     version: name === refreshedPhoto ? "2" : "1",
     size: String(photoBytes.length),
     sha256Checksum: photoDigest,
+    capabilities: { canDownload: true },
+    ...((benchmark || id === "fixture-rdo-foto-28_1") && {
+      thumbnailLink: "https://drive.google.com/thumbnail?id=" + id,
+    }),
   }));
+}
+
+function scopedRdoFolders(key) {
+  return photoFolders.filter(
+    ({ code }) =>
+      key === `lvhf-${code}` ||
+      key === `cobertura-${code}` ||
+      (key === "estrutura-armazem-01" && ["11", "56"].includes(code)),
+  );
+}
+
+function recordedPhotos(key) {
+  const folders = scopedRdoFolders(key);
+  const order = new Intl.Collator("pt-BR", { numeric: true });
+  return drivePhotos()
+    .flatMap((photo) => {
+      const folder = folders.find(
+        ({ id }) =>
+          id === photo.parents[0] ||
+          (id === photoFolders[0].id && photo.parents[0] === launchedSubfolder.id),
+      );
+      if (!folder) return [];
+      const { id, name, version, modifiedTime } = photo;
+      return [
+        {
+          id,
+          name,
+          version,
+          modifiedAt: modifiedTime,
+          folderId: folder.id,
+          code: folder.code,
+          category: folder.category,
+          path: photo.parents[0] === launchedSubfolder.id ? [launchedSubfolder.id] : [],
+          representations: ["thumbnail", "preview", "original"],
+        },
+      ];
+    })
+    .sort(
+      (a, b) =>
+        order.compare(a.code, b.code) ||
+        b.category.localeCompare(a.category) ||
+        b.modifiedAt.localeCompare(a.modifiedAt) ||
+        order.compare(a.name, b.name),
+    );
 }
 const source = {
   id: docId,
@@ -263,9 +367,35 @@ const layoutOnlyFixture = {
 };
 const body = async (req) =>
   JSON.parse(Buffer.concat(await Array.fromAsync(req)).toString() || "{}");
-const server = http.createServer(async (req, res) => {
+async function serveFixture(req, res) {
   const url = new URL(req.url, fakeApi);
   const { pathname: path } = url;
+  if (benchmark) {
+    if (path === "/benchmark/original.png") return serveBytes(req, res, photoBytes, "image/png");
+    if (path.startsWith("/fixture-drive/") || path.startsWith("/rest/")) {
+      await new Promise((resolve) => setTimeout(resolve, 80));
+    }
+    if (path.startsWith("/fixture-drive/")) trace.driveCalls = (trace.driveCalls ?? 0) + 1;
+    if (
+      path.startsWith("/storage/v1/object/sign/") &&
+      req.method === "GET" &&
+      path.endsWith(".pdf")
+    ) {
+      const derivative = path.includes("/nexus-cruz-alta-pdf-previas/")
+        ? performancePdf.pages.find((page) => path.endsWith(page.sha256 + ".pdf"))
+        : undefined;
+      return serveBytes(req, res, derivative?.data ?? bytes, "application/pdf");
+    }
+  }
+  if (path === "/fixture-drive/thumbnail") {
+    trace.driveThumbnails.push(url.searchParams.get("id"));
+    return serveBytes(
+      req,
+      res,
+      benchmarkThumb ?? webpBytes,
+      benchmark ? "image/png" : "image/webp",
+    );
+  }
   const json = (data, status = 200) => {
     res.writeHead(status, {
       "content-type": "application/json",
@@ -312,17 +442,62 @@ const server = http.createServer(async (req, res) => {
     });
     return res.end();
   }
+  const rdoStorage =
+    /\/nexus-cruz-alta-rdo\/[^/]+\/[^/]+\/[^/]+\/([^/]+)\/([^/]+)\/(thumbnail\.webp|preview\.webp|original)$/.exec(
+      path,
+    );
+  if (req.method === "GET" && rdoStorage) {
+    const [, id, version, filename] = rdoStorage;
+    const variant = filename.split(".")[0];
+    if (req.headers.apikey !== "sb_secret_test_fixture") return json({}, 403);
+    trace.rdoMedia.push(id);
+    trace.rdoRepresentations.push({ id, version, variant });
+    if (variant === "original" && delayedOriginal?.id === id) {
+      const pending = delayedOriginal;
+      delayedOriginal = undefined;
+      pending.started.resolve();
+      await pending.gate.promise;
+    }
+    const image =
+      variant === "original" ? photoBytes : variant === "preview" ? rdoPreview : rdoThumbnail;
+    return serveBytes(req, res, image, variant === "original" ? "image/png" : "image/webp");
+  }
   if (path.startsWith("/storage/v1/object/sign/")) {
     if (req.method === "POST") {
       trace.signed.push(path);
       return json({ signedURL: path.replace("/storage/v1", "") + "?token=isolated-fixture" });
     }
+    const office = officeFiles.find(({ nome }) => path.endsWith("/" + nome));
+    if (office) {
+      res.writeHead(200, {
+        "content-type": office.mime,
+        "content-disposition": `attachment; filename="${office.nome}"`,
+        "access-control-allow-origin": "*",
+      });
+      return res.end("fixture Office preservado para download");
+    }
+    if (path.endsWith(".webp")) return serveBytes(req, res, webpBytes, "image/webp");
+    if (path.endsWith(".png")) return serveBytes(req, res, photoBytes, "image/png");
     res.writeHead(200, {
       "content-type": "application/pdf",
       "content-length": bytes.length,
       "access-control-allow-origin": "*",
     });
     return res.end(bytes);
+  }
+  if (benchmark && path === "/rest/v1/rpc/ca_pdf_representacao") {
+    const parameters = await body(req);
+    if (req.headers.apikey !== "sb_secret_test_fixture" || parameters.p_sha256 !== digest)
+      return json(null, 403);
+    return json({
+      chunks: performancePdf.chunks,
+      pages: performancePdf.pages.map(({ page, pageCount, size, sha256 }) => ({
+        page,
+        pageCount,
+        size,
+        sha256,
+      })),
+    });
   }
   if (path === "/rest/v1/rpc/ca_inspecao_rdo_origem") {
     const params = await body(req);
@@ -390,6 +565,42 @@ const server = http.createServer(async (req, res) => {
                   },
                 ],
               },
+              {
+                id: imageDoc,
+                titulo: "Imagem de revisão de teste",
+                escopo: "individual",
+                objeto: "cobertura-11",
+                version: 1,
+                descricao: "",
+                pode_corrigir: false,
+                vigente_id: imageRevision,
+                revisoes: [imageRevision, imageLegacy].map((id, index) => ({
+                  id,
+                  rotulo: index === 0 ? "02" : "01",
+                  data: "2026-11-12",
+                  arquivo_id: imageFile,
+                  mime: "image/png",
+                })),
+              },
+              ...officeFiles.map((office) => ({
+                id: office.id,
+                titulo: office.title,
+                escopo: "individual",
+                objeto: "cobertura-11",
+                version: 1,
+                descricao: "",
+                pode_corrigir: false,
+                vigente_id: office.revision,
+                revisoes: [
+                  {
+                    id: office.revision,
+                    rotulo: "01",
+                    data: "2026-11-12",
+                    arquivo_id: office.file,
+                    mime: office.mime,
+                  },
+                ],
+              })),
             ]
           : [],
     });
@@ -409,19 +620,85 @@ const server = http.createServer(async (req, res) => {
       tamanho: bytes.length,
     });
   }
+  if (rpc === "ca_acervo_midia") {
+    trace.mediaScopes.push(params);
+    if (params.p_chave !== "cobertura-11" || params.p_org !== orgId)
+      return json({ code: "42501" }, 403);
+    const office = officeFiles.find(
+      ({ id, revision }) => params.p_doc === id && params.p_rev === revision,
+    );
+    if (office && params.p_variante === "anexo_office")
+      return json({
+        arquivo_id: office.file,
+        nome: office.nome,
+        caminho: office.nome,
+        mime: office.mime,
+        sha256: photoDigest,
+        variante: "anexo_office",
+      });
+    if (params.p_doc !== imageDoc || ![imageRevision, imageLegacy].includes(params.p_rev))
+      return json({ code: "42501" }, 403);
+    if (params.p_rev === imageLegacy && params.p_variante === "miniatura_384") return json(null);
+    const original = params.p_variante === "original" || params.p_rev === imageLegacy;
+    return json({
+      arquivo_id: imageFile,
+      nome: "anexo-foto.png",
+      caminho: original ? "anexo-foto.png" : params.p_variante + ".webp",
+      mime: original ? "image/png" : "image/webp",
+      sha256: original ? photoDigest : webpDigest,
+      variante: original ? "original" : params.p_variante,
+    });
+  }
+  if (rpc === "ca_rdo_listar") {
+    if (delayInitialPanel && params.p_chave === "cobertura-11") {
+      listingStarted.resolve();
+      await listingGate.promise;
+    }
+    const photos = recordedPhotos(params.p_chave);
+    return json({
+      ready: params.p_chave !== "cobertura-28.1",
+      photos: photos.slice(params.p_pagina * 6, params.p_pagina * 6 + 6),
+      total: photos.length,
+      partial: false,
+    });
+  }
+  if (rpc === "ca_rdo_material") {
+    const folders = scopedRdoFolders(params.p_chave);
+    const photos = recordedPhotos(params.p_chave);
+    const assets =
+      params.p_chave === "cobertura-28.1"
+        ? []
+        : photos
+            .filter((photo) =>
+              params.p_fotos.some(
+                (reference) =>
+                  reference.id === photo.id &&
+                  reference.folderId === photo.folderId &&
+                  reference.version === photo.version &&
+                  reference.path.join("/") === photo.path.join("/"),
+              ),
+            )
+            .map((photo) => ({
+              ...photo,
+              unit: unitId,
+              variants: {
+                original: { mime: "image/png", bytes: photoBytes.length, sha256: photoDigest },
+                thumbnail: {
+                  mime: "image/webp",
+                  bytes: rdoThumbnail.length,
+                  sha256: thumbnailDigest,
+                },
+                preview: { mime: "image/webp", bytes: rdoPreview.length, sha256: previewDigest },
+              },
+            }));
+    return json({ folders, assets });
+  }
   if (rpc === "ca_inspecao_rdo_summary") {
     if (delayInitialPanel && params.p_chave === "cobertura-11") {
       listingStarted.resolve();
       await listingGate.promise;
     }
-    return json(
-      photoFolders.filter(
-        ({ code }) =>
-          params.p_chave === `lvhf-${code}` ||
-          params.p_chave === `cobertura-${code}` ||
-          (params.p_chave === "estrutura-armazem-01" && ["11", "56"].includes(code)),
-      ),
-    );
+    return json(scopedRdoFolders(params.p_chave));
   }
   if (rpc === "ca_inspecao_summary")
     return json({
@@ -459,6 +736,13 @@ const server = http.createServer(async (req, res) => {
     return json({ state: "verified", lastCheckedAt: now.toISOString() });
   if (rpc === "ca_inspecao_request_sync") return json({ state: "queued", queued: 3 });
   return json({ message: "RPC do fixture não registrada." }, 404);
+}
+const server = http.createServer((req, res) => {
+  void serveFixture(req, res).catch((error) => {
+    if (req.destroyed && (error.code === "ECONNRESET" || error.name === "AbortError")) return;
+    trace.errors.push("Servidor local de teste: " + error.message);
+    res.destroy();
+  });
 });
 await new Promise((resolve, reject) =>
   server.once("error", reject).listen(fixturePort, "127.0.0.1", resolve),
@@ -474,58 +758,46 @@ globalThis.fetch = (input, options) => {
   const address = input instanceof Request ? input.url : input;
   if (!URL.canParse(address)) return fetchNative(input, options);
   const url = new URL(address);
-  if (url.origin === "https://oauth2.googleapis.com" || url.origin === "https://www.googleapis.com") {
+  if (url.origin === "https://oauth2.googleapis.com" || url.origin === "https://www.googleapis.com" || url.origin === "https://drive.google.com") {
     return fetchNative(${JSON.stringify(fakeApi)} + "/fixture-drive" + url.pathname + url.search, options);
   }
   return fetchNative(input, options);
 };
 `,
 );
-const vite = spawn(
-  process.execPath,
-  [
-    "--import",
-    drivePreloader,
-    "node_modules/vite/bin/vite.js",
-    "dev",
-    "--host",
-    "127.0.0.1",
-    "--port",
-    String(appPort),
-    "--strictPort",
-  ],
-  {
-    cwd: workspace,
-    env: {
-      ...process.env,
-      SUPABASE_URL: fakeApi,
-      VITE_SUPABASE_URL: fakeApi,
-      SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test_fixture",
-      VITE_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test_fixture",
-      SUPABASE_SERVICE_ROLE_KEY: "sb_secret_test_fixture",
-      CRUZ_ALTA_DRIVE_SERVICE_ACCOUNT_JSON: "fixture",
-    },
-  },
+await preparePdfAssets(
+  join(workspace, "node_modules/pdfjs-dist"),
+  join(workspace, "public/pdfjs/6.4.299"),
 );
+const serverArgs = release
+  ? [".output/server/index.mjs"]
+  : [
+      "node_modules/vite/bin/vite.js",
+      "dev",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      String(appPort),
+      "--strictPort",
+    ];
+const appServer = spawn(process.execPath, ["--import", drivePreloader, ...serverArgs], {
+  cwd: workspace,
+  env: {
+    ...process.env,
+    NITRO_HOST: "127.0.0.1",
+    NITRO_PORT: String(appPort),
+    SUPABASE_URL: fakeApi,
+    VITE_SUPABASE_URL: fakeApi,
+    SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test_fixture",
+    VITE_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test_fixture",
+    SUPABASE_SERVICE_ROLE_KEY: "sb_secret_test_fixture",
+    CRUZ_ALTA_DRIVE_SERVICE_ACCOUNT_JSON: "fixture",
+  },
+});
 let log = "";
-vite.stdout.on("data", (x) => (log += x.toString()));
-vite.stderr.on("data", (x) => (log += x.toString()));
-let browser;
-try {
-  for (let n = 0; n < 40; n++) {
-    try {
-      if ((await fetch(app)).ok) break;
-    } catch {}
-    await new Promise((r) => setTimeout(r, 300));
-  }
-  browser = await chromium.launch({
-    executablePath:
-      process.env.CRUZ_CHROME ||
-      (process.platform === "darwin"
-        ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-        : undefined),
-    args: process.platform === "darwin" ? ["--use-angle=metal"] : ["--enable-unsafe-swiftshader"],
-  });
+appServer.stdout.on("data", (x) => (log += x.toString()));
+appServer.stderr.on("data", (x) => (log += x.toString()));
+async function checkBrowserInterface(browser) {
   const guest = await browser.newPage({
     viewport: { width: 1440, height: 900 },
     reducedMotion: "reduce",
@@ -656,6 +928,7 @@ try {
   await launch.locator("img[src^='blob:']").waitFor();
   trace.timing.firstThumbnailMs = Math.round(performance.now() - selectedAt);
   assert(!trace.rdoMedia.includes("fixture-rdo-foto-11-7"));
+  assert(!trace.rdoRepresentations.some(({ variant }) => variant === "original"));
   const firstThumbnailRequests = trace.rdoMedia.filter(
     (id) => id === "fixture-rdo-foto-11-1",
   ).length;
@@ -680,6 +953,9 @@ try {
   delayedOriginal = heldPhoto;
   await launch.click();
   const viewer = photos.getByRole("group", { name: "Visualizador de fotos" });
+  await viewer.locator('img[data-representation="preview"][data-loaded="true"]').waitFor();
+  assert(!trace.rdoRepresentations.some(({ variant }) => variant === "original"));
+  await viewer.getByRole("button", { name: "Ver original", exact: true }).click();
   await withDeadline(heldPhoto.started.promise, "O original da foto não foi solicitado.");
   const preview = viewer.locator(".ca-rdo-placeholder");
   await preview.waitFor();
@@ -688,6 +964,7 @@ try {
   const displayed = viewer.getByRole("img", { name: launchedPhotos[0] });
   await displayed.waitFor();
   await displayed.evaluate((image) => image.decode());
+  assert.equal(await displayed.getAttribute("data-representation"), "original");
   assert.equal(await preview.count(), 0);
   const firstPhotoUrl = await displayed.getAttribute("src");
   assert(firstPhotoUrl?.startsWith("blob:"));
@@ -708,6 +985,13 @@ try {
   assert.equal(await page.locator(".ca-stage canvas").getAttribute("data-camera"), initialPose);
   assert.equal(context.pages().length, 1);
 
+  await photos.getByRole("button", { name: `Abrir foto ${launchedPhotos[5]}` }).click();
+  await viewer.getByRole("button", { name: "Próxima foto" }).click();
+  await viewer.getByRole("img", { name: launchedPhotos[6] }).waitFor();
+  await viewer.getByRole("button", { name: "Fechar foto" }).click();
+  await previousPage.click();
+  await launch.waitFor();
+
   const drawer = page.getByRole("complementary", { name: "Ficha do objeto" });
   const standardWidth = (await drawer.boundingBox()).width;
   const canvas = page.locator(".ca-stage canvas");
@@ -726,12 +1010,15 @@ try {
   assert.equal(await canvas.getAttribute("data-camera"), initialPose);
   assert.equal(page.url(), initialMap);
   await page.screenshot({ path: folder + "/10-ficha-tela-cheia.png" });
-  const signedBeforeDrawing = trace.signed.length;
+  const signedBeforeDrawing = trace.signed.filter((path) => path.endsWith(".pdf")).length;
   const drawingStartedAt = performance.now();
   await drawing.click();
   await waitForPdfPage(page, 1);
   trace.timing.drawingFirstPageMs = Math.round(performance.now() - drawingStartedAt);
-  assert.equal(trace.signed.length - signedBeforeDrawing, 1);
+  assert.equal(
+    trace.signed.filter((path) => path.endsWith(".pdf")).length - signedBeforeDrawing,
+    1,
+  );
   assert.equal(await page.locator(".ca-drawer").evaluate((element) => element.offsetWidth), 1440);
   await page.screenshot({ path: folder + "/11-documento-tela-cheia.png" });
   denyDrawing = true;
@@ -746,6 +1033,42 @@ try {
   await drawer.getByRole("button", { name: "Reduzir ficha" }).click();
   assert.equal((await drawer.boundingBox()).width, standardWidth);
   assert.equal(await canvas.getAttribute("data-camera"), initialPose);
+
+  const imageCard = drawer.getByRole("article").filter({ hasText: "Imagem de revisão de teste" });
+  await imageCard.scrollIntoViewIfNeeded();
+  await imageCard.locator('.ca-doc-thumbnail img[src^="blob:"]').waitFor();
+  assert(
+    !trace.mediaScopes.some(({ p_variante }) =>
+      ["previa_768", "original", "anexo_office"].includes(p_variante),
+    ),
+  );
+  await imageCard.getByRole("button", { name: /Abrir Imagem de revisão de teste/ }).click();
+  const imageReader = page.locator(".ca-acervo-image-reader");
+  await imageReader.locator('img[data-representation="previa_768"][data-ready="true"]').waitFor();
+  assert(!trace.mediaScopes.some(({ p_variante }) => p_variante === "original"));
+  await imageReader.getByRole("button", { name: "Ver original", exact: true }).click();
+  await imageReader.locator('img[data-representation="original"][data-ready="true"]').waitFor();
+  await page.getByLabel("Revisão aberta").selectOption(imageLegacy);
+  await imageReader.locator('img[data-representation="original"][data-ready="true"]').waitFor();
+  assert.equal(
+    await imageReader.getByRole("button", { name: "Ver original", exact: true }).count(),
+    0,
+  );
+  await page.getByRole("button", { name: "Fechar leitor", exact: true }).click();
+  for (const office of officeFiles) {
+    await drawer.getByRole("button", { name: new RegExp(`Abrir ${office.title}`) }).click();
+    assert(!trace.mediaScopes.some(({ p_doc }) => p_doc === office.id));
+    const download = page.waitForEvent("download");
+    await page.getByRole("button", { name: "Baixar original", exact: true }).click();
+    assert.equal((await download).suggestedFilename(), office.nome);
+    assert(
+      trace.mediaScopes.some(
+        ({ p_doc, p_rev, p_variante }) =>
+          p_doc === office.id && p_rev === office.revision && p_variante === "anexo_office",
+      ),
+    );
+    await page.getByRole("button", { name: "Fechar leitor", exact: true }).click();
+  }
 
   await drawer.getByRole("button", { name: "Ficha técnica", exact: true }).click();
   await drawer.getByRole("button", { name: "Editar", exact: true }).click();
@@ -790,13 +1113,16 @@ try {
   await page.getByText("Restrição documental de teste local.", { exact: true }).waitFor();
   await page.screenshot({ path: folder + "/02-ficha.png" });
   const firstSource = page.locator(".ca-inspection-dates > div").first().getByRole("button");
-  const signedBeforeEvidence = trace.signed.length;
+  const signedBeforeEvidence = trace.signed.filter((path) => path.endsWith(".pdf")).length;
   await firstSource.click();
   await page.waitForURL(
     (url) => url.searchParams.get("evidencia") === docId && url.searchParams.get("pagina") === "2",
   );
   await waitForPdfPage(page, 2);
-  assert.equal(trace.signed.length - signedBeforeEvidence, 1);
+  assert.equal(
+    trace.signed.filter((path) => path.endsWith(".pdf")).length - signedBeforeEvidence,
+    1,
+  );
   await page.screenshot({ path: folder + "/03-leitor-pagina-2.png" });
   await page.keyboard.press("Escape");
   await page.waitForURL((url) => !url.searchParams.has("evidencia"));
@@ -835,6 +1161,17 @@ try {
   const decimalCard = photos.getByRole("button", { name: `Abrir foto ${decimalPhoto}` });
   await decimalCard.waitFor();
   assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 1);
+  await decimalCard.locator('img[data-loaded="true"]').waitFor();
+  const decimalId = "fixture-rdo-foto-28_1";
+  const thumbnailReads = trace.driveThumbnails.filter((id) => id === decimalId).length;
+  await decimalCard.click();
+  await viewer.locator('img[data-representation="preview"][data-loaded="true"]').waitFor();
+  assert(trace.driveThumbnails.filter((id) => id === decimalId).length > thumbnailReads);
+  assert(!trace.rdoMedia.includes(decimalId));
+  await viewer.getByRole("button", { name: "Ver original", exact: true }).click();
+  await viewer.locator('img[data-representation="original"][data-loaded="true"]').waitFor();
+  assert.equal(trace.rdoMedia.filter((id) => id === decimalId).length, 1);
+  await viewer.getByRole("button", { name: "Fechar foto" }).click();
   await page.goto(map + "?objeto=lvhf-56&aba=ficha");
   await page
     .locator(".ca-drawer-head")
@@ -950,6 +1287,10 @@ try {
     "related-structure",
     "rdo-private-photos-current-tag",
     "rdo-lazy-gallery-pagination",
+    "rdo-preview-original-on-demand-cross-page",
+    "rdo-native-preview-unindexed-with-explicit-original",
+    "image-revision-lazy-384-preview-768-and-original",
+    "office-same-revision-private-download",
     "rdo-reuses-preview-and-shows-it-while-original-loads",
     "rdo-photo-keyboard-viewer-with-camera-preserved",
     "rdo-revokes-photo-blob",
@@ -960,11 +1301,46 @@ try {
   assert.deepEqual(trace.errors, []);
   console.log("Evidências locais de teste em " + folder);
   console.log(JSON.stringify(trace, null, 2));
+}
+
+let browser;
+try {
+  for (let n = 0; n < 40; n++) {
+    try {
+      if ((await fetch(app)).ok) break;
+    } catch {}
+    await new Promise((r) => setTimeout(r, 300));
+  }
+  browser = await chromium.launch({
+    executablePath:
+      process.env.CRUZ_CHROME ||
+      (process.platform === "darwin"
+        ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        : undefined),
+    args: process.platform === "darwin" ? ["--use-angle=metal"] : ["--enable-unsafe-swiftshader"],
+  });
+  if (benchmark) {
+    [rdoThumbnail, rdoPreview] = await drawingWebps(browser, fakeApi + "/benchmark/original.png");
+    thumbnailDigest = createHash("sha256").update(rdoThumbnail).digest("hex");
+    previewDigest = createHash("sha256").update(rdoPreview).digest("hex");
+    trace.rdoVariantBytes = { thumbnail: rdoThumbnail.length, preview: rdoPreview.length };
+    await runMediaBenchmark({
+      browser,
+      map,
+      fakeApi,
+      session,
+      trace,
+      pdfSize: bytes.length,
+      photoSize: photoBytes.length,
+    });
+  } else {
+    await checkBrowserInterface(browser);
+  }
 } finally {
   sheetGate.resolve();
   listingGate.resolve();
   await browser?.close();
-  vite.kill();
+  appServer.kill();
   server.closeAllConnections();
   await new Promise((resolve) => server.close(resolve));
   await writeFile(folder + "/dev.log", log);

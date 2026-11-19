@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import { createClientOnlyFn } from "@tanstack/react-start";
 
 const load = () =>
   import("@/features/nr/NrOriginalPreview").then((module) => ({
@@ -7,6 +8,13 @@ const load = () =>
 
 export const CruzAltaPdf = lazy(load);
 
+const loadPdfRenderer = createClientOnlyFn(
+  () => import("@/features/projetos-engenharia/leitor/renderer.client"),
+);
+
 export function prepareCruzAltaPdf() {
-  void load().catch(() => undefined);
+  void Promise.all([
+    load(),
+    loadPdfRenderer().then((renderer) => renderer.preparePdfEngine()),
+  ]).catch(() => undefined);
 }

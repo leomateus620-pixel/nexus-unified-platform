@@ -213,7 +213,11 @@ export function createInspectionWorker(options: WorkerOptions) {
         await rpc("ca_inspecao_sync_claim", { p_token: ticket }, signal),
       );
       if (!claim.authorized) return workerResponse({ error: "acesso_negado" }, 403);
-      if (!claim.job) return workerResponse({ state: "sem_trabalho" });
+      if (!claim.job) {
+        const { prepareNextCruzAltaPdf } = await import("../pdf-representations.server");
+        const prepared = await prepareNextCruzAltaPdf(service, signal).catch(() => false);
+        return workerResponse({ state: prepared ? "pdf_preparado" : "sem_trabalho" });
+      }
       credentials = lease.parse(claim.job);
       const current = job.parse(claim.job);
       let driveCredentials = options.credentials;

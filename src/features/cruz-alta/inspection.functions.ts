@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { setResponseHeader } from "@tanstack/react-start/server";
+import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { nrResult } from "@/features/nr/nr.functions";
@@ -213,9 +213,12 @@ export const caInspectionSummary = createServerFn({ method: "GET" })
 
 export const caInspectionOpen = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(organization.extend({ key, id: uuid }))
+  .inputValidator(
+    organization.extend({ key, id: uuid, pagina: z.number().int().min(1).max(5000).optional() }),
+  )
   .handler(async ({ context, data }) => {
     privateResponse();
+    const signal = getRequest().signal;
     const parameters = { p_org: data.organization_id, p_key: data.key, p_evidence: data.id };
     const schema = z.object({
       path: z.string(),
@@ -225,19 +228,39 @@ export const caInspectionOpen = createServerFn({ method: "POST" })
     });
     const load = async () =>
       schema.parse(
-        await rpc(context.supabase as SupabaseClient, "ca_inspecao_preview", parameters),
+        nrResult(
+          await (context.supabase as SupabaseClient)
+            .rpc("ca_inspecao_preview", parameters)
+            .abortSignal(signal),
+        ),
       );
     const file = await load();
     if (file.path !== `${file.sha256}.pdf`)
       throw new Error("O caminho do laudo diverge da revisão conferida.");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const signed = await supabaseAdmin.storage
-      .from("nexus-cruz-alta-laudos")
-      .createSignedUrl(file.path, 60);
+    const wantedPage = data.pagina;
+    const [signed, representations] = await Promise.all([
+      supabaseAdmin.storage.from("nexus-cruz-alta-laudos").createSignedUrl(file.path, 60),
+      wantedPage
+        ? import("./pdf-representations.server")
+            .then(({ signCruzAltaPdfRepresentations }) =>
+              signCruzAltaPdfRepresentations(
+                supabaseAdmin as unknown as SupabaseClient,
+                data.organization_id,
+                "nexus-cruz-alta-laudos",
+                { caminho: file.path, sha256: file.sha256, tamanho: file.size },
+                wantedPage,
+                signal,
+              ),
+            )
+            .catch(() => undefined)
+        : undefined,
+    ]);
     if (signed.error || !signed.data) throw new Error("O laudo está temporariamente indisponível.");
     const current = await load();
-    if (current.sha256 !== file.sha256 || current.path !== file.path)
+    if (current.sha256 !== file.sha256 || current.path !== file.path || current.size !== file.size)
       throw new Error("A revisão mudou. Abra o laudo novamente.");
+    signal.throwIfAborted();
     return {
       url: signed.data.signedUrl,
       id: data.id,
@@ -245,6 +268,8 @@ export const caInspectionOpen = createServerFn({ method: "POST" })
       mime: "application/pdf" as const,
       size: file.size,
       sha256: file.sha256,
+      expira_em: new Date(Date.now() + 60_000).toISOString(),
+      ...(representations ? { representations } : {}),
     };
   });
 

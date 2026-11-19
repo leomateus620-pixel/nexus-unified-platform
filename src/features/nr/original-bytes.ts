@@ -3,7 +3,7 @@ export async function confirmedNrOriginalBytes(
   response: Response,
   expected: { tamanho: number; sha256: string },
   signal: AbortSignal,
-): Promise<Uint8Array> {
+): Promise<Uint8Array<ArrayBuffer>> {
   signal.throwIfAborted();
   if (!response.ok) throw new Error("Original indisponível para este acesso.");
   if (

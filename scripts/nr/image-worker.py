@@ -48,12 +48,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--max-jobs', type=int, default=30)
     parser.add_argument('--watch', action='store_true')
+    parser.add_argument('--cruz-alta', action='store_true',
+                        help='Processar somente imagens de revisões vinculadas à cena de Cruz Alta')
     args = parser.parse_args()
     if not 1 <= args.max_jobs <= 5000:
         raise SystemExit('Limite de lote inválido')
     base, key = os.getenv('SUPABASE_URL', '').rstrip('/'), os.getenv('SUPABASE_SERVICE_ROLE_KEY', '')
     if urllib.parse.urlparse(base).hostname != 'yhtgijtllvgzoqtfcgal.supabase.co' or not key:
         raise SystemExit('Integração não configurada: projeto/credencial do worker ausentes')
+    if args.cruz_alta:
+        # Dedicated process with 2 GiB, one source at a time. The web isolate has a lower limit.
+        Image.MAX_IMAGE_PIXELS = 96_000_000
     headers = {'apikey': key, **({} if key.startswith('sb_') else {'Authorization': 'Bearer ' + key})}
 
     def request(route, body=None, mime='application/json', method=None):
@@ -72,10 +77,11 @@ def main():
 
     processed = failed = total_bytes = 0
     while processed < args.max_jobs:
-        jobs = rpc('nr_imagem_trabalho_obter', {'p_limite': 1})
+        jobs = (rpc('ca_imagem_reservar', {'p_processador': PROCESSOR}) if args.cruz_alta else
+                rpc('nr_imagem_trabalho_obter', {'p_limite': 1}))
         if not jobs:
             if args.watch:
-                time.sleep(5)
+                time.sleep(30 if args.cruz_alta else 5)
                 continue
             break
         for job in jobs:

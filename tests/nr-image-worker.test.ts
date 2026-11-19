@@ -30,6 +30,7 @@ test("misconfigured backend hosts fail before any credential can be transmitted"
 });
 type Binary = Uint8Array<ArrayBuffer>;
 type Options = {
+  cruzAlta?: boolean;
   original?: Binary;
   preview?: Binary;
   persisted?: Binary;
@@ -71,9 +72,15 @@ async function harness(options: Options = {}) {
     const body = typeof init.body === "string" ? JSON.parse(init.body) : null;
     calls.push({ url, init, body });
     const reply = (value: unknown) => Promise.resolve(Response.json(value));
-    if (url.pathname.endsWith("/nr_imagem_worker_validar"))
+    if (
+      url.pathname.endsWith(
+        options.cruzAlta ? "/ca_imagem_worker_validar" : "/nr_imagem_worker_validar",
+      )
+    )
       return reply(options.authorized !== false);
-    if (url.pathname.endsWith("/nr_imagem_trabalho_obter"))
+    if (
+      url.pathname.endsWith(options.cruzAlta ? "/ca_imagem_reservar" : "/nr_imagem_trabalho_obter")
+    )
       return reply(options.jobs === false ? [] : [job]);
     if (url.pathname.endsWith("/nr_imagem_trabalho_concluir")) {
       const result = body!.p_resultado as Record<string, unknown>;
@@ -107,6 +114,7 @@ async function harness(options: Options = {}) {
     throw Error("Unexpected request in isolated worker test");
   };
   const handler = createImageWorker({
+    cruzAlta: options.cruzAlta,
     url: ORIGIN,
     serviceKey: key,
     fetch: transport,
@@ -128,6 +136,28 @@ async function harness(options: Options = {}) {
   };
   return { run, calls, completed, job, original, preview, key };
 }
+
+test("Cruz Alta hashes a source above 10 MiB across chunks before requesting its private rendition", async () => {
+  const original = new Uint8Array(11 * 1024 * 1024);
+  original.set(fixtures.landscape);
+  const chunked = () =>
+    new Response(
+      new ReadableStream({
+        start(controller) {
+          for (let offset = 0; offset < original.length; offset += 128 * 1024)
+            controller.enqueue(original.subarray(offset, offset + 128 * 1024));
+          controller.close();
+        },
+      }),
+      { headers: { "content-type": "image/jpeg" } },
+    );
+  const success = await harness({ cruzAlta: true, original, originalResponse: chunked });
+  assert.equal((await success.run()).result.ready, 1);
+  const mismatch = await harness({ cruzAlta: true, original, originalResponse: chunked });
+  original[original.length - 1] ^= 1;
+  assert.equal((await mismatch.run()).result.error, "original_divergente");
+  assert(!mismatch.calls.some(({ url }) => url.pathname.includes("/render/image/")));
+});
 
 test("narrow authentication rejects unauthenticated calls before any queue or Storage access", async () => {
   const state = await harness();

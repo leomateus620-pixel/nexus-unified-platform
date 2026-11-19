@@ -1,0 +1,6 @@
+FROM python:3.12-slim
+RUN python -m pip install --no-cache-dir Pillow==12.2.0
+WORKDIR /app
+COPY image-worker.py ./image-worker.py
+USER 65534:65534
+ENTRYPOINT ["python", "-u", "/app/image-worker.py", "--cruz-alta", "--watch", "--max-jobs", "5000"]

@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -300,8 +301,13 @@ export const caLocalizarOrigem = createServerFn({ method: "GET" })
   );
 export const caPrevia = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(alvo.extend({ documento_id: uuid, revisao_id: uuid }))
+  .inputValidator(
+    alvo.extend({ documento_id: uuid, revisao_id: uuid, representar: z.boolean().optional() }),
+  )
   .handler(async ({ context, data }) => {
+    setResponseHeader("Cache-Control", "private, no-store");
+    setResponseHeader("Referrer-Policy", "no-referrer");
+    const signal = getRequest().signal;
     const args = { ...params(data), p_doc: data.documento_id, p_rev: data.revisao_id };
     const shape = z.object({
       arquivo_id: uuid,
@@ -310,14 +316,39 @@ export const caPrevia = createServerFn({ method: "POST" })
       sha256: z.string(),
       tamanho: z.number(),
     });
-    const meta = shape.parse(await rpc(context.supabase, "ca_previa", args));
+    const authorized = async () =>
+      shape.parse(nrResult(await db(context.supabase).rpc("ca_previa", args).abortSignal(signal)));
+    const meta = await authorized();
     const admin = await adminPrivado();
-    const signed = await admin.storage.from(NR_ARQUIVO_BUCKET).createSignedUrl(meta.caminho, 60);
+    signal.throwIfAborted();
+    const [signed, representations] = await Promise.all([
+      admin.storage.from(NR_ARQUIVO_BUCKET).createSignedUrl(meta.caminho, 60),
+      data.representar && meta.mime === "application/pdf"
+        ? import("./pdf-representations.server")
+            .then(({ signCruzAltaPdfRepresentations }) =>
+              signCruzAltaPdfRepresentations(
+                admin,
+                data.organization_id,
+                NR_ARQUIVO_BUCKET,
+                meta,
+                1,
+                signal,
+              ),
+            )
+            .catch(() => undefined)
+        : undefined,
+    ]);
     if (signed.error || !signed.data)
       throw new Error("Prévia temporariamente indisponível. Tente novamente.");
-    const confirmado = shape.parse(await rpc(context.supabase, "ca_previa", args));
-    if (confirmado.arquivo_id !== meta.arquivo_id)
+    const confirmado = await authorized();
+    if (
+      confirmado.arquivo_id !== meta.arquivo_id ||
+      confirmado.caminho !== meta.caminho ||
+      confirmado.sha256 !== meta.sha256 ||
+      confirmado.tamanho !== meta.tamanho
+    )
       throw new Error("A revisão mudou durante a preparação da prévia.");
+    signal.throwIfAborted();
     return {
       url: signed.data.signedUrl,
       mime: meta.mime,
@@ -325,6 +356,66 @@ export const caPrevia = createServerFn({ method: "POST" })
       tamanho: meta.tamanho,
       arquivo_id: meta.arquivo_id,
       expira_em: new Date(Date.now() + 60000).toISOString(),
+      ...(representations ? { representations } : {}),
+    };
+  });
+
+const varianteMidia = z.enum(["miniatura_384", "previa_768", "original", "anexo_office"]);
+const metadadosMidia = z.object({
+  arquivo_id: uuid,
+  nome: z.string(),
+  caminho: z.string(),
+  mime: z.string(),
+  sha256: z.string(),
+  variante: varianteMidia,
+});
+
+export const caAcervoMidia = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(alvo.extend({ ...idRevisao.shape, variante: varianteMidia }))
+  .handler(async ({ context, data }) => {
+    setResponseHeader("Cache-Control", "private, no-store");
+    setResponseHeader("Referrer-Policy", "no-referrer");
+    const signal = getRequest().signal;
+    const args = {
+      ...params(data),
+      p_doc: data.documento_id,
+      p_rev: data.revisao_id,
+      p_variante: data.variante,
+    };
+    const authorized = async () =>
+      metadadosMidia
+        .nullable()
+        .parse(
+          nrResult(await db(context.supabase).rpc("ca_acervo_midia", args).abortSignal(signal)),
+        );
+    const media = await authorized();
+    if (!media) return null;
+    const admin = await adminPrivado();
+    signal.throwIfAborted();
+    const signed = await admin.storage
+      .from(NR_ARQUIVO_BUCKET)
+      .createSignedUrl(
+        media.caminho,
+        60,
+        media.variante === "anexo_office" ? { download: media.nome } : {},
+      );
+    if (signed.error || !signed.data)
+      throw new Error("Arquivo privado temporariamente indisponível. Tente novamente.");
+    const confirmed = await authorized();
+    if (
+      confirmed?.arquivo_id !== media.arquivo_id ||
+      confirmed.caminho !== media.caminho ||
+      confirmed.sha256 !== media.sha256 ||
+      confirmed.variante !== media.variante
+    )
+      throw new Error("A revisão mudou durante a preparação do arquivo.");
+    signal.throwIfAborted();
+    return {
+      url: signed.data.signedUrl,
+      nome: media.nome,
+      variante: media.variante,
+      versao: media.sha256,
     };
   });
 

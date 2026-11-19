@@ -291,7 +291,7 @@ try {
     "23514",
   );
   await stage(noDate, imgHash, roof, 302, "image/png");
-  await publish(roof, imgIntent, img.id, noDate);
+  const linkedImage = await publish(roof, imgIntent, img.id, noDate);
   const evidence = (await get(sql, roof)).documentos[0].revisoes[0];
   assert.equal(evidence.data, null);
   assert.equal(evidence.nota, noDate.origem.nota);
@@ -361,6 +361,90 @@ try {
     ),
   );
   passed("desvinculação com retenção dos demais vínculos, revisões e autoria");
+  await sql.unsafe("reset role");
+  await applyMigrations(sql, await loadManifest(process.cwd()));
+  await login(sql, editor);
+  const media = (variant) =>
+    sql`select ca_acervo_midia(${org},${roof},${linkedImage.documento_id},${linkedImage.revisao_id},${variant}) result`;
+  assert.equal((await media("miniatura_384"))[0].result, null);
+  assert.equal((await media("previa_768"))[0].result.caminho, img.caminho);
+  await denied(() => sql`select ca_imagem_reservar('nexus-pillow-v1')`, "42501");
+  await sql.unsafe("set role service_role");
+  const claims = [];
+  for (let count = 0; count < 2; count++) {
+    const [job] = (await sql`select ca_imagem_reservar('nexus-pillow-v1') r`)[0].r;
+    assert.equal(job.arquivo_id, img.id);
+    assert.equal(job.original_sha256, imgHash);
+    claims.push(job);
+  }
+  assert.notEqual(claims[0].variante, claims[1].variante);
+  assert.deepEqual((await sql`select ca_imagem_reservar('nexus-pillow-v1') r`)[0].r, []);
+  for (const job of claims) {
+    await sql`select nr_imagem_trabalho_concluir(${job.id},${job.lease},${sql.json({
+      estado: "disponivel",
+      mime: "image/webp",
+      tamanho: 120,
+      largura: 96,
+      altura: 64,
+      sha256: "8".repeat(64),
+    })})`;
+  }
+  await login(sql, editor);
+  for (const job of claims)
+    assert.equal((await media(job.variante))[0].result.caminho, job.caminho);
+  await login(sql, outsider);
+  await denied(() => media("previa_768"), "42501");
+  passed(
+    "trabalhos privados da cena, retomada sem duplicação e autorização das representações por revisão",
+  );
+  await login(sql, editor);
+  for (const [ext, mime, marker] of [
+    ["docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "1"],
+    ["xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "2"],
+  ]) {
+    const intent = randomUUID();
+    const sha256 = marker.repeat(64);
+    const nome = `acervo-original.${ext}`;
+    const file = (
+      await sql`select ca_preparar(${org},${roof},${intent},${sql.json({ nome, mime, tamanho: 400, sha256 })}) r`
+    )[0].r;
+    await sql.unsafe("reset role");
+    await sql`insert into storage.objects(bucket_id,name,metadata) values('nexus-nr-acervo',${file.caminho},${sql.json({ size: 400, mimetype: mime })})`;
+    await sql.unsafe("set role service_role");
+    await sql`select ca_bytes_verificados(${org},${file.id},${editor},${sha256},400,${mime})`;
+    await login(sql, editor);
+    const revision = await publish(roof, intent, file.id, {
+      titulo: `Anexo tecnicamente vinculado ${ext}`,
+      rotulo: "Original",
+      data: "2026-11-12",
+      escopo: "individual",
+      categoria: "outro",
+    });
+    const download = (key, rev) =>
+      sql`select ca_acervo_midia(${org},${key},${revision.documento_id},${rev},'anexo_office') result`;
+    const originalFile = (await download(roof, revision.revisao_id))[0].result;
+    assert.equal(originalFile.arquivo_id, file.id);
+    assert.equal(originalFile.nome, nome);
+    assert.equal(originalFile.mime, mime);
+    await denied(() => download(shared, revision.revisao_id), "42501");
+    await denied(() => download(roof, linkedImage.revisao_id), "55000");
+    await denied(
+      () => sql`select ca_previa(${org},${roof},${revision.documento_id},${revision.revisao_id})`,
+      "55000",
+    );
+  }
+  passed("DOCX/XLSX originais só para download da revisão e do objeto autorizados");
+  await sql.unsafe("reset role");
+  const ticket = randomUUID().replaceAll("-", "") + randomUUID().replaceAll("-", "");
+  await sql`insert into nr_imagem_worker_tickets(ticket_sha256,expira_em,finalidade)
+    values(encode(sha256(convert_to(${ticket},'UTF8')),'hex'),now()+interval '2 minutes','cruz_alta')`;
+  await login(sql, editor);
+  await denied(() => sql`select ca_imagem_worker_validar(${ticket})`, "42501");
+  await sql.unsafe("set role service_role");
+  assert.equal((await sql`select nr_imagem_worker_validar(${ticket}) ok`)[0].ok, false);
+  assert.equal((await sql`select ca_imagem_worker_validar(${ticket}) ok`)[0].ok, true);
+  assert.equal((await sql`select ca_imagem_worker_validar(${ticket}) ok`)[0].ok, false);
+  passed("ticket da fila de imagens restrito ao callback da unidade e consumido uma vez");
   console.log(
     checks +
       " cenários de banco passaram. Storage simulado apenas por metadados no cluster descartável.",

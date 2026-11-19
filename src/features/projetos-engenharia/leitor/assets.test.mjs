@@ -15,6 +15,11 @@ async function fixture(run) {
       JSON.stringify({ name: "pdfjs-dist", version: "6.4.299" }),
     );
     await writeFile(path.join(pkg, "LICENSE"), "Local library license fixture");
+    await mkdir(path.join(pkg, "legacy", "build"), { recursive: true });
+    await writeFile(
+      path.join(pkg, "legacy", "build", "pdf.worker.min.mjs"),
+      "/* worker fixture */",
+    );
     for (const folder of ["cmaps", "wasm", "iccs", "standard_fonts"]) {
       await mkdir(path.join(pkg, folder));
       await writeFile(
@@ -46,7 +51,11 @@ test("resources repeat deterministically and do not publish the scripting sandbo
     assert.deepEqual(await preparePdfAssets(pkg, output), first);
     assert.equal(await readFile(path.join(output, "nexus-assets.json"), "utf8"), manifest);
     assert.equal(await readFile(sibling, "utf8"), "Existing asset");
-    assert.equal(first.files, 5);
+    assert.equal(first.files, 6);
+    assert.equal(
+      await readFile(path.join(output, "legacy", "build", "pdf.worker.min.mjs"), "utf8"),
+      "/* worker fixture */",
+    );
     await assert.rejects(readFile(path.join(output, "wasm", "quickjs-eval.js")), {
       code: "ENOENT",
     });

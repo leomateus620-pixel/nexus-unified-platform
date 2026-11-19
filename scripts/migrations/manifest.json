@@ -463,6 +463,22 @@
     {
       "path": "drizzle/migrations/0091_ca_inspecao_rdo_origem.sql",
       "sha256": "1978f05b5474f128a5061e8e33c92ca691f6ed3c3b89ab165e54bede9eadcd62"
+    },
+    {
+      "path": "drizzle/migrations/0092_ca_pdf_representacoes.sql",
+      "sha256": "ca4dcd6f1eeda88abdc25aabc874d557a83277f4bbfd8bd8708816ab7198486b"
+    },
+    {
+      "path": "drizzle/migrations/0093_ca_rdo_midia.sql",
+      "sha256": "4a16379562f84b654f930ceb06a720091ac3fbc680ae68f52795506033cfa0da"
+    },
+    {
+      "path": "drizzle/migrations/0094_ca_acervo_midia.sql",
+      "sha256": "5aa7e93d975044e9b0c34442bc8c13c89e7cb71b181b7976e43730ad762b1178"
+    },
+    {
+      "path": "drizzle/migrations/0095_ca_imagem_trabalho.sql",
+      "sha256": "85358a04202c1aaacdb3c5d924fb9bb358b2e0adf2bfec17a50299b5ce390e3e"
     }
   ]
 }

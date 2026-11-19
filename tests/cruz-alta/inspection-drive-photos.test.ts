@@ -11,6 +11,7 @@ const BASE = "fixture-photo-root";
 const NESTED = "fixture-photo-nested";
 const DIRECT = "fixture-photo-direct";
 const PHOTO = "fixture-photo-original";
+const SECOND = "fixture-photo-second";
 const FOREIGN = "fixture-photo-unrelated";
 const RDO_ROOT = "fixture-private-rdo-root";
 const RDO_LAUNCHED = "fixture-private-rdo-launched";
@@ -62,6 +63,10 @@ type FixtureOptions = {
   baseName?: string;
   launchedParent?: string;
   originFailure?: number;
+  secondPhoto?: boolean;
+  canDownload?: boolean;
+  holdOrigin?: { id: string; release: Promise<void>; deny?: boolean; onStart?: () => void };
+  onPhotoMetadata?: () => void;
 };
 
 function fixture(options: FixtureOptions = {}) {
@@ -80,7 +85,14 @@ function fixture(options: FixtureOptions = {}) {
         photo("fixture-shortcut", BASE, "application/vnd.google-apps.shortcut"),
       ],
     ],
-    [NESTED, [selected, photo("fixture-photo-svg", NESTED, "image/svg+xml")]],
+    [
+      NESTED,
+      [
+        selected,
+        ...(options.secondPhoto ? [photo(SECOND, NESTED)] : []),
+        photo("fixture-photo-svg", NESTED, "image/svg+xml"),
+      ],
+    ],
   ]);
   const transport: typeof fetch = async (input, init) => {
     const url = new URL(String(input));
@@ -129,6 +141,12 @@ function fixture(options: FixtureOptions = {}) {
       return Response.json({ files: parent === BASE ? items.slice(1) : items });
     }
     if (id === RDO_ROOT || id === RDO_LAUNCHED) {
+      if (options.holdOrigin?.id === id) {
+        options.holdOrigin.onStart?.();
+        await options.holdOrigin.release;
+        if (options.holdOrigin.deny)
+          return Response.json({ error: { status: "PERMISSION_DENIED" } }, { status: 403 });
+      }
       if (id === RDO_LAUNCHED)
         assert.equal(headers.get("X-Goog-Drive-Resource-Keys"), `${RDO_LAUNCHED}/${RESOURCE}`);
       return Response.json(
@@ -147,6 +165,7 @@ function fixture(options: FixtureOptions = {}) {
       if (options.inaccessible && id === BASE) folder.capabilities.canListChildren = false;
       return Response.json(folder);
     }
+    if (id === SECOND && options.secondPhoto) return Response.json(photo(SECOND, NESTED));
     assert.equal(
       id,
       PHOTO,
@@ -158,10 +177,14 @@ function fixture(options: FixtureOptions = {}) {
       });
     }
     photoDetails += 1;
+    options.onPhotoMetadata?.();
     return Response.json({
       ...selected,
       ...(options.omitParents ? { parents: undefined } : {}),
       ...(options.replaced && photoDetails > 1 ? { version: "43" } : {}),
+      ...(options.canDownload !== undefined
+        ? { capabilities: { canDownload: options.canDownload } }
+        : {}),
       thumbnailLink: options.thumbnailLink,
     });
   };
@@ -169,6 +192,142 @@ function fixture(options: FixtureOptions = {}) {
 }
 
 const ref = { id: PHOTO, version: "42", path: [NESTED] };
+
+const registeredPublishedTag = {
+  ...access,
+  origin: {
+    parentId: RDO_LAUNCHED,
+    rootId: RDO_ROOT,
+    nameMatches: (value: string) => value.startsWith("08 - "),
+  },
+};
+
+test(
+  "the uncatalogued fallback waits for root authorization before reading the TAG",
+  { timeout: 3000 },
+  async () => {
+    const originStarted = Promise.withResolvers<void>();
+    const root = Promise.withResolvers<void>();
+    const state = fixture({
+      baseParent: RDO_LAUNCHED,
+      baseName: "08 - TAG",
+      holdOrigin: {
+        id: RDO_ROOT,
+        release: root.promise,
+        deny: true,
+        onStart: () => originStarted.resolve(),
+      },
+    });
+    const denied = assert.rejects(
+      state.api.readPhoto(registeredPublishedTag, ref, false, signal()),
+      {
+        code: "pasta_rdo_fora_da_origem",
+      },
+    );
+    await originStarted.promise;
+    assert(!state.urls.some((url) => url.searchParams.has("q") || url.pathname.endsWith(BASE)));
+    root.resolve();
+    await denied;
+    assert(!state.urls.some((url) => url.searchParams.has("alt")));
+  },
+);
+
+test(
+  "an exact catalogue photo verifies concurrently with its registered origin and deduplicates identical refs",
+  { timeout: 3000 },
+  async () => {
+    const root = Promise.withResolvers<void>();
+    const reachedPhoto = Promise.withResolvers<void>();
+    const state = fixture({
+      baseParent: RDO_LAUNCHED,
+      baseName: "08 - TAG",
+      canDownload: true,
+      holdOrigin: { id: RDO_ROOT, release: root.promise },
+      onPhotoMetadata: () => reachedPhoto.resolve(),
+    });
+    const access = state.api.photoAccess(registeredPublishedTag, signal());
+    let settled = false;
+    const result = Promise.all([
+      access.verifyCatalogRef(ref),
+      access.verifyCatalogRef({ ...ref, path: [...ref.path] }),
+    ]).finally(() => {
+      settled = true;
+    });
+    await reachedPhoto.promise;
+    assert.equal(settled, false, "known live photo must wait for the registered root");
+    root.resolve();
+    assert.deepEqual(
+      (await result).map((item) => item.canDownload),
+      [true, true],
+    );
+    assert.equal(state.urls.filter((url) => url.pathname.endsWith(PHOTO)).length, 1);
+    assert(!state.urls.some((url) => url.searchParams.has("alt")));
+  },
+);
+
+test(
+  "an accessible catalogue photo cannot override a denied root or moved RDO branch",
+  { timeout: 3000 },
+  async () => {
+    for (const origin of [
+      { id: RDO_ROOT, deny: true },
+      { id: RDO_LAUNCHED, launchedParent: FOREIGN },
+    ]) {
+      const held = Promise.withResolvers<void>();
+      const reachedPhoto = Promise.withResolvers<void>();
+      const state = fixture({
+        baseParent: RDO_LAUNCHED,
+        baseName: "08 - TAG",
+        canDownload: true,
+        ...(origin.launchedParent ? { launchedParent: origin.launchedParent } : {}),
+        holdOrigin: {
+          id: origin.id,
+          release: held.promise,
+          ...(origin.deny ? { deny: true } : {}),
+        },
+        onPhotoMetadata: () => reachedPhoto.resolve(),
+      });
+      const result = state.api.photoAccess(registeredPublishedTag, signal()).verifyCatalogRef(ref);
+      const denied = assert.rejects(result, { code: "pasta_rdo_fora_da_origem" });
+      await reachedPhoto.promise;
+      held.resolve();
+      await denied;
+      assert(!state.urls.some((url) => url.searchParams.has("alt")));
+    }
+  },
+);
+
+test("checks two visible photos against one live scoped traversal and never reads their original bytes", async () => {
+  const state = fixture({ secondPhoto: true });
+  const scoped = state.api.photoAccess(access, signal());
+  await Promise.all([scoped.verify(ref), scoped.verify({ ...ref, id: SECOND })]);
+  assert.equal(state.urls.filter((url) => url.pathname.endsWith(BASE)).length, 1);
+  assert.equal(state.urls.filter((url) => url.pathname.endsWith(NESTED)).length, 1);
+  assert.equal(
+    state.urls.filter((url) => url.searchParams.get("q")?.includes(`'${NESTED}' in parents`))
+      .length,
+    1,
+  );
+  assert.equal(state.urls.filter((url) => url.searchParams.has("alt")).length, 0);
+  await assert.rejects(scoped.verify({ ...ref, id: FOREIGN }), { code: "foto_rdo_indisponivel" });
+  assert(!state.urls.some((url) => url.pathname.endsWith(FOREIGN)));
+});
+
+test("a live denial of content access rejects cached and direct reads despite visible metadata", async () => {
+  const denied = fixture({ canDownload: false, thumbnailLink: THUMBNAIL });
+  await assert.rejects(denied.api.photoAccess(access, signal()).verify(ref), {
+    code: "foto_rdo_indisponivel",
+  });
+  await assert.rejects(denied.api.readPhoto(access, ref, true, signal()), {
+    code: "foto_rdo_indisponivel",
+  });
+  assert(!denied.urls.some((url) => url.searchParams.has("alt") || url.href === THUMBNAIL));
+  assert.equal(
+    (await fixture({ canDownload: true }).api.photoAccess(access, signal()).verify(ref))
+      .canDownload,
+    true,
+  );
+});
 
 test("lists raster photo metadata from complete pages with exact paths and no storage URLs", async () => {
   const state = fixture();

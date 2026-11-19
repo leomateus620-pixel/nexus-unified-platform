@@ -151,7 +151,7 @@ try {
     node (Join-Path $PSScriptRoot $scenario)
     if ($LASTEXITCODE -ne 0) { throw "Agenda / team test failed: $scenario" }
   }
-  foreach ($scenario in @('nr-mapa-pet', 'nr-contratacao', 'nr-equipe', 'pet-v2', 'cruz-alta-acervo')) {
+  foreach ($scenario in @('nr-mapa-pet', 'nr-contratacao', 'nr-equipe', 'pet-v2', 'cruz-alta-acervo', 'cruz-alta-laudos', 'cruz-alta-rdo')) {
     node "$PSScriptRoot\$scenario.mjs"
     if ($LASTEXITCODE -ne 0) { throw "NR unit / PET v2 test failed: $scenario" }
   }

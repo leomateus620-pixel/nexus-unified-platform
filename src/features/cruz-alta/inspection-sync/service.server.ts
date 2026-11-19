@@ -38,7 +38,8 @@ export function createInspectionService(options: InspectionServiceOptions) {
     if (!options.serviceKey.startsWith("sb_"))
       headers.set("Authorization", `Bearer ${options.serviceKey}`);
     try {
-      return await transport(`${base.origin}${path}`, { ...init, headers, redirect: "error" });
+      // Workerd supports manual redirects. Callers reject every non-2xx response.
+      return await transport(`${base.origin}${path}`, { ...init, headers, redirect: "manual" });
     } catch {
       throw new SyncFailure("backend_transporte_indisponivel", true);
     }

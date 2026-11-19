@@ -12,10 +12,9 @@ export function roofFrames(p: CruzPart): [GroundPoint, GroundPoint][] {
   if ((!openRoof(p) && !raisedRoof(p)) || p.footprint.length !== 4) return [];
   const [a, b, c, d] = p.footprint as [GroundPoint, GroundPoint, GroundPoint, GroundPoint];
   const length = Math.hypot(a[0] - b[0], a[1] - b[1]);
-  const bays =
-    p.id === "cobertura-62"
-      ? 3
-      : Math.max(1, Math.round(length / (p.id === "cobertura-28.1" ? 10 : 7.5)));
+  // O quadro de 72 s distingue uma modulação mais densa na frente aberta da Caldeira 35 t.
+  const stride = p.id === "cobertura-35" ? 4.5 : p.id === "cobertura-28.1" ? 10 : 7.5;
+  const bays = p.id === "cobertura-62" ? 3 : Math.max(1, Math.round(length / stride));
   const lerp = (u: GroundPoint, v: GroundPoint, t: number): GroundPoint => [
     u[0] + (v[0] - u[0]) * t,
     u[1] + (v[1] - u[1]) * t,

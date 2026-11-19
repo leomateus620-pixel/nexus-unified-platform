@@ -3,6 +3,7 @@ import test from "node:test";
 import { objects, geometry, lifelines } from "../../src/features/cruz-alta/manifest";
 import { spatialIndex } from "../../src/features/cruz-alta/spatial";
 import { cruzAlta, isCruzAlta } from "../../src/features/cruz-alta/context";
+import { lvhfState } from "../../src/features/cruz-alta/lvhf-appearance";
 import {
   geoToGround,
   groundToGeo,
@@ -23,6 +24,14 @@ test("Cada malha e cada segmento resolvem uma chave única na hierarquia", () =>
   assert.ok(map.byId.get("lvhf-29.2")?.status?.includes("Retirada"));
   assert.equal(new Set(lifelines.map((l) => l.id)).size, 73);
   assert.ok(!lifelines.some((l) => l.id === "lvhf-20" || l.id === "lvhf-29.2"));
+});
+test("A legenda da revisão 56 diferencia as linhas montadas com aditivo", () => {
+  const withAdditive = new Set(
+    lifelines.filter((line) => line.status === "montada-aditivo").map((line) => line.id),
+  );
+  assert.deepEqual(withAdditive, new Set(["lvhf-01", "lvhf-38", "lvhf-57"]));
+  const byId = new Map(objects.map((object) => [object.id, object]));
+  for (const line of lifelines) assert.equal(line.status, lvhfState(byId.get(line.id)?.status));
 });
 test("Coordenadas de controle fazem ida e volta com erro numérico inferior a um centímetro", () => {
   for (const c of registro.controls) {

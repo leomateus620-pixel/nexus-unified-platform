@@ -1,3 +1,5 @@
+import { localGroundHeight } from "./site-ground";
+
 export type GridBounds = [west: number, north: number, east: number, south: number];
 export interface HorizonGrid {
   bounds: GridBounds;
@@ -50,7 +52,7 @@ export function siteHeight(
   pad: GridBounds,
 ) {
   const padDistance = innerDistance(pad, x, z);
-  if (padDistance >= 0) return -0.005;
+  if (padDistance >= 0) return localGroundHeight(x, z);
   let h = elevationAt(wide, x, z);
   if (detail) {
     const weight = ramp(innerDistance(detail.meta.bounds, x, z) / 400);
@@ -58,7 +60,7 @@ export function siteHeight(
   }
   // Local tangent plane on WGS 84. At 30 km the curvature lowers the visible skyline by ~71 m.
   const tangentDrop = (x * x + z * z) / (2 * 6371008.8);
-  return -0.005 + (h - tangentDrop + 0.005) * ramp(-padDistance / 225);
+  return (h - tangentDrop) * ramp(-padDistance / 225);
 }
 /** LOD fixed to the only navigable area. Both grids use the same triangle edges at every distance. */
 export function sampleAxis(

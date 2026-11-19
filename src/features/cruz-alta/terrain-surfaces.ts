@@ -45,6 +45,32 @@ export const northReservoirBund = (
     [158, 426],
   ] as GroundPoint[]
 ).map(sheetToGround);
+
+// Dois eixos lidos na foto da folha 1 (rev. 56), girada no sentido da faixa.
+// Os quatro vértices de cada faixa preservam o eixo fotografado e a leitura do lastro em planta.
+export const railwayCorridors = [
+  sheet("lastro", [
+    [38, 646],
+    [1062, 339],
+    [1064, 344],
+    [40, 651],
+  ]),
+  sheet("lastro", [
+    [38, 660],
+    [1062, 353],
+    [1064, 358],
+    [40, 665],
+  ]),
+];
+
+const approachAsphaltEdge: GroundPoint[] = [
+  [543, 696],
+  [622, 677],
+  [736, 696],
+  [933, 733],
+  [1090, 759],
+];
+
 export const groundPatches: GroundPatch[] = [
   wide(
     "lavoura",
@@ -352,16 +378,26 @@ export const groundPatches: GroundPatch[] = [
     true,
   ),
   sheet("asfalto", [
-    [543, 696],
-    [622, 677],
-    [736, 696],
-    [933, 733],
-    [1090, 759],
+    ...approachAsphaltEdge,
     [1092, 773],
     [933, 749],
     [730, 712],
     [625, 692],
     [561, 707],
+  ]),
+  // A1 rev. 56 e vídeo 0 s: faixa clara contínua entre os pés da bateria sul e a faixa vegetada.
+  // A composição é interpretada e a altura conserva o datum local.
+  sheet("concreto", [
+    [901, 465],
+    [971, 442],
+    [1064, 411],
+    [1149, 387],
+    [1231, 365],
+    [1231, 370],
+    [1149, 394],
+    [1067, 418],
+    [973, 448],
+    [903, 470],
   ]),
   sheet(
     "campo",
@@ -576,9 +612,140 @@ export const yardPatches: GroundPatch[] = [
     ],
     true,
   ),
+  // A1 folha 1, pátios e passagem dos silos: limites do claro/escuro traçados na foto registrada.
+  // O tom cinza descreve o acabamento aparente, com material construtivo a confirmar.
+  sheet(
+    "pisoMineral",
+    [
+      [653, 577],
+      [713, 572],
+      [770, 555],
+      [838, 533],
+      [880, 516],
+      [913, 511],
+      [949, 548],
+      [925, 576],
+      [934, 592],
+      [910, 612],
+      [906, 653],
+      [953, 670],
+      [949, 693],
+      [855, 677],
+      [762, 658],
+      [690, 640],
+      [653, 628],
+      [643, 603],
+    ],
+    true,
+  ),
+  sheet(
+    "pisoMineral",
+    [
+      [102, 676],
+      [168, 665],
+      [230, 640],
+      [286, 624],
+      [310, 625],
+      [321, 650],
+      [281, 676],
+      [266, 695],
+      [214, 709],
+      [157, 727],
+      [108, 726],
+      [96, 709],
+    ],
+    true,
+  ),
+  sheet(
+    "campo",
+    [
+      [890, 446],
+      [930, 429],
+      [989, 412],
+      [1047, 397],
+      [1105, 381],
+      [1165, 362],
+      [1202, 359],
+      [1225, 356],
+      [1231, 362],
+      [1194, 376],
+      [1134, 395],
+      [1078, 412],
+      [1012, 432],
+      [955, 451],
+      [907, 469],
+      [892, 466],
+    ],
+    true,
+  ),
+  sheet("pisoMineral", [
+    [915, 685],
+    [961, 689],
+    [1028, 704],
+    [1097, 718],
+    [1155, 730],
+    [1229, 741],
+    [1229, 752],
+    [1155, 742],
+    [1097, 729],
+    [1027, 716],
+    [961, 700],
+    [915, 696],
+  ]),
 ];
+
+// A1 rev. 56 e vídeo 150 s. As faixas claras acompanham a via e as faces longas das naves.
+// A classe mineral descreve o aspecto da faixa de serviço. O tipo de pavimento requer vistoria.
+export const railwayYard = sheet("pisoMineral", [
+  [40, 631],
+  [195, 586],
+  [362, 538],
+  [485, 495],
+  [549, 469],
+  [653, 442],
+  [820, 394],
+  [1008, 338],
+  [1047, 325],
+  [1075, 336],
+  [1080, 356],
+  [1048, 368],
+  [977, 384],
+  [857, 422],
+  [755, 448],
+  [628, 497],
+  [540, 525],
+  [426, 553],
+  [276, 601],
+  [123, 644],
+  [40, 676],
+]);
+
+// Os mesmos vértices sustentam a borda de asfalto e a junta da faixa adjacente. Sem cota conhecida.
+export const approachJoint = approachAsphaltEdge.map(sheetToGround);
+
 // Distintas descontinuidades de acabamento no pátio e bordas dos diques. Unidades: metros locais.
 export const finishLines = [
+  {
+    type: "transicao",
+    points: [
+      [901, 465],
+      [971, 442],
+      [1064, 411],
+      [1149, 387],
+      [1231, 365],
+    ],
+  },
+  {
+    type: "transicao",
+    points: [
+      [915, 685],
+      [963, 692],
+      [1028, 707],
+      [1097, 721],
+      [1155, 733],
+      [1220, 744],
+    ],
+  },
   {
     type: "giro",
     points: [
@@ -629,14 +796,6 @@ export const finishLines = [
       [122, 326],
       [207, 302],
       [191, 205],
-    ],
-  },
-  {
-    type: "dique",
-    points: [
-      [151, 421],
-      [223, 403],
-      [207, 326],
     ],
   },
   {

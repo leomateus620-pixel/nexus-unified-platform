@@ -27,8 +27,18 @@ export function profile(part: CruzPart) {
     lo = Math.min(...distances),
     width = Math.max(0.001, Math.max(...distances) - lo);
   const t = (v: GroundPoint) => (across(v) - lo) / width;
+  const section = part.roofSection;
+  const segment = (u: number) => {
+    const i = section!.findIndex(([at]) => at >= u);
+    const end = Math.max(1, i);
+    return [section![end - 1]!, section![end]!] as const;
+  };
   const h = (v: GroundPoint) => {
     const u = T.MathUtils.clamp(t(v), 0, 1);
+    if (section) {
+      const [[start, low], [end, high]] = segment(u);
+      return T.MathUtils.lerp(low, high, (u - start) / (end - start));
+    }
     const rise =
       part.roof === "gable"
         ? 1 - Math.abs(2 * u - 1)
@@ -39,12 +49,37 @@ export function profile(part: CruzPart) {
             : 0;
     return part.eave + rise * part.rise;
   };
-  const steps = part.roof === "arc" ? 72 : part.roof === "gable" ? 2 : 1;
+  const roofDistance = (v: GroundPoint) => {
+    const distance = t(v) * width;
+    if (section) {
+      const u = T.MathUtils.clamp(t(v), 0, 1);
+      let length = 0;
+      for (let i = 1; i < section.length; i++) {
+        const [a, h1] = section[i - 1]!;
+        const [b, h2] = section[i]!;
+        length += Math.hypot((b - a) * width, h2 - h1) * T.MathUtils.clamp((u - a) / (b - a), 0, 1);
+      }
+      return length;
+    }
+    if (part.roof === "mono") return Math.hypot(width, part.rise) * t(v);
+    if (part.roof === "gable") return Math.hypot(width, 2 * part.rise) * t(v);
+    if (part.roof !== "arc") return distance;
+    // Integral of arc length over the parabolic profile. Independent of LOD tessellation.
+    const slope = (4 * part.rise) / width;
+    if (Math.abs(slope) < 0.001) return distance;
+    const primitive = (k: number) => (k * Math.hypot(1, k) + Math.asinh(k)) / 2;
+    return (width / (2 * slope)) * (primitive(slope) - primitive(slope * (1 - 2 * t(v))));
+  };
+  const stations = (arcSegments = 72) => {
+    if (section) return section.map(([at]) => at);
+    const steps = part.roof === "arc" ? arcSegments : part.roof === "gable" ? 2 : 1;
+    return Array.from({ length: steps + 1 }, (_, i) => i / steps);
+  };
   const normalAt = (v: GroundPoint) => {
     const derivative = (4 * part.rise * (1 - 2 * t(v))) / width;
     return new T.Vector3((derivative * dz) / len, 1, (-derivative * dx) / len).normalize();
   };
-  return { p, along, across, t, h, steps, normalAt };
+  return { p, along, across, t, h, stations, normalAt, roofDistance };
 }
 function clip(poly: GroundPoint[], at: number, t: (p: GroundPoint) => number, above: boolean) {
   const out: GroundPoint[] = [];
@@ -63,17 +98,25 @@ function clip(poly: GroundPoint[], at: number, t: (p: GroundPoint) => number, ab
   }
   return out;
 }
-function meshGeometry(positions: number[], uvs?: number[]) {
+export function meshGeometry(positions: number[], uvs?: number[]) {
   const geo = new T.BufferGeometry();
   geo.setAttribute("position", new T.Float32BufferAttribute(positions, 3));
   if (uvs) geo.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2));
   geo.computeVertexNormals();
   return geo;
 }
+export function edgeCuts(a: number, b: number, stations: readonly number[]) {
+  const cuts = [0, 1];
+  for (const station of stations.slice(1, -1)) {
+    const cut = (station - a) / (b - a);
+    if (cut > 0 && cut < 1) cuts.push(cut);
+  }
+  return cuts.sort((a, b) => a - b);
+}
 export function shell(part: CruzPart, arcSegments?: number) {
   const surface = profile(part),
-    { p, h, t, along, across } = surface,
-    steps = part.roof === "arc" ? (arcSegments ?? surface.steps) : surface.steps;
+    { p, h, t, along, roofDistance } = surface,
+    stations = surface.stations(arcSegments);
   const roof: number[] = [],
     wall: number[] = [],
     wallUV: number[] = [],
@@ -84,12 +127,12 @@ export function shell(part: CruzPart, arcSegments?: number) {
     normals: number[] = [];
   for (const [i, j, k] of triangles(p)) {
     const face = [p[i!]!, p[j!]!, p[k!]!];
-    for (let s = 0; s < steps; s++) {
-      const band = clip(clip(face, s / steps, t, true), (s + 1) / steps, t, false);
+    for (let s = 1; s < stations.length; s++) {
+      const band = clip(clip(face, stations[s - 1]!, t, true), stations[s]!, t, false);
       for (let n = 1; n + 1 < band.length; n++)
         for (const v of [band[0]!, band[n + 1]!, band[n]!]) {
           roof.push(v[0], h(v), v[1]);
-          uv.push(along(v), across(v));
+          uv.push(along(v), roofDistance(v));
           if (part.roof === "arc") {
             const n = surface.normalAt(v);
             normals.push(n.x, n.y, n.z);
@@ -105,12 +148,7 @@ export function shell(part: CruzPart, arcSegments?: number) {
       b = boundary[(i + 1) % boundary.length]!,
       ta = t(a),
       tb = t(b);
-    const cuts = [0, 1];
-    for (let s = 1; s < steps; s++) {
-      const cut = (s / steps - ta) / (tb - ta);
-      if (cut > 0 && cut < 1) cuts.push(cut);
-    }
-    cuts.sort((a, b) => a - b);
+    const cuts = edgeCuts(ta, tb, stations);
     const interpolate = (fraction: number): GroundPoint => [
       a[0] + (b[0] - a[0]) * fraction,
       a[1] + (b[1] - a[1]) * fraction,

@@ -9,8 +9,12 @@ function ground([x, y]: GroundPoint): GroundPoint {
     ((y * 1536) / 1029 - 967.9787659868598) * pixel,
   ];
 }
-function zone(kind: CruzArea["kind"], points: GroundPoint[]): CruzArea {
-  return { kind, footprint: points.map(ground) };
+function zone(
+  kind: CruzArea["kind"],
+  points: GroundPoint[],
+  vegetation?: CruzArea["vegetation"],
+): CruzArea {
+  return { kind, footprint: points.map(ground), ...(vegetation && { vegetation }) };
 }
 export const outerContext: CruzArea[] = [
   // Corredor de acesso ao oeste e estrada de travessia junto à bateria sul.
@@ -78,47 +82,63 @@ export const outerContext: CruzArea[] = [
     [1099, 899],
     [869, 859],
   ]),
-  zone("vegetacao", [
-    [591, 394],
-    [617, 398],
-    [675, 419],
-    [692, 505],
-    [672, 527],
-    [653, 511],
-    [627, 511],
-    [613, 531],
-    [600, 500],
-  ]),
-  zone("vegetacao", [
-    [679, 420],
-    [748, 436],
-    [776, 535],
-    [773, 570],
-    [749, 556],
-    [729, 534],
-    [695, 531],
-  ]),
-  zone("vegetacao", [
-    [756, 440],
-    [862, 475],
-    [866, 542],
-    [810, 558],
-    [790, 577],
-    [777, 532],
-  ]),
-  zone("vegetacao", [
-    [805, 655],
-    [839, 683],
-    [866, 675],
-    [868, 842],
-    [829, 852],
-    [790, 864],
-    [743, 875],
-    [704, 863],
-    [721, 832],
-    [757, 785],
-    [782, 748],
-  ]),
+  zone(
+    "vegetacao",
+    [
+      [591, 394],
+      [617, 398],
+      [675, 419],
+      [692, 505],
+      [672, 527],
+      [653, 511],
+      [627, 511],
+      [613, 531],
+      [600, 500],
+    ],
+    "talhao",
+  ),
+  zone(
+    "vegetacao",
+    [
+      [679, 420],
+      [748, 436],
+      [776, 535],
+      [773, 570],
+      [749, 556],
+      [729, 534],
+      [695, 531],
+    ],
+    "talhao",
+  ),
+  zone(
+    "vegetacao",
+    [
+      [756, 440],
+      [862, 475],
+      [866, 542],
+      [810, 558],
+      [790, 577],
+      [777, 532],
+    ],
+    "talhao",
+  ),
+  zone(
+    "vegetacao",
+    [
+      [805, 655],
+      [839, 683],
+      [866, 675],
+      [868, 842],
+      [829, 852],
+      [790, 864],
+      [743, 875],
+      [704, 863],
+      [721, 832],
+      [757, 785],
+      [782, 748],
+    ],
+    "talhao",
+  ),
   zone("vegetacao", [
     [961, 505],
     [1001, 503],

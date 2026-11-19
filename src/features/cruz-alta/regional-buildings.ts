@@ -10,8 +10,8 @@ export async function urbanSilhouette(
   const data: { unitsPerMetre: number; objects: [number, number[]][] } = await r.json();
   const vertices: number[] = [],
     colors: number[] = [];
-  const roofColor = new T.Color("#b8aca0"),
-    wallColor = new T.Color("#9f9d8e");
+  const roofColor = new T.Color("#a79988"),
+    wallColor = new T.Color("#969186");
   function vertex(x: number, z: number, y: number, roof: boolean, shade: number) {
     vertices.push(x, y, z);
     const c = roof ? roofColor : wallColor;
@@ -25,13 +25,15 @@ export async function urbanSilhouette(
       );
     if (!T.ShapeUtils.isClockWise(ring)) ring.reverse();
     const center = ring.reduce((p, v) => p.add(v), new T.Vector2()).multiplyScalar(1 / ring.length);
+    // Keep the outline legible over the raster without a repeated bright roof tone.
+    const tint = 0.95 + 0.09 * Math.sin(center.x * 0.071 + center.y * 0.113);
     const level = heightAt(center.x, center.y),
       eave = level + (levels || 1) * 3;
     const roof = T.ShapeUtils.triangulateShape(ring, []);
     for (const tri of roof)
       for (const id of [tri[0]!, tri[2]!, tri[1]!]) {
         const v = ring[id]!;
-        vertex(v.x, v.y, eave, true, 1);
+        vertex(v.x, v.y, eave, true, tint);
       }
     for (let i = 0; i < ring.length; i++) {
       const a = ring[i]!,

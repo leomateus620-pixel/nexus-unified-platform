@@ -70,6 +70,11 @@ import {
   type Elevations,
   type GridBounds,
 } from "../../src/features/cruz-alta/regional-grid";
+import {
+  exposedBallast,
+  localGroundHeight,
+  railwayAxes,
+} from "../../src/features/cruz-alta/site-ground";
 
 test("fundo regional preserva norte/sul, altitude relativa e uma única borda do pátio", () => {
   const grid: Elevations = {
@@ -95,8 +100,8 @@ test("fundo regional preserva norte/sul, altitude relativa e uma única borda do
     [120, 0],
     [5, 130],
   ] as GroundPoint[])
-    assert.equal(siteHeight(x, z, grid, null, pad), -0.005);
-  assert(Math.abs(siteHeight(-100.01, 0, grid, null, pad) + 0.005) < 1e-5);
+    assert.equal(siteHeight(x, z, grid, null, pad), localGroundHeight(x, z));
+  assert(Math.abs(siteHeight(-100.01, 0, grid, null, pad) - localGroundHeight(-100, 0)) < 1e-5);
   const detail = { ...grid, meta: { ...grid.meta, bounds: [-500, -500, 500, 500] as GridBounds } };
   assert.equal(siteHeight(-500, 0, grid, detail, pad), siteHeight(-500, 0, grid, null, pad));
   const axis = sampleAxis(-1000, 1000, 0, [-100, 120], 40);
@@ -108,6 +113,21 @@ test("fundo regional preserva norte/sul, altitude relativa e uma única borda do
 });
 
 import { opticalAlignment } from "../../src/features/cruz-alta/optical-alignment";
+
+test("linhas de quebra conservam a cota do pátio e a inclinação do apoio caminhável", () => {
+  const dique = sheetToGround([185, 372]);
+  assert(Math.abs(localGroundHeight(...dique) - 0.08) < 1e-8);
+  assert.equal(localGroundHeight(...sheetToGround([200, 460])), 0);
+  for (const axis of railwayAxes) {
+    for (const [from, to] of exposedBallast) {
+      assert(localGroundHeight(...axis.point(from)) < 1e-8);
+      assert(localGroundHeight(...axis.point(to)) < 1e-8);
+      assert(localGroundHeight(...axis.point((from + to) / 2)) > 0.09);
+      assert(localGroundHeight(...axis.point((from + to) / 2, 1.2)) < 1e-8);
+    }
+    assert.equal(localGroundHeight(...axis.point(0.5)), 0);
+  }
+});
 
 test("viés óptico do CBERS vem de quatro pontos de chão e reduz o resíduo nos seis independentes", () => {
   const registro = JSON.parse(

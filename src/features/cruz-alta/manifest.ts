@@ -4,6 +4,8 @@ import type { CruzArea, CruzLine, CruzObject, CruzPart, GroundPoint } from "./sc
 import { photoCorners, sheetToGround } from "./registro";
 import { surveyItems } from "./linhas";
 import { roofs } from "./tracados";
+import { receivingRoofSections } from "./moega-section";
+import { railwayCorridors } from "./terrain-surfaces";
 
 export { photoCorners };
 export const objects: CruzObject[] = [];
@@ -137,7 +139,12 @@ for (const [sector, sectorName, structures] of groups) {
         lifelines.push({
           id: `lvhf-${code}`,
           points: path.map(sheetToGround),
-          status: row.status.startsWith("Montada") ? "montada" : "a-montar",
+          status:
+            row.status === "Montada · aditivo"
+              ? "montada-aditivo"
+              : row.status === "Montada"
+                ? "montada"
+                : "a-montar",
         });
       }
     }
@@ -172,6 +179,8 @@ for (const roof of roofs) {
     ...(roof.parapet ? { parapet: roof.parapet } : {}),
   });
 }
+
+receivingRoofSections(geometry, lifelines);
 
 // Centros de base interpretados. A elipse da borda superior e a sombra estão deslocadas na foto oblíqua.
 function cylinder(
@@ -258,23 +267,16 @@ centralTanks.forEach(([x, y, r], i) =>
   ),
 );
 
-function area(kind: CruzArea["kind"], polygon: GroundPoint[], mass?: CruzArea["mass"]) {
-  context.push({ kind, footprint: polygon.map(sheetToGround), ...(mass ? { mass } : {}) });
+function area(
+  kind: CruzArea["kind"],
+  polygon: GroundPoint[],
+  appearance?: Pick<CruzArea, "mass" | "vegetation">,
+) {
+  context.push({ kind, footprint: polygon.map(sheetToGround), ...appearance });
 }
-// Faixa escura entre as naves. Os eixos convergem perto do término ao sul.
-// Coordenadas do aço e do lastro foram lidas com a foto girada no sentido dos trilhos.
-area("ferrovia", [
-  [38, 646],
-  [1062, 339],
-  [1064, 344],
-  [40, 651],
-]);
-area("ferrovia", [
-  [38, 660],
-  [1062, 353],
-  [1064, 358],
-  [40, 665],
-]);
+context.push(
+  ...railwayCorridors.map(({ footprint }) => ({ kind: "ferrovia" as const, footprint })),
+);
 area("via", [
   [38, 759],
   [143, 783],
@@ -313,27 +315,36 @@ area("patio", [
   [1109, 715],
   [1058, 689],
 ]);
-area("vegetacao", [
-  [24, 25],
-  [278, 21],
-  [283, 81],
-  [297, 126],
-  [265, 168],
-  [205, 188],
-  [120, 216],
-  [95, 354],
-  [42, 422],
-  [17, 394],
-]);
-area("vegetacao", [
-  [955, 28],
-  [1239, 16],
-  [1241, 256],
-  [1205, 211],
-  [1173, 157],
-  [1112, 94],
-  [1052, 65],
-]);
+// Quadros 0 s, 36 s e 150 s: duas massas de copas altas e estreitas junto ao perímetro.
+area(
+  "vegetacao",
+  [
+    [24, 25],
+    [278, 21],
+    [283, 81],
+    [297, 126],
+    [265, 168],
+    [205, 188],
+    [120, 216],
+    [95, 354],
+    [42, 422],
+    [17, 394],
+  ],
+  { vegetation: "talhao" },
+);
+area(
+  "vegetacao",
+  [
+    [955, 28],
+    [1239, 16],
+    [1241, 256],
+    [1205, 211],
+    [1173, 157],
+    [1112, 94],
+    [1052, 65],
+  ],
+  { vegetation: "talhao" },
+);
 area("vegetacao", [
   [284, 791],
   [376, 757],
@@ -353,7 +364,7 @@ area(
     [325, 679],
     [143, 732],
   ],
-  { roof: "gable", eave: 5.8, rise: 1.9 },
+  { mass: { roof: "gable", eave: 5.8, rise: 1.9 } },
 );
 area(
   "vizinhanca",
@@ -363,7 +374,7 @@ area(
     [611, 906],
     [530, 906],
   ],
-  { roof: "arc", eave: 7.5, rise: 3.6 },
+  { mass: { roof: "arc", eave: 7.5, rise: 3.6 } },
 );
 area(
   "vizinhanca",
@@ -373,7 +384,7 @@ area(
     [1029, 901],
     [854, 901],
   ],
-  { roof: "arc", eave: 7.2, rise: 3.4 },
+  { mass: { roof: "arc", eave: 7.2, rise: 3.4 } },
 );
 for (const [x, y, r] of [
   [737, 755, 18],

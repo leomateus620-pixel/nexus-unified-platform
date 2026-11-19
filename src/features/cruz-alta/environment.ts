@@ -1,11 +1,76 @@
 import * as T from "three";
 import { shell } from "./geometry";
-import type { CruzArea, CruzPart } from "./scene-types";
+import type { CruzArea, CruzPart, GroundPoint } from "./scene-types";
 import { extent, center, type SpatialIndex } from "./spatial";
 import { groundSkin } from "./ground-material";
 import { regionalHorizon } from "./regional";
 import { woodedAreas } from "./vegetation";
-import { northReservoirBund, roadsideMasses } from "./terrain-surfaces";
+import {
+  approachJoint,
+  groundPatches,
+  northReservoirBund,
+  roadsideMasses,
+} from "./terrain-surfaces";
+import { localGroundHeight } from "./site-ground";
+import { railway } from "./railway";
+
+function pavementJoint(points: GroundPoint[]) {
+  const positions: number[] = [];
+  for (let i = 1; i < points.length; i++) {
+    const [ax, az] = points[i - 1]!,
+      [bx, bz] = points[i]!;
+    const dx = bx - ax,
+      dz = bz - az,
+      length = Math.hypot(dx, dz);
+    const ex = (-dz / length) * 0.072,
+      ez = (dx / length) * 0.072;
+    const vertex = (x: number, z: number) => [x, localGroundHeight(x, z) + 0.003, z];
+    const a = vertex(ax - ex, az - ez),
+      b = vertex(ax + ex, az + ez);
+    const c = vertex(bx + ex, bz + ez),
+      d = vertex(bx - ex, bz - ez);
+    positions.push(...a, ...b, ...c, ...a, ...c, ...d);
+  }
+  const geometry = new T.BufferGeometry();
+  geometry.setAttribute("position", new T.Float32BufferAttribute(positions, 3));
+  geometry.computeVertexNormals();
+  const material = new T.MeshStandardMaterial({
+    color: "#746a5e",
+    roughness: 0.95,
+    side: T.DoubleSide,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const joint = new T.Mesh(geometry, material);
+  joint.name = "Junta entre a via de aproximação e o pátio";
+  joint.receiveShadow = true;
+  return joint;
+}
+
+function bundLip(material: T.Material) {
+  const [cx, cz] = center(extent(northReservoirBund));
+  const path = northReservoirBund.map(([x, z]) => new T.Vector2(x, -z));
+  const inner = northReservoirBund.map(([x, z]) => {
+    const dx = cx - x,
+      dz = cz - z;
+    const t = 0.26 / Math.hypot(dx, dz);
+    return new T.Vector2(x + dx * t, -(z + dz * t));
+  });
+  const perimeter = new T.Shape(path);
+  perimeter.holes.push(new T.Path(inner));
+  // Lábio contínuo visível aos 150 s. A altura ainda é esquemática.
+  const lip = new T.Mesh(
+    new T.ExtrudeGeometry(perimeter, { depth: 0.62, bevelEnabled: false }),
+    material,
+  );
+  lip.name = "Contenção em concreto do reservatório norte";
+  lip.rotation.x = -Math.PI / 2;
+  lip.position.y = -0.02;
+  lip.castShadow = lip.receiveShadow = true;
+  return lip;
+}
+
 export function createGroundContext(
   context: CruzArea[],
   index: SpatialIndex,
@@ -13,90 +78,66 @@ export function createGroundContext(
   parts: CruzPart[] = [],
   maxAnisotropy = 8,
 ) {
-  const root = new T.Group();
+  const root = new T.Group(),
+    surface = new T.Group();
   const material = (color: T.ColorRepresentation, roughness: number, metalness = 0) =>
     new T.MeshStandardMaterial({ color, roughness, metalness, side: T.DoubleSide });
-  const steel = material("#898883", 0.56, 0.37);
   const b = index.unit,
     [cx, cz] = center(b),
     span = Math.max(b.east - b.west, b.south - b.north, 60);
-  const { plate, padPlate, pad, map, rough, useBackdrop, width, textures } = groundSkin(
-    context,
-    parts,
-    cx,
-    cz,
-    span,
-  );
-  for (const texture of textures) texture.anisotropy = maxAnisotropy;
-  padPlate.visible = false;
-  root.add(plate, padPlate);
-  const bund = new T.InstancedMesh(
-    new T.BoxGeometry(1, 1, 1),
-    material("#dcdedd", 0.88),
-    northReservoirBund.length,
-  );
-  const curb = new T.Object3D();
-  northReservoirBund.forEach(([x, z], i) => {
-    const [nx, nz] = northReservoirBund[(i + 1) % northReservoirBund.length]!;
-    const dx = nx - x,
-      dz = nz - z;
-    // Contorno interpretado da ortoimagem; lábio do dique visível no vídeo. Altura esquemática.
-    curb.position.set((x + nx) / 2, 0.3, (z + nz) / 2);
-    curb.rotation.y = Math.atan2(dx, dz);
-    curb.scale.set(0.2, 0.6, Math.hypot(dx, dz));
-    curb.updateMatrix();
-    bund.setMatrixAt(i, curb.matrix);
-  });
-  bund.castShadow = bund.receiveShadow = true;
-  root.add(bund);
-  const backgroundRoof = material("#acaaa0", 0.79, 0.08),
-    backdropWalls = material("#a29f92", 0.9);
-  for (const a of context) {
-    const bb = extent(a.footprint);
-    if (a.kind === "vizinhanca") {
-      const circular = a.footprint.length > 12;
-      if (circular) {
-        const [x, z] = center(bb),
-          r = (bb.east - bb.west) / 2,
-          estimatedHeight = r * 1.45;
-        const wall = new T.Mesh(new T.CylinderGeometry(r, r, estimatedHeight, 24), backdropWalls);
-        const cap = new T.Mesh(new T.ConeGeometry(r, r * 0.45, 24), backgroundRoof);
-        wall.position.set(x, estimatedHeight / 2, z);
-        cap.position.set(x, estimatedHeight + r * 0.225, z);
-        wall.castShadow = cap.castShadow = true;
-        root.add(wall, cap);
-      } else {
-        const mass = shell({
-          id: "",
-          footprint: a.footprint,
-          ...(a.mass ?? { eave: 5, rise: 1.9, roof: "gable" }),
-        });
-        const wall = new T.Mesh(mass.wall, backdropWalls),
-          cap = new T.Mesh(mass.roof, backgroundRoof);
-        wall.castShadow = cap.castShadow = true;
-        root.add(wall, cap);
-      }
-    }
-    if (a.kind === "ferrovia" && a.footprint.length === 4) {
-      const [a0, a1, a2, a3] = a.footprint;
-      const from = new T.Vector3((a0![0] + a3![0]) / 2, 0.14, (a0![1] + a3![1]) / 2),
-        to = new T.Vector3((a1![0] + a2![0]) / 2, 0.14, (a1![1] + a2![1]) / 2);
-      const delta = to.clone().sub(from),
-        perp = new T.Vector3(-delta.z, 0, delta.x).normalize();
-      for (const side of [-0.63, 0.63]) {
-        const geo = new T.BoxGeometry(0.085, 0.09, delta.length());
-        const rail = new T.Mesh(geo, steel);
-        rail.position.copy(from).lerp(to, 0.5).addScaledVector(perp, side);
-        rail.lookAt(rail.position.clone().add(delta));
-        root.add(rail);
-      }
-    }
-  }
-  const grove = woodedAreas(context, parts);
+  const hardGround = groundPatches
+    .filter(({ surface }) => ["concreto", "concretoDique", "asfalto"].includes(surface))
+    .map(({ footprint }) => footprint);
+  const grove = woodedAreas(context, parts, hardGround);
   grove.texture.anisotropy = maxAnisotropy;
+  grove.setHeight(localGroundHeight);
+  const {
+    plate,
+    padPlate,
+    pad,
+    map,
+    rough,
+    useBackdrop,
+    setBackdropVisible,
+    width,
+    textures,
+    local,
+  } = groundSkin(context, parts, cx, cz, span, maxAnisotropy, invalidate, grove.contacts);
+  for (const texture of textures) texture.anisotropy = maxAnisotropy;
+  surface.add(plate, padPlate, bundLip(material("#dcdedd", 0.87)), pavementJoint(approachJoint));
+  const rails = railway();
+  root.add(rails.root);
+  const backgroundRoof = material("#acaaa0", 0.79, 0.08);
+  const backdropWalls = material("#a29f92", 0.9);
+  const neighbors: { floor: T.Group; footprint: GroundPoint[] }[] = [];
+  for (const a of context.filter((a) => a.kind === "vizinhanca")) {
+    const bb = extent(a.footprint);
+    const floor = new T.Group();
+    if (a.footprint.length > 12) {
+      const [x, z] = center(bb),
+        r = (bb.east - bb.west) / 2,
+        estimatedHeight = r * 1.45;
+      const wall = new T.Mesh(new T.CylinderGeometry(r, r, estimatedHeight, 24), backdropWalls);
+      const cap = new T.Mesh(new T.ConeGeometry(r, r * 0.45, 24), backgroundRoof);
+      wall.position.set(x, estimatedHeight / 2, z);
+      cap.position.set(x, estimatedHeight + r * 0.225, z);
+      wall.castShadow = cap.castShadow = true;
+      floor.add(wall, cap);
+    } else {
+      const mass = shell({
+        id: "",
+        footprint: a.footprint,
+        ...(a.mass ?? { eave: 5, rise: 1.9, roof: "gable" }),
+      });
+      const wall = new T.Mesh(mass.wall, backdropWalls),
+        cap = new T.Mesh(mass.roof, backgroundRoof);
+      wall.castShadow = cap.castShadow = true;
+      floor.add(wall, cap);
+    }
+    neighbors.push({ floor, footprint: a.footprint });
+    root.add(floor);
+  }
   root.add(grove.root);
-  let terrainHeight: (x: number, z: number) => number = () => 0;
-  let repositionTrees = false;
   const homes = new T.InstancedMesh(
     new T.BoxGeometry(1, 1, 1),
     backdropWalls,
@@ -124,14 +165,32 @@ export function createGroundContext(
   homes.receiveShadow = roofs.receiveShadow = true;
   homes.castShadow = roofs.castShadow = true;
   root.add(homes, roofs);
-  const elevations = new Map<T.InstancedMesh, Float32Array>();
-  root.traverse((o) => {
-    if (o instanceof T.InstancedMesh) {
-      const y = new Float32Array(o.count);
-      for (let i = 0; i < o.count; i++) y[i] = o.instanceMatrix.array[i * 16 + 13]!;
-      elevations.set(o, y);
+  let regionalVisible = false;
+  let contextVisible = true;
+  let regionHeight = localGroundHeight;
+  function updateSeam() {
+    const visible = contextVisible && regionalVisible;
+    if (plate.visible === !visible) return;
+    const heightAt = visible ? regionHeight : localGroundHeight;
+    plate.visible = !visible;
+    setBackdropVisible(visible);
+    grove.setHeight(heightAt);
+    for (const { floor, footprint } of neighbors) {
+      floor.position.y = Math.min(...footprint.map(([x, z]) => heightAt(x, z)));
     }
-  });
+    for (const [mesh, y] of [
+      [homes, 1.55],
+      [roofs, 3.76],
+    ] as const) {
+      const inst = mesh.instanceMatrix;
+      for (let i = 0; i < mesh.count; i++) {
+        const at = i * 16;
+        inst.array[at + 13] = y + heightAt(inst.array[at + 12]!, inst.array[at + 14]!);
+      }
+      inst.needsUpdate = true;
+      mesh.computeBoundingSphere();
+    }
+  }
   const region = regionalHorizon(
     b,
     map,
@@ -142,47 +201,44 @@ export function createGroundContext(
     maxAnisotropy,
     invalidate,
     (visible, heightAt) => {
-      if (padPlate.visible === visible) return;
-      terrainHeight = visible ? heightAt : () => 0;
-      repositionTrees = true;
-      plate.visible = !visible;
-      padPlate.visible = visible;
-      for (const [mesh, flat] of elevations) {
-        const inst = mesh.instanceMatrix;
-        for (let i = 0; i < mesh.count; i++) {
-          const p = i * 16;
-          inst.array[p + 13] =
-            flat[i]! + (visible ? heightAt(inst.array[p + 12]!, inst.array[p + 14]!) : 0);
-        }
-        inst.needsUpdate = true;
-        mesh.computeBoundingSphere();
-      }
+      regionalVisible = visible;
+      regionHeight = heightAt;
+      updateSeam();
     },
   );
   root.add(region.root);
   function dispose() {
     region.dispose();
+    local.dispose();
     grove.texture.dispose();
     const materials = new Set<T.Material>(),
       geometries = new Set<T.BufferGeometry>();
-    root.traverse((o) => {
+    const collect = (o: T.Object3D) => {
       if (o instanceof T.Mesh) {
         geometries.add(o.geometry);
         for (const m of Array.isArray(o.material) ? o.material : [o.material]) materials.add(m);
       }
       if (o instanceof T.InstancedMesh) o.dispose();
-    });
+    };
+    root.traverse(collect);
+    surface.traverse(collect);
     for (const m of materials) m.dispose();
     for (const geo of geometries) geo.dispose();
     for (const texture of textures) texture.dispose();
   }
   return {
     root,
+    surface,
     dispose,
     setRegion: region.setRegion,
-    updateRegion: (eye: T.Vector3) => {
-      grove.update(eye, terrainHeight, repositionTrees);
-      repositionTrees = false;
+    setContextVisible(visible: boolean) {
+      contextVisible = visible;
+      updateSeam();
+    },
+    updateRegion: (eye: T.Vector3, economical = false) => {
+      grove.update(eye, economical);
+      rails.update(eye, economical);
+      local.update(eye);
       region.updateRegion(eye);
     },
     regionInfo: region.regionInfo,

@@ -9,14 +9,14 @@ export interface StandTree {
   depth: number;
   phase: number;
   color: T.Color;
-  type: 0 | 1;
-  index: number;
+  y: number;
 }
 function leafTexture() {
   const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = 256;
+  canvas.width = canvas.height = 128;
   const c = canvas.getContext("2d")!,
     random = randomSequence(231998);
+  c.scale(0.5, 0.5);
   function leaf(x: number, y: number, length: number, angle: number) {
     const w = length * (0.29 + random() * 0.17),
       light = 148 + Math.floor(random() * 98);
@@ -79,54 +79,53 @@ function leafTexture() {
   tex.anisotropy = 8;
   return tex;
 }
-const cap = 26,
-  clusters = 26,
-  forks = 12,
-  up = new T.Vector3(0, 1, 0);
-export function nearCanopies(trees: StandTree[], crowns: [T.InstancedMesh, T.InstancedMesh]) {
+const cap = 22;
+const clusters = 16;
+const forks = 8;
+const detailRadius = 39;
+const cellSize = 32;
+const up = new T.Vector3(0, 1, 0);
+
+/** Sprays and branch forks complement the continuous crown. No replacement or moving billboards. */
+export function nearCanopies(trees: StandTree[]) {
   const root = new T.Group(),
     texture = leafTexture();
+  root.name = "Folhagem no nível do pátio";
   const foil = new T.MeshStandardMaterial({
     map: texture,
-    alphaTest: 0.26,
+    alphaTest: 0.25,
     alphaToCoverage: true,
     side: T.DoubleSide,
     roughness: 0.97,
   });
-  const patch = new T.PlaneGeometry(1, 1, 2, 2),
-    vertices = patch.getAttribute("position");
-  for (let i = 0; i < vertices.count; i++)
-    vertices.setZ(i, -0.15 * (vertices.getX(i) ** 2 + vertices.getY(i) ** 2));
+  const patch = new T.PlaneGeometry(1, 1, 2, 1);
+  const vertices = patch.getAttribute("position");
+  for (let i = 0; i < vertices.count; i++) vertices.setZ(i, -0.29 * vertices.getX(i) ** 2);
   patch.computeVertexNormals();
   const foliage = new T.InstancedMesh(patch, foil, cap * clusters);
   const branches = new T.InstancedMesh(
-    new T.CylinderGeometry(0.4, 1, 1, 6),
-    new T.MeshStandardMaterial({ color: "#695c49", roughness: 0.98 }),
+    new T.CylinderGeometry(0.35, 1, 1, 5, 1, true),
+    new T.MeshStandardMaterial({ color: "#6e6454", roughness: 0.98 }),
     cap * forks,
   );
   foliage.count = branches.count = 0;
   foliage.frustumCulled = branches.frustumCulled = false;
-  foliage.castShadow = branches.castShadow = true;
+  // The crown already casts the coherent shadow. The cards only add detail to the visible surface.
   foliage.receiveShadow = branches.receiveShadow = true;
   foliage.instanceMatrix.setUsage(T.DynamicDrawUsage);
   branches.instanceMatrix.setUsage(T.DynamicDrawUsage);
   root.add(foliage, branches);
-  const cells = new Map<string, StandTree[]>(),
-    bases = crowns.map((m) => m.instanceMatrix.array.slice());
+  const cells = new Map<string, StandTree[]>();
   for (const t of trees) {
-    const k = Math.floor(t.x / 45) + "," + Math.floor(t.z / 45);
+    const k = Math.floor(t.x / cellSize) + "," + Math.floor(t.z / cellSize);
     let row = cells.get(k);
     if (!row) cells.set(k, (row = []));
     row.push(t);
   }
-  let prior = new Set<StandTree>();
   const last = new T.Vector3(Infinity, Infinity, Infinity);
   const piece = new T.Object3D(),
     delta = new T.Vector3(),
-    m = new T.Matrix4(),
     tint = new T.Color();
-  let foliageCount = 0,
-    branchCount = 0;
   function limb(ax: number, ay: number, az: number, bx: number, by: number, bz: number, r: number) {
     delta.set(bx - ax, by - ay, bz - az);
     const len = delta.length();
@@ -134,86 +133,90 @@ export function nearCanopies(trees: StandTree[], crowns: [T.InstancedMesh, T.Ins
     piece.quaternion.setFromUnitVectors(up, delta.multiplyScalar(1 / len));
     piece.scale.set(r, len, r);
     piece.updateMatrix();
-    branches.setMatrixAt(branchCount++, piece.matrix);
+    return piece.matrix;
   }
-  function crown(t: StandTree, scale: number, baseY: number) {
-    const mesh = crowns[t.type];
-    m.fromArray(bases[t.type]!, 16 * t.index);
-    m.elements[13]! += baseY;
-    for (const j of [0, 1, 2, 4, 5, 6, 8, 9, 10]) m.elements[j]! *= scale;
-    mesh.setMatrixAt(t.index, m);
-    mesh.instanceMatrix.needsUpdate = true;
-  }
-  function update(eye: T.Vector3, elevation: (x: number, z: number) => number, force = false) {
-    if (!force && last.distanceToSquared(eye) < 2.25) return;
+  let dirty = true;
+  let previousEconomy = false;
+  function update(eye: T.Vector3, economical: boolean) {
+    if (!dirty && previousEconomy === economical && last.distanceToSquared(eye) < 0.64) return;
+    dirty = false;
+    previousEconomy = economical;
     last.copy(eye);
-    foliageCount = branchCount = 0;
-    const next = new Set<StandTree>();
-    const col = Math.floor(eye.x / 45),
-      row = Math.floor(eye.z / 45),
-      near: { t: StandTree; d: number; y: number }[] = [];
+    if (economical) {
+      foliage.count = branches.count = 0;
+      return;
+    }
+    const col = Math.floor(eye.x / cellSize),
+      row = Math.floor(eye.z / cellSize);
+    const near: { t: StandTree; distance: number }[] = [];
     for (let i = col - 2; i <= col + 2; i++)
       for (let j = row - 2; j <= row + 2; j++)
         for (const t of cells.get(i + "," + j) ?? []) {
-          const y = elevation(t.x, t.z),
-            d = Math.hypot(t.x - eye.x, t.z - eye.z, y + t.height * 0.62 - eye.y);
-          if (d < 50) near.push({ t, d, y });
+          const distance = Math.hypot(t.x - eye.x, t.z - eye.z, t.y + t.height * 0.56 - eye.y);
+          if (distance < detailRadius) near.push({ t, distance });
         }
-    near.sort((a, b) => a.d - b.d);
-    for (const { t, d, y } of near.slice(0, cap)) {
-      next.add(t);
-      const fade = 1 - T.MathUtils.smoothstep(d, 26, 50);
-      crown(t, 1 - fade * 0.985, y);
+    near.sort((a, b) => a.distance - b.distance);
+    // Reduce the falloff radius in a dense stand so the cap is reached with no visible swap.
+    const falloff = Math.min(detailRadius, Math.max(1, near[cap]?.distance ?? detailRadius));
+    let foliageCount = 0,
+      branchCount = 0;
+    for (const { t, distance } of near.slice(0, cap)) {
+      const fade = 1 - T.MathUtils.smoothstep(distance, falloff * 0.52, falloff);
+      if (fade < 0.015) continue;
       const radius = t.diameter / 2,
-        cy = y + t.height - t.depth / 2;
+        cy = t.y + t.height - t.depth / 2;
       const rng = randomSequence(t.phase),
         start = rng() * Math.PI * 2;
       for (let k = 0; k < clusters; k++) {
-        // Rotate and tilt overlapping curved sprays through the ellipsoid. No camera-facing billboards.
-        const v = 1 - (2 * (k + 0.38)) / clusters,
-          ang = start + k * 2.39996 + rng() * 0.36,
-          ring = Math.sqrt(Math.max(0, 1 - v * v));
-        const rad = radius * (0.5 + 0.32 * rng());
+        // Bias the sprays toward the sides and underside visible from the paved edge.
+        const v = 0.53 - (1.4 * (k + 0.38)) / clusters;
+        const ang = start + k * 2.39996 + rng() * 0.4;
+        const ring = Math.sqrt(Math.max(0, 1 - v * v));
+        const rad = radius * (0.68 + 0.35 * rng());
         piece.position.set(
           t.x + Math.cos(ang) * ring * rad,
-          cy + v * t.depth * 0.38,
+          cy + v * t.depth * 0.46,
           t.z + Math.sin(ang) * ring * rad,
         );
         piece.rotation.set(
-          -v * 0.88 + (rng() - 0.5) * 0.8,
+          -v * 0.9 + (rng() - 0.5) * 0.8,
           Math.PI * 0.5 - ang,
           (rng() - 0.5) * 1.4,
           "YXZ",
         );
-        const w = t.diameter * (0.36 + 0.23 * rng()) * fade;
+        const w = t.diameter * (0.19 + 0.17 * rng()) * fade;
         piece.scale.set(w, w * (0.82 + 0.3 * rng()), w);
         piece.updateMatrix();
         foliage.setMatrixAt(foliageCount, piece.matrix);
-        tint.copy(t.color).multiplyScalar(1.12 + 0.38 * rng());
+        tint.copy(t.color).multiplyScalar(0.99 + 0.27 * rng());
         foliage.setColorAt(foliageCount++, tint);
       }
       for (let k = 0; k < forks / 2; k++) {
         const a = start + 1.92 * k,
-          frac = 0.62 + (0.5 - rng()) * 0.24;
-        const fromY = y + t.height * (0.22 + k * 0.032),
-          bx = t.x + Math.cos(a) * radius * 0.39,
-          bz = t.z + Math.sin(a) * radius * 0.39,
-          by = y + t.height * frac;
-        limb(t.x, fromY, t.z, bx, by, bz, radius * 0.046 * fade);
+          frac = 0.62 + (0.5 - rng()) * 0.22;
+        const fromY = t.y + t.height * (0.29 + k * 0.046);
+        const bx = t.x + Math.cos(a) * radius * 0.43,
+          bz = t.z + Math.sin(a) * radius * 0.43;
+        const by = t.y + t.height * frac;
+        branches.setMatrixAt(
+          branchCount++,
+          limb(t.x, fromY, t.z, bx, by, bz, radius * 0.038 * fade),
+        );
         const end = a + (rng() - 0.5) * 1.1;
-        limb(
-          bx,
-          by,
-          bz,
-          t.x + Math.cos(end) * radius * 0.58,
-          y + t.height * (0.70 + rng() * 0.13),
-          t.z + Math.sin(end) * radius * 0.58,
-          radius * 0.025 * fade,
+        branches.setMatrixAt(
+          branchCount++,
+          limb(
+            bx,
+            by,
+            bz,
+            t.x + Math.cos(end) * radius * 0.64,
+            t.y + t.height * (0.68 + rng() * 0.13),
+            t.z + Math.sin(end) * radius * 0.64,
+            radius * 0.022 * fade,
+          ),
         );
       }
     }
-    for (const t of prior) if (!next.has(t)) crown(t, 1, elevation(t.x, t.z));
-    prior = next;
     foliage.count = foliageCount;
     branches.count = branchCount;
     if (foliageCount) {
@@ -222,5 +225,12 @@ export function nearCanopies(trees: StandTree[], crowns: [T.InstancedMesh, T.Ins
       branches.instanceMatrix.needsUpdate = true;
     }
   }
-  return { root, texture, update };
+  return {
+    root,
+    texture,
+    update,
+    setDirty: () => {
+      dirty = true;
+    },
+  };
 }

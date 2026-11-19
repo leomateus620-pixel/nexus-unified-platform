@@ -92,12 +92,6 @@
 .nx-sidebar-nav ul[hidden] { display: none; }
 .nx-upload-label { display: grid; gap: 0.5rem; font-size: 0.875rem; }
 .nx-upload-label input { max-width: 100%; min-height: 2.75rem; }
-.nx-map-library > a { flex-direction: column; min-width: 0; }
-.nx-map-library > a > div:first-child { height: 11rem; overflow: hidden; }
-.nx-map-library > a > div:first-child img,
-.nx-map-library > a > div:first-child svg { height: 100%; width: 100%; }
-.nx-map-library > a > div:last-child { flex: 1; flex-direction: column; align-items: stretch; padding: 1.25rem; }
-.nx-map-open { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: auto; min-height: 2.75rem; border-top: 1px solid var(--border); padding-top: 0.75rem; color: var(--primary); font-size: 0.875rem; font-weight: 600; }
 /* The navigation frame owns its palette and dimensions even around a light workspace. */
 .nx-app-shell.nx-stable-frame.nexus-operational :is(.nx-sidebar, .nx-topbar) {
   color-scheme: dark;
@@ -119,7 +113,6 @@
 @media (min-width: 1024px) {
   .nx-app-shell.nx-stable-frame.nexus-operational > .nx-shell-content { padding-left: 16rem; }
 }
-.nx-map-library h2 { font-size: 1.125rem; line-height: 1.5; }
 .nexus-operational :where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;

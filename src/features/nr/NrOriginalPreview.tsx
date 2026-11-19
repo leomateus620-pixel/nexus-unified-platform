@@ -27,12 +27,14 @@ export function NrOriginalPreview({
   file,
   authorizePreview,
   showOriginalLink = true,
+  initialPage = 1,
 }: {
   org: string;
   file: NrPreviewFile;
   url: string;
   authorizePreview?: () => Promise<{ url: string }>;
   showOriginalLink?: boolean;
+  initialPage?: number;
 }) {
   const authorize = useServerFn(nrArquivoBaixar);
   const host = useRef<HTMLDivElement>(null),
@@ -70,7 +72,7 @@ export function NrOriginalPreview({
     setLink("");
     setError("");
     setPages(0);
-    setPage(1);
+    setPage(initialPage);
     setPageText("");
     async function open() {
       try {
@@ -98,6 +100,11 @@ export function NrOriginalPreview({
           "/pdfjs/6.4.299/",
         );
         controller.signal.throwIfAborted();
+        if (!Number.isInteger(initialPage) || initialPage < 1 || initialPage > reader.pageCount) {
+          await reader.close();
+          reader = undefined;
+          throw new Error("A página indicada não está disponível nesta revisão.");
+        }
         document.current = reader;
         setPages(reader.pageCount);
       } catch (cause) {
@@ -144,7 +151,7 @@ export function NrOriginalPreview({
       document.current = null;
       void reader?.close();
     };
-  }, [org, file.id, file.tamanho, file.sha256, attempt]);
+  }, [org, file.id, file.tamanho, file.sha256, initialPage, attempt]);
   useEffect(() => {
     const reader = document.current;
     if (!reader || !canvas.current || !pages) return;

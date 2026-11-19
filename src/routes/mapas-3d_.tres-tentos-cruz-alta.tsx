@@ -9,6 +9,8 @@ const searchSchema = z.object({
   aba: z.enum(["documentos", "ficha"]).optional(),
   documento: z.string().uuid().optional(),
   revisao: z.string().uuid().optional(),
+  evidencia: z.string().uuid().optional(),
+  pagina: z.number().int().positive().max(10_000).optional(),
 });
 export const Route = createFileRoute("/mapas-3d_/tres-tentos-cruz-alta")({
   ssr: false,
@@ -25,8 +27,8 @@ function MapRoute() {
         search={search}
         archive={search.vista === "acervo"}
         onChange={(next, replace) => {
-          const fromReader = !!(search.documento || search.revisao);
-          const toReader = !!(next.documento || next.revisao);
+          const fromReader = !!(search.documento || search.revisao || search.evidencia);
+          const toReader = !!(next.documento || next.revisao || next.evidencia);
           const closing = (fromReader && !toReader) || (!!search.objeto && !next.objeto);
           if (closing && history.state?.caOrigem === (fromReader ? "leitor" : "ficha")) {
             window.history.back();

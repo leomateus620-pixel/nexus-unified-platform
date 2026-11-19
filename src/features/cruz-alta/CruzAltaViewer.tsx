@@ -1,5 +1,5 @@
 import { createClientOnlyFn } from "@tanstack/react-start";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import {
   ArrowDown,
   ArrowLeft,
@@ -25,6 +25,8 @@ import type { CameraMode, CruzObject, SceneLayer, SceneLayers } from "./scene-ty
 import "./viewer.css";
 import { StructureBrowser, type StructureFilter } from "./StructureBrowser";
 import { activeLegend, lvhfAppearance, lvhfSwatch } from "./lvhf-appearance";
+import { InspectionMarkers } from "./InspectionMarkers";
+import type { CaInspectionSummary } from "./inspection-domain";
 
 const loadReference = createClientOnlyFn(() => import("./reference.client"));
 const index = spatialIndex(objects, geometry, lifelines);
@@ -93,9 +95,15 @@ function DimensionalMap({
 export default function CruzAltaViewer({
   selectedId,
   onSelect,
+  inspections,
+  onOpenInspection,
+  inspectionSelection,
 }: {
   selectedId: string | null;
   onSelect: (id: string) => void;
+  inspections?: CaInspectionSummary | undefined;
+  onOpenInspection: (id: string) => void;
+  inspectionSelection: RefObject<string | null>;
 }) {
   const stage = useRef<HTMLDivElement>(null),
     labelBox = useRef<HTMLDivElement>(null),
@@ -134,6 +142,7 @@ export default function CruzAltaViewer({
     miniArrow = useRef<SVGGElement>(null),
     sight = useRef<SVGLineElement>(null);
   const [ready, setReady] = useState(false);
+  const [showInspections, setShowInspections] = useState(true);
   const [horizon, setHorizon] = useState(true),
     [horizonInfo, setHorizonInfo] = useState<import("./regional-types").HorizonInfo | null>(null);
   useEffect(() => {
@@ -256,13 +265,15 @@ export default function CruzAltaViewer({
   }, [retry, applyCamera]);
   useEffect(() => {
     scene.current?.select(selectedId);
-    const keepPosition = pickedFromYard.current === selectedId;
+    const keepPosition =
+      pickedFromYard.current === selectedId || inspectionSelection.current === selectedId;
     pickedFromYard.current = null;
+    inspectionSelection.current = null;
     if (!keepPosition && selectedId && index.focus(selectedId)) {
       scene.current?.moveTo({ mode: "angular", id: selectedId });
       setMode("angular");
     }
-  }, [selectedId]);
+  }, [selectedId, inspectionSelection]);
   useEffect(() => {
     scene.current?.layers(layers);
   }, [layers]);
@@ -377,6 +388,14 @@ export default function CruzAltaViewer({
               </span>
             ))}
         </div>
+        {inspections && showInspections && ready && (
+          <InspectionMarkers
+            lines={inspections.lines}
+            scene={scene.current}
+            ready={ready}
+            openSheet={onOpenInspection}
+          />
+        )}
         {failure && (
           <div className="ca-fallback">
             <svg viewBox={mapBox(unit)} role="img" aria-label="Planta navegável da unidade">
@@ -505,6 +524,17 @@ export default function CruzAltaViewer({
                   />
                 </label>
               ))}
+              {inspections &&
+                (inspections.status !== "not_configured" || inspections.lines.length > 0) && (
+                  <label className="ca-layer-toggle">
+                    Laudos e inspeções
+                    <input
+                      type="checkbox"
+                      checked={showInspections}
+                      onChange={(event) => setShowInspections(event.target.checked)}
+                    />
+                  </label>
+                )}
               <label className="ca-layer-toggle">
                 Paisagem de Cruz Alta
                 <input

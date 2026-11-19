@@ -778,3 +778,195 @@
   outline-offset: 4px;
   border-radius: 2px;
 }
+
+.ca-inspection-sheet header,
+.ca-inspection-sheet h3,
+.ca-inspection-restriction h4,
+.ca-inspection-caution {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ca-inspection-sheet header {
+  justify-content: space-between;
+}
+.ca-inspection-sheet h3 {
+  margin: 0;
+}
+.ca-inspection-deadline {
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: #edf2e9;
+  color: #385745;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.ca-inspection-deadline[data-state="soon"] {
+  background: #fbf0d4;
+  color: #724c17;
+}
+.ca-inspection-deadline[data-state="overdue"] {
+  background: #fae4db;
+  color: #812f26;
+}
+.ca-inspection-caution {
+  color: #6e4b23;
+  font-weight: 650;
+  font-size: 0.85rem;
+}
+.ca-inspection-dates {
+  gap: 12px 8px;
+  margin-top: 14px;
+}
+.ca-inspection-dates dt {
+  line-height: 1.2;
+}
+.ca-inspection-dates dd:first-of-type {
+  margin-top: 4px;
+  font-weight: 700;
+}
+.ca-inspection-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-align: left;
+  color: #2d5a48;
+  min-height: 34px;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+  font-size: 0.79rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ca-inspection-source svg {
+  flex: none;
+}
+.ca-inspection-restriction {
+  background: #fbf2df;
+  border: 1px solid #eadabc;
+  border-left: 3px solid #957038;
+  border-radius: 7px;
+  color: #5e4628;
+  padding: 8px 10px;
+}
+.ca-inspection-restriction h4 {
+  margin: 0;
+  font-size: 0.89rem;
+  font-weight: 700;
+}
+.ca-inspection-restriction p,
+.ca-inspection-candidate {
+  white-space: pre-wrap;
+}
+.ca-inspection-documents ul {
+  padding: 0;
+  list-style: none;
+}
+.ca-inspection-documents li {
+  padding-top: 6px;
+  border-top: 1px solid #dce5d8;
+}
+.ca-inspection-documents li > strong {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+.ca-inspection-documents .ca-version {
+  margin-right: 7px;
+}
+.ca-inspection-review {
+  margin-top: 5px;
+}
+.ca-inspection-review fieldset {
+  padding: 7px 9px;
+  border: 1px solid #d5dfd4;
+  border-radius: 6px;
+}
+.ca-inspection-review legend {
+  padding-inline: 3px;
+  color: #315447;
+  font-weight: 650;
+}
+.ca-drawer-body .ca-inspection-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  margin: 0;
+}
+.ca-drawer-body .ca-inspection-choice input {
+  appearance: auto;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  accent-color: #215b47;
+}
+@media (max-width: 760px) {
+  .ca-inspection-source {
+    min-height: 44px;
+  }
+}
+.ca-drawer-body .nr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.ca-drawer-body .nr-actions button {
+  color: var(--ca-ink);
+  border-color: #c8d5ca;
+  background: #f5f8f1;
+  min-height: 38px;
+  min-width: 42px;
+}
+.ca-drawer-body .nr-actions button:disabled {
+  opacity: 0.5;
+}
+@media (max-width: 760px) {
+  .ca-drawer-body .nr-actions button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+.ca-inspections-related h3 {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0 0 8px;
+}
+.ca-inspections-related ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ca-inspections-related li button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  min-height: 44px;
+  border-top: 1px solid var(--ca-rule);
+  padding: 7px 0;
+  text-align: left;
+  color: var(--ca-ink);
+}
+.ca-inspections-related li button strong,
+.ca-inspections-related li button small {
+  display: block;
+  line-height: 1.3;
+}
+.ca-inspections-related li button small {
+  color: var(--ca-muted);
+}
+.ca-inspections-related li button .ca-inspection-deadline {
+  justify-self: start;
+  grid-row: 2;
+}
+.ca-inspections-related li button > svg {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}

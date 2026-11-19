@@ -35,6 +35,8 @@ import {
   caPrevia,
 } from "./acervo.functions";
 import { describeFile, operationId, transferFile } from "./upload";
+import { InspectionSection, InspectionSourcesReader, RelatedInspections } from "./InspectionSheet";
+import type { CaInspectionSummary } from "./inspection-domain";
 
 const Pdf = lazy(() =>
   import("@/features/nr/NrOriginalPreview").then((m) => ({ default: m.NrOriginalPreview })),
@@ -56,6 +58,11 @@ type Props = {
   search: MapSearch;
   change: ChangeSearch;
   openReader: (doc: string, rev: string) => void;
+  readInspection: (evidence: string, page: number) => void;
+  openInspection: (id: string) => void;
+  inspections: CaInspectionSummary | undefined;
+  inspectionsPending: boolean;
+  refreshInspections: () => Promise<unknown>;
   archive: boolean;
 };
 const describeError = (e: unknown) =>
@@ -133,21 +140,33 @@ export default function TechnicalPanel(props: Props) {
       </>
     );
   if (!sheet.data) return <p role="status">Carregando ficha…</p>;
-  const reading = !!(search.revisao || search.documento);
+  const reading = !!(search.revisao || search.documento || search.evidencia);
   return (
     <>
       <div hidden={reading}>
         <SheetContent {...props} scope={scope} sheet={sheet.data} refresh={refresh} />
       </div>
-      {reading && (
-        <Reader
-          key={[object.id, search.documento].join("/")}
-          onRevision={props.openReader}
+      {search.evidencia ? (
+        <InspectionSourcesReader
+          key={search.evidencia + "/" + search.pagina}
           user={user}
-          scope={scope}
-          search={search}
-          docs={sheet.data.documentos}
+          object={object.id}
+          summary={props.inspections}
+          pending={props.inspectionsPending}
+          evidenceId={search.evidencia}
+          page={search.pagina}
         />
+      ) : (
+        reading && (
+          <Reader
+            key={[object.id, search.documento].join("/")}
+            onRevision={props.openReader}
+            user={user}
+            scope={scope}
+            search={search}
+            docs={sheet.data.documentos}
+          />
+        )
       )}
     </>
   );
@@ -257,6 +276,11 @@ function SheetContent({
   search,
   change,
   openReader,
+  readInspection,
+  openInspection,
+  inspections,
+  inspectionsPending,
+  refreshInspections,
   archive,
 }: Props & { scope: Scope; sheet: Sheet; refresh: () => Promise<void> }) {
   const [form, setForm] = useState<"anexar" | "vincular" | "editar" | "importar" | null>(null);
@@ -365,6 +389,9 @@ function SheetContent({
           {note}
         </p>
       )}
+      {!isForm && inspections && (object.kind === "estrutura" || object.kind === "componente") && (
+        <RelatedInspections object={object.id} lines={inspections.lines} onOpen={openInspection} />
+      )}
       {correction ? (
         <CorrectDocument
           scope={scope}
@@ -464,6 +491,16 @@ function SheetContent({
         </>
       ) : (
         <>
+          {(object.kind === "lvhf" || object.id === "unidade") && (
+            <InspectionSection
+              key={object.id}
+              object={object.id}
+              summary={inspections}
+              pending={inspectionsPending}
+              onOpen={readInspection}
+              refresh={refreshInspections}
+            />
+          )}
           <div className="ca-detail-section">
             <h3>Descrição</h3>
             <p>{sheet.descricao || "Descrição ainda não informada."}</p>

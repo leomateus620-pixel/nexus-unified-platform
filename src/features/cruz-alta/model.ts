@@ -679,6 +679,7 @@ export function buildModel(
   }
   const profiles = parts.filter((p) => p.footprint.length > 2).map((p) => ({ p, h: profile(p).h }));
   const lineMaterials = new Map<string, LineMaterial>();
+  const lineAnchors = new Map<string, { length: number; position: T.Vector3 }>();
   for (const line of lines) {
     if (line.points.length < 2) continue;
     const parent = index.byId.get(line.id)?.parent;
@@ -703,6 +704,20 @@ export function buildModel(
       }
     }
     const split = line.status === "montada-aditivo";
+    let length = 0;
+    const segments: number[] = [];
+    for (let i = 3; i < vertices.length; i += 3) {
+      length += Math.hypot(vertices[i]! - vertices[i - 3]!, vertices[i + 2]! - vertices[i - 1]!);
+      segments.push(length);
+    }
+    if (length > (lineAnchors.get(line.id)?.length ?? 0)) {
+      const segment = segments.findIndex((end) => end >= length / 2);
+      const start = segments[segment - 1] ?? 0;
+      const fraction = (length / 2 - start) / (segments[segment]! - start);
+      const position = new T.Vector3().fromArray(vertices, segment * 3);
+      position.lerp(new T.Vector3().fromArray(vertices, (segment + 1) * 3), fraction);
+      lineAnchors.set(line.id, { length, position });
+    }
     if (!lineMaterials.has(line.status))
       lineMaterials.set(
         line.status,
@@ -859,5 +874,6 @@ export function buildModel(
     showHorizon: (enabled: boolean) => environment.setRegion?.(enabled),
     horizonInfo: () => environment.regionInfo?.() ?? null,
     regionFrame: (eye: T.Vector3, economy = false) => environment.updateRegion?.(eye, economy),
+    lineAnchor: (id: string) => lineAnchors.get(id)?.position,
   };
 }

@@ -435,6 +435,14 @@
     {
       "path": "drizzle/migrations/0084_nr_cena_conflito_editorial.sql",
       "sha256": "19af09c17012112a1d2bfd90e18eac6463d217303bda6708105a5e682ff0369e"
+    },
+    {
+      "path": "drizzle/migrations/0085_ca_inspecao_laudos.sql",
+      "sha256": "c2a6eeff7720da86f0bf9bb60cfb54f49e0ba1afdf9d7c5d28a37d1e032c82cf"
+    },
+    {
+      "path": "drizzle/migrations/0086_ca_inspecao_sincronizacao.sql",
+      "sha256": "67d1f4a7f614691fe3c53c824bbfa7105f92e4f22f5e900da964707793a01f81"
     }
   ]
 }

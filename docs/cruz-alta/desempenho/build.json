@@ -1,0 +1,9 @@
+{
+  "arquivos_cena": 46,
+  "sha256_conjunto_sha256": "5c89deb2e86cf7bf4e987c9027f34f62f5565754edbe45ff1aa7513dbe33df63",
+  "metodo": "Caminho relativo em UTF-8, NUL e 32 bytes do SHA-256 de cada arquivo em src/features/cruz-alta e public/models/cruz-alta, em ordem de caminho.",
+  "entrada_cliente": "public/assets/CruzAltaWorkspace-CRnWZUqU.js",
+  "sha256_entrada_cliente": "7c00fe50ddf5b7efbdb3e8855d1719fdc421bbcc0779c9d96842156a7225ae8d",
+  "wrangler_build": "2026-11-16",
+  "workerd_local": "2026-09-18"
+}

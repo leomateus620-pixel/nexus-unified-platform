@@ -1,5 +1,17 @@
 # Levantamento da unidade de Cruz Alta
 
+## Rotas e controles conferidos
+
+| Entrada de referência | Contrato preservado |
+| --- | --- |
+| Biblioteca em `/mapas-3d/unidades` | Pesquisa pelo parâmetro `q`, cartões por cena e abertura por link. O cartão Cruz Alta aponta diretamente para sua rota. |
+| Mapa industrial em `/mapas-3d` | Entrada própria da unidade já modelada, com painel recolhível, busca, camadas, qualidade, vista superior, passeio, foco e retorno à visão geral. |
+| Trevisan em `/mapas-3d/trevisan` | Visualizador próprio, navegação de volta à biblioteca, setores, camadas e consulta de fontes e limites. |
+| Mapa NR da Cotrirosa | Acesso pelo módulo autenticado, escopo de organização/cliente/unidade, modelo técnico e vínculos de acervo próprios. |
+| Cruz Alta em `/mapas-3d/tres-tentos-cruz-alta` | Cena pública dedicada, ficha privada por ID estável e acesso ao acervo específico por `vista=acervo`. Um link pode identificar objeto, aba, documento e revisão. |
+
+As rotas do catálogo e de seus dois visualizadores públicos anteriores continuam com os respectivos componentes. A cena e o acervo novos usam a tripla de IDs registrada na [verificação do banco](acervo-verificacao.md).
+
 ## Base documental
 
 A folha 1 do layout rev. 56 de 18/11/2026 contém 74 registros e 73 chamadas sobre a fotografia. A folha 2 registra as modificações. A leitura recursiva alcançou a pasta principal, LINHAS JÁ MONTADAS e CONJUNTOS. Havia 87 PDFs, 11 JPEGs, quatro PNGs e um vídeo. A revisão 43 de 28/10/2026, recebida separadamente, acrescenta um original ao histórico. Os carimbos e quadros de revisão identificam as pranchas. O inventário privado conserva o ID externo, SHA-256, tipo, tamanho, página, data, revisão, vínculo e interpretação de cada fonte.
@@ -56,7 +68,7 @@ A cena contém 96 volumes técnicos, 86 traçados que representam 73 itens posic
 
 O perímetro usado na navegação é um envelope dos sólidos técnicos. A área operacional interpretada, as continuidades visíveis no entorno e o limite de propriedade são conceitos distintos. O limite patrimonial ainda depende de base cadastral. Três silos pequenos e as coberturas na divisa oeste integram o contexto de menor detalhe. O rótulo “Sementes Aurora UBS” visível no Earth não estabelece a titularidade daquelas edificações.
 
-O pavimento tem diferentes acabamentos nas imagens. Há pátio de manobra com rastros de giro, trechos de terra avermelhada, bordas irregulares junto à vegetação e limites duros em torno dos reservatórios. As manchas de cor e o agregado são gerados para a cena. O detalhe de grão usa escala de 1,60 m por textura, com variação independente de 18,5 e 122 m. Onde a composição do piso não pôde ser identificada, a cena usa um piso mineral interpretado. Uma vistoria de materiais ou projeto de pavimentação definiria composição e espessura.
+O pavimento tem diferentes acabamentos nas imagens. Há pátio de manobra com rastros de giro, trechos de terra avermelhada, bordas irregulares junto à vegetação e limites duros em torno dos reservatórios. As manchas de cor e o agregado são gerados para a cena. O detalhe de grão usa escala de 1,60 m por textura, com variação independente de 18,5 e 122 m. Onde a composição do piso não pôde ser identificada, a cena usa um piso mineral interpretado. No corpo norte 6, o acabamento claro se limita ao dique visto no vídeo a 150 s. A mediana sRGB do trecho iluminado foi (227, 229, 228), e o material local usa #dcdedd com rugosidade 0,88. O ressalto visual de 0,60 m depende de confirmação em corte. Uma vistoria de materiais ou projeto de pavimentação definiria composição e espessura.
 
 A conferência no Earth com norte para cima abrangeu fábrica, bairro, cidade e arredores. De dentro da unidade, a vizinhança urbana tem maior continuidade para norte e nordeste. A margem leste intercala vegetação densa, águas e áreas abertas. Campos a oeste variam em forma e cor, incluindo trechos de solo exposto e faixas vegetadas sinuosas. O fundo regional serve à leitura desses horizontes. O passeio e os alvos da câmera permanecem na implantação técnica.
 
@@ -74,6 +86,6 @@ As árvores próximas usam ramos e conjuntos de folhas com transparência recort
 
 ## Reprodução
 
-Execute `node --import tsx --test tests/cruz-alta/levantamento.test.ts` para verificar hierarquia, 74 registros, 73 traçados identificados, histórico, caimentos em relação ao eixo, ida e volta dos pontos e continuidade do relevo na borda do piso técnico. O ensaio visual usa as poses guardadas em `refinamento/antes/cameras.json` e `refinamento/depois/cameras.json`. A visualização em planta aceita a prancha local e opacidade ajustável. A DJI 44 oferece a pose oblíqua estimada, e o encontro 11/56 mostra o arco e a cumeeira do anexo.
+Execute `node --import tsx --test tests/cruz-alta/levantamento.test.ts` para verificar hierarquia, 74 registros, 73 traçados identificados, histórico, caimentos em relação ao eixo, ida e volta dos pontos e continuidade do relevo na borda do piso técnico. O ensaio visual usa as poses guardadas em `refinamento/antes/cameras.json` e `refinamento/depois/cameras.json`. Para reproduzir o cotejo óptico diretamente do anexo, execute `python3 scripts/cruz-alta/verificar_registro_cbers.py --pdf /caminho/para/layout.pdf` com PyMuPDF, Pillow, OpenCV e NumPy. A visualização em planta aceita a prancha local e opacidade ajustável. A DJI 44 oferece a pose oblíqua estimada, e o encontro 11/56 mostra o arco e a cumeeira do anexo.
 
 O script `scripts/cruz-alta/conciliar_inventario.py` recebe a árvore recursiva, os originais e o inventário revisado, e grava um novo snapshot. Para mudança de bytes em uma origem conhecida, exige nova conferência do conteúdo, carimbo e destinos. O sistema guarda a revisão anterior em sua associação lógica. O arquivo de trabalho detalhado, as imagens de controle e os quadros do vídeo ficam no acervo privado da entrega.

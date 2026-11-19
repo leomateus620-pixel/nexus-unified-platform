@@ -29,7 +29,11 @@ def local_photo(path):
         x1, y1 = [round(v*.7) for v in (rect.x1,rect.y1)]
         canvas = Image.new("RGB",(1270,925),(223,223,215))
         canvas.paste(im.resize((x1-x0,y1-y0),Image.Resampling.BICUBIC),(x0,y0))
-        return cv2.cvtColor(np.array(canvas),cv2.COLOR_RGB2BGR)
+        # The archived working photograph used JPEG quality 94 (4:2:0).
+        encoded=io.BytesIO()
+        canvas.save(encoded,format="JPEG",quality=94,subsampling=2)
+        encoded.seek(0)
+        return cv2.cvtColor(np.array(Image.open(encoded)),cv2.COLOR_RGB2BGR)
 
 
 def gradients(image, blur):

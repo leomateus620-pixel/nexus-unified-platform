@@ -1,4 +1,14 @@
-import { lazy, Suspense, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ComponentProps,
+} from "react";
 import {
   ArrowUpRight,
   ChevronDown,
@@ -28,6 +38,7 @@ import {
 } from "./inspection-display";
 import { SectorIcon } from "./sector-visual";
 import { lvhfAppearance, lvhfState, lvhfSwatch } from "./lvhf-appearance";
+import { useRdoPhotos } from "./use-rdo-photos";
 import "./workspace.css";
 const objects: CruzObject[] = elements.some((e) => e.id === "unidade")
   ? elements
@@ -52,7 +63,20 @@ function ancestors(object: CruzObject | undefined) {
   return trail;
 }
 
-const Panel = lazy(() => import("./TechnicalPanel"));
+const loadPanel = () => import("./TechnicalPanel");
+const Panel = lazy(loadPanel);
+function preparePanel() {
+  void loadPanel().catch(() => undefined);
+}
+function AuthorizedPanel(props: Omit<ComponentProps<typeof Panel>, "photos">) {
+  const { documento, revisao, evidencia } = props.search;
+  const photos = useRdoPhotos(props.user, props.object, !(documento || revisao || evidencia));
+  return (
+    <Suspense fallback={<p role="status">Carregando ficha…</p>}>
+      <Panel {...props} photos={photos} />
+    </Suspense>
+  );
+}
 export type MapSearch = {
   objeto?: string | undefined;
   aba?: "documentos" | "ficha" | undefined;
@@ -207,14 +231,17 @@ export default function CruzAltaWorkspace({
   };
   const openReader = (doc: string, rev: string) => {
     rememberReaderOpener();
-    onChange({
-      ...search,
-      aba: "documentos",
-      documento: doc,
-      revisao: rev,
-      evidencia: undefined,
-      pagina: undefined,
-    });
+    onChange(
+      {
+        ...search,
+        aba: "documentos",
+        documento: doc,
+        revisao: rev,
+        evidencia: undefined,
+        pagina: undefined,
+      },
+      reader,
+    );
   };
   const openInspection = (id: string) => {
     if (search.objeto !== id) inspectionSelection.current = id;
@@ -268,6 +295,7 @@ export default function CruzAltaWorkspace({
           <CruzAltaViewer
             selectedId={selected?.id ?? null}
             onSelect={select}
+            onPrepareSelection={authorized ? preparePanel : undefined}
             inspections={inspections}
             onOpenInspection={openInspection}
             inspectionSelection={inspectionSelection}
@@ -402,22 +430,20 @@ export default function CruzAltaWorkspace({
                     A sessão atual não tem acesso a este acervo.
                   </p>
                 ) : (
-                  <Suspense fallback={<p role="status">Carregando ficha…</p>}>
-                    <Panel
-                      key={user.id + selected.id}
-                      user={user.id}
-                      object={selected}
-                      search={search}
-                      change={onChange}
-                      openReader={openReader}
-                      readInspection={readInspection}
-                      openInspection={openInspection}
-                      inspections={inspections}
-                      inspectionsPending={inspectionQuery.isPending}
-                      refreshInspections={inspectionQuery.refetch}
-                      archive={archive}
-                    />
-                  </Suspense>
+                  <AuthorizedPanel
+                    key={user.id + selected.id}
+                    user={user.id}
+                    object={selected}
+                    search={search}
+                    change={onChange}
+                    openReader={openReader}
+                    readInspection={readInspection}
+                    openInspection={openInspection}
+                    inspections={inspections}
+                    inspectionsPending={inspectionQuery.isPending}
+                    refreshInspections={inspectionQuery.refetch}
+                    archive={archive}
+                  />
                 )}
                 {!reader && geometry.some((p) => p.id === selected.id) && (
                   <details>

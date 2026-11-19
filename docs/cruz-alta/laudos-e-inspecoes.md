@@ -22,7 +22,30 @@ A ficha lateral mostra miniaturas das fotos da LVHF selecionada e das linhas vin
 
 Aplique as migrações `0089` a `0091` via Lovable. Em um ambiente novo, publique o worker antes de executar `ca_inspecao_rdo_registrar(p_raiz, p_lancadas)` no banco do projeto, com os IDs das duas pastas do Drive. A função cadastra a origem na configuração privada e usa a fila existente. O worker percorre as duas listagens, incluindo páginas adicionais, e substitui a relação de pastas somente ao concluir a conferência. Mudanças de nome, movimentações e novas pastas numeradas entram no ciclo do agendador.
 
-A ficha consulta a lista de imagens da seleção ao abrir e periodicamente enquanto permanece visível. A versão do Drive muda quando o arquivo é editado e faz a ficha pedir a imagem nova. O servidor valida a sessão, o acesso aos originais e o vínculo à estrutura em cada leitura. A conta de serviço lê o arquivo na origem e entrega a imagem pelo Nexus.
+A ficha consulta o catálogo privado em páginas de seis fotos. Ao abrir uma foto, mostra a prévia de até 1280 px. O controle **Ver original** solicita o arquivo em resolução integral. A listagem em segundo plano acompanha alterações de versão enquanto a ficha está aberta. Cada transferência exige acesso à unidade e verificação atual do arquivo, da versão e das pastas no Drive. Uma cópia privada fica elegível depois da conferência dos bytes gravados. Durante o processamento, a origem continua atendendo a consulta. A sincronização retira versões antigas do catálogo e agenda a remoção das cópias correspondentes.
+
+## Ativação das prévias do acervo
+
+1. Aplicar as migrações `0092` a `0095` pelo ledger do projeto e publicar a aplicação com os assets versionados do leitor. Os buckets `nexus-cruz-alta-pdf-previas` e `nexus-cruz-alta-rdo` são privados. As imagens dos anexos da unidade usam as representações privadas já existentes do NR.
+2. Conferir o callback `nexus_ca_inspecao_worker_url` e a credencial do Drive descritos acima. Os agendamentos `nexus-ca-inspecao-drive`, `nexus-ca-rdo-midia` e `nexus-ca-imagens` processam, respectivamente, inspeções/PDFs, fotos de montagem e imagens do acervo. Cada fila autentica sua invocação. O primeiro carregamento do acervo existente depende da conclusão desses trabalhos.
+3. Para antecipar os PDFs antigos, um operador pode executar `node --import tsx scripts/cruz-alta/preparar-pdfs.ts 100` em um ambiente de servidor com `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`. O lote usa a mesma reserva que o agendador e informa quantos arquivos processou. As páginas extraídas têm até 2 MiB. Para originais acima de 24 MiB e folhas maiores, o leitor usa intervalos de 256 KiB com SHA-256. Se o servidor de arquivos não atender a leitura parcial, o leitor confere e abre o original completo.
+4. Para imagens grandes ou ambientes sem transformação no Storage, construir o processador dedicado na raiz com `docker build -f scripts/cruz-alta/Dockerfile.imagens -t nexus-ca-imagens scripts/nr`. Com as duas variáveis anteriores já definidas no ambiente protegido, executar `docker run -d --restart unless-stopped --memory=2g --env SUPABASE_URL --env SUPABASE_SERVICE_ROLE_KEY --name nexus-ca-imagens nexus-ca-imagens`. O processo atende apenas imagens vinculadas à unidade e confirma no Storage as variantes de 384 e 768 px. Também pode ser executado em lote com `python3 scripts/nr/image-worker.py --cruz-alta --max-jobs 30` em ambiente com Pillow instalado.
+5. Conferir a cobertura em uma sessão administrativa usando as consultas abaixo. Selecionar no mapa um componente com foto e uma LVHF com laudo, abrir o original pelo botão da foto e a página de evidência pela ficha. Na NR-35, repetir a abertura pelo acervo da mesma unidade. O registro da validação deve usar duração, tipo e tamanho, mantendo as URLs assinadas e os documentos privados fora dos logs.
+
+```sql
+select coalesce(r.estado, 'aguarda primeira reserva') as fase, count(*)
+from public.ca_pdf_fontes() f
+left join public.ca_pdf_representacoes r using (organization_id, bucket, caminho, sha256)
+group by 1;
+select tipo, estado, count(*) from public.ca_rdo_trabalhos group by tipo, estado;
+select v.variante, count(*) filter (where exists (
+  select 1 from public.nr_imagem_representacoes i
+  where i.arquivo_id = f.id and i.variante = v.variante and i.estado = 'disponivel'
+)) as prontas, count(*) as imagens
+from public.ca_imagem_fontes() f(id)
+cross join (values ('miniatura_384'), ('previa_768')) v(variante)
+group by v.variante;
+```
 
 ## Conferência
 

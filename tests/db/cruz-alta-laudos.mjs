@@ -247,7 +247,7 @@ try {
   await enqueue();
   await scan([doc()]);
   const pdfSeal = { value: "00983", page: 3, label: "Lacre de teste" };
-  await processDoc(warning, "2027-11-18", { seal: pdfSeal });
+  await processDoc(warning, "2027-11-18", { seal: pdfSeal, pages: 4 });
   const first = await current();
   assert.equal(first.fields.due.value, "2027-11-18");
   assert.equal(first.restriction, null);
@@ -277,6 +277,93 @@ try {
   assert.equal(approved.seal.evidence, first.documents[0].id);
   assert.equal(approved.layoutSeal.value, layout[0].seal);
   console.log("PASS leitura privada com página e aviso somente após decisão técnica");
+
+  await role(users.viewer);
+  await deny(() => sql`select ca_pdf_trabalho()`, "42501");
+  await deny(() => sql`select * from ca_pdf_representacoes`, "42501");
+  await role(null, true);
+  const pdfJob = (await sql`select ca_pdf_trabalho() r`)[0].r;
+  assert.equal(pdfJob.bucket, "nexus-cruz-alta-laudos");
+  assert.equal(pdfJob.sha256, "a".repeat(64));
+  assert.deepEqual(pdfJob.paginas, [1, 2, 3]);
+  assert.equal((await sql`select ca_pdf_trabalho() r`)[0].r, null);
+  const result = sql.json({ chunks: ["8".repeat(64)], pages: [] });
+  assert.equal((await sql`select ca_pdf_finalizar(${randomUUID()},${result}) r`)[0].r, false);
+  await deny(
+    () => sql`select ca_pdf_finalizar(${pdfJob.lease},${sql.json({ chunks: [], pages: [] })})`,
+    "23514",
+  );
+  assert.equal(
+    (
+      await sql`select ca_pdf_finalizar(${pdfJob.lease},${sql.json({ chunks: ["8".repeat(64)], pages: [], retryPages: true })}) r`
+    )[0].r,
+    true,
+  );
+  assert.equal((await sql`select ca_pdf_finalizar(${pdfJob.lease},${result}) r`)[0].r, false);
+  assert.deepEqual(
+    (
+      await sql`select ca_pdf_representacao(${org},${pdfJob.bucket},${pdfJob.caminho},${pdfJob.sha256},${pdfJob.tamanho}) r`
+    )[0].r,
+    { chunks: ["8".repeat(64)], pages: [] },
+  );
+  assert.equal(
+    (
+      await sql`select ca_pdf_representacao(${org},${pdfJob.bucket},${pdfJob.caminho},${"b".repeat(64)},${pdfJob.tamanho}) r`
+    )[0].r,
+    null,
+  );
+  assert.equal((await sql`select ca_pdf_trabalho() r`)[0].r, null);
+  await role();
+  await sql`update ca_pdf_representacoes set tentar_em=now() where sha256=${pdfJob.sha256}`;
+  await role(null, true);
+  const retryPdf = (await sql`select ca_pdf_trabalho() r`)[0].r;
+  assert.notEqual(retryPdf.lease, pdfJob.lease);
+  assert.deepEqual(retryPdf.paginas_conferidas, []);
+  const cachedPage = { page: 1, pageCount: 4, size: 300, sha256: "9".repeat(64) };
+  const withPage = { chunks: ["8".repeat(64)], pages: [cachedPage] };
+  assert.equal(
+    (await sql`select ca_pdf_finalizar(${retryPdf.lease},${sql.json(withPage)}) r`)[0].r,
+    true,
+  );
+  console.log("PASS fila privada de PDFs, páginas da evidência, manifesto e lease idempotente");
+
+  await role();
+  const undoAdditionalEvidence = new Error("Isolar revisão com mesmo hash");
+  await assert.rejects(
+    sql.begin(async (tx) => {
+      await tx`with nova_fonte as (
+        insert into ca_inspecao_fontes(organization_id,cliente_id,unidade_id,raiz,drive_id,tipo,versao,nome,meta,visto_lote)
+        select f.organization_id,f.cliente_id,f.unidade_id,f.raiz,f.drive_id||'-nova-fonte',f.tipo,f.versao,f.nome,f.meta,f.visto_lote
+        from ca_inspecao_evidencias e join ca_inspecao_fontes f on f.id=e.fonte_id where e.id=${first.documents[0].id}
+        returning id,organization_id,unidade_id
+      ), nova_evidencia as (
+        insert into ca_inspecao_evidencias(fonte_id,sha256,tamanho,nome,tipo,versao,revisao,modificado_em,
+          paginas,campos,restricao,problemas,extracao_inequivoca)
+        select f.id,e.sha256,e.tamanho,e.nome,e.tipo,e.versao,e.revisao,e.modificado_em,
+          e.paginas,e.campos || '{"rt":{"value":"2026-11-18","page":4,"label":"Data da RT"}}',e.restricao,e.problemas,e.extracao_inequivoca
+        from nova_fonte f cross join ca_inspecao_evidencias e where e.id=${first.documents[0].id}
+        returning id,fonte_id
+      ) insert into ca_inspecao_vinculos(organization_id,unidade_id,chave,evidencia_id)
+      select f.organization_id,f.unidade_id,${key},e.id from nova_fonte f join nova_evidencia e on e.fonte_id=f.id`;
+      assert.equal((await tx`select ca_pdf_pendente() r`)[0].r, true);
+      await tx.unsafe("set local role service_role");
+      const extended = (await tx`select ca_pdf_trabalho() r`)[0].r;
+      assert.equal(extended.sha256, pdfJob.sha256);
+      assert.deepEqual(extended.paginas, [1, 2, 3, 4]);
+      assert.deepEqual(extended.paginas_conferidas, [cachedPage]);
+      // The worker kept the manifest and skipped the new page as oversized.
+      assert.equal(
+        (await tx`select ca_pdf_finalizar(${extended.lease},${sql.json(withPage)}) r`)[0].r,
+        true,
+      );
+      assert.equal((await tx`select ca_pdf_trabalho() r`)[0].r, null);
+      await tx.unsafe("reset role");
+      assert.equal((await tx`select ca_pdf_pendente() r`)[0].r, false);
+      throw undoAdditionalEvidence;
+    }),
+    (error) => error === undoAdditionalEvidence,
+  );
+  console.log("PASS novo conjunto de páginas no mesmo PDF reabre o trabalho uma vez");
 
   await enqueue(true);
   await scan([doc({ version: 2, revision: 1, byte: "b" })]);

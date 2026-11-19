@@ -14,6 +14,19 @@ export async function handleCruzAltaInspectionWorker(request: Request) {
   if (!url || !serviceKey) return workerResponse({ error: "integracao_nao_configurada" }, 503);
 
   try {
+    if (request.headers.get("X-Nexus-Job-Queue") === "imagens") {
+      const [{ createImageWorker }, { imageInfo }] = await Promise.all([
+        import("../../nr/image-worker/core.server"),
+        import("../../nr/image-worker/image-info.server"),
+      ]);
+      return await createImageWorker({ url, serviceKey, inspectImage: imageInfo, cruzAlta: true })(
+        request,
+      );
+    }
+    if (request.headers.get("X-Nexus-Job-Queue") === "rdo") {
+      const { createRdoWorker } = await import("./rdo-worker.server");
+      return await createRdoWorker({ url, serviceKey })(request);
+    }
     const worker = createInspectionWorker({
       url,
       serviceKey,

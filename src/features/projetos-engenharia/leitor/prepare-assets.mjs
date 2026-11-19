@@ -39,6 +39,7 @@ export async function preparePdfAssets(packageDirectory, outputDirectory) {
   }
   for (const name of await readdir(packageDirectory))
     if (/^(LICENSE|NOTICE)(\.|$)/i.test(name)) await copy(name);
+  await copy(path.join("legacy", "build", "pdf.worker.min.mjs"));
   for (const folder of ["cmaps", "standard_fonts", "wasm", "iccs"]) {
     for (const name of (await readdir(path.join(packageDirectory, folder))).sort()) {
       // The custom reader never executes PDF JavaScript or imports the scripting sandbox.

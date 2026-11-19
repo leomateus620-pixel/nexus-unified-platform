@@ -47,4 +47,17 @@ class ImageWorkerTest(unittest.TestCase):
                                       (original[:30], hashlib.sha256(original[:30]).hexdigest(), 'image/png')]:
             with self.assertRaises(Exception): worker.representation(payload, digest, mime, 384)
 
+    def test_large_document_original_produces_both_checked_webps(self):
+        # An uncompressed high-resolution drawing exercises the >10 MiB production case.
+        encoded = io.BytesIO()
+        Image.new('RGB', (2400, 1650), (29, 54, 78)).save(encoded, 'PNG', compress_level=0)
+        original = encoded.getvalue()
+        self.assertGreater(len(original), 10 * 1024 * 1024)
+        digest = hashlib.sha256(original).hexdigest()
+        for edge in (384, 768):
+            data, result = worker.representation(original, digest, 'image/png', edge)
+            self.assertEqual((result['largura'], result['altura']), (edge, edge * 1650 // 2400))
+            self.assertEqual(result['sha256'], hashlib.sha256(data).hexdigest())
+            self.assertLess(len(data), len(original) // 100)
+
 if __name__ == '__main__': unittest.main()

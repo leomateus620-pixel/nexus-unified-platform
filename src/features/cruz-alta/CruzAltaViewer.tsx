@@ -110,6 +110,7 @@ function DimensionalMap({
 export default function CruzAltaViewer({
   selectedId,
   onSelect,
+  onPrepareSelection,
   inspections,
   onOpenInspection,
   inspectionSelection,
@@ -118,6 +119,7 @@ export default function CruzAltaViewer({
 }: {
   selectedId: string | null;
   onSelect: (id: string) => void;
+  onPrepareSelection?: (() => void) | undefined;
   inspections?: CaInspectionSummary | undefined;
   onOpenInspection: (id: string) => void;
   inspectionSelection: RefObject<string | null>;
@@ -449,6 +451,7 @@ export default function CruzAltaViewer({
                   aria-current={object.id === selectedId || undefined}
                   title={title}
                   onFocus={(event) => {
+                    onPrepareSelection?.();
                     const marker = event.currentTarget;
                     const label = marker.querySelector<HTMLElement>(".ca-map-marker-title");
                     marker.toggleAttribute(
@@ -510,6 +513,7 @@ export default function CruzAltaViewer({
                 aria-label="Buscar setor, estrutura ou LVHF"
                 aria-controls={open === "busca" ? "ca-search-results" : undefined}
                 value={query}
+                onFocus={onPrepareSelection}
                 onClick={() => setOpen("busca")}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -550,6 +554,7 @@ export default function CruzAltaViewer({
               title="Lista de estruturas"
               aria-label="Lista de estruturas"
               aria-expanded={open === "busca"}
+              onFocus={onPrepareSelection}
               onClick={() => {
                 setOpen(open === "busca" ? null : "busca");
               }}

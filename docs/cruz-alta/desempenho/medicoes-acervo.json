@@ -1,0 +1,404 @@
+{
+  "data": "2026-11-19",
+  "base": "1193fc6836119f68de950effbd4836df42226ee5",
+  "perfil": {
+    "surface": "acervo",
+    "mbps": 20,
+    "latencyMs": 80,
+    "sourceRttMs": 80,
+    "pdfBytes": 25082650,
+    "imageBytes": 19553215
+  },
+  "webpBytes": {
+    "thumbnail": 29706,
+    "preview": 294312
+  },
+  "acervoAnterior": {
+    "stats": {
+      "thumbnailMs": {
+        "median": 1839,
+        "p95": 2340,
+        "min": 1817,
+        "max": 2340
+      },
+      "photoViewMs": {
+        "median": 8933,
+        "p95": 8949,
+        "min": 8902,
+        "max": 8949
+      },
+      "originalMs": {
+        "median": 8933,
+        "p95": 8949,
+        "min": 8902,
+        "max": 8949
+      },
+      "directMs": {
+        "median": 7924,
+        "p95": 7933,
+        "min": 7918,
+        "max": 7933
+      },
+      "overheadMs": {
+        "median": 1000,
+        "p95": 1019,
+        "min": 973,
+        "max": 1019
+      },
+      "pdfPageMs": {
+        "median": 12231,
+        "p95": 12267,
+        "min": 12167,
+        "max": 12267
+      },
+      "driveToThumbnail": {
+        "median": 17,
+        "p95": 18,
+        "min": 17,
+        "max": 18
+      }
+    },
+    "rounds": [
+      {
+        "mobile": false,
+        "thumbnailMs": 2337,
+        "photoViewMs": 8916,
+        "pdfPageMs": 12233,
+        "originalMs": 8916,
+        "directMs": 7924,
+        "overheadMs": 992,
+        "driveToThumbnail": 18
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 1817,
+        "photoViewMs": 8902,
+        "pdfPageMs": 12167,
+        "originalMs": 8902,
+        "directMs": 7929,
+        "overheadMs": 973,
+        "driveToThumbnail": 17
+      },
+      {
+        "mobile": false,
+        "thumbnailMs": 2340,
+        "photoViewMs": 8933,
+        "pdfPageMs": 12231,
+        "originalMs": 8933,
+        "directMs": 7933,
+        "overheadMs": 1000,
+        "driveToThumbnail": 18
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 1839,
+        "photoViewMs": 8939,
+        "pdfPageMs": 12238,
+        "originalMs": 8939,
+        "directMs": 7922,
+        "overheadMs": 1017,
+        "driveToThumbnail": 17
+      },
+      {
+        "mobile": false,
+        "thumbnailMs": 1829,
+        "photoViewMs": 8937,
+        "pdfPageMs": 12170,
+        "originalMs": 8937,
+        "directMs": 7918,
+        "overheadMs": 1019,
+        "driveToThumbnail": 17
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 1847,
+        "photoViewMs": 8949,
+        "pdfPageMs": 12267,
+        "originalMs": 8949,
+        "directMs": 7931,
+        "overheadMs": 1018,
+        "driveToThumbnail": 17
+      }
+    ]
+  },
+  "acervoAtual": {
+    "stats": {
+      "thumbnailMs": {
+        "median": 827,
+        "p95": 840
+      },
+      "photoViewMs": {
+        "median": 866,
+        "p95": 884
+      },
+      "originalMs": {
+        "median": 8402,
+        "p95": 8416
+      },
+      "directMs": {
+        "median": 7925,
+        "p95": 7934
+      },
+      "overheadMs": {
+        "median": 481,
+        "p95": 496
+      },
+      "pdfPageMs": {
+        "median": 1945,
+        "p95": 1953
+      },
+      "driveToThumbnail": {
+        "median": 12,
+        "p95": 12
+      }
+    },
+    "rounds": [
+      {
+        "mobile": false,
+        "thumbnailMs": 839,
+        "photoViewMs": 854,
+        "pdfPageMs": 1948,
+        "originalMs": 8376,
+        "directMs": 7928,
+        "overheadMs": 448,
+        "driveToThumbnail": 9
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 827,
+        "photoViewMs": 854,
+        "pdfPageMs": 1937,
+        "originalMs": 8412,
+        "directMs": 7928,
+        "overheadMs": 484,
+        "driveToThumbnail": 12
+      },
+      {
+        "mobile": false,
+        "thumbnailMs": 812,
+        "photoViewMs": 884,
+        "pdfPageMs": 1950,
+        "originalMs": 8414,
+        "directMs": 7925,
+        "overheadMs": 489,
+        "driveToThumbnail": 12
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 825,
+        "photoViewMs": 866,
+        "pdfPageMs": 1942,
+        "originalMs": 8402,
+        "directMs": 7921,
+        "overheadMs": 481,
+        "driveToThumbnail": 12
+      },
+      {
+        "mobile": false,
+        "thumbnailMs": 840,
+        "photoViewMs": 883,
+        "pdfPageMs": 1945,
+        "originalMs": 8399,
+        "directMs": 7926,
+        "overheadMs": 473,
+        "driveToThumbnail": 12
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 835,
+        "photoViewMs": 877,
+        "pdfPageMs": 1889,
+        "originalMs": 8370,
+        "directMs": 7914,
+        "overheadMs": 456,
+        "driveToThumbnail": 12
+      },
+      {
+        "mobile": false,
+        "thumbnailMs": 815,
+        "photoViewMs": 852,
+        "pdfPageMs": 1953,
+        "originalMs": 8416,
+        "directMs": 7934,
+        "overheadMs": 482,
+        "driveToThumbnail": 12
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 832,
+        "photoViewMs": 882,
+        "pdfPageMs": 1950,
+        "originalMs": 8414,
+        "directMs": 7918,
+        "overheadMs": 496,
+        "driveToThumbnail": 12
+      }
+    ]
+  },
+  "mapaAtual": {
+    "stats": {
+      "thumbnailMs": {
+        "median": 817,
+        "p95": 1017
+      },
+      "photoViewMs": {
+        "median": 860,
+        "p95": 881
+      },
+      "originalMs": {
+        "median": 8419,
+        "p95": 8445
+      },
+      "directMs": {
+        "median": 7923,
+        "p95": 7931
+      },
+      "overheadMs": {
+        "median": 496,
+        "p95": 514
+      },
+      "pdfPageMs": {
+        "median": 1945,
+        "p95": 1957
+      },
+      "driveToThumbnail": {
+        "median": 8,
+        "p95": 16
+      },
+      "automationThumbnailMs": {
+        "median": 841,
+        "p95": 1349
+      }
+    },
+    "rounds": [
+      {
+        "mobile": false,
+        "thumbnailMs": 1017,
+        "photoViewMs": 881,
+        "pdfPageMs": 1957,
+        "originalMs": 8445,
+        "directMs": 7931,
+        "overheadMs": 514,
+        "driveToThumbnail": 16,
+        "automationThumbnailMs": 1349
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 817,
+        "photoViewMs": 860,
+        "pdfPageMs": 1945,
+        "originalMs": 8419,
+        "directMs": 7923,
+        "overheadMs": 496,
+        "driveToThumbnail": 8,
+        "automationThumbnailMs": 841
+      },
+      {
+        "mobile": false,
+        "thumbnailMs": 830,
+        "photoViewMs": 864,
+        "pdfPageMs": 1949,
+        "originalMs": 8432,
+        "directMs": 7921,
+        "overheadMs": 511,
+        "driveToThumbnail": 8,
+        "automationThumbnailMs": 856
+      },
+      {
+        "mobile": true,
+        "thumbnailMs": 816,
+        "photoViewMs": 847,
+        "pdfPageMs": 1942,
+        "originalMs": 8401,
+        "directMs": 7926,
+        "overheadMs": 475,
+        "driveToThumbnail": 8,
+        "automationThumbnailMs": 839
+      }
+    ]
+  },
+  "imagemVinculadaNR": {
+    "profile": {
+      "mbps": 20,
+      "latencyMs": 80
+    },
+    "previewWebpBytes": 200950,
+    "originalPngBytes": 19553215,
+    "medianMs": 844,
+    "p95Ms": 859,
+    "rounds": [
+      {
+        "mobile": false,
+        "previewMs": 838,
+        "dimensions": [
+          768,
+          550
+        ],
+        "originalMs": 8393,
+        "originalDimensions": [
+          3000,
+          2172
+        ]
+      },
+      {
+        "mobile": true,
+        "previewMs": 859,
+        "dimensions": [
+          768,
+          550
+        ],
+        "originalMs": 8373,
+        "originalDimensions": [
+          3000,
+          2172
+        ]
+      },
+      {
+        "mobile": false,
+        "previewMs": 842,
+        "dimensions": [
+          768,
+          550
+        ]
+      },
+      {
+        "mobile": true,
+        "previewMs": 855,
+        "dimensions": [
+          768,
+          550
+        ]
+      },
+      {
+        "mobile": false,
+        "previewMs": 844,
+        "dimensions": [
+          768,
+          550
+        ]
+      },
+      {
+        "mobile": true,
+        "previewMs": 851,
+        "dimensions": [
+          768,
+          550
+        ]
+      }
+    ],
+    "office": [
+      {
+        "mobile": false,
+        "ms": 299,
+        "filename": "memorial.docx",
+        "bytes": 790
+      },
+      {
+        "mobile": true,
+        "ms": 296,
+        "filename": "planilha.xlsx",
+        "bytes": 755
+      }
+    ]
+  }
+}

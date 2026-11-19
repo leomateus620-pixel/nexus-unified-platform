@@ -17,9 +17,16 @@ export async function createPdfRangeTransport(
   authorize: AuthorizeRange,
   signal: AbortSignal,
   onFailure: (error: unknown) => void,
+  chunkHashes?: readonly string[],
 ) {
   if (!Number.isSafeInteger(size) || size < PDF_RANGE_CHUNK || size > MAX_PDF_RANGE_BYTES)
     throw new LeituraPeError("resource");
+  if (
+    chunkHashes &&
+    (chunkHashes.length !== Math.ceil(size / PDF_RANGE_CHUNK) ||
+      chunkHashes.some((hash) => !/^[a-f0-9]{64}$/.test(hash)))
+  )
+    throw new LeituraPeError("integrity");
   const abort = new AbortController();
   const sessionSignal = AbortSignal.any([signal, abort.signal]);
   let authorization: Awaited<ReturnType<AuthorizeRange>> | undefined;
@@ -52,14 +59,24 @@ export async function createPdfRangeTransport(
     return (await pendingAuthorization).url;
   }
 
+  function fragmentBounds(begin: number, end: number) {
+    return chunkHashes
+      ? ([
+          Math.floor(begin / PDF_RANGE_CHUNK) * PDF_RANGE_CHUNK,
+          Math.min(size, Math.ceil(end / PDF_RANGE_CHUNK) * PDF_RANGE_CHUNK),
+        ] as const)
+      : ([begin, end] as const);
+  }
+
   async function read(begin: number, end: number) {
-    const expectedLength = end - begin;
+    const [first, last] = fragmentBounds(begin, end);
+    const expectedLength = last - first;
     const requestSignal = AbortSignal.any([sessionSignal, AbortSignal.timeout(25_000)]);
     for (let attempt = 0; attempt < 2; attempt++) {
       const url = await signedUrl();
       requestSignal.throwIfAborted();
       const response = await fetch(url, {
-        headers: { Range: `bytes=${begin}-${end - 1}` },
+        headers: { Range: `bytes=${first}-${last - 1}` },
         cache: "no-store",
         credentials: "omit",
         redirect: "error",
@@ -76,7 +93,7 @@ export async function createPdfRangeTransport(
       const length = response.headers.get("content-length");
       if (
         response.status !== 206 ||
-        response.headers.get("content-range") !== `bytes ${begin}-${end - 1}/${size}` ||
+        response.headers.get("content-range") !== `bytes ${first}-${last - 1}/${size}` ||
         (encoding && encoding !== "identity") ||
         (length && Number(length) !== expectedLength) ||
         (mime !== "application/pdf" && mime !== "application/octet-stream") ||
@@ -98,7 +115,19 @@ export async function createPdfRangeTransport(
           offset += chunk.value.byteLength;
         }
         if (offset !== expectedLength) throw new LeituraPeError("range");
-        return bytes;
+        if (chunkHashes) {
+          for (let offset = 0; offset < bytes.length; offset += PDF_RANGE_CHUNK) {
+            const chunk = bytes.subarray(offset, offset + PDF_RANGE_CHUNK);
+            const digest = await crypto.subtle.digest("SHA-256", chunk);
+            requestSignal.throwIfAborted();
+            const hash = Array.from(new Uint8Array(digest), (byte) =>
+              byte.toString(16).padStart(2, "0"),
+            ).join("");
+            if (hash !== chunkHashes[(first + offset) / PDF_RANGE_CHUNK])
+              throw new LeituraPeError("integrity");
+          }
+        }
+        return bytes.subarray(begin - first, end - first);
       } finally {
         await reader.cancel().catch(() => undefined);
         reader.releaseLock();
@@ -114,20 +143,22 @@ export async function createPdfRangeTransport(
   class Transport extends Base {
     override requestDataRange(begin: number, end: number) {
       if (sessionSignal.aborted) return;
+      const [first, last] = fragmentBounds(begin, end);
+      const transferBytes = last - first;
       if (
         !Number.isSafeInteger(begin) ||
         !Number.isSafeInteger(end) ||
         begin < 0 ||
         begin >= end ||
         end > size ||
-        end - begin > MAX_REQUEST_BYTES ||
-        scheduledBytes + end - begin > MAX_SESSION_BYTES ||
+        transferBytes > MAX_REQUEST_BYTES ||
+        scheduledBytes + transferBytes > MAX_SESSION_BYTES ||
         pending.length >= MAX_PENDING_REQUESTS
       ) {
         this.fail(new LeituraPeError("resource"));
         return;
       }
-      scheduledBytes += end - begin;
+      scheduledBytes += transferBytes;
       pending.push({ begin, end });
       this.drain();
     }

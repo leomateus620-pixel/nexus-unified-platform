@@ -93,11 +93,25 @@ export function InspectionSourcesReader({
     ? references.find((item) => item?.id === evidenceId && item.page === page)
     : (line?.documents.find((item) => item.id === evidenceId) ??
       references.find((item) => item?.id === evidenceId));
-  const authorize = (signal: AbortSignal) =>
-    open({ data: { organization_id: cruzAlta.org, key: object, id: evidenceId }, signal });
+  const authorize = async (signal: AbortSignal) => {
+    const current = await open({
+      data: { organization_id: cruzAlta.org, key: object, id: evidenceId },
+      signal,
+    });
+    return { url: current.url, expiresAt: current.expira_em };
+  };
   const q = useQuery({
     queryKey: ["cruz-alta-evidencia", user, cruzAlta.org, object, evidence?.id],
-    queryFn: ({ signal }) => authorize(signal),
+    queryFn: ({ signal }) =>
+      open({
+        data: {
+          organization_id: cruzAlta.org,
+          key: object,
+          id: evidenceId,
+          pagina: evidence?.page,
+        },
+        signal,
+      }),
     enabled: !!evidence,
     retry: false,
     gcTime: 0,
@@ -138,7 +152,10 @@ export function InspectionSourcesReader({
           <CruzAltaPdf
             org={cruzAlta.org}
             url={q.data.url}
-            initialAuthorizedUntil={q.dataUpdatedAt + 45_000}
+            initialAuthorizedUntil={Math.min(
+              Date.parse(q.data.expira_em),
+              q.dataUpdatedAt + 45_000,
+            )}
             file={{
               id: q.data.id,
               nome: q.data.title,
@@ -147,6 +164,8 @@ export function InspectionSourcesReader({
               sha256: q.data.sha256,
             }}
             authorizePreview={authorize}
+            representations={q.data.representations}
+            staticWorker
             showOriginalLink={false}
             initialPage={evidence.page}
           />

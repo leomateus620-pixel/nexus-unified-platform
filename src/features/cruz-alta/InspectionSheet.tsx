@@ -1,12 +1,12 @@
-import { lazy, Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { AlertTriangle, ChevronRight, FileCheck2, FileText, RefreshCw } from "lucide-react";
 import { cruzAlta } from "./context";
-import { objects } from "./manifest";
 import type { CruzObject } from "./scene-types";
 import { hasInspectionEvidence, technicalTitle } from "./inspection-display";
 import { caInspectionOpen, caInspectionReview, caInspectionSyncNow } from "./inspection.functions";
+import { CruzAltaPdf, prepareCruzAltaPdf } from "./pdf-preview";
 import {
   formatInspectionDate,
   inspectDueStatus,
@@ -17,11 +17,6 @@ import {
   type InspectionAdoptField,
 } from "./inspection-domain";
 
-const Pdf = lazy(() =>
-  import("@/features/nr/NrOriginalPreview").then((module) => ({
-    default: module.NrOriginalPreview,
-  })),
-);
 const fieldLabels: Record<InspectionAdoptField, string> = {
   installation: "Instalação",
   rt: "Responsabilidade técnica (RT)",
@@ -98,15 +93,20 @@ export function InspectionSourcesReader({
     ? references.find((item) => item?.id === evidenceId && item.page === page)
     : (line?.documents.find((item) => item.id === evidenceId) ??
       references.find((item) => item?.id === evidenceId));
-  const authorize = () =>
-    open({ data: { organization_id: cruzAlta.org, key: object, id: evidenceId } });
+  const authorize = (signal: AbortSignal) =>
+    open({ data: { organization_id: cruzAlta.org, key: object, id: evidenceId }, signal });
   const q = useQuery({
     queryKey: ["cruz-alta-evidencia", user, cruzAlta.org, object, evidence?.id],
-    queryFn: authorize,
+    queryFn: ({ signal }) => authorize(signal),
     enabled: !!evidence,
     retry: false,
     gcTime: 0,
+    refetchOnWindowFocus: false,
   });
+  const hasEvidence = !!evidence;
+  useEffect(() => {
+    if (hasEvidence) prepareCruzAltaPdf();
+  }, [hasEvidence]);
 
   if (pending) return <p role="status">Conferindo a evidência no acervo privado…</p>;
   if (!evidence)
@@ -135,9 +135,10 @@ export function InspectionSourcesReader({
         </>
       ) : q.data ? (
         <Suspense fallback={<p role="status">Preparando o leitor…</p>}>
-          <Pdf
+          <CruzAltaPdf
             org={cruzAlta.org}
             url={q.data.url}
+            initialAuthorizedUntil={q.dataUpdatedAt + 45_000}
             file={{
               id: q.data.id,
               nome: q.data.title,
@@ -157,45 +158,26 @@ export function InspectionSourcesReader({
   );
 }
 
-const byKey = new Map(objects.map((object) => [object.id, object]));
-
-function descendsFrom(item: CruzObject, ancestor: string) {
-  let parent = item.parent;
-  while (parent) {
-    if (parent === ancestor) return true;
-    parent = byKey.get(parent)?.parent;
-  }
-  return false;
-}
-
 export function RelatedInspections({
-  object,
-  lines,
+  items,
   onOpen,
 }: {
-  object: string;
-  lines: CaInspectionLine[];
+  items: { object: CruzObject; line: CaInspectionLine }[];
   onOpen: (id: string) => void;
 }) {
-  const related = lines.filter((line) => {
-    const item = byKey.get(line.key);
-    return item && descendsFrom(item, object);
-  });
-  if (!related.length) return null;
   return (
     <section className="ca-detail-section ca-inspections-related">
       <h3>
         <FileCheck2 size={17} aria-hidden="true" /> Laudos e inspeções
       </h3>
       <ul>
-        {related.map((line) => {
-          const item = byKey.get(line.key);
+        {items.map(({ object, line }) => {
           const due = inspectDueStatus(line.fields.due?.value ?? null);
           return (
             <li key={line.key}>
               <button type="button" onClick={() => onOpen(line.key)}>
                 <span>
-                  <strong>{item && technicalTitle(item, line)}</strong>
+                  <strong>{technicalTitle(object, line)}</strong>
                   <small>
                     {hasInspectionEvidence(line) ? (
                       <>

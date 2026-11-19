@@ -39,6 +39,15 @@ export type InspectionMarker = {
 
 type PinPlacement = { x: number; y: number; width: number; height: number };
 
+const labelHeight = 44;
+function overlapsLabel(label: PinPlacement, other: PinPlacement) {
+  return (
+    Math.abs(label.x - other.x) < (label.width + other.width) / 2 + 8 &&
+    label.y + 12 > other.y - other.height &&
+    label.y - label.height < other.y + 18
+  );
+}
+
 type SceneOptions = {
   host: HTMLDivElement;
   labels: HTMLDivElement;
@@ -100,7 +109,7 @@ export function openScene(options: SceneOptions) {
     perspective = new T.PerspectiveCamera(43, 1, 0.15, far),
     ortho = new T.OrthographicCamera(-100, 100, 100, -100, 0.15, far);
   let camera: T.PerspectiveCamera | T.OrthographicCamera = perspective;
-  const controls = new OrbitControls<T.PerspectiveCamera | T.OrthographicCamera>(camera, canvas);
+  const controls = new OrbitControls<T.PerspectiveCamera | T.OrthographicCamera>(camera, host);
   controls.enableDamping = false;
   controls.enableZoom = false;
   controls.maxPolarAngle = Math.PI * 0.485;
@@ -116,6 +125,7 @@ export function openScene(options: SceneOptions) {
     layers = options.layers;
   let width = 1,
     height = 1,
+    tooltipWidth = 0,
     last = performance.now(),
     forcedWalk: string | null = null;
   let walkYaw = 0,
@@ -146,7 +156,7 @@ export function openScene(options: SceneOptions) {
   );
   scene.add(model.root);
   const labelNodes = new Map(
-    [...options.labels.querySelectorAll<HTMLSpanElement>("[data-label]")].map((node) => [
+    [...options.labels.querySelectorAll<HTMLButtonElement>("[data-label]")].map((node) => [
       node.dataset["label"]!,
       node,
     ]),
@@ -189,52 +199,64 @@ export function openScene(options: SceneOptions) {
     for (const id of labelNodes.keys()) visibility.set(id, visible(id));
   }
   function labelsAt(distance: number, pins: PinPlacement[]) {
-    const chosen = selected ? index.byId.get(selected) : null;
-    const priority = (id: string) =>
-      id === selected ? 0 : chosen && index.chains.get(chosen.id)?.includes(id) ? 1 : 2;
-    const placed: { x: number; y: number; w: number }[] = [];
-    const localKind = mode === "patio" || distance < span * 0.55 ? "estrutura" : "setor";
-    for (const [id, node] of [...labelNodes].sort(([a], [b]) => priority(a) - priority(b))) {
-      const object = index.byId.get(id)!,
-        e = index.focus(id);
-      let shown = false;
+    const local = mode === "patio" || distance < span * 0.55;
+    const detailed = mode === "patio" || distance < span * 0.27;
+    const ancestors = selected ? (index.chains.get(selected) ?? []) : [];
+    const compact = width < 520;
+    const limit = Math.max(2, (compact ? 4 : width < 940 ? 7 : 10) - Math.floor(pins.length / 2));
+    const top = Math.min(65, height * 0.18);
+    const bottom = height - Math.min(mode === "patio" ? 119 : 78, height * 0.26);
+    const candidates = [];
+    for (const [id, node] of labelNodes) {
+      const object = index.byId.get(id)!;
+      const bounds = layers.nomes && visibility.get(id) ? index.focus(id) : undefined;
+      const inSelectedStructure = object.parent && ancestors.includes(object.parent);
+      const component =
+        object.kind === "componente" && (detailed || (local && inSelectedStructure));
+      const level = local ? "estrutura" : "setor";
+      if (!bounds || (id !== selected && !component && object.kind !== level)) continue;
+
+      const [x, z] = center(bounds);
+      const elevation = bounds.top + 1.3;
+      temp.set(x, elevation, z).project(camera);
+      const px = (0.5 + 0.5 * temp.x) * width;
+      const py = (0.5 - 0.5 * temp.y) * height - 9;
+      const labelWidth = Math.min(compact ? 142 : 180, Math.max(77, node.title.length * 8 + 48));
+      const left = px - labelWidth / 2,
+        right = px + labelWidth / 2;
       if (
-        e &&
-        layers.nomes &&
-        visibility.get(id) &&
-        (id === selected || object.kind === localKind)
-      ) {
-        const [x, z] = center(e);
-        temp.set(x, e.top + 1.3, z).project(camera);
-        const px = (0.5 + 0.5 * temp.x) * width,
-          py = (0.5 - 0.5 * temp.y) * height;
-        const w = Math.min(180, node.textContent!.length * 6 + 18);
-        if (
-          temp.z >= -1 &&
-          temp.z <= 1 &&
-          px > w / 2 &&
-          px < width - w / 2 &&
-          py > 20 &&
-          py < height - 26 &&
-          placed.every((o) => Math.abs(o.y - py) > 24 || Math.abs(o.x - px) > (o.w + w) / 2 + 5) &&
-          pins.every(
-            (pin) =>
-              py < pin.y - pin.height - 4 ||
-              py > pin.y + 19 ||
-              Math.abs(pin.x - px) > (pin.width + w) / 2 + 5,
-          ) &&
-          (mode === "planta" ||
-            !index.labelOccluded(camera.position, x, e.top + 1.3, z, id, layers))
-        ) {
-          placed.push({ x: px, y: py, w });
-          shown = true;
-          node.style.left = px + "px";
-          node.style.top = py + "px";
-          node.dataset["selected"] = id === selected ? "true" : "false";
-        }
-      }
-      node.hidden = !shown;
+        temp.z < -1 ||
+        temp.z > 1 ||
+        left <= 6 ||
+        right >= width - 6 ||
+        py - labelHeight <= top ||
+        py >= bottom ||
+        (left < (width <= 650 ? 68 : 134) && py + 6 > height - (width <= 650 ? 76 : 125)) ||
+        (right >= width - 66 && py - labelHeight < height / 2 + 72 && py + 6 > height / 2 - 72)
+      )
+        continue;
+      const priority = id === selected ? 0 : component ? (inSelectedStructure ? 1 : 3) : 2;
+      const rank = Math.hypot(px - width / 2, py - height / 2);
+      const box = { x: px, y: py, width: labelWidth, height: labelHeight };
+      candidates.push({ id, node, x, z, elevation, box, left, priority, rank });
     }
+    const shown = new Set<HTMLButtonElement>();
+    const placed = [...pins];
+    for (const candidate of candidates.sort((a, b) => a.priority - b.priority || a.rank - b.rank)) {
+      if (shown.size === limit) break;
+      const { id, node, x, z, elevation, box, left } = candidate;
+      if (placed.some((other) => overlapsLabel(box, other))) continue;
+      if (mode !== "planta" && index.labelOccluded(camera.position, x, elevation, z, id, layers))
+        continue;
+      shown.add(node);
+      placed.push(box);
+      const tooltipLeft = Math.max(6, Math.min(box.x - tooltipWidth / 2, width - tooltipWidth - 6));
+      node.style.width = `${box.width}px`;
+      node.style.transform = `translate3d(${left}px, ${box.y - box.height}px, 0)`;
+      node.style.setProperty("--ca-marker-tooltip-left", `${tooltipLeft - left}px`);
+      node.dataset["selected"] = String(id === selected);
+    }
+    for (const node of labelNodes.values()) node.hidden = !shown.has(node);
   }
   const inspectionPoint = new T.Vector3();
   let inspectionMarkers: InspectionMarker[] = [];
@@ -487,6 +509,8 @@ export function openScene(options: SceneOptions) {
     const rect = host.getBoundingClientRect();
     width = Math.max(1, rect.width);
     height = Math.max(1, rect.height);
+    tooltipWidth = Math.max(0, Math.min(256, width - 12));
+    options.labels.style.setProperty("--ca-marker-tooltip-width", `${tooltipWidth}px`);
     renderer.setSize(width, height, false);
     canvas.dataset["dpr"] = String(renderer.getPixelRatio());
     perspective.aspect = width / height;
@@ -710,6 +734,12 @@ export function openScene(options: SceneOptions) {
     request();
   }
   const pointerCache = new Map<number, T.Vector2>();
+  const markerPointers = new Map<number, HTMLButtonElement>();
+  function markerAt(target: EventTarget | null) {
+    return target instanceof Element
+      ? target.closest<HTMLButtonElement>("button[data-label]")
+      : null;
+  }
   function zoom(factor: number, clientX?: number, clientY?: number) {
     if (mode === "patio") return;
     drone = false;
@@ -775,22 +805,27 @@ export function openScene(options: SceneOptions) {
     motion = null;
   });
   controls.addEventListener("change", request);
-  canvas.addEventListener(
+  host.addEventListener(
     "pointerdown",
     (e) => {
       motion = null;
       if (e.pointerType === "touch")
         pointerCache.set(e.pointerId, new T.Vector2(e.clientX, e.clientY));
+      const marker = markerAt(e.target);
+      if (marker) {
+        markerPointers.set(e.pointerId, marker);
+        e.preventDefault();
+      }
       canvas.focus({ preventScroll: true });
       gesture.down(e.pointerId, e.clientX, e.clientY, performance.now());
       if (mode === "patio") {
         drag = e.pointerId;
-        canvas.setPointerCapture(e.pointerId);
+        host.setPointerCapture(e.pointerId);
       }
     },
     { signal, capture: true },
   );
-  canvas.addEventListener(
+  host.addEventListener(
     "wheel",
     (e) => {
       if (mode === "patio") return;
@@ -805,7 +840,7 @@ export function openScene(options: SceneOptions) {
     },
     { signal, capture: true, passive: false },
   );
-  canvas.addEventListener(
+  host.addEventListener(
     "pointermove",
     (e) => {
       const old = pinchSpread();
@@ -826,13 +861,20 @@ export function openScene(options: SceneOptions) {
     },
     { signal },
   );
-  canvas.addEventListener(
+  host.addEventListener(
     "pointerup",
     (e) => {
       pointerCache.delete(e.pointerId);
+      const marker = markerPointers.get(e.pointerId);
+      markerPointers.delete(e.pointerId);
       if (drag === e.pointerId) drag = null;
       gesture.up(e.pointerId, performance.now());
       if (!gesture.consume() || e.button !== 0) return;
+      if (marker) {
+        // OrbitControls captures the pointer, so only a completed tap activates the button.
+        if (markerAt(document.elementFromPoint(e.clientX, e.clientY)) === marker) marker.click();
+        return;
+      }
       const rect = canvas.getBoundingClientRect();
       point.set(
         (2 * (e.clientX - rect.left)) / rect.width - 1,
@@ -844,10 +886,11 @@ export function openScene(options: SceneOptions) {
     },
     { signal },
   );
-  canvas.addEventListener(
+  host.addEventListener(
     "pointercancel",
     () => {
       pointerCache.clear();
+      markerPointers.clear();
       gesture.cancel();
       drag = null;
     },
@@ -859,6 +902,7 @@ export function openScene(options: SceneOptions) {
       pressed.clear();
       drag = null;
       pointerCache.clear();
+      markerPointers.clear();
       gesture.cancel();
     },
     { signal },

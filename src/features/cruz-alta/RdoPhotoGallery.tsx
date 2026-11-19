@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Camera, ChevronLeft, ChevronRight, ImageOff, Maximize2, RefreshCw, X } from "lucide-react";
 import { cruzAlta } from "./context";
 import { technicalTitle } from "./inspection-display";
 import type { CaInspectionLine } from "./inspection-domain";
 import { objects } from "./manifest";
-import { caRdoPhoto, caRdoPhotos } from "./rdo-photos.functions";
+import { caRdoPhoto } from "./rdo-photos.functions";
 import type { RdoPhoto } from "./rdo-photos";
 import type { CruzObject } from "./scene-types";
+import type { useRdoPhotos } from "./use-rdo-photos";
 
 const pageSize = 6;
+const thumbnailCacheSize = 2 * pageSize;
 const titleOrder = new Intl.Collator("pt-BR", { numeric: true });
 const categories = [
   { id: "montagem", label: "Registro de montagem" },
@@ -25,65 +26,127 @@ function photoKey(photo: RdoPhoto) {
   return `${photo.folderId}/${photo.id}`;
 }
 
+function photoVersion(photo: RdoPhoto) {
+  return `${photoKey(photo)}/${photo.version}`;
+}
+
+function useBlobUrl(blob: Blob | undefined) {
+  const [url, setUrl] = useState<{ blob: Blob; src: string }>();
+  useEffect(() => {
+    if (!blob) {
+      setUrl(undefined);
+      return;
+    }
+    const src = URL.createObjectURL(blob);
+    setUrl({ blob, src });
+    return () => URL.revokeObjectURL(src);
+  }, [blob]);
+  return blob && url?.blob === blob ? url.src : undefined;
+}
+
 function PhotoImage({
   chave,
   photo,
   preview,
+  eager = false,
+  thumbnails,
 }: {
   chave: string;
   photo: RdoPhoto;
   preview: boolean;
+  eager?: boolean;
+  thumbnails: Map<string, Blob>;
 }) {
   const getPhoto = useServerFn(caRdoPhoto);
   const frame = useRef<HTMLDivElement>(null);
-  const [viewable, setViewable] = useState(!preview);
-  const [src, setSrc] = useState<string>();
+  const key = photoVersion(photo);
+  const thumbnail = thumbnails.get(key);
+  const [nearViewport, setNearViewport] = useState(false);
+  const viewable = !preview || eager || nearViewport || !!thumbnail;
+  const [image, setImage] = useState<Blob>();
+  const src = useBlobUrl(image ?? (preview ? thumbnail : undefined));
+  const placeholder = useBlobUrl(preview ? undefined : thumbnail);
+  const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     if (viewable || !frame.current) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry?.isIntersecting) setViewable(true);
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) setNearViewport(true);
+      },
+      { rootMargin: "96px 0px" },
+    );
     observer.observe(frame.current);
     return () => observer.disconnect();
   }, [viewable]);
 
+  const { id, folderId, version, path } = photo;
   useEffect(() => {
-    if (!viewable) return;
+    if (!viewable || (preview && thumbnails.has(key))) return;
     const controller = new AbortController();
-    let objectUrl: string | undefined;
-    const { id, folderId, version, path } = photo;
     async function load() {
       try {
         const response = await getPhoto({
-          data: { organization_id: cruzAlta.org, chave, id, folderId, version, path, preview },
+          data: {
+            organization_id: cruzAlta.org,
+            chave,
+            id,
+            folderId,
+            version,
+            path,
+            preview,
+          },
           signal: controller.signal,
         });
         if (!response.ok) throw new Error("Imagem indisponível.");
         const blob = await response.blob();
         if (controller.signal.aborted) return;
-        objectUrl = URL.createObjectURL(blob);
-        setSrc(objectUrl);
+        if (preview) {
+          thumbnails.set(key, blob);
+          if (thumbnails.size > thumbnailCacheSize) {
+            const oldest = thumbnails.keys().next().value;
+            if (oldest !== undefined) thumbnails.delete(oldest);
+          }
+        }
+        setImage(blob);
       } catch {
         if (!controller.signal.aborted) setFailed(true);
       }
     }
     void load();
-    return () => {
-      controller.abort();
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [attempt, chave, getPhoto, photo, preview, viewable]);
+    return () => controller.abort();
+  }, [attempt, chave, folderId, getPhoto, id, key, path, preview, thumbnails, version, viewable]);
+
+  const pending = viewable && !loaded && !failed;
 
   return (
-    <div className="ca-rdo-image" ref={frame} aria-busy={!src && !failed && viewable}>
+    <div className="ca-rdo-image" ref={frame} aria-busy={pending}>
+      {placeholder && !loaded && (
+        <img src={placeholder} alt="" aria-hidden="true" className="ca-rdo-placeholder" />
+      )}
+      {src && !failed && (
+        <img
+          key={src}
+          src={src}
+          alt={preview ? "" : photo.name}
+          aria-hidden={!loaded || undefined}
+          className="ca-rdo-rendered"
+          data-loaded={loaded}
+          decoding="async"
+          onLoad={() => setLoaded(true)}
+          onError={() => {
+            if (preview) thumbnails.delete(key);
+            setFailed(true);
+          }}
+        />
+      )}
       {failed ? (
-        <>
+        <div className="ca-rdo-image-state">
           <ImageOff size={22} aria-hidden="true" />
           <span role={preview ? undefined : "status"}>
-            {preview ? "Sem miniatura" : "Não foi possível abrir a foto."}
+            {preview ? "Sem miniatura" : "Não foi possível abrir o original."}
           </span>
           {!preview && (
             <button
@@ -91,50 +154,35 @@ function PhotoImage({
               type="button"
               onClick={() => {
                 setFailed(false);
-                setSrc(undefined);
+                setLoaded(false);
+                setImage(undefined);
                 setAttempt((count) => count + 1);
               }}
             >
               Tentar abrir novamente
             </button>
           )}
-        </>
-      ) : src ? (
-        <img
-          src={src}
-          alt={preview ? "" : photo.name}
-          decoding="async"
-          onError={() => setFailed(true)}
-        />
-      ) : (
-        <>
-          <Camera size={22} aria-hidden="true" />
-          {!preview && <span role="status">Carregando foto…</span>}
-        </>
-      )}
+        </div>
+      ) : !loaded ? (
+        <div className="ca-rdo-image-state">
+          {!placeholder && <Camera size={22} aria-hidden="true" />}
+          {!preview && <span role="status">Carregando original…</span>}
+        </div>
+      ) : null}
     </div>
   );
 }
 
 export function RdoPhotoGallery({
-  user,
   object,
   inspections,
+  photos: query,
 }: {
-  user: string;
   object: CruzObject;
   inspections: ReadonlyMap<string, CaInspectionLine>;
+  photos: ReturnType<typeof useRdoPhotos>;
 }) {
-  const listPhotos = useServerFn(caRdoPhotos);
-  const query = useQuery({
-    queryKey: ["cruz-alta", user, cruzAlta.org, object.id, "fotos-montagem"],
-    queryFn: ({ signal }) =>
-      listPhotos({ data: { organization_id: cruzAlta.org, chave: object.id }, signal }),
-    gcTime: 0,
-    staleTime: 30_000,
-    refetchInterval: 60_000,
-    retry: false,
-  });
+  const [thumbnails] = useState(() => new Map<string, Blob>());
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<string>();
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -159,6 +207,13 @@ export function RdoPhotoGallery({
   const lastPage = Math.max(0, Math.ceil(photos.length / pageSize) - 1);
   const currentPage = Math.min(page, lastPage);
   const pageStart = currentPage * pageSize;
+
+  useEffect(() => {
+    const current = new Set(photos.map(photoVersion));
+    for (const key of thumbnails.keys()) {
+      if (!current.has(key)) thumbnails.delete(key);
+    }
+  }, [photos, thumbnails]);
 
   useEffect(() => {
     if (viewing) closeButton.current?.focus();
@@ -211,7 +266,16 @@ export function RdoPhotoGallery({
           </button>
         )}
       </div>
-      {query.isPending && <p role="status">Conferindo fotos…</p>}
+      {query.isPending && (
+        <div className="ca-rdo-list-loading" role="status">
+          <span>Buscando fotos de montagem…</span>
+          <div aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </div>
+        </div>
+      )}
       {query.isError ? (
         <p role="status">Não foi possível atualizar as fotos.</p>
       ) : listing?.partial ? (
@@ -266,10 +330,11 @@ export function RdoPhotoGallery({
             </button>
           </div>
           <PhotoImage
-            key={`${photoKey(current)}/${current.version}`}
+            key={photoVersion(current)}
             chave={object.id}
             photo={current}
             preview={false}
+            thumbnails={thumbnails}
           />
           <div className="ca-rdo-caption">
             <strong>{current.name}</strong>
@@ -292,7 +357,7 @@ export function RdoPhotoGallery({
                   <strong>{label}</strong>
                   <ul>
                     {matches.map((photo) => (
-                      <li key={`${photoKey(photo)}/${photo.version}`}>
+                      <li key={photoVersion(photo)}>
                         <button
                           type="button"
                           className="ca-rdo-card"
@@ -303,7 +368,13 @@ export function RdoPhotoGallery({
                             setActive(photoKey(photo));
                           }}
                         >
-                          <PhotoImage chave={object.id} photo={photo} preview />
+                          <PhotoImage
+                            chave={object.id}
+                            photo={photo}
+                            preview
+                            eager={currentPage === 0 && photo === photos[0]}
+                            thumbnails={thumbnails}
+                          />
                           <span className="ca-rdo-card-label">
                             <span>{photo.name}</span>
                             <Maximize2 size={15} aria-hidden="true" />

@@ -25,6 +25,8 @@ export type NrPreviewFile = {
 export function NrOriginalPreview({
   org,
   file,
+  url,
+  initialAuthorizedUntil,
   authorizePreview,
   showOriginalLink = true,
   initialPage = 1,
@@ -32,7 +34,8 @@ export function NrOriginalPreview({
   org: string;
   file: NrPreviewFile;
   url: string;
-  authorizePreview?: () => Promise<{ url: string }>;
+  initialAuthorizedUntil?: number;
+  authorizePreview?: (signal: AbortSignal) => Promise<{ url: string }>;
   showOriginalLink?: boolean;
   initialPage?: number;
 }) {
@@ -54,9 +57,12 @@ export function NrOriginalPreview({
   const [link, setLink] = useState("");
   const renew =
     authorizePreview ??
-    (() => authorize({ data: { organization_id: org, id: file.id, visualizar: true } }));
+    ((signal: AbortSignal) =>
+      authorize({ data: { organization_id: org, id: file.id, visualizar: true }, signal }));
   const authorization = useRef(renew);
   authorization.current = renew;
+  const initialAuthorization = useRef({ url, validUntil: initialAuthorizedUntil });
+  initialAuthorization.current = { url, validUntil: initialAuthorizedUntil };
   useEffect(() => {
     if (!host.current) return;
     const observer = new ResizeObserver(([entry]) => {
@@ -76,22 +82,28 @@ export function NrOriginalPreview({
     setPageText("");
     async function open() {
       try {
-        // A new attempt renews access. Download links remain an explicit fallback for every state.
-        const permitted = await authorization.current();
+        const initial = initialAuthorization.current;
+        const permitted =
+          attempt === 0 && initial.validUntil && initial.validUntil > Date.now()
+            ? initial
+            : await authorization.current(controller.signal);
         controller.signal.throwIfAborted();
         setLink(permitted.url);
-        const response = await fetch(permitted.url, {
-          signal: controller.signal,
-          credentials: "omit",
-          cache: "no-store",
-          referrerPolicy: "no-referrer",
-        });
-        const bytes = await confirmedNrOriginalBytes(
-          response,
-          { tamanho: file.tamanho, sha256: file.sha256 },
-          controller.signal,
-        );
-        const { openOriginalDocument } = await loadRenderer();
+        const [bytes, { openOriginalDocument }] = await Promise.all([
+          fetch(permitted.url, {
+            signal: controller.signal,
+            credentials: "omit",
+            cache: "no-store",
+            referrerPolicy: "no-referrer",
+          }).then((response) =>
+            confirmedNrOriginalBytes(
+              response,
+              { tamanho: file.tamanho, sha256: file.sha256 },
+              controller.signal,
+            ),
+          ),
+          loadRenderer(),
+        ]);
         controller.signal.throwIfAborted();
         reader = await openOriginalDocument(
           bytes,
@@ -125,12 +137,14 @@ export function NrOriginalPreview({
     // Continued viewing revalidates the authenticated relationship, independently of signed-URL TTL.
     const interval = setInterval(() => {
       void authorization
-        .current()
+        .current(controller.signal)
         .then((result) => {
           if (!controller.signal.aborted) setLink(result.url);
         })
         .catch(() => {
           if (controller.signal.aborted) return;
+          clearInterval(interval);
+          setBusy(false);
           setError(
             "O acesso ao original mudou. Feche e consulte novamente com uma sessão autorizada.",
           );

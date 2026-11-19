@@ -1,7 +1,7 @@
 import "@tanstack/react-start/server-only";
 import { createInspectionWorker } from "./core.server";
 import { serviceCredentials } from "./drive.server";
-import { inspectionTicket, workerResponse } from "./service.server";
+import { inspectionBackendError, inspectionTicket, workerResponse } from "./service.server";
 
 export async function handleCruzAltaInspectionWorker(request: Request) {
   if (request.method !== "POST") return workerResponse({ error: "metodo_nao_permitido" }, 405);
@@ -28,7 +28,10 @@ export async function handleCruzAltaInspectionWorker(request: Request) {
       },
     });
     return await worker(request);
-  } catch {
-    return workerResponse({ error: "integracao_nao_configurada" }, 503);
+  } catch (error) {
+    return workerResponse(
+      { error: inspectionBackendError(error) ?? "integracao_nao_configurada" },
+      503,
+    );
   }
 }

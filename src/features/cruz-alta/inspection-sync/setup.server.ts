@@ -2,6 +2,7 @@ import "@tanstack/react-start/server-only";
 import { driveSigningKey, readLimited, serviceCredentials, SyncFailure } from "./drive.server";
 import {
   createInspectionService,
+  inspectionBackendError,
   inspectionResponseHeaders,
   inspectionTicket,
   workerResponse,
@@ -51,8 +52,11 @@ export function createDriveSetupHandler(options: InspectionServiceOptions | null
       if (stored === true)
         return new Response(null, { status: 204, headers: inspectionResponseHeaders });
       if (stored === false) return workerResponse({ error: "acesso_negado" }, 403);
-    } catch {
-      // Authentication and storage failures share a redacted public error.
+    } catch (error) {
+      return workerResponse(
+        { error: inspectionBackendError(error) ?? "configuracao_indisponivel" },
+        503,
+      );
     }
     return workerResponse({ error: "configuracao_indisponivel" }, 503);
   };

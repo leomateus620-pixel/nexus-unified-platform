@@ -29,6 +29,26 @@ const vaultCredential = {
   private_key: credentials.privateKey,
   private_key_id: "a".repeat(40),
 };
+
+test("identifies server requests and redacts a backend permissions failure", async () => {
+  const handler = createDriveSetupHandler({
+    url: URL_SUPABASE,
+    serviceKey: "sb_secret_isolated_fixture",
+    fetch: async (_url, init) => {
+      assert.equal(new Headers(init?.headers).get("user-agent"), "Nexus-Cruz-Alta-Worker/1.0");
+      return Response.json({ code: "42501", details: "informe privado" }, { status: 401 });
+    },
+  });
+  const result = await handler(
+    new Request("https://nexusgestao.app/api/public/cruz-alta/inspection-drive-setup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Nexus-Drive-Setup-Token": TOKEN },
+      body: JSON.stringify(vaultCredential),
+    }),
+  );
+  assert.equal(result.status, 503);
+  assert.deepEqual(await result.json(), { error: "backend_permissao_negada" });
+});
 const PDF = new TextEncoder().encode("%PDF-1.7\nDocumento de teste sintético\n%%EOF");
 const HASH = Buffer.from(await crypto.subtle.digest("SHA-256", PDF)).toString("hex");
 const SEAL = { value: "001234", page: 1, label: "Lacre" };

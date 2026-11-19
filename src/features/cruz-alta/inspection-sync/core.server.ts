@@ -13,6 +13,7 @@ import {
 } from "./drive.server";
 import {
   createInspectionService,
+  inspectionBackendError,
   inspectionTicket,
   workerResponse,
   type InspectionServiceOptions,
@@ -273,7 +274,11 @@ export function createInspectionWorker(options: WorkerOptions) {
       );
       return workerResponse({ state: finished.state });
     } catch (error) {
-      if (!credentials) return workerResponse({ error: "fila_laudos_indisponivel" }, 503);
+      if (!credentials)
+        return workerResponse(
+          { error: inspectionBackendError(error) ?? "fila_laudos_indisponivel" },
+          503,
+        );
       const failure =
         error instanceof SyncFailure
           ? error

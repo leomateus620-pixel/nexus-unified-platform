@@ -5,24 +5,26 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
-  Box,
   ChevronLeft,
   Focus,
-  Footprints,
   Layers,
   ListTree,
-  Map,
   Maximize,
   Minus,
+  Mountain,
   Plus,
   Search,
+  SlidersHorizontal,
   X,
 } from "lucide-react";
 import { objects, geometry, lifelines, context, photoCorners } from "./manifest";
 import { spatialIndex, type Extent } from "./spatial";
 import type { CruzScene, CameraState } from "./navigation";
+import { DAYLIGHT_EXPOSURE } from "./scene-types";
 import type { CameraMode, CruzObject, SceneLayer, SceneLayers } from "./scene-types";
 import "./viewer.css";
+import { StructureBrowser, type StructureFilter } from "./StructureBrowser";
+import { activeLegend, lvhfAppearance, lvhfSwatch } from "./lvhf-appearance";
 
 const loadReference = createClientOnlyFn(() => import("./reference.client"));
 const index = spatialIndex(objects, geometry, lifelines);
@@ -40,16 +42,11 @@ const layerNames: Record<SceneLayer, string> = {
   nomes: "Nomes",
   lvhf: "Linhas de vida",
 };
-const kinds: Record<CruzObject["kind"], string> = {
-  setor: "Setor",
-  estrutura: "Estrutura",
-  componente: "Componente",
-  lvhf: "Item LVHF",
-};
+const normalLayers = ["edificacoes", "equipamentos", "entorno", "nomes", "lvhf"] as const;
 const modes = [
-  { key: "angular", name: "Órbita", icon: Box },
-  { key: "planta", name: "Planta", icon: Map },
-  { key: "patio", name: "Pátio", icon: Footprints },
+  { key: "angular", name: "Órbita", artwork: "orbita" },
+  { key: "planta", name: "Planta", artwork: "planta" },
+  { key: "patio", name: "Pátio", artwork: "patio" },
 ] as const;
 const unit = index.unit;
 const displayCode = (o: CruzObject) =>
@@ -105,7 +102,7 @@ export default function CruzAltaViewer({
     scene = useRef<CruzScene | null>(null),
     search = useRef<HTMLInputElement>(null);
   const onPick = useRef(onSelect);
-  onPick.current = onSelect;
+  const pickedFromYard = useRef<string | null>(null);
   const currentId = useRef(selectedId);
   currentId.current = selectedId;
   const [failure, setFailure] = useState(""),
@@ -114,7 +111,13 @@ export default function CruzAltaViewer({
     [query, setQuery] = useState("");
   const [open, setOpen] = useState<"busca" | "camadas" | null>(null),
     [layers, setLayers] = useState<SceneLayers>(defaultLayers),
-    [exposure, setExposure] = useState(1.1);
+    [exposure, setExposure] = useState(DAYLIGHT_EXPOSURE),
+    [filter, setFilter] = useState<StructureFilter>("todos");
+  const resultsList = useRef<HTMLDivElement>(null);
+  onPick.current = (id) => {
+    if (mode === "patio" && selectedId !== id) pickedFromYard.current = id;
+    onSelect(id);
+  };
   const [quality, setQuality] = useState<"auto" | "economico" | "detalhado">(() => {
       try {
         const saved = localStorage.getItem("nexus:cruz-alta:qualidade");
@@ -253,7 +256,9 @@ export default function CruzAltaViewer({
   }, [retry, applyCamera]);
   useEffect(() => {
     scene.current?.select(selectedId);
-    if (selectedId && index.focus(selectedId)) {
+    const keepPosition = pickedFromYard.current === selectedId;
+    pickedFromYard.current = null;
+    if (!keepPosition && selectedId && index.focus(selectedId)) {
       scene.current?.moveTo({ mode: "angular", id: selectedId });
       setMode("angular");
     }
@@ -271,6 +276,7 @@ export default function CruzAltaViewer({
         event.stopPropagation();
         event.preventDefault();
         setOpen(null);
+        if (open === "busca") search.current?.focus();
       }
     };
     window.addEventListener("keydown", close, true);
@@ -287,7 +293,16 @@ export default function CruzAltaViewer({
   useEffect(() => {
     scene.current?.matte(matte);
   }, [matte]);
-  const matches = useMemo(() => index.search(query), [query]);
+  const matches = useMemo(
+    () => index.search(query).filter((o) => filter === "todos" || o.kind === filter),
+    [query, filter],
+  );
+  const focusResult = (offset: number) => {
+    const buttons = resultsList.current?.querySelectorAll<HTMLButtonElement>("[data-ca-select]");
+    if (!buttons?.length) return;
+    const current = [...buttons].indexOf(document.activeElement as HTMLButtonElement);
+    buttons[Math.max(0, Math.min(buttons.length - 1, current + offset))]?.focus();
+  };
   const choose = (object: CruzObject) => {
     setOpen(null);
     if (object.kind === "setor") {
@@ -324,6 +339,7 @@ export default function CruzAltaViewer({
         </div>
         <button
           className="ca-overview"
+          aria-label="Ver toda a unidade"
           onClick={() => {
             setMode("angular");
             setOpen(null);
@@ -335,7 +351,14 @@ export default function CruzAltaViewer({
           <span>Ver toda a unidade</span>
         </button>
       </header>
-      <div className="ca-stage" ref={stage}>
+      <div
+        className="ca-stage"
+        ref={stage}
+        onPointerDown={(event) => {
+          if (open && event.target instanceof Element && !event.target.closest(".ca-top, .ca-pop"))
+            setOpen(null);
+        }}
+      >
         {photoFile && (
           <img
             ref={photo}
@@ -376,8 +399,9 @@ export default function CruzAltaViewer({
               <input
                 ref={search}
                 type="search"
-                placeholder="Buscar setor, estrutura ou LVHF"
+                placeholder="Buscar no mapa"
                 aria-label="Buscar setor, estrutura ou LVHF"
+                aria-controls={open === "busca" ? "ca-search-results" : undefined}
                 value={query}
                 onClick={() => setOpen("busca")}
                 onChange={(e) => {
@@ -388,6 +412,7 @@ export default function CruzAltaViewer({
                   if (e.key === "ArrowDown") {
                     e.preventDefault();
                     setOpen("busca");
+                    requestAnimationFrame(() => focusResult(1));
                     return;
                   }
                   if (e.key === "Enter" && matches[0]) {
@@ -399,6 +424,21 @@ export default function CruzAltaViewer({
                 }}
               />
             </label>
+            {query && (
+              <button
+                type="button"
+                className="ca-clear-search"
+                aria-label="Limpar busca"
+                onClick={() => {
+                  setQuery("");
+                  setFilter("todos");
+                  setOpen("busca");
+                  search.current?.focus();
+                }}
+              >
+                <X size={15} />
+              </button>
+            )}
             <button
               title="Lista de estruturas"
               aria-label="Lista de estruturas"
@@ -422,39 +462,24 @@ export default function CruzAltaViewer({
           </button>
         </div>
         {open === "busca" && (
-          <div className="ca-pop ca-results">
-            <div className="ca-pop-title">
-              <h2>{query ? "Resultados" : "Estruturas e setores"}</h2>
-              <button aria-label="Fechar lista" onClick={() => setOpen(null)}>
-                <X size={17} />
-              </button>
-            </div>
-            {!query && (
-              <button
-                className="ca-unit-action"
-                onClick={() => {
-                  setOpen(null);
-                  onSelect("unidade");
-                }}
-              >
-                Abrir ficha da unidade
-              </button>
-            )}
-            <ul>
-              {matches.map((o) => (
-                <li key={o.id}>
-                  <button onClick={() => choose(o)} aria-pressed={selectedId === o.id}>
-                    <span>{o.name}</span>
-                    <small>
-                      {kinds[o.kind]}
-                      {displayCode(o) ? " · " + displayCode(o) : ""}
-                    </small>
-                  </button>
-                </li>
-              ))}
-            </ul>
-            {!matches.length && <p>Nenhum resultado para esta busca.</p>}
-          </div>
+          <StructureBrowser
+            objects={objects}
+            matches={matches}
+            query={query}
+            filter={filter}
+            onFilter={setFilter}
+            selectedId={selectedId}
+            onChoose={choose}
+            onUnit={() => {
+              setOpen(null);
+              onSelect("unidade");
+            }}
+            onClose={() => {
+              setOpen(null);
+              search.current?.focus();
+            }}
+            resultsRef={resultsList}
+          />
         )}
         {open === "camadas" && (
           <div className="ca-pop ca-options">
@@ -464,62 +489,68 @@ export default function CruzAltaViewer({
                 <X size={17} />
               </button>
             </div>
-            {(Object.keys(layerNames) as SceneLayer[]).map((key) => (
-              <label key={key}>
+            <fieldset className="ca-layer-group">
+              <legend>
+                <Layers size={14} /> Implantação
+              </legend>
+              {normalLayers.map((key) => (
+                <label className="ca-layer-toggle" key={key}>
+                  {layerNames[key]}
+                  <input
+                    type="checkbox"
+                    checked={layers[key]}
+                    onChange={(e) =>
+                      setLayers((previous) => ({ ...previous, [key]: e.target.checked }))
+                    }
+                  />
+                </label>
+              ))}
+              <label className="ca-layer-toggle">
+                Paisagem de Cruz Alta
                 <input
                   type="checkbox"
-                  checked={layers[key]}
-                  onChange={(e) =>
-                    setLayers((previous) => ({ ...previous, [key]: e.target.checked }))
-                  }
+                  checked={horizon}
+                  onChange={(e) => setHorizon(e.target.checked)}
                 />
-                {layerNames[key]}
               </label>
-            ))}
-            <label>
-              <input
-                type="checkbox"
-                checked={horizon}
-                onChange={(e) => setHorizon(e.target.checked)}
-              />
-              Paisagem de Cruz Alta
-            </label>
-            {horizon && (
-              <p className="ca-horizon-source">
-                {horizonInfo?.state === "ready"
-                  ? horizonInfo.attribution
-                  : horizonInfo?.state === "failed"
-                    ? "Paisagem regional indisponível."
-                    : "Carregando relevo e paisagem regional…"}
-              </p>
-            )}
-            <label>
-              <input type="checkbox" checked={matte} onChange={(e) => setMatte(e.target.checked)} />
-              Estudo de volumes
-            </label>
-            <label>
-              Qualidade gráfica
-              <select
-                aria-label="Qualidade gráfica"
-                value={quality}
-                onChange={(e) => setQuality(e.target.value as typeof quality)}
-              >
-                <option value="auto">Automática</option>
-                <option value="economico">Econômica</option>
-                <option value="detalhado">Detalhada</option>
-              </select>
-            </label>
-            <label className="ca-exposure">
-              Exposição
-              <input
-                type="range"
-                min={0.65}
-                max={1.55}
-                step={0.05}
-                value={exposure}
-                onChange={(e) => setExposure(Number(e.target.value))}
-              />
-            </label>
+            </fieldset>
+            <fieldset className="ca-layer-group">
+              <legend>
+                <SlidersHorizontal size={14} /> Renderização
+              </legend>
+              <label className="ca-layer-toggle">
+                Estudo de volumes
+                <input
+                  type="checkbox"
+                  checked={matte}
+                  onChange={(e) => setMatte(e.target.checked)}
+                />
+              </label>
+              <label>
+                Qualidade gráfica
+                <select
+                  aria-label="Qualidade gráfica"
+                  value={quality}
+                  onChange={(e) => setQuality(e.target.value as typeof quality)}
+                >
+                  <option value="auto">Automática</option>
+                  <option value="economico">Econômica</option>
+                  <option value="detalhado">Detalhada</option>
+                </select>
+              </label>
+              <label className="ca-exposure">
+                Exposição
+                <input
+                  type="range"
+                  min={0.65}
+                  max={1.55}
+                  step={0.05}
+                  value={exposure}
+                  onChange={(e) => setExposure(Number(e.target.value))}
+                />
+                <output aria-hidden="true">{Math.round(exposure * 100)}%</output>
+              </label>
+            </fieldset>
             <details className="ca-comparison">
               <summary>Comparar enquadramentos</summary>
               <button
@@ -542,8 +573,19 @@ export default function CruzAltaViewer({
               >
                 Encontro de coberturas · 11/56
               </button>
-              <label>
-                Layout A1 (43/56) ou fotografia DJI 0044
+              <button
+                disabled={!ready}
+                onClick={() => {
+                  scene.current?.moveTo({ mode: "patio", reference: "ferrovia" });
+                  setOpen(null);
+                  setMode("patio");
+                }}
+              >
+                Pátio ferroviário · 11/56
+              </button>
+              <label className="ca-reference-file">
+                <strong>Comparar com arquivo local</strong>
+                <span>Layout A1 rev. 43/56 ou fotografia DJI 0044.</span>
                 <input
                   type="file"
                   accept="application/pdf,image/jpeg"
@@ -577,18 +619,32 @@ export default function CruzAltaViewer({
               )}
               {overlayStatus && <p role="status">{overlayStatus}</p>}
             </details>
+            {horizon &&
+              (horizonInfo?.state === "ready" ? (
+                <details className="ca-layer-sources">
+                  <summary>
+                    <Mountain size={14} /> Fontes da paisagem
+                  </summary>
+                  <p className="ca-horizon-source">{horizonInfo.attribution}</p>
+                </details>
+              ) : (
+                <p role="status" className="ca-horizon-source">
+                  {horizonInfo?.state === "failed"
+                    ? "Paisagem regional indisponível."
+                    : "Carregando relevo e paisagem regional…"}
+                </p>
+              ))}
           </div>
         )}
-        {layers.lvhf && (
+        {layers.lvhf && open !== "busca" && (
           <div className="ca-legend" aria-label="Situação registrada na revisão 56">
             <strong>LVHF · Rev. 56</strong>
-            <span>
-              <i />
-              Montada
-            </span>
-            <span>
-              <i />A montar
-            </span>
+            {activeLegend.map((state) => (
+              <span key={state}>
+                <i aria-hidden="true" style={{ background: lvhfSwatch(state) }} />
+                {lvhfAppearance[state].label}
+              </span>
+            ))}
           </div>
         )}
         <div className="ca-tools" aria-label="Controles da câmera">
@@ -629,14 +685,22 @@ export default function CruzAltaViewer({
             <span>N ↑</span>
           </div>
           <div className="ca-modes" aria-label="Modo de navegação">
-            {modes.map(({ key, name, icon: Icon }) => (
+            {modes.map(({ key, name, artwork }) => (
               <button
                 key={key}
                 disabled={!ready}
                 aria-pressed={mode === key}
                 onClick={() => openMode(key)}
               >
-                <Icon size={15} />
+                <span className="ca-mode-icon" aria-hidden="true">
+                  <img
+                    src={"/models/cruz-alta/icones/" + artwork + ".webp"}
+                    alt=""
+                    width={25}
+                    height={25}
+                    decoding="async"
+                  />
+                </span>
                 {name}
               </button>
             ))}

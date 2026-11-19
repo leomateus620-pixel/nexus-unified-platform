@@ -1,4 +1,5 @@
 import { openRoof, roofFrames } from "./roof-supports";
+import { localGroundBlocked, localGroundHeight } from "./site-ground";
 import type { CruzLine, CruzObject, CruzPart, GroundPoint, SceneLayers } from "./scene-types";
 
 export type Extent = { west: number; east: number; north: number; south: number; top: number };
@@ -25,6 +26,9 @@ function union(a: Extent, b: Extent): Extent {
 }
 export function center(e: Extent): GroundPoint {
   return [(e.west + e.east) / 2, (e.north + e.south) / 2];
+}
+export function partSupportOffset(part: CruzPart) {
+  return part.bracing === "gallery" ? 0 : localGroundHeight(...center(extent(part.footprint)));
 }
 export function inside(x: number, z: number, polygon: GroundPoint[]) {
   let result = false;
@@ -102,9 +106,10 @@ export function spatialIndex(objects: CruzObject[], parts: CruzPart[], lines: Cr
       bounds.set(key, bounds.has(key) ? union(bounds.get(key)!, e) : e);
   };
   const solids = parts.map((p) => {
-    const e = extent(p.footprint, p.eave + p.rise + (p.parapet?.height ?? 0));
+    const offset = partSupportOffset(p);
+    const e = extent(p.footprint, offset + p.eave + p.rise + (p.parapet?.height ?? 0));
     add(p.id, e);
-    return { part: p, bounds: e, columns: openRoof(p) ? roofFrames(p).flat() : null };
+    return { part: p, offset, bounds: e, columns: openRoof(p) ? roofFrames(p).flat() : null };
   });
   for (const l of lines) if (l.points.length) add(l.id, extent(l.points, l.y ?? 0));
   const unit = [...bounds.values()].reduce<Extent>((a, b) => union(a, b), extent([]));
@@ -158,11 +163,13 @@ export function spatialIndex(objects: CruzObject[], parts: CruzPart[], lines: Cr
     "cobertura-08": [3],
   };
   function occupied(x: number, z: number) {
+    if (localGroundBlocked(x, z)) return true;
     const allowed = restrict(x, z);
     if (Math.hypot(allowed[0] - x, allowed[1] - z) > 0.02) return true;
+    const floor = localGroundHeight(x, z);
     return solids.some(
-      ({ part: p, bounds: b, columns }) =>
-        (p.base ?? 0) < 2.1 &&
+      ({ part: p, offset, bounds: b, columns }) =>
+        (p.base ?? 0) + offset - floor < 2.1 &&
         x >= b.west &&
         x <= b.east &&
         z >= b.north &&
@@ -198,7 +205,7 @@ export function spatialIndex(objects: CruzObject[], parts: CruzPart[], lines: Cr
       maxX = Math.max(eye.x, x),
       minZ = Math.min(eye.z, z),
       maxZ = Math.max(eye.z, z);
-    return solids.some(({ part: p, bounds: b, columns }) => {
+    return solids.some(({ part: p, offset, bounds: b, columns }) => {
       const layer =
         p.roof === "tank" || p.roof === "silo" ? "equipamentos" : (p.layer ?? "edificacoes");
       if (
@@ -226,7 +233,7 @@ export function spatialIndex(objects: CruzObject[], parts: CruzPart[], lines: Cr
           v = (ax * dz - az * dx) / det;
         if (t <= 0.001 || t >= 0.995 || v < 0 || v > 1) continue;
         const elevation = eye.y + t * dy;
-        if (elevation > (p.base ?? 0) && elevation < p.eave) return true;
+        if (elevation > (p.base ?? 0) + offset && elevation < p.eave + offset) return true;
       }
       return false;
     });

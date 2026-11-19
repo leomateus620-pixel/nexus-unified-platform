@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { CheckCircle2, FileJson, FolderOpen } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { caInventory, caImportInventory, type InventoryRow } from "./inventory.functions";
@@ -22,13 +23,37 @@ export default function ImportInventory({ user, onClose }: { user: string; onClo
     retry: false,
   });
   const [files, setFiles] = useState<File[]>([]),
+    [source, setSource] = useState<File | null>(null),
     [progress, setProgress] = useState(""),
-    [report, setReport] = useState<string[]>([]);
+    [processed, setProcessed] = useState<number | null>(null),
+    [report, setReport] = useState<string[]>([]),
+    [error, setError] = useState("");
+  async function register() {
+    if (!source || guard.current) return;
+    guard.current = true;
+    setError("");
+    setReport([]);
+    setProgress("Registrando inventário…");
+    try {
+      if (source.size > 2 * 1024 * 1024) throw new Error("O arquivo excede 2 MiB.");
+      const result = await saveInventory({ data: { ...org, json: await source.text() } });
+      await q.refetch();
+      setReport([result.quantidade + " fontes registradas."]);
+      setSource(null);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Inventário inválido.");
+    } finally {
+      guard.current = false;
+      setProgress("");
+    }
+  }
   const guard = useRef(false);
   async function reconcile() {
     if (guard.current || !q.data) return;
     guard.current = true;
     setReport([]);
+    setError("");
+    setProcessed(null);
     const lines: string[] = [];
     try {
       const allowed = new Set(
@@ -150,6 +175,8 @@ export default function ImportInventory({ user, onClose }: { user: string; onClo
         physical.add(row.sha256);
       }
       const remaining = [...documents.values()];
+      setProgress("Conferindo e publicando fontes…");
+      setProcessed(0);
       const run = async () => {
         for (let batch = remaining.shift(); batch; batch = remaining.shift()) {
           batch.sort(
@@ -158,9 +185,6 @@ export default function ImportInventory({ user, onClose }: { user: string; onClo
               String(a.revision).localeCompare(String(b.revision), "pt-BR", { numeric: true }),
           );
           for (const row of batch) {
-            setProgress(
-              "Conferindo " + ++done + " de " + q.data!.length + " · " + row.originalName,
-            );
             try {
               await process(row);
             } catch (e) {
@@ -170,6 +194,8 @@ export default function ImportInventory({ user, onClose }: { user: string; onClo
                   " — " +
                   (e instanceof Error ? e.message : "Falha na confirmação."),
               );
+            } finally {
+              setProcessed(++done);
             }
           }
         }
@@ -188,81 +214,127 @@ export default function ImportInventory({ user, onClose }: { user: string; onClo
           " pendências.",
       );
     } catch (e) {
-      lines.unshift(e instanceof Error ? e.message : "Falha na leitura.");
+      setError(e instanceof Error ? e.message : "Falha na leitura.");
     } finally {
       guard.current = false;
       setReport(lines);
+      setProcessed(null);
       setProgress("");
     }
   }
   return (
-    <section>
-      <h3>Conciliar inventário técnico</h3>
-      <p>
-        Destino · Três Tentos, Cruz Alta/RS. Cada vínculo usa a revisão, o conteúdo e o objeto
-        conferidos no inventário.
-      </p>
-      {q.data && <p>{q.data.length} fontes registradas.</p>}
-      {q.isError && <p role="alert">{q.error.message}</p>}
-      <label>
-        Inventário conferido (JSON)
-        <input
-          type="file"
-          accept=".json"
-          disabled={!!progress}
-          onChange={async (e) => {
-            const f = e.target.files?.[0];
-            if (!f) return;
-            setProgress("Registrando inventário…");
-            try {
-              if (f.size > 2 * 1024 * 1024) throw new Error("O arquivo excede 2 MiB.");
-              const result = await saveInventory({ data: { ...org, json: await f.text() } });
-              await q.refetch();
-              setReport([result.quantidade + " fontes registradas."]);
-            } catch (error) {
-              setReport([error instanceof Error ? error.message : "Inventário inválido."]);
-            } finally {
-              setProgress("");
-            }
-          }}
-        />
-      </label>
-      <label>
-        Selecionar pasta de originais
-        <input
-          type="file"
-          multiple
-          {...{ webkitdirectory: "" }}
-          disabled={!!progress}
-          onChange={(e) => setFiles(Array.from(e.target.files ?? []))}
-        />
-      </label>
-      <div className="ca-actions">
+    <section className="ca-technical ca-inventory" aria-busy={!!progress}>
+      <header className="ca-form-heading">
+        <h3>Conciliar inventário técnico</h3>
+        <p>Três Tentos · Cruz Alta/RS</p>
+      </header>
+      <section className="ca-detail-section">
+        <h4>
+          <FileJson size={17} aria-hidden="true" /> Inventário conferido
+        </h4>
+        {q.isPending && <p role="status">Consultando inventário ativo…</p>}
+        {q.data && (
+          <p className="ca-hint">{q.data.length} fontes registradas no inventário ativo.</p>
+        )}
+        {q.isError && (
+          <>
+            <p role="alert" className="ca-feedback">
+              {q.error.message}
+            </p>
+            <button className="ca-action" onClick={() => void q.refetch()}>
+              Tentar novamente
+            </button>
+          </>
+        )}
+        <label>
+          Arquivo JSON do inventário
+          <input
+            type="file"
+            accept=".json,application/json"
+            disabled={!!progress}
+            onChange={(e) => {
+              setSource(e.currentTarget.files?.[0] ?? null);
+              setError("");
+              e.currentTarget.value = "";
+            }}
+          />
+        </label>
+        {source && <p className="ca-hint">{source.name}</p>}
         <button
           className="ca-action"
+          disabled={!source || !!progress}
+          onClick={() => void register()}
+        >
+          Registrar inventário
+        </button>
+      </section>
+      <section className="ca-detail-section">
+        <h4>
+          <FolderOpen size={17} aria-hidden="true" /> Originais locais
+        </h4>
+        <p className="ca-hint">
+          As fontes são conferidas pelo conteúdo e vinculadas ao destino registrado no inventário.
+        </p>
+        <label>
+          Pasta de originais
+          <input
+            type="file"
+            multiple
+            {...{ webkitdirectory: "" }}
+            disabled={!!progress}
+            onChange={(e) => {
+              setFiles(Array.from(e.currentTarget.files ?? []));
+              setError("");
+            }}
+          />
+        </label>
+        {!!files.length && <p className="ca-hint">{files.length} arquivos selecionados.</p>}
+        <button
+          className="ca-action ca-primary"
           disabled={!q.data?.length || !!progress || !files.length}
           onClick={() => void reconcile()}
         >
           Conferir e importar
         </button>
-        <button className="ca-action" disabled={!!progress} onClick={onClose}>
-          Concluir
-        </button>
-      </div>
-      {progress && <p role="status">{progress}</p>}
-      {report.length > 0 && (
-        <div aria-live="polite">
-          <p>{report[0]}</p>
-          <details>
-            <summary>Pendências por fonte</summary>
-            <ul>
-              {report.slice(1).map((line, i) => (
-                <li key={i}>{line}</li>
-              ))}
-            </ul>
-          </details>
+      </section>
+      {progress && (
+        <div className="ca-progress">
+          <p role="status">{progress}</p>
+          {processed !== null && q.data && (
+            <>
+              <label>
+                {processed} de {q.data.length} fontes
+                <progress value={processed} max={q.data.length} />
+              </label>
+            </>
+          )}
         </div>
       )}
+      {error && (
+        <p className="ca-feedback" role="alert">
+          {error}
+        </p>
+      )}
+      {report.length > 0 && (
+        <div className="ca-inventory-result" aria-live="polite">
+          <p>
+            <CheckCircle2 size={17} aria-hidden="true" /> {report[0]}
+          </p>
+          {report.length > 1 && (
+            <details>
+              <summary>Pendências por fonte ({report.length - 1})</summary>
+              <ul>
+                {report.slice(1).map((line, i) => (
+                  <li key={i}>{line}</li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </div>
+      )}
+      <button className="ca-action ca-quiet-action" disabled={!!progress} onClick={onClose}>
+        Concluir
+      </button>
     </section>
   );
 }

@@ -4,14 +4,16 @@ import { SelectionGesture } from "../nr/mapa/gestures";
 import type { HorizonInfo } from "./regional-types";
 import { daylight } from "./light";
 import { buildModel } from "./model";
-import { center, extent, type Extent, type SpatialIndex } from "./spatial";
-import type {
-  CameraMode,
-  CruzPart,
-  CruzArea,
-  CruzLine,
-  SceneLayers,
-  GroundPoint,
+import { localGroundHeight, railwayAxes } from "./site-ground";
+import { center, extent, partSupportOffset, type Extent, type SpatialIndex } from "./spatial";
+import {
+  DAYLIGHT_EXPOSURE,
+  type CameraMode,
+  type CruzPart,
+  type CruzArea,
+  type CruzLine,
+  type SceneLayers,
+  type GroundPoint,
 } from "./scene-types";
 
 export interface CameraState {
@@ -27,7 +29,7 @@ export interface CameraState {
 export interface SceneCommand {
   mode: CameraMode;
   id?: string;
-  reference?: "dji44" | "encontro";
+  reference?: "dji44" | "encontro" | "ferrovia";
 }
 type SceneOptions = {
   host: HTMLDivElement;
@@ -45,6 +47,7 @@ type SceneOptions = {
   onLost: () => void;
 };
 const up = new T.Vector3(0, 1, 0);
+const eyeHeight = 1.7;
 export function openScene(options: SceneOptions) {
   const { host, index } = options;
   const canvas = document.createElement("canvas");
@@ -78,7 +81,7 @@ export function openScene(options: SceneOptions) {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.PCFShadowMap;
   renderer.toneMapping = T.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = DAYLIGHT_EXPOSURE;
   const scene = new T.Scene();
   scene.background = new T.Color("#e3e8e0");
   const bounds = index.unit;
@@ -150,6 +153,18 @@ export function openScene(options: SceneOptions) {
     bGround = new T.Vector3();
   const abort = new AbortController(),
     signal = abort.signal;
+  function groundIntersection(result: T.Vector3) {
+    plane.constant = 0;
+    if (!ray.ray.intersectPlane(plane, result)) return null;
+    // Start at the local datum and resample only when the pointer reaches a profiled surface.
+    for (let i = 0; i < 3; i++) {
+      const floor = localGroundHeight(result.x, result.z);
+      if (Math.abs(result.y - floor) < 0.005) return result;
+      plane.constant = -floor;
+      if (!ray.ray.intersectPlane(plane, result)) return null;
+    }
+    return result;
+  }
   function visible(id: string) {
     const kind = index.byId.get(id)?.kind;
     if (kind === "lvhf") return layers.lvhf;
@@ -209,9 +224,9 @@ export function openScene(options: SceneOptions) {
   }
   function updateHud(distance: number) {
     ray.setFromCamera(new T.Vector2(-0.06, -0.63), camera);
-    const left = ray.ray.intersectPlane(plane, aGround);
+    const left = groundIntersection(aGround);
     ray.setFromCamera(new T.Vector2(0.06, -0.63), camera);
-    const rightPoint = ray.ray.intersectPlane(plane, bGround);
+    const rightPoint = groundIntersection(bGround);
     let metres = 0,
       bar = 0;
     if (left && rightPoint) {
@@ -254,8 +269,12 @@ export function openScene(options: SceneOptions) {
       camera.position.x + speed * (-Math.sin(walkYaw) * forward + Math.cos(walkYaw) * horizontal);
     const z =
       camera.position.z + speed * (-Math.cos(walkYaw) * forward - Math.sin(walkYaw) * horizontal);
-    if (!index.occupied(x, camera.position.z)) camera.position.x = x;
-    if (!index.occupied(camera.position.x, z)) camera.position.z = z;
+    const eye = camera.position;
+    const reachable = (x: number, z: number) =>
+      !index.occupied(x, z) && Math.abs(localGroundHeight(x, z) - (eye.y - eyeHeight)) <= 0.23;
+    if (reachable(x, z)) eye.set(x, localGroundHeight(x, z) + eyeHeight, z);
+    else if (reachable(x, eye.z)) eye.set(x, localGroundHeight(x, eye.z) + eyeHeight, eye.z);
+    else if (reachable(eye.x, z)) eye.set(eye.x, localGroundHeight(eye.x, z) + eyeHeight, z);
     request();
   }
   let overlay: T.Mesh<T.BufferGeometry, T.MeshBasicMaterial> | null = null;
@@ -273,7 +292,7 @@ export function openScene(options: SceneOptions) {
     geom.setAttribute(
       "position",
       new T.Float32BufferAttribute(
-        corners.flatMap(([x, z]) => [x, 0, z]),
+        corners.flatMap(([x, z]) => [x, localGroundHeight(x, z), z]),
         3,
       ),
     );
@@ -333,7 +352,7 @@ export function openScene(options: SceneOptions) {
     const lod = model.updateLod(camera, height, tier);
     const shadowCenter = mode === "patio" ? camera.position : controls.target;
     illumination.shadows(renderer, shadowCenter, mode === "patio" ? 50 : distance, tier);
-    model.regionFrame(camera.position);
+    model.regionFrame(camera.position, economy);
     if (showHorizon && frames) {
       if (!horizonRequested) {
         horizonRequested = true;
@@ -344,6 +363,7 @@ export function openScene(options: SceneOptions) {
       if (state !== horizonState) {
         horizonState = state;
         canvas.dataset["horizon"] = state;
+        if (state === "ready") renderer.shadowMap.needsUpdate = true;
         options.onHorizon(info ? { ...info } : null);
       }
     }
@@ -351,7 +371,7 @@ export function openScene(options: SceneOptions) {
     const tick = performance.now();
     renderer.render(scene, camera);
     if (!frames) request();
-    else model.loadDetails();
+    else if (model.loadDetails()) renderer.shadowMap.needsUpdate = true;
     canvas.dataset["cpuMs"] = (performance.now() - tick).toFixed(2);
     canvas.dataset["frames"] = String(++frames);
     canvas.dataset["geometries"] = String(renderer.info.memory.geometries);
@@ -370,6 +390,9 @@ export function openScene(options: SceneOptions) {
     canvas.dataset["fov"] = camera === perspective ? String(perspective.fov) : "orthographic";
     canvas.dataset["zoom"] = String(camera.zoom);
     canvas.dataset["mode"] = mode;
+    if (mode === "patio")
+      canvas.dataset["floor"] = localGroundHeight(camera.position.x, camera.position.z).toFixed(3);
+    else delete canvas.dataset["floor"];
     canvas.dataset["calls"] = String(renderer.info.render.calls);
     canvas.dataset["triangles"] = String(renderer.info.render.triangles);
   }
@@ -407,12 +430,13 @@ export function openScene(options: SceneOptions) {
       (p) => !id || index.chains.get(p.id)?.includes(id) || index.byId.get(id)?.parent === p.id,
     );
     const points = physical.length
-      ? physical.flatMap((p) =>
-          p.footprint.flatMap(([x, z]) => [
-            new T.Vector3(x, p.base ?? 0, z),
-            new T.Vector3(x, p.eave + p.rise, z),
-          ]),
-        )
+      ? physical.flatMap((p) => {
+          const height = partSupportOffset(p);
+          return p.footprint.flatMap(([x, z]) => [
+            new T.Vector3(x, (p.base ?? 0) + height, z),
+            new T.Vector3(x, p.eave + p.rise + height, z),
+          ]);
+        })
       : [
           new T.Vector3(e.east, e.top, e.south),
           new T.Vector3(e.west, e.top, e.north),
@@ -466,8 +490,21 @@ export function openScene(options: SceneOptions) {
       perspective.fov = 52;
       perspective.updateProjectionMatrix();
       const d = Math.max(8, Math.hypot(e.east - e.west, e.south - e.north) * 0.64);
-      eye.set(x - d * 0.65, 1.7, z + d * 0.66);
-      if (!command.id) {
+      eye.set(x - d * 0.65, eyeHeight, z + d * 0.66);
+      const track = command.reference === "ferrovia" ? railwayAxes[0] : undefined;
+      if (track) {
+        const [railX, railZ] = track.point(0.132, 1.65);
+        eye.set(railX, eyeHeight, railZ);
+      } else if (
+        !command.id &&
+        previous === "angular" &&
+        !initial &&
+        perspective.position.distanceTo(controls.target) < span * 0.2 &&
+        !index.occupied(perspective.position.x, perspective.position.z)
+      ) {
+        eye.x = perspective.position.x;
+        eye.z = perspective.position.z;
+      } else if (!command.id) {
         // The two maneuvering yards are surveyed on the A1. Select a clear apron along the inherited bearing.
         const heading =
           previous === "angular" ? previousHeading : target.clone().sub(eye).setY(0).normalize();
@@ -475,7 +512,7 @@ export function openScene(options: SceneOptions) {
           .filter((a) => a.kind === "patio")
           .map((a) => {
             const [px, pz] = center(extent(a.footprint)),
-              point = new T.Vector3(px, 1.7, pz);
+              point = new T.Vector3(px, eyeHeight, pz);
             const clear = [0, 4, 10, 18].every(
               (d) => !index.occupied(px + d * heading.x, pz + d * heading.z),
             );
@@ -496,12 +533,16 @@ export function openScene(options: SceneOptions) {
             const px = eye.x + radius * Math.cos((n * Math.PI) / 12),
               pz = eye.z + radius * Math.sin((n * Math.PI) / 12);
             if (!index.occupied(px, pz)) {
-              eye.set(px, 1.7, pz);
+              eye.set(px, eyeHeight, pz);
               found = true;
             }
           }
       }
-      if (previous === "angular" && !initial)
+      eye.y = localGroundHeight(eye.x, eye.z) + eyeHeight;
+      if (track) {
+        const [railX, railZ] = track.point(0.22, 4);
+        target.set(railX, eye.y - 0.45, railZ);
+      } else if (previous === "angular" && !initial)
         target.set(eye.x + previousHeading.x * 25, eye.y + 1.15, eye.z + previousHeading.z * 25);
       perspective.position.copy(eye);
       perspective.lookAt(target);
@@ -593,10 +634,7 @@ export function openScene(options: SceneOptions) {
     );
     ray.setFromCamera(ndc, camera);
     const hit = model.nearest(ray),
-      anchor =
-        hit?.point.clone() ??
-        ray.ray.intersectPlane(plane, new T.Vector3()) ??
-        controls.target.clone();
+      anchor = hit?.point.clone() ?? groundIntersection(new T.Vector3()) ?? controls.target.clone();
     if (camera === ortho) {
       const before = ortho.zoom;
       ortho.zoom = T.MathUtils.clamp(before / factor, controls.minZoom, 180);
@@ -627,7 +665,12 @@ export function openScene(options: SceneOptions) {
         if (obstacle && obstacle.distance <= len + 1.05)
           next.copy(eye).addScaledVector(step, Math.max(0, obstacle.distance - 1.05));
       }
-      if (next.y < 1.2) next.lerp(eye, (1.2 - next.y) / Math.max(0.01, eye.y - next.y));
+      const minimum = localGroundHeight(next.x, next.z) + 1.2;
+      if (next.y < minimum)
+        next.lerp(
+          eye,
+          T.MathUtils.clamp((minimum - next.y) / Math.max(0.01, eye.y - next.y), 0, 1),
+        );
       const actual = next.distanceTo(anchor) / distance;
       controls.target.sub(anchor).multiplyScalar(actual).add(anchor);
       eye.copy(next);
@@ -830,7 +873,10 @@ export function openScene(options: SceneOptions) {
     },
     horizon: (enabled: boolean) => {
       showHorizon = enabled;
-      if (horizonRequested) model.showHorizon(enabled);
+      if (horizonRequested) {
+        model.showHorizon(enabled);
+        renderer.shadowMap.needsUpdate = true;
+      }
       request();
     },
     matte: (enabled: boolean) => {

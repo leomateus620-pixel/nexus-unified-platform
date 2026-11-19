@@ -95,7 +95,7 @@ function demGeometry(
     : Math.max(40, Math.min(75, (e - w) / (wide.meta.cols - 1)));
   const xs = sampleAxis(w, e, cx, [pw, pe, inner[0], inner[2]], minStep);
   const zs = sampleAxis(n, s, cz, [pn, ps, inner[1], inner[3]], minStep);
-  const pos = [],
+  const pos: number[] = [],
     uv = [],
     regional = [],
     local = [],
@@ -124,7 +124,35 @@ function demGeometry(
   g.setAttribute("localUv", new T.Float32BufferAttribute(local, 2));
   g.setIndex(indices);
   g.computeVertexNormals();
-  return g;
+  function cell(axis: number[], p: number) {
+    let from = 0,
+      to = axis.length - 1;
+    while (to - from > 1) {
+      const mid = (from + to) >>> 1;
+      if (p < axis[mid]!) to = mid;
+      else from = mid;
+    }
+    return from;
+  }
+  function meshHeight(x: number, z: number) {
+    if (x >= pw && x <= pe && z >= pn && z <= ps) return siteHeight(x, z, wide, detail, pad);
+    const i = cell(xs, x),
+      j = cell(zs, z);
+    const fraction = (p: number, low: number, high: number) =>
+      Math.max(0, Math.min(1, (p - low) / (high - low)));
+    const u = fraction(x, xs[i]!, xs[i + 1]!),
+      v = fraction(z, zs[j]!, zs[j + 1]!);
+    const nw = j * xs.length + i,
+      sw = nw + xs.length;
+    const a = pos[nw * 3 + 1]!,
+      b = pos[(nw + 1) * 3 + 1]!;
+    const c = pos[sw * 3 + 1]!,
+      d = pos[(sw + 1) * 3 + 1]!;
+    return u + v <= 1
+      ? a * (1 - u - v) + b * u + c * v
+      : d * (u + v - 1) + b * (1 - v) + c * (1 - u);
+  }
+  return { geometry: g, meshHeight };
 }
 function landMaterial(
   wide: Layer,
@@ -249,8 +277,8 @@ export function regionalHorizon(
         }
       }
       if (disposed) return;
-      heightAt = (x, z) => siteHeight(x, z, wide, detail, pad) + 0.005;
-      const geo = demGeometry(wide, detail, pad, localWidth);
+      const { geometry: geo, meshHeight } = demGeometry(wide, detail, pad, localWidth);
+      heightAt = meshHeight;
       const inner = nearby ?? detail ?? wide;
       const adjusted = Boolean(m.nearby && (nearby || detail));
       useBackdrop(inner.texture, inner.meta.bounds, adjusted);
@@ -259,6 +287,7 @@ export function regionalHorizon(
         landMaterial(wide, detail, nearby, adjusted, local, observed, pad[2] - pad[0], localWidth),
       );
       land.name = "Horizonte topográfico de Cruz Alta";
+      land.receiveShadow = true;
       root.add(land);
       geo.computeBoundingBox();
       const [west, north, east, south] = m.bounds;

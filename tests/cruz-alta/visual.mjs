@@ -87,6 +87,29 @@ try {
   results.push(
     "Busca sem acento enquadra Preparação. O código 28.1 abre a cobertura. Escape conserva a posição.",
   );
+  await search.fill("28.1");
+  await search.click();
+  await page
+    .getByRole("group", { name: "Filtrar resultados" })
+    .getByRole("button", { name: "LVHF", exact: true })
+    .click();
+  await search.press("ArrowDown");
+  const result = page.locator("#ca-search-results li button");
+  assert.equal(await result.count(), 1);
+  await page.waitForFunction(() => document.activeElement?.textContent?.includes("LVHF 28.1"));
+  await page.keyboard.press("Escape");
+  assert(await search.evaluate((input) => input === document.activeElement));
+  await page.getByRole("button", { name: "Limpar busca" }).click();
+  const sector = page.locator('[data-setor="setor-armazenagem"] button[data-ca-select]').first();
+  assert.equal(await sector.getAttribute("aria-expanded"), "false");
+  await sector.press("Enter");
+  assert.equal(await sector.getAttribute("aria-expanded"), "true");
+  assert(await page.getByRole("button", { name: "Expandir Armazém 01" }).isVisible());
+  await capture(page, "lista-setores");
+  await page.keyboard.press("Escape");
+  results.push(
+    "Filtro LVHF e setas percorrem os resultados. A lista expande setores e estruturas e Escape devolve o foco à busca.",
+  );
   // Pick the same point on the mesh after the drawer closes and the viewport changes.
   const footprint = geometry.find((p) => p.id === "cobertura-28.1"),
     pt = footprint.footprint
@@ -148,14 +171,92 @@ try {
   await page.getByRole("button", { name: "Pátio", exact: true }).click();
   await stable(page);
   const yard = await camera(page);
-  assert.equal(yard.camera.split(",")[1], "1.700");
+  assert(Math.abs(Number(yard.camera.split(",")[1]) - Number(yard.floor) - 1.7) <= 0.002);
   await canvas(page).focus();
   await page.keyboard.down("w");
   await page.waitForTimeout(520);
   await page.keyboard.up("w");
   await stable(page);
-  assert.notEqual((await camera(page)).camera, yard.camera);
+  const walked = await camera(page);
+  assert.notEqual(walked.camera, yard.camera);
+  assert(Math.abs(Number(walked.camera.split(",")[1]) - Number(walked.floor) - 1.7) <= 0.002);
   results.push("Passeio ao nível do pátio com deslocamento pelo teclado.");
+  await compareMenu(page);
+  await page.getByRole("button", { name: /Pátio ferroviário/ }).click();
+  await page.locator("canvas[data-mode=patio]").waitFor();
+  await capture(page, "patio-ferroviario");
+  await canvas(page).focus();
+  const atGround = (await camera(page)).floor;
+  await page.keyboard.down("a");
+  await page.waitForFunction(
+    (old) => Number(document.querySelector(".ca-stage canvas").dataset.floor) > Number(old) + 0.05,
+    atGround,
+  );
+  await page.keyboard.up("a");
+  const atBallast = await camera(page);
+  assert(Math.abs(Number(atBallast.camera.split(",")[1]) - Number(atBallast.floor) - 1.7) <= 0.002);
+  results.push(
+    "A travessia do lastro usa o campo de altura da cena e preserva a distância do olho ao piso.",
+  );
+  const landscape = await browser.newPage({
+    viewport: { width: 1440, height: 900 },
+    reducedMotion: "reduce",
+  });
+  landscape.on("pageerror", (e) => errors.push(e.message));
+  let releaseRegion;
+  const gate = new Promise((resolve) => {
+    releaseRegion = resolve;
+  });
+  await landscape.route("**/models/cruz-alta/regional/manifest.json", async (request) => {
+    await gate;
+    await request.continue();
+  });
+  await landscape.goto(route + "?objeto=reservatorio-norte-6", { waitUntil: "domcontentloaded" });
+  await landscape.locator("canvas[data-camera]").waitFor();
+  await landscape.getByRole("button", { name: "Pátio", exact: true }).click();
+  await landscape.locator("canvas[data-mode=patio][data-horizon=loading]").waitFor();
+  const beforeRegion = await camera(landscape);
+  releaseRegion();
+  await landscape.locator("canvas[data-horizon=ready]").waitFor();
+  const afterRegion = await camera(landscape);
+  assert.equal(afterRegion.camera, beforeRegion.camera);
+  assert.equal(afterRegion.floor, beforeRegion.floor);
+  await landscape.getByRole("button", { name: "Camadas", exact: true }).click();
+  await landscape.getByRole("checkbox", { name: "Paisagem de Cruz Alta" }).uncheck();
+  await stable(landscape);
+  assert.equal((await camera(landscape)).camera, beforeRegion.camera);
+  await landscape.getByRole("checkbox", { name: "Paisagem de Cruz Alta" }).check();
+  await stable(landscape);
+  assert.equal((await camera(landscape)).camera, beforeRegion.camera);
+  results.push(
+    "Olho e piso no pátio permanecem nas mesmas cotas antes da carga, depois e com a paisagem desligada.",
+  );
+  await landscape.close();
+
+  // A URL pública monta o mesmo painel/rota do leitor; os binários permanecem protegidos.
+  const direct = await browser.newPage({
+    viewport: { width: 1440, height: 900 },
+    reducedMotion: "reduce",
+  });
+  const referenceId = "00000000-0000-4000-8000-000000000001";
+  await direct.goto(
+    route + "?objeto=cobertura-28.1&documento=" + referenceId + "&revisao=" + referenceId,
+  );
+  await direct.locator("canvas[data-camera]").waitFor();
+  assert(await direct.getByRole("complementary", { name: "Leitor de documentos" }).isVisible());
+  assert(await direct.getByRole("link", { name: "Entrar no Nexus" }).isVisible());
+  const readerEye = (await camera(direct)).camera;
+  await direct.getByRole("button", { name: "Fechar leitor" }).click();
+  await direct.waitForURL(
+    (url) =>
+      url.searchParams.get("objeto") === "cobertura-28.1" && !url.searchParams.has("revisao"),
+  );
+  await stable(direct);
+  assert.equal((await camera(direct)).camera, readerEye);
+  results.push(
+    "URL direta do leitor preserva seleção e câmera ao voltar à ficha; documentos privados pedem autenticação.",
+  );
+  await direct.close();
   const mobile = await browser.newPage({
     viewport: { width: 390, height: 844 },
     isMobile: true,
@@ -195,6 +296,29 @@ try {
   results.push(
     "Pinça mantém a cena. Em 390 × 844 a ficha permanece selecionável, sem transbordamento e com X ≥44 px.",
   );
+  await mobile.getByRole("button", { name: "Fechar ficha" }).click();
+  await mobile.getByRole("button", { name: "Planta", exact: true }).click();
+  await mobile.locator("canvas[data-mode=planta]").waitFor();
+  await mobile.getByRole("button", { name: "Pátio", exact: true }).click();
+  await mobile.locator("canvas[data-mode=patio]").waitFor();
+  assert(await mobile.getByRole("button", { name: "Avançar" }).isVisible());
+  await mobile.getByRole("button", { name: "Ver toda a unidade" }).click();
+  await mobile.locator("canvas[data-mode=angular]").waitFor();
+  assert(await mobile.getByRole("img", { name: "Minimapa com norte para cima" }).isVisible());
+  await mobile.getByRole("button", { name: "Camadas", exact: true }).click();
+  await mobile.getByRole("checkbox", { name: "Linhas de vida" }).check();
+  await mobile.getByRole("button", { name: "Fechar camadas" }).click();
+  assert(await mobile.locator(".ca-legend").getByText("Montada com aditivo").isVisible());
+  await capture(mobile, "legenda-lvhf");
+  await mobile.setViewportSize({ width: 320, height: 720 });
+  assert(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  assert.equal(
+    await mobile
+      .locator(".ca-modes img")
+      .evaluateAll((images) => images.filter((img) => img.complete && img.naturalWidth > 0).length),
+    3,
+  );
+  results.push("No celular, Planta, Pátio, minimapa, visão geral e camada LVHF seguem acessíveis.");
   const plain = await browser.newPage();
   await plain.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;

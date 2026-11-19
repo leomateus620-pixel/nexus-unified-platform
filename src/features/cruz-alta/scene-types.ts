@@ -19,6 +19,8 @@ export interface CruzPart {
   rise: number;
   base?: number;
   roof: "flat" | "gable" | "arc" | "mono" | "silo" | "tank";
+  /** Optional piecewise section across a roof, from low to high profile coordinate t. */
+  roofSection?: readonly (readonly [t: number, y: number])[];
   /** Ridge / longitudinal unit vector in the XZ plane. */
   axis?: GroundPoint;
   layer?: "equipamentos" | "edificacoes";
@@ -28,15 +30,18 @@ export interface CruzPart {
 export interface CruzLine {
   id: string;
   points: GroundPoint[];
-  status: "montada" | "a-montar" | "fora";
+  status: "montada" | "montada-aditivo" | "a-montar" | "fora";
   y?: number;
 }
 export interface CruzArea {
   /** Silhueta observada do entorno. O vínculo patrimonial continua pendente. */
   mass?: { roof: "arc" | "gable" | "mono" | "flat"; eave: number; rise: number };
+  /** Fisionomia aparente nas tomadas aéreas. Espécies e alturas individuais não cadastradas. */
+  vegetation?: "talhao" | "bosque";
   kind: "via" | "ferrovia" | "vegetacao" | "agua" | "patio" | "vizinhanca";
   footprint: GroundPoint[];
 }
 export type SceneLayer = "edificacoes" | "equipamentos" | "entorno" | "nomes" | "lvhf";
 export type SceneLayers = Record<SceneLayer, boolean>;
 export type CameraMode = "angular" | "planta" | "patio";
+export const DAYLIGHT_EXPOSURE = 1.0;

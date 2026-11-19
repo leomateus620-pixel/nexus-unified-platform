@@ -26,6 +26,10 @@ const orgId = "abab473b-8baa-4781-aed2-c1243338af65";
 const unitId = "a9f6603b-6497-8e9e-822a-dfc860510c1a";
 const clientId = "c3d779b6-c407-8ab4-8545-6bdfd6068013";
 const docId = "f618cb75-19de-4601-87d5-5fcc868af637";
+const drawingId = "b99c41ea-db27-4a9a-aae5-1ccf1a6d16e2";
+const drawingRevision = "b0faeab4-61e6-42db-a063-11ef9586b4c1";
+const drawingFile = "e60ce8ec-0132-4b30-8dcd-d65ab41509a0";
+const drawingTitle = "Prancha de montagem de teste";
 const candidateId = "d4b08715-705d-4c21-a90b-e6c7a27f170a";
 const orphanId = "a5259a69-5a18-4463-ae30-3bcbd42c4d74";
 const galleryRoot = "fixture-rdo-root";
@@ -122,7 +126,37 @@ pdf.addPage().drawText("Arquivo de teste local - pagina 1", { x: 70, y: 760, siz
 pdf.addPage().drawText("Evidencia de teste local - pagina 2", { x: 70, y: 760, size: 17 });
 const bytes = Buffer.from(await pdf.save());
 const digest = createHash("sha256").update(bytes).digest("hex");
-const trace = { ids: [], decisions: [], errors: [], rdoMedia: [] };
+const trace = { ids: [], decisions: [], errors: [], rdoMedia: [], signed: [], timing: {} };
+const sheetGate = Promise.withResolvers();
+const listingGate = Promise.withResolvers();
+const listingStarted = Promise.withResolvers();
+let delayInitialPanel = false;
+let delayedOriginal;
+let denyDrawing = false;
+
+async function withDeadline(promise, label) {
+  let timeout;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(label)), 15_000);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function waitForPdfPage(page, number) {
+  await page.locator(".nr-actions").getByText(`Página ${number} de 2`, { exact: true }).waitFor();
+  await page.waitForFunction((number) => {
+    const canvas = document.querySelector(
+      `.ca-drawer canvas[aria-label^="Página ${number} do PDF"]`,
+    );
+    return canvas?.width > 300 && canvas?.height > 150;
+  }, number);
+}
 
 const folderMime = "application/vnd.google-apps.folder";
 const launchedSubfolder = {
@@ -261,6 +295,12 @@ const server = http.createServer(async (req, res) => {
     if (!photo) return json({}, 404);
     if (url.searchParams.get("alt") !== "media") return json(photo);
     trace.rdoMedia.push(id);
+    if (delayedOriginal?.id === id) {
+      const pending = delayedOriginal;
+      delayedOriginal = undefined;
+      pending.started.resolve();
+      await pending.gate.promise;
+    }
     res.writeHead(200, { "content-type": "image/png", "content-length": photoBytes.length });
     return res.end(photoBytes);
   }
@@ -273,10 +313,10 @@ const server = http.createServer(async (req, res) => {
     return res.end();
   }
   if (path.startsWith("/storage/v1/object/sign/")) {
-    if (req.method === "POST")
-      return json({
-        signedURL: "/object/sign/nexus-cruz-alta-laudos/" + digest + ".pdf?token=isolated-fixture",
-      });
+    if (req.method === "POST") {
+      trace.signed.push(path);
+      return json({ signedURL: path.replace("/storage/v1", "") + "?token=isolated-fixture" });
+    }
     res.writeHead(200, {
       "content-type": "application/pdf",
       "content-length": bytes.length,
@@ -311,7 +351,8 @@ const server = http.createServer(async (req, res) => {
   const params = await body(req);
   trace.ids.push(rpc);
   if (rpc === "ca_estado") return json({ provisionada: true, pode_provisionar: false });
-  if (rpc === "ca_ficha")
+  if (rpc === "ca_ficha") {
+    if (delayInitialPanel && params.p_chave === "cobertura-11") await sheetGate.promise;
     return json({
       id: docId,
       chave: params.p_chave,
@@ -327,9 +368,52 @@ const server = http.createServer(async (req, res) => {
       atualizado_por: userId,
       atributos: {},
       historico: [],
-      documentos: [],
+      documentos:
+        params.p_chave === "cobertura-11"
+          ? [
+              {
+                id: drawingId,
+                titulo: drawingTitle,
+                escopo: "individual",
+                objeto: "cobertura-11",
+                version: 1,
+                descricao: "Prancha privada do fixture local.",
+                pode_corrigir: true,
+                vigente_id: drawingRevision,
+                revisoes: [
+                  {
+                    id: drawingRevision,
+                    rotulo: "03",
+                    data: "2026-11-12",
+                    arquivo_id: drawingFile,
+                    mime: "application/pdf",
+                  },
+                ],
+              },
+            ]
+          : [],
     });
+  }
+  if (
+    rpc === "ca_previa" &&
+    params.p_chave === "cobertura-11" &&
+    params.p_doc === drawingId &&
+    params.p_rev === drawingRevision
+  ) {
+    if (denyDrawing) return json({ code: "42501", message: "Acesso revogado." }, 403);
+    return json({
+      arquivo_id: drawingFile,
+      caminho: digest + ".pdf",
+      mime: "application/pdf",
+      sha256: digest,
+      tamanho: bytes.length,
+    });
+  }
   if (rpc === "ca_inspecao_rdo_summary") {
+    if (delayInitialPanel && params.p_chave === "cobertura-11") {
+      listingStarted.resolve();
+      await listingGate.promise;
+    }
     return json(
       photoFolders.filter(
         ({ code }) =>
@@ -447,6 +531,42 @@ try {
     reducedMotion: "reduce",
   });
   await guest.goto(map);
+  const mapCanvas = guest.locator("canvas[data-camera]");
+  await mapCanvas.waitFor();
+  const marker = guest.locator(".ca-labels button[data-label]:visible").first();
+  await marker.waitFor();
+  const markerId = await marker.getAttribute("data-label");
+  assert.equal(
+    await marker.getAttribute("title"),
+    (await marker.locator(".ca-map-marker-title").textContent()).trim(),
+  );
+  assert.equal(await marker.locator("img").count(), 1);
+  await guest.screenshot({ path: folder + "/08-legendas.png" });
+  const markerControl = guest.locator(`.ca-labels button[data-label="${markerId}"]`);
+  await markerControl.press("Enter");
+  await guest.waitForURL((url) => url.searchParams.get("objeto") === markerId);
+  const guestClose = guest.getByRole("button", { name: "Fechar ficha" });
+  assert(await guestClose.evaluate((button) => document.activeElement === button));
+  await guest.keyboard.press("Escape");
+  await guest.waitForURL((url) => !url.searchParams.has("objeto"));
+  await guest.waitForFunction(
+    (id) =>
+      document.activeElement?.getAttribute("data-label") === id ||
+      document.activeElement?.matches(".ca-search input"),
+    markerId,
+  );
+  const fullscreenButton = guest.getByRole("button", { name: "Tela cheia da unidade" });
+  const initialCanvas = await mapCanvas.elementHandle();
+  const beforeFullscreen = await mapCanvas.getAttribute("data-camera");
+  await fullscreenButton.click();
+  const exitUnit = guest.getByRole("button", { name: "Sair da tela cheia da unidade" });
+  await exitUnit.waitFor();
+  await guest.waitForFunction(() => document.fullscreenElement?.matches(".ca-workspace"));
+  assert(await mapCanvas.evaluate((canvas, original) => canvas === original, initialCanvas));
+  assert.equal(await mapCanvas.getAttribute("data-camera"), beforeFullscreen);
+  await exitUnit.click();
+  await fullscreenButton.waitFor();
+  assert.equal(await guest.evaluate(() => document.fullscreenElement), null);
   await guest.getByRole("button", { name: "Camadas", exact: true }).click();
   await guest.waitForSelector(".ca-options");
   assert.equal(await guest.getByRole("checkbox", { name: "Laudos e inspeções" }).count(), 0);
@@ -486,7 +606,18 @@ try {
     if (msg.type() === "error") trace.errors.push(msg.text());
   });
   page.setDefaultTimeout(30000);
+  delayInitialPanel = true;
+  const selectedAt = performance.now();
   await page.goto(map + "?objeto=cobertura-11");
+  await withDeadline(listingStarted.promise, "A galeria esperou pela resposta da ficha.");
+  trace.timing.listingStartedMs = Math.round(performance.now() - selectedAt);
+  sheetGate.resolve();
+  const drawing = page.getByRole("button", { name: /Revisão 03/ });
+  await drawing.waitFor();
+  trace.timing.documentReadyMs = Math.round(performance.now() - selectedAt);
+  assert.equal(await page.getByRole("button", { name: /Abrir foto/ }).count(), 0);
+  listingGate.resolve();
+  delayInitialPanel = false;
   await page.getByRole("button", { name: "Camadas", exact: true }).click();
   const layer = page.getByRole("checkbox", { name: "Laudos e inspeções", exact: true });
   await layer.waitFor();
@@ -509,27 +640,64 @@ try {
   await launch.waitFor();
   await photos.getByText(privateTitle, { exact: true }).waitFor();
   await photos.getByText(/Lançadas no RDO/).waitFor();
+  const sheet = page.getByRole("complementary", { name: "Ficha do objeto" });
+  await sheet
+    .getByRole("group", { name: "Ir para uma seção" })
+    .getByRole("button", { name: "Fotos de montagem" })
+    .click();
+  assert(
+    await sheet
+      .getByRole("group", { name: "Galeria de montagem" })
+      .evaluate((section) => document.activeElement === section),
+  );
   assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 6);
   assert.equal(await photos.getByRole("link").count(), 0);
+  await launch.scrollIntoViewIfNeeded();
   await launch.locator("img[src^='blob:']").waitFor();
+  trace.timing.firstThumbnailMs = Math.round(performance.now() - selectedAt);
   assert(!trace.rdoMedia.includes("fixture-rdo-foto-11-7"));
+  const firstThumbnailRequests = trace.rdoMedia.filter(
+    (id) => id === "fixture-rdo-foto-11-1",
+  ).length;
   const previousPage = photos.getByRole("button", { name: "Página anterior de fotos" });
   const nextPage = photos.getByRole("button", { name: "Próxima página de fotos" });
   await nextPage.click();
   await photos.getByRole("button", { name: `Abrir foto ${launchedPhotos[6]}` }).waitFor();
   assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 1);
   await previousPage.click();
+  await launch.locator("img[src^='blob:']").waitFor();
+  assert.equal(
+    trace.rdoMedia.filter((id) => id === "fixture-rdo-foto-11-1").length,
+    firstThumbnailRequests,
+  );
   const initialMap = page.url();
   const initialPose = await page.locator(".ca-stage canvas").getAttribute("data-camera");
+  const heldPhoto = {
+    id: "fixture-rdo-foto-11-1",
+    started: Promise.withResolvers(),
+    gate: Promise.withResolvers(),
+  };
+  delayedOriginal = heldPhoto;
   await launch.click();
   const viewer = photos.getByRole("group", { name: "Visualizador de fotos" });
+  await withDeadline(heldPhoto.started.promise, "O original da foto não foi solicitado.");
+  const preview = viewer.locator(".ca-rdo-placeholder");
+  await preview.waitFor();
+  await preview.evaluate((image) => image.decode());
+  heldPhoto.gate.resolve();
   const displayed = viewer.getByRole("img", { name: launchedPhotos[0] });
   await displayed.waitFor();
   await displayed.evaluate((image) => image.decode());
+  assert.equal(await preview.count(), 0);
   const firstPhotoUrl = await displayed.getAttribute("src");
   assert(firstPhotoUrl?.startsWith("blob:"));
   assert(await viewer.getByRole("button", { name: "Foto anterior" }).isDisabled());
   await page.screenshot({ path: folder + "/06-galeria-rdo.png" });
+  await sheet.getByRole("button", { name: "Tela cheia da ficha" }).click();
+  assert.equal(await displayed.getAttribute("src"), firstPhotoUrl);
+  await page.screenshot({ path: folder + "/13-foto-tela-cheia.png" });
+  await sheet.getByRole("button", { name: "Sair da tela cheia da ficha" }).click();
+  await viewer.getByRole("button", { name: "Próxima foto" }).focus();
   await page.keyboard.press("ArrowRight");
   await viewer.getByRole("img", { name: launchedPhotos[1] }).waitFor();
   assert(await page.evaluate((url) => window.fixtureRevokedUrls.has(url), firstPhotoUrl));
@@ -539,6 +707,60 @@ try {
   assert.equal(page.url(), initialMap);
   assert.equal(await page.locator(".ca-stage canvas").getAttribute("data-camera"), initialPose);
   assert.equal(context.pages().length, 1);
+
+  const drawer = page.getByRole("complementary", { name: "Ficha do objeto" });
+  const standardWidth = (await drawer.boundingBox()).width;
+  const canvas = page.locator(".ca-stage canvas");
+  const retainedCanvas = await canvas.elementHandle();
+  await drawer.getByRole("button", { name: "Expandir ficha" }).click();
+  await drawer.getByRole("button", { name: "Reduzir ficha" }).waitFor();
+  assert((await drawer.boundingBox()).width > standardWidth + 170);
+  assert(await canvas.isVisible());
+  await drawer.locator(".ca-drawer-body").evaluate((element) => (element.scrollTop = 0));
+  await page.screenshot({ path: folder + "/09-ficha-expandida.png" });
+  await drawer.getByRole("button", { name: "Tela cheia da ficha" }).click();
+  await drawer.getByRole("button", { name: "Sair da tela cheia da ficha" }).waitFor();
+  assert.equal((await drawer.boundingBox()).width, 1440);
+  assert.equal(await page.locator(".ca-viewport-wrap").getAttribute("inert"), "");
+  assert(await canvas.evaluate((element, original) => element === original, retainedCanvas));
+  assert.equal(await canvas.getAttribute("data-camera"), initialPose);
+  assert.equal(page.url(), initialMap);
+  await page.screenshot({ path: folder + "/10-ficha-tela-cheia.png" });
+  const signedBeforeDrawing = trace.signed.length;
+  const drawingStartedAt = performance.now();
+  await drawing.click();
+  await waitForPdfPage(page, 1);
+  trace.timing.drawingFirstPageMs = Math.round(performance.now() - drawingStartedAt);
+  assert.equal(trace.signed.length - signedBeforeDrawing, 1);
+  assert.equal(await page.locator(".ca-drawer").evaluate((element) => element.offsetWidth), 1440);
+  await page.screenshot({ path: folder + "/11-documento-tela-cheia.png" });
+  denyDrawing = true;
+  await page.clock.fastForward(31_000);
+  await page.getByText(/O acesso ao original mudou/).waitFor();
+  denyDrawing = false;
+  await page.keyboard.press("Escape");
+  await drawer.getByRole("button", { name: "Sair da tela cheia da ficha" }).waitFor();
+  assert(await drawing.evaluate((element) => element === document.activeElement));
+  await page.keyboard.press("Escape");
+  await drawer.getByRole("button", { name: "Reduzir ficha" }).waitFor();
+  await drawer.getByRole("button", { name: "Reduzir ficha" }).click();
+  assert.equal((await drawer.boundingBox()).width, standardWidth);
+  assert.equal(await canvas.getAttribute("data-camera"), initialPose);
+
+  await drawer.getByRole("button", { name: "Ficha técnica", exact: true }).click();
+  await drawer.getByRole("button", { name: "Editar", exact: true }).click();
+  await drawer.getByRole("button", { name: "Editar ficha", exact: true }).click();
+  const description = drawer.getByRole("textbox", { name: "Descrição", exact: true });
+  await description.fill("Alteração local ainda em edição.");
+  await drawer.getByRole("button", { name: "Expandir ficha" }).click();
+  await drawer.getByRole("button", { name: "Tela cheia da ficha" }).click();
+  assert.equal(await description.inputValue(), "Alteração local ainda em edição.");
+  await drawer.getByRole("button", { name: "Sair da tela cheia da ficha" }).click();
+  await drawer.getByRole("button", { name: "Reduzir ficha" }).click();
+  await drawer.getByRole("button", { name: "Cancelar", exact: true }).click();
+  await drawer.getByRole("button", { name: "Consulta", exact: true }).click();
+  await drawer.getByRole("button", { name: "Documentos", exact: true }).click();
+
   const search = page.getByRole("searchbox", { name: "Buscar setor, estrutura ou LVHF" });
   await search.fill("LAC " + fixtureSeal);
   await page.locator(".ca-browser").getByText(privateTitle, { exact: true }).waitFor();
@@ -568,11 +790,13 @@ try {
   await page.getByText("Restrição documental de teste local.", { exact: true }).waitFor();
   await page.screenshot({ path: folder + "/02-ficha.png" });
   const firstSource = page.locator(".ca-inspection-dates > div").first().getByRole("button");
+  const signedBeforeEvidence = trace.signed.length;
   await firstSource.click();
   await page.waitForURL(
     (url) => url.searchParams.get("evidencia") === docId && url.searchParams.get("pagina") === "2",
   );
-  await page.getByText("Página 2 de 2", { exact: true }).waitFor();
+  await waitForPdfPage(page, 2);
+  assert.equal(trace.signed.length - signedBeforeEvidence, 1);
   await page.screenshot({ path: folder + "/03-leitor-pagina-2.png" });
   await page.keyboard.press("Escape");
   await page.waitForURL((url) => !url.searchParams.has("evidencia"));
@@ -638,7 +862,7 @@ try {
   await page.waitForURL((url) => url.searchParams.get("objeto") === "lvhf-11");
   assert.equal(await camera.getAttribute("data-camera"), fromStructure);
   await page.locator(".ca-inspection-dates > div").first().getByRole("button").click();
-  await page.getByText("Página 2 de 2", { exact: true }).waitFor();
+  await waitForPdfPage(page, 2);
   await page.evaluate(async () => {
     const modulePath = "/src/integrations/supabase/client.ts";
     const { supabase } = await import(modulePath);
@@ -661,6 +885,9 @@ try {
     (session) => localStorage.setItem("sb-127-auth-token", JSON.stringify(session)),
     session,
   );
+  await mobileContext.addInitScript(() => {
+    Object.defineProperty(document, "fullscreenEnabled", { value: false });
+  });
   const mobile = await mobileContext.newPage();
   mobile.setDefaultTimeout(30000);
   await mobile.goto(map + "?objeto=lvhf-11&aba=ficha");
@@ -670,6 +897,23 @@ try {
     .getByRole("heading", { name: privateTitle, exact: true })
     .waitFor();
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
+  await mobile.getByRole("button", { name: "Tela cheia da unidade" }).tap();
+  await mobile.locator(".ca-workspace.ca-window-fullscreen").waitFor();
+  assert.equal(await mobile.evaluate(() => document.fullscreenElement), null);
+  await mobile.getByRole("button", { name: "Sair da tela cheia da unidade" }).tap();
+  assert.equal(await mobile.locator(".ca-workspace.ca-window-fullscreen").count(), 0);
+  await mobile.getByRole("button", { name: "Recolher ao resumo" }).tap();
+  assert(!(await mobile.locator(".ca-drawer-body").isVisible()));
+  await mobile.getByRole("button", { name: "Abrir meia ficha" }).tap();
+  const halfHeight = (await mobile.locator(".ca-drawer").boundingBox()).height;
+  await mobile.getByRole("button", { name: "Expandir ficha" }).tap();
+  assert((await mobile.locator(".ca-drawer").boundingBox()).height > halfHeight + 180);
+  await mobile.getByRole("button", { name: "Tela cheia da ficha" }).tap();
+  assert.equal((await mobile.locator(".ca-drawer").boundingBox()).height, 844);
+  assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
+  await mobile.screenshot({ path: folder + "/12-ficha-tela-cheia-movel.png" });
+  await mobile.getByRole("button", { name: "Sair da tela cheia da ficha" }).tap();
+  await mobile.getByRole("button", { name: "Reduzir ficha" }).tap();
   const mobilePhoto = mobile.getByRole("button", { name: `Abrir foto ${refreshedPhoto}` });
   await mobilePhoto.waitFor();
   assert((await mobilePhoto.boundingBox())?.height >= 44);
@@ -683,10 +927,16 @@ try {
     .evaluate((section) => section.scrollIntoView({ block: "start" }));
   await mobile.screenshot({ path: folder + "/04-movel.png" });
   await mobile.locator(".ca-inspection-dates > div").first().getByRole("button").tap();
-  await mobile.getByText("Página 2 de 2", { exact: true }).waitFor();
+  await waitForPdfPage(mobile, 2);
   await mobile.getByRole("button", { name: "Fechar leitor" }).tap();
   await mobile.waitForURL((url) => !url.searchParams.has("evidencia"));
   trace.steps = [
+    "interactive-structure-labels-keyboard-focus",
+    "native-and-fallback-workspace-fullscreen",
+    "wide-and-full-panel-keeps-camera-url-and-form",
+    "parallel-photo-listing-and-document-shelf",
+    "single-initial-document-and-evidence-authorization",
+    "document-permission-change-clears-reader",
     "guest-private",
     "layer-default-toggle",
     "exact-tag-layout-seal",
@@ -700,6 +950,7 @@ try {
     "related-structure",
     "rdo-private-photos-current-tag",
     "rdo-lazy-gallery-pagination",
+    "rdo-reuses-preview-and-shows-it-while-original-loads",
     "rdo-photo-keyboard-viewer-with-camera-preserved",
     "rdo-revokes-photo-blob",
     "rdo-gallery-automatic-refresh-added-replaced-deleted",
@@ -710,6 +961,8 @@ try {
   console.log("Evidências locais de teste em " + folder);
   console.log(JSON.stringify(trace, null, 2));
 } finally {
+  sheetGate.resolve();
+  listingGate.resolve();
   await browser?.close();
   vite.kill();
   server.closeAllConnections();

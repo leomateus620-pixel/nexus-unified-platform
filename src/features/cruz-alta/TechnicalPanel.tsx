@@ -4,8 +4,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowLeft,
+  Camera,
   Check,
   ChevronRight,
+  ClipboardList,
+  FileCheck2,
   FileImage,
   FileText,
   Link2,
@@ -37,6 +40,8 @@ import {
 import { describeFile, operationId, transferFile } from "./upload";
 import { InspectionSection, InspectionSourcesReader, RelatedInspections } from "./InspectionSheet";
 import { RdoPhotoGallery } from "./RdoPhotoGallery";
+import { CruzAltaPdf, prepareCruzAltaPdf } from "./pdf-preview";
+import { useRdoPhotos } from "./use-rdo-photos";
 import type { CaInspectionLine, CaInspectionSummary } from "./inspection-domain";
 import {
   inspectionCatalog,
@@ -45,9 +50,6 @@ import {
   technicalTitle,
 } from "./inspection-display";
 
-const Pdf = lazy(() =>
-  import("@/features/nr/NrOriginalPreview").then((m) => ({ default: m.NrOriginalPreview })),
-);
 const Import = lazy(() => import("./ImportInventory"));
 const scopeLabels = {
   individual: "Do componente selecionado",
@@ -91,6 +93,8 @@ export default function TechnicalPanel(props: Props) {
     [error, setError] = useState("");
   const scope = { organization_id: cruzAlta.org, chave: object.id };
   const key = ["cruz-alta", user, scope.organization_id];
+  const reading = !!(search.revisao || search.documento || search.evidencia);
+  const photos = useRdoPhotos(user, object, !reading);
   const state = useQuery({
     queryKey: [...key, "estado"],
     queryFn: ({ signal }) => getState({ data: { organization_id: scope.organization_id }, signal }),
@@ -147,11 +151,16 @@ export default function TechnicalPanel(props: Props) {
       </>
     );
   if (!sheet.data) return <p role="status">Carregando ficha…</p>;
-  const reading = !!(search.revisao || search.documento || search.evidencia);
   return (
     <>
       <div hidden={reading}>
-        <SheetContent {...props} scope={scope} sheet={sheet.data} refresh={refresh} />
+        <SheetContent
+          {...props}
+          scope={scope}
+          sheet={sheet.data}
+          refresh={refresh}
+          photos={photos}
+        />
       </div>
       {search.evidencia ? (
         <InspectionSourcesReader
@@ -195,15 +204,21 @@ function Reader({
   const preview = useServerFn(caPrevia);
   const doc = docs.find((d) => d.id === search.documento),
     rev = doc?.revisoes.find((r) => r.id === search.revisao);
-  const renew = () => preview({ data: { ...scope, documento_id: doc!.id, revisao_id: rev!.id } });
+  const renew = (signal: AbortSignal) =>
+    preview({ data: { ...scope, documento_id: doc!.id, revisao_id: rev!.id }, signal });
   const q = useQuery({
     queryKey: ["cruz-alta-preview", user, scope, doc?.id, rev?.id],
-    queryFn: renew,
+    queryFn: ({ signal }) => renew(signal),
     enabled: !!rev,
     retry: false,
     gcTime: 0,
-    refetchInterval: 30000,
+    refetchOnWindowFocus: false,
+    refetchInterval: (query) => (query.state.data?.mime.startsWith("image/") ? 30_000 : false),
   });
+  const pdfRevision = rev?.mime === "application/pdf";
+  useEffect(() => {
+    if (pdfRevision) prepareCruzAltaPdf();
+  }, [pdfRevision]);
   if (!doc || !rev) return feedback("Documento ou revisão indisponível para este objeto.");
   return (
     <>
@@ -238,9 +253,13 @@ function Reader({
         <p role="status">Preparando prévia privada…</p>
       ) : q.data.mime === "application/pdf" ? (
         <Suspense fallback={<p>Preparando leitor…</p>}>
-          <Pdf
+          <CruzAltaPdf
             org={scope.organization_id}
             url={q.data.url}
+            initialAuthorizedUntil={Math.min(
+              Date.parse(q.data.expira_em),
+              q.dataUpdatedAt + 45_000,
+            )}
             file={{
               id: q.data.arquivo_id,
               nome: doc.titulo,
@@ -253,18 +272,62 @@ function Reader({
           />
         </Suspense>
       ) : q.data.mime.startsWith("image/") ? (
-        <img
-          className="ca-reader-image"
-          src={q.data.url}
-          alt={doc.titulo}
-          referrerPolicy="no-referrer"
-          onError={(e) => {
-            e.currentTarget.alt = "Prévia de imagem indisponível. Feche e reabra o leitor.";
-          }}
+        <ReaderImage
+          key={`${q.data.arquivo_id}/${q.data.sha256}`}
+          url={q.data.url}
+          title={doc.titulo}
+          refresh={async () => (await q.refetch()).data?.url}
         />
       ) : (
         <p>Prévia indisponível para este formato.</p>
       )}
+    </>
+  );
+}
+
+function ReaderImage({
+  url,
+  title,
+  refresh,
+}: {
+  url: string;
+  title: string;
+  refresh: () => Promise<string | undefined>;
+}) {
+  const [src, setSrc] = useState(url);
+  const [status, setStatus] = useState<"loading" | "ready" | "failed" | "retrying">("loading");
+  if (status === "retrying") return <p role="status">Preparando prévia privada…</p>;
+  if (status === "failed") {
+    return (
+      <>
+        {feedback("Prévia de imagem indisponível.")}
+        <button
+          className="ca-action"
+          type="button"
+          onClick={async () => {
+            setStatus("retrying");
+            const next = await refresh();
+            if (next) setSrc(next);
+            setStatus(next ? "loading" : "failed");
+          }}
+        >
+          Tentar novamente
+        </button>
+      </>
+    );
+  }
+  return (
+    <>
+      {status === "loading" && <p role="status">Carregando imagem…</p>}
+      <img
+        className="ca-reader-image"
+        src={src}
+        alt={title}
+        decoding="async"
+        referrerPolicy="no-referrer"
+        onLoad={() => setStatus("ready")}
+        onError={() => setStatus("failed")}
+      />
     </>
   );
 }
@@ -274,9 +337,27 @@ function formatDate(value: string | null) {
 function revisionLabel(label: string) {
   return label === "Original" ? label : "Revisão " + label;
 }
+
+function focusSection(section: HTMLDivElement | null) {
+  section?.focus({ preventScroll: true });
+  section?.scrollIntoView({ block: "start", inline: "nearest" });
+}
+
+const objectsById = new Map(objects.map((object) => [object.id, object]));
+
+function relatedInspectionItems(ancestor: string, lines: CaInspectionLine[]) {
+  return lines.flatMap((line) => {
+    const object = objectsById.get(line.key);
+    let parent = object?.parent;
+    while (parent && parent !== ancestor) parent = objectsById.get(parent)?.parent;
+    return object && parent === ancestor ? [{ object, line }] : [];
+  });
+}
+
 function SheetContent({
   scope,
   sheet,
+  photos,
   refresh,
   object,
   user,
@@ -289,7 +370,12 @@ function SheetContent({
   inspectionsPending,
   refreshInspections,
   archive,
-}: Props & { scope: Scope; sheet: Sheet; refresh: () => Promise<void> }) {
+}: Props & {
+  scope: Scope;
+  sheet: Sheet;
+  photos: ReturnType<typeof useRdoPhotos>;
+  refresh: () => Promise<void>;
+}) {
   const [form, setForm] = useState<"anexar" | "vincular" | "editar" | "importar" | null>(null);
   const [revisionTarget, setRevisionTarget] = useState<DocumentRow | null>(null);
   const [correction, setCorrection] = useState<DocumentRow | null>(null);
@@ -298,6 +384,8 @@ function SheetContent({
   const [unlinkError, setUnlinkError] = useState("");
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
+  const photosSection = useRef<HTMLDivElement>(null);
+  const inspectionsSection = useRef<HTMLDivElement>(null);
   const remove = useServerFn(caDesvincular);
   const closeForm = () => {
     setForm(null);
@@ -352,41 +440,78 @@ function SheetContent({
   const isForm = !!(form || correction);
   const canEdit =
     sheet.pode_editar || sheet.pode_publicar || sheet.documentos.some((d) => d.pode_corrigir);
+  const related =
+    inspections && (object.kind === "estrutura" || object.kind === "componente")
+      ? relatedInspectionItems(object.id, inspections.lines)
+      : [];
+  const showInspection = !docsTab && (object.kind === "lvhf" || object.id === "unidade");
+  const showPhotos =
+    object.kind === "estrutura" || object.kind === "componente" || object.kind === "lvhf";
+  const hasPhotoLinks =
+    showPhotos &&
+    !!photos.data?.photos.length &&
+    !photos.error?.message.startsWith("Unauthorized:");
+  const hasInspectionLinks = showInspection || related.length > 0;
   return (
     <section className="ca-technical">
       {!isForm && (
         <>
           {editedTitle && <h3>{editedTitle}</h3>}
-          <div className="ca-tabs" role="group" aria-label="Conteúdo da ficha">
-            <button
-              aria-pressed={docsTab}
-              onClick={() => change({ ...search, aba: "documentos" }, true)}
-            >
-              <FileText size={16} aria-hidden="true" />
-              Documentos
-            </button>
-            <button
-              aria-pressed={!docsTab}
-              onClick={() => change({ ...search, aba: "ficha" }, true)}
-            >
-              Ficha técnica
-            </button>
-          </div>
-          {canEdit && (
-            <div className="ca-work-mode" role="group" aria-label="Modo da ficha">
+          <div className="ca-sheet-nav">
+            <div className="ca-tabs" role="group" aria-label="Conteúdo da ficha">
               <button
                 type="button"
-                aria-pressed={!editing}
-                onClick={() => {
-                  setEditing(false);
-                  setUnlink(null);
-                }}
+                aria-pressed={docsTab}
+                onClick={() => change({ ...search, aba: "documentos" }, true)}
               >
-                Consulta
+                <FileText size={16} aria-hidden="true" />
+                Documentos
               </button>
-              <button type="button" aria-pressed={editing} onClick={() => setEditing(true)}>
-                <Pencil size={14} aria-hidden="true" /> Editar
+              <button
+                type="button"
+                aria-pressed={!docsTab}
+                onClick={() => change({ ...search, aba: "ficha" }, true)}
+              >
+                <ClipboardList size={16} aria-hidden="true" />
+                Ficha técnica
               </button>
+            </div>
+          </div>
+          {(canEdit || hasPhotoLinks || hasInspectionLinks) && (
+            <div className="ca-sheet-utilities">
+              {canEdit && (
+                <div className="ca-work-mode" role="group" aria-label="Modo da ficha">
+                  <button
+                    type="button"
+                    aria-pressed={!editing}
+                    onClick={() => {
+                      setEditing(false);
+                      setUnlink(null);
+                    }}
+                  >
+                    Consulta
+                  </button>
+                  <button type="button" aria-pressed={editing} onClick={() => setEditing(true)}>
+                    <Pencil size={14} aria-hidden="true" /> Editar
+                  </button>
+                </div>
+              )}
+              {(hasPhotoLinks || hasInspectionLinks) && (
+                <div className="ca-sheet-shortcuts" role="group" aria-label="Ir para uma seção">
+                  {hasPhotoLinks && (
+                    <button type="button" onClick={() => focusSection(photosSection.current)}>
+                      <Camera size={15} aria-hidden="true" />
+                      Fotos de montagem
+                    </button>
+                  )}
+                  {hasInspectionLinks && (
+                    <button type="button" onClick={() => focusSection(inspectionsSection.current)}>
+                      <FileCheck2 size={15} aria-hidden="true" />
+                      Laudos e inspeções
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </>
@@ -396,184 +521,210 @@ function SheetContent({
           {note}
         </p>
       )}
-      {!isForm &&
-        (object.kind === "estrutura" || object.kind === "componente" || object.kind === "lvhf") && (
-          <RdoPhotoGallery object={object} user={user} inspections={catalog} />
-        )}
-      {!isForm && inspections && (object.kind === "estrutura" || object.kind === "componente") && (
-        <RelatedInspections object={object.id} lines={inspections.lines} onOpen={openInspection} />
-      )}
-      {correction ? (
-        <CorrectDocument
-          scope={scope}
-          doc={correction}
-          onCancel={() => setCorrection(null)}
-          onSuccess={success}
-        />
-      ) : form === "editar" ? (
-        <EditSheet sheet={sheet} scope={scope} onCancel={closeForm} onSuccess={success} />
-      ) : form === "anexar" || form === "vincular" ? (
-        <Attach
-          key={form + revisionTarget?.id}
-          mode={form}
-          target={revisionTarget}
-          scope={scope}
-          user={user}
-          title={objectTitle}
-          onCancel={closeForm}
-          onSuccess={success}
-        />
-      ) : form === "importar" ? (
-        <Suspense fallback={<p>Carregando inventário…</p>}>
-          <Import
-            user={user}
-            onClose={() => {
-              closeForm();
-              void refresh();
-            }}
-          />
-        </Suspense>
-      ) : docsTab ? (
-        <>
-          {editing && sheet.pode_publicar && (
-            <div className="ca-actions ca-document-tools">
-              <button className="ca-action ca-primary" onClick={() => setForm("anexar")}>
-                <Upload size={16} aria-hidden="true" />
-                Enviar documento
-              </button>
-              <button className="ca-action" onClick={() => setForm("vincular")}>
-                <Link2 size={16} aria-hidden="true" />
-                Vincular existente
-              </button>
-            </div>
-          )}
-          <DocumentShelf
-            docs={sheet.documentos}
-            inspections={catalog}
-            owner={object.id}
-            editing={editing}
-            canPublish={sheet.pode_publicar}
-            canUnlink={sheet.pode_editar}
-            confirm={(doc) =>
-              doc.id === unlink?.id && doc.escopo === unlink.escopo ? confirmUnlink : null
-            }
-            open={openReader}
-            correct={setCorrection}
-            revise={(doc) => {
-              setRevisionTarget(doc);
-              setForm("anexar");
-            }}
-            unlink={(doc) => {
-              setUnlink(doc);
-              setUnlinkError("");
-            }}
-          />
-          {!archive && (
-            <div className="ca-actions">
-              <Link
-                className="ca-parent"
-                to={cruzAlta.rota}
-                search={{ vista: "acervo", objeto: object.id, aba: "documentos" }}
-              >
-                Consultar no acervo
-              </Link>
-              {sheet.pode_editar && (
-                <Link
-                  className="ca-parent"
-                  to="/nr-35/$"
-                  params={{ _splat: "documentos" }}
-                  search={{
-                    cliente: cruzAlta.cliente,
-                    unidade: cruzAlta.unidade,
-                    escopo: "unidade",
-                    objeto: object.id,
-                    painel: "acervo",
-                  }}
-                >
-                  Acervo NR-35
-                </Link>
-              )}
-            </div>
-          )}
-          {editing && sheet.pode_publicar && object.id === "unidade" && (
-            <button className="ca-action" onClick={() => setForm("importar")}>
-              Conciliar inventário técnico
-            </button>
-          )}
-        </>
-      ) : (
-        <>
-          {(object.kind === "lvhf" || object.id === "unidade") && (
-            <InspectionSection
-              key={object.id}
-              object={object.id}
-              summary={inspections}
-              pending={inspectionsPending}
-              onOpen={readInspection}
-              refresh={refreshInspections}
+      <div className="ca-sheet-layout">
+        <div className="ca-sheet-main">
+          {correction ? (
+            <CorrectDocument
+              scope={scope}
+              doc={correction}
+              onCancel={() => setCorrection(null)}
+              onSuccess={success}
             />
-          )}
-          <div className="ca-detail-section">
-            <h3>Descrição</h3>
-            <p>{sheet.descricao || "Descrição ainda não informada."}</p>
-            {(object.code || object.status) && (
-              <dl className="ca-metadata">
-                {object.code && (
-                  <div>
-                    <dt>Código técnico</dt>
-                    <dd>{object.code}</dd>
-                  </div>
+          ) : form === "editar" ? (
+            <EditSheet sheet={sheet} scope={scope} onCancel={closeForm} onSuccess={success} />
+          ) : form === "anexar" || form === "vincular" ? (
+            <Attach
+              key={form + revisionTarget?.id}
+              mode={form}
+              target={revisionTarget}
+              scope={scope}
+              user={user}
+              title={objectTitle}
+              onCancel={closeForm}
+              onSuccess={success}
+            />
+          ) : form === "importar" ? (
+            <Suspense fallback={<p>Carregando inventário…</p>}>
+              <Import
+                user={user}
+                onClose={() => {
+                  closeForm();
+                  void refresh();
+                }}
+              />
+            </Suspense>
+          ) : docsTab ? (
+            <>
+              {editing && sheet.pode_publicar && (
+                <div className="ca-actions ca-document-tools">
+                  <button className="ca-action ca-primary" onClick={() => setForm("anexar")}>
+                    <Upload size={16} aria-hidden="true" />
+                    Enviar documento
+                  </button>
+                  <button className="ca-action" onClick={() => setForm("vincular")}>
+                    <Link2 size={16} aria-hidden="true" />
+                    Vincular existente
+                  </button>
+                </div>
+              )}
+              <DocumentShelf
+                docs={sheet.documentos}
+                inspections={catalog}
+                owner={object.id}
+                editing={editing}
+                canPublish={sheet.pode_publicar}
+                canUnlink={sheet.pode_editar}
+                confirm={(doc) =>
+                  doc.id === unlink?.id && doc.escopo === unlink.escopo ? confirmUnlink : null
+                }
+                open={openReader}
+                correct={setCorrection}
+                revise={(doc) => {
+                  setRevisionTarget(doc);
+                  setForm("anexar");
+                }}
+                unlink={(doc) => {
+                  setUnlink(doc);
+                  setUnlinkError("");
+                }}
+              />
+              {!archive && (
+                <div className="ca-actions">
+                  <Link
+                    className="ca-parent"
+                    to={cruzAlta.rota}
+                    search={{ vista: "acervo", objeto: object.id, aba: "documentos" }}
+                  >
+                    Consultar no acervo
+                  </Link>
+                  {sheet.pode_editar && (
+                    <Link
+                      className="ca-parent"
+                      to="/nr-35/$"
+                      params={{ _splat: "documentos" }}
+                      search={{
+                        cliente: cruzAlta.cliente,
+                        unidade: cruzAlta.unidade,
+                        escopo: "unidade",
+                        objeto: object.id,
+                        painel: "acervo",
+                      }}
+                    >
+                      Acervo NR-35
+                    </Link>
+                  )}
+                </div>
+              )}
+              {editing && sheet.pode_publicar && object.id === "unidade" && (
+                <button className="ca-action" onClick={() => setForm("importar")}>
+                  Conciliar inventário técnico
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="ca-detail-section">
+                <h3>Descrição</h3>
+                <p>{sheet.descricao || "Descrição ainda não informada."}</p>
+                {(object.code || object.status) && (
+                  <dl className="ca-metadata">
+                    {object.code && (
+                      <div>
+                        <dt>Código técnico</dt>
+                        <dd>{object.code}</dd>
+                      </div>
+                    )}
+                    {object.status && (
+                      <div>
+                        <dt>Situação na revisão 56</dt>
+                        <dd>{object.status}</dd>
+                      </div>
+                    )}
+                  </dl>
                 )}
-                {object.status && (
-                  <div>
-                    <dt>Situação na revisão 56</dt>
-                    <dd>{object.status}</dd>
-                  </div>
-                )}
-              </dl>
-            )}
-            <h3>Observações</h3>
-            <p>{sheet.observacoes || "Nenhuma observação registrada."}</p>
-          </div>
-          {Object.entries(sheet.atributos ?? {}).length > 0 && (
-            <section className="ca-detail-section">
-              <h3>Dimensões e fontes</h3>
-              <dl className="ca-metadata">
-                {Object.entries(sheet.atributos).map(([key, value]) => (
-                  <div key={key}>
-                    <dt>{key}</dt>
-                    <dd>
-                      {value.valor === null
-                        ? "Pendente"
-                        : value.valor.toLocaleString("pt-BR") + " " + value.unidade}
-                    </dd>
-                    <dd className="ca-hint">
-                      {value.fonte} · {value.confirmacao}
-                    </dd>
-                  </div>
+                <h3>Observações</h3>
+                <p>{sheet.observacoes || "Nenhuma observação registrada."}</p>
+              </div>
+              {Object.entries(sheet.atributos ?? {}).length > 0 && (
+                <section className="ca-detail-section">
+                  <h3>Dimensões e fontes</h3>
+                  <dl className="ca-metadata">
+                    {Object.entries(sheet.atributos).map(([key, value]) => (
+                      <div key={key}>
+                        <dt>{key}</dt>
+                        <dd>
+                          {value.valor === null
+                            ? "Pendente"
+                            : value.valor.toLocaleString("pt-BR") + " " + value.unidade}
+                        </dd>
+                        <dd className="ca-hint">
+                          {value.fonte} · {value.confirmacao}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              )}
+              {editing && sheet.pode_editar && (
+                <button className="ca-action ca-primary" onClick={() => setForm("editar")}>
+                  <Pencil size={14} aria-hidden="true" />
+                  Editar ficha
+                </button>
+              )}
+              <details>
+                <summary>Histórico da ficha</summary>
+                <p>
+                  Versão {sheet.version} · {formatDate(sheet.atualizado_em)}
+                </p>
+                {sheet.historico.map((h, i) => (
+                  <p key={i}>
+                    {formatDate(h.em)} · {h.comando.replaceAll("_", " ")}
+                  </p>
                 ))}
-              </dl>
-            </section>
+              </details>
+            </>
           )}
-          {editing && sheet.pode_editar && (
-            <button className="ca-action ca-primary" onClick={() => setForm("editar")}>
-              <Pencil size={14} aria-hidden="true" />
-              Editar ficha
-            </button>
-          )}
-          <details>
-            <summary>Histórico da ficha</summary>
-            <p>
-              Versão {sheet.version} · {formatDate(sheet.atualizado_em)}
-            </p>
-            {sheet.historico.map((h, i) => (
-              <p key={i}>
-                {formatDate(h.em)} · {h.comando.replaceAll("_", " ")}
-              </p>
-            ))}
-          </details>
-        </>
-      )}
+        </div>
+        {!isForm && (
+          <div className="ca-sheet-secondary">
+            {hasInspectionLinks && (
+              <div
+                key="inspecoes"
+                className="ca-sheet-jump-target"
+                ref={inspectionsSection}
+                role="group"
+                aria-label="Registros de inspeção"
+                tabIndex={-1}
+              >
+                {showInspection ? (
+                  <InspectionSection
+                    key={object.id}
+                    object={object.id}
+                    summary={inspections}
+                    pending={inspectionsPending}
+                    onOpen={readInspection}
+                    refresh={refreshInspections}
+                  />
+                ) : (
+                  <RelatedInspections items={related} onOpen={openInspection} />
+                )}
+              </div>
+            )}
+            {showPhotos && (
+              <div
+                key="fotos"
+                className="ca-sheet-jump-target"
+                ref={photosSection}
+                role="group"
+                aria-label="Galeria de montagem"
+                tabIndex={-1}
+              >
+                <RdoPhotoGallery object={object} photos={photos} inspections={catalog} />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -611,7 +762,7 @@ function DocumentShelf({
   const words = normalize(query.trim()).split(/\s+/);
   const names = (doc: DocumentRow) =>
     (doc.origens ?? [doc.objeto]).map((id) => {
-      const source = objects.find((object) => object.id === id);
+      const source = objectsById.get(id);
       return source ? technicalTitle(source, objectInspection(source, inspections)) : id;
     });
   const filtered = docs.filter((doc) => {
@@ -635,20 +786,18 @@ function DocumentShelf({
     );
   return (
     <div className="ca-document-shelf">
-      {docs.length > 3 && (
-        <label className="ca-doc-search">
-          <span>Buscar no acervo do objeto</span>
-          <span>
-            <Search size={16} aria-hidden="true" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Título, objeto ou revisão"
-            />
-          </span>
-        </label>
-      )}
+      <label className="ca-doc-search">
+        <span>Buscar no acervo do objeto</span>
+        <span>
+          <Search size={16} aria-hidden="true" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Título, objeto ou revisão"
+          />
+        </span>
+      </label>
       {!filtered.length && <p role="status">Nenhum documento corresponde à busca.</p>}
       {(Object.keys(scopeLabels) as Purpose[]).map((scope) => {
         const group = filtered.filter((doc) => doc.escopo === scope);
@@ -1093,7 +1242,7 @@ function Attach({
     requestAnimationFrame(() => stages.current?.focus());
   };
   const linking = mode === "vincular";
-  const destination = target ? (objects.find((o) => o.id === target.objeto)?.name ?? title) : title;
+  const destination = target ? (objectsById.get(target.objeto)?.name ?? title) : title;
   const owner = target?.objeto ?? scope.chave;
   const available = useQuery({
     queryKey: ["cruz-alta", user, scope.organization_id, "disponiveis", scope.chave],

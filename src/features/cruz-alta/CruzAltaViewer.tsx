@@ -7,9 +7,11 @@ import {
   ArrowUp,
   ChevronLeft,
   Focus,
+  Frame,
   Layers,
   ListTree,
   Maximize,
+  Minimize,
   Minus,
   Mountain,
   Plus,
@@ -26,6 +28,7 @@ import "./viewer.css";
 import { StructureBrowser, type StructureFilter } from "./StructureBrowser";
 import { activeLegend, lvhfAppearance, lvhfSwatch } from "./lvhf-appearance";
 import { InspectionMarkers } from "./InspectionMarkers";
+import { SectorIcon } from "./sector-visual";
 import type { CaInspectionSummary } from "./inspection-domain";
 import {
   inspectionCatalog,
@@ -57,6 +60,7 @@ const modes = [
   { key: "patio", name: "Pátio", artwork: "patio" },
 ] as const;
 const unit = index.unit;
+const markerObjects = objects.filter((object) => index.focus(object.id));
 const searchText = (value: string) =>
   value
     .normalize("NFD")
@@ -109,14 +113,18 @@ export default function CruzAltaViewer({
   inspections,
   onOpenInspection,
   inspectionSelection,
+  fullscreen,
+  onToggleFullscreen,
 }: {
   selectedId: string | null;
   onSelect: (id: string) => void;
   inspections?: CaInspectionSummary | undefined;
   onOpenInspection: (id: string) => void;
   inspectionSelection: RefObject<string | null>;
+  fullscreen: boolean;
+  onToggleFullscreen: () => void;
 }) {
-  const stage = useRef<HTMLDivElement>(null),
+  const surface = useRef<HTMLDivElement>(null),
     labelBox = useRef<HTMLDivElement>(null),
     scene = useRef<CruzScene | null>(null),
     search = useRef<HTMLInputElement>(null);
@@ -233,9 +241,9 @@ export default function CruzAltaViewer({
     setFailure("");
     import("./navigation")
       .then(({ openScene }) => {
-        if (!alive || !stage.current || !labelBox.current) return;
+        if (!alive || !surface.current || !labelBox.current) return;
         active = openScene({
-          host: stage.current,
+          host: surface.current,
           labels: labelBox.current,
           index,
           parts: geometry,
@@ -354,6 +362,7 @@ export default function CruzAltaViewer({
       selectedId && index.focus(selectedId) ? { mode: next, id: selectedId } : { mode: next },
     );
   }
+  const fullscreenLabel = fullscreen ? "Sair da tela cheia da unidade" : "Tela cheia da unidade";
   return (
     <section className="ca-view" aria-label="Mapa da unidade Cruz Alta">
       <header className="ca-header">
@@ -370,44 +379,102 @@ export default function CruzAltaViewer({
             Unidade Cruz Alta <small>/ RS</small>
           </h1>
         </div>
-        <button
-          className="ca-overview"
-          aria-label="Ver toda a unidade"
-          onClick={() => {
-            setMode("angular");
-            setOpen(null);
-            scene.current?.moveTo({ mode: "angular" });
-          }}
-          disabled={!ready}
-        >
-          <Maximize size={16} />
-          <span>Ver toda a unidade</span>
-        </button>
+        <div className="ca-header-actions">
+          <button
+            type="button"
+            className="ca-overview"
+            aria-label="Ver toda a unidade"
+            title="Ver toda a unidade"
+            onClick={() => {
+              setMode("angular");
+              setOpen(null);
+              scene.current?.moveTo({ mode: "angular" });
+            }}
+            disabled={!ready}
+          >
+            <Frame size={16} aria-hidden="true" />
+            <span>Ver toda a unidade</span>
+          </button>
+          <button
+            type="button"
+            className="ca-unit-fullscreen"
+            aria-label={fullscreenLabel}
+            title={fullscreenLabel}
+            onClick={() => {
+              setOpen(null);
+              onToggleFullscreen();
+            }}
+          >
+            {fullscreen ? (
+              <Minimize size={17} aria-hidden="true" />
+            ) : (
+              <Maximize size={17} aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </header>
       <div
         className="ca-stage"
-        ref={stage}
         onPointerDown={(event) => {
           if (open && event.target instanceof Element && !event.target.closest(".ca-top, .ca-pop"))
             setOpen(null);
         }}
       >
-        {photoFile && (
-          <img
-            ref={photo}
-            className="ca-drone-overlay"
-            alt="Comparação local com a fotografia DJI 0044"
-            style={{ opacity: overlayOpacity }}
-          />
-        )}
-        <div className="ca-labels" ref={labelBox} aria-hidden="true">
-          {objects
-            .filter((o) => index.focus(o.id))
-            .map((o) => (
-              <span hidden key={o.id} data-label={o.id}>
-                {technicalTitle(o, objectInspection(o, catalog))}
-              </span>
-            ))}
+        <div className="ca-scene-surface" ref={surface}>
+          {photoFile && (
+            <img
+              ref={photo}
+              className="ca-drone-overlay"
+              alt="Comparação local com a fotografia DJI 0044"
+              style={{ opacity: overlayOpacity }}
+            />
+          )}
+          <div
+            className="ca-labels"
+            ref={labelBox}
+            hidden={!ready}
+            role="group"
+            aria-label="Pontos do mapa 3D"
+          >
+            {markerObjects.map((object) => {
+              const title = technicalTitle(object, objectInspection(object, catalog));
+              return (
+                <button
+                  type="button"
+                  hidden
+                  key={object.id}
+                  className="ca-map-marker"
+                  data-label={object.id}
+                  data-kind={object.kind}
+                  aria-current={object.id === selectedId || undefined}
+                  title={title}
+                  onFocus={(event) => {
+                    const marker = event.currentTarget;
+                    const label = marker.querySelector<HTMLElement>(".ca-map-marker-title");
+                    marker.toggleAttribute(
+                      "data-truncated",
+                      !!label && label.scrollHeight > label.clientHeight,
+                    );
+                  }}
+                  onClick={(event) => {
+                    event.currentTarget.focus({ preventScroll: true });
+                    setOpen(null);
+                    onPick.current(object.id);
+                  }}
+                >
+                  <span className="ca-map-marker-face">
+                    <span className="ca-map-marker-symbol" aria-hidden="true">
+                      <SectorIcon id={object.id} size={22} />
+                    </span>
+                    <span className="ca-map-marker-title">{title}</span>
+                  </span>
+                  <span className="ca-map-marker-tooltip" aria-hidden="true">
+                    {title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
         {inspections && showInspections && ready && (
           <InspectionMarkers

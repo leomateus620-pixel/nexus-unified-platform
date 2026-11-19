@@ -1,5 +1,16 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, ChevronRight, ChevronUp, LockKeyhole, X } from "lucide-react";
+import { lazy, Suspense, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  LockKeyhole,
+  Maximize,
+  Minimize,
+  PanelRightClose,
+  PanelRightOpen,
+  X,
+} from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -51,6 +62,8 @@ export type MapSearch = {
   pagina?: number | undefined;
 };
 export type ChangeSearch = (next: MapSearch, replace?: boolean) => void;
+type PanelSize = "summary" | "standard" | "wide";
+
 export default function CruzAltaWorkspace({
   search,
   onChange,
@@ -76,54 +89,124 @@ export default function CruzAltaWorkspace({
   const inspections = authorized && !inspectionQuery.isError ? inspectionQuery.data : undefined;
   const catalog = useMemo(() => inspectionCatalog(inspections?.lines), [inspections?.lines]);
   const label = (object: CruzObject) => technicalTitle(object, objectInspection(object, catalog));
-  const [compact, setCompact] = useState(false);
-
+  const [panelSize, setPanelSize] = useState<PanelSize>("standard");
+  const [panelFullscreen, setPanelFullscreen] = useState(false);
+  const [nativeFullscreen, setNativeFullscreen] = useState(false);
+  const [fillViewport, setFillViewport] = useState(false);
+  const workspace = useRef<HTMLDivElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const readerOpener = useRef<HTMLElement | null>(null);
   const panelBody = useRef<HTMLDivElement>(null);
+  const panelId = useId();
   const scrollPos = useRef(0);
   const inspectionSelection = useRef<string | null>(null);
   const selected = objects.find((o) => o.id === search.objeto);
   const selectedState = lvhfState(selected?.status);
   const trail = ancestors(selected);
   const reader = !!(search.revisao || search.documento || search.evidencia);
+  const hasPanel = !!search.objeto || reader;
+  const fullPanel = hasPanel && !archive && panelFullscreen;
+  const wide = reader || panelSize === "wide";
+  const summary = panelSize === "summary" && !reader && !fullPanel;
+  const hadPanel = useRef(hasPanel);
+
+  useEffect(() => {
+    const updateFullscreen = () => {
+      setNativeFullscreen(document.fullscreenElement === workspace.current);
+    };
+    document.addEventListener("fullscreenchange", updateFullscreen);
+    return () => document.removeEventListener("fullscreenchange", updateFullscreen);
+  }, []);
+
+  async function toggleUnitFullscreen() {
+    const root = workspace.current;
+    if (!root) return;
+    if (fillViewport) {
+      setFillViewport(false);
+    } else if (document.fullscreenElement === root) {
+      await document.exitFullscreen();
+    } else {
+      try {
+        if (document.fullscreenEnabled && root.requestFullscreen) {
+          await root.requestFullscreen();
+          return;
+        }
+      } catch {
+        // The embedded browser can refuse fullscreen even when it exposes the API.
+      }
+      setFillViewport(true);
+    }
+  }
+
   const select = (id: string) => {
-    if (!search.objeto) opener.current = document.activeElement as HTMLElement;
+    if (!hasPanel) {
+      opener.current = document.activeElement as HTMLElement;
+      setPanelFullscreen(false);
+    }
     scrollPos.current = 0;
-    setCompact(false);
+    setPanelSize((size) => (hasPanel && size === "wide" ? size : "standard"));
     onChange({ objeto: id, aba: "documentos" }, !!search.objeto);
   };
   const close = useCallback(() => {
     if (reader)
       onChange({ objeto: search.objeto, aba: search.evidencia ? "ficha" : "documentos" }, true);
     else {
+      setPanelFullscreen(false);
+      setPanelSize("standard");
       onChange({}, true);
-
-      requestAnimationFrame(() =>
-        (opener.current?.isConnected
-          ? opener.current
-          : document.querySelector<HTMLElement>(".ca-workspace button")
-        )?.focus(),
-      );
     }
   }, [onChange, reader, search.evidencia, search.objeto]);
   useEffect(() => {
-    if (!search.objeto) return;
-    closeButton.current?.focus({ preventScroll: true });
+    if (!hasPanel) {
+      if (!hadPanel.current) return undefined;
+      hadPanel.current = false;
+      const target = opener.current;
+      opener.current = null;
+      let projectionFrame = 0;
+      const layoutFrame = requestAnimationFrame(() => {
+        projectionFrame = requestAnimationFrame(() => {
+          const fallback = workspace.current?.querySelector<HTMLElement>(
+            ".ca-search input, select",
+          );
+          if (target?.isConnected && target.getClientRects().length)
+            target.focus({ preventScroll: true });
+          if (!target || document.activeElement !== target)
+            fallback?.focus({ preventScroll: true });
+        });
+      });
+      return () => {
+        cancelAnimationFrame(layoutFrame);
+        cancelAnimationFrame(projectionFrame);
+      };
+    }
+    hadPanel.current = true;
     if (panelBody.current) panelBody.current.scrollTop = reader ? 0 : scrollPos.current;
-  }, [search.objeto, reader]); // Camera and layers stay mounted across panel and reader navigation.
+    const fromReader = !reader && readerOpener.current?.isConnected ? readerOpener.current : null;
+    if (!reader) readerOpener.current = null;
+    (fromReader ?? closeButton.current)?.focus({ preventScroll: true });
+    return undefined;
+  }, [hasPanel, search.objeto, reader]);
   useEffect(() => {
-    if (!search.objeto) return;
+    if (!hasPanel && !fillViewport) return;
     const escape = (event: KeyboardEvent) => {
       if (event.key !== "Escape" || event.defaultPrevented) return;
       event.preventDefault();
-      close();
+      if (reader) close();
+      else if (fullPanel) setPanelFullscreen(false);
+      else if (hasPanel) close();
+      else setFillViewport(false);
     };
     window.addEventListener("keydown", escape);
     return () => window.removeEventListener("keydown", escape);
-  }, [close, search.objeto]);
+  }, [close, fillViewport, fullPanel, hasPanel, reader]);
+  const rememberReaderOpener = () => {
+    if (reader) return;
+    readerOpener.current = document.activeElement as HTMLElement;
+    scrollPos.current = panelBody.current?.scrollTop ?? 0;
+  };
   const openReader = (doc: string, rev: string) => {
-    if (!reader) scrollPos.current = panelBody.current?.scrollTop ?? 0;
+    rememberReaderOpener();
     onChange({
       ...search,
       aba: "documentos",
@@ -135,22 +218,28 @@ export default function CruzAltaWorkspace({
   };
   const openInspection = (id: string) => {
     if (search.objeto !== id) inspectionSelection.current = id;
-    if (!search.objeto) opener.current = document.activeElement as HTMLElement;
+    if (!hasPanel) {
+      opener.current = document.activeElement as HTMLElement;
+      setPanelFullscreen(false);
+    }
     if (search.objeto !== id || search.aba !== "ficha") scrollPos.current = 0;
-    setCompact(false);
+    setPanelSize((size) => (hasPanel && size === "wide" ? size : "standard"));
     onChange({ objeto: id, aba: "ficha" }, !!search.objeto);
   };
   const readInspection = (evidence: string, page: number) => {
-    if (!reader) scrollPos.current = panelBody.current?.scrollTop ?? 0;
+    rememberReaderOpener();
     onChange({ objeto: search.objeto, aba: "ficha", evidencia: evidence, pagina: page });
   };
   return (
     <div
+      ref={workspace}
       className={[
         "ca-workspace",
-        (!!search.objeto || reader) && "ca-has-panel",
-        reader && "ca-expanded",
-        compact && !reader && "ca-compact",
+        hasPanel && "ca-has-panel",
+        wide && "ca-expanded",
+        summary && "ca-compact",
+        fullPanel && "ca-panel-fullscreen",
+        fillViewport && "ca-window-fullscreen",
         archive && "ca-archive",
       ]
         .filter(Boolean)
@@ -175,17 +264,19 @@ export default function CruzAltaWorkspace({
           </Link>
         </div>
       ) : (
-        <div className="ca-viewport-wrap">
+        <div className="ca-viewport-wrap" inert={fullPanel}>
           <CruzAltaViewer
             selectedId={selected?.id ?? null}
             onSelect={select}
             inspections={inspections}
             onOpenInspection={openInspection}
             inspectionSelection={inspectionSelection}
+            fullscreen={nativeFullscreen || fillViewport}
+            onToggleFullscreen={() => void toggleUnitFullscreen()}
           />
         </div>
       )}
-      {(search.objeto || reader) && (
+      {hasPanel && (
         <aside
           className="ca-drawer"
           aria-label={reader ? "Leitor de documentos" : "Ficha do objeto"}
@@ -218,26 +309,54 @@ export default function CruzAltaWorkspace({
                 {selected ? label(selected) : "Objeto indisponível"}
               </h2>
             </div>
-            {!reader && (
+            <div className="ca-drawer-actions">
+              {!archive && !reader && !fullPanel && (
+                <>
+                  <button
+                    type="button"
+                    className="ca-mobile-size"
+                    onClick={() => setPanelSize(summary ? "standard" : "summary")}
+                    aria-label={summary ? "Abrir meia ficha" : "Recolher ao resumo"}
+                    aria-controls={panelId}
+                    aria-expanded={!summary}
+                    title={summary ? "Abrir meia ficha" : "Recolher ao resumo"}
+                  >
+                    {summary ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPanelSize(wide ? "standard" : "wide")}
+                    aria-label={wide ? "Reduzir ficha" : "Expandir ficha"}
+                    aria-controls={panelId}
+                    title={wide ? "Reduzir ficha" : "Expandir ficha"}
+                  >
+                    {wide ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}
+                  </button>
+                </>
+              )}
+              {!archive && (
+                <button
+                  type="button"
+                  onClick={() => setPanelFullscreen(!fullPanel)}
+                  aria-label={fullPanel ? "Sair da tela cheia da ficha" : "Tela cheia da ficha"}
+                  aria-controls={panelId}
+                  title={fullPanel ? "Sair da tela cheia da ficha" : "Tela cheia da ficha"}
+                >
+                  {fullPanel ? <Minimize size={18} /> : <Maximize size={18} />}
+                </button>
+              )}
               <button
-                className="ca-mobile-size"
-                onClick={() => {
-                  setCompact(!compact);
-                }}
-                aria-label={compact ? "Abrir meia ficha" : "Recolher ao resumo"}
+                type="button"
+                ref={closeButton}
+                onClick={close}
+                aria-label={reader ? "Fechar leitor" : "Fechar ficha"}
+                title={reader ? "Fechar leitor" : "Fechar ficha"}
               >
-                {compact ? <ChevronUp /> : <ChevronDown />}
+                <X size={20} />
               </button>
-            )}
-            <button
-              ref={closeButton}
-              onClick={close}
-              aria-label={reader ? "Fechar leitor" : "Fechar ficha"}
-            >
-              <X size={20} />
-            </button>
+            </div>
           </header>
-          <div className="ca-drawer-body" ref={panelBody}>
+          <div className="ca-drawer-body" id={panelId} ref={panelBody}>
             {!selected ? (
               <p role="alert">O endereço não corresponde a um objeto desta unidade.</p>
             ) : (

@@ -18,9 +18,11 @@ O perfil revisor precisa da permissão `revisar_nr` e de um cadastro profissiona
 
 ## Fotos de montagem e RDO
 
-A ficha lateral mostra as pastas da LVHF selecionada e das linhas vinculadas à estrutura. O código no início do nome é conferido contra a cena. As subpastas numeradas da raiz entram como fotos de montagem. As subpastas numeradas de `LANÇADOS RDO CHARLISE` entram como fotos lançadas no RDO. A seção usa a identificação técnica da linha e abre a pasta original em outra aba. O Drive aplica o compartilhamento da pasta e mostra as fotos recém-adicionadas ao abrir o link.
+A ficha lateral mostra miniaturas das fotos da LVHF selecionada e das linhas vinculadas à estrutura. A seleção de uma miniatura amplia a foto na própria ficha. O código no início do nome da pasta é conferido contra a cena. As subpastas numeradas da raiz entram como fotos de montagem. As subpastas numeradas de `LANÇADOS RDO CHARLISE` entram como fotos lançadas no RDO.
 
-Aplique a migração `0089` via Lovable e publique o worker antes de executar `ca_inspecao_rdo_registrar(p_raiz, p_lancadas)` no banco do projeto, com os IDs das duas pastas do Drive. A função cadastra a origem na configuração privada e usa a fila existente. O worker percorre as duas listagens, incluindo páginas adicionais, e substitui a relação de pastas somente ao concluir a conferência. Mudanças de nome, movimentações e novas pastas numeradas entram no ciclo do agendador. A aplicação consulta o inventário com a sessão da unidade e a permissão de abrir originais.
+Aplique as migrações `0089` a `0091` via Lovable. Em um ambiente novo, publique o worker antes de executar `ca_inspecao_rdo_registrar(p_raiz, p_lancadas)` no banco do projeto, com os IDs das duas pastas do Drive. A função cadastra a origem na configuração privada e usa a fila existente. O worker percorre as duas listagens, incluindo páginas adicionais, e substitui a relação de pastas somente ao concluir a conferência. Mudanças de nome, movimentações e novas pastas numeradas entram no ciclo do agendador.
+
+A ficha consulta a lista de imagens da seleção ao abrir e periodicamente enquanto permanece visível. A versão do Drive muda quando o arquivo é editado e faz a ficha pedir a imagem nova. O servidor valida a sessão, o acesso aos originais e o vínculo à estrutura em cada leitura. A conta de serviço lê o arquivo na origem e entrega a imagem pelo Nexus.
 
 ## Conferência
 

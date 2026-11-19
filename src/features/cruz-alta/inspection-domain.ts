@@ -44,20 +44,11 @@ export type CaInspectionLine = {
   documents: CaInspectionEvidence[];
 };
 
-export type InspectionRdoFolder = {
-  id: string;
-  code: string;
-  name: string;
-  category: "montagem" | "lancada";
-  resourceKey?: string | undefined;
-};
-
 export type CaInspectionSummary = {
   lastSync: string | null;
   status: "not_configured" | "idle" | "running" | "failed";
   canReview: boolean;
   lines: CaInspectionLine[];
-  rdoFolders?: InspectionRdoFolder[];
   unmatched?: Array<{ id: string; title: string; issues: string[] }>;
 };
 

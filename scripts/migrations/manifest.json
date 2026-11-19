@@ -455,6 +455,14 @@
     {
       "path": "drizzle/migrations/0089_ca_inspecao_fotos_rdo.sql",
       "sha256": "e2768bcd9c383badea538495aa6233442fbf1dcdb58387682c13f44a92d1bc06"
+    },
+    {
+      "path": "drizzle/migrations/0090_ca_inspecao_rdo_credencial.sql",
+      "sha256": "856a8f8f14304e9b4d180f7b9e133c32a661b8d8766d0d38cca3ed4c0a0d96aa"
+    },
+    {
+      "path": "drizzle/migrations/0091_ca_inspecao_rdo_origem.sql",
+      "sha256": "1978f05b5474f128a5061e8e33c92ca691f6ed3c3b89ab165e54bede9eadcd62"
     }
   ]
 }

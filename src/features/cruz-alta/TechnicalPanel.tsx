@@ -35,12 +35,8 @@ import {
   caPrevia,
 } from "./acervo.functions";
 import { describeFile, operationId, transferFile } from "./upload";
-import {
-  InspectionSection,
-  InspectionSourcesReader,
-  RdoPhotoFolders,
-  RelatedInspections,
-} from "./InspectionSheet";
+import { InspectionSection, InspectionSourcesReader, RelatedInspections } from "./InspectionSheet";
+import { RdoPhotoGallery } from "./RdoPhotoGallery";
 import type { CaInspectionLine, CaInspectionSummary } from "./inspection-domain";
 import {
   inspectionCatalog,
@@ -400,9 +396,10 @@ function SheetContent({
           {note}
         </p>
       )}
-      {!isForm && inspections?.rdoFolders && (
-        <RdoPhotoFolders object={object} folders={inspections.rdoFolders} inspections={catalog} />
-      )}
+      {!isForm &&
+        (object.kind === "estrutura" || object.kind === "componente" || object.kind === "lvhf") && (
+          <RdoPhotoGallery object={object} user={user} inspections={catalog} />
+        )}
       {!isForm && inspections && (object.kind === "estrutura" || object.kind === "componente") && (
         <RelatedInspections object={object.id} lines={inspections.lines} onOpen={openInspection} />
       )}

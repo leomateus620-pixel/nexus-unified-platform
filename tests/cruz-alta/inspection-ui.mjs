@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import http from "node:http";
-import { createHash, createHmac } from "node:crypto";
+import { createHash, createHmac, generateKeyPairSync } from "node:crypto";
 import { spawn } from "node:child_process";
 import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
@@ -28,30 +28,53 @@ const clientId = "c3d779b6-c407-8ab4-8545-6bdfd6068013";
 const docId = "f618cb75-19de-4601-87d5-5fcc868af637";
 const candidateId = "d4b08715-705d-4c21-a90b-e6c7a27f170a";
 const orphanId = "a5259a69-5a18-4463-ae30-3bcbd42c4d74";
+const galleryRoot = "fixture-rdo-root";
+const galleryPublished = "fixture-rdo-published";
 const photoFolders = [
-  { id: "fixture-rdo-lancada-11", code: "11", name: "Pasta de teste 11", category: "lancada" },
+  {
+    id: "fixture-rdo-lancada-11",
+    code: "11",
+    name: "11 - Pasta de teste",
+    category: "lancada",
+    parentId: galleryPublished,
+  },
   {
     id: "fixture-rdo-montagem-56",
     code: "56",
-    name: "Pasta de teste 56",
+    name: "56 - Pasta de teste",
     category: "montagem",
     resourceKey: "fixture-resource-key",
+    parentId: galleryRoot,
   },
   {
     id: "fixture-rdo-montagem-28_1",
     code: "28.1",
-    name: "Pasta de teste 28.1",
+    name: "28.1 - Pasta de teste",
     category: "montagem",
+    parentId: galleryRoot,
   },
 ];
-const driveFolders = "https://drive.google.com/drive/folders/";
-const launchedPhoto = driveFolders + photoFolders[0].id;
-const montagePhoto =
-  driveFolders + photoFolders[1].id + "?resourcekey=" + photoFolders[1].resourceKey;
-const decimalPhoto = driveFolders + photoFolders[2].id;
-const refreshedFolderId = "fixture-rdo-lancada-11-atualizada";
-const refreshedPhoto = driveFolders + refreshedFolderId;
-let rdoPhotoFolders = photoFolders;
+const launchedPhotos = Array.from({ length: 7 }, (_, i) => `RDO de teste 11-${i + 1}.png`);
+const montagePhoto = "Montagem de teste 56.png";
+const decimalPhoto = "Montagem de teste 28.1.png";
+const refreshedPhoto = "Nova foto de teste 11.png";
+const addedPhoto = "Última foto de teste 11.png";
+const photoBytes = Buffer.from(
+  "iVBORw0KGgoAAAANSUhEUgAAAFAAAAA3CAIAAAAUgloYAAAAbElEQVR42u3YMQ0AIAwEwLrEAR5YsIADtOKgY5OSS3794bbPx7k7yVgzScduAAMDAwMDAwOXgf8j5V1gYGBgYGBg4DqwLQ0MDAwMDAwM7NOypYGBgYGBgYF9WrY0MDAwMDAwMLBPCxgYuF/3AX6ovwFy0dxOAAAAAElFTkSuQmCC",
+  "base64",
+);
+const photoDigest = createHash("sha256").update(photoBytes).digest("hex");
+const { privateKey: fixtureDriveKey } = generateKeyPairSync("rsa", {
+  modulusLength: 2048,
+  privateKeyEncoding: { format: "pem", type: "pkcs8" },
+  publicKeyEncoding: { format: "pem", type: "spki" },
+});
+const fixtureDriveCredentials = JSON.stringify({
+  type: "service_account",
+  client_email: "gallery-fixture@example.iam.gserviceaccount.com",
+  private_key: fixtureDriveKey,
+});
+let galleryRefreshed = false;
 const layoutDescription = "TELHADO ARMAZEM 01 - LVHF 90M - (01 UNIDADE)";
 const fixtureDescription = "TELHADO ARMAZEM 01 - LVHF 91M - (01 UNIDADE)";
 const fixtureSeal = "99990117";
@@ -99,7 +122,57 @@ pdf.addPage().drawText("Arquivo de teste local - pagina 1", { x: 70, y: 760, siz
 pdf.addPage().drawText("Evidencia de teste local - pagina 2", { x: 70, y: 760, size: 17 });
 const bytes = Buffer.from(await pdf.save());
 const digest = createHash("sha256").update(bytes).digest("hex");
-const trace = { ids: [], decisions: [], errors: [] };
+const trace = { ids: [], decisions: [], errors: [], rdoMedia: [] };
+
+const folderMime = "application/vnd.google-apps.folder";
+const launchedSubfolder = {
+  id: "fixture-rdo-subfolder-11",
+  name: "Dia de teste",
+  mimeType: folderMime,
+  modifiedTime: now.toISOString(),
+  version: "1",
+  parents: [photoFolders[0].id],
+  capabilities: { canListChildren: true },
+};
+const fixtureFolders = [
+  ...photoFolders,
+  { id: galleryPublished, name: "LANÇADAS NO RDO", parentId: galleryRoot },
+  { id: galleryRoot, name: "RAIZ DE TESTE" },
+].map(({ id, name, parentId, resourceKey }) => ({
+  id,
+  name,
+  parents: parentId ? [parentId] : [],
+  mimeType: folderMime,
+  modifiedTime: now.toISOString(),
+  version: "1",
+  resourceKey,
+  capabilities: { canListChildren: true },
+}));
+
+function drivePhotos() {
+  const launched = launchedPhotos.map((name, i) => [
+    `fixture-rdo-foto-11-${i + 1}`,
+    galleryRefreshed && i === 0 ? refreshedPhoto : name,
+    launchedSubfolder.id,
+  ]);
+  if (galleryRefreshed)
+    launched.splice(-1, 1, ["fixture-rdo-foto-11-8", addedPhoto, launchedSubfolder.id]);
+  const records = [
+    ...launched,
+    ["fixture-rdo-foto-56", montagePhoto, photoFolders[1].id],
+    ["fixture-rdo-foto-28_1", decimalPhoto, photoFolders[2].id],
+  ];
+  return records.map(([id, name, parent]) => ({
+    id,
+    name,
+    parents: [parent],
+    mimeType: "image/png",
+    modifiedTime: now.toISOString(),
+    version: name === refreshedPhoto ? "2" : "1",
+    size: String(photoBytes.length),
+    sha256Checksum: photoDigest,
+  }));
+}
 const source = {
   id: docId,
   kind: "laudo",
@@ -157,7 +230,8 @@ const layoutOnlyFixture = {
 const body = async (req) =>
   JSON.parse(Buffer.concat(await Array.fromAsync(req)).toString() || "{}");
 const server = http.createServer(async (req, res) => {
-  const path = new URL(req.url, fakeApi).pathname;
+  const url = new URL(req.url, fakeApi);
+  const { pathname: path } = url;
   const json = (data, status = 200) => {
     res.writeHead(status, {
       "content-type": "application/json",
@@ -166,6 +240,30 @@ const server = http.createServer(async (req, res) => {
     });
     res.end(JSON.stringify(data));
   };
+  if (path === "/fixture-drive/token")
+    return json({ access_token: "fixture-only", expires_in: 3600 });
+  const driveFiles = "/fixture-drive/drive/v3/files";
+  if (path.startsWith(driveFiles)) {
+    const records = drivePhotos();
+    if (path === driveFiles) {
+      const parent = /^'([^']+)' in parents/.exec(url.searchParams.get("q") ?? "")?.[1];
+      return json({
+        files: [...records, ...fixtureFolders, launchedSubfolder].filter(
+          (record) => record.parents[0] === parent,
+        ),
+      });
+    }
+    const id = path.split("/").at(-1);
+    const folder = fixtureFolders.find((entry) => entry.id === id);
+    if (folder) return json(folder);
+    if (id === launchedSubfolder.id) return json(launchedSubfolder);
+    const photo = records.find((record) => record.id === id);
+    if (!photo) return json({}, 404);
+    if (url.searchParams.get("alt") !== "media") return json(photo);
+    trace.rdoMedia.push(id);
+    res.writeHead(200, { "content-type": "image/png", "content-length": photoBytes.length });
+    return res.end(photoBytes);
+  }
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
       "access-control-allow-origin": "*",
@@ -185,6 +283,16 @@ const server = http.createServer(async (req, res) => {
       "access-control-allow-origin": "*",
     });
     return res.end(bytes);
+  }
+  if (path === "/rest/v1/rpc/ca_inspecao_rdo_origem") {
+    const params = await body(req);
+    const sources = photoFolders.filter((folder) => params.p_pastas.includes(folder.id));
+    return req.headers.apikey === "sb_secret_test_fixture"
+      ? json({
+          credential: fixtureDriveCredentials,
+          folders: sources.map(({ id, parentId }) => ({ id, parentId, rootId: galleryRoot })),
+        })
+      : json({ code: "42501" }, 403);
   }
   if (req.headers.authorization !== "Bearer " + token)
     return json({ code: "PGRST301", message: "Sessão de teste ausente." }, 401);
@@ -221,7 +329,16 @@ const server = http.createServer(async (req, res) => {
       historico: [],
       documentos: [],
     });
-  if (rpc === "ca_inspecao_rdo_summary") return json(rdoPhotoFolders);
+  if (rpc === "ca_inspecao_rdo_summary") {
+    return json(
+      photoFolders.filter(
+        ({ code }) =>
+          params.p_chave === `lvhf-${code}` ||
+          params.p_chave === `cobertura-${code}` ||
+          (params.p_chave === "estrutura-armazem-01" && ["11", "56"].includes(code)),
+      ),
+    );
+  }
   if (rpc === "ca_inspecao_summary")
     return json({
       items: [fixture, layoutOnlyFixture],
@@ -252,7 +369,6 @@ const server = http.createServer(async (req, res) => {
     fixture.documents = [source];
     fixture.availability = "verified";
     fixture.version++;
-    rdoPhotoFolders = [{ ...photoFolders[0], id: refreshedFolderId }, ...photoFolders.slice(1)];
     return json(fixture);
   }
   if (rpc === "ca_inspecao_sync_status")
@@ -263,9 +379,29 @@ const server = http.createServer(async (req, res) => {
 await new Promise((resolve, reject) =>
   server.once("error", reject).listen(fixturePort, "127.0.0.1", resolve),
 );
+// Redirect only the app server's Google calls to loopback. Leave the real server functions,
+// authorization middleware, hierarchy checks, and media/Blob response protocol enabled.
+const drivePreloader = join(folder, "fixture-drive-preloader.mjs");
+await writeFile(
+  drivePreloader,
+  `
+const fetchNative = globalThis.fetch;
+globalThis.fetch = (input, options) => {
+  const address = input instanceof Request ? input.url : input;
+  if (!URL.canParse(address)) return fetchNative(input, options);
+  const url = new URL(address);
+  if (url.origin === "https://oauth2.googleapis.com" || url.origin === "https://www.googleapis.com") {
+    return fetchNative(${JSON.stringify(fakeApi)} + "/fixture-drive" + url.pathname + url.search, options);
+  }
+  return fetchNative(input, options);
+};
+`,
+);
 const vite = spawn(
   process.execPath,
   [
+    "--import",
+    drivePreloader,
     "node_modules/vite/bin/vite.js",
     "dev",
     "--host",
@@ -323,8 +459,8 @@ try {
   assert.equal(await guest.getByText("LAC " + fixtureSeal, { exact: false }).count(), 0);
   assert.equal(await guest.getByText(fixtureDescription, { exact: false }).count(), 0);
   assert.equal(await guest.locator(".ca-rdo-photos").count(), 0);
-  assert.equal(await guest.locator(`a[href^="${driveFolders}"]`).count(), 0);
   assert.equal(trace.ids.length, 0);
+  assert.equal(trace.rdoMedia.length, 0);
   assert.equal(await guest.locator(".ca-reader-title").count(), 0);
   await guest.close();
   const context = await browser.newContext({
@@ -335,7 +471,16 @@ try {
     (session) => localStorage.setItem("sb-127-auth-token", JSON.stringify(session)),
     session,
   );
+  await context.addInitScript(() => {
+    const revokeObjectURL = URL.revokeObjectURL.bind(URL);
+    window.fixtureRevokedUrls = new Set();
+    URL.revokeObjectURL = (url) => {
+      window.fixtureRevokedUrls.add(url);
+      revokeObjectURL(url);
+    };
+  });
   const page = await context.newPage();
+  await page.clock.install();
   page.on("pageerror", (e) => trace.errors.push(e.message));
   page.on("console", (msg) => {
     if (msg.type() === "error") trace.errors.push(msg.text());
@@ -360,25 +505,40 @@ try {
     .waitFor();
   await page.locator(".ca-inspections-related").getByText(privateTitle, { exact: true }).waitFor();
   const photos = page.getByRole("region", { name: "Fotos de montagem" });
-  const launchedLink = photos.getByRole("link", { name: /Lançadas no RDO/ });
-  await launchedLink.waitFor();
-  await photos.getByRole("heading", { name: privateTitle, exact: true }).waitFor();
-  assert.equal(await photos.getByRole("link").count(), 1);
-  assert.equal(await launchedLink.getAttribute("href"), launchedPhoto);
-  assert.equal(await launchedLink.getAttribute("target"), "_blank");
-  assert.equal(await launchedLink.getAttribute("rel"), "noopener noreferrer");
-  assert.equal(await photos.locator("img, video, iframe").count(), 0);
-  await context.route("https://drive.google.com/**", (route) =>
-    route.fulfill({ status: 200, body: "Pasta simulada no teste local." }),
-  );
+  const launch = photos.getByRole("button", { name: `Abrir foto ${launchedPhotos[0]}` });
+  await launch.waitFor();
+  await photos.getByText(privateTitle, { exact: true }).waitFor();
+  await photos.getByText(/Lançadas no RDO/).waitFor();
+  assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 6);
+  assert.equal(await photos.getByRole("link").count(), 0);
+  await launch.locator("img[src^='blob:']").waitFor();
+  assert(!trace.rdoMedia.includes("fixture-rdo-foto-11-7"));
+  const previousPage = photos.getByRole("button", { name: "Página anterior de fotos" });
+  const nextPage = photos.getByRole("button", { name: "Próxima página de fotos" });
+  await nextPage.click();
+  await photos.getByRole("button", { name: `Abrir foto ${launchedPhotos[6]}` }).waitFor();
+  assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 1);
+  await previousPage.click();
   const initialMap = page.url();
   const initialPose = await page.locator(".ca-stage canvas").getAttribute("data-camera");
-  const [photoTab] = await Promise.all([context.waitForEvent("page"), launchedLink.click()]);
-  await photoTab.waitForURL(launchedPhoto);
-  assert.equal(await photoTab.evaluate(() => window.opener), null);
+  await launch.click();
+  const viewer = photos.getByRole("group", { name: "Visualizador de fotos" });
+  const displayed = viewer.getByRole("img", { name: launchedPhotos[0] });
+  await displayed.waitFor();
+  await displayed.evaluate((image) => image.decode());
+  const firstPhotoUrl = await displayed.getAttribute("src");
+  assert(firstPhotoUrl?.startsWith("blob:"));
+  assert(await viewer.getByRole("button", { name: "Foto anterior" }).isDisabled());
+  await page.screenshot({ path: folder + "/06-galeria-rdo.png" });
+  await page.keyboard.press("ArrowRight");
+  await viewer.getByRole("img", { name: launchedPhotos[1] }).waitFor();
+  assert(await page.evaluate((url) => window.fixtureRevokedUrls.has(url), firstPhotoUrl));
+  await page.keyboard.press("Escape");
+  await viewer.waitFor({ state: "detached" });
+  assert(await launch.evaluate((button) => document.activeElement === button));
   assert.equal(page.url(), initialMap);
   assert.equal(await page.locator(".ca-stage canvas").getAttribute("data-camera"), initialPose);
-  await photoTab.close();
+  assert.equal(context.pages().length, 1);
   const search = page.getByRole("searchbox", { name: "Buscar setor, estrutura ou LVHF" });
   await search.fill("LAC " + fixtureSeal);
   await page.locator(".ca-browser").getByText(privateTitle, { exact: true }).waitFor();
@@ -394,7 +554,7 @@ try {
       url.searchParams.get("objeto") === "lvhf-11" && url.searchParams.get("aba") === "ficha",
   );
   await page.getByText("18/05/2024", { exact: true }).waitFor();
-  assert.equal(await launchedLink.getAttribute("href"), launchedPhoto);
+  await launch.waitFor();
   await page
     .locator(".ca-drawer-head")
     .getByRole("heading", { name: privateTitle, exact: true })
@@ -424,8 +584,17 @@ try {
   await review.getByRole("checkbox", { name: /Próxima inspeção/ }).check();
   await review.getByRole("button", { name: "Confirmar validação" }).click();
   await review.waitFor({ state: "detached" });
-  await photos.locator(`a[href="${refreshedPhoto}"]`).waitFor();
-  assert.equal(await photos.locator(`a[href="${launchedPhoto}"]`).count(), 0);
+  galleryRefreshed = true;
+  await page.clock.fastForward(61_000);
+  await photos.getByRole("button", { name: `Abrir foto ${refreshedPhoto}` }).waitFor();
+  assert.equal(await launch.count(), 0);
+  await nextPage.click();
+  await photos.getByRole("button", { name: `Abrir foto ${addedPhoto}` }).waitFor();
+  assert.equal(
+    await photos.getByRole("button", { name: `Abrir foto ${launchedPhotos[6]}` }).count(),
+    0,
+  );
+  await previousPage.click();
   assert.deepEqual(trace.decisions[0]?.p_decisions, {
     evidence: candidateId,
     action: "approve",
@@ -439,10 +608,9 @@ try {
   await page.getByText("Fixture local - sem identificador.pdf", { exact: true }).waitFor();
   assert.equal(await photos.count(), 0);
   await page.goto(map + "?objeto=cobertura-28.1");
-  const decimalLink = photos.getByRole("link", { name: /Pasta de montagem/ });
-  await decimalLink.waitFor();
-  assert.equal(await photos.getByRole("link").count(), 1);
-  assert.equal(await decimalLink.getAttribute("href"), decimalPhoto);
+  const decimalCard = photos.getByRole("button", { name: `Abrir foto ${decimalPhoto}` });
+  await decimalCard.waitFor();
+  assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 1);
   await page.goto(map + "?objeto=lvhf-56&aba=ficha");
   await page
     .locator(".ca-drawer-head")
@@ -450,11 +618,9 @@ try {
     .waitFor();
   await page.getByText("Nenhum laudo de inspeção vinculado.", { exact: true }).waitFor();
   assert.equal(await page.locator(".ca-inspection-dates").count(), 0);
-  assert.equal(await photos.getByRole("link").count(), 1);
-  assert.equal(
-    await photos.getByRole("link", { name: /Pasta de montagem/ }).getAttribute("href"),
-    montagePhoto,
-  );
+  const montageCard = photos.getByRole("button", { name: `Abrir foto ${montagePhoto}` });
+  await montageCard.waitFor();
+  assert.equal(await photos.getByRole("button", { name: /Abrir foto/ }).count(), 1);
   await page.screenshot({ path: folder + "/05-identificacao-sem-laudo.png" });
   await page.goto(map + "?objeto=estrutura-armazem-01");
   const related = page
@@ -462,10 +628,11 @@ try {
     .getByRole("button")
     .filter({ hasText: privateTitle });
   await related.waitFor();
-  await photos.getByRole("heading", { name: privateTitle, exact: true }).waitFor();
-  await photos.getByRole("heading", { name: layoutOnlyTitle, exact: true }).waitFor();
-  assert.equal(await photos.getByRole("link").count(), 2);
-  assert.equal(await photos.locator(`a[href="${decimalPhoto}"]`).count(), 0);
+  await photos.getByText(privateTitle, { exact: true }).waitFor();
+  await nextPage.click();
+  await photos.getByText(layoutOnlyTitle, { exact: true }).waitFor();
+  await montageCard.waitFor();
+  assert.equal(await decimalCard.count(), 0);
   const fromStructure = await camera.getAttribute("data-camera");
   await related.click();
   await page.waitForURL((url) => url.searchParams.get("objeto") === "lvhf-11");
@@ -482,7 +649,6 @@ try {
   assert.equal(await page.locator(".ca-reader-title").count(), 0);
   assert.equal(await page.getByText(fixtureSeal, { exact: false }).count(), 0);
   assert.equal(await page.locator(".ca-rdo-photos").count(), 0);
-  assert.equal(await page.locator(`a[href^="${driveFolders}"]`).count(), 0);
 
   const mobileContext = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -504,11 +670,14 @@ try {
     .getByRole("heading", { name: privateTitle, exact: true })
     .waitFor();
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
-  const mobilePhoto = mobile
-    .getByRole("region", { name: "Fotos de montagem" })
-    .getByRole("link", { name: /Lançadas no RDO/ });
-  assert.equal(await mobilePhoto.getAttribute("href"), refreshedPhoto);
+  const mobilePhoto = mobile.getByRole("button", { name: `Abrir foto ${refreshedPhoto}` });
+  await mobilePhoto.waitFor();
   assert((await mobilePhoto.boundingBox())?.height >= 44);
+  await mobilePhoto.tap();
+  const mobileViewer = mobile.getByRole("group", { name: "Visualizador de fotos" });
+  await mobileViewer.getByRole("img", { name: refreshedPhoto }).waitFor();
+  await mobile.screenshot({ path: folder + "/07-galeria-rdo-movel.png" });
+  await mobileViewer.getByRole("button", { name: "Fechar foto" }).tap();
   await mobile
     .locator(".ca-inspection-sheet")
     .evaluate((section) => section.scrollIntoView({ block: "start" }));
@@ -529,9 +698,11 @@ try {
     "unmatched-unit",
     "authorized-sync-request",
     "related-structure",
-    "rdo-private-folders-current-tag",
-    "rdo-opens-new-tab-with-camera-preserved",
-    "rdo-folder-refresh",
+    "rdo-private-photos-current-tag",
+    "rdo-lazy-gallery-pagination",
+    "rdo-photo-keyboard-viewer-with-camera-preserved",
+    "rdo-revokes-photo-blob",
+    "rdo-gallery-automatic-refresh-added-replaced-deleted",
     "logout-clears-private-view",
     "mobile",
   ];

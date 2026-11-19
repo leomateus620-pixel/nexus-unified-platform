@@ -82,6 +82,20 @@ const storedSummary = z.object({
   lastCheckedAt: z.string().nullable(),
   unmatched: z.array(z.object({ id: uuid, sourceName: z.string(), issues: issueList })).optional(),
 });
+const driveIdentifier = z.string().regex(/^[A-Za-z0-9_-]{5,250}$/);
+const storedRdoFolders = z.array(
+  z.object({
+    id: driveIdentifier,
+    code: z.string().regex(/^\d{2,3}(?:\.\d+)?$/),
+    name: z.string().min(1),
+    category: z.enum(["montagem", "lancada"]),
+    resourceKey: z
+      .string()
+      .regex(/^[A-Za-z0-9_-]{1,250}$/)
+      .nullish()
+      .transform((value) => value ?? undefined),
+  }),
+);
 const syncState = z.object({
   state: z.enum(["not_configured", "syncing", "partial", "stale", "verified"]),
   lastCheckedAt: z.string().nullable(),
@@ -167,14 +181,16 @@ export const caInspectionSummary = createServerFn({ method: "GET" })
   .handler(async ({ context, data }): Promise<CaInspectionSummary> => {
     privateResponse();
     const client = context.supabase as SupabaseClient;
-    const response = await client.rpc("ca_inspecao_summary", {
-      p_org: data.organization_id,
-      p_chave: "unidade",
-    });
+    const unit = { p_org: data.organization_id, p_chave: "unidade" };
+    const [response, check, photos] = await Promise.all([
+      client.rpc("ca_inspecao_summary", unit),
+      client.rpc("ca_inspecao_sync_status", { p_org: data.organization_id }),
+      client.rpc("ca_inspecao_rdo_summary", unit),
+    ]);
     if (response.error && databaseUnavailable.includes(response.error.code)) return emptySummary;
     const summary = storedSummary.parse(nrResult(response));
-    const check = await client.rpc("ca_inspecao_sync_status", { p_org: data.organization_id });
     const service = check.error ? null : syncState.parse(check.data);
+    const rdo = photos.error ? undefined : storedRdoFolders.safeParse(photos.data);
     const state: CaInspectionSummary["status"] =
       service?.state === "syncing"
         ? "running"
@@ -187,6 +203,7 @@ export const caInspectionSummary = createServerFn({ method: "GET" })
       lastSync: service?.lastCheckedAt ?? summary.lastCheckedAt,
       status: state,
       canReview: summary.canReview,
+      ...(rdo?.success ? { rdoFolders: rdo.data } : {}),
       lines: summary.items
         .filter(
           (line) =>

@@ -498,6 +498,135 @@ try {
   await finish(setupJob, { kind: "scan", children: [], nextPageToken: null });
   assert.equal(await readWorker(setupJob.id, setupJob.lease), null);
   console.log("PASS leitura da credencial isolada ao trabalho com lease vigente");
+
+  const rdoRoot = "pasta-teste-raiz-rdo";
+  const rdoPublishedId = "pasta-teste-filial-lancadas";
+  const rdoScanJob = { folderId: rdoRoot, kind: "rdo", ancestorNames: [], rdoPublishedId };
+  const rdoSummary = async (user = users.reviewer, scope = "unidade") => {
+    await role(user);
+    return (await sql`select ca_inspecao_rdo_summary(${org},${scope}) r`)[0].r;
+  };
+  const rdoRegister = async (root = rdoRoot, published = rdoPublishedId) =>
+    (await sql`select ca_inspecao_rdo_registrar(${root},${published}) r`)[0].r;
+  const rdoStatus = async () => {
+    await role(users.reviewer);
+    return (await sql`select ca_inspecao_sync_status(${org}) r`)[0].r;
+  };
+  const rdoRefresh = async () => {
+    await role();
+    await sql`update ca_inspecao_lotes set criado_em=now()-interval '16 minutes' where raiz=${rdoRoot}`;
+    await role(null, true);
+    assert.equal((await rdoRegister()).queued, 1);
+    const pending = await job();
+    assert.deepEqual(pending.scan, rdoScanJob);
+    return pending;
+  };
+  const rdoScan = (folders) => ({ kind: "scan", rdoFolders: folders });
+
+  await role();
+  assert.equal(
+    (await sql`select count(*)::int n from ca_inspecao_raizes where tipo='rdo'`)[0].n,
+    0,
+  );
+  // A fila e o estado dos laudos usam a interface local simulada do Vault e pg_net.
+  await sql`insert into vault.secrets(name,secret)
+    values('nexus_ca_inspecao_worker_url','https://nexusgestao.app/api/public/cruz-alta/inspection-worker')`;
+  await sql.unsafe(`create schema net;
+    create function net.http_post(url text, body jsonb default '{}', params jsonb default '{}',
+      headers jsonb default '{}', timeout_milliseconds integer default 1000)
+    returns bigint language sql as $$select 42::bigint$$;`);
+  await sql`insert into ca_inspecao_lotes(raiz,terminou_em,estado)
+    select drive_id,clock_timestamp(),'concluido' from ca_inspecao_raizes`;
+  const originalStatus = await rdoStatus();
+  assert.equal(originalStatus.state, "verified");
+
+  assert.deepEqual(await rdoSummary(), []);
+  await deny(rdoRegister, "42501");
+  await deny(() => rdoSummary(users.outsider), "42501");
+  await deny(() => rdoSummary(users.reviewer, "lvhf-inexistente"), "42501");
+  await role();
+  await sql.unsafe("set role anon");
+  await deny(() => sql`select ca_inspecao_rdo_summary(${org},'unidade')`, "42501");
+  await role(null, true);
+  await deny(() => sql`select * from ca_inspecao_rdo_acervo`, "42501");
+  await deny(() => rdoRegister(rdoRoot, rdoRoot), "23514");
+  await deny(() => rdoRegister(folderId, rdoPublishedId), "PT409");
+  assert.equal((await rdoRegister()).queued, 1);
+  assert.equal((await rdoRegister()).queued, 0);
+  await deny(() => rdoRegister(rdoRoot, "pasta-teste-troca"), "PT409");
+  await deny(() => rdoRegister("pasta-teste-nova-raiz", rdoPublishedId), "PT409");
+  const firstRdo = await job();
+  assert.deepEqual(firstRdo.scan, rdoScanJob);
+
+  await role();
+  const codes = await sql`select codigo from nr_cena_elementos
+    where cena='tres-tentos-cruz-alta' and tipo='lvhf' and situacao is distinct from 'Retirada'
+    order by codigo`;
+  assert.equal(codes.length, 74);
+  const folders = codes.map(({ codigo: code }) => ({
+    id: "pasta-teste-" + code.replace(".", "-"),
+    code,
+    name: code === "28.1" ? "28,01\u00a0‒\u202fObra de teste" : code + " - Obra de teste",
+    category: "montagem",
+  }));
+  const launched = {
+    id: "pasta-teste-lancada-08",
+    code: "08",
+    name: "8 - Pasta conferida",
+    category: "lancada",
+    resourceKey: "0-chave-de-teste",
+  };
+  assert.equal((await finish(firstRdo, rdoScan(folders), randomUUID())).state, "obsolete");
+  await deny(() => finish(firstRdo, rdoScan([...folders, folders[0]])), "23514");
+  await deny(() => finish(firstRdo, rdoScan([{ ...launched, id: rdoPublishedId }])), "23514");
+  await deny(
+    () => finish(firstRdo, rdoScan([{ ...folders[0], code: "29.2", name: "29.2 - Retirada" }])),
+    "23514",
+  );
+  await deny(
+    () => finish(firstRdo, rdoScan([{ ...launched, name: "08.1 - Outra linha" }])),
+    "23514",
+  );
+  assert.equal((await finish(firstRdo, rdoScan([...folders, launched]))).state, "completed");
+  assert.equal((await rdoSummary()).length, 75);
+  assert.deepEqual(await rdoSummary(users.reviewer, "lvhf-08"), [
+    launched,
+    folders.find((folder) => folder.code === "08"),
+  ]);
+  assert.deepEqual(await rdoSummary(users.reviewer, "cobertura-28.1"), [
+    folders.find((folder) => folder.code === "28.1"),
+  ]);
+  assert.deepEqual(
+    await rdoSummary(users.viewer, "lvhf-08"),
+    await rdoSummary(users.reviewer, "lvhf-08"),
+  );
+  await role();
+  await sql`update nr_cena_consultores set permite_original=false
+    where organization_id=${org} and unidade_id=${unit} and usuario_id=${users.viewer}`;
+  assert.deepEqual(await rdoSummary(users.viewer), []);
+  console.log("PASS cadastro idempotente, 74 identidades ativas e acesso a originais por escopo");
+
+  const failedRdo = await rdoRefresh();
+  await deny(() => finish(failedRdo, { ...rdoScan([]), nextPageToken: "incompleto" }), "23514");
+  assert.equal(
+    (
+      await sql`select ca_inspecao_sync_fail(${failedRdo.id},${failedRdo.lease},'pagina_incompleta',false) r`
+    )[0].r.state,
+    "failed",
+  );
+  assert.equal((await rdoSummary()).length, 75);
+  assert.deepEqual(await rdoStatus(), originalStatus);
+  const changedRdo = await rdoRefresh();
+  const moved = { ...launched, category: "montagem" };
+  assert.equal((await finish(failedRdo, rdoScan([]))).state, "obsolete");
+  assert.equal((await finish(changedRdo, rdoScan([moved]))).state, "completed");
+  assert.deepEqual(await rdoSummary(), [moved]);
+  const emptyRdo = await rdoRefresh();
+  assert.equal((await finish(emptyRdo, rdoScan([]))).state, "completed");
+  assert.deepEqual(await rdoSummary(), []);
+  console.log(
+    "PASS leitura completa substitui pastas removidas ou movidas, preserva a anterior em falhas e isola o estado dos laudos",
+  );
 } finally {
   await sql.end();
   await control.unsafe("drop database " + database + " with (force)");

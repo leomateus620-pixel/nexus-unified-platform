@@ -104,6 +104,7 @@ type FakeOptions = {
   folderParents?: string[];
   fileParents?: string[];
   parentLookup?: Command;
+  driveFixture?: (url: URL, headers: Headers) => Response;
 };
 
 function wire(o: FakeOptions = {}) {
@@ -168,6 +169,7 @@ function wire(o: FakeOptions = {}) {
     }
     assert.equal(url.origin, "https://www.googleapis.com");
     assert.equal(headers.get("authorization"), "Bearer test-google-token");
+    if (o.driveFixture) return o.driveFixture(url, headers);
     if (url.pathname === "/drive/v3/files") {
       const query = url.searchParams.get("q") ?? "";
       return Response.json(query.includes(" and name = ") ? o.parentLookup : o.list);
@@ -240,6 +242,195 @@ function driveRecord(name: string, id: string, override: Command = {}) {
     ...override,
   };
 }
+
+const RDO_ROOT_ID = "fixture-rdo-root-id";
+const RDO_PUBLISHED_ID = "fixture-rdo-published-id";
+const RDO_JOB = {
+  ...JOB_SCAN,
+  scan: { kind: "rdo", folderId: RDO_ROOT_ID, rdoPublishedId: RDO_PUBLISHED_ID },
+};
+const RDO_PUBLISHED = "LANÇADOS RDO TESTE";
+const RDO_RESOURCE_KEY = "0-fixture-resource-key";
+
+function rdoFolder(name: string, id: string, parent: string = RDO_ROOT_ID) {
+  return driveRecord(name, id, { mimeType: DRIVE_FOLDER, parents: [parent] });
+}
+
+type RdoPage = { files: Command[]; nextPageToken?: string; incompleteSearch?: boolean };
+
+function wireRdo({
+  root,
+  launched = { "": { files: [] } },
+  launchedParent = RDO_ROOT_ID,
+}: {
+  root: Record<string, RdoPage>;
+  launched?: Record<string, RdoPage>;
+  launchedParent?: string;
+}) {
+  return wire({
+    job: RDO_JOB,
+    driveFixture: (url, headers) => {
+      assert.equal(url.searchParams.has("alt"), false);
+      if (url.pathname === `/drive/v3/files/${RDO_ROOT_ID}`) {
+        return Response.json({
+          ...rdoFolder("FOTOS MONTAGEM RDO", RDO_ROOT_ID),
+          capabilities: { canListChildren: true },
+        });
+      }
+      if (url.pathname === `/drive/v3/files/${RDO_PUBLISHED_ID}`) {
+        assert.equal(
+          headers.get("X-Goog-Drive-Resource-Keys"),
+          `${RDO_PUBLISHED_ID}/${RDO_RESOURCE_KEY}`,
+        );
+        return Response.json({
+          ...rdoFolder(RDO_PUBLISHED, RDO_PUBLISHED_ID, launchedParent),
+          capabilities: { canListChildren: true },
+        });
+      }
+      assert.equal(url.pathname, "/drive/v3/files", "no requests for numbered folders");
+      const token = url.searchParams.get("pageToken") ?? "";
+      const query = url.searchParams.get("q");
+      const branch =
+        query === `'${RDO_ROOT_ID}' in parents and trashed = false and mimeType = '${DRIVE_FOLDER}'`
+          ? root
+          : launched;
+      if (branch === launched)
+        assert.equal(
+          query,
+          `'${RDO_PUBLISHED_ID}' in parents and trashed = false and mimeType = '${DRIVE_FOLDER}'`,
+        );
+      const page = branch[token];
+      assert(page, "requested an expected page cursor");
+      // Simula a filtragem por MIME executada no Drive, inclusive para arquivos soltos.
+      return Response.json({
+        ...page,
+        files: page.files.filter((item) => item["mimeType"] === DRIVE_FOLDER),
+      });
+    },
+  });
+}
+
+const launchedFolder = {
+  ...rdoFolder(RDO_PUBLISHED, RDO_PUBLISHED_ID),
+  resourceKey: RDO_RESOURCE_KEY,
+};
+
+test("RDO publishes both terminal folder listings with exact LVHF IDs and never enters a photo folder", async () => {
+  const run = wireRdo({
+    root: {
+      "": {
+        files: [
+          rdoFolder("8 - TELHADO DE TESTE", "assembly-roof-08"),
+          driveRecord("avulsa.jpg", "loose-photo-file", { mimeType: "image/jpeg" }),
+          rdoFolder("99 - CÓDIGO SEM CORRESPONDÊNCIA", "unknown-folder-id"),
+          rdoFolder("9 - NOME COM CONTROLE\u0001", "invalid-name-folder"),
+        ],
+        nextPageToken: "root-last",
+      },
+      "root-last": {
+        files: [
+          rdoFolder("11 - TELHADO DE TESTE", "assembly-roof-11"),
+          driveRecord("controle.xlsx", "spreadsheet-file", {
+            mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          }),
+          launchedFolder,
+        ],
+      },
+    },
+    launched: {
+      "": {
+        files: [rdoFolder("11 - TELHADO DE TESTE", "launched-roof-11", RDO_PUBLISHED_ID)],
+        nextPageToken: "launch-last",
+      },
+      "launch-last": {
+        files: [
+          {
+            ...rdoFolder("28,01 − RECORTE DE TESTE", "launched-roof-28-1", RDO_PUBLISHED_ID),
+            resourceKey: RDO_RESOURCE_KEY,
+          },
+          rdoFolder("29.2 - ITEM HISTÓRICO", "old-roof-folder", RDO_PUBLISHED_ID),
+        ],
+      },
+    },
+  });
+
+  assert.equal((await run.run()).status, 200);
+  assert.equal(run.finished.length, 1);
+  assert.deepEqual(run.finished[0], {
+    kind: "scan",
+    rdoFolders: [
+      { id: "assembly-roof-08", code: "08", name: "8 - TELHADO DE TESTE", category: "montagem" },
+      { id: "assembly-roof-11", code: "11", name: "11 - TELHADO DE TESTE", category: "montagem" },
+      { id: "launched-roof-11", code: "11", name: "11 - TELHADO DE TESTE", category: "lancada" },
+      {
+        id: "launched-roof-28-1",
+        code: "28.1",
+        name: "28,01 − RECORTE DE TESTE",
+        category: "lancada",
+        resourceKey: RDO_RESOURCE_KEY,
+      },
+    ],
+  });
+  const listings = run.calls.filter((url) => url.includes("/drive/v3/files?"));
+  assert.equal(listings.length, 4);
+  assert.equal(run.parsed.length, 0);
+  assert.equal(
+    run.calls.some((url) => url.includes("/storage/")),
+    false,
+  );
+});
+
+test("RDO leaves the prior snapshot in place on an incomplete page, cursor race or changed membership", async () => {
+  const folder = rdoFolder("8 - TELHADO DE TESTE", "assembly-roof-08");
+  const cases: (Parameters<typeof wireRdo>[0] & { error: string })[] = [
+    {
+      root: { "": { files: [rdoFolder(RDO_PUBLISHED, "different-launched-folder")] } },
+      error: "pasta_rdo_lancados_ausente",
+    },
+    {
+      root: { "": { files: [folder, launchedFolder] } },
+      launched: {
+        "": { files: [], nextPageToken: "launch-last" },
+        "launch-last": { files: [], incompleteSearch: true },
+      },
+      error: "listagem_drive_incompleta",
+    },
+    {
+      root: {
+        "": { files: [folder], nextPageToken: "root-last" },
+        "root-last": { files: [folder, launchedFolder] },
+      },
+      error: "listagem_rdo_inconsistente",
+    },
+    {
+      root: { "": { files: [launchedFolder] } },
+      launchedParent: PARENT,
+      error: "pasta_drive_divergente",
+    },
+  ];
+  for (const { error, ...options } of cases) {
+    const run = wireRdo(options);
+    assert.equal((await run.run()).status, 200);
+    assert.equal(run.finished.length, 0);
+    assert.equal(run.failures[0]?.["p_error"], error);
+  }
+});
+
+test("only a complete RDO root-and-child claim can start a photo-folder scan", async () => {
+  for (const scan of [
+    { kind: "rdo", folderId: RDO_ROOT_ID },
+    { ...RDO_JOB.scan, rdoPublishedId: RDO_ROOT_ID },
+    { ...RDO_JOB.scan, ancestorNames: ["fora-do-escopo"] },
+    { ...RDO_JOB.scan, pageToken: "mid-scan" },
+    { ...RDO_JOB.scan, parentFolderId: PARENT },
+  ]) {
+    const run = wire({ job: { ...RDO_JOB, scan } });
+    assert.equal((await run.run()).status, 200);
+    assert.equal(run.finished.length, 0);
+    assert.equal(run.failures[0]?.["p_error"], "pasta_da_varredura_invalida");
+    assert(run.calls.every((url) => url.startsWith(URL_SUPABASE)));
+  }
+});
 
 test("only a valid queue claim allows a Drive call, and a caller cannot supply scope", async () => {
   const run = wire({ authorized: false });

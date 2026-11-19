@@ -451,6 +451,10 @@
     {
       "path": "drizzle/migrations/0088_ca_inspecao_credencial_drive.sql",
       "sha256": "615efd0a77b2112d04f59e2eddd4be335fb72136c03340ce80db7e1c4d84ec74"
+    },
+    {
+      "path": "drizzle/migrations/0089_ca_inspecao_fotos_rdo.sql",
+      "sha256": "e2768bcd9c383badea538495aa6233442fbf1dcdb58387682c13f44a92d1bc06"
     }
   ]
 }

@@ -28,6 +28,30 @@ const clientId = "c3d779b6-c407-8ab4-8545-6bdfd6068013";
 const docId = "f618cb75-19de-4601-87d5-5fcc868af637";
 const candidateId = "d4b08715-705d-4c21-a90b-e6c7a27f170a";
 const orphanId = "a5259a69-5a18-4463-ae30-3bcbd42c4d74";
+const photoFolders = [
+  { id: "fixture-rdo-lancada-11", code: "11", name: "Pasta de teste 11", category: "lancada" },
+  {
+    id: "fixture-rdo-montagem-56",
+    code: "56",
+    name: "Pasta de teste 56",
+    category: "montagem",
+    resourceKey: "fixture-resource-key",
+  },
+  {
+    id: "fixture-rdo-montagem-28_1",
+    code: "28.1",
+    name: "Pasta de teste 28.1",
+    category: "montagem",
+  },
+];
+const driveFolders = "https://drive.google.com/drive/folders/";
+const launchedPhoto = driveFolders + photoFolders[0].id;
+const montagePhoto =
+  driveFolders + photoFolders[1].id + "?resourcekey=" + photoFolders[1].resourceKey;
+const decimalPhoto = driveFolders + photoFolders[2].id;
+const refreshedFolderId = "fixture-rdo-lancada-11-atualizada";
+const refreshedPhoto = driveFolders + refreshedFolderId;
+let rdoPhotoFolders = photoFolders;
 const layoutDescription = "TELHADO ARMAZEM 01 - LVHF 90M - (01 UNIDADE)";
 const fixtureDescription = "TELHADO ARMAZEM 01 - LVHF 91M - (01 UNIDADE)";
 const fixtureSeal = "99990117";
@@ -197,6 +221,7 @@ const server = http.createServer(async (req, res) => {
       historico: [],
       documentos: [],
     });
+  if (rpc === "ca_inspecao_rdo_summary") return json(rdoPhotoFolders);
   if (rpc === "ca_inspecao_summary")
     return json({
       items: [fixture, layoutOnlyFixture],
@@ -227,6 +252,7 @@ const server = http.createServer(async (req, res) => {
     fixture.documents = [source];
     fixture.availability = "verified";
     fixture.version++;
+    rdoPhotoFolders = [{ ...photoFolders[0], id: refreshedFolderId }, ...photoFolders.slice(1)];
     return json(fixture);
   }
   if (rpc === "ca_inspecao_sync_status")
@@ -296,6 +322,8 @@ try {
     .waitFor();
   assert.equal(await guest.getByText("LAC " + fixtureSeal, { exact: false }).count(), 0);
   assert.equal(await guest.getByText(fixtureDescription, { exact: false }).count(), 0);
+  assert.equal(await guest.locator(".ca-rdo-photos").count(), 0);
+  assert.equal(await guest.locator(`a[href^="${driveFolders}"]`).count(), 0);
   assert.equal(trace.ids.length, 0);
   assert.equal(await guest.locator(".ca-reader-title").count(), 0);
   await guest.close();
@@ -331,6 +359,26 @@ try {
     .getByText(privateTitle, { exact: true })
     .waitFor();
   await page.locator(".ca-inspections-related").getByText(privateTitle, { exact: true }).waitFor();
+  const photos = page.getByRole("region", { name: "Fotos de montagem" });
+  const launchedLink = photos.getByRole("link", { name: /Lançadas no RDO/ });
+  await launchedLink.waitFor();
+  await photos.getByRole("heading", { name: privateTitle, exact: true }).waitFor();
+  assert.equal(await photos.getByRole("link").count(), 1);
+  assert.equal(await launchedLink.getAttribute("href"), launchedPhoto);
+  assert.equal(await launchedLink.getAttribute("target"), "_blank");
+  assert.equal(await launchedLink.getAttribute("rel"), "noopener noreferrer");
+  assert.equal(await photos.locator("img, video, iframe").count(), 0);
+  await context.route("https://drive.google.com/**", (route) =>
+    route.fulfill({ status: 200, body: "Pasta simulada no teste local." }),
+  );
+  const initialMap = page.url();
+  const initialPose = await page.locator(".ca-stage canvas").getAttribute("data-camera");
+  const [photoTab] = await Promise.all([context.waitForEvent("page"), launchedLink.click()]);
+  await photoTab.waitForURL(launchedPhoto);
+  assert.equal(await photoTab.evaluate(() => window.opener), null);
+  assert.equal(page.url(), initialMap);
+  assert.equal(await page.locator(".ca-stage canvas").getAttribute("data-camera"), initialPose);
+  await photoTab.close();
   const search = page.getByRole("searchbox", { name: "Buscar setor, estrutura ou LVHF" });
   await search.fill("LAC " + fixtureSeal);
   await page.locator(".ca-browser").getByText(privateTitle, { exact: true }).waitFor();
@@ -346,6 +394,7 @@ try {
       url.searchParams.get("objeto") === "lvhf-11" && url.searchParams.get("aba") === "ficha",
   );
   await page.getByText("18/05/2024", { exact: true }).waitFor();
+  assert.equal(await launchedLink.getAttribute("href"), launchedPhoto);
   await page
     .locator(".ca-drawer-head")
     .getByRole("heading", { name: privateTitle, exact: true })
@@ -375,6 +424,8 @@ try {
   await review.getByRole("checkbox", { name: /Próxima inspeção/ }).check();
   await review.getByRole("button", { name: "Confirmar validação" }).click();
   await review.waitFor({ state: "detached" });
+  await photos.locator(`a[href="${refreshedPhoto}"]`).waitFor();
+  assert.equal(await photos.locator(`a[href="${launchedPhoto}"]`).count(), 0);
   assert.deepEqual(trace.decisions[0]?.p_decisions, {
     evidence: candidateId,
     action: "approve",
@@ -386,6 +437,12 @@ try {
   await page.getByText("Sincronização solicitada.", { exact: true }).waitFor();
   await page.getByText("Arquivos aguardando identificação (1)", { exact: true }).click();
   await page.getByText("Fixture local - sem identificador.pdf", { exact: true }).waitFor();
+  assert.equal(await photos.count(), 0);
+  await page.goto(map + "?objeto=cobertura-28.1");
+  const decimalLink = photos.getByRole("link", { name: /Pasta de montagem/ });
+  await decimalLink.waitFor();
+  assert.equal(await photos.getByRole("link").count(), 1);
+  assert.equal(await decimalLink.getAttribute("href"), decimalPhoto);
   await page.goto(map + "?objeto=lvhf-56&aba=ficha");
   await page
     .locator(".ca-drawer-head")
@@ -393,6 +450,11 @@ try {
     .waitFor();
   await page.getByText("Nenhum laudo de inspeção vinculado.", { exact: true }).waitFor();
   assert.equal(await page.locator(".ca-inspection-dates").count(), 0);
+  assert.equal(await photos.getByRole("link").count(), 1);
+  assert.equal(
+    await photos.getByRole("link", { name: /Pasta de montagem/ }).getAttribute("href"),
+    montagePhoto,
+  );
   await page.screenshot({ path: folder + "/05-identificacao-sem-laudo.png" });
   await page.goto(map + "?objeto=estrutura-armazem-01");
   const related = page
@@ -400,6 +462,10 @@ try {
     .getByRole("button")
     .filter({ hasText: privateTitle });
   await related.waitFor();
+  await photos.getByRole("heading", { name: privateTitle, exact: true }).waitFor();
+  await photos.getByRole("heading", { name: layoutOnlyTitle, exact: true }).waitFor();
+  assert.equal(await photos.getByRole("link").count(), 2);
+  assert.equal(await photos.locator(`a[href="${decimalPhoto}"]`).count(), 0);
   const fromStructure = await camera.getAttribute("data-camera");
   await related.click();
   await page.waitForURL((url) => url.searchParams.get("objeto") === "lvhf-11");
@@ -415,6 +481,8 @@ try {
   assert.equal(await page.locator(".ca-inspection-markers").count(), 0);
   assert.equal(await page.locator(".ca-reader-title").count(), 0);
   assert.equal(await page.getByText(fixtureSeal, { exact: false }).count(), 0);
+  assert.equal(await page.locator(".ca-rdo-photos").count(), 0);
+  assert.equal(await page.locator(`a[href^="${driveFolders}"]`).count(), 0);
 
   const mobileContext = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -436,6 +504,11 @@ try {
     .getByRole("heading", { name: privateTitle, exact: true })
     .waitFor();
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
+  const mobilePhoto = mobile
+    .getByRole("region", { name: "Fotos de montagem" })
+    .getByRole("link", { name: /Lançadas no RDO/ });
+  assert.equal(await mobilePhoto.getAttribute("href"), refreshedPhoto);
+  assert((await mobilePhoto.boundingBox())?.height >= 44);
   await mobile
     .locator(".ca-inspection-sheet")
     .evaluate((section) => section.scrollIntoView({ block: "start" }));
@@ -456,6 +529,9 @@ try {
     "unmatched-unit",
     "authorized-sync-request",
     "related-structure",
+    "rdo-private-folders-current-tag",
+    "rdo-opens-new-tab-with-camera-preserved",
+    "rdo-folder-refresh",
     "logout-clears-private-view",
     "mobile",
   ];

@@ -11,6 +11,7 @@ import {
   sha256Pattern,
   SyncFailure,
 } from "./drive.server";
+import { scanRdoFolders } from "./rdo.server";
 import {
   createInspectionService,
   inspectionBackendError,
@@ -26,7 +27,7 @@ const WORKER_TIMEOUT_MS = 43_000;
 const uuid = z.string().uuid();
 const id = z.string().regex(driveId);
 const fileName = z.string().min(1).max(500);
-const rootKind = z.enum(["laudo", "montada", "layout"]);
+const rootKind = z.enum(["laudo", "montada", "layout", "rdo"]);
 const lease = z.object({ id: uuid, lease: uuid });
 const scan = z.object({
   folderId: id,
@@ -34,6 +35,7 @@ const scan = z.object({
   pageToken: z.string().min(1).max(4096).nullish(),
   resourceKey: id.nullish(),
   parentFolderId: id.optional(),
+  rdoPublishedId: id.optional(),
   ancestorNames: z.array(fileName).max(4).optional(),
 });
 const source = z.object({
@@ -236,28 +238,48 @@ export function createInspectionWorker(options: WorkerOptions) {
           resourceKey,
           pageToken,
           parentFolderId,
+          rdoPublishedId,
           ancestorNames = [],
         } = current.scan;
-        if (
-          (ancestorNames.length && kind !== "laudo") ||
-          (!ancestorNames.length && folderId !== inspectionFolders[kind])
-        )
-          throw new SyncFailure("pasta_da_varredura_invalida");
-        const page = await drive.listFolder(
-          folderId,
-          resourceKey ?? null,
-          pageToken ?? null,
-          signal,
-          {
-            parent: kind === "montada" ? inspectionFolders.layout : parentFolderId,
-            name: ancestorNames.at(-1),
-          },
-        );
-        result = {
-          kind: "scan",
-          children: classifyInspectionFiles(kind, page.items, ancestorNames),
-          nextPageToken: page.nextPageToken,
-        };
+        if (kind === "rdo") {
+          if (
+            !rdoPublishedId ||
+            rdoPublishedId === folderId ||
+            pageToken ||
+            parentFolderId ||
+            ancestorNames.length
+          )
+            throw new SyncFailure("pasta_da_varredura_invalida");
+          result = await scanRdoFolders(
+            drive,
+            folderId,
+            rdoPublishedId,
+            resourceKey ?? null,
+            signal,
+          );
+        } else {
+          if (
+            rdoPublishedId ||
+            (ancestorNames.length && kind !== "laudo") ||
+            (!ancestorNames.length && folderId !== inspectionFolders[kind])
+          )
+            throw new SyncFailure("pasta_da_varredura_invalida");
+          const page = await drive.listFolder(
+            folderId,
+            resourceKey ?? null,
+            pageToken ?? null,
+            signal,
+            {
+              parent: kind === "montada" ? inspectionFolders.layout : parentFolderId,
+              name: ancestorNames.at(-1),
+            },
+          );
+          result = {
+            kind: "scan",
+            children: classifyInspectionFiles(kind, page.items, ancestorNames),
+            nextPageToken: page.nextPageToken,
+          };
+        }
       } else {
         result = await processSource(current.source, drive, signal);
       }

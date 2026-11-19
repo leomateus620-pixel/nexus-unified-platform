@@ -7,8 +7,8 @@ export const inspectionFolders = {
   montada: "1FjvgNs3u0e4cYqgvGTiEhE6l5u-8ha5K",
   laudo: "1Dh_gK_YehJ7-1nEj9RRCGuH0IZwR7bte",
 } as const;
-export type FolderKind = keyof typeof inspectionFolders;
-export type SourceKind = FolderKind | "placa";
+export type FolderKind = keyof typeof inspectionFolders | "rdo";
+export type SourceKind = Exclude<FolderKind, "rdo"> | "placa";
 export type ScanItem = DriveItem & {
   kind: SourceKind;
   code: string | null;
@@ -20,11 +20,13 @@ export function knownLvhf(code: string) {
   return codes.has(code);
 }
 
+const driveDashes = /[\u2010-\u2015\u2212]/g;
+
 const normalize = (name: string) =>
   name
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
-    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .replace(driveDashes, "-")
     .toUpperCase()
     .trim();
 const segments = (name: string) =>
@@ -43,8 +45,18 @@ function firstCode(name: string) {
   return numericCode(segments(name)[0] ?? "");
 }
 
+export function rdoFolderCode(name: string) {
+  const code = numericCode(
+    name
+      .replace(driveDashes, "-")
+      .trim()
+      .split(/\s+-\s+/)[0] ?? "",
+  );
+  return code && code !== "29.2" && knownLvhf(code) ? code : null;
+}
+
 export function classifyInspectionFiles(
-  kind: FolderKind,
+  kind: Exclude<FolderKind, "rdo">,
   items: DriveItem[],
   ancestorNames: string[],
 ) {

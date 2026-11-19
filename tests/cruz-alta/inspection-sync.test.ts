@@ -115,7 +115,7 @@ function wire(o: FakeOptions = {}) {
   const transport: typeof fetch = async (raw, init) => {
     const url = new URL(String(raw));
     const headers = new Headers(init?.headers);
-    assert.equal(init?.redirect, "error");
+    assert.equal(init?.redirect, "manual");
     calls.push(url.href);
     if (url.origin === URL_SUPABASE) {
       assert.equal(headers.get("apikey"), "sb_secret_local_fixture");
@@ -344,7 +344,7 @@ test("setup forwards only normalized credential fields and lets the private RPC 
       const headers = new Headers(init?.headers);
       assert.equal(headers.get("apikey"), "sb_secret_local_fixture");
       assert.equal(headers.get("X-Nexus-Drive-Setup-Token"), null);
-      assert.equal(init?.redirect, "error");
+      assert.equal(init?.redirect, "manual");
       assert.deepEqual(JSON.parse(String(init?.body)), {
         p_token: TOKEN,
         p_credential: vaultCredential,

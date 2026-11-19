@@ -219,7 +219,7 @@ export function createDrive(credentials: Credentials, transport = fetch) {
           grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
           assertion: jwt,
         }),
-        redirect: "error",
+        redirect: "manual",
         signal,
       });
       expectSuccess(response, "autenticacao_drive_indisponivel");
@@ -230,7 +230,7 @@ export function createDrive(credentials: Credentials, transport = fetch) {
     })();
     const headers = new Headers({ Authorization: `Bearer ${await bearer}` });
     if (key) headers.set("X-Goog-Drive-Resource-Keys", `${id}/${key}`);
-    const response = await transport(`${DRIVE_API}${path}`, { headers, redirect: "error", signal });
+    const response = await transport(`${DRIVE_API}${path}`, { headers, redirect: "manual", signal });
     expectSuccess(response, "leitura_drive_indisponivel");
     return response;
   }

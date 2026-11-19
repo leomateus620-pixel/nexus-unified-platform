@@ -6,6 +6,7 @@ import { nrResult } from "@/features/nr/nr.functions";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { cruzAlta } from "./context";
 import {
+  inspectionAdoptFields,
   inspectionFields,
   type CaInspectionLine,
   type CaInspectionSummary,
@@ -25,16 +26,22 @@ const sourceIssues: Record<string, string> = {
   extracao_documental_indisponivel: "Confira as datas e as condições de uso no PDF original.",
 };
 const explainIssue = (issue: string) => sourceIssues[issue] ?? issue;
-const field = z.enum(inspectionFields);
-const storedFields = z.record(
-  field,
-  z.object({
-    value: z.string().date(),
-    page,
-    label: z.string(),
-    evidence: uuid.optional(),
-  }),
-);
+const field = z.enum(inspectionAdoptFields);
+const rawField = z.object({
+  value: z.string().date(),
+  page,
+  label: z.string(),
+  evidence: uuid.optional(),
+});
+const sealValue = z.string().regex(/^\d+(?: \/ \d+)*$/);
+const storedSealField = rawField.extend({ value: sealValue });
+const storedFields = z.object({
+  installation: rawField.optional(),
+  rt: rawField.optional(),
+  inspection: rawField.optional(),
+  due: rawField.optional(),
+  seal: storedSealField.optional(),
+});
 const restriction = z.object({ text: z.string(), page, evidence: uuid.optional() });
 const storedDocument = z.object({
   id: uuid,
@@ -51,6 +58,18 @@ const storedDocument = z.object({
 const storedLine = z.object({
   key,
   version: z.number().int().nonnegative(),
+  description: z.string().nullish(),
+  seal: z
+    .discriminatedUnion("source", [
+      z.object({
+        source: z.literal("layout"),
+        value: sealValue,
+        page,
+        revision: z.number().int().nonnegative(),
+      }),
+      storedSealField.extend({ source: z.literal("pdf") }),
+    ])
+    .nullish(),
   availability: z.enum(["stale", "review", "verified", "unconfirmed"]),
   fields: storedFields,
   restriction: restriction.nullable(),
@@ -88,10 +107,24 @@ function asLine(row: z.infer<typeof storedLine>): CaInspectionLine {
   }));
   const byId = new Map(documents.map((doc) => [doc.id, doc]));
   const fields: CaInspectionLine["fields"] = {};
-  for (const [name, data] of Object.entries(row.fields)) {
-    const doc = data.evidence && byId.get(data.evidence);
-    if (doc) fields[name as (typeof inspectionFields)[number]] = { ...doc, ...data };
+  for (const name of inspectionFields) {
+    const data = row.fields[name];
+    const doc = data?.evidence && byId.get(data.evidence);
+    if (doc && data) fields[name] = { ...doc, ...data };
   }
+  const sealDocument =
+    row.seal?.source === "pdf" && row.seal.evidence && byId.get(row.seal.evidence);
+  const seal =
+    row.seal?.source === "layout"
+      ? row.seal
+      : sealDocument && row.seal
+        ? {
+            ...sealDocument,
+            page: row.seal.page,
+            value: row.seal.value,
+            source: "document" as const,
+          }
+        : undefined;
   const source = row.restriction?.evidence && byId.get(row.restriction.evidence);
   const reviews = row.documents
     .filter((doc) => doc.available && doc.state === "pending")
@@ -99,11 +132,13 @@ function asLine(row: z.infer<typeof storedLine>): CaInspectionLine {
       id: doc.id,
       reasons: (doc.issues?.length ? doc.issues : row.issues).map(explainIssue),
       restriction: doc.restriction?.text ?? null,
-      fields: inspectionFields.filter((name) => !!doc.fields?.[name]),
+      fields: inspectionAdoptFields.filter((name) => !!doc.fields?.[name]),
     }));
   const first = reviews[0];
   return {
     key: row.key,
+    ...(row.description ? { description: row.description } : {}),
+    ...(seal ? { seal } : {}),
     fields,
     documents,
     version: row.version,
@@ -158,6 +193,8 @@ export const caInspectionSummary = createServerFn({ method: "GET" })
       lines: summary.items
         .filter(
           (line) =>
+            line.description ||
+            line.seal ||
             line.documents.length > 0 ||
             line.availability === "review" ||
             line.availability === "stale",
@@ -223,7 +260,7 @@ export const caInspectionReview = createServerFn({ method: "POST" })
         version: z.number().int().nonnegative(),
         evidence: uuid,
         action: z.enum(["approve", "dismiss"]),
-        adopt: z.array(field).max(4).optional(),
+        adopt: z.array(field).max(5).optional(),
         restriction: z.enum(["keep", "adopt", "remove"]).optional(),
         note: z.string().trim().max(2500).optional(),
       })

@@ -24,6 +24,7 @@ const credentials = {
 };
 const PDF = new TextEncoder().encode("%PDF-1.7\nDocumento de teste sintético\n%%EOF");
 const HASH = Buffer.from(await crypto.subtle.digest("SHA-256", PDF)).toString("hex");
+const SEAL = { value: "001234", page: 1, label: "Lacre" };
 const SOURCE = {
   id: FILE,
   name: NAME,
@@ -37,6 +38,18 @@ const SOURCE = {
   resourceKey: null,
   code: "57.1",
   revision: 0,
+};
+const LAYOUT_SOURCE = {
+  ...SOURCE,
+  name: "00 - LAYOUT GERAL - LVHF 3 TENTOS CRUZ ALTA - A1.pdf",
+  kind: "layout",
+  parents: [inspectionFolders.layout],
+  code: null,
+  revision: null,
+};
+const LAYOUT = {
+  revision: 56,
+  rows: [{ code: "57.1", description: "LAJE BARRACÃO", seal: "000761" }],
 };
 const JOB_SCAN = {
   id: JOB,
@@ -56,6 +69,9 @@ type FakeOptions = {
   uploadStatus?: number;
   parseThrows?: boolean;
   parseWrongIdentity?: boolean;
+  parseSeal?: boolean;
+  parseLayoutThrows?: boolean;
+  driveSource?: { name: string; parents: string[]; sha256: string };
 };
 
 function wire(o: FakeOptions = {}) {
@@ -63,6 +79,7 @@ function wire(o: FakeOptions = {}) {
   const finished: Command[] = [];
   const failures: Command[] = [];
   const parsed: unknown[] = [];
+  let layoutReads = 0;
   const transport: typeof fetch = async (raw, init) => {
     const url = new URL(String(raw));
     const headers = new Headers(init?.headers);
@@ -124,8 +141,13 @@ function wire(o: FakeOptions = {}) {
       });
     assert.equal(url.pathname, `/drive/v3/files/${FILE}`);
     if (url.searchParams.get("alt") === "media") return new Response(PDF);
+    const driveSource = o.driveSource ?? SOURCE;
     return Response.json(
-      driveRecord(SOURCE.name, FILE, { version: o.relistVersion ?? SOURCE.version }),
+      driveRecord(driveSource.name, FILE, {
+        parents: driveSource.parents,
+        sha256Checksum: driveSource.sha256,
+        version: o.relistVersion ?? SOURCE.version,
+      }),
     );
   };
   const worker = createInspectionWorker({
@@ -143,7 +165,14 @@ function wire(o: FakeOptions = {}) {
         restriction: null,
         pages: 2,
         ...(o.parseWrongIdentity ? { identityMismatch: true as const } : {}),
+        ...(o.parseSeal ? { seal: SEAL } : {}),
       };
+    },
+    parseLayout: async (bytes) => {
+      layoutReads += 1;
+      assert.deepEqual(bytes, PDF);
+      if (o.parseLayoutThrows) throw new Error("Layout parser diagnostic must stay private");
+      return LAYOUT;
     },
   });
   const run = async (token = TOKEN) =>
@@ -154,7 +183,7 @@ function wire(o: FakeOptions = {}) {
         body: JSON.stringify({ url: "https://outside.test/private", count: 1000 }),
       }),
     );
-  return { calls, finished, failures, parsed, run };
+  return { calls, finished, failures, parsed, layoutReads: () => layoutReads, run };
 }
 
 function driveRecord(name: string, id: string, override: Command = {}) {
@@ -256,7 +285,7 @@ test("parser faults retain the original for review without presenting unverified
 });
 
 test("an explicit cover identity conflict is kept out of the rooftop and line links", async () => {
-  const run = wire({ job: JOB_PROCESS, parseWrongIdentity: true });
+  const run = wire({ job: JOB_PROCESS, parseWrongIdentity: true, parseSeal: true });
   assert.equal((await run.run()).status, 200);
   assert.equal(run.finished[0]?.["status"], "review");
   assert.equal(run.finished[0]?.["sha256"], HASH);
@@ -264,6 +293,68 @@ test("an explicit cover identity conflict is kept out of the rooftop and line li
   assert.deepEqual(run.finished[0]?.["itemKeys"], []);
   assert.deepEqual(run.finished[0]?.["issues"], ["O código da capa diverge"]);
   assert.equal("identityMismatch" in run.finished[0]!, false);
+  assert.equal("seal" in run.finished[0]!, false);
+});
+
+test("a seal travels with the source page and preserves the exact printed number", async () => {
+  const run = wire({ job: JOB_PROCESS, parseSeal: true });
+  assert.equal((await run.run()).status, 200);
+  assert.equal(run.finished[0]?.["sha256"], HASH);
+  assert.deepEqual(run.finished[0]?.["itemKeys"], ["lvhf-57.1"]);
+  assert.deepEqual(run.finished[0]?.["seal"], SEAL);
+});
+
+test("layout rows retain their revision, digest and exact transcription from the pinned folder", async () => {
+  const run = wire({
+    job: { ...JOB_PROCESS, source: LAYOUT_SOURCE },
+    driveSource: LAYOUT_SOURCE,
+  });
+  assert.equal((await run.run()).status, 200);
+  assert.equal(run.layoutReads(), 1);
+  assert.equal(run.parsed.length, 0);
+  assert.deepEqual(run.finished[0]?.["layout"], { ...LAYOUT, sha256: HASH });
+  assert.deepEqual(run.finished[0]?.["itemKeys"], ["unidade"]);
+  assert.equal(run.finished[0]?.["sha256"], null);
+  assert.equal(
+    run.calls.some((url) => url.includes("/storage/")),
+    false,
+  );
+});
+
+test("an unparseable or contradictory layout leaves only an issue for the reviewer", async () => {
+  const failed = wire({
+    job: { ...JOB_PROCESS, source: LAYOUT_SOURCE },
+    driveSource: LAYOUT_SOURCE,
+    parseLayoutThrows: true,
+  });
+  assert.equal((await failed.run()).status, 200);
+  assert.equal(failed.finished[0]?.["status"], "review");
+  assert.deepEqual(failed.finished[0]?.["issues"], ["extracao_do_layout_indisponivel"]);
+  assert.equal("layout" in failed.finished[0]!, false);
+
+  const contradictory = wire({
+    job: { ...JOB_PROCESS, source: { ...LAYOUT_SOURCE, revision: 54 } },
+    driveSource: LAYOUT_SOURCE,
+  });
+  assert.equal((await contradictory.run()).status, 200);
+  assert.deepEqual(contradictory.finished[0]?.["issues"], ["revisao_do_layout_divergente"]);
+  assert.equal("layout" in contradictory.finished[0]!, false);
+});
+
+test("layout jobs outside the pinned folder or with a digest mismatch never reach the parser", async () => {
+  const outside = wire({
+    job: { ...JOB_PROCESS, source: { ...LAYOUT_SOURCE, parents: [PARENT] } },
+  });
+  assert.equal((await outside.run()).status, 200);
+  assert.equal(outside.failures[0]?.["p_error"], "pasta_do_layout_invalida");
+  assert(outside.calls.every((url) => url.startsWith(URL_SUPABASE)));
+
+  const source = { ...LAYOUT_SOURCE, sha256: "b".repeat(64) };
+  const corrupted = wire({ job: { ...JOB_PROCESS, source }, driveSource: source });
+  assert.equal((await corrupted.run()).status, 200);
+  assert.equal(corrupted.failures[0]?.["p_error"], "hash_drive_divergente");
+  assert.equal(corrupted.layoutReads(), 0);
+  assert.equal(corrupted.finished.length, 0);
 });
 
 test("a changed version, an oversized PDF, and a mounted-only reference avoid binary reads", async () => {

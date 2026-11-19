@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { AlertTriangle, ChevronRight, FileCheck2, FileText, RefreshCw } from "lucide-react";
 import { cruzAlta } from "./context";
 import { objects } from "./manifest";
+import { hasInspectionEvidence, technicalTitle } from "./inspection-display";
 import { caInspectionOpen, caInspectionReview, caInspectionSyncNow } from "./inspection.functions";
 import {
   formatInspectionDate,
@@ -12,7 +13,7 @@ import {
   type CaInspectionEvidence,
   type CaInspectionLine,
   type CaInspectionSummary,
-  type InspectionField,
+  type InspectionAdoptField,
 } from "./inspection-domain";
 
 const Pdf = lazy(() =>
@@ -20,11 +21,12 @@ const Pdf = lazy(() =>
     default: module.NrOriginalPreview,
   })),
 );
-const fieldLabels: Record<InspectionField, string> = {
+const fieldLabels: Record<InspectionAdoptField, string> = {
   installation: "Instalação",
   rt: "Responsabilidade técnica (RT)",
   inspection: "Última inspeção",
   due: "Próxima inspeção",
+  seal: "Lacre",
 };
 const dueLabels = {
   current: "Prazo vigente",
@@ -84,7 +86,12 @@ export function InspectionSourcesReader({
   const open = useServerFn(caInspectionOpen);
   const line = summary?.lines.find(({ key }) => key === object);
   const references = line
-    ? [line.restriction, ...Object.values(line.fields), ...line.documents]
+    ? [
+        line.restriction,
+        line.seal?.source === "document" ? line.seal : null,
+        ...Object.values(line.fields),
+        ...line.documents,
+      ]
     : [];
   const evidence = page
     ? references.find((item) => item?.id === evidenceId && item.page === page)
@@ -182,14 +189,20 @@ export function RelatedInspections({
             <li key={line.key}>
               <button type="button" onClick={() => onOpen(line.key)}>
                 <span>
-                  <strong>{item?.name}</strong>
+                  <strong>{item && technicalTitle(item, line)}</strong>
                   <small>
-                    Próxima inspeção · {formatInspectionDate(line.fields.due?.value)}
-                    {line.status === "review"
-                      ? " · Em revisão"
-                      : line.status === "stale"
-                        ? " · Atualização pendente"
-                        : ""}
+                    {hasInspectionEvidence(line) ? (
+                      <>
+                        Próxima inspeção · {formatInspectionDate(line.fields.due?.value)}
+                        {line.status === "review"
+                          ? " · Em revisão"
+                          : line.status === "stale"
+                            ? " · Atualização pendente"
+                            : ""}
+                      </>
+                    ) : (
+                      "Sem laudo de inspeção vinculado"
+                    )}
                   </small>
                 </span>
                 <span className="ca-inspection-deadline" data-state={due}>
@@ -221,6 +234,7 @@ export function InspectionSection({
   const isUnit = object === "unidade";
   const line = summary?.lines.find(({ key }) => key === object);
   const due = inspectDueStatus(line?.fields.due?.value ?? null);
+  const withInspection = !!line && hasInspectionEvidence(line);
   const configured = summary && summary.status !== "not_configured";
   const reviews = line?.reviews ?? (line?.review ? [line.review] : []);
   const sync = useServerFn(caInspectionSyncNow);
@@ -252,7 +266,10 @@ export function InspectionSection({
       ) : null}
       {isUnit && configured && (
         <>
-          <p>{summary.lines.length} linhas com registros de laudos ou inspeções.</p>
+          <p>
+            {summary.lines.filter(hasInspectionEvidence).length} linhas com registros de laudos ou
+            inspeções.
+          </p>
           {lastSync && !Number.isNaN(lastSync.getTime()) && (
             <p className="ca-hint">
               Última sincronização{" "}
@@ -317,7 +334,8 @@ export function InspectionSection({
       )}
       {line && (
         <>
-          {line.status !== "verified" && (
+          {!withInspection && <p>Nenhum laudo de inspeção vinculado.</p>}
+          {withInspection && line.status !== "verified" && (
             <p className="ca-inspection-caution">
               <AlertTriangle size={15} aria-hidden="true" />
               {line.status === "review"
@@ -327,22 +345,43 @@ export function InspectionSection({
                 : "A sincronização deste registro está pendente."}
             </p>
           )}
-          <dl className="ca-metadata ca-inspection-dates">
-            {inspectionFields.map((field) => {
-              const datum = line.fields[field];
-              return (
-                <div key={field}>
-                  <dt>{fieldLabels[field]}</dt>
-                  <dd>{formatInspectionDate(datum?.value)}</dd>
-                  {datum && (
-                    <dd>
-                      <SourceButton evidence={datum} onOpen={onOpen} />
-                    </dd>
+          {withInspection && (
+            <dl className="ca-metadata ca-inspection-dates">
+              {inspectionFields.map((field) => {
+                const datum = line.fields[field];
+                return (
+                  <div key={field}>
+                    <dt>{fieldLabels[field]}</dt>
+                    <dd>{formatInspectionDate(datum?.value)}</dd>
+                    {datum && (
+                      <dd>
+                        <SourceButton evidence={datum} onOpen={onOpen} />
+                      </dd>
+                    )}
+                  </div>
+                );
+              })}
+            </dl>
+          )}
+          {line.seal && (
+            <dl className="ca-metadata ca-inspection-seal">
+              <div>
+                <dt>Lacre registrado</dt>
+                <dd>
+                  <strong>LAC {line.seal.value}</strong>
+                </dd>
+                <dd>
+                  {line.seal.source === "layout" ? (
+                    <span className="ca-hint">
+                      LAYOUT GERAL · REV. {line.seal.revision} · P. {line.seal.page}
+                    </span>
+                  ) : (
+                    <SourceButton evidence={line.seal} onOpen={onOpen} />
                   )}
-                </div>
-              );
-            })}
-          </dl>
+                </dd>
+              </div>
+            </dl>
+          )}
           {line.restriction && (
             <section className="ca-inspection-restriction">
               <h4>
@@ -352,10 +391,12 @@ export function InspectionSection({
               <SourceButton evidence={line.restriction} onOpen={onOpen} />
             </section>
           )}
-          <p className="ca-hint">
-            O prazo e as restrições aqui apresentados são registros documentais. A liberação de uso
-            segue a avaliação operacional da linha.
-          </p>
+          {withInspection && (
+            <p className="ca-hint">
+              O prazo e as restrições aqui apresentados são registros documentais. A liberação de
+              uso segue a avaliação operacional da linha.
+            </p>
+          )}
           {!!line.documents.length && (
             <details className="ca-inspection-documents">
               <summary>Documentos de evidência ({line.documents.length})</summary>
@@ -398,7 +439,7 @@ function InspectionReview({
   refresh: () => Promise<unknown>;
 }) {
   const submitReview = useServerFn(caInspectionReview);
-  const [adopt, setAdopt] = useState<InspectionField[]>([]);
+  const [adopt, setAdopt] = useState<InspectionAdoptField[]>([]);
   const [restriction, setRestriction] = useState<"adopt" | "keep" | "remove" | "">("");
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
@@ -436,7 +477,11 @@ function InspectionReview({
   }
   return (
     <details className="ca-inspection-review">
-      <summary>Validar a restrição e as datas</summary>
+      <summary>
+        {review.fields?.includes("seal")
+          ? "Validar restrição, datas e lacre"
+          : "Validar a restrição e as datas"}
+      </summary>
       {evidence && <SourceButton evidence={evidence} onOpen={onOpen} />}
       {!!review.reasons.length && (
         <ul>
@@ -448,7 +493,7 @@ function InspectionReview({
       {review.restriction && <p className="ca-inspection-candidate">{review.restriction}</p>}
       {!!review.fields?.length && (
         <fieldset>
-          <legend>Datas a adotar desta evidência</legend>
+          <legend>Dados a adotar desta evidência</legend>
           {review.fields.map((field) => (
             <label className="ca-inspection-choice" key={field}>
               <input
@@ -464,7 +509,12 @@ function InspectionReview({
               />
               <span>
                 {fieldLabels[field]}{" "}
-                <small>Atual: {formatInspectionDate(line.fields[field]?.value)}</small>
+                <small>
+                  Atual:{" "}
+                  {field === "seal"
+                    ? (line.seal?.value ?? "A confirmar")
+                    : formatInspectionDate(line.fields[field]?.value)}
+                </small>
               </span>
             </label>
           ))}

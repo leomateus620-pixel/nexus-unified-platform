@@ -3,11 +3,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { formatInspectionDate, inspectDueStatus, type CaInspectionLine } from "./inspection-domain";
 import type { CruzScene } from "./navigation";
 import { objects } from "./manifest";
+import { hasInspectionEvidence, technicalTitle } from "./inspection-display";
 
 const objectById = new Map(objects.map((object) => [object.id, object]));
 
 const documentation = {
   verified: "Registro conferido",
+  layout: "Identificação no layout",
   review: "Em revisão",
   stale: "Atualização pendente",
   restriction: "Restrição registrada",
@@ -16,13 +18,22 @@ const documentation = {
 };
 function markerState(line: CaInspectionLine): keyof typeof documentation {
   const due = inspectDueStatus(line.fields.due?.value ?? null);
+  if (!hasInspectionEvidence(line) && (line.description || line.seal)) return "layout";
   if (due === "overdue") return "overdue";
   if (line.restriction) return "restriction";
   if (line.status !== "verified") return line.status;
   if (due === "soon") return "soon";
   return "verified";
 }
-const paintOrder = ["overdue", "restriction", "review", "stale", "soon", "verified"] as const;
+const paintOrder = [
+  "overdue",
+  "restriction",
+  "review",
+  "stale",
+  "soon",
+  "layout",
+  "verified",
+] as const;
 
 export function InspectionMarkers({
   lines,
@@ -71,17 +82,20 @@ export function InspectionMarkers({
         const status =
           paintOrder.find((state) => lines.some((line) => markerState(line) === state)) ??
           "verified";
+        const coverage = objectById.get(cover);
         const title = multiple
-          ? (objectById.get(cover)?.name ?? "Linhas da cobertura")
-          : (single?.name ?? "Linha de vida");
+          ? coverage
+            ? technicalTitle(coverage)
+            : "Linhas da cobertura"
+          : single
+            ? technicalTitle(single, lines[0])
+            : "Linha de vida";
         const firstDue = lines
           .flatMap((line) => (line.fields.due ? [line.fields.due.value] : []))
           .sort()[0];
         const dueText =
           (multiple ? "Primeiro prazo · " : "Próxima inspeção · ") + formatInspectionDate(firstDue);
-        const name = multiple
-          ? lines.length + " laudos e inspeções nesta cobertura"
-          : "Laudos e inspeções · LVHF " + code;
+        const groupLabel = multiple ? lines.length + " linhas nesta cobertura. " : "";
         return (
           <div
             key={cover}
@@ -105,7 +119,15 @@ export function InspectionMarkers({
               className="ca-inspection-pin"
               data-pin-control
               data-state={status}
-              aria-label={name + ". " + title + ". " + dueText + ". " + documentation[status]}
+              aria-label={
+                title +
+                ". " +
+                groupLabel +
+                dueText +
+                ". " +
+                documentation[status] +
+                ". Laudos e inspeções."
+              }
               aria-expanded={multiple ? open === cover : undefined}
               aria-controls={multiple && open === cover ? "ca-inspection-pop-" + cover : undefined}
               title={title + " · " + dueText + " · " + documentation[status]}
@@ -155,7 +177,7 @@ export function InspectionMarkers({
                         }}
                       >
                         <span>
-                          <strong>{objectById.get(line.key)?.name}</strong>
+                          <strong>{technicalTitle(objectById.get(line.key)!, line)}</strong>
                           <small>
                             Próxima inspeção · {formatInspectionDate(line.fields.due?.value)}
                           </small>

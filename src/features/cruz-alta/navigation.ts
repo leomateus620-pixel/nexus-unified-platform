@@ -274,9 +274,9 @@ export function openScene(options: SceneOptions) {
         inspectionPoint.set(anchor.x, projectedY, anchor.z).project(camera);
         const x = (0.5 + 0.5 * inspectionPoint.x) * width;
         const y = (0.5 - 0.5 * inspectionPoint.y) * height;
-        const expanded: boolean = width >= 650 && !expandedPlaced && x > 132 && x < width - 132;
-        const pinWidth = expanded ? 226 : 54;
-        const pinHeight = expanded ? 52 : 44;
+        const expanded: boolean = width >= 650 && !expandedPlaced && x > 156 && x < width - 156;
+        const pinWidth = expanded ? 280 : 54;
+        const pinHeight = expanded ? 68 : 44;
         visible =
           inspectionPoint.z >= -1 &&
           inspectionPoint.z <= 1 &&

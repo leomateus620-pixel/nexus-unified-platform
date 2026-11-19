@@ -1,6 +1,8 @@
 export const inspectionFields = ["installation", "rt", "inspection", "due"] as const;
 
 export type InspectionField = (typeof inspectionFields)[number];
+export const inspectionAdoptFields = [...inspectionFields, "seal"] as const;
+export type InspectionAdoptField = (typeof inspectionAdoptFields)[number];
 export type InspectionKind = "laudo" | "placa";
 export type InspectionDateEvidence = { value: string; page: number; label: string };
 
@@ -10,6 +12,7 @@ export type ParsedInspectionPdf = {
   issues: string[];
   pages: number;
   identityMismatch?: true;
+  seal?: InspectionDateEvidence;
 };
 
 export type CaInspectionEvidence = {
@@ -24,6 +27,10 @@ export type CaInspectionEvidence = {
 export type CaInspectionLine = {
   key: string;
   status: "verified" | "review" | "stale";
+  description?: string;
+  seal?:
+    | { source: "layout"; value: string; page: number; revision: number }
+    | (CaInspectionEvidence & { source: "document"; value: string });
   version: number;
   fields: Partial<Record<InspectionField, CaInspectionEvidence & InspectionDateEvidence>>;
   restriction: (CaInspectionEvidence & { text: string }) | null;
@@ -31,7 +38,7 @@ export type CaInspectionLine = {
     id: string;
     reasons: string[];
     restriction: string | null;
-    fields?: InspectionField[];
+    fields?: InspectionAdoptField[];
   };
   reviews?: Array<NonNullable<CaInspectionLine["review"]>>;
   documents: CaInspectionEvidence[];

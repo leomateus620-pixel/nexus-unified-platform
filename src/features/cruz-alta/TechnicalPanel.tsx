@@ -36,7 +36,13 @@ import {
 } from "./acervo.functions";
 import { describeFile, operationId, transferFile } from "./upload";
 import { InspectionSection, InspectionSourcesReader, RelatedInspections } from "./InspectionSheet";
-import type { CaInspectionSummary } from "./inspection-domain";
+import type { CaInspectionLine, CaInspectionSummary } from "./inspection-domain";
+import {
+  inspectionCatalog,
+  objectInspection,
+  technicalTag,
+  technicalTitle,
+} from "./inspection-display";
 
 const Pdf = lazy(() =>
   import("@/features/nr/NrOriginalPreview").then((m) => ({ default: m.NrOriginalPreview })),
@@ -302,6 +308,10 @@ function SheetContent({
     closeForm();
     setCorrection(null);
   };
+  const catalog = inspectionCatalog(inspections?.lines);
+  const objectTitle = technicalTag(object)
+    ? technicalTitle(object, objectInspection(object, catalog))
+    : sheet.titulo;
   const confirmUnlink =
     editing && unlink ? (
       <div className="ca-feedback ca-unlink" role="group" aria-label="Confirmar desvinculação">
@@ -337,11 +347,7 @@ function SheetContent({
       </div>
     ) : null;
   const docsTab = search.aba !== "ficha";
-  const mapTitle = object.id.startsWith("cobertura-")
-    ? object.id.slice(10) + " · " + object.name
-    : object.name;
-  const editedTitle =
-    sheet.titulo !== object.name && sheet.titulo !== mapTitle ? sheet.titulo : null;
+  const editedTitle = !technicalTag(object) && sheet.titulo !== object.name ? sheet.titulo : null;
   const isForm = !!(form || correction);
   const canEdit =
     sheet.pode_editar || sheet.pode_publicar || sheet.documentos.some((d) => d.pode_corrigir);
@@ -408,7 +414,7 @@ function SheetContent({
           target={revisionTarget}
           scope={scope}
           user={user}
-          title={sheet.titulo}
+          title={objectTitle}
           onCancel={closeForm}
           onSuccess={success}
         />
@@ -438,6 +444,7 @@ function SheetContent({
           )}
           <DocumentShelf
             docs={sheet.documentos}
+            inspections={catalog}
             owner={object.id}
             editing={editing}
             canPublish={sheet.pode_publicar}
@@ -567,6 +574,7 @@ function SheetContent({
 }
 function DocumentShelf({
   docs,
+  inspections,
   owner,
   editing,
   canPublish,
@@ -578,6 +586,7 @@ function DocumentShelf({
   confirm,
 }: {
   docs: DocumentRow[];
+  inspections: ReadonlyMap<string, CaInspectionLine>;
   owner: string;
   editing: boolean;
   canPublish: boolean;
@@ -596,9 +605,10 @@ function DocumentShelf({
       .toLowerCase();
   const words = normalize(query.trim()).split(/\s+/);
   const names = (doc: DocumentRow) =>
-    (doc.origens ?? [doc.objeto]).map(
-      (id) => objects.find((object) => object.id === id)?.name ?? id,
-    );
+    (doc.origens ?? [doc.objeto]).map((id) => {
+      const source = objects.find((object) => object.id === id);
+      return source ? technicalTitle(source, objectInspection(source, inspections)) : id;
+    });
   const filtered = docs.filter((doc) => {
     const text = normalize(
       [

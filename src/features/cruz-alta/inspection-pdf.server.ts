@@ -95,6 +95,38 @@ function identifiersOnCover(page: string) {
   return identifiers;
 }
 
+function readSeal(pages: string[], issues: string[]) {
+  const candidates = new Map<string, { value: string; page: number; label: string }>();
+  for (const [index, text] of pages.entries()) {
+    const matches = text.matchAll(
+      /\blacres?\b(?:[ \t]*\/[ \t]*regime)?\s*(?:n(?:\.?o|[.º°]+)\s*)?[:–—-]?\s*(\d{1,14}(?:\s*(?:\/|,|\be\b|\+)\s*\d{1,14})*)(?![\d,.])/g,
+    );
+    for (const match of matches) {
+      const numbers = match[1]?.match(/\d+/g);
+      if (numbers?.length)
+        candidates.set([...numbers].sort().join("/"), {
+          value: numbers.join(" / "),
+          page: index + 1,
+          label: "Lacre",
+        });
+    }
+  }
+  const explicit = [...candidates.values()].sort(
+    (a, b) => b.value.length - a.value.length || a.page - b.page,
+  );
+  const primary = explicit[0];
+  if (
+    primary &&
+    explicit.some((item) =>
+      item.value.split(" / ").some((number) => !primary.value.split(" / ").includes(number)),
+    )
+  ) {
+    issues.push("Lacre: mais de um valor sem correspondência inequívoca no documento.");
+    return undefined;
+  }
+  return primary;
+}
+
 export function parseInspectionPages(pages: string[], source: PdfSource): ParsedInspectionPdf {
   const result: ParsedInspectionPdf = {
     fields: {},
@@ -165,6 +197,8 @@ export function parseInspectionPages(pages: string[], source: PdfSource): Parsed
     result.issues.push("A próxima inspeção antecede a inspeção registrada ou tem a mesma data.");
   }
   result.restriction = extractedRestriction(pages, source.kind);
+  const seal = readSeal(readable, result.issues);
+  if (seal) result.seal = seal;
   return result;
 }
 

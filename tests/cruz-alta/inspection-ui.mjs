@@ -28,6 +28,12 @@ const clientId = "c3d779b6-c407-8ab4-8545-6bdfd6068013";
 const docId = "f618cb75-19de-4601-87d5-5fcc868af637";
 const candidateId = "d4b08715-705d-4c21-a90b-e6c7a27f170a";
 const orphanId = "a5259a69-5a18-4463-ae30-3bcbd42c4d74";
+const layoutDescription = "TELHADO ARMAZEM 01 - LVHF 90M - (01 UNIDADE)";
+const fixtureDescription = "TELHADO ARMAZEM 01 - LVHF 91M - (01 UNIDADE)";
+const fixtureSeal = "99990117";
+const publicTitle = "11 · " + layoutDescription;
+const privateTitle = "11 · " + fixtureDescription + " · LAC " + fixtureSeal;
+const layoutOnlyTitle = "56 · TELHADO AO LADO ARMAZÉM 01 - LVHF 15M - (01 UNIDADE) · LAC 99990156";
 const now = new Date();
 const expires = Math.floor(now.getTime() / 1000) + 3600;
 const due = new Date(now.getTime() + 10 * 24 * 3600_000).toISOString().slice(0, 10);
@@ -96,6 +102,8 @@ const fixture = {
   key: "lvhf-11",
   version: 1,
   availability: "review",
+  description: fixtureDescription,
+  seal: { value: fixtureSeal, page: 1, revision: 57, source: "layout" },
   fields: {
     installation: { value: "2024-05-18", page: 2, label: "Data de instalação", evidence: docId },
     rt: { value: "2024-05-19", page: 1, label: "Data RT", evidence: docId },
@@ -110,6 +118,17 @@ const fixture = {
   restriction: approval,
   documents: [source, candidate],
   issues: ["A data exige conferência."],
+};
+const layoutOnlyFixture = {
+  key: "lvhf-56",
+  version: 0,
+  availability: "unconfirmed",
+  description: "TELHADO AO LADO ARMAZÉM 01 - LVHF 15M - (01 UNIDADE)",
+  seal: { value: "99990156", page: 1, revision: 57, source: "layout" },
+  fields: {},
+  restriction: null,
+  documents: [],
+  issues: [],
 };
 const body = async (req) =>
   JSON.parse(Buffer.concat(await Array.fromAsync(req)).toString() || "{}");
@@ -180,7 +199,7 @@ const server = http.createServer(async (req, res) => {
     });
   if (rpc === "ca_inspecao_summary")
     return json({
-      items: [fixture],
+      items: [fixture, layoutOnlyFixture],
       canReview: true,
       lastCheckedAt: now.toISOString(),
       status: "idle",
@@ -271,6 +290,12 @@ try {
   assert.equal(await guest.getByRole("checkbox", { name: "Laudos e inspeções" }).count(), 0);
   await guest.goto(map + "?objeto=lvhf-11&aba=ficha&evidencia=" + docId + "&pagina=2");
   await guest.getByText("Acervo técnico privado", { exact: true }).waitFor();
+  await guest
+    .locator(".ca-drawer-head")
+    .getByRole("heading", { name: publicTitle, exact: true })
+    .waitFor();
+  assert.equal(await guest.getByText("LAC " + fixtureSeal, { exact: false }).count(), 0);
+  assert.equal(await guest.getByText(fixtureDescription, { exact: false }).count(), 0);
   assert.equal(trace.ids.length, 0);
   assert.equal(await guest.locator(".ca-reader-title").count(), 0);
   await guest.close();
@@ -293,7 +318,9 @@ try {
   const layer = page.getByRole("checkbox", { name: "Laudos e inspeções", exact: true });
   await layer.waitFor();
   assert(await layer.isChecked());
-  const badge = page.getByRole("button", { name: /Laudos e inspeções · LVHF 11/ });
+  const badge = page
+    .locator(".ca-inspection-pin")
+    .filter({ has: page.getByText(privateTitle, { exact: true }) });
   await layer.uncheck();
   assert.equal(await badge.count(), 0);
   await layer.check();
@@ -301,13 +328,15 @@ try {
   await badge.waitFor();
   await page
     .locator(".ca-inspection-marker[data-expanded=true] .ca-inspection-pin-copy")
-    .getByText(/Telhado armazém 01/i)
+    .getByText(privateTitle, { exact: true })
     .waitFor();
-  await page
-    .getByRole("button", { name: /LVHF 11.*Próxima inspeção/ })
-    .first()
-    .waitFor();
-  await page.locator(".ca-inspections-related").waitFor();
+  await page.locator(".ca-inspections-related").getByText(privateTitle, { exact: true }).waitFor();
+  const search = page.getByRole("searchbox", { name: "Buscar setor, estrutura ou LVHF" });
+  await search.fill("LAC " + fixtureSeal);
+  await page.locator(".ca-browser").getByText(privateTitle, { exact: true }).waitFor();
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Limpar busca" }).click();
+  await page.keyboard.press("Escape");
   await page.screenshot({ path: folder + "/01-marcador.png" });
   const camera = page.locator(".ca-stage canvas");
   const before = await camera.getAttribute("data-camera");
@@ -317,6 +346,14 @@ try {
       url.searchParams.get("objeto") === "lvhf-11" && url.searchParams.get("aba") === "ficha",
   );
   await page.getByText("18/05/2024", { exact: true }).waitFor();
+  await page
+    .locator(".ca-drawer-head")
+    .getByRole("heading", { name: privateTitle, exact: true })
+    .waitFor();
+  const seal = page.locator(".ca-inspection-seal");
+  await seal.getByText("LAC " + fixtureSeal, { exact: true }).waitFor();
+  await seal.getByText("LAYOUT GERAL · REV. 57 · P. 1", { exact: true }).waitFor();
+  assert.equal(await seal.getByRole("button").count(), 0);
   assert.equal(await camera.getAttribute("data-camera"), before);
   await page.getByText("Vence em até 30 dias", { exact: true }).waitFor();
   await page.getByText("Restrição documental de teste local.", { exact: true }).waitFor();
@@ -349,8 +386,19 @@ try {
   await page.getByText("Sincronização solicitada.", { exact: true }).waitFor();
   await page.getByText("Arquivos aguardando identificação (1)", { exact: true }).click();
   await page.getByText("Fixture local - sem identificador.pdf", { exact: true }).waitFor();
+  await page.goto(map + "?objeto=lvhf-56&aba=ficha");
+  await page
+    .locator(".ca-drawer-head")
+    .getByRole("heading", { name: layoutOnlyTitle, exact: true })
+    .waitFor();
+  await page.getByText("Nenhum laudo de inspeção vinculado.", { exact: true }).waitFor();
+  assert.equal(await page.locator(".ca-inspection-dates").count(), 0);
+  await page.screenshot({ path: folder + "/05-identificacao-sem-laudo.png" });
   await page.goto(map + "?objeto=estrutura-armazem-01");
-  const related = page.locator(".ca-inspections-related").getByRole("button", { name: /LVHF 11/ });
+  const related = page
+    .locator(".ca-inspections-related")
+    .getByRole("button")
+    .filter({ hasText: privateTitle });
   await related.waitFor();
   const fromStructure = await camera.getAttribute("data-camera");
   await related.click();
@@ -366,6 +414,7 @@ try {
   await page.getByText("Acervo técnico privado", { exact: true }).waitFor();
   assert.equal(await page.locator(".ca-inspection-markers").count(), 0);
   assert.equal(await page.locator(".ca-reader-title").count(), 0);
+  assert.equal(await page.getByText(fixtureSeal, { exact: false }).count(), 0);
 
   const mobileContext = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -382,6 +431,10 @@ try {
   mobile.setDefaultTimeout(30000);
   await mobile.goto(map + "?objeto=lvhf-11&aba=ficha");
   await mobile.getByText("18/05/2024", { exact: true }).waitFor();
+  await mobile
+    .locator(".ca-drawer-head")
+    .getByRole("heading", { name: privateTitle, exact: true })
+    .waitFor();
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
   await mobile
     .locator(".ca-inspection-sheet")
@@ -394,6 +447,8 @@ try {
   trace.steps = [
     "guest-private",
     "layer-default-toggle",
+    "exact-tag-layout-seal",
+    "layout-without-inspection",
     "marker-camera",
     "dates-restriction",
     "reader-page-return",

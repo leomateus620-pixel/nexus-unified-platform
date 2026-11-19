@@ -305,6 +305,9 @@
   .ca-drawer-head .ca-mobile-size {
     display: grid;
   }
+  .ca-drawer-head h2[data-technical] {
+    font-size: 1rem;
+  }
   .ca-drawer-sector-mark {
     width: 34px;
     height: 34px;

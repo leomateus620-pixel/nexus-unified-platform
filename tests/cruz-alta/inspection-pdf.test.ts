@@ -82,3 +82,19 @@ test("usa o dia civil e a janela de trinta dias para os indicadores", () => {
   assert.equal(inspectDueStatus(null, "2027-03-02"), "unknown");
   assert.equal(formatInspectionDate("2027-03-01"), "01/03/2027");
 });
+
+test("leva ao lacre apenas números explicitamente identificados e preserva os zeros", () => {
+  assert.deepEqual(
+    parseInspectionPages(
+      [
+        "ART nº 93837212\nLACRE / REGIME\n00702 / 00919 / restrição",
+        "Inspeção inicial 18/07/2026 — comprovada pelo lacre Nº 00919",
+      ],
+      laudo,
+    ).seal,
+    { value: "00702 / 00919", page: 1, label: "Lacre" },
+  );
+  const ambiguous = parseInspectionPages(["Lacre 00001", "Lacre 00002"], laudo);
+  assert.equal(ambiguous.seal, undefined);
+  assert(ambiguous.issues.some((issue) => issue.includes("Lacre")));
+});

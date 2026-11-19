@@ -22,6 +22,10 @@ export async function handleCruzAltaInspectionWorker(request: Request) {
         const { parseCruzAltaInspectionPdf } = await import("../inspection-pdf.server");
         return parseCruzAltaInspectionPdf(bytes, source);
       },
+      parseLayout: async (bytes) => {
+        const { parseCruzAltaLayoutPdf } = await import("../inspection-layout.server");
+        return parseCruzAltaLayoutPdf(bytes);
+      },
     });
     return await worker(request);
   } catch {

@@ -164,6 +164,13 @@ async function preview(user, evidence, line = key) {
   return (await sql`select ca_inspecao_preview(${org},${line},${evidence}) r`)[0].r;
 }
 
+async function registerLayout(revision, hash, rows, user = null) {
+  await role(user, !user);
+  return (
+    await sql`select ca_inspecao_layout_conferido(${revision},${hash},${sql.json(rows)}) r`
+  )[0].r;
+}
+
 await control.unsafe(`do $$ begin
   if not exists(select 1 from pg_roles where rolname='anon') then create role anon nologin; end if;
   if not exists(select 1 from pg_roles where rolname='authenticated') then create role authenticated nologin; end if;
@@ -189,6 +196,13 @@ try {
     values(${org},'Revisor de teste','colaborador',${users.reviewer},'CREA TESTE 123',${users.reviewer})`;
   await sql`insert into clientes(id,organization_id,razao_social) values(${client},${org},'TESTE LAUDOS')`;
   await sql`insert into unidades(id,organization_id,cliente_id,nome) values(${unit},${org},${client},'UNIDADE DE TESTE')`;
+  const beforeSeals = migrations.findIndex((entry) =>
+    entry.path.endsWith("/0087_ca_inspecao_lacres.sql"),
+  );
+  assert.ok(beforeSeals > 0);
+  await applyMigrations(sql, migrations.slice(0, beforeSeals));
+  assert.equal((await current()).seal, undefined);
+  await role();
   await applyMigrations(sql, migrations);
   assert.deepEqual(await applyMigrations(sql, migrations), []);
   await sql`insert into nr_cena_consultores values(${org},${client},${unit},${users.viewer},false)`;
@@ -200,15 +214,50 @@ try {
   await deny(() => sql`select ca_inspecao_request_sync(${org})`, "42501");
   console.log("PASS migrações, escopo privado, papel e fila");
 
+  const layout = [
+    { code: "08", description: "Descrição sintética da linha de teste", seal: "00421" },
+    { code: "11", description: "Descrição sintética sem laudo", seal: "00428 / 00426" },
+  ];
+  const layoutHash = "1".repeat(64);
+  await deny(() => registerLayout(56, layoutHash, layout, users.reviewer), "42501");
+  assert.equal((await registerLayout(56, layoutHash, layout)).state, "adopted");
+  assert.equal((await registerLayout(56, layoutHash, [...layout].reverse())).state, "same");
+  await deny(() => registerLayout(56, layoutHash, [layout[0]]), "23514");
+  const noReport = (await summary(users.viewer, "lvhf-11")).items[0];
+  assert.equal(noReport.description, layout[1].description);
+  assert.deepEqual(noReport.seal, {
+    value: layout[1].seal,
+    page: 1,
+    revision: 56,
+    source: "layout",
+  });
+  assert.equal(noReport.documents.length, 0);
+  const competing = [
+    { ...layout[0], seal: "72345" },
+    { ...layout[1], description: "Outra descrição sintética" },
+  ];
+  assert.equal((await registerLayout(56, "2".repeat(64), competing)).state, "conflict");
+  assert.equal((await current()).seal.value, layout[0].seal);
+  assert.equal((await current()).layoutConflict, true);
+  assert.equal((await registerLayout(55, "3".repeat(64), competing)).state, "historical");
+  assert.equal((await registerLayout(57, "4".repeat(64), layout)).state, "adopted");
+  assert.equal((await current()).layoutConflict, false);
+  console.log("PASS layout privado sem laudo, repetição e conflito preservam revisão conferida");
+
   await enqueue();
   await scan([doc()]);
-  await processDoc(warning);
+  const pdfSeal = { value: "00983", page: 3, label: "Lacre de teste" };
+  await processDoc(warning, "2027-11-18", { seal: pdfSeal });
   const first = await current();
   assert.equal(first.fields.due.value, "2027-11-18");
   assert.equal(first.restriction, null);
   assert.equal(first.availability, "review");
   assert.deepEqual(first.documents[0].restriction, warning);
+  assert.deepEqual(first.documents[0].fields.seal, pdfSeal);
+  assert.equal(first.seal.value, layout[0].seal);
+  assert.equal(first.fields.seal, undefined);
   assert.equal((await current(users.viewer)).documents[0].restriction, undefined);
+  assert.equal((await current(users.viewer)).documents[0].fields, undefined);
   await deny(() => preview(users.viewer, first.documents[0].id), "42501");
   await role();
   await sql`update nr_cena_consultores set permite_original=true where usuario_id=${users.viewer}`;
@@ -219,9 +268,14 @@ try {
     "42501",
   );
   await deny(() => review(first, first.documents[0].id, undefined), "23514");
-  const approved = await review(first, first.documents[0].id, "adopt");
+  const approved = await review(first, first.documents[0].id, "adopt", { adopt: ["seal"] });
   assert.equal(approved.restriction.text, warning.text);
   assert.equal(approved.status, "restricted");
+  assert.equal(approved.seal.value, pdfSeal.value);
+  assert.equal(approved.seal.page, pdfSeal.page);
+  assert.equal(approved.seal.source, "pdf");
+  assert.equal(approved.seal.evidence, first.documents[0].id);
+  assert.equal(approved.layoutSeal.value, layout[0].seal);
   console.log("PASS leitura privada com página e aviso somente após decisão técnica");
 
   await enqueue(true);
@@ -314,6 +368,47 @@ try {
   console.log(
     "PASS aviso equivalente sem nova pendência e data aprovada preservada em nova divergência",
   );
+
+  const layoutFolder = "test-root-layout";
+  const newRows = [
+    { ...layout[1], description: "Descrição da próxima revisão privada", seal: "00387" },
+  ];
+  const newHash = "5".repeat(64);
+  await role(null, true);
+  await sql`select ca_inspecao_sync_start(${sql.json([{ folderId: layoutFolder, kind: "layout" }])})`;
+  await scan([
+    {
+      ...doc({ id: "test-layout-00", kind: "layout", name: "Layout TESTE.pdf", byte: "5" }),
+      parents: [layoutFolder],
+      code: null,
+      revision: null,
+    },
+  ]);
+  const layoutJob = await job();
+  assert.equal(layoutJob.kind, "process");
+  assert.equal(
+    (
+      await finish(layoutJob, {
+        kind: "process",
+        status: "ready",
+        sha256: null,
+        size: null,
+        itemKeys: ["unidade"],
+        fields: {},
+        restriction: null,
+        issues: [],
+        pages: 0,
+        layout: { revision: 58, sha256: newHash, rows: newRows },
+      })
+    ).state,
+    "completed",
+  );
+  const automaticallyUpdated = (await summary(users.viewer, "lvhf-11")).items[0];
+  assert.equal(automaticallyUpdated.description, newRows[0].description);
+  assert.equal(automaticallyUpdated.seal.value, newRows[0].seal);
+  assert.equal(automaticallyUpdated.seal.revision, 58);
+  assert.equal((await current()).seal.evidence, first.documents[0].id);
+  console.log("PASS atualização automática do layout e preservação do lacre decidido no PDF");
 } finally {
   await sql.end();
   await control.unsafe("drop database " + database + " with (force)");

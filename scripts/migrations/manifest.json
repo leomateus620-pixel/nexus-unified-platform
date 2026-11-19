@@ -443,6 +443,10 @@
     {
       "path": "drizzle/migrations/0086_ca_inspecao_sincronizacao.sql",
       "sha256": "67d1f4a7f614691fe3c53c824bbfa7105f92e4f22f5e900da964707793a01f81"
+    },
+    {
+      "path": "drizzle/migrations/0087_ca_inspecao_lacres.sql",
+      "sha256": "87ed3ed5ddfb3a44fa15f67a99dfda7c1502f702952b968e4f768764307bc5ad"
     }
   ]
 }

@@ -53,6 +53,11 @@ const claimedResult = z.object({ authorized: z.boolean(), job: z.unknown() });
 const finishedResult = z.object({ state: z.enum(["completed", "obsolete"]) });
 const failedResult = z.object({ state: z.enum(["retry", "failed", "obsolete"]) });
 
+type LayoutTable = {
+  revision: number;
+  rows: { code: string; description: string; seal: string | null }[];
+};
+
 type WorkerOptions = {
   url: string;
   serviceKey: string;
@@ -61,6 +66,7 @@ type WorkerOptions = {
     bytes: Uint8Array,
     source: { kind: "laudo" | "placa"; code: string; revision: number },
   ) => Promise<ParsedInspectionPdf>;
+  parseLayout: (bytes: Uint8Array) => Promise<LayoutTable>;
   fetch?: typeof fetch;
 };
 
@@ -70,6 +76,7 @@ type ProcessResult = ParsedInspectionPdf & {
   itemKeys: string[];
   size: number | null;
   sha256: string | null;
+  layout?: LayoutTable & { sha256: string };
 };
 
 export function workerResponse(body: Record<string, unknown>, status = 200) {
@@ -169,7 +176,24 @@ export function createInspectionWorker(options: WorkerOptions) {
     if (item.kind === "layout") {
       if (item.parents[0] !== inspectionFolders.layout)
         throw new SyncFailure("pasta_do_layout_invalida");
-      return noOriginal(["unidade"]);
+      const keys = ["unidade"];
+      if (item.size > MAX_DRIVE_PDF_BYTES) return noOriginal(keys, "layout_acima_do_limite");
+      const { bytes, sha256 } = await drive.download(item, signal);
+      let table: LayoutTable;
+      try {
+        table = await options.parseLayout(bytes);
+      } catch {
+        signal.throwIfAborted();
+        return noOriginal(keys, "extracao_do_layout_indisponivel");
+      }
+      signal.throwIfAborted();
+      if (!table.rows.length) return noOriginal(keys, "extracao_do_layout_indisponivel");
+      if (item.revision !== null && item.revision !== table.revision)
+        return noOriginal(keys, "revisao_do_layout_divergente");
+      return {
+        ...noOriginal(keys),
+        layout: { revision: table.revision, sha256, rows: table.rows },
+      };
     }
     const keys = item.code ? [`lvhf-${item.code}`] : [];
     if (!item.code) return noOriginal(keys, "numero_lvhf_ausente_ou_divergente");
@@ -198,7 +222,7 @@ export function createInspectionWorker(options: WorkerOptions) {
     }
     signal.throwIfAborted();
     await keepOriginal(bytes, sha256, signal);
-    const { identityMismatch, fields, restriction, issues, pages } = parsed;
+    const { identityMismatch, fields, restriction, issues, pages, seal } = parsed;
     return {
       kind: "process",
       status: identityMismatch || issues.length ? "review" : "verified",
@@ -209,6 +233,7 @@ export function createInspectionWorker(options: WorkerOptions) {
       restriction: identityMismatch ? null : restriction,
       issues,
       pages,
+      ...(seal && !identityMismatch ? { seal } : {}),
     };
   }
 

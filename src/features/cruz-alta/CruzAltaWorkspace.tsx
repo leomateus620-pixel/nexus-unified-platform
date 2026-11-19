@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, ChevronRight, ChevronUp, LockKeyhole, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -9,18 +9,18 @@ import CruzAltaViewer from "./CruzAltaViewer";
 import { geometry, objects as elements } from "./manifest";
 import type { CruzObject } from "./scene-types";
 import { cruzAlta } from "./context";
+import {
+  inspectionCatalog,
+  objectInspection,
+  technicalTag,
+  technicalTitle,
+} from "./inspection-display";
 import { SectorIcon } from "./sector-visual";
 import { lvhfAppearance, lvhfState, lvhfSwatch } from "./lvhf-appearance";
 import "./workspace.css";
 const objects: CruzObject[] = elements.some((e) => e.id === "unidade")
   ? elements
   : [{ id: "unidade", kind: "setor", name: "Três Tentos — Cruz Alta/RS" }, ...elements];
-
-function label(object: CruzObject) {
-  return object.id.startsWith("cobertura-")
-    ? object.id.slice(10) + " · " + object.name
-    : object.name;
-}
 
 const objectKinds: Record<CruzObject["kind"], string> = {
   setor: "Setor",
@@ -74,6 +74,8 @@ export default function CruzAltaWorkspace({
     refetchInterval: (query) => (query.state.data?.status === "running" ? 8_000 : 60_000),
   });
   const inspections = authorized && !inspectionQuery.isError ? inspectionQuery.data : undefined;
+  const catalog = useMemo(() => inspectionCatalog(inspections?.lines), [inspections?.lines]);
+  const label = (object: CruzObject) => technicalTitle(object, objectInspection(object, catalog));
   const [compact, setCompact] = useState(false);
 
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -212,7 +214,9 @@ export default function CruzAltaWorkspace({
                   </span>
                 )}
               </div>
-              <h2>{selected ? label(selected) : "Objeto indisponível"}</h2>
+              <h2 data-technical={selected && !!technicalTag(selected) ? true : undefined}>
+                {selected ? label(selected) : "Objeto indisponível"}
+              </h2>
             </div>
             {!reader && (
               <button

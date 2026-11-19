@@ -755,7 +755,7 @@
 .ca-view .ca-inspection-pin[data-state="review"] {
   background: #805619;
 }
-.ca-view .ca-inspection-pin[data-state="stale"] {
+.ca-view .ca-inspection-pin:is([data-state="stale"], [data-state="layout"]) {
   background: #4b5754;
 }
 .ca-inspection-pop {
@@ -825,8 +825,8 @@
   display: none;
 }
 .ca-inspection-marker[data-expanded="true"] .ca-inspection-pin {
-  width: 226px;
-  min-height: 52px;
+  width: 280px;
+  min-height: 68px;
   justify-content: flex-start;
   padding: 5px 9px;
   gap: 7px;
@@ -840,7 +840,7 @@
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   line-height: 1.1;
 }
 .ca-inspection-pin-copy small {

@@ -7,16 +7,20 @@ import {
   driveId,
   MAX_DRIVE_PDF_BYTES,
   readLimited,
-  type serviceCredentials,
+  serviceCredentials,
   sha256Pattern,
   SyncFailure,
 } from "./drive.server";
+import {
+  createInspectionService,
+  inspectionTicket,
+  workerResponse,
+  type InspectionServiceOptions,
+} from "./service.server";
 import { classifyInspectionFiles, inspectionFolders, knownLvhf } from "./sources.server";
 
-const SUPABASE_ORIGIN = "https://yhtgijtllvgzoqtfcgal.supabase.co";
 const BUCKET = "nexus-cruz-alta-laudos";
 const WORKER_TIMEOUT_MS = 43_000;
-export const inspectionTicket = /^[a-f0-9]{64}$/;
 
 const uuid = z.string().uuid();
 const id = z.string().regex(driveId);
@@ -58,16 +62,13 @@ type LayoutTable = {
   rows: { code: string; description: string; seal: string | null }[];
 };
 
-type WorkerOptions = {
-  url: string;
-  serviceKey: string;
-  credentials: ReturnType<typeof serviceCredentials>;
+type WorkerOptions = InspectionServiceOptions & {
+  credentials?: ReturnType<typeof serviceCredentials>;
   parse: (
     bytes: Uint8Array,
     source: { kind: "laudo" | "placa"; code: string; revision: number },
   ) => Promise<ParsedInspectionPdf>;
   parseLayout: (bytes: Uint8Array) => Promise<LayoutTable>;
-  fetch?: typeof fetch;
 };
 
 type ProcessResult = ParsedInspectionPdf & {
@@ -78,16 +79,6 @@ type ProcessResult = ParsedInspectionPdf & {
   sha256: string | null;
   layout?: LayoutTable & { sha256: string };
 };
-
-export function workerResponse(body: Record<string, unknown>, status = 200) {
-  return Response.json(body, {
-    status,
-    headers: {
-      "cache-control": "no-store",
-      "x-content-type-options": "nosniff",
-    },
-  });
-}
 
 function noOriginal(itemKeys: string[], issue?: string): ProcessResult {
   return {
@@ -104,43 +95,14 @@ function noOriginal(itemKeys: string[], issue?: string): ProcessResult {
 }
 
 export function createInspectionWorker(options: WorkerOptions) {
-  const base = new URL(options.url);
-  if (base.href !== `${SUPABASE_ORIGIN}/` || !options.serviceKey)
-    throw new SyncFailure("worker_nao_configurado");
-
-  const transport = options.fetch ?? fetch;
-  const supabaseHeaders = new Headers({ apikey: options.serviceKey });
-  if (!options.serviceKey.startsWith("sb_"))
-    supabaseHeaders.set("Authorization", `Bearer ${options.serviceKey}`);
-
-  async function rpc(name: string, params: Record<string, unknown>, signal: AbortSignal) {
-    const headers = new Headers(supabaseHeaders);
-    headers.set("Content-Type", "application/json");
-    const response = await transport(`${base.origin}/rest/v1/rpc/${name}`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(params),
-      redirect: "error",
-      signal,
-    });
-    if (!response.ok) {
-      await response.body?.cancel();
-      throw new SyncFailure("fila_laudos_indisponivel", true);
-    }
-    if (!response.body) return null;
-    const bytes = await readLimited(response, 32_768, "resposta_da_fila_acima_do_limite");
-    return bytes.length ? (JSON.parse(new TextDecoder().decode(bytes)) as unknown) : null;
-  }
+  const service = createInspectionService(options);
+  const { rpc } = service;
 
   async function keepOriginal(bytes: Uint8Array<ArrayBuffer>, sha256: string, signal: AbortSignal) {
-    const headers = new Headers(supabaseHeaders);
-    headers.set("Content-Type", DRIVE_PDF);
-    headers.set("x-upsert", "false");
-    const response = await transport(`${base.origin}/storage/v1/object/${BUCKET}/${sha256}.pdf`, {
+    const response = await service.request(`/storage/v1/object/${BUCKET}/${sha256}.pdf`, {
       method: "POST",
-      headers,
+      headers: { "content-type": DRIVE_PDF, "x-upsert": "false" },
       body: bytes,
-      redirect: "error",
       signal,
     });
     if (response.ok) {
@@ -242,7 +204,6 @@ export function createInspectionWorker(options: WorkerOptions) {
     const ticket = request.headers.get("X-Nexus-Job-Token") ?? "";
     if (!inspectionTicket.test(ticket)) return workerResponse({ error: "acesso_negado" }, 403);
     const signal = AbortSignal.any([request.signal, AbortSignal.timeout(WORKER_TIMEOUT_MS)]);
-    const drive = createDrive(options.credentials, transport);
     let credentials: z.infer<typeof lease> | undefined;
     try {
       const claim = claimedResult.parse(
@@ -252,6 +213,20 @@ export function createInspectionWorker(options: WorkerOptions) {
       if (!claim.job) return workerResponse({ state: "sem_trabalho" });
       credentials = lease.parse(claim.job);
       const current = job.parse(claim.job);
+      let driveCredentials = options.credentials;
+      if (!driveCredentials) {
+        const stored = await rpc(
+          "ca_inspecao_drive_worker_secret",
+          {
+            p_id: credentials.id,
+            p_lease: credentials.lease,
+          },
+          signal,
+        );
+        if (!stored) throw new SyncFailure("integracao_nao_configurada", true);
+        driveCredentials = serviceCredentials(stored);
+      }
+      const drive = createDrive(driveCredentials, options.fetch);
       let result;
       if (current.kind === "scan") {
         const {

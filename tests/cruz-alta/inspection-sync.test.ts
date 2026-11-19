@@ -8,6 +8,7 @@ import {
   MAX_DRIVE_PDF_BYTES,
 } from "../../src/features/cruz-alta/inspection-sync/drive.server";
 import { inspectionFolders } from "../../src/features/cruz-alta/inspection-sync/sources.server";
+import { createDriveSetupHandler } from "../../src/features/cruz-alta/inspection-sync/setup.server";
 
 const URL_SUPABASE = "https://yhtgijtllvgzoqtfcgal.supabase.co";
 const TOKEN = "a".repeat(64);
@@ -21,6 +22,12 @@ const { privateKey, publicKey } = generateKeyPairSync("rsa", { modulusLength: 20
 const credentials = {
   clientEmail: "cruz-alta@test-case.iam.gserviceaccount.com",
   privateKey: privateKey.export({ type: "pkcs8", format: "pem" }).toString(),
+};
+const vaultCredential = {
+  type: "service_account",
+  client_email: credentials.clientEmail,
+  private_key: credentials.privateKey,
+  private_key_id: "a".repeat(40),
 };
 const PDF = new TextEncoder().encode("%PDF-1.7\nDocumento de teste sintético\n%%EOF");
 const HASH = Buffer.from(await crypto.subtle.digest("SHA-256", PDF)).toString("hex");
@@ -72,6 +79,11 @@ type FakeOptions = {
   parseSeal?: boolean;
   parseLayoutThrows?: boolean;
   driveSource?: { name: string; parents: string[]; sha256: string };
+  useVault?: boolean;
+  vaultUnavailable?: boolean;
+  folderParents?: string[];
+  fileParents?: string[];
+  parentLookup?: Command;
 };
 
 function wire(o: FakeOptions = {}) {
@@ -92,6 +104,11 @@ function wire(o: FakeOptions = {}) {
       if (url.pathname.endsWith("/ca_inspecao_sync_claim")) {
         assert.deepEqual(body, { p_token: TOKEN });
         return Response.json({ authorized: o.authorized ?? true, job: o.job ?? null });
+      }
+      if (url.pathname.endsWith("/ca_inspecao_drive_worker_secret")) {
+        assert(o.useVault);
+        assert.deepEqual(body, { p_id: JOB, p_lease: LEASE });
+        return Response.json(o.vaultUnavailable ? null : vaultCredential);
       }
       if (url.pathname.endsWith("/ca_inspecao_sync_finish")) {
         assert.equal(body?.["p_id"], JOB);
@@ -131,12 +148,16 @@ function wire(o: FakeOptions = {}) {
     }
     assert.equal(url.origin, "https://www.googleapis.com");
     assert.equal(headers.get("authorization"), "Bearer test-google-token");
-    if (url.pathname === "/drive/v3/files") return Response.json(o.list);
+    if (url.pathname === "/drive/v3/files") {
+      const query = url.searchParams.get("q") ?? "";
+      return Response.json(query.includes(" and name = ") ? o.parentLookup : o.list);
+    }
     if (url.pathname === `/drive/v3/files/${PARENT}`)
       return Response.json({
         id: PARENT,
         mimeType: DRIVE_FOLDER,
         name: JOB_SCAN.scan.ancestorNames[0],
+        parents: o.folderParents,
         capabilities: { canListChildren: o.folderReadable !== false },
       });
     assert.equal(url.pathname, `/drive/v3/files/${FILE}`);
@@ -144,7 +165,7 @@ function wire(o: FakeOptions = {}) {
     const driveSource = o.driveSource ?? SOURCE;
     return Response.json(
       driveRecord(driveSource.name, FILE, {
-        parents: driveSource.parents,
+        parents: o.fileParents ?? driveSource.parents,
         sha256Checksum: driveSource.sha256,
         version: o.relistVersion ?? SOURCE.version,
       }),
@@ -153,7 +174,7 @@ function wire(o: FakeOptions = {}) {
   const worker = createInspectionWorker({
     url: URL_SUPABASE,
     serviceKey: "sb_secret_local_fixture",
-    credentials,
+    ...(o.useVault ? {} : { credentials }),
     fetch: transport,
     parse: async (bytes, metadata) => {
       assert.deepEqual(bytes, PDF);
@@ -213,6 +234,127 @@ test("only a valid queue claim allows a Drive call, and a caller cannot supply s
   assert(outside.calls.every((url) => url.startsWith(URL_SUPABASE)));
 });
 
+test("the worker resolves a Vault secret only for a strictly validated active lease", async () => {
+  for (const job of [null, { ...JOB_PROCESS, lease: "malformed" }]) {
+    const run = wire({ job, useVault: true });
+    await run.run();
+    assert(run.calls.every((url) => url.endsWith("ca_inspecao_sync_claim")));
+  }
+  const denied = wire({ job: JOB_PROCESS, useVault: true, authorized: false });
+  assert.equal((await denied.run()).status, 403);
+  assert.equal(denied.calls.length, 1);
+
+  const leased = wire({ job: JOB_PROCESS, useVault: true });
+  assert.equal((await leased.run()).status, 200);
+  assert(leased.calls[0]?.endsWith("ca_inspecao_sync_claim"));
+  assert(leased.calls[1]?.endsWith("ca_inspecao_drive_worker_secret"));
+  assert.equal(leased.calls[2], "https://oauth2.googleapis.com/token");
+
+  const absent = wire({ job: JOB_PROCESS, useVault: true, vaultUnavailable: true });
+  assert.equal((await absent.run()).status, 200);
+  assert.equal(absent.failures[0]?.["p_error"], "integracao_nao_configurada");
+  assert(absent.calls.every((url) => url.startsWith(URL_SUPABASE)));
+});
+
+test("the setup endpoint requires HTTPS, a header ticket and a bounded valid Google credential", async () => {
+  let attempts = 0;
+  const setup = createDriveSetupHandler({
+    url: URL_SUPABASE,
+    serviceKey: "sb_secret_local_fixture",
+    fetch: async () => {
+      attempts += 1;
+      throw new Error("invalid setup requests never reach the RPC");
+    },
+  });
+  const defaultHeaders = { "Content-Type": "application/json", "X-Nexus-Drive-Setup-Token": TOKEN };
+  const path = "/api/public/cruz-alta/inspection-drive-setup";
+  const url = `https://nexus.fixture.test${path}`;
+  const body = JSON.stringify(vaultCredential);
+  const checks: [Request, number][] = [
+    [new Request(url), 405],
+    [
+      new Request(`http://nexus.fixture.test${path}`, {
+        method: "POST",
+        headers: defaultHeaders,
+        body,
+      }),
+      403,
+    ],
+    [
+      new Request(`${url}?token=${TOKEN}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+      }),
+      403,
+    ],
+    [
+      new Request(url, {
+        method: "POST",
+        headers: { ...defaultHeaders, "Content-Type": "text/plain" },
+        body,
+      }),
+      415,
+    ],
+    [new Request(url, { method: "POST", headers: defaultHeaders, body: " ".repeat(16_385) }), 413],
+    [
+      new Request(url, {
+        method: "POST",
+        headers: defaultHeaders,
+        body: JSON.stringify({ ...vaultCredential, private_key: "fixture-invalid" }),
+      }),
+      400,
+    ],
+  ];
+  for (const [request, status] of checks) {
+    const response = await setup(request);
+    assert.equal(response.status, status);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+  }
+  assert.equal(attempts, 0);
+});
+
+test("setup forwards only normalized credential fields and lets the private RPC consume its ticket", async () => {
+  let consumed = false;
+  const setup = createDriveSetupHandler({
+    url: URL_SUPABASE,
+    serviceKey: "sb_secret_local_fixture",
+    fetch: async (raw, init) => {
+      assert.equal(String(raw), `${URL_SUPABASE}/rest/v1/rpc/ca_inspecao_drive_setup_concluir`);
+      const headers = new Headers(init?.headers);
+      assert.equal(headers.get("apikey"), "sb_secret_local_fixture");
+      assert.equal(headers.get("X-Nexus-Drive-Setup-Token"), null);
+      assert.equal(init?.redirect, "error");
+      assert.deepEqual(JSON.parse(String(init?.body)), {
+        p_token: TOKEN,
+        p_credential: vaultCredential,
+      });
+      const firstUse = !consumed;
+      consumed = true;
+      return Response.json(firstUse);
+    },
+  });
+  const request = () =>
+    new Request("https://nexus.fixture.test/api/public/cruz-alta/inspection-drive-setup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "X-Nexus-Drive-Setup-Token": TOKEN,
+      },
+      body: JSON.stringify({
+        ...vaultCredential,
+        token_uri: "https://untrusted.fixture.test",
+        tag: "omit",
+      }),
+    });
+  const accepted = await setup(request());
+  assert.equal(accepted.status, 204);
+  assert.equal(await accepted.text(), "");
+  const replay = await setup(request());
+  assert.equal(replay.status, 403);
+  assert.deepEqual(await replay.json(), { error: "acesso_negado" });
+});
+
 test("a Drive page keeps decimal codes exact and presents a conflicting filename for review", async () => {
   const run = wire({
     job: { ...JOB_SCAN, scan: { ...JOB_SCAN.scan, pageToken: "page-before" } },
@@ -260,6 +402,58 @@ test("a folder missing list permissions is never interpreted as an empty complet
     run.calls.some((url) => url.includes("/drive/v3/files?")),
     false,
   );
+});
+
+test("Drive metadata with omitted parents is accepted only if a scoped listing confirms the exact item", async () => {
+  const folder = wire({
+    job: { ...JOB_SCAN, scan: { ...JOB_SCAN.scan, parentFolderId: inspectionFolders.laudo } },
+    parentLookup: {
+      files: [{ id: PARENT, name: JOB_SCAN.scan.ancestorNames[0], mimeType: DRIVE_FOLDER }],
+    },
+    list: { files: [] },
+  });
+  assert.equal((await folder.run()).status, 200);
+  assert.equal(folder.finished[0]?.["kind"], "scan");
+  const folderQueries = folder.calls
+    .filter((url) => url.includes("/drive/v3/files?"))
+    .map((url) => new URL(url).searchParams.get("q"));
+  assert.equal(
+    folderQueries[0],
+    `'${inspectionFolders.laudo}' in parents and trashed = false and name = '${JOB_SCAN.scan.ancestorNames[0]}' and mimeType = '${DRIVE_FOLDER}'`,
+  );
+
+  const file = wire({
+    job: JOB_PROCESS,
+    fileParents: [],
+    parentLookup: { files: [{ id: FILE, name: NAME, mimeType: DRIVE_PDF, parents: [PARENT] }] },
+  });
+  assert.equal((await file.run()).status, 200);
+  assert.equal(file.finished[0]?.["sha256"], HASH);
+  const fileQuery = new URL(file.calls.find((url) => url.includes("/drive/v3/files?"))!);
+  assert.equal(
+    fileQuery.searchParams.get("q"),
+    `'${PARENT}' in parents and trashed = false and name = '${NAME}' and mimeType = '${DRIVE_PDF}'`,
+  );
+});
+
+test("contradictory direct parents or same-name siblings cannot authorize a binary read", async () => {
+  for (const fileParents of [["wrong-explicit-parent-id"], []]) {
+    const run = wire({
+      job: JOB_PROCESS,
+      fileParents,
+      parentLookup: { files: [{ id: `${FILE}-same-name`, name: NAME, mimeType: DRIVE_PDF }] },
+    });
+    assert.equal((await run.run()).status, 200);
+    assert.equal(run.failures[0]?.["p_error"], "pasta_drive_divergente");
+    assert.equal(
+      run.calls.some((url) => url.includes("alt=media")),
+      false,
+    );
+    assert.equal(
+      run.calls.some((url) => url.includes("/drive/v3/files?")),
+      fileParents.length === 0,
+    );
+  }
 });
 
 test("document bytes are verified and stored once by hash before publishing parser evidence", async () => {

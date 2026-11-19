@@ -41,15 +41,17 @@ function record(value: unknown): Record<string, unknown> {
   return value as Record<string, unknown>;
 }
 
-export function serviceCredentials(value: string): Credentials {
-  const data = record(JSON.parse(value));
+export function serviceCredentials(value: unknown): Credentials {
+  const data = record(typeof value === "string" ? JSON.parse(value) : value);
   const { type, client_email, private_key, private_key_id } = data;
   if (
     type !== "service_account" ||
     typeof client_email !== "string" ||
     !/^[A-Za-z0-9.+_-]+@[A-Za-z0-9.-]+\.gserviceaccount\.com$/.test(client_email) ||
     typeof private_key !== "string" ||
-    private_key.length > 8192
+    private_key.length > 8192 ||
+    (private_key_id != null &&
+      (typeof private_key_id !== "string" || !/^[A-Za-z0-9_-]{1,128}$/.test(private_key_id)))
   )
     throw new SyncFailure("credencial_drive_invalida");
   return {
@@ -59,7 +61,7 @@ export function serviceCredentials(value: string): Credentials {
   };
 }
 
-export async function readLimited(response: Response, limit: number, code: string) {
+export async function readLimited(response: Request | Response, limit: number, code: string) {
   const declared = response.headers.get("content-length");
   if (declared !== null && (!/^\d+$/.test(declared) || Number(declared) > limit)) {
     await response.body?.cancel();
@@ -108,6 +110,23 @@ function base64Url(bytes: Uint8Array) {
     .replace(/\//g, "_");
 }
 
+export async function driveSigningKey(privateKey: string) {
+  const raw = privateKey
+    .trim()
+    .match(/^-----BEGIN PRIVATE KEY-----\s+([\w+/=\s]+?)\s+-----END PRIVATE KEY-----$/);
+  if (!raw?.[1]) throw new SyncFailure("credencial_drive_invalida");
+  const key = await crypto.subtle.importKey(
+    "pkcs8",
+    Uint8Array.from(atob(raw[1].replace(/\s/g, "")), (character) => character.charCodeAt(0)),
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  if ((key.algorithm as RsaKeyAlgorithm).modulusLength < 2048)
+    throw new SyncFailure("credencial_drive_invalida");
+  return key;
+}
+
 async function assertion(credentials: Credentials, now: number) {
   const encoder = new TextEncoder();
   const encode = (data: object) => base64Url(encoder.encode(JSON.stringify(data)));
@@ -120,17 +139,7 @@ async function assertion(credentials: Credentials, now: number) {
     iat,
     exp: iat + 300,
   });
-  const raw = credentials.privateKey
-    .trim()
-    .match(/^-----BEGIN PRIVATE KEY-----\s+([\w+/=\s]+?)\s+-----END PRIVATE KEY-----$/);
-  if (!raw?.[1]) throw new SyncFailure("credencial_drive_invalida");
-  const key = await crypto.subtle.importKey(
-    "pkcs8",
-    Uint8Array.from(atob(raw[1].replace(/\s/g, "")), (character) => character.charCodeAt(0)),
-    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
+  const key = await driveSigningKey(credentials.privateKey);
   const signed = `${header}.${payload}`;
   const signature = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", key, encoder.encode(signed));
   return `${signed}.${base64Url(new Uint8Array(signature))}`;
@@ -145,20 +154,19 @@ function expectSuccess(response: Response, failure: string) {
   );
 }
 
-function asDriveItem(value: unknown): DriveItem {
+function explicitParent(data: Record<string, unknown>, expected: string) {
+  const parents = data["parents"];
+  if (parents == null || (Array.isArray(parents) && parents.length === 0)) return null;
+  return Array.isArray(parents) && parents.length === 1 && parents[0] === expected;
+}
+
+const quotedDriveValue = (value: string) =>
+  `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+
+function asDriveItem(value: unknown, parent: string): DriveItem {
   const data = record(value);
-  const {
-    id,
-    name,
-    mimeType,
-    parents,
-    modifiedTime,
-    version,
-    size,
-    sha256Checksum,
-    resourceKey,
-    trashed,
-  } = data;
+  const { id, name, mimeType, modifiedTime, version, size, sha256Checksum, resourceKey, trashed } =
+    data;
   const bytes = typeof size === "string" && /^\d+$/.test(size) ? Number(size) : null;
   if (
     trashed === true ||
@@ -171,9 +179,7 @@ function asDriveItem(value: unknown): DriveItem {
       (character) => character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127,
     ) ||
     (mimeType !== DRIVE_FOLDER && mimeType !== DRIVE_PDF) ||
-    !Array.isArray(parents) ||
-    parents.length !== 1 ||
-    parents.some((parent) => typeof parent !== "string" || !driveId.test(parent)) ||
+    explicitParent(data, parent) === false ||
     typeof modifiedTime !== "string" ||
     !Number.isFinite(Date.parse(modifiedTime)) ||
     typeof version !== "string" ||
@@ -188,7 +194,7 @@ function asDriveItem(value: unknown): DriveItem {
     id,
     name,
     mimeType,
-    parents,
+    parents: [parent],
     modifiedAt: modifiedTime,
     version,
     size: bytes,
@@ -228,6 +234,91 @@ export function createDrive(credentials: Credentials, transport = fetch) {
     expectSuccess(response, "leitura_drive_indisponivel");
     return response;
   }
+
+  async function listPage(
+    query: string,
+    fields: string,
+    id: string,
+    key: string | null,
+    pageToken: string | null,
+    signal: AbortSignal,
+  ) {
+    const params = new URLSearchParams({
+      q: query,
+      fields: `nextPageToken,incompleteSearch,files(${fields})`,
+      supportsAllDrives: "true",
+      includeItemsFromAllDrives: "true",
+      spaces: "drive",
+      pageSize: String(DRIVE_PAGE_SIZE),
+    });
+    if (pageToken) params.set("pageToken", pageToken);
+    const data = await readJson(
+      await driveRequest(`/files?${params}`, id, key, signal),
+      MAX_METADATA_BYTES,
+    );
+    if (data["incompleteSearch"] === true) throw new SyncFailure("listagem_drive_incompleta", true);
+    const raw = data["files"] ?? [];
+    const next = data["nextPageToken"] ?? null;
+    if (
+      !Array.isArray(raw) ||
+      raw.length > DRIVE_PAGE_SIZE ||
+      (next !== null &&
+        (typeof next !== "string" || !next || next.length > 4096 || next === pageToken))
+    )
+      throw new SyncFailure("pagina_drive_invalida", true);
+    return { raw, nextPageToken: next };
+  }
+
+  async function confirmParent(
+    metadata: Record<string, unknown>,
+    expected: string,
+    resourceKey: string | null,
+    signal: AbortSignal,
+  ) {
+    const direct = explicitParent(metadata, expected);
+    if (direct === true) return;
+    if (direct === false) throw new SyncFailure("pasta_drive_divergente");
+
+    // Drive can omit parents in a direct metadata lookup. Only an exact match in a
+    // server-filtered response from the already authorized parent can confirm membership.
+    const { id, name, mimeType } = metadata;
+    if (
+      typeof id !== "string" ||
+      !driveId.test(id) ||
+      typeof name !== "string" ||
+      !name ||
+      name.length > 500 ||
+      (mimeType !== DRIVE_FOLDER && mimeType !== DRIVE_PDF)
+    )
+      throw new SyncFailure("pasta_drive_divergente");
+    const query = `${quotedDriveValue(expected)} in parents and trashed = false and name = ${quotedDriveValue(name)} and mimeType = ${quotedDriveValue(mimeType)}`;
+    let pageToken: string | null = null;
+    for (let page = 0; page < 5; page += 1) {
+      const { raw, nextPageToken } = await listPage(
+        query,
+        "id,name,mimeType,parents,trashed",
+        id,
+        resourceKey,
+        pageToken,
+        signal,
+      );
+      const exact = raw.map(record).find((row) => row["id"] === id);
+      if (exact) {
+        if (
+          exact["name"] !== name ||
+          exact["mimeType"] !== mimeType ||
+          exact["trashed"] === true ||
+          explicitParent(exact, expected) === false
+        )
+          break;
+        return;
+      }
+      if (!nextPageToken) break;
+      pageToken = nextPageToken;
+    }
+    throw new SyncFailure("pasta_drive_divergente");
+  }
+
   return {
     async listFolder(
       id: string,
@@ -253,50 +344,36 @@ export function createDrive(credentials: Credentials, transport = fetch) {
         capabilities?.canListChildren !== true
       )
         throw new SyncFailure("pasta_drive_sem_acesso");
-      if (
-        (expected.name && folder["name"] !== expected.name) ||
-        (expected.parent &&
-          (!Array.isArray(folder["parents"]) || folder["parents"][0] !== expected.parent))
-      )
+      if (expected.name && folder["name"] !== expected.name)
         throw new SyncFailure("pasta_drive_divergente");
-      const params = new URLSearchParams({
-        q: `'${id}' in parents and trashed = false and (mimeType = '${DRIVE_FOLDER}' or mimeType = '${DRIVE_PDF}')`,
-        fields: `nextPageToken,incompleteSearch,files(${FILE_FIELDS})`,
-        supportsAllDrives: "true",
-        includeItemsFromAllDrives: "true",
-        spaces: "drive",
-        pageSize: String(DRIVE_PAGE_SIZE),
-      });
-      if (pageToken) params.set("pageToken", pageToken);
-      const data = await readJson(
-        await driveRequest(`/files?${params}`, id, key, signal),
-        MAX_METADATA_BYTES,
+      if (expected.parent) await confirmParent(folder, expected.parent, key, signal);
+      const { raw, nextPageToken } = await listPage(
+        `'${id}' in parents and trashed = false and (mimeType = '${DRIVE_FOLDER}' or mimeType = '${DRIVE_PDF}')`,
+        FILE_FIELDS,
+        id,
+        key,
+        pageToken,
+        signal,
       );
-      if (data["incompleteSearch"] === true)
-        throw new SyncFailure("listagem_drive_incompleta", true);
-      const raw = data["files"] ?? [];
-      const next = data["nextPageToken"] ?? null;
-      if (
-        !Array.isArray(raw) ||
-        raw.length > DRIVE_PAGE_SIZE ||
-        (next !== null &&
-          (typeof next !== "string" || !next || next.length > 4096 || next === pageToken))
-      )
-        throw new SyncFailure("pagina_drive_invalida", true);
-      const items = raw.map(asDriveItem);
-      if (items.some((item) => item.parents[0] !== id))
-        throw new SyncFailure("pasta_drive_divergente", true);
-      return { items, nextPageToken: next };
+      return { items: raw.map((item) => asDriveItem(item, id)), nextPageToken };
     },
     async download(item: DriveItem, signal: AbortSignal) {
       const params = new URLSearchParams({ supportsAllDrives: "true", fields: FILE_FIELDS });
-      const details = async () =>
-        asDriveItem(
-          await readJson(
-            await driveRequest(`/files/${item.id}?${params}`, item.id, item.resourceKey, signal),
-            16_384,
-          ),
+      const parent = item.parents[0]!;
+      const details = async () => {
+        const metadata = await readJson(
+          await driveRequest(`/files/${item.id}?${params}`, item.id, item.resourceKey, signal),
+          16_384,
         );
+        if (
+          metadata["id"] !== item.id ||
+          metadata["name"] !== item.name ||
+          metadata["trashed"] === true
+        )
+          throw new SyncFailure("versao_drive_atualizada");
+        await confirmParent(metadata, parent, item.resourceKey, signal);
+        return asDriveItem(metadata, parent);
+      };
       const check = (current: DriveItem) => {
         if (
           current.id !== item.id ||

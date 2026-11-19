@@ -154,7 +154,6 @@ function asLine(row: z.infer<typeof storedLine>): CaInspectionLine {
 }
 
 const databaseUnavailable = ["PGRST202", "42883", "42P01"];
-const useDrive = () => Boolean(process.env["CRUZ_ALTA_DRIVE_SERVICE_ACCOUNT_JSON"]);
 const emptySummary: CaInspectionSummary = {
   lastSync: null,
   status: "not_configured",
@@ -174,10 +173,8 @@ export const caInspectionSummary = createServerFn({ method: "GET" })
     });
     if (response.error && databaseUnavailable.includes(response.error.code)) return emptySummary;
     const summary = storedSummary.parse(nrResult(response));
-    const check = useDrive()
-      ? await client.rpc("ca_inspecao_sync_status", { p_org: data.organization_id })
-      : null;
-    const service = check && !check.error ? syncState.parse(check.data) : null;
+    const check = await client.rpc("ca_inspecao_sync_status", { p_org: data.organization_id });
+    const service = check.error ? null : syncState.parse(check.data);
     const state: CaInspectionSummary["status"] =
       service?.state === "syncing"
         ? "running"
@@ -295,7 +292,6 @@ export const caInspectionSyncNow = createServerFn({ method: "POST" })
   .inputValidator(organization)
   .handler(async ({ context, data }) => {
     privateResponse();
-    if (!useDrive()) throw new Error("Integração com o Drive ainda não configurada.");
     const result = z.object({ state: z.string(), queued: z.number().int().default(0) }).parse(
       await rpc(context.supabase as SupabaseClient, "ca_inspecao_request_sync", {
         p_org: data.organization_id,

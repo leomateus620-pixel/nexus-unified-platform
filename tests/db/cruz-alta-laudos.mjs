@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { randomBytes, randomUUID } from "node:crypto";
+import { generateKeyPairSync, randomBytes, randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import postgres from "postgres";
 import { applyMigrations } from "../../scripts/migrations/executor.mjs";
@@ -409,6 +409,95 @@ try {
   assert.equal(automaticallyUpdated.seal.revision, 58);
   assert.equal((await current()).seal.evidence, first.documents[0].id);
   console.log("PASS atualização automática do layout e preservação do lacre decidido no PDF");
+
+  const setupEmail = "laudos-fixture@local-fixture.iam.gserviceaccount.com";
+  const fakeKey = generateKeyPairSync("rsa", { modulusLength: 2048 })
+    .privateKey.export({ type: "pkcs8", format: "pem" })
+    .toString();
+  const fixture = {
+    type: "service_account",
+    client_email: setupEmail,
+    private_key: fakeKey,
+    private_key_id: "test-fixture-kid",
+    token_uri: "https://fixture.invalid/",
+  };
+  const issue = async () =>
+    (await sql`select ca_inspecao_drive_setup_emitir(${setupEmail}) r`)[0].r;
+  const install = async (token, payload) =>
+    (await sql`select ca_inspecao_drive_setup_concluir(${token},${sql.json(payload)}) r`)[0].r;
+  const readWorker = async (id, leaseId) =>
+    (await sql`select ca_inspecao_drive_worker_secret(${id},${leaseId}) r`)[0].r;
+  await role();
+  await deny(issue, "55000");
+
+  // O cluster descartável simula a interface do Vault. A extensão de produção cifra os valores.
+  await sql.unsafe(`create schema vault;
+    create table vault.secrets(id uuid primary key default gen_random_uuid(),
+      name text unique not null, secret text not null, description text);
+    create view vault.decrypted_secrets as select id,name,secret as decrypted_secret from vault.secrets;
+    create function vault.create_secret(new_secret text,new_name text,new_description text,new_key_id uuid)
+    returns uuid language sql as $vault$
+      insert into vault.secrets(name,secret,description) values(new_name,new_secret,new_description) returning id
+    $vault$;`);
+
+  await role(users.reviewer);
+  await deny(issue, "42501");
+  await deny(() => install("a".repeat(64), fixture), "42501");
+  await deny(() => readWorker(randomUUID(), randomUUID()), "42501");
+  await role(null, true);
+  await deny(issue, "42501");
+  await role();
+  const superseded = await issue();
+  const expired = await issue();
+  assert.match(expired.token, /^[a-f0-9]{64}$/);
+  const timeRemaining = Date.parse(expired.expiresAt) - Date.now();
+  assert.ok(timeRemaining > 590000 && timeRemaining <= 600000);
+  assert.equal((await sql`select count(*)::int n from ca_inspecao_drive_convites`)[0].n, 1);
+  assert.equal(
+    (
+      await sql`select hash=encode(sha256(convert_to(${expired.token},'UTF8')),'hex') match
+    from ca_inspecao_drive_convites`
+    )[0].match,
+    true,
+  );
+  await sql`update ca_inspecao_drive_convites set expira_em=now()-interval '1 second'`;
+  await role(null, true);
+  assert.equal(await install(expired.token, fixture), false);
+  assert.equal(await install(superseded.token, fixture), false);
+  await role();
+  const invitation = await issue();
+  await role(null, true);
+  assert.equal(
+    await install(invitation.token, {
+      ...fixture,
+      client_email: "outro@fixture.iam.gserviceaccount.com",
+    }),
+    false,
+  );
+  assert.equal(await install(invitation.token, { ...fixture, private_key: "invalida" }), false);
+  assert.equal(await install(invitation.token, fixture), true);
+  assert.equal(await install(invitation.token, fixture), false);
+  assert.equal(await readWorker(randomUUID(), randomUUID()), null);
+  await role();
+  await deny(issue, "PT409");
+  assert.equal((await sql`select count(*)::int n from ca_inspecao_drive_convites`)[0].n, 0);
+  assert.equal((await sql`select count(*)::int n from vault.secrets`)[0].n, 1);
+  console.log("PASS convite vinculado à conta, expirável, uso único e cadastro sem sobrescrita");
+
+  const setupBatch = (
+    await sql`insert into ca_inspecao_lotes(raiz) values(${layoutFolder}) returning id`
+  )[0].id;
+  await sql`insert into ca_inspecao_trabalhos(lote_id,tipo,chave,payload)
+    values(${setupBatch},'scan',${layoutFolder},${sql.json({ folderId: layoutFolder, kind: "layout", ancestorNames: [] })})`;
+  const setupJob = await job();
+  assert.equal(await readWorker(setupJob.id, randomUUID()), null);
+  const credential = await readWorker(setupJob.id, setupJob.lease);
+  assert.equal(credential.client_email, setupEmail);
+  assert.ok(credential.private_key === fakeKey.trim());
+  assert.equal(credential.token_uri, undefined);
+  await finish(setupJob, { kind: "scan", children: [], nextPageToken: null });
+  assert.equal(await readWorker(setupJob.id, setupJob.lease), null);
+  console.log("PASS leitura da credencial isolada ao trabalho com lease vigente");
 } finally {
   await sql.end();
   await control.unsafe("drop database " + database + " with (force)");

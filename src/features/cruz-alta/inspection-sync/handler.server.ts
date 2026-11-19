@@ -1,6 +1,7 @@
 import "@tanstack/react-start/server-only";
-import { createInspectionWorker, inspectionTicket, workerResponse } from "./core.server";
+import { createInspectionWorker } from "./core.server";
 import { serviceCredentials } from "./drive.server";
+import { inspectionTicket, workerResponse } from "./service.server";
 
 export async function handleCruzAltaInspectionWorker(request: Request) {
   if (request.method !== "POST") return workerResponse({ error: "metodo_nao_permitido" }, 405);
@@ -10,14 +11,13 @@ export async function handleCruzAltaInspectionWorker(request: Request) {
   const url = process.env["SUPABASE_URL"];
   const serviceKey = process.env["SUPABASE_SERVICE_ROLE_KEY"];
   const credential = process.env["CRUZ_ALTA_DRIVE_SERVICE_ACCOUNT_JSON"];
-  if (!url || !serviceKey || !credential)
-    return workerResponse({ error: "integracao_nao_configurada" }, 503);
+  if (!url || !serviceKey) return workerResponse({ error: "integracao_nao_configurada" }, 503);
 
   try {
     const worker = createInspectionWorker({
       url,
       serviceKey,
-      credentials: serviceCredentials(credential),
+      ...(credential ? { credentials: serviceCredentials(credential) } : {}),
       parse: async (bytes, source) => {
         const { parseCruzAltaInspectionPdf } = await import("../inspection-pdf.server");
         return parseCruzAltaInspectionPdf(bytes, source);

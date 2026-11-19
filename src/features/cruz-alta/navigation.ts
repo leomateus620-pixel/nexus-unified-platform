@@ -31,6 +31,14 @@ export interface SceneCommand {
   id?: string;
   reference?: "dji44" | "encontro" | "ferrovia";
 }
+export type InspectionMarker = {
+  node: HTMLElement;
+  cover: string;
+  keys: string[];
+};
+
+type PinPlacement = { x: number; y: number; width: number; height: number };
+
 type SceneOptions = {
   host: HTMLDivElement;
   labels: HTMLDivElement;
@@ -180,7 +188,7 @@ export function openScene(options: SceneOptions) {
   function cacheVisibility() {
     for (const id of labelNodes.keys()) visibility.set(id, visible(id));
   }
-  function labelsAt(distance: number) {
+  function labelsAt(distance: number, pins: PinPlacement[]) {
     const chosen = selected ? index.byId.get(selected) : null;
     const priority = (id: string) =>
       id === selected ? 0 : chosen && index.chains.get(chosen.id)?.includes(id) ? 1 : 2;
@@ -209,6 +217,12 @@ export function openScene(options: SceneOptions) {
           py > 20 &&
           py < height - 26 &&
           placed.every((o) => Math.abs(o.y - py) > 24 || Math.abs(o.x - px) > (o.w + w) / 2 + 5) &&
+          pins.every(
+            (pin) =>
+              py < pin.y - pin.height - 4 ||
+              py > pin.y + 19 ||
+              Math.abs(pin.x - px) > (pin.width + w) / 2 + 5,
+          ) &&
           (mode === "planta" ||
             !index.labelOccluded(camera.position, x, e.top + 1.3, z, id, layers))
         ) {
@@ -221,6 +235,79 @@ export function openScene(options: SceneOptions) {
       }
       node.hidden = !shown;
     }
+  }
+  const inspectionPoint = new T.Vector3();
+  let inspectionMarkers: InspectionMarker[] = [];
+  function positionInspections() {
+    const placements: PinPlacement[] = [];
+    if (!inspectionMarkers.length) return placements;
+    const selectedChain = selected ? (index.chains.get(selected) ?? []) : [];
+    const ranked = inspectionMarkers
+      .map((marker) => {
+        const selectedAnchor =
+          selected && marker.keys.includes(selected) ? model.lineAnchor(selected) : undefined;
+        const anchor = selectedAnchor ?? marker.keys.map(model.lineAnchor).find(Boolean);
+        const focused =
+          !!selected &&
+          (marker.cover === selected ||
+            marker.keys.includes(selected) ||
+            (index.chains.get(marker.cover)?.includes(selected) && selectedChain.length > 1));
+        return {
+          marker,
+          anchor,
+          focused,
+          distance: anchor?.distanceTo(camera.position) ?? Infinity,
+        };
+      })
+      .sort((a, b) => Number(b.focused) - Number(a.focused) || a.distance - b.distance);
+    const markerLimit = width < 520 ? 4 : 8;
+    let expandedPlaced: boolean = false;
+    for (const { marker, anchor, focused, distance } of ranked) {
+      const node = marker.node;
+      let visible = false;
+      if (
+        anchor &&
+        placements.length < markerLimit &&
+        (focused || distance < (mode === "patio" ? 65 : 165))
+      ) {
+        const projectedY = anchor.y + 1.2;
+        inspectionPoint.set(anchor.x, projectedY, anchor.z).project(camera);
+        const x = (0.5 + 0.5 * inspectionPoint.x) * width;
+        const y = (0.5 - 0.5 * inspectionPoint.y) * height;
+        const expanded: boolean = width >= 650 && !expandedPlaced && x > 156 && x < width - 156;
+        const pinWidth = expanded ? 280 : 54;
+        const pinHeight = expanded ? 68 : 44;
+        visible =
+          inspectionPoint.z >= -1 &&
+          inspectionPoint.z <= 1 &&
+          x > pinWidth / 2 + 4 &&
+          x < width - pinWidth / 2 - 4 &&
+          y > Math.min(100, height * 0.29) &&
+          y < height - Math.min(96, height * 0.27) &&
+          placements.every(
+            (p) =>
+              Math.abs(x - p.x) > (pinWidth + p.width) / 2 + 7 ||
+              Math.abs(y - p.y) > Math.max(pinHeight, p.height) + 8,
+          ) &&
+          !index.labelOccluded(
+            camera.position,
+            anchor.x,
+            projectedY,
+            anchor.z,
+            marker.cover,
+            layers,
+          );
+        if (visible) {
+          placements.push({ x, y, width: pinWidth, height: pinHeight });
+          expandedPlaced ||= expanded;
+          node.dataset["expanded"] = String(expanded);
+          node.style.transform = `translate(${x}px, ${y}px)`;
+          node.dataset["edge"] = x < 145 ? "start" : x > width - 145 ? "end" : "center";
+        }
+      }
+      node.hidden = !visible;
+    }
+    return placements;
   }
   function updateHud(distance: number) {
     ray.setFromCamera(new T.Vector2(-0.06, -0.63), camera);
@@ -253,7 +340,7 @@ export function openScene(options: SceneOptions) {
       metres,
       drone,
     });
-    labelsAt(distance);
+    labelsAt(distance, positionInspections());
   }
   function walk(dt: number) {
     const horizontal =
@@ -862,6 +949,10 @@ export function openScene(options: SceneOptions) {
     },
     moveTo,
     zoom,
+    inspectionMarkers: (markers: InspectionMarker[]) => {
+      inspectionMarkers = markers;
+      request();
+    },
     walk: (value: string | null) => {
       forcedWalk = value;
       request();

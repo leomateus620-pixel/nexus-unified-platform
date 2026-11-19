@@ -67,6 +67,8 @@ import { Route as AuthenticatedComprasOrdensProducaoIndexRouteImport } from './r
 import { Route as AuthenticatedComprasOrdensProducaoOrdemIdRouteImport } from './routes/_authenticated/compras.ordens-producao.$ordemId'
 import { Route as AuthenticatedExecucaoOrdensOrdemIdRouteImport } from './routes/_authenticated/execucao.ordens.$ordemId'
 import { Route as AuthenticatedExecucaoPetsPetIdRouteImport } from './routes/_authenticated/execucao.pets.$petId'
+import { Route as ApiPublicCruzAltaInspectionDriveSetupRouteImport } from './routes/api/public/cruz-alta/inspection-drive-setup'
+import { Route as ApiPublicCruzAltaInspectionWorkerRouteImport } from './routes/api/public/cruz-alta/inspection-worker'
 import { Route as ApiPublicNrImageWorkerRouteImport } from './routes/api/public/nr/image-worker'
 import { Route as AuthenticatedComercialPropostasPropostaIdIndexRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.index'
 import { Route as AuthenticatedComercialPropostasPropostaIdRevisoesRevisaoIdRouteImport } from './routes/_authenticated/comercial.propostas.$propostaId.revisoes.$revisaoId'
@@ -399,6 +401,18 @@ const AuthenticatedExecucaoPetsPetIdRoute =
     path: '/pets/$petId',
     getParentRoute: () => AuthenticatedExecucaoRoute,
   } as any)
+const ApiPublicCruzAltaInspectionDriveSetupRoute =
+  ApiPublicCruzAltaInspectionDriveSetupRouteImport.update({
+    id: '/api/public/cruz-alta/inspection-drive-setup',
+    path: '/api/public/cruz-alta/inspection-drive-setup',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicCruzAltaInspectionWorkerRoute =
+  ApiPublicCruzAltaInspectionWorkerRouteImport.update({
+    id: '/api/public/cruz-alta/inspection-worker',
+    path: '/api/public/cruz-alta/inspection-worker',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicNrImageWorkerRoute = ApiPublicNrImageWorkerRouteImport.update({
   id: '/api/public/nr/image-worker',
   path: '/api/public/nr/image-worker',
@@ -553,6 +567,8 @@ export interface FileRoutesByFullPath {
   '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
   '/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
   '/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
+  '/api/public/cruz-alta/inspection-drive-setup': typeof ApiPublicCruzAltaInspectionDriveSetupRoute
+  '/api/public/cruz-alta/inspection-worker': typeof ApiPublicCruzAltaInspectionWorkerRoute
   '/api/public/nr/image-worker': typeof ApiPublicNrImageWorkerRoute
   '/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
@@ -615,6 +631,8 @@ export interface FileRoutesByTo {
   '/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
   '/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
   '/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
+  '/api/public/cruz-alta/inspection-drive-setup': typeof ApiPublicCruzAltaInspectionDriveSetupRoute
+  '/api/public/cruz-alta/inspection-worker': typeof ApiPublicCruzAltaInspectionWorkerRoute
   '/api/public/nr/image-worker': typeof ApiPublicNrImageWorkerRoute
   '/comercial/propostas': typeof AuthenticatedComercialPropostasIndexRoute
   '/compras/ordens-compra': typeof AuthenticatedComprasOrdensCompraIndexRoute
@@ -687,6 +705,8 @@ export interface FileRoutesById {
   '/_authenticated/compras/ordens-producao/$ordemId': typeof AuthenticatedComprasOrdensProducaoOrdemIdRoute
   '/_authenticated/execucao/ordens/$ordemId': typeof AuthenticatedExecucaoOrdensOrdemIdRoute
   '/_authenticated/execucao/pets/$petId': typeof AuthenticatedExecucaoPetsPetIdRoute
+  '/api/public/cruz-alta/inspection-drive-setup': typeof ApiPublicCruzAltaInspectionDriveSetupRoute
+  '/api/public/cruz-alta/inspection-worker': typeof ApiPublicCruzAltaInspectionWorkerRoute
   '/api/public/nr/image-worker': typeof ApiPublicNrImageWorkerRoute
   '/_authenticated/comercial/propostas/': typeof AuthenticatedComercialPropostasIndexRoute
   '/_authenticated/compras/ordens-compra/': typeof AuthenticatedComprasOrdensCompraIndexRoute
@@ -760,6 +780,8 @@ export interface FileRouteTypes {
     | '/compras/ordens-producao/$ordemId'
     | '/execucao/ordens/$ordemId'
     | '/execucao/pets/$petId'
+    | '/api/public/cruz-alta/inspection-drive-setup'
+    | '/api/public/cruz-alta/inspection-worker'
     | '/api/public/nr/image-worker'
     | '/comercial/propostas/'
     | '/compras/ordens-compra/'
@@ -822,6 +844,8 @@ export interface FileRouteTypes {
     | '/compras/ordens-producao/$ordemId'
     | '/execucao/ordens/$ordemId'
     | '/execucao/pets/$petId'
+    | '/api/public/cruz-alta/inspection-drive-setup'
+    | '/api/public/cruz-alta/inspection-worker'
     | '/api/public/nr/image-worker'
     | '/comercial/propostas'
     | '/compras/ordens-compra'
@@ -893,6 +917,8 @@ export interface FileRouteTypes {
     | '/_authenticated/compras/ordens-producao/$ordemId'
     | '/_authenticated/execucao/ordens/$ordemId'
     | '/_authenticated/execucao/pets/$petId'
+    | '/api/public/cruz-alta/inspection-drive-setup'
+    | '/api/public/cruz-alta/inspection-worker'
     | '/api/public/nr/image-worker'
     | '/_authenticated/comercial/propostas/'
     | '/_authenticated/compras/ordens-compra/'
@@ -922,6 +948,8 @@ export interface RootRouteChildren {
   Mapas3dTrevisanRoute: typeof Mapas3dTrevisanRoute
   Mapas3dUnidadesRoute: typeof Mapas3dUnidadesRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  ApiPublicCruzAltaInspectionDriveSetupRoute: typeof ApiPublicCruzAltaInspectionDriveSetupRoute
+  ApiPublicCruzAltaInspectionWorkerRoute: typeof ApiPublicCruzAltaInspectionWorkerRoute
   ApiPublicNrImageWorkerRoute: typeof ApiPublicNrImageWorkerRoute
 }
 
@@ -1333,6 +1361,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedExecucaoPetsPetIdRouteImport
       parentRoute: typeof AuthenticatedExecucaoRoute
     }
+    '/api/public/cruz-alta/inspection-drive-setup': {
+      id: '/api/public/cruz-alta/inspection-drive-setup'
+      path: '/api/public/cruz-alta/inspection-drive-setup'
+      fullPath: '/api/public/cruz-alta/inspection-drive-setup'
+      preLoaderRoute: typeof ApiPublicCruzAltaInspectionDriveSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/cruz-alta/inspection-worker': {
+      id: '/api/public/cruz-alta/inspection-worker'
+      path: '/api/public/cruz-alta/inspection-worker'
+      fullPath: '/api/public/cruz-alta/inspection-worker'
+      preLoaderRoute: typeof ApiPublicCruzAltaInspectionWorkerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/nr/image-worker': {
       id: '/api/public/nr/image-worker'
       path: '/api/public/nr/image-worker'
@@ -1687,6 +1729,10 @@ const rootRouteChildren: RootRouteChildren = {
   Mapas3dTrevisanRoute: Mapas3dTrevisanRoute,
   Mapas3dUnidadesRoute: Mapas3dUnidadesRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  ApiPublicCruzAltaInspectionDriveSetupRoute:
+    ApiPublicCruzAltaInspectionDriveSetupRoute,
+  ApiPublicCruzAltaInspectionWorkerRoute:
+    ApiPublicCruzAltaInspectionWorkerRoute,
   ApiPublicNrImageWorkerRoute: ApiPublicNrImageWorkerRoute,
 }
 export const routeTree = rootRouteImport

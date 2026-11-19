@@ -96,7 +96,9 @@ try {
   await search.press("ArrowDown");
   const result = page.locator("#ca-search-results li button");
   assert.equal(await result.count(), 1);
-  await page.waitForFunction(() => document.activeElement?.textContent?.includes("LVHF 28.1"));
+  await page.waitForFunction(() =>
+    document.activeElement?.textContent?.trim().startsWith("28.1 · "),
+  );
   await page.keyboard.press("Escape");
   assert(await search.evaluate((input) => input === document.activeElement));
   await page.getByRole("button", { name: "Limpar busca" }).click();

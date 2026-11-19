@@ -87,13 +87,16 @@ select public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_ra
 select pg_temp.ag_assert((select count(*)=2 from public.agenda_eventos where acao_id=:'action_id'),'multiple distinct visits reuse same action identity');
 
 -- Requirements are configured capabilities, never invented legal periodicities.
+-- Keep the qualification current at publication and its service windows clear of fixed visits above.
+select (now() at time zone 'America/Sao_Paulo')::date - 30 as qualification_completion,
+  greatest((now() at time zone 'America/Sao_Paulo')::date + 3, date '2026-11-09') as qualification_expiry \gset
 select (public.salvar_competencia('61000000-0000-0000-0000-000000000001',gen_random_uuid(),'{"nome":"Agenda competência teste","exige_evidencia":false,"exige_validade":true}')->>'id') as skill_id \gset
-select (public.salvar_qualificacao('61000000-0000-0000-0000-000000000001',gen_random_uuid(),jsonb_build_object('pessoa_id',:'principal','competencia_id',:'skill_id','emissor','Emissor teste','conclusao','2026-10-01','validade','2026-11-05'))->>'id') as qualification_id \gset
+select (public.salvar_qualificacao('61000000-0000-0000-0000-000000000001',gen_random_uuid(),jsonb_build_object('pessoa_id',:'principal','competencia_id',:'skill_id','emissor','Emissor teste','conclusao',:'qualification_completion','validade',:'qualification_expiry'))->>'id') as qualification_id \gset
 select public.transicionar_qualificacao('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'qualification_id',1,'em_conferencia');
 select public.transicionar_qualificacao('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'qualification_id',2,'validada');
-select (public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'event_data'::jsonb||jsonb_build_object('inicio','2026-11-06T10:00:00Z','fim','2026-11-06T11:00:00Z','participantes','[]'::jsonb,'competencias',jsonb_build_array(:'skill_id')))->>'id') as expired_id \gset
+select (public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'event_data'::jsonb||jsonb_build_object('inicio',(:'qualification_expiry'::date + 1 + time '10:00') at time zone 'UTC','fim',(:'qualification_expiry'::date + 1 + time '11:00') at time zone 'UTC','participantes','[]'::jsonb,'competencias',jsonb_build_array(:'skill_id')))->>'id') as expired_id \gset
 select pg_temp.ag_reject(format($q$select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),%L,1,'publicado')$q$,:'expired_id'),'23514','qualification expiring before service blocks publication');
-select (public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'event_data'::jsonb||jsonb_build_object('inicio','2026-11-04T10:00:00Z','fim','2026-11-04T11:00:00Z','participantes','[]'::jsonb,'competencias',jsonb_build_array(:'skill_id')))->>'id') as qualified_id \gset
+select (public.salvar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'event_data'::jsonb||jsonb_build_object('inicio',(:'qualification_expiry'::date - 1 + time '10:00') at time zone 'UTC','fim',(:'qualification_expiry'::date - 1 + time '11:00') at time zone 'UTC','participantes','[]'::jsonb,'competencias',jsonb_build_array(:'skill_id')))->>'id') as qualified_id \gset
 select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'qualified_id',1,'publicado');
 select public.transicionar_qualificacao('61000000-0000-0000-0000-000000000001',gen_random_uuid(),:'qualification_id',3,'revogada','Revogação conferida pelo emissor');
 select pg_temp.ag_reject(format($q$select public.transicionar_evento_agenda('61000000-0000-0000-0000-000000000001',gen_random_uuid(),%L,2,'em_andamento')$q$,:'qualified_id'),'23514','qualification is revalidated when activity starts');

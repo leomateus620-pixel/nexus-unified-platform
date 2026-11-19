@@ -11,7 +11,9 @@ import {
 } from "lucide-react";
 import { lvhfAppearance, lvhfState, lvhfSwatch } from "./lvhf-appearance";
 import type { CruzObject } from "./scene-types";
+import type { CaInspectionLine } from "./inspection-domain";
 import { SectorIcon } from "./sector-visual";
+import { objectInspection, technicalTitle } from "./inspection-display";
 import "./structure-browser.css";
 
 const filters = [
@@ -64,20 +66,21 @@ function Pictogram({ sector }: { sector: CruzObject }) {
   );
 }
 
-function componentCode(item: CruzObject) {
-  if (item.kind === "componente") return item.aliases?.find((alias) => /^\d+(\.\d+)?$/.test(alias));
-  return undefined;
-}
-
-function ItemLabel({ item, path }: { item: CruzObject; path?: string }) {
-  const code = componentCode(item);
+function ItemLabel({
+  item,
+  path,
+  line,
+}: {
+  item: CruzObject;
+  path?: string;
+  line: CaInspectionLine | undefined;
+}) {
   const status = lvhfState(item.status);
   return (
     <span className="ca-browser-label">
-      <strong>{item.name}</strong>
+      <strong>{technicalTitle(item, line)}</strong>
       <span className="ca-browser-meta">
         {kinds[item.kind]}
-        {code ? " · " + code : ""}
         {path && " · " + path}
         {item.status && (
           <span className="ca-browser-status">
@@ -101,6 +104,7 @@ export function StructureBrowser({
   onUnit,
   onClose,
   resultsRef,
+  inspections,
 }: {
   objects: CruzObject[];
   matches: CruzObject[];
@@ -112,6 +116,7 @@ export function StructureBrowser({
   onUnit: () => void;
   onClose: () => void;
   resultsRef?: Ref<HTMLDivElement>;
+  inspections: ReadonlyMap<string, CaInspectionLine>;
 }) {
   const tree = useMemo(() => catalogTree(objects), [objects]);
   const selected = selectedId ? tree.byId.get(selectedId) : undefined;
@@ -130,13 +135,13 @@ export function StructureBrowser({
         item,
         path: parents
           .filter((parent) => parent.kind !== "setor")
-          .map((parent) => parent.name)
+          .map((parent) => technicalTitle(parent, objectInspection(parent, inspections)))
           .join(" / "),
       });
       grouped.set(sector, rows);
     }
     return [...grouped];
-  }, [matches, searching, tree]);
+  }, [matches, searching, tree, inspections]);
 
   function toggle(id: string) {
     setExpanded((previous) => {
@@ -174,8 +179,7 @@ export function StructureBrowser({
     const isSector = item.kind === "setor";
     const Icon = icons[item.kind];
     const branchId = `ca-branch-${item.id}`;
-    const code = componentCode(item);
-    const disclosureLabel = `${isOpen ? "Recolher" : "Expandir"} ${item.name}${code ? " · " + code : ""}`;
+    const disclosureLabel = `${isOpen ? "Recolher" : "Expandir"} ${technicalTitle(item, objectInspection(item, inspections))}`;
     return (
       <li
         key={item.id}
@@ -223,7 +227,7 @@ export function StructureBrowser({
                 onClick={() => onChoose(item)}
               >
                 <Icon className="ca-browser-kind" aria-hidden="true" size={17} />
-                <ItemLabel item={item} />
+                <ItemLabel item={item} line={objectInspection(item, inspections)} />
               </button>
               {children.length > 0 && (
                 <button
@@ -318,7 +322,11 @@ export function StructureBrowser({
                             ) : (
                               <Icon className="ca-browser-kind" aria-hidden="true" size={17} />
                             )}
-                            <ItemLabel item={item} path={path} />
+                            <ItemLabel
+                              item={item}
+                              path={path}
+                              line={objectInspection(item, inspections)}
+                            />
                             <ChevronRight aria-hidden="true" size={16} />
                           </button>
                         </div>

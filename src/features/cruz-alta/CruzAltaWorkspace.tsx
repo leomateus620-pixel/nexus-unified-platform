@@ -1,23 +1,26 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, ChevronRight, ChevronUp, LockKeyhole, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { caInspectionSummary } from "./inspection.functions";
 import { useOrg, useSessionUser } from "@/features/org/session";
 import CruzAltaViewer from "./CruzAltaViewer";
 import { geometry, objects as elements } from "./manifest";
 import type { CruzObject } from "./scene-types";
 import { cruzAlta } from "./context";
+import {
+  inspectionCatalog,
+  objectInspection,
+  technicalTag,
+  technicalTitle,
+} from "./inspection-display";
 import { SectorIcon } from "./sector-visual";
 import { lvhfAppearance, lvhfState, lvhfSwatch } from "./lvhf-appearance";
 import "./workspace.css";
 const objects: CruzObject[] = elements.some((e) => e.id === "unidade")
   ? elements
   : [{ id: "unidade", kind: "setor", name: "Três Tentos — Cruz Alta/RS" }, ...elements];
-
-function label(object: CruzObject) {
-  return object.id.startsWith("cobertura-")
-    ? object.id.slice(10) + " · " + object.name
-    : object.name;
-}
 
 const objectKinds: Record<CruzObject["kind"], string> = {
   setor: "Setor",
@@ -44,6 +47,8 @@ export type MapSearch = {
   aba?: "documentos" | "ficha" | undefined;
   documento?: string | undefined;
   revisao?: string | undefined;
+  evidencia?: string | undefined;
+  pagina?: number | undefined;
 };
 export type ChangeSearch = (next: MapSearch, replace?: boolean) => void;
 export default function CruzAltaWorkspace({
@@ -57,24 +62,40 @@ export default function CruzAltaWorkspace({
 }) {
   const user = useSessionUser();
   const org = useOrg();
+  const getInspections = useServerFn(caInspectionSummary);
+  const authorized = !!user && org.data?.userId === user.id && org.data?.orgId === cruzAlta.org;
+  const inspectionQuery = useQuery({
+    queryKey: ["cruz-alta", user?.id, cruzAlta.org, "inspecoes"],
+    queryFn: ({ signal }) => getInspections({ data: { organization_id: cruzAlta.org }, signal }),
+    enabled: authorized,
+    retry: false,
+    gcTime: 0,
+    staleTime: 30_000,
+    refetchInterval: (query) => (query.state.data?.status === "running" ? 8_000 : 60_000),
+  });
+  const inspections = authorized && !inspectionQuery.isError ? inspectionQuery.data : undefined;
+  const catalog = useMemo(() => inspectionCatalog(inspections?.lines), [inspections?.lines]);
+  const label = (object: CruzObject) => technicalTitle(object, objectInspection(object, catalog));
   const [compact, setCompact] = useState(false);
 
   const closeButton = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLElement | null>(null);
   const panelBody = useRef<HTMLDivElement>(null);
   const scrollPos = useRef(0);
+  const inspectionSelection = useRef<string | null>(null);
   const selected = objects.find((o) => o.id === search.objeto);
   const selectedState = lvhfState(selected?.status);
   const trail = ancestors(selected);
-  const reader = !!(search.revisao || search.documento);
+  const reader = !!(search.revisao || search.documento || search.evidencia);
   const select = (id: string) => {
     if (!search.objeto) opener.current = document.activeElement as HTMLElement;
     scrollPos.current = 0;
     setCompact(false);
     onChange({ objeto: id, aba: "documentos" }, !!search.objeto);
   };
-  const close = () => {
-    if (reader) onChange({ objeto: search.objeto, aba: "documentos" }, true);
+  const close = useCallback(() => {
+    if (reader)
+      onChange({ objeto: search.objeto, aba: search.evidencia ? "ficha" : "documentos" }, true);
     else {
       onChange({}, true);
 
@@ -85,11 +106,14 @@ export default function CruzAltaWorkspace({
         )?.focus(),
       );
     }
-  };
+  }, [onChange, reader, search.evidencia, search.objeto]);
   useEffect(() => {
     if (!search.objeto) return;
     closeButton.current?.focus({ preventScroll: true });
     if (panelBody.current) panelBody.current.scrollTop = reader ? 0 : scrollPos.current;
+  }, [search.objeto, reader]); // Camera and layers stay mounted across panel and reader navigation.
+  useEffect(() => {
+    if (!search.objeto) return;
     const escape = (event: KeyboardEvent) => {
       if (event.key !== "Escape" || event.defaultPrevented) return;
       event.preventDefault();
@@ -97,10 +121,28 @@ export default function CruzAltaWorkspace({
     };
     window.addEventListener("keydown", escape);
     return () => window.removeEventListener("keydown", escape);
-  }, [search.objeto, reader]); // Camera and layers remain mounted across panel and reader navigation.
+  }, [close, search.objeto]);
   const openReader = (doc: string, rev: string) => {
-    scrollPos.current = panelBody.current?.scrollTop ?? 0;
-    onChange({ ...search, aba: "documentos", documento: doc, revisao: rev });
+    if (!reader) scrollPos.current = panelBody.current?.scrollTop ?? 0;
+    onChange({
+      ...search,
+      aba: "documentos",
+      documento: doc,
+      revisao: rev,
+      evidencia: undefined,
+      pagina: undefined,
+    });
+  };
+  const openInspection = (id: string) => {
+    if (search.objeto !== id) inspectionSelection.current = id;
+    if (!search.objeto) opener.current = document.activeElement as HTMLElement;
+    if (search.objeto !== id || search.aba !== "ficha") scrollPos.current = 0;
+    setCompact(false);
+    onChange({ objeto: id, aba: "ficha" }, !!search.objeto);
+  };
+  const readInspection = (evidence: string, page: number) => {
+    if (!reader) scrollPos.current = panelBody.current?.scrollTop ?? 0;
+    onChange({ objeto: search.objeto, aba: "ficha", evidencia: evidence, pagina: page });
   };
   return (
     <div
@@ -134,7 +176,13 @@ export default function CruzAltaWorkspace({
         </div>
       ) : (
         <div className="ca-viewport-wrap">
-          <CruzAltaViewer selectedId={selected?.id ?? null} onSelect={select} />
+          <CruzAltaViewer
+            selectedId={selected?.id ?? null}
+            onSelect={select}
+            inspections={inspections}
+            onOpenInspection={openInspection}
+            inspectionSelection={inspectionSelection}
+          />
         </div>
       )}
       {(search.objeto || reader) && (
@@ -166,7 +214,9 @@ export default function CruzAltaWorkspace({
                   </span>
                 )}
               </div>
-              <h2>{selected ? label(selected) : "Objeto indisponível"}</h2>
+              <h2 data-technical={selected && !!technicalTag(selected) ? true : undefined}>
+                {selected ? label(selected) : "Objeto indisponível"}
+              </h2>
             </div>
             {!reader && (
               <button
@@ -241,6 +291,11 @@ export default function CruzAltaWorkspace({
                       search={search}
                       change={onChange}
                       openReader={openReader}
+                      readInspection={readInspection}
+                      openInspection={openInspection}
+                      inspections={inspections}
+                      inspectionsPending={inspectionQuery.isPending}
+                      refreshInspections={inspectionQuery.refetch}
                       archive={archive}
                     />
                   </Suspense>

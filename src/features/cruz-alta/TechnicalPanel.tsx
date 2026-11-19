@@ -35,6 +35,14 @@ import {
   caPrevia,
 } from "./acervo.functions";
 import { describeFile, operationId, transferFile } from "./upload";
+import { InspectionSection, InspectionSourcesReader, RelatedInspections } from "./InspectionSheet";
+import type { CaInspectionLine, CaInspectionSummary } from "./inspection-domain";
+import {
+  inspectionCatalog,
+  objectInspection,
+  technicalTag,
+  technicalTitle,
+} from "./inspection-display";
 
 const Pdf = lazy(() =>
   import("@/features/nr/NrOriginalPreview").then((m) => ({ default: m.NrOriginalPreview })),
@@ -56,6 +64,11 @@ type Props = {
   search: MapSearch;
   change: ChangeSearch;
   openReader: (doc: string, rev: string) => void;
+  readInspection: (evidence: string, page: number) => void;
+  openInspection: (id: string) => void;
+  inspections: CaInspectionSummary | undefined;
+  inspectionsPending: boolean;
+  refreshInspections: () => Promise<unknown>;
   archive: boolean;
 };
 const describeError = (e: unknown) =>
@@ -133,21 +146,33 @@ export default function TechnicalPanel(props: Props) {
       </>
     );
   if (!sheet.data) return <p role="status">Carregando ficha…</p>;
-  const reading = !!(search.revisao || search.documento);
+  const reading = !!(search.revisao || search.documento || search.evidencia);
   return (
     <>
       <div hidden={reading}>
         <SheetContent {...props} scope={scope} sheet={sheet.data} refresh={refresh} />
       </div>
-      {reading && (
-        <Reader
-          key={[object.id, search.documento].join("/")}
-          onRevision={props.openReader}
+      {search.evidencia ? (
+        <InspectionSourcesReader
+          key={search.evidencia + "/" + search.pagina}
           user={user}
-          scope={scope}
-          search={search}
-          docs={sheet.data.documentos}
+          object={object.id}
+          summary={props.inspections}
+          pending={props.inspectionsPending}
+          evidenceId={search.evidencia}
+          page={search.pagina}
         />
+      ) : (
+        reading && (
+          <Reader
+            key={[object.id, search.documento].join("/")}
+            onRevision={props.openReader}
+            user={user}
+            scope={scope}
+            search={search}
+            docs={sheet.data.documentos}
+          />
+        )
       )}
     </>
   );
@@ -257,6 +282,11 @@ function SheetContent({
   search,
   change,
   openReader,
+  readInspection,
+  openInspection,
+  inspections,
+  inspectionsPending,
+  refreshInspections,
   archive,
 }: Props & { scope: Scope; sheet: Sheet; refresh: () => Promise<void> }) {
   const [form, setForm] = useState<"anexar" | "vincular" | "editar" | "importar" | null>(null);
@@ -278,6 +308,10 @@ function SheetContent({
     closeForm();
     setCorrection(null);
   };
+  const catalog = inspectionCatalog(inspections?.lines);
+  const objectTitle = technicalTag(object)
+    ? technicalTitle(object, objectInspection(object, catalog))
+    : sheet.titulo;
   const confirmUnlink =
     editing && unlink ? (
       <div className="ca-feedback ca-unlink" role="group" aria-label="Confirmar desvinculação">
@@ -313,11 +347,7 @@ function SheetContent({
       </div>
     ) : null;
   const docsTab = search.aba !== "ficha";
-  const mapTitle = object.id.startsWith("cobertura-")
-    ? object.id.slice(10) + " · " + object.name
-    : object.name;
-  const editedTitle =
-    sheet.titulo !== object.name && sheet.titulo !== mapTitle ? sheet.titulo : null;
+  const editedTitle = !technicalTag(object) && sheet.titulo !== object.name ? sheet.titulo : null;
   const isForm = !!(form || correction);
   const canEdit =
     sheet.pode_editar || sheet.pode_publicar || sheet.documentos.some((d) => d.pode_corrigir);
@@ -365,6 +395,9 @@ function SheetContent({
           {note}
         </p>
       )}
+      {!isForm && inspections && (object.kind === "estrutura" || object.kind === "componente") && (
+        <RelatedInspections object={object.id} lines={inspections.lines} onOpen={openInspection} />
+      )}
       {correction ? (
         <CorrectDocument
           scope={scope}
@@ -381,7 +414,7 @@ function SheetContent({
           target={revisionTarget}
           scope={scope}
           user={user}
-          title={sheet.titulo}
+          title={objectTitle}
           onCancel={closeForm}
           onSuccess={success}
         />
@@ -411,6 +444,7 @@ function SheetContent({
           )}
           <DocumentShelf
             docs={sheet.documentos}
+            inspections={catalog}
             owner={object.id}
             editing={editing}
             canPublish={sheet.pode_publicar}
@@ -464,6 +498,16 @@ function SheetContent({
         </>
       ) : (
         <>
+          {(object.kind === "lvhf" || object.id === "unidade") && (
+            <InspectionSection
+              key={object.id}
+              object={object.id}
+              summary={inspections}
+              pending={inspectionsPending}
+              onOpen={readInspection}
+              refresh={refreshInspections}
+            />
+          )}
           <div className="ca-detail-section">
             <h3>Descrição</h3>
             <p>{sheet.descricao || "Descrição ainda não informada."}</p>
@@ -530,6 +574,7 @@ function SheetContent({
 }
 function DocumentShelf({
   docs,
+  inspections,
   owner,
   editing,
   canPublish,
@@ -541,6 +586,7 @@ function DocumentShelf({
   confirm,
 }: {
   docs: DocumentRow[];
+  inspections: ReadonlyMap<string, CaInspectionLine>;
   owner: string;
   editing: boolean;
   canPublish: boolean;
@@ -559,9 +605,10 @@ function DocumentShelf({
       .toLowerCase();
   const words = normalize(query.trim()).split(/\s+/);
   const names = (doc: DocumentRow) =>
-    (doc.origens ?? [doc.objeto]).map(
-      (id) => objects.find((object) => object.id === id)?.name ?? id,
-    );
+    (doc.origens ?? [doc.objeto]).map((id) => {
+      const source = objects.find((object) => object.id === id);
+      return source ? technicalTitle(source, objectInspection(source, inspections)) : id;
+    });
   const filtered = docs.filter((doc) => {
     const text = normalize(
       [

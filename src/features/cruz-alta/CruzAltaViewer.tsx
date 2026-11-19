@@ -1,5 +1,5 @@
 import { createClientOnlyFn } from "@tanstack/react-start";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import {
   ArrowDown,
   ArrowLeft,
@@ -25,6 +25,14 @@ import type { CameraMode, CruzObject, SceneLayer, SceneLayers } from "./scene-ty
 import "./viewer.css";
 import { StructureBrowser, type StructureFilter } from "./StructureBrowser";
 import { activeLegend, lvhfAppearance, lvhfSwatch } from "./lvhf-appearance";
+import { InspectionMarkers } from "./InspectionMarkers";
+import type { CaInspectionSummary } from "./inspection-domain";
+import {
+  inspectionCatalog,
+  objectInspection,
+  technicalTag,
+  technicalTitle,
+} from "./inspection-display";
 
 const loadReference = createClientOnlyFn(() => import("./reference.client"));
 const index = spatialIndex(objects, geometry, lifelines);
@@ -49,9 +57,11 @@ const modes = [
   { key: "patio", name: "Pátio", artwork: "patio" },
 ] as const;
 const unit = index.unit;
-const displayCode = (o: CruzObject) =>
-  o.code ??
-  (o.kind === "componente" ? o.aliases?.find((a) => /^\d+(?:\.\d+)?$/.test(a)) : undefined);
+const searchText = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("pt-BR");
 function mapBox(e: Extent) {
   const margin = Math.max(e.east - e.west, e.south - e.north) * 0.06;
   return [
@@ -77,25 +87,34 @@ function DimensionalMap({
           points={a.footprint.map((v) => v.join(",")).join(" ")}
         />
       ))}
-      {geometry.map((p, i) => (
-        <polygon
-          key={i}
-          className={"ca-footprint ca-" + p.roof}
-          points={p.footprint.map((v) => v.join(",")).join(" ")}
-          onClick={onSelect ? () => onSelect(p.id) : undefined}
-        >
-          {!mini && <title>{index.byId.get(p.id)?.name}</title>}
-        </polygon>
-      ))}
+      {geometry.map((part, i) => {
+        const object = index.byId.get(part.id);
+        return (
+          <polygon
+            key={i}
+            className={"ca-footprint ca-" + part.roof}
+            points={part.footprint.map((point) => point.join(",")).join(" ")}
+            onClick={onSelect ? () => onSelect(part.id) : undefined}
+          >
+            {!mini && object && <title>{technicalTitle(object)}</title>}
+          </polygon>
+        );
+      })}
     </>
   );
 }
 export default function CruzAltaViewer({
   selectedId,
   onSelect,
+  inspections,
+  onOpenInspection,
+  inspectionSelection,
 }: {
   selectedId: string | null;
   onSelect: (id: string) => void;
+  inspections?: CaInspectionSummary | undefined;
+  onOpenInspection: (id: string) => void;
+  inspectionSelection: RefObject<string | null>;
 }) {
   const stage = useRef<HTMLDivElement>(null),
     labelBox = useRef<HTMLDivElement>(null),
@@ -134,6 +153,7 @@ export default function CruzAltaViewer({
     miniArrow = useRef<SVGGElement>(null),
     sight = useRef<SVGLineElement>(null);
   const [ready, setReady] = useState(false);
+  const [showInspections, setShowInspections] = useState(true);
   const [horizon, setHorizon] = useState(true),
     [horizonInfo, setHorizonInfo] = useState<import("./regional-types").HorizonInfo | null>(null);
   useEffect(() => {
@@ -256,13 +276,15 @@ export default function CruzAltaViewer({
   }, [retry, applyCamera]);
   useEffect(() => {
     scene.current?.select(selectedId);
-    const keepPosition = pickedFromYard.current === selectedId;
+    const keepPosition =
+      pickedFromYard.current === selectedId || inspectionSelection.current === selectedId;
     pickedFromYard.current = null;
+    inspectionSelection.current = null;
     if (!keepPosition && selectedId && index.focus(selectedId)) {
       scene.current?.moveTo({ mode: "angular", id: selectedId });
       setMode("angular");
     }
-  }, [selectedId]);
+  }, [selectedId, inspectionSelection]);
   useEffect(() => {
     scene.current?.layers(layers);
   }, [layers]);
@@ -293,10 +315,21 @@ export default function CruzAltaViewer({
   useEffect(() => {
     scene.current?.matte(matte);
   }, [matte]);
-  const matches = useMemo(
-    () => index.search(query).filter((o) => filter === "todos" || o.kind === filter),
-    [query, filter],
-  );
+  const catalog = useMemo(() => inspectionCatalog(inspections?.lines), [inspections?.lines]);
+  const matches = useMemo(() => {
+    const found = index.search(query);
+    const value = searchText(query.trim());
+    if (value) {
+      const seen = new Set(found.map((object) => object.id));
+      const words = value.split(/\s+/);
+      for (const object of objects) {
+        if (!technicalTag(object) || seen.has(object.id)) continue;
+        const title = searchText(technicalTitle(object, objectInspection(object, catalog)));
+        if (words.every((word) => title.includes(word))) found.push(object);
+      }
+    }
+    return found.filter((object) => filter === "todos" || object.kind === filter);
+  }, [query, filter, catalog]);
   const focusResult = (offset: number) => {
     const buttons = resultsList.current?.querySelectorAll<HTMLButtonElement>("[data-ca-select]");
     if (!buttons?.length) return;
@@ -372,11 +405,18 @@ export default function CruzAltaViewer({
             .filter((o) => index.focus(o.id))
             .map((o) => (
               <span hidden key={o.id} data-label={o.id}>
-                {displayCode(o) ? displayCode(o) + " · " : ""}
-                {o.name}
+                {technicalTitle(o, objectInspection(o, catalog))}
               </span>
             ))}
         </div>
+        {inspections && showInspections && ready && (
+          <InspectionMarkers
+            lines={inspections.lines}
+            scene={scene.current}
+            ready={ready}
+            openSheet={onOpenInspection}
+          />
+        )}
         {failure && (
           <div className="ca-fallback">
             <svg viewBox={mapBox(unit)} role="img" aria-label="Planta navegável da unidade">
@@ -479,6 +519,7 @@ export default function CruzAltaViewer({
               search.current?.focus();
             }}
             resultsRef={resultsList}
+            inspections={catalog}
           />
         )}
         {open === "camadas" && (
@@ -505,6 +546,17 @@ export default function CruzAltaViewer({
                   />
                 </label>
               ))}
+              {inspections &&
+                (inspections.status !== "not_configured" || inspections.lines.length > 0) && (
+                  <label className="ca-layer-toggle">
+                    Laudos e inspeções
+                    <input
+                      type="checkbox"
+                      checked={showInspections}
+                      onChange={(event) => setShowInspections(event.target.checked)}
+                    />
+                  </label>
+                )}
               <label className="ca-layer-toggle">
                 Paisagem de Cruz Alta
                 <input

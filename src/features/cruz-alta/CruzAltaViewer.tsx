@@ -115,13 +115,35 @@ export default function CruzAltaViewer({
   const [open, setOpen] = useState<"busca" | "camadas" | null>(null),
     [layers, setLayers] = useState<SceneLayers>(defaultLayers),
     [exposure, setExposure] = useState(1.1);
-  const retained = useRef({ layers, exposure });
-  retained.current = { layers, exposure };
+  const [quality, setQuality] = useState<"auto" | "economico" | "detalhado">(() => {
+      try {
+        const saved = localStorage.getItem("nexus:cruz-alta:qualidade");
+        return saved === "economico" || saved === "detalhado" ? saved : "auto";
+      } catch {
+        return "auto";
+      }
+    }),
+    [matte, setMatte] = useState(false);
+  const retained = useRef({ layers, exposure, quality, matte });
+  retained.current = { layers, exposure, quality, matte };
   const hud = useRef<HTMLDivElement>(null),
     compass = useRef<SVGSVGElement>(null),
     miniArrow = useRef<SVGGElement>(null),
     sight = useRef<SVGLineElement>(null);
   const [ready, setReady] = useState(false);
+  const [horizon, setHorizon] = useState(true),
+    [horizonInfo, setHorizonInfo] = useState<import("./regional-types").HorizonInfo | null>(null);
+  useEffect(() => {
+    scene.current?.horizon(horizon);
+  }, [horizon, ready]);
+  const photo = useRef<HTMLImageElement>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  useEffect(() => {
+    if (!photo.current || !photoFile) return;
+    const url = URL.createObjectURL(photoFile);
+    photo.current.src = url;
+    return () => URL.revokeObjectURL(url);
+  }, [photoFile]);
   const overlaySource = useRef<AbortController | null>(null);
   const [overlayStatus, setOverlayStatus] = useState(""),
     [overlayRev, setOverlayRev] = useState(""),
@@ -131,20 +153,28 @@ export default function CruzAltaViewer({
     scene.current?.removeOverlay();
     setOverlayStatus("");
     setOverlayRev("");
+    setPhotoFile(null);
   };
   async function compare(file: File) {
     releaseOverlay();
     const controller = new AbortController();
     overlaySource.current = controller;
-    setOverlayStatus("Abrindo a folha 1…");
+    setOverlayStatus("Conferindo a referência…");
     try {
       const { readComparison } = await loadReference();
-      const { crop, revision } = await readComparison(file, controller.signal);
+      const result = await readComparison(file, controller.signal);
       if (controller.signal.aborted || !scene.current) return;
-      scene.current.compare(crop, photoCorners, overlayOpacity);
-      scene.current.moveTo({ mode: "planta" });
-      setMode("planta");
-      setOverlayRev(revision);
+      if (result.kind === "drone") {
+        setPhotoFile(result.file);
+        scene.current.moveTo({ mode: "angular", reference: "dji44" });
+        setMode("angular");
+        setOverlayRev("DJI 0044");
+      } else {
+        scene.current.compare(result.crop, photoCorners, overlayOpacity);
+        scene.current.moveTo({ mode: "planta" });
+        setMode("planta");
+        setOverlayRev("Rev. " + result.revision);
+      }
       setOverlayStatus("");
     } catch (error) {
       if (!controller.signal.aborted)
@@ -155,6 +185,7 @@ export default function CruzAltaViewer({
 
   const applyCamera = useCallback((s: CameraState) => {
     if (!hud.current) return;
+    if (photo.current) photo.current.hidden = !s.drone;
     const rule = hud.current.querySelector<HTMLSpanElement>(".ca-rule");
     if (rule) {
       rule.style.width = s.bar + "px";
@@ -189,8 +220,10 @@ export default function CruzAltaViewer({
           areas: context,
           layers: retained.current.layers,
           selected: currentId.current,
+          quality: retained.current.quality,
           onPick: (id) => onPick.current(id),
           onCamera: applyCamera,
+          onHorizon: setHorizonInfo,
           onLost: () => {
             if (!alive) return;
             active?.dispose();
@@ -200,6 +233,8 @@ export default function CruzAltaViewer({
             setFailure("A conexão com a placa gráfica foi interrompida.");
           },
         });
+        active.quality(retained.current.quality);
+        active.matte(retained.current.matte);
         active.exposure(retained.current.exposure);
         setOverlayRev("");
         setOverlayStatus("");
@@ -241,6 +276,17 @@ export default function CruzAltaViewer({
     window.addEventListener("keydown", close, true);
     return () => window.removeEventListener("keydown", close, true);
   }, [open]);
+  useEffect(() => {
+    try {
+      localStorage.setItem("nexus:cruz-alta:qualidade", quality);
+    } catch {
+      /* Storage unavailable. */
+    }
+    scene.current?.quality(quality);
+  }, [quality]);
+  useEffect(() => {
+    scene.current?.matte(matte);
+  }, [matte]);
   const matches = useMemo(() => index.search(query), [query]);
   const choose = (object: CruzObject) => {
     setOpen(null);
@@ -290,6 +336,14 @@ export default function CruzAltaViewer({
         </button>
       </header>
       <div className="ca-stage" ref={stage}>
+        {photoFile && (
+          <img
+            ref={photo}
+            className="ca-drone-overlay"
+            alt="Comparação local com a fotografia DJI 0044"
+            style={{ opacity: overlayOpacity }}
+          />
+        )}
         <div className="ca-labels" ref={labelBox} aria-hidden="true">
           {objects
             .filter((o) => index.focus(o.id))
@@ -331,9 +385,14 @@ export default function CruzAltaViewer({
                   setOpen("busca");
                 }}
                 onKeyDown={(e) => {
-                  if(e.key==="ArrowDown"){e.preventDefault();setOpen("busca");return;}
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setOpen("busca");
+                    return;
+                  }
                   if (e.key === "Enter" && matches[0]) {
-                    e.preventDefault();e.stopPropagation();
+                    e.preventDefault();
+                    e.stopPropagation();
                     choose(matches[0]);
                     e.currentTarget.blur();
                   }
@@ -417,6 +476,39 @@ export default function CruzAltaViewer({
                 {layerNames[key]}
               </label>
             ))}
+            <label>
+              <input
+                type="checkbox"
+                checked={horizon}
+                onChange={(e) => setHorizon(e.target.checked)}
+              />
+              Paisagem de Cruz Alta
+            </label>
+            {horizon && (
+              <p className="ca-horizon-source">
+                {horizonInfo?.state === "ready"
+                  ? horizonInfo.attribution
+                  : horizonInfo?.state === "failed"
+                    ? "Paisagem regional indisponível."
+                    : "Carregando relevo e paisagem regional…"}
+              </p>
+            )}
+            <label>
+              <input type="checkbox" checked={matte} onChange={(e) => setMatte(e.target.checked)} />
+              Estudo de volumes
+            </label>
+            <label>
+              Qualidade gráfica
+              <select
+                aria-label="Qualidade gráfica"
+                value={quality}
+                onChange={(e) => setQuality(e.target.value as typeof quality)}
+              >
+                <option value="auto">Automática</option>
+                <option value="economico">Econômica</option>
+                <option value="detalhado">Detalhada</option>
+              </select>
+            </label>
             <label className="ca-exposure">
               Exposição
               <input
@@ -451,10 +543,10 @@ export default function CruzAltaViewer({
                 Encontro de coberturas · 11/56
               </button>
               <label>
-                Layout geral em PDF · Rev. 43 ou 56
+                Layout A1 (43/56) ou fotografia DJI 0044
                 <input
                   type="file"
-                  accept="application/pdf"
+                  accept="application/pdf,image/jpeg"
                   disabled={!ready}
                   onChange={(event) => {
                     const file = event.target.files?.[0];
@@ -466,7 +558,7 @@ export default function CruzAltaViewer({
               {overlayRev && (
                 <>
                   <label>
-                    Opacidade · Rev. {overlayRev}
+                    Opacidade · {overlayRev}
                     <input
                       type="range"
                       min={0}
@@ -550,6 +642,16 @@ export default function CruzAltaViewer({
             ))}
           </div>
           <div className="ca-orientation">
+            {horizon && horizonInfo?.state === "ready" && (
+              <a
+                className="ca-osm-credit"
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                © OpenStreetMap
+              </a>
+            )}
             <span className="ca-north">
               <svg ref={compass} width="16" height="18" viewBox="0 0 16 18" aria-hidden="true">
                 <path d="M8 1L14.5 16 8 12 1.5 16Z" fill="currentColor" />

@@ -1,0 +1,180 @@
+{
+  "reference": "Folha 1 rev. 56 registrada conforme registro.json; foto de 24/08/2026. Mosaico CBERS-4A/WPM de 09/08/2026, 2 m/px.",
+  "method": "Translação na amostragem de cor. Correlação normalizada de gradientes em janelas de piso e borda. A imagem avaliada mantém a grade e o hash oficiais. A incerteza de algumas janelas inclui copa, beiral e diferenças temporais.",
+  "searchRadiusPixels": 12,
+  "sampleShiftXZMetres": [
+    -12.0,
+    1.5
+  ],
+  "fullCorrectionRadiusMetres": 310,
+  "uncorrectedBeyondMetres": 620,
+  "centerXZMetres": [
+    68.955,
+    26.513
+  ],
+  "independentRMSEBeforeMetres": 15.23,
+  "independentRMSEAfterMetres": 6.58,
+  "independentMaximumAfterMetres": 10.69,
+  "points": [
+    {
+      "id": "G1",
+      "group": "ajuste",
+      "feature": "Dique e mudança de piso junto aos tanques",
+      "sheet": [
+        225,
+        423
+      ],
+      "halfWindowPixels": 14,
+      "opticalShiftXZMetres": [
+        -14,
+        0
+      ],
+      "correlation": 0.691,
+      "residualMetres": 2.5
+    },
+    {
+      "id": "G2",
+      "group": "ajuste",
+      "feature": "Margem da rua junto ao estacionamento oeste",
+      "sheet": [
+        287,
+        799
+      ],
+      "halfWindowPixels": 14,
+      "opticalShiftXZMetres": [
+        -10,
+        2
+      ],
+      "correlation": 0.653,
+      "residualMetres": 2.06
+    },
+    {
+      "id": "G3",
+      "group": "ajuste",
+      "feature": "Meio-fio do canteiro sul",
+      "sheet": [
+        1202,
+        848
+      ],
+      "halfWindowPixels": 12,
+      "opticalShiftXZMetres": [
+        -12,
+        0
+      ],
+      "correlation": 0.575,
+      "residualMetres": 1.5
+    },
+    {
+      "id": "G4",
+      "group": "ajuste",
+      "feature": "Cruzamento no acesso sul ao pátio",
+      "sheet": [
+        1088,
+        767
+      ],
+      "halfWindowPixels": 17,
+      "opticalShiftXZMetres": [
+        -12,
+        4
+      ],
+      "correlation": 0.693,
+      "residualMetres": 2.5
+    },
+    {
+      "id": "C1",
+      "group": "independente",
+      "feature": "Borda da plataforma ao norte",
+      "sheet": [
+        290,
+        105
+      ],
+      "halfWindowPixels": 13,
+      "opticalShiftXZMetres": [
+        -8,
+        0
+      ],
+      "correlation": 0.602,
+      "residualMetres": 4.27
+    },
+    {
+      "id": "C2",
+      "group": "independente",
+      "feature": "Borda arborizada a nordeste",
+      "sheet": [
+        1108,
+        139
+      ],
+      "halfWindowPixels": 14,
+      "opticalShiftXZMetres": [
+        -16,
+        6
+      ],
+      "correlation": 0.621,
+      "residualMetres": 6.02
+    },
+    {
+      "id": "C3",
+      "group": "independente",
+      "feature": "Ilha gramada no corredor da bateria de silos",
+      "sheet": [
+        970,
+        407
+      ],
+      "halfWindowPixels": 10,
+      "opticalShiftXZMetres": [
+        -20,
+        -2
+      ],
+      "correlation": 0.763,
+      "residualMetres": 8.73
+    },
+    {
+      "id": "C4",
+      "group": "independente",
+      "feature": "Entrada na faixa verde junto à nave ao norte do 56",
+      "sheet": [
+        105,
+        735
+      ],
+      "halfWindowPixels": 12,
+      "opticalShiftXZMetres": [
+        -14,
+        12
+      ],
+      "correlation": 0.496,
+      "residualMetres": 10.69
+    },
+    {
+      "id": "C5",
+      "group": "independente",
+      "feature": "Ruptura de acabamento junto ao jardim do pátio",
+      "sheet": [
+        411,
+        819
+      ],
+      "halfWindowPixels": 13,
+      "opticalShiftXZMetres": [
+        -12,
+        -2
+      ],
+      "correlation": 0.767,
+      "residualMetres": 3.5
+    },
+    {
+      "id": "C6",
+      "group": "independente",
+      "feature": "Mudança de faixa no retorno do pátio",
+      "sheet": [
+        701,
+        699
+      ],
+      "halfWindowPixels": 16,
+      "opticalShiftXZMetres": [
+        -12,
+        0
+      ],
+      "correlation": 0.581,
+      "residualMetres": 1.5
+    }
+  ]
+}

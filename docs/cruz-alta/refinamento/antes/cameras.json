@@ -1,0 +1,86 @@
+{
+  "ampla": {
+    "engine": "three.js r186",
+    "camera": "-329.897,376.617,301.721",
+    "target": "68.955,9.673,26.513",
+    "fov": "43",
+    "zoom": "1",
+    "mode": "angular",
+    "calls": "102",
+    "triangles": "468281",
+    "width": 1280,
+    "height": 721
+  },
+  "planta": {
+    "engine": "three.js r186",
+    "camera": "68.955,723.963,26.514",
+    "target": "68.955,0.000,26.513",
+    "fov": "orthographic",
+    "zoom": "0.8771929824561404",
+    "mode": "planta",
+    "calls": "101",
+    "triangles": "468274",
+    "width": 1280,
+    "height": 721
+  },
+  "patio": {
+    "engine": "three.js r186",
+    "camera": "-37.726,1.700,-5.036",
+    "target": "8.329,4.250,-50.426",
+    "fov": "52",
+    "zoom": "1",
+    "mode": "patio",
+    "calls": "78",
+    "triangles": "465191",
+    "width": 1280,
+    "height": 721
+  },
+  "armazem-01-dji": {
+    "engine": "three.js r186",
+    "camera": "-14.041,21.222,-129.049",
+    "target": "-3.585,8.626,-94.680",
+    "fov": "45.77582684584651",
+    "zoom": "1",
+    "mode": "angular",
+    "calls": "91",
+    "triangles": "468458",
+    "width": 1280,
+    "height": 721
+  },
+  "encontro-11-56": {
+    "engine": "three.js r186",
+    "camera": "-43.268,9.500,-106.648",
+    "target": "-5.003,7.600,-94.248",
+    "fov": "43",
+    "zoom": "1",
+    "mode": "angular",
+    "calls": "79",
+    "triangles": "466975",
+    "width": 1280,
+    "height": 721
+  },
+  "preparacao": {
+    "engine": "three.js r186",
+    "camera": "87.549,63.757,-52.242",
+    "target": "148.479,7.701,-94.284",
+    "fov": "43",
+    "zoom": "1",
+    "mode": "angular",
+    "calls": "72",
+    "triangles": "464706",
+    "width": 1280,
+    "height": 721
+  },
+  "galeria": {
+    "engine": "three.js r186",
+    "camera": "-29.237,99.936,259.596",
+    "target": "69.736,8.881,191.304",
+    "fov": "43",
+    "zoom": "1",
+    "mode": "angular",
+    "calls": "75",
+    "triangles": "467677",
+    "width": 1280,
+    "height": 721
+  }
+}

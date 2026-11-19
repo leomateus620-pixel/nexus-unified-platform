@@ -584,3 +584,33 @@
   font-size: 13px;
   color: #245544;
 }
+.ca-drone-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+.ca-horizon-source {
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--ca-muted);
+  padding: 0 14px 8px;
+}
+.ca-options select {
+  min-width: 0;
+  background: var(--ca-paper);
+  padding: 4px;
+  border: 1px solid var(--ca-line);
+  border-radius: 5px;
+}
+
+.ca-osm-credit {
+  font-size: 10px;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  pointer-events: auto;
+}

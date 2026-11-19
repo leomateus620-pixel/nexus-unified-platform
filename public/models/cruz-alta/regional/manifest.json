@@ -1,0 +1,141 @@
+{
+  "bounds": [
+    -21000,
+    -23000,
+    38000,
+    35000
+  ],
+  "cols": 370,
+  "rows": 363,
+  "heights": "elevacoes.bin",
+  "albedo": "cobertura.webp",
+  "verticalScaleMeters": 0.1,
+  "altitudeOffsetMeters": 0,
+  "siteElevationMeters": 464.24,
+  "elevationRangeMeters": [
+    313.2,
+    516.7
+  ],
+  "spacingMeters": [
+    159.892,
+    160.221
+  ],
+  "imagePixels": [
+    1967,
+    1933
+  ],
+  "imageSpacingMeters": 30,
+  "landCoverPercent": {
+    "10": 13.42,
+    "20": 0.01,
+    "30": 8.09,
+    "40": 77.32,
+    "50": 0.6,
+    "60": 0.03,
+    "80": 0.53,
+    "90": 0.01
+  },
+  "detail": {
+    "bounds": [
+      -7200,
+      -7200,
+      7200,
+      7200
+    ],
+    "cols": 385,
+    "rows": 385,
+    "heights": "local-elevacoes.bin",
+    "albedo": "local-cobertura.webp",
+    "verticalScaleMeters": 0.1,
+    "altitudeOffsetMeters": 0,
+    "siteElevationMeters": 464.24,
+    "elevationRangeMeters": [
+      369.0,
+      490.8
+    ],
+    "spacingMeters": [
+      37.5,
+      37.5
+    ],
+    "imagePixels": [
+      4096,
+      4096
+    ],
+    "imageSpacingMeters": 3.515625,
+    "landCoverPercent": {
+      "10": 15.1,
+      "20": 0.03,
+      "30": 15.82,
+      "40": 62.25,
+      "50": 6.33,
+      "60": 0.11,
+      "80": 0.36,
+      "90": 0.01
+    },
+    "percentCoverageCBERS": 99.9994
+  },
+  "nearby": {
+    "bounds": [
+      -1600,
+      -1600,
+      1600,
+      1600
+    ],
+    "albedo": "vizinhos.webp",
+    "imagePixels": [
+      1600,
+      1600
+    ],
+    "imageSpacingMeters": 2.0,
+    "percentCoverageCBERS": 100.0
+  },
+  "origin": [
+    -53.60602301,
+    -28.66355384
+  ],
+  "verticalDatum": "EGM2008",
+  "attribution": [
+    "Produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.",
+    "© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium. CC BY 4.0.",
+    "IBGE · Malhas Territoriais · Cruz Alta/RS (4306106).",
+    "INPE/Brazil Data Cube · CBERS-4A/WPM · 09/08/2026 · fusão PCA e recorte em cores naturais. CC BY 4.0."
+  ],
+  "sources": [
+    {
+      "id": "CBERS4A_WPM_PCA_RGB321_20260809_209_149",
+      "url": "https://data.inpe.br/bdc/stac/v1/collections/CB4A-WPM-PCA-FUSED-1/items/CBERS4A_WPM_PCA_RGB321_20260809_209_149",
+      "asset": "https://data.inpe.br/bdc/data/CB4A-WPM-PCA-FUSED/v001/209/149/2026/8/CBERS4A_WPM_PCA_RGB321_20260809_209_149.tif",
+      "sourceSHA256": "b256670249d34515f468366d80b2db1859840b59c5a02556688571d756db594d",
+      "clippedSHA256": "61808b8648815a19ac9d80b382aae33cc896153575a8dd0150ac72164a4860f6",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "cutlineCRS": "EPSG:32722"
+    },
+    {
+      "id": "dem.tif",
+      "url": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_S29_00_W054_00_DEM/Copernicus_DSM_COG_10_S29_00_W054_00_DEM.tif",
+      "sha256": "a6f7f24add8e1138e193a90268718fc7258529ebef6e20360d8046051eb94bb2"
+    },
+    {
+      "id": "rgb.tif",
+      "url": "https://esa-worldcover-s2.s3.eu-central-1.amazonaws.com/rgbnir/2021/S29/ESA_WorldCover_10m_2021_v200_S29W054_S2RGBNIR.tif",
+      "sha256": "9ebd993b0e9839f4760108ee8aad48677466e484d0d52acb38d46756b7f9b522"
+    },
+    {
+      "id": "worldcover.tif",
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_S30W054_Map.tif",
+      "sha256": "d110027908c5ac3fd0fe3e413293582ed56ba7b05304545241ce1bcc6c1d1d11"
+    },
+    {
+      "id": "municipio.json",
+      "url": "https://servicodados.ibge.gov.br/api/v3/malhas/municipios/4306106?formato=application/vnd.geo%2Bjson&qualidade=maxima",
+      "sha256": "eaba02c68f9142927be78230239cabe61bb9f7de24ec0d4691d3e3c9d067c3b2"
+    }
+  ],
+  "derivatives": {
+    "cobertura.webp": "6ca7f871d7d358b3d8a505bc1f91b0561aa04326ec43d3227ef71900f731039a",
+    "elevacoes.bin": "b10f53edc0103638dddd5026b6b37bc5c113c671a96d9d1db523b796c68e43fb",
+    "local-cobertura.webp": "ea2e9c91f1a5b64715913ae928aac2c74a766c35b7517cf7ef11e678bf198717",
+    "local-elevacoes.bin": "83f4abc9c5a3fbd15de09e8502b1a04172f66df3be6ecedf87abfff3f337da07",
+    "vizinhos.webp": "e62960127208ad8c5c9eda71607dd88c11d6e5454a89cae4606bee2a66d5b431"
+  }
+}

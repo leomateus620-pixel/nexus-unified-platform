@@ -314,9 +314,9 @@ function SheetContent({
                         {(d.origens ?? [d.objeto])
                           .map((id) => {
                             const source = objects.find((o) => o.id === id);
-                            return source
-                              ? [source.code, source.name].filter(Boolean).join(" · ")
-                              : id;
+                            if (!source) return id;
+                            if (source.kind === "lvhf" || !source.code) return source.name;
+                            return source.code + " · " + source.name;
                           })
                           .join(" / ")}
                       </p>

@@ -1,79 +1,959 @@
 // Campos cadastrais e traçados vetoriais da revisão 56, folha 1. Coordenadas em pontos PDF × 0,7.
 import type { GroundPoint } from "./scene-types";
-export interface SurveyItem {code: string; name: string; status: string; approximate: boolean; paths: GroundPoint[][]}
+export interface SurveyItem {
+  code: string;
+  name: string;
+  status: string;
+  approximate: boolean;
+  paths: GroundPoint[][];
+}
 export const surveyItems: SurveyItem[] = [
-  {"code":"01","name":"Carregamento rodoviário","status":"Montada · aditivo","approximate":false,"paths":[[[600.15,359.98],[633.41,350.02]],[[633.41,350.02],[666.68,340.05]],[[731.65,319.43],[761.3,310.34]],[[761.3,310.34],[790.94,301.26]]]},
-  {"code":"02","name":"Telhado armazém farelo","status":"A montar","approximate":false,"paths":[[[638.62,422.59],[985.16,316.94]]]},
-  {"code":"03","name":"Telhado armazém casca","status":"A montar","approximate":false,"paths":[[[299.8,471.45],[588.22,379.86]]]},
-  {"code":"04","name":"Telhado armazém casca","status":"A montar","approximate":false,"paths":[[[280.19,512.16],[481.14,448.35]]]},
-  {"code":"05","name":"Telhado armazém casca","status":"A montar","approximate":false,"paths":[[[317.02,529.79],[461.51,483.91],[490.58,478.06],[516.58,469.8]]]},
-  {"code":"06","name":"Telhado armazém casca","status":"A montar","approximate":false,"paths":[[[485.02,444.16],[598.5,408.12]],[[488.63,471.91],[606.83,434.37]],[[482.12,451.42],[600.33,413.89]],[[552.05,458.54],[608.79,440.52]]]},
-  {"code":"07","name":"Telhado manutenção","status":"A montar","approximate":false,"paths":[[[593.36,292.89],[778.38,236.76]]]},
-  {"code":"08","name":"Telhado cavaco","status":"Montada","approximate":false,"paths":[[[832.63,197.07],[1040.45,134.65]]]},
-  {"code":"09","name":"Telhado caldeira 20 t","status":"A montar","approximate":false,"paths":[[[775.69,189.24],[800.52,264.63]]]},
-  {"code":"10","name":"Telhado caldeira 20 t","status":"A montar","approximate":false,"paths":[[[813.59,177.08],[838.42,252.47]]]},
-  {"code":"11","name":"Telhado armazém 01","status":"Montada","approximate":false,"paths":[[[362.08,654.76],[564.62,592.72]]]},
-  {"code":"12","name":"Telhado armazém 02","status":"Montada","approximate":false,"paths":[[[683.11,554.51],[885.65,492.47]]]},
-  {"code":"13","name":"Telhado fibra","status":"A montar","approximate":false,"paths":[[[112.11,561.19],[260.29,514.48]]]},
-  {"code":"14","name":"Telhado moegas 01 e 02","status":"Montada","approximate":false,"paths":[[[633.33,627.61],[613.03,561.19]]]},
-  {"code":"15","name":"Telhado ao lado elevador resíduo soja","status":"Montada","approximate":false,"paths":[[[574.47,574.13],[592.32,628.31]]]},
-  {"code":"16","name":"Telhado caldeira nova 35 t","status":"A montar","approximate":false,"paths":[[[747.53,166.37],[823.75,144.23]]]},
-  {"code":"17","name":"Telhado cilindro moagem fibra vegetal","status":"Montada","approximate":false,"paths":[[[80.76,504.05],[191.88,468.78]]]},
-  {"code":"18","name":"Telhado ferroviária expedição de grãos","status":"Montada","approximate":false,"paths":[[[468.16,563.9],[599.19,525.9]]]},
-  {"code":"19","name":"Telhado ferroviária expedição de grãos","status":"Montada","approximate":false,"paths":[[[633.37,510.36],[662.94,501.31]]]},
-  {"code":"20","name":"Telhado ferroviária expedição de casca","status":"Fora do projeto","approximate":false,"paths":[]},
-  {"code":"21","name":"Laje substação e QGBT","status":"Montada","approximate":false,"paths":[[[516.33,374.76],[563.28,360.74]]]},
-  {"code":"22","name":"Laje brigada de incêndio em L","status":"Montada","approximate":false,"paths":[[[476.84,378.92],[482.64,396.98]],[[480.67,394.55],[507.09,385.8]]]},
-  {"code":"23","name":"Laje substação preparação","status":"Montada","approximate":false,"paths":[[[408.13,330.32],[417.6,362.84]]]},
-  {"code":"24","name":"Telhado sala gerência","status":"Montada","approximate":false,"paths":[[[460.4,348.3],[526.9,328.27]]]},
-  {"code":"25","name":"Telhado supervisório","status":"A montar","approximate":false,"paths":[[[573.37,285.41],[580.7,309.1]]]},
-  {"code":"26","name":"Telhado plataforma de carregamento 01 e 02","status":"Montada","approximate":false,"paths":[[[240.9,322.71],[254.25,367.91]]]},
-  {"code":"27","name":"Telhado superior preparação","status":"A montar","approximate":false,"paths":[[[322.92,250.94],[340.87,314.17]]]},
-  {"code":"27.1","name":"Telhado novo preparação","status":"A montar","approximate":false,"paths":[[[340.55,322.79],[345.3,339.5]]]},
-  {"code":"28","name":"Telhado inferior preparação","status":"A montar","approximate":false,"paths":[[[403.87,333.67],[375.7,246.3]]]},
-  {"code":"28.1","name":"Telhado inferior preparação","status":"A montar","approximate":false,"paths":[[[383.16,216.89],[307.83,241.97]]]},
-  {"code":"29","name":"Telhado extração","status":"A montar","approximate":false,"paths":[[[480.63,295.0],[502.01,288.57]]]},
-  {"code":"29.1","name":"Telhado extração","status":"A montar","approximate":false,"paths":[[[457.48,298.4],[474.09,293.33]]]},
-  {"code":"30","name":"Telhado superior extração","status":"A montar","approximate":false,"paths":[[[400.65,167.69],[413.34,207.9]]]},
-  {"code":"31","name":"Telhado inferior extração","status":"A montar","approximate":false,"paths":[[[429.26,211.18],[458.36,303.25]]]},
-  {"code":"32","name":"Telhado biodiesel","status":"A montar","approximate":false,"paths":[[[547.72,244.41],[560.19,284.69]]]},
-  {"code":"33","name":"Telhado tanques","status":"Montada","approximate":false,"paths":[[[684.84,221.54],[722.9,210.29]]]},
-  {"code":"34","name":"Telhado tanques em L","status":"Montada","approximate":false,"paths":[[[712.23,143.43],[722.49,171.38],[670.27,187.21]]]},
-  {"code":"35","name":"Telhado caldeira nova 35 t","status":"A montar","approximate":false,"paths":[[[733.42,142.41],[845.69,111.01]]]},
-  {"code":"36","name":"Telhado tanques atrás extração","status":"Montada","approximate":false,"paths":[[[446.47,163.34],[472.72,155.88]],[[452.7,181.41],[478.86,173.65]]]},
-  {"code":"37","name":"Telhado tanque diesel","status":"Montada","approximate":true,"paths":[[[367.59,66.24],[374.59,90.03]]]},
-  {"code":"38","name":"Telhado prédio atrás caldeira","status":"Montada · aditivo","approximate":true,"paths":[[[621.3,79.11],[665.62,67.24]],[[665.62,67.24],[709.95,55.37]]]},
-  {"code":"39","name":"Laje supervisório recebimento novo","status":"Montada","approximate":false,"paths":[[[998.43,622.73],[1001.97,634.97],[1026.71,627.49],[1023.17,615.25],[998.43,622.73]]]},
-  {"code":"39.1","name":"Telhado novo supervisório recebimento novo","status":"A montar","approximate":false,"paths":[[[980.81,683.29],[1023.62,670.61],[1020.81,661.1],[1077.89,644.19],[1065.91,603.76],[966.02,633.34]]]},
-  {"code":"40","name":"Telhado supervisório balança nova","status":"Montada","approximate":false,"paths":[[[1160.61,726.02],[1189.9,731.33]]]},
-  {"code":"41","name":"Laje substação","status":"Montada","approximate":true,"paths":[[[317.0,90.74],[328.56,118.04]]]},
-  {"code":"42","name":"Telhado superior carregamento rodoviário","status":"Montada","approximate":true,"paths":[[[661.82,327.47],[706.96,313.93]]]},
-  {"code":"43","name":"Telhado superior carregamento rodoviário","status":"Montada","approximate":true,"paths":[[[676.73,354.29],[690.79,349.4]]]},
-  {"code":"44","name":"Telhado superior ferroviária expedição de casca","status":"Montada","approximate":true,"paths":[[[505.6,511.67],[541.13,500.62]]]},
-  {"code":"45","name":"Telhado inferior ferroviária expedição de casca","status":"Montada","approximate":true,"paths":[[[536.5,495.69],[590.93,478.62]]]},
-  {"code":"46","name":"Telhado fundos casca em L","status":"A montar","approximate":false,"paths":[[[304.92,487.58],[265.91,499.96],[259.67,480.3]]]},
-  {"code":"47","name":"Telhado barracão terceiros","status":"A montar","approximate":true,"paths":[[[280.96,333.08],[309.52,324.68]],[[273.38,307.3],[301.93,298.9]],[[288.54,358.86],[265.79,281.52],[294.35,273.12],[317.1,350.46]]]},
-  {"code":"48","name":"Laje substação preparação","status":"Montada","approximate":true,"paths":[[[306.5,193.66],[365.84,176.86]]]},
-  {"code":"49","name":"Telhado substação","status":"Montada","approximate":true,"paths":[[[342.72,97.34],[356.4,91.48]]]},
-  {"code":"50","name":"Telhado sala de treinamento","status":"Montada","approximate":true,"paths":[[[589.83,720.79],[576.96,744.85]]]},
-  {"code":"51","name":"Telhado administrativo","status":"A montar","approximate":true,"paths":[[[502.83,912.81],[554.81,814.03]],[[558.28,807.44],[583.69,759.15]]]},
-  {"code":"52","name":"Telhado balança","status":"Montada","approximate":true,"paths":[[[477.56,892.79],[546.11,735.97]]]},
-  {"code":"53","name":"Telhado casca","status":"Montada","approximate":false,"paths":[[[619.39,444.71],[604.37,397.43]]]},
-  {"code":"54","name":"Telhado superior ferroviária expedição de grãos","status":"Montada","approximate":true,"paths":[[[588.41,523.6],[623.93,512.55]]]},
-  {"code":"55","name":"Laje manutenção AR","status":"Montada","approximate":true,"paths":[[[261.34,463.04],[259.77,448.34]]]},
-  {"code":"56","name":"Telhado ao lado armazém 01","status":"A montar","approximate":false,"paths":[[[323.25,662.65],[349.93,654.01]]]},
-  {"code":"57","name":"Telhado barracão","status":"Montada · aditivo","approximate":false,"paths":[[[764.53,580.99],[817.73,564.13]],[[817.73,564.13],[870.93,547.27]]]},
-  {"code":"57.1","name":"Laje barracão","status":"Montada","approximate":false,"paths":[[[870.93,547.27],[912.8,534.01]]]},
-  {"code":"58","name":"Telhado moega nova","status":"A montar","approximate":false,"paths":[[[984.67,609.58],[981.02,594.19]]]},
-  {"code":"59","name":"Telhado balança nova","status":"Montada","approximate":false,"paths":[[[1102.51,742.71],[1186.01,754.49]]]},
-  {"code":"60","name":"Telhado abastecimento","status":"Montada","approximate":false,"paths":[[[837.99,289.92],[868.59,281.16]]]},
-  {"code":"61","name":"Telhado armazém farelo","status":"Montada","approximate":false,"paths":[[[637.5,444.15],[626.71,411.14]]]},
-  {"code":"62","name":"Telhado caldeira","status":"A montar","approximate":false,"paths":[[[783.19,275.39],[818.53,263.75]]]},
-  {"code":"63","name":"Telhado ao lado moegas 01 e 02","status":"A montar","approximate":false,"paths":[[[638.19,593.09],[646.86,621.56]]]},
-  {"code":"64","name":"Telhado ao lado extração","status":"A montar","approximate":false,"paths":[[[483.41,247.88],[499.98,242.67]]]},
-  {"code":"65","name":"Telhado ao lado armazém 02","status":"Montada","approximate":false,"paths":[[[661.08,544.69],[674.17,584.77]]]},
-  {"code":"66","name":"Telhado entre moegas 01 e 02 e armazém 02","status":"Montada","approximate":false,"paths":[[[639.95,540.39],[648.73,568.83]]]},
-  {"code":"67","name":"Telhado moegas 01 e 02","status":"A montar","approximate":false,"paths":[[[596.34,654.56],[600.64,670.35]]]},
-  {"code":"68","name":"Telhado moegas 01 e 02","status":"A montar","approximate":false,"paths":[[[618.23,629.25],[622.24,644.61]]]},
-  {"code":"69","name":"Telhado moegas 01 e 02","status":"A montar","approximate":false,"paths":[[[626.97,658.17],[631.61,673.35]]]},
+  {
+    code: "01",
+    name: "Carregamento rodoviário",
+    status: "Montada · aditivo",
+    approximate: false,
+    paths: [
+      [
+        [600.15, 359.98],
+        [633.41, 350.02],
+      ],
+      [
+        [633.41, 350.02],
+        [666.68, 340.05],
+      ],
+      [
+        [731.65, 319.43],
+        [761.3, 310.34],
+      ],
+      [
+        [761.3, 310.34],
+        [790.94, 301.26],
+      ],
+    ],
+  },
+  {
+    code: "02",
+    name: "Telhado armazém farelo",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [638.62, 422.59],
+        [985.16, 316.94],
+      ],
+    ],
+  },
+  {
+    code: "03",
+    name: "Telhado armazém casca",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [299.8, 471.45],
+        [588.22, 379.86],
+      ],
+    ],
+  },
+  {
+    code: "04",
+    name: "Telhado armazém casca",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [280.19, 512.16],
+        [481.14, 448.35],
+      ],
+    ],
+  },
+  {
+    code: "05",
+    name: "Telhado armazém casca",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [317.02, 529.79],
+        [461.51, 483.91],
+        [490.58, 478.06],
+        [516.58, 469.8],
+      ],
+    ],
+  },
+  {
+    code: "06",
+    name: "Telhado armazém casca",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [485.02, 444.16],
+        [598.5, 408.12],
+      ],
+      [
+        [488.63, 471.91],
+        [606.83, 434.37],
+      ],
+      [
+        [482.12, 451.42],
+        [600.33, 413.89],
+      ],
+      [
+        [552.05, 458.54],
+        [608.79, 440.52],
+      ],
+    ],
+  },
+  {
+    code: "07",
+    name: "Telhado manutenção",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [593.36, 292.89],
+        [778.38, 236.76],
+      ],
+    ],
+  },
+  {
+    code: "08",
+    name: "Telhado cavaco",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [832.63, 197.07],
+        [1040.45, 134.65],
+      ],
+    ],
+  },
+  {
+    code: "09",
+    name: "Telhado caldeira 20 t",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [775.69, 189.24],
+        [800.52, 264.63],
+      ],
+    ],
+  },
+  {
+    code: "10",
+    name: "Telhado caldeira 20 t",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [813.59, 177.08],
+        [838.42, 252.47],
+      ],
+    ],
+  },
+  {
+    code: "11",
+    name: "Telhado armazém 01",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [362.08, 654.76],
+        [564.62, 592.72],
+      ],
+    ],
+  },
+  {
+    code: "12",
+    name: "Telhado armazém 02",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [683.11, 554.51],
+        [885.65, 492.47],
+      ],
+    ],
+  },
+  {
+    code: "13",
+    name: "Telhado fibra",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [112.11, 561.19],
+        [260.29, 514.48],
+      ],
+    ],
+  },
+  {
+    code: "14",
+    name: "Telhado moegas 01 e 02",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [633.33, 627.61],
+        [613.03, 561.19],
+      ],
+    ],
+  },
+  {
+    code: "15",
+    name: "Telhado ao lado elevador resíduo soja",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [574.47, 574.13],
+        [592.32, 628.31],
+      ],
+    ],
+  },
+  {
+    code: "16",
+    name: "Telhado caldeira nova 35 t",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [747.53, 166.37],
+        [823.75, 144.23],
+      ],
+    ],
+  },
+  {
+    code: "17",
+    name: "Telhado cilindro moagem fibra vegetal",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [80.76, 504.05],
+        [191.88, 468.78],
+      ],
+    ],
+  },
+  {
+    code: "18",
+    name: "Telhado ferroviária expedição de grãos",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [468.16, 563.9],
+        [599.19, 525.9],
+      ],
+    ],
+  },
+  {
+    code: "19",
+    name: "Telhado ferroviária expedição de grãos",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [633.37, 510.36],
+        [662.94, 501.31],
+      ],
+    ],
+  },
+  {
+    code: "20",
+    name: "Telhado ferroviária expedição de casca",
+    status: "Fora do projeto",
+    approximate: false,
+    paths: [],
+  },
+  {
+    code: "21",
+    name: "Laje substação e QGBT",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [516.33, 374.76],
+        [563.28, 360.74],
+      ],
+    ],
+  },
+  {
+    code: "22",
+    name: "Laje brigada de incêndio em L",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [476.84, 378.92],
+        [482.64, 396.98],
+      ],
+      [
+        [480.67, 394.55],
+        [507.09, 385.8],
+      ],
+    ],
+  },
+  {
+    code: "23",
+    name: "Laje substação preparação",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [408.13, 330.32],
+        [417.6, 362.84],
+      ],
+    ],
+  },
+  {
+    code: "24",
+    name: "Telhado sala gerência",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [460.4, 348.3],
+        [526.9, 328.27],
+      ],
+    ],
+  },
+  {
+    code: "25",
+    name: "Telhado supervisório",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [573.37, 285.41],
+        [580.7, 309.1],
+      ],
+    ],
+  },
+  {
+    code: "26",
+    name: "Telhado plataforma de carregamento 01 e 02",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [240.9, 322.71],
+        [254.25, 367.91],
+      ],
+    ],
+  },
+  {
+    code: "27",
+    name: "Telhado superior preparação",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [322.92, 250.94],
+        [340.87, 314.17],
+      ],
+    ],
+  },
+  {
+    code: "27.1",
+    name: "Telhado novo preparação",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [340.55, 322.79],
+        [345.3, 339.5],
+      ],
+    ],
+  },
+  {
+    code: "28",
+    name: "Telhado inferior preparação",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [403.87, 333.67],
+        [375.7, 246.3],
+      ],
+    ],
+  },
+  {
+    code: "28.1",
+    name: "Telhado inferior preparação",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [383.16, 216.89],
+        [307.83, 241.97],
+      ],
+    ],
+  },
+  {
+    code: "29",
+    name: "Telhado extração",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [480.63, 295.0],
+        [502.01, 288.57],
+      ],
+    ],
+  },
+  {
+    code: "29.1",
+    name: "Telhado extração",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [457.48, 298.4],
+        [474.09, 293.33],
+      ],
+    ],
+  },
+  {
+    code: "30",
+    name: "Telhado superior extração",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [400.65, 167.69],
+        [413.34, 207.9],
+      ],
+    ],
+  },
+  {
+    code: "31",
+    name: "Telhado inferior extração",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [429.26, 211.18],
+        [458.36, 303.25],
+      ],
+    ],
+  },
+  {
+    code: "32",
+    name: "Telhado biodiesel",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [547.72, 244.41],
+        [560.19, 284.69],
+      ],
+    ],
+  },
+  {
+    code: "33",
+    name: "Telhado tanques",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [684.84, 221.54],
+        [722.9, 210.29],
+      ],
+    ],
+  },
+  {
+    code: "34",
+    name: "Telhado tanques em L",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [712.23, 143.43],
+        [722.49, 171.38],
+        [670.27, 187.21],
+      ],
+    ],
+  },
+  {
+    code: "35",
+    name: "Telhado caldeira nova 35 t",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [733.42, 142.41],
+        [845.69, 111.01],
+      ],
+    ],
+  },
+  {
+    code: "36",
+    name: "Telhado tanques atrás extração",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [446.47, 163.34],
+        [472.72, 155.88],
+      ],
+      [
+        [452.7, 181.41],
+        [478.86, 173.65],
+      ],
+    ],
+  },
+  {
+    code: "37",
+    name: "Telhado tanque diesel",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [367.59, 66.24],
+        [374.59, 90.03],
+      ],
+    ],
+  },
+  {
+    code: "38",
+    name: "Telhado prédio atrás caldeira",
+    status: "Montada · aditivo",
+    approximate: true,
+    paths: [
+      [
+        [621.3, 79.11],
+        [665.62, 67.24],
+      ],
+      [
+        [665.62, 67.24],
+        [709.95, 55.37],
+      ],
+    ],
+  },
+  {
+    code: "39",
+    name: "Laje supervisório recebimento novo",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [998.43, 622.73],
+        [1001.97, 634.97],
+        [1026.71, 627.49],
+        [1023.17, 615.25],
+        [998.43, 622.73],
+      ],
+    ],
+  },
+  {
+    code: "39.1",
+    name: "Telhado novo supervisório recebimento novo",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [980.81, 683.29],
+        [1023.62, 670.61],
+        [1020.81, 661.1],
+        [1077.89, 644.19],
+        [1065.91, 603.76],
+        [966.02, 633.34],
+      ],
+    ],
+  },
+  {
+    code: "40",
+    name: "Telhado supervisório balança nova",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [1160.61, 726.02],
+        [1189.9, 731.33],
+      ],
+    ],
+  },
+  {
+    code: "41",
+    name: "Laje substação",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [317.0, 90.74],
+        [328.56, 118.04],
+      ],
+    ],
+  },
+  {
+    code: "42",
+    name: "Telhado superior carregamento rodoviário",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [661.82, 327.47],
+        [706.96, 313.93],
+      ],
+    ],
+  },
+  {
+    code: "43",
+    name: "Telhado superior carregamento rodoviário",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [676.73, 354.29],
+        [690.79, 349.4],
+      ],
+    ],
+  },
+  {
+    code: "44",
+    name: "Telhado superior ferroviária expedição de casca",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [505.6, 511.67],
+        [541.13, 500.62],
+      ],
+    ],
+  },
+  {
+    code: "45",
+    name: "Telhado inferior ferroviária expedição de casca",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [536.5, 495.69],
+        [590.93, 478.62],
+      ],
+    ],
+  },
+  {
+    code: "46",
+    name: "Telhado fundos casca em L",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [304.92, 487.58],
+        [265.91, 499.96],
+        [259.67, 480.3],
+      ],
+    ],
+  },
+  {
+    code: "47",
+    name: "Telhado barracão terceiros",
+    status: "A montar",
+    approximate: true,
+    paths: [
+      [
+        [280.96, 333.08],
+        [309.52, 324.68],
+      ],
+      [
+        [273.38, 307.3],
+        [301.93, 298.9],
+      ],
+      [
+        [288.54, 358.86],
+        [265.79, 281.52],
+        [294.35, 273.12],
+        [317.1, 350.46],
+      ],
+    ],
+  },
+  {
+    code: "48",
+    name: "Laje substação preparação",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [306.5, 193.66],
+        [365.84, 176.86],
+      ],
+    ],
+  },
+  {
+    code: "49",
+    name: "Telhado substação",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [342.72, 97.34],
+        [356.4, 91.48],
+      ],
+    ],
+  },
+  {
+    code: "50",
+    name: "Telhado sala de treinamento",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [589.83, 720.79],
+        [576.96, 744.85],
+      ],
+    ],
+  },
+  {
+    code: "51",
+    name: "Telhado administrativo",
+    status: "A montar",
+    approximate: true,
+    paths: [
+      [
+        [502.83, 912.81],
+        [554.81, 814.03],
+      ],
+      [
+        [558.28, 807.44],
+        [583.69, 759.15],
+      ],
+    ],
+  },
+  {
+    code: "52",
+    name: "Telhado balança",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [477.56, 892.79],
+        [546.11, 735.97],
+      ],
+    ],
+  },
+  {
+    code: "53",
+    name: "Telhado casca",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [619.39, 444.71],
+        [604.37, 397.43],
+      ],
+    ],
+  },
+  {
+    code: "54",
+    name: "Telhado superior ferroviária expedição de grãos",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [588.41, 523.6],
+        [623.93, 512.55],
+      ],
+    ],
+  },
+  {
+    code: "55",
+    name: "Laje manutenção AR",
+    status: "Montada",
+    approximate: true,
+    paths: [
+      [
+        [261.34, 463.04],
+        [259.77, 448.34],
+      ],
+    ],
+  },
+  {
+    code: "56",
+    name: "Telhado ao lado armazém 01",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [323.25, 662.65],
+        [349.93, 654.01],
+      ],
+    ],
+  },
+  {
+    code: "57",
+    name: "Telhado barracão",
+    status: "Montada · aditivo",
+    approximate: false,
+    paths: [
+      [
+        [764.53, 580.99],
+        [817.73, 564.13],
+      ],
+      [
+        [817.73, 564.13],
+        [870.93, 547.27],
+      ],
+    ],
+  },
+  {
+    code: "57.1",
+    name: "Laje barracão",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [870.93, 547.27],
+        [912.8, 534.01],
+      ],
+    ],
+  },
+  {
+    code: "58",
+    name: "Telhado moega nova",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [984.67, 609.58],
+        [981.02, 594.19],
+      ],
+    ],
+  },
+  {
+    code: "59",
+    name: "Telhado balança nova",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [1102.51, 742.71],
+        [1186.01, 754.49],
+      ],
+    ],
+  },
+  {
+    code: "60",
+    name: "Telhado abastecimento",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [837.99, 289.92],
+        [868.59, 281.16],
+      ],
+    ],
+  },
+  {
+    code: "61",
+    name: "Telhado armazém farelo",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [637.5, 444.15],
+        [626.71, 411.14],
+      ],
+    ],
+  },
+  {
+    code: "62",
+    name: "Telhado caldeira",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [783.19, 275.39],
+        [818.53, 263.75],
+      ],
+    ],
+  },
+  {
+    code: "63",
+    name: "Telhado ao lado moegas 01 e 02",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [638.19, 593.09],
+        [646.86, 621.56],
+      ],
+    ],
+  },
+  {
+    code: "64",
+    name: "Telhado ao lado extração",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [483.41, 247.88],
+        [499.98, 242.67],
+      ],
+    ],
+  },
+  {
+    code: "65",
+    name: "Telhado ao lado armazém 02",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [661.08, 544.69],
+        [674.17, 584.77],
+      ],
+    ],
+  },
+  {
+    code: "66",
+    name: "Telhado entre moegas 01 e 02 e armazém 02",
+    status: "Montada",
+    approximate: false,
+    paths: [
+      [
+        [639.95, 540.39],
+        [648.73, 568.83],
+      ],
+    ],
+  },
+  {
+    code: "67",
+    name: "Telhado moegas 01 e 02",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [596.34, 654.56],
+        [600.64, 670.35],
+      ],
+    ],
+  },
+  {
+    code: "68",
+    name: "Telhado moegas 01 e 02",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [618.23, 629.25],
+        [622.24, 644.61],
+      ],
+    ],
+  },
+  {
+    code: "69",
+    name: "Telhado moegas 01 e 02",
+    status: "A montar",
+    approximate: false,
+    paths: [
+      [
+        [626.97, 658.17],
+        [631.61, 673.35],
+      ],
+    ],
+  },
 ];

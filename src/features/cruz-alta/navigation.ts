@@ -1,8 +1,10 @@
 import * as T from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { SelectionGesture } from "../nr/mapa/gestures";
+import type { HorizonInfo } from "./regional-types";
+import { daylight } from "./light";
 import { buildModel } from "./model";
-import { center, type Extent, type SpatialIndex } from "./spatial";
+import { center, extent, type Extent, type SpatialIndex } from "./spatial";
 import type {
   CameraMode,
   CruzPart,
@@ -20,6 +22,7 @@ export interface CameraState {
   heading: number;
   bar: number;
   metres: number;
+  drone: boolean;
 }
 export interface SceneCommand {
   mode: CameraMode;
@@ -35,8 +38,10 @@ type SceneOptions = {
   lines: CruzLine[];
   layers: SceneLayers;
   selected: string | null;
+  quality: "auto" | "economico" | "detalhado";
   onPick: (id: string) => void;
   onCamera: (state: CameraState) => void;
+  onHorizon: (info: HorizonInfo | null) => void;
   onLost: () => void;
 };
 const up = new T.Vector3(0, 1, 0);
@@ -56,6 +61,20 @@ export function openScene(options: SceneOptions) {
   });
   host.prepend(canvas);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+  const gl = renderer.getContext(),
+    debug = gl.getExtension("WEBGL_debug_renderer_info");
+  const gpu = String(gl.getParameter(debug ? debug.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
+  const limited = /swiftshader|llvmpipe|software/i.test(gpu) || navigator.hardwareConcurrency <= 4;
+  let tier = options.quality === "auto" ? (limited ? "economico" : "equilibrado") : options.quality,
+    economy = tier === "economico",
+    frames = 0;
+  const ratio = () => Math.min(devicePixelRatio, economy ? 1 : tier === "equilibrado" ? 1.5 : 2);
+  canvas.dataset["gpu"] = gpu;
+  canvas.dataset["antialias"] = String(gl.getContextAttributes()?.antialias ?? false);
+  canvas.dataset["quality"] = tier;
+  renderer.setPixelRatio(ratio());
+  renderer.info.autoReset = false;
+  renderer.shadowMap.autoUpdate = false;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.PCFShadowMap;
   renderer.toneMapping = T.ACESFilmicToneMapping;
@@ -66,42 +85,19 @@ export function openScene(options: SceneOptions) {
   const [cx, cz] = center(bounds);
   const span = Math.max(bounds.east - bounds.west, bounds.south - bounds.north, 60);
   scene.fog = new T.FogExp2("#e3e8e0", 0.14 / span);
-  const far = Math.max(2000, span * 15),
+  const far = 110000,
     perspective = new T.PerspectiveCamera(43, 1, 0.15, far),
     ortho = new T.OrthographicCamera(-100, 100, 100, -100, 0.15, far);
   let camera: T.PerspectiveCamera | T.OrthographicCamera = perspective;
   const controls = new OrbitControls<T.PerspectiveCamera | T.OrthographicCamera>(camera, canvas);
   controls.enableDamping = false;
+  controls.enableZoom = false;
   controls.maxPolarAngle = Math.PI * 0.485;
-  controls.minDistance = 3;
+  controls.minDistance = 1.15;
   controls.maxDistance = span * 8;
   controls.minZoom = 0.15;
   controls.maxZoom = 180;
   controls.screenSpacePanning = false;
-  const floorGeo = new T.PlaneGeometry(span * 8, span * 8),
-    floorMat = new T.MeshStandardMaterial({ color: "#ac9c86", roughness: 0.98 });
-  const floor = new T.Mesh(floorGeo, floorMat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.set(cx, -0.12, cz);
-  floor.receiveShadow = true;
-  scene.add(floor);
-  scene.add(new T.HemisphereLight("#f4fbff", "#a49882", 1.5));
-  const sun = new T.DirectionalLight("#fffbf1", 2.75);
-  sun.position.set(cx - span * 0.45, span * 0.85, cz - span * 0.55);
-  sun.target.position.set(cx, 0, cz);
-  sun.castShadow = true;
-  Object.assign(sun.shadow.camera, {
-    left: -span * 0.67,
-    right: span * 0.67,
-    top: span * 0.67,
-    bottom: -span * 0.67,
-    near: 1,
-    far: span * 3,
-  });
-  sun.shadow.mapSize.set(2048, 2048);
-  sun.shadow.normalBias = 0.13;
-  sun.shadow.bias = -0.00012;
-  scene.add(sun, sun.target);
   let frame = 0,
     closed = false,
     mode: CameraMode = "angular",
@@ -122,12 +118,21 @@ export function openScene(options: SceneOptions) {
     start: T.Vector3;
     elapsed: number;
   } | null = null;
+  let drone = false;
   const pressed = new Set<string>(),
     gesture = new SelectionGesture();
   const request = () => {
     if (!closed && !frame) frame = requestAnimationFrame(render);
   };
-  const model = buildModel(options.parts, options.lines, options.areas, index, request);
+  const illumination = daylight(scene, span);
+  const model = buildModel(
+    options.parts,
+    options.lines,
+    options.areas,
+    index,
+    request,
+    renderer.capabilities.getMaxAnisotropy(),
+  );
   scene.add(model.root);
   const labelNodes = new Map(
     [...options.labels.querySelectorAll<HTMLSpanElement>("[data-label]")].map((node) => [
@@ -165,7 +170,7 @@ export function openScene(options: SceneOptions) {
     const priority = (id: string) =>
       id === selected ? 0 : chosen && index.chains.get(chosen.id)?.includes(id) ? 1 : 2;
     const placed: { x: number; y: number; w: number }[] = [];
-    const localKind = distance < span * 0.55 ? "estrutura" : "setor";
+    const localKind = mode === "patio" || distance < span * 0.55 ? "estrutura" : "setor";
     for (const [id, node] of [...labelNodes].sort(([a], [b]) => priority(a) - priority(b))) {
       const object = index.byId.get(id)!,
         e = index.focus(id);
@@ -188,7 +193,9 @@ export function openScene(options: SceneOptions) {
           px < width - w / 2 &&
           py > 20 &&
           py < height - 26 &&
-          placed.every((o) => Math.abs(o.y - py) > 24 || Math.abs(o.x - px) > (o.w + w) / 2 + 5)
+          placed.every((o) => Math.abs(o.y - py) > 24 || Math.abs(o.x - px) > (o.w + w) / 2 + 5) &&
+          (mode === "planta" ||
+            !index.labelOccluded(camera.position, x, e.top + 1.3, z, id, layers))
         ) {
           placed.push({ x: px, y: py, w });
           shown = true;
@@ -229,6 +236,7 @@ export function openScene(options: SceneOptions) {
       heading,
       bar,
       metres,
+      drone,
     });
     labelsAt(distance);
   }
@@ -290,11 +298,20 @@ export function openScene(options: SceneOptions) {
     scene.add(overlay);
     request();
   }
+  let showHorizon = true,
+    horizonRequested = false,
+    horizonState = "";
   function render(now: number) {
     frame = 0;
     if (closed) return;
     const dt = Math.min(0.07, Math.max(0.001, (now - last) / 1000));
     last = now;
+    if (mode !== "patio" && !motion) {
+      const [x, z] = index.restrict(controls.target.x, controls.target.z);
+      const correction = new T.Vector3(x - controls.target.x, 0, z - controls.target.z);
+      controls.target.add(correction);
+      camera.position.add(correction);
+    }
     if (mode === "patio") walk(dt);
     if (motion) {
       motion.elapsed += dt;
@@ -313,8 +330,34 @@ export function openScene(options: SceneOptions) {
       perspective.near = mode === "patio" ? 0.11 : Math.max(0.12, distance * 0.004);
       perspective.updateProjectionMatrix();
     }
-    model.updateLod(camera, distance);
+    const lod = model.updateLod(camera, height, tier);
+    const shadowCenter = mode === "patio" ? camera.position : controls.target;
+    illumination.shadows(renderer, shadowCenter, mode === "patio" ? 50 : distance, tier);
+    model.regionFrame(camera.position);
+    if (showHorizon && frames) {
+      if (!horizonRequested) {
+        horizonRequested = true;
+        model.showHorizon(true);
+      }
+      const info = model.horizonInfo(),
+        state = info?.state ?? "loading";
+      if (state !== horizonState) {
+        horizonState = state;
+        canvas.dataset["horizon"] = state;
+        options.onHorizon(info ? { ...info } : null);
+      }
+    }
+    renderer.info.reset();
+    const tick = performance.now();
     renderer.render(scene, camera);
+    if (!frames) request();
+    else model.loadDetails();
+    canvas.dataset["cpuMs"] = (performance.now() - tick).toFixed(2);
+    canvas.dataset["frames"] = String(++frames);
+    canvas.dataset["geometries"] = String(renderer.info.memory.geometries);
+    canvas.dataset["textures"] = String(renderer.info.memory.textures);
+    canvas.dataset["lodNear"] = String(lod.near);
+    canvas.dataset["lodDistant"] = String(lod.distant);
     updateHud(distance);
     canvas.dataset["camera"] = camera.position
       .toArray()
@@ -335,6 +378,7 @@ export function openScene(options: SceneOptions) {
     width = Math.max(1, rect.width);
     height = Math.max(1, rect.height);
     renderer.setSize(width, height, false);
+    canvas.dataset["dpr"] = String(renderer.getPixelRatio());
     perspective.aspect = width / height;
     perspective.updateProjectionMatrix();
     ortho.top = span / 2;
@@ -342,6 +386,16 @@ export function openScene(options: SceneOptions) {
     ortho.left = (-span * width) / height / 2;
     ortho.right = -ortho.left;
     ortho.updateProjectionMatrix();
+    const overview = frameDistance(
+      bounds,
+      new T.Vector3(cx, bounds.top * 0.34, cz),
+      new T.Vector3(-1, 0.92, 0.69).normalize(),
+    );
+    controls.maxDistance = overview * 1.12;
+    controls.minZoom =
+      span /
+      (1.27 *
+        Math.max(bounds.south - bounds.north, (bounds.east - bounds.west) / perspective.aspect));
     request();
   }
   function frameDistance(e: Extent, target: T.Vector3, dir: T.Vector3, id?: string) {
@@ -392,7 +446,11 @@ export function openScene(options: SceneOptions) {
     const [x, z] = center(e),
       target = new T.Vector3(x, e.top * 0.34, z);
     const dir = new T.Vector3(-1, 0.92, 0.69).normalize();
-    const previous = mode;
+    drone = command.reference === "dji44";
+    const previous = mode,
+      previousHeading = camera.getWorldDirection(new T.Vector3());
+    previousHeading.y = 0;
+    previousHeading.normalize();
     mode = command.mode;
     motion = null;
     pressed.clear();
@@ -409,6 +467,28 @@ export function openScene(options: SceneOptions) {
       perspective.updateProjectionMatrix();
       const d = Math.max(8, Math.hypot(e.east - e.west, e.south - e.north) * 0.64);
       eye.set(x - d * 0.65, 1.7, z + d * 0.66);
+      if (!command.id) {
+        // The two maneuvering yards are surveyed on the A1. Select a clear apron along the inherited bearing.
+        const heading =
+          previous === "angular" ? previousHeading : target.clone().sub(eye).setY(0).normalize();
+        const yards = options.areas
+          .filter((a) => a.kind === "patio")
+          .map((a) => {
+            const [px, pz] = center(extent(a.footprint)),
+              point = new T.Vector3(px, 1.7, pz);
+            const clear = [0, 4, 10, 18].every(
+              (d) => !index.occupied(px + d * heading.x, pz + d * heading.z),
+            );
+            return {
+              point,
+              clear,
+              score: heading.dot(target.clone().sub(point).setY(0).normalize()),
+            };
+          })
+          .filter((y) => y.clear)
+          .sort((a, b) => b.score - a.score);
+        if (yards[0]) eye.copy(yards[0].point);
+      }
       if (index.occupied(eye.x, eye.z)) {
         let found = false;
         for (let radius = 1; radius < span && !found; radius += 2)
@@ -421,6 +501,8 @@ export function openScene(options: SceneOptions) {
             }
           }
       }
+      if (previous === "angular" && !initial)
+        target.set(eye.x + previousHeading.x * 25, eye.y + 1.15, eye.z + previousHeading.z * 25);
       perspective.position.copy(eye);
       perspective.lookAt(target);
       const angles = new T.Euler().setFromQuaternion(perspective.quaternion, "YXZ");
@@ -499,22 +581,67 @@ export function openScene(options: SceneOptions) {
     initial = false;
     request();
   }
-  function zoom(factor: number) {
-    motion = null;
+  const pointerCache = new Map<number, T.Vector2>();
+  function zoom(factor: number, clientX?: number, clientY?: number) {
     if (mode === "patio") return;
+    drone = false;
+    motion = null;
+    const rect = canvas.getBoundingClientRect();
+    const ndc = new T.Vector2(
+      clientX === undefined ? 0 : ((clientX - rect.left) * 2) / rect.width - 1,
+      clientY === undefined ? 0 : 1 - ((clientY - rect.top) * 2) / rect.height,
+    );
+    ray.setFromCamera(ndc, camera);
+    const hit = model.nearest(ray),
+      anchor =
+        hit?.point.clone() ??
+        ray.ray.intersectPlane(plane, new T.Vector3()) ??
+        controls.target.clone();
     if (camera === ortho) {
-      ortho.zoom = T.MathUtils.clamp(ortho.zoom / factor, 0.15, 180);
+      const before = ortho.zoom;
+      ortho.zoom = T.MathUtils.clamp(before / factor, controls.minZoom, 180);
       ortho.updateProjectionMatrix();
-    } else
-      perspective.position
+      const shift = anchor
+        .clone()
         .sub(controls.target)
-        .multiplyScalar(factor)
-        .clampLength(3, span * 8)
-        .add(controls.target);
+        .multiplyScalar(1 - before / ortho.zoom);
+      shift.y = 0;
+      ortho.position.add(shift);
+      controls.target.add(shift);
+    } else {
+      const eye = perspective.position,
+        distance = eye.distanceTo(anchor);
+      if (distance < 0.001) return;
+      const scaled = T.MathUtils.clamp(
+        factor,
+        Math.min(1, 1.2 / distance),
+        Math.max(1, controls.maxDistance / distance),
+      );
+      const next = eye.clone().sub(anchor).multiplyScalar(scaled).add(anchor);
+      // A nearer wall outside the pointer ray may intercept a receding, oblique dolly.
+      const step = next.clone().sub(eye),
+        len = step.length();
+      if (len > 0.01) {
+        ray.set(eye, step.normalize());
+        const obstacle = model.nearest(ray);
+        if (obstacle && obstacle.distance <= len + 1.05)
+          next.copy(eye).addScaledVector(step, Math.max(0, obstacle.distance - 1.05));
+      }
+      if (next.y < 1.2) next.lerp(eye, (1.2 - next.y) / Math.max(0.01, eye.y - next.y));
+      const actual = next.distanceTo(anchor) / distance;
+      controls.target.sub(anchor).multiplyScalar(actual).add(anchor);
+      eye.copy(next);
+    }
     controls.update();
     request();
   }
+  const pinchSpread = () => {
+    const pair = [...pointerCache.values()];
+    return pair.length === 2 ? pair[0]!.distanceTo(pair[1]!) : 0;
+  };
   controls.addEventListener("start", () => {
+    drone = false;
+    request();
     motion = null;
   });
   controls.addEventListener("change", request);
@@ -522,6 +649,8 @@ export function openScene(options: SceneOptions) {
     "pointerdown",
     (e) => {
       motion = null;
+      if (e.pointerType === "touch")
+        pointerCache.set(e.pointerId, new T.Vector2(e.clientX, e.clientY));
       canvas.focus({ preventScroll: true });
       gesture.down(e.pointerId, e.clientX, e.clientY, performance.now());
       if (mode === "patio") {
@@ -533,14 +662,30 @@ export function openScene(options: SceneOptions) {
   );
   canvas.addEventListener(
     "wheel",
-    () => {
-      motion = null;
+    (e) => {
+      if (mode === "patio") return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const lines = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? height : 1;
+      zoom(
+        Math.exp(T.MathUtils.clamp(e.deltaY * lines * 0.0013, -0.48, 0.48)),
+        e.clientX,
+        e.clientY,
+      );
     },
-    { signal, capture: true, passive: true },
+    { signal, capture: true, passive: false },
   );
   canvas.addEventListener(
     "pointermove",
     (e) => {
+      const old = pinchSpread();
+      pointerCache.get(e.pointerId)?.set(e.clientX, e.clientY);
+      const next = pinchSpread();
+      if (old > 0 && next > 0 && mode !== "patio") {
+        const pair = [...pointerCache.values()],
+          mid = pair[0]!.clone().lerp(pair[1]!, 0.5);
+        zoom(T.MathUtils.clamp(old / next, 0.73, 1.38), mid.x, mid.y);
+      }
       gesture.move(e.pointerId, e.clientX, e.clientY);
       if (mode === "patio" && drag === e.pointerId) {
         walkYaw -= e.movementX * 0.005;
@@ -554,6 +699,7 @@ export function openScene(options: SceneOptions) {
   canvas.addEventListener(
     "pointerup",
     (e) => {
+      pointerCache.delete(e.pointerId);
       if (drag === e.pointerId) drag = null;
       gesture.up(e.pointerId, performance.now());
       if (!gesture.consume() || e.button !== 0) return;
@@ -571,6 +717,7 @@ export function openScene(options: SceneOptions) {
   canvas.addEventListener(
     "pointercancel",
     () => {
+      pointerCache.clear();
       gesture.cancel();
       drag = null;
     },
@@ -581,6 +728,7 @@ export function openScene(options: SceneOptions) {
     () => {
       pressed.clear();
       drag = null;
+      pointerCache.clear();
       gesture.cancel();
     },
     { signal },
@@ -607,6 +755,7 @@ export function openScene(options: SceneOptions) {
       )
         return;
       e.preventDefault();
+      drone = false;
       motion = null;
       if (mode === "patio") {
         pressed.add(k);
@@ -679,7 +828,24 @@ export function openScene(options: SceneOptions) {
       model.highlight(id, layers);
       request();
     },
+    horizon: (enabled: boolean) => {
+      showHorizon = enabled;
+      if (horizonRequested) model.showHorizon(enabled);
+      request();
+    },
+    matte: (enabled: boolean) => {
+      model.matte(enabled);
+      request();
+    },
+    quality: (setting: "auto" | "economico" | "detalhado") => {
+      tier = setting === "auto" ? (limited ? "economico" : "equilibrado") : setting;
+      economy = tier === "economico";
+      renderer.setPixelRatio(ratio());
+      canvas.dataset["quality"] = tier;
+      resize();
+    },
     layers: (value: SceneLayers) => {
+      renderer.shadowMap.needsUpdate = true;
       layers = value;
       cacheVisibility();
       model.setLayers(value);
@@ -697,9 +863,7 @@ export function openScene(options: SceneOptions) {
       controls.dispose();
       removeOverlay();
       model.dispose();
-      floorGeo.dispose();
-      floorMat.dispose();
-      sun.shadow.dispose();
+      illumination.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
       canvas.remove();

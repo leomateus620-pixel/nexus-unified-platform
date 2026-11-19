@@ -32,6 +32,8 @@ export interface CruzLine {
   y?: number;
 }
 export interface CruzArea {
+  /** Silhueta observada do entorno. O vínculo patrimonial continua pendente. */
+  mass?: { roof: "arc" | "gable" | "mono" | "flat"; eave: number; rise: number };
   kind: "via" | "ferrovia" | "vegetacao" | "agua" | "patio" | "vizinhanca";
   footprint: GroundPoint[];
 }

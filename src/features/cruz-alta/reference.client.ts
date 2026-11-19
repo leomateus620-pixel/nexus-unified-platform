@@ -8,11 +8,14 @@ const references: Record<string, string> = {
 /** The two verified sheets have identical aerial imagery, page size and crop. Only the supplied file is opened. */
 export async function readComparison(file: File, signal: AbortSignal) {
   if (file.size > 25 * 1024 * 1024)
-    throw Error("Selecione o layout A1 conferido, revisão 43 ou 56.");
+    throw Error("Selecione o layout A1 conferido ou a foto DJI 0044.");
   const bytes = await file.arrayBuffer();
   const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), (b) =>
     b.toString(16).padStart(2, "0"),
   ).join("");
+  signal.throwIfAborted();
+  if (digest === "bcfe8cdeaef51492b3cbc627b2862d264cca56ab2b9837147422244d520ff0bf")
+    return { kind: "drone", file } as const;
   const revision = references[digest];
   if (!revision)
     throw Error("A origem e o enquadramento deste arquivo ainda não foram conferidos.");
@@ -58,7 +61,7 @@ export async function readComparison(file: File, signal: AbortSignal) {
       crop.height,
     );
     signal.throwIfAborted();
-    return { crop, revision };
+    return { kind: "planta", crop, revision } as const;
   } finally {
     await doc.close();
     page.width = page.height = 0;

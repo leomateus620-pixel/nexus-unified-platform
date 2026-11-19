@@ -1,167 +1,19 @@
 import * as T from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import type { HorizonControls } from "./regional-types";
+import { paintRoof, tankColor } from "./acabamentos";
+import { palette as c } from "./paleta";
+import { gableCladding } from "./cladding";
+import { siloFinish, siloCapColor } from "./silo-finish";
+import { openRoof, raisedRoof, roofFrames } from "./roof-supports";
+import { createGroundContext } from "./environment";
+import { shell, profile } from "./geometry";
 import { Line2 } from "three/addons/lines/Line2.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import type { CruzArea, CruzLine, CruzPart, GroundPoint, SceneLayers } from "./scene-types";
 import { center, extent, inside, type SpatialIndex } from "./spatial";
 
-type Vertex = [number, number, number];
-function perimeter(p: GroundPoint[]) {
-  return p.filter(([x, z], i) => {
-    const next = p[(i + 1) % p.length];
-    return next && (next[0] !== x || next[1] !== z);
-  });
-}
-function triangles(p: GroundPoint[]) {
-  return T.ShapeUtils.triangulateShape(
-    p.map(([x, z]) => new T.Vector2(x, z)),
-    [],
-  );
-}
-function profile(part: CruzPart) {
-  const p = perimeter(part.footprint);
-  const edge = p
-    .map(
-      ([x, z], i) => [p[(i + 1) % p.length]![0] - x, p[(i + 1) % p.length]![1] - z] as GroundPoint,
-    )
-    .sort((a, b) => Math.hypot(...b) - Math.hypot(...a))[0]!;
-  const [dx, dz] = part.axis ?? edge,
-    len = Math.hypot(dx, dz) || 1;
-  const along = ([x, z]: GroundPoint) => (x * dx + z * dz) / len;
-  const across = ([x, z]: GroundPoint) => (z * dx - x * dz) / len;
-  const distances = p.map(across),
-    lo = Math.min(...distances),
-    width = Math.max(0.001, Math.max(...distances) - lo);
-  const t = (v: GroundPoint) => (across(v) - lo) / width;
-  const h = (v: GroundPoint) => {
-    const u = T.MathUtils.clamp(t(v), 0, 1);
-    const rise =
-      part.roof === "gable"
-        ? 1 - Math.abs(2 * u - 1)
-        : part.roof === "arc"
-          ? 4 * u * (1 - u)
-          : part.roof === "mono"
-            ? u
-            : 0;
-    return part.eave + rise * part.rise;
-  };
-  const steps = part.roof === "arc" ? 16 : part.roof === "gable" ? 2 : 1;
-  return { p, along, across, t, h, steps };
-}
-function clip(poly: GroundPoint[], at: number, t: (p: GroundPoint) => number, above: boolean) {
-  const out: GroundPoint[] = [];
-  for (let i = 0; i < poly.length; i++) {
-    const a = poly[i]!,
-      b = poly[(i + 1) % poly.length]!,
-      ta = t(a),
-      tb = t(b);
-    const keepA = above ? ta >= at : ta <= at,
-      keepB = above ? tb >= at : tb <= at;
-    if (keepA) out.push(a);
-    if (keepA !== keepB) {
-      const u = (at - ta) / (tb - ta);
-      out.push([a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]);
-    }
-  }
-  return out;
-}
-function meshGeometry(positions: number[], uvs?: number[]) {
-  const geo = new T.BufferGeometry();
-  geo.setAttribute("position", new T.Float32BufferAttribute(positions, 3));
-  if (uvs) geo.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2));
-  geo.computeVertexNormals();
-  return geo;
-}
-function shell(part: CruzPart) {
-  const { p, h, t, along, across, steps } = profile(part);
-  const roof: number[] = [],
-    wall: number[] = [],
-    uv: number[] = [],
-    parapet: number[] = [];
-  for (const [i, j, k] of triangles(p)) {
-    const face = [p[i!]!, p[j!]!, p[k!]!];
-    for (let s = 0; s < steps; s++) {
-      const band = clip(clip(face, s / steps, t, true), (s + 1) / steps, t, false);
-      for (let n = 1; n + 1 < band.length; n++)
-        for (const v of [band[0]!, band[n + 1]!, band[n]!]) {
-          roof.push(v[0], h(v), v[1]);
-          uv.push(along(v), across(v));
-        }
-    }
-  }
-  for (let i = 0; i < p.length; i++) {
-    const a = p[i]!,
-      b = p[(i + 1) % p.length]!,
-      ta = t(a),
-      tb = t(b);
-    const cuts = [0, 1];
-    for (let s = 1; s < steps; s++) {
-      const cut = (s / steps - ta) / (tb - ta);
-      if (cut > 0 && cut < 1) cuts.push(cut);
-    }
-    cuts.sort((a, b) => a - b);
-    const interpolate = (fraction: number): GroundPoint => [
-      a[0] + (b[0] - a[0]) * fraction,
-      a[1] + (b[1] - a[1]) * fraction,
-    ];
-    for (let j = 1; j < cuts.length; j++) {
-      const v = interpolate(cuts[j - 1]!),
-        w = interpolate(cuts[j]!);
-      const bottom = part.base ?? 0,
-        vh = h(v),
-        wh = h(w);
-      const quad = (buffer: number[], v1: number, w1: number, v2: number, w2: number) => {
-        buffer.push(
-          v[0],
-          v1,
-          v[1],
-          w[0],
-          w1,
-          w[1],
-          v[0],
-          v2,
-          v[1],
-          v[0],
-          v2,
-          v[1],
-          w[0],
-          w1,
-          w[1],
-          w[0],
-          w2,
-          w[1],
-        );
-      };
-      quad(wall, bottom, bottom, vh, wh);
-      if (part.parapet)
-        quad(
-          parapet,
-          vh,
-          wh,
-          part.eave + part.rise + part.parapet.height,
-          part.eave + part.rise + part.parapet.height,
-        );
-    }
-  }
-  return {
-    roof: meshGeometry(roof, uv),
-    wall: meshGeometry(wall),
-    parapet: parapet.length ? meshGeometry(parapet) : null,
-  };
-}
-function groundFace(a: CruzArea, y: number) {
-  const p = perimeter(a.footprint),
-    pos: number[] = [],
-    uv: number[] = [];
-  for (const face of triangles(p))
-    for (const i of face.slice().reverse()) {
-      const [x, z] = p[i]!;
-      pos.push(x, y, z);
-      uv.push(x / 12, z / 12);
-    }
-  return meshGeometry(pos, uv);
-}
 const technicalColors = { montada: 0x146957, "a-montar": 0xdb731f, fora: 0x737780 };
 export function buildModel(
   parts: CruzPart[],
@@ -169,6 +21,7 @@ export function buildModel(
   context: CruzArea[],
   index: SpatialIndex,
   invalidate: () => void,
+  maxAnisotropy = 8,
 ) {
   const root = new T.Group(),
     layers = {
@@ -183,13 +36,13 @@ export function buildModel(
   const walls = material("#a9aea5", 0.88),
     roof = material("#bbc3c2", 0.48, 0.22),
     steel = material("#aaaead", 0.44, 0.34),
-    tank = material("#d2d0c7", 0.52, 0.17);
+    tank = material("#ffffff", 0.52, 0.17);
   const paint = new Map<string, T.Material>();
   const textures: T.Texture[] = [];
   const loader = new T.TextureLoader();
   const normal = loader.load("/textures/3tentos/galvanized-normal.png", invalidate);
   normal.wrapS = normal.wrapT = T.RepeatWrapping;
-  normal.anisotropy = 4;
+  normal.anisotropy = maxAnisotropy;
   normal.repeat.set(0.7, 1);
   textures.push(normal);
   roof.normalMap = normal;
@@ -202,36 +55,66 @@ export function buildModel(
     brush.fillStyle = "#f0ede4";
     brush.fillRect(0, 0, 512, 256);
     if (pattern === "rings") {
-      for (let y = 0; y < 256; y += 2) {
-        brush.fillStyle = y % 16 === 0 ? "#aaa99f" : "#d6d5ca";
-        brush.fillRect(0, y, 512, y % 16 === 0 ? 1.5 : 0.7);
+      for (let y = 0; y < 256; y += 3) {
+        brush.fillStyle = y % 21 === 0 ? "#a4a8a5" : "#d2d7d4";
+        brush.fillRect(0, y, 512, y % 21 === 0 ? 1.4 : 0.7);
       }
-      for (let x = 0; x < 512; x += 32) {
-        brush.fillStyle = "#bfc0b9";
-        brush.fillRect(x, 0, 1, 256);
+      // The side stiffeners repeat around the shell. In the photo the hoop bands occupy the upper third.
+      for (let x = 0; x < 512; x += 8) {
+        brush.fillStyle = "#989f9e";
+        brush.fillRect(x, 0, 1.4, 256);
+        brush.fillStyle = "#fffdf4";
+        brush.fillRect(x + 1.6, 0, 1.2, 256);
+      }
+      for (let y = 5; y < 103; y += 19) {
+        brush.fillStyle = "#838b8a";
+        brush.fillRect(0, y, 512, 2);
       }
     } else {
       const step = pattern === "seams" ? 16 : 32;
       for (let x = 0; x < 512; x += step) {
-        brush.fillStyle = "#c2c4be";
-        brush.fillRect(x, 0, pattern === "seams" ? 2 : 3, 256);
+        const v = 0.5 + 0.5 * Math.sin(12.7 * x + 1.6) * Math.cos(2.7 * x);
+        brush.fillStyle = "rgba(120,104,81," + v * (pattern === "seams" ? 0.17 : 0.07) + ")";
+        brush.fillRect(x, 0, step, 256);
+        brush.fillStyle = "#bcbeb5";
+        brush.fillRect(x, 0, pattern === "seams" ? 2.5 : 3, 256);
         brush.fillStyle = "#fafaf4";
-        brush.fillRect(x + 3, 0, 2, 256);
+        brush.fillRect(x + 3, 0, 1.5, 256);
+      }
+      if (pattern === "seams") {
+        for (let y = 22; y < 256; y += 71) {
+          brush.fillStyle = "#adb2aa";
+          brush.fillRect(0, y, 512, 1.8);
+        }
       }
     }
     const texture = new T.CanvasTexture(tile);
     texture.wrapS = texture.wrapT = T.RepeatWrapping;
     texture.colorSpace = T.SRGBColorSpace;
-    texture.anisotropy = 8;
+    texture.anisotropy = maxAnisotropy;
     textures.push(texture);
     return texture;
   }
-  const siloWall = material("#b2b5af", 0.5, 0.27),
-    siloRoof = material("#c5c8c4", 0.43, 0.26);
+  const siloWall = material(c.siloCostado, 0.5, 0.27),
+    siloRoof = material("#ffffff", 0.43, 0.26);
   siloWall.map = metalFinish("rings");
   siloRoof.map = metalFinish("seams");
   roof.map = metalFinish("sheet");
   roof.map.repeat.set(0.28, 0.15);
+  const sheetWall = roof.clone();
+  sheetWall.color.set("#b3bbb8");
+  sheetWall.roughness = 0.71;
+  sheetWall.metalness = 0.17;
+  sheetWall.normalScale.set(0.24, 0.24);
+  const oxidizedWall = sheetWall.clone();
+  oxidizedWall.color.set("#ffffff");
+  oxidizedWall.map = gableCladding(maxAnisotropy);
+  textures.push(oxidizedWall.map);
+  oxidizedWall.roughness = 0.8;
+  const splitMetal = roof.clone();
+  splitMetal.color.set("#ffffff");
+  splitMetal.vertexColors = true;
+  splitMetal.roughness = 0.58;
   const weathered = roof.clone();
   weathered.color.set("#a99685");
   weathered.roughness = 0.68;
@@ -240,110 +123,29 @@ export function buildModel(
   darker.roughness = 0.67;
   const bright = roof.clone();
   bright.color.set("#dbdcd4");
-  const areaMaterials = {
-    via: material("#80817a", 0.96),
-    ferrovia: material("#76766e", 0.92),
-    vegetacao: material("#75846a", 0.98),
-    agua: material("#799593", 0.38),
-    patio: material("#b3ad9d", 0.94),
-    vizinhanca: material("#9b9f93", 0.91),
-  };
-  const gravel = loader.load("/textures/3tentos/gravel-base.png", invalidate);
-  gravel.colorSpace = T.SRGBColorSpace;
-  gravel.wrapS = gravel.wrapT = T.RepeatWrapping;
-  gravel.anisotropy = 4;
-  textures.push(gravel);
-  areaMaterials.patio.map = gravel;
-  // Background silhouettes carry no technical-object IDs or ownership links.
-  const treeMatrices: T.Matrix4[] = [],
-    treeColors: T.Color[] = [];
-  let seed = 20260824;
-  const random = () => {
-    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-    return seed / 4294967296;
-  };
-  const treeGeo = new T.IcosahedronGeometry(1, 1),
-    treeMat = material("#819173", 0.96);
-  const backgroundRoof = material("#b0b3a8", 0.75, 0.07);
-  const backdropWalls = material("#a2a69a", 0.88);
-  const levels = {
-    vizinhanca: 0.025,
-    patio: 0.04,
-    vegetacao: 0.055,
-    agua: 0.06,
-    via: 0.075,
-    ferrovia: 0.09,
-  };
-  for (const a of context)
-    if (a.footprint.length > 2) {
-      const m = new T.Mesh(groundFace(a, levels[a.kind]), areaMaterials[a.kind]);
-      m.receiveShadow = true;
-      layers.entorno.add(m);
-      const bb = extent(a.footprint);
-      if (a.kind === "vegetacao") {
-        const spacing=Math.max(bb.east-bb.west,bb.south-bb.north)>180?10:5.9;
-        for (let x = bb.west; x < bb.east; x += spacing)
-          for (let z = bb.north; z < bb.south; z += spacing*.93) {
-            const px = x + random() * spacing*.74,
-              pz = z + random() * spacing*.74;
-            if (!inside(px, pz, a.footprint)) continue;
-            const w = spacing*(.5+random()*.42),
-              h = 2.8+random()*2.95;
-            treeMatrices.push(
-              new T.Matrix4().makeScale(w, h, w * 0.93).setPosition(px, h * 0.8, pz),
-            );
-            treeColors.push(
-              new T.Color().setHSL(
-                0.23 + random() * 0.035,
-                0.12 + random() * 0.12,
-                0.39 + random() * 0.14,
-              ),
-            );
-          }
-      }
-      if (a.kind === "vizinhanca") {
-        const circular = a.footprint.length > 12;
-        if (circular) {
-          const [x, z] = center(bb),
-            r = (bb.east - bb.west) / 2,
-            estimatedHeight = r * 1.45;
-          const wall = new T.Mesh(new T.CylinderGeometry(r, r, estimatedHeight, 24), backdropWalls);
-          const cap = new T.Mesh(new T.ConeGeometry(r, r * 0.45, 24), backgroundRoof);
-          wall.position.set(x, estimatedHeight / 2, z);
-          cap.position.set(x, estimatedHeight + r * 0.225, z);
-          wall.castShadow = cap.castShadow = true;
-          layers.entorno.add(wall, cap);
-        } else {
-          const mass = shell({ id: "", footprint: a.footprint, eave: 5, rise: 1.9, roof: "gable" });
-          const wall = new T.Mesh(mass.wall, backdropWalls),
-            cap = new T.Mesh(mass.roof, backgroundRoof);
-          wall.castShadow = cap.castShadow = true;
-          layers.entorno.add(wall, cap);
-        }
-      }
-      if (a.kind === "ferrovia" && a.footprint.length === 4) {
-        const [a0, a1, a2, a3] = a.footprint;
-        const from = new T.Vector3((a0![0] + a3![0]) / 2, 0.14, (a0![1] + a3![1]) / 2),
-          to = new T.Vector3((a1![0] + a2![0]) / 2, 0.14, (a1![1] + a2![1]) / 2);
-        const delta = to.clone().sub(from),
-          perp = new T.Vector3(-delta.z, 0, delta.x).normalize();
-        for (const side of [-0.63, 0.63]) {
-          const geo = new T.BoxGeometry(0.085, 0.09, delta.length());
-          const rail = new T.Mesh(geo, steel);
-          rail.position.copy(from).lerp(to, 0.5).addScaledVector(perp, side);
-          rail.lookAt(rail.position.clone().add(delta));
-          layers.entorno.add(rail);
-        }
-      }
-    }
-  const canopy = new T.InstancedMesh(treeGeo, treeMat, treeMatrices.length);
-  treeMatrices.forEach((m, i) => {
-    canopy.setMatrixAt(i, m);
-    canopy.setColorAt(i, treeColors[i]!);
-  });
-  canopy.castShadow = true;
-  canopy.receiveShadow = true;
-  layers.entorno.add(canopy);
+  const boilerWall = sheetWall.clone();
+  boilerWall.color.set("#945045");
+  boilerWall.roughness = 0.64;
+  const louverWall = sheetWall.clone();
+  louverWall.color.set("#59615e");
+  louverWall.roughness = 0.74;
+  const djiBox = sheetWall.clone();
+  djiBox.color.set(c.caixa56);
+  const galleryMetal = steel.clone();
+  galleryMetal.color.set(c.galeria);
+  const innerSteel = steel.clone();
+  innerSteel.color.set(c.caldeiraAco);
+  innerSteel.roughness = 0.62;
+  const cavacoRed = sheetWall.clone();
+  cavacoRed.color.set(c.tintaCavaco);
+  cavacoRed.roughness = 0.67;
+  const prepPanel = sheetWall.clone();
+  prepPanel.color.set(c.preparacaoFachada);
+  const footConcrete = walls.clone();
+  footConcrete.color.set(c.siloBase);
+  const environment: ReturnType<typeof createGroundContext> & Partial<HorizonControls> =
+    createGroundContext(context, index, invalidate, parts, maxAnisotropy);
+  layers.entorno.add(environment.root);
   const candidates: T.Object3D[] = [];
   const highlightParts = new Map<string, { geo: T.BufferGeometry; matrix: T.Matrix4 }[]>();
   function register(id: string, geo: T.BufferGeometry, matrix = new T.Matrix4()) {
@@ -358,9 +160,30 @@ export function buildModel(
   const faceIds = new Map<T.Object3D, { end: number; id: string }[]>();
   const instanceIds = new Map<T.Object3D, string[]>();
   const barGeo = new T.BoxGeometry(1, 1, 1);
+  const curved: { id: string; low: T.Mesh; high?: T.Mesh }[] = [];
+  const details: (() => void)[] = [];
+  let disposed = false,
+    matteEnabled = false;
+  function loadDetails() {
+    if (disposed || !details.length) return;
+    const pending = details.splice(0, 2);
+    for (const addDetail of pending) addDetail();
+    invalidate();
+  }
+  const lodInfo = new Map<string, { center: T.Vector3; diameter: number; near: boolean }>();
+  function trackLod(p: CruzPart) {
+    const e = extent(p.footprint),
+      [x, z] = center(e);
+    const width =
+      p.roof === "arc"
+        ? Math.max(...p.footprint.map(profile(p).across)) -
+          Math.min(...p.footprint.map(profile(p).across))
+        : e.east - e.west;
+    lodInfo.set(p.id, { center: new T.Vector3(x, p.eave, z), diameter: width, near: false });
+  }
   for (const p of parts.filter((p) => p.roof !== "tank" && p.roof !== "silo")) {
     if (p.footprint.length < 3) continue;
-    const g = shell(p),
+    const g = shell(p, p.roof === "arc" ? 18 : undefined),
       layer = layers[p.layer ?? "edificacoes"];
     const structure =
       index.chains.get(p.id)?.find((id) => index.byId.get(id)?.kind === "estrutura") ?? p.id;
@@ -371,31 +194,230 @@ export function buildModel(
       batches.get(mat)!.push({ id, geo });
       register(id, geo);
     };
-    const roofMaterial = ["cobertura-11", "cobertura-12"].includes(p.id)
+    const roofMaterial = [
+      "cobertura-11",
+      "cobertura-12",
+      "cobertura-03",
+      "cobertura-04",
+      "cobertura-05",
+      "cobertura-13",
+      "cobertura-57",
+    ].includes(p.id)
       ? weathered
       : p.bracing || p.roof === "flat"
         ? darker
-        : ["cobertura-02", "cobertura-08", "cobertura-56"].includes(p.id)
+        : ["cobertura-02", "cobertura-08", "cobertura-35", "cobertura-56"].includes(p.id)
           ? bright
-          : p.id === "cobertura-03"
+          : p.id === "cobertura-51"
             ? darker
             : roof;
-    add(g.roof, roofMaterial, p.id);
-    if(p.id==="cobertura-28.1"){
-      g.wall.dispose();
-      const deck=p.base??8.6;
-      const columns:T.Matrix4[]=[];
-      for(let i=0;i<4;i++){
-        const a=p.footprint[i]!,b=p.footprint[(i+1)%4]!;
-        const n=i%2===0?3:1;
-        for(let j=0;j<n;j++){const x=a[0]+(b[0]-a[0])*j/n,z=a[1]+(b[1]-a[1])*j/n;
-          columns.push(new T.Matrix4().makeScale(.24,p.eave-deck,.24).setPosition(x,(deck+p.eave)/2,z));
+    if (p.id === "cobertura-11") {
+      // DJI 0044, May 2026: contrasting sheets at the ridge and four rows of round roof terminals.
+      const roofProfile = profile(p);
+      const a = p.footprint[0]!,
+        b = p.footprint[1]!,
+        c = p.footprint[3]!,
+        d = p.footprint[2]!;
+      const start = new T.Vector2((a[0] + c[0]) / 2, (a[1] + c[1]) / 2),
+        end = new T.Vector2((b[0] + d[0]) / 2, (b[1] + d[1]) / 2);
+      const axis = end.clone().sub(start),
+        length = axis.length();
+      axis.normalize();
+      const normal = new T.Vector2(-axis.y, axis.x);
+      const yImage = [234, 210, 195, 180, 170, 160, 153, 147, 142, 137, 133, 129, 125, 122, 119];
+      const caps = new T.InstancedMesh(
+        new T.CylinderGeometry(0.27, 0.41, 0.52, 12),
+        steel,
+        yImage.length * 4,
+      );
+      const focal = 800,
+        tilt = Math.atan((337.5 - 57) / focal),
+        slope = (v: number) => Math.tan(tilt + Math.atan((v - 337.5) / focal));
+      const eyeDist = (length * slope(117)) / (slope(258) - slope(117)),
+        eyeRise = eyeDist * slope(258);
+      const m = new T.Matrix4();
+      let instance = 0;
+      for (const v of yImage)
+        for (const offset of [-2.3, -0.78, 0.78, 2.3]) {
+          const at = start
+            .clone()
+            .addScaledVector(
+              axis,
+              T.MathUtils.clamp((eyeRise - 0.26) / slope(v) - eyeDist, 0.5, length - 0.5),
+            )
+            .addScaledVector(normal, offset);
+          m.makeTranslation(at.x, roofProfile.h([at.x, at.y]) + 0.24, at.y);
+          caps.setMatrixAt(instance++, m);
+        }
+      caps.castShadow = caps.receiveShadow = true;
+      layer.add(caps);
+      instanceIds.set(caps, Array(instance).fill(p.id));
+      candidates.push(caps);
+    }
+    const calibrated = paintRoof(g.roof, p);
+    if (p.roof === "arc") {
+      const mat = calibrated ? splitMetal : roofMaterial;
+      const low = new T.Mesh(g.roof, mat);
+      const addMesh = (m: T.Mesh) => {
+        m.userData["id"] = p.id;
+        m.castShadow = m.receiveShadow = true;
+        layer.add(m);
+        candidates.push(m);
+      };
+      addMesh(low);
+      register(p.id, g.roof);
+      trackLod(p);
+      const pair: { id: string; low: T.Mesh; high?: T.Mesh } = { id: p.id, low };
+      curved.push(pair);
+      details.push(() => {
+        const fine = shell(p, 72);
+        fine.wall.dispose();
+        fine.gable?.dispose();
+        fine.parapet?.dispose();
+        if (calibrated) paintRoof(fine.roof, p);
+        const high = new T.Mesh(fine.roof, mat);
+        high.visible = false;
+        addMesh(high);
+        pair.high = high;
+        if (matteEnabled) {
+          painted.set(high, mat);
+          high.material = clay;
+        }
+      });
+    } else add(g.roof, calibrated ? splitMetal : roofMaterial, p.id);
+    if (p.id === "cobertura-56") {
+      // Three lower corners were intersected with the roof plane from the DJI 0044 pose.
+      // The top lies at roughly 12.4 m in the relative frame. No equipment function or absolute datum is inferred.
+      const [a, b, c, d] = p.footprint as [GroundPoint, GroundPoint, GroundPoint, GroundPoint];
+      const at = (u: number, v: number): GroundPoint => [
+        (1 - v) * (a[0] + u * (b[0] - a[0])) + v * (d[0] + u * (c[0] - d[0])),
+        (1 - v) * (a[1] + u * (b[1] - a[1])) + v * (d[1] + u * (c[1] - d[1])),
+      ];
+      const footprint = [at(0.18, 0.04), at(0.76, 0.04), at(0.76, 0.23), at(0.18, 0.23)];
+      const mount = Math.min(...footprint.map(profile(p).h));
+      const housing = shell({
+        ...p,
+        footprint,
+        roof: "mono",
+        base: mount - 0.12,
+        eave: 12.36,
+        rise: 0.16,
+      });
+      add(housing.wall, djiBox, p.id);
+      add(housing.roof, bright, p.id);
+    }
+    if (g.gable) add(g.gable, p.id === "cobertura-08" ? cavacoRed : oxidizedWall, structure);
+    if (openRoof(p) || raisedRoof(p)) {
+      // The Preparação assembly explicitly shows a band of open posts between the wall and both upper roofs.
+      const deck = raisedRoof(p) ? p.eave - 1.4 : (p.base ?? 0);
+      if (raisedRoof(p)) {
+        const body = shell({ id: p.id, footprint: p.footprint, roof: "flat", eave: deck, rise: 0 });
+        add(body.wall, prepPanel, structure);
+        add(body.roof, darker, structure);
+      }
+      if (["cobertura-57", "cobertura-08", "cobertura-35"].includes(p.id))
+        add(g.wall, p.id === "cobertura-35" ? boilerWall : sheetWall, structure);
+      else g.wall.dispose();
+      const profileHeight = profile(p).h;
+      const frames = roofFrames(p),
+        columns: T.Matrix4[] = [];
+      function insert(a: T.Vector3, b: T.Vector3, width: number, depth = width) {
+        const vector = b.clone().sub(a);
+        if (vector.length() < 0.005) return;
+        columns.push(
+          new T.Matrix4().compose(
+            a.clone().lerp(b, 0.5),
+            new T.Quaternion().setFromUnitVectors(
+              new T.Vector3(0, 1, 0),
+              vector.clone().normalize(),
+            ),
+            new T.Vector3(width, vector.length(), depth),
+          ),
+        );
+      }
+      const v = ([x, z]: GroundPoint, y: number) => new T.Vector3(x, y, z);
+      for (const [a, b] of frames) {
+        const ah = profileHeight(a),
+          bh = profileHeight(b);
+        insert(v(a, deck), v(a, ah), 0.24);
+        insert(v(b, deck), v(b, bh), 0.24);
+        const low = Math.min(ah, bh) - 0.32;
+        if (p.id !== "cobertura-08") insert(v(a, low), v(b, low), 0.16);
+        if (!["cobertura-08", "cobertura-28.1"].includes(p.id) && !raisedRoof(p)) {
+          const bays = 6;
+          for (let j = 0; j < bays; j++) {
+            const at = (k: number): GroundPoint => [
+              a[0] + ((b[0] - a[0]) * k) / bays,
+              a[1] + ((b[1] - a[1]) * k) / bays,
+            ];
+            const start = at(j),
+              end = at(j + 1);
+            insert(
+              v(start, j % 2 ? low : profileHeight(start) - 0.09),
+              v(end, j % 2 ? profileHeight(end) - 0.09 : low),
+              0.1,
+            );
+          }
         }
       }
-      const posts=new T.InstancedMesh(barGeo,steel,columns.length);columns.forEach((matrix,i)=>posts.setMatrixAt(i,matrix));
-      posts.castShadow=posts.receiveShadow=true;layer.add(posts);candidates.push(posts);instanceIds.set(posts,columns.map(()=>p.id));
-    } else if (!p.bracing) add(g.wall, walls, structure);
-    else {
+      // Folded edge at the perimeter provides a finite roof rim when viewed from the yard.
+      for (let i = 0; i < p.footprint.length; i++) {
+        const a = p.footprint[i]!,
+          b = p.footprint[(i + 1) % 4]!,
+          n = p.roof === "gable" ? 2 : 1;
+        for (let j = 0; j < n; j++) {
+          const at = (k: number): GroundPoint => [
+            a[0] + ((b[0] - a[0]) * k) / n,
+            a[1] + ((b[1] - a[1]) * k) / n,
+          ];
+          const start = at(j),
+            end = at(j + 1);
+          insert(
+            v(start, profileHeight(start) - 0.13),
+            v(end, profileHeight(end) - 0.13),
+            0.24,
+            0.18,
+          );
+        }
+      }
+      if (p.id === "cobertura-35") {
+        // Three horizontal levels are discernible through the east-facing bay in the 72 s video frame.
+        for (const k of [0.27, 0.53, 0.77])
+          insert(v(p.footprint[0]!, p.eave * k), v(p.footprint[1]!, p.eave * k), 0.19);
+      }
+      const posts = new T.InstancedMesh(
+        barGeo,
+        p.id === "cobertura-35" ? innerSteel : steel,
+        columns.length,
+      );
+      columns.forEach((m, i) => posts.setMatrixAt(i, m));
+      posts.castShadow = posts.receiveShadow = true;
+      layer.add(posts);
+      candidates.push(posts);
+      instanceIds.set(
+        posts,
+        columns.map(() => p.id),
+      );
+    } else if (!p.bracing) {
+      const wallMaterial =
+        p.id === "cobertura-06"
+          ? louverWall
+          : ["cobertura-16", "cobertura-35", "cobertura-33", "cobertura-34"].includes(p.id)
+            ? boilerWall
+            : p.id === "cobertura-11"
+              ? sheetWall
+              : [
+                    "cobertura-03",
+                    "cobertura-04",
+                    "cobertura-05",
+                    "cobertura-06",
+                    "cobertura-46",
+                    "cobertura-56",
+                  ].includes(p.id)
+                ? sheetWall
+                : walls;
+      add(g.wall, wallMaterial, structure);
+    } else {
       g.wall.dispose();
       const matrices: T.Matrix4[] = [];
       const beam = (a: T.Vector3, b: T.Vector3, r: number) => {
@@ -438,7 +460,7 @@ export function buildModel(
           beam(start, end, 0.13);
         }
       }
-      const bars = new T.InstancedMesh(barGeo, steel, matrices.length);
+      const bars = new T.InstancedMesh(barGeo, galleryMetal, matrices.length);
       matrices.forEach((m, i) => bars.setMatrixAt(i, m));
       bars.castShadow = bars.receiveShadow = true;
       layer.add(bars);
@@ -449,7 +471,9 @@ export function buildModel(
       candidates.push(bars);
     }
     if (g.parapet && p.parapet) {
-      const key = p.parapet.color ?? "#b8bcb6";
+      const key = ["cobertura-27", "cobertura-27.1", "cobertura-28"].includes(p.id)
+        ? c.preparacaoPintura
+        : (p.parapet.color ?? "#b8bcb6");
       if (!paint.has(key)) paint.set(key, material(key, 0.55, 0.16));
       add(g.parapet, paint.get(key)!, p.id);
     }
@@ -477,18 +501,25 @@ export function buildModel(
     instances: T.InstancedMesh;
     ids: string[];
     matrices: T.Matrix4[];
-    centers: T.Vector3[];
+    colors: T.Color[] | null;
+    order: string;
     high: boolean;
   };
   const batches: Batch[] = [];
   for (const kind of ["tank", "silo"] as const) {
     const cylinders = parts.filter((p) => p.roof === kind);
     if (!cylinders.length) continue;
+    cylinders.forEach(trackLod);
     for (const cap of [false, true]) {
       const specs = cylinders.filter((p) => !cap || p.rise > 0);
       if (!specs.length) continue;
       const matrices: T.Matrix4[] = [],
-        centers: T.Vector3[] = [],
+        colors =
+          kind === "tank"
+            ? specs.map((p) => tankColor(p.id, cap))
+            : cap
+              ? specs.map((p) => siloCapColor(p.id))
+              : null,
         ids: string[] = [];
       for (const p of specs) {
         const e = extent(p.footprint),
@@ -500,7 +531,6 @@ export function buildModel(
             .makeScale((e.east - e.west) / 2, height, (e.south - e.north) / 2)
             .setPosition(x, y, z),
         );
-        centers.push(new T.Vector3(x, y, z));
         ids.push(p.id);
       }
       for (const high of [true, false]) {
@@ -517,27 +547,73 @@ export function buildModel(
         layers.equipamentos.add(m);
         candidates.push(m);
         instanceIds.set(m, []);
-        batches.push({ instances: m, ids, matrices, centers, high });
+        if (colors) m.setColorAt(0, colors[0]!);
+        batches.push({ instances: m, ids, matrices, colors, high, order: "pending" });
       }
     }
   }
-  function updateLod(camera: T.Camera, sortDistance: number) {
+  for (const { mesh, ids } of siloFinish(parts, galleryMetal, footConcrete)) {
+    layers.equipamentos.add(mesh);
+    candidates.push(mesh);
+    instanceIds.set(mesh, ids);
+  }
+  const plainWhite = new T.Color(0xffffff);
+  const viewAxis = new T.Vector3(),
+    relative = new T.Vector3();
+  function updateLod(
+    camera: T.PerspectiveCamera | T.OrthographicCamera,
+    height: number,
+    tier: string,
+  ) {
+    camera.getWorldDirection(viewAxis);
+    const ortho = camera instanceof T.OrthographicCamera;
+    const pixelScale = ortho
+      ? (height * camera.zoom) / (camera.top - camera.bottom)
+      : height / (2 * Math.tan(T.MathUtils.degToRad(camera.fov) / 2));
+    let near = 0;
+    for (const entry of lodInfo.values()) {
+      const depth = relative.copy(entry.center).sub(camera.position).dot(viewAxis);
+      const pixels = (entry.diameter * pixelScale) / (ortho ? 1 : Math.max(0.1, depth));
+      entry.near =
+        depth > 0 &&
+        pixels >
+          (entry.near
+            ? tier === "economico"
+              ? 66
+              : tier === "equilibrado"
+                ? 52
+                : 40
+            : tier === "economico"
+              ? 91
+              : tier === "equilibrado"
+                ? 74
+                : 60);
+      if (entry.near) near++;
+    }
+    for (const pair of curved) {
+      if (pair.high) {
+        pair.high.visible = lodInfo.get(pair.id)!.near;
+        pair.low.visible = !pair.high.visible;
+      }
+    }
     for (const b of batches) {
+      const order = b.ids.map((id) => Number(lodInfo.get(id)!.near === b.high)).join("");
+      if (b.order === order) continue;
+      b.order = order;
       const ids = instanceIds.get(b.instances)!;
       ids.length = 0;
       for (let i = 0; i < b.ids.length; i++) {
-        const distance =
-          camera instanceof T.OrthographicCamera
-            ? sortDistance
-            : camera.position.distanceTo(b.centers[i]!);
-        if (distance < 130 !== b.high) continue;
+        if (lodInfo.get(b.ids[i]!)!.near !== b.high) continue;
         b.instances.setMatrixAt(ids.length, b.matrices[i]!);
+        if (b.colors) b.instances.setColorAt(ids.length, matteEnabled ? plainWhite : b.colors[i]!);
         ids.push(b.ids[i]!);
       }
       b.instances.count = ids.length;
+      if (b.instances.instanceColor) b.instances.instanceColor.needsUpdate = true;
       b.instances.instanceMatrix.needsUpdate = true;
       b.instances.boundingSphere = null;
     }
+    return { near, distant: lodInfo.size - near };
   }
   const profiles = parts.filter((p) => p.footprint.length > 2).map((p) => ({ p, h: profile(p).h }));
   const lineMaterials = new Map<string, LineMaterial>();
@@ -626,12 +702,14 @@ export function buildModel(
       layers[key].visible = visible[key];
     highlight(selectedId, visible);
   }
-  function pick(ray: T.Raycaster) {
-    const hits = ray.intersectObjects(
-      candidates.filter((m) => m.parent?.visible),
+  function nearest(ray: T.Raycaster) {
+    return ray.intersectObjects(
+      candidates.filter((m) => m.visible && m.parent?.visible),
       false,
-    );
-    const first = hits[0];
+    )[0];
+  }
+  function pick(ray: T.Raycaster) {
+    const first = nearest(ray);
     if (first?.faceIndex != null && faceIds.has(first.object)) {
       const face = first.faceIndex;
       return faceIds.get(first.object)!.find((range) => face < range.end)?.id;
@@ -643,27 +721,58 @@ export function buildModel(
         : instanceIds.get(first.object)?.[first.instanceId]
     ) as string | undefined;
   }
+  const clay = material("#acb2a8", 0.98);
+  const painted = new Map<T.Mesh, T.Material | T.Material[]>();
+  function matte(enabled: boolean) {
+    matteEnabled = enabled;
+    for (const b of batches) if (b.colors) b.order = "refresh";
+    for (const key of ["edificacoes", "equipamentos"] as const) {
+      layers[key].traverse((obj) => {
+        if (!(obj instanceof T.Mesh)) return;
+        if (enabled) {
+          if (!painted.has(obj)) painted.set(obj, obj.material);
+          obj.material = clay;
+        } else {
+          const original = painted.get(obj);
+          if (original) obj.material = original;
+        }
+      });
+    }
+    if (!enabled) painted.clear();
+  }
   function dispose() {
+    disposed = true;
+    details.length = 0;
     const geos = new Set<T.BufferGeometry>(),
       mats = new Set<T.Material>([
+        clay,
+        footConcrete,
+        prepPanel,
+        djiBox,
+        galleryMetal,
+        innerSteel,
+        cavacoRed,
+        boilerWall,
+        louverWall,
+        sheetWall,
+        oxidizedWall,
         walls,
         roof,
         steel,
         tank,
         selectionMat,
         outlineMat,
+        splitMetal,
         siloRoof,
         siloWall,
         weathered,
         darker,
         bright,
-        treeMat,
-        backgroundRoof,
-        backdropWalls,
         ...paint.values(),
-        ...Object.values(areaMaterials),
         ...lineMaterials.values(),
       ]);
+    environment.root.removeFromParent();
+    environment.dispose();
     root.traverse((obj) => {
       if (obj instanceof T.Mesh || obj instanceof T.LineSegments) geos.add(obj.geometry);
       if (obj instanceof T.InstancedMesh) obj.dispose();
@@ -674,5 +783,18 @@ export function buildModel(
     for (const m of mats) m.dispose();
     for (const tex of textures) tex.dispose();
   }
-  return { root, highlight, setLayers, pick, updateLod, dispose };
+  return {
+    root,
+    highlight,
+    setLayers,
+    pick,
+    nearest,
+    matte,
+    updateLod,
+    loadDetails,
+    dispose,
+    showHorizon: (enabled: boolean) => environment.setRegion?.(enabled),
+    horizonInfo: () => environment.regionInfo?.() ?? null,
+    regionFrame: (eye: T.Vector3) => environment.updateRegion?.(eye),
+  };
 }

@@ -153,10 +153,22 @@ test("Cruz Alta hashes a source above 10 MiB across chunks before requesting its
     );
   const success = await harness({ cruzAlta: true, original, originalResponse: chunked });
   assert.equal((await success.run()).result.ready, 1);
+  assert(success.calls.every(({ init }) => init.redirect === "manual"));
+  assert(
+    success.calls.every(
+      ({ init }) => new Headers(init.headers).get("user-agent") === "Nexus-NR-Image-Worker/1.0",
+    ),
+  );
   const mismatch = await harness({ cruzAlta: true, original, originalResponse: chunked });
   original[original.length - 1] ^= 1;
   assert.equal((await mismatch.run()).result.error, "original_divergente");
   assert(!mismatch.calls.some(({ url }) => url.pathname.includes("/render/image/")));
+});
+
+test("a redirected Storage upload is rejected before confirming a representation", async () => {
+  const state = await harness({ cruzAlta: true, uploadStatus: 307 });
+  assert.equal((await state.run()).result.error, "redirecionamento_recusado");
+  assert(state.completed.every((result) => result.estado !== "disponivel"));
 });
 
 test("narrow authentication rejects unauthenticated calls before any queue or Storage access", async () => {

@@ -161,7 +161,10 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
   )
     throw Error("Invalid private worker origin");
   const root = base.origin;
-  const headers: Record<string, string> = { apikey: options.serviceKey };
+  const headers: Record<string, string> = {
+    apikey: options.serviceKey,
+    "user-agent": "Nexus-NR-Image-Worker/1.0",
+  };
   if (!options.serviceKey.startsWith("sb_"))
     headers["Authorization"] = `Bearer ${options.serviceKey}`;
   return async (request: Request): Promise<Response> => {
@@ -174,13 +177,19 @@ export function createImageWorker(options: WorkerOptions): (request: Request) =>
     const timer = setTimeout(() => deadline.abort(), 45_000);
     const elapsed = () => Math.round(now() - started);
     let claimed: { id: string; lease: string } | null = null;
-    const call = (url: string, init: RequestInit = {}) =>
-      transport(url, {
+    const call = async (url: string, init: RequestInit = {}) => {
+      const response = await transport(url, {
         ...init,
-        redirect: "error",
+        redirect: "manual",
         signal: deadline.signal,
         headers: { ...headers, ...init.headers },
       });
+      if (response.status >= 300 && response.status < 400) {
+        await response.body?.cancel();
+        fail("redirecionamento_recusado");
+      }
+      return response;
+    };
     const rpc = async (name: string, data: Record<string, unknown>) => {
       const response = await call(`${root}/rest/v1/rpc/${name}`, {
         method: "POST",
